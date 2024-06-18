@@ -4,6 +4,7 @@
 \setcounter{chapter}{0}
 # Regression and the Normal Distribution
 
+
 *Chapter Preview*. Regression analysis is a
 statistical method that is widely used in many fields of study, with
 actuarial science being no exception. This chapter provides an
@@ -70,7 +71,7 @@ properties of natural selection and inheritance.
 \empexjed{Galton}\index{datasets!Galton heights}
 
 To illustrate a data set that can be analyzed using regression
-methods, Table \@ref{tab:T1:Galton} displays some data included in
+methods, Table \@ref(tab:GaltonTable) displays some data included in
 Galton's 1885 paper.\ecaptionjed{Galton's 1885 Regression Data} This
 table displays the heights of 928 adult children, classified by an
 index of their parents' height. Here, all female heights were
@@ -81,35 +82,43 @@ adequately approximated by a normal curve. In developing regression
 analysis, he provided a single model for the joint distribution of
 heights.
 
-\begin{table}[h] \scalefont{0.9}
-\caption{\label{T1:Galton} Galton's 1885 Regression Data}
-\begin{tabular}{l|ccccccccccc|r}
-\hline
-Height of &  \multicolumn{12}{c}{Parents' Height} \\
-\multicolumn{2}{l}{adult child} \\
-in inches & $<$64.0 & 64.5 & 65.5 & 66.5 & 67.5 & 68.5 &
-69.5 & 70.5 & 71.5 & 72.5 & $>$73.0 & Total \\
-\hline
-$>$73.7 & - & - & - & - & - & - & 5 & 3 & 2 & 4 & - & 14 \\
-73.2 & - & - & - & - & - & 3 & 4 & 3 & 2 & 2 & 3 & 17 \\
-72.2 & - & - & 1 & - & 4 & 4 & 11 & 4 & 9 & 7 & 1 & 41 \\
-71.2 & - & - & 2 & - & 11 & 18 & 20 & 7 & 4 & 2 & - & 64 \\
-70.2 & - & - & 5 & 4 & 19 & 21 & 25 & 14 & 10 & 1 & - & 99 \\
-69.2 & 1 & 2 & 7 & 13 & 38 & 48 & 33 & 18 & 5 & 2 & - & 167 \\
-68.2 & 1 & - & 7 & 14 & 28 & 34 & 20 & 12 & 3 & 1 & - & 120 \\
-67.2 & 2 & 5 & 11 & 17 & 38 & 31 & 27 & 3 & 4 & - & - & 138 \\
-66.2 & 2 & 5 & 11 & 17 & 36 & 25 & 17 & 1 & 3 & - & - & 117 \\
-65.2 & 1 & 1 & 7 & 2 & 15 & 16 & 4 & 1 & 1 & - & - & 48 \\
-64.2 & 4 & 4 & 5 & 5 & 14 & 11 & 16 & - & - & - & - & 59 \\
-63.2 & 2 & 4 & 9 & 3 & 5 & 7 & 1 & 1 & - & - & - & 32 \\
-62.2 & - & 1 & - & 3 & 3 & - & - & - & - & - & - & 7 \\
-$<$61.2 & 1 & 1 & 1 & - & - & 1 & - & 1 & - & - & - & 5 \\ \hline
-Total & 14 & 23 & 66 & 78 & 211 & 219 & 183 & 68 & 43 & 19 & 4 & 928 \\
-\hline
-\end{tabular}
-\textit{Source: }Stigler (1986).
- \scalefont{1.1111}
-\end{table}
+
+
+```{r GaltonTable, echo = FALSE}
+
+ row1 <- c( 0,0,0,0,0,0, 5 , 3 , 2 , 4 ,0, 14) 
+ row2 <- c(0,0,0,0,0, 3 , 4 , 3 , 2 , 2 , 3 , 17) 
+ row3 <- c(0,0, 1 ,0, 4 , 4 , 11 , 4 , 9 , 7 , 1 , 41) 
+ row4 <- c(0,0, 2 ,0, 11 , 18 , 20 , 7 , 4 , 2 ,0, 64) 
+ row5 <- c(0,0, 5 , 4 , 19 , 21 , 25 , 14 , 10 , 1 ,0, 99) 
+ row6 <- c(1 , 2 , 7 , 13 , 38 , 48 , 33 , 18 , 5 , 2 ,0, 167) 
+ row7 <- c( 1 ,0, 7 , 14 , 28 , 34 , 20 , 12 , 3 , 1 ,0, 120) 
+ row8 <- c( 2 , 5 , 11 , 17 , 38 , 31 , 27 , 3 , 4 ,0,0, 138) 
+ row9 <- c( 2 , 5 , 11 , 17 , 36 , 25 , 17 , 1 , 3 ,0,0, 117) 
+ row10 <- c( 1 , 1 , 7 , 2 , 15 , 16 , 4 , 1 , 1 ,0,0, 48) 
+ row11 <- c( 4 , 4 , 5 , 5 , 14 , 11 , 16 ,0,0,0,0, 59) 
+ row12 <- c( 2 , 4 , 9 , 3 , 5 , 7 , 1 , 1 ,0,0,0, 32 )
+ row13 <- c(0, 1 ,0, 3 , 3 ,0,0,0,0,0,0, 7) 
+ row14 <- c( 1 , 1 , 1 ,0,0, 1 ,0, 1 ,0,0,0, 5) 
+ row15 <- c( 14 , 23 , 66 , 78 , 211 , 219 , 183 , 68 , 43 , 19 , 4 , 928)
+ 
+ tableMat <- rbind(row1,row2,row3,row4,row5,row6,
+                   row7,row8,row9,row10,row11,row12,
+                   row13,row14, row15)
+rownames(tableMat)  <- c(">73.7", "73.2", "72.2", "71.2","70.2", "69.2","68.2", "67.2","66.2", "65.2","64.2", "63.2","62.2", "<61.2","Total")
+colnames(tableMat)  <- c("<64.0", "64.5", "65.5", "66.5","67.5", "68.5","69.5", "70.5","71.5", "72.5",">73.0", "Total")
+ 
+ #colSums(tableMat)
+TableGen1(TableData=tableMat, 
+         TextTitle='Galtons 1885 Regression Data', 
+         Align='r', Digits=0, ColumnSpec=1:11,
+         BorderRight=c(1,12), ColWidth = ColWidth10)
+ 
+ 
+```
+
+*Source*: Stigler (1986)
+
 
 \marginparjed{Regression analysis is a method to quantify the
 relationship between a variable of interest and explanatory
@@ -117,14 +126,14 @@ variables.}
 
 \index{explanatory variable}
 
-Table \@ref{tab:T1:Galton} shows that much of the information concerning
-the height of an adult child can be attributed to, or ``explained,''
+Table \@ref(tab:GaltonTable) shows that much of the information concerning
+the height of an adult child can be attributed to, or 'explained,'
 in terms of the parents' height. Thus, we use the term
 *explanatory variable*  for measurements that provide
 information about a variable of interest. Regression analysis is a
 method to quantify the relationship between a variable of interest
 and explanatory variables. The methodology used to study the data in
-Table \@ref{tab:T1:Galton} can also be used to study actuarial and other
+Table \@ref(tab:GaltonTable) can also be used to study actuarial and other
 risk management problems, the thesis of this book.
 
 ## Fitting Data to a Normal Distribution
@@ -132,22 +141,23 @@ risk management problems, the thesis of this book.
 Historically, the normal distribution had a pivotal role in the
 development of regression analysis. It continues to play an
 important role, although we will be interested in extending
-regression ideas to highly ``non-normal'' data.
+regression ideas to highly  'non-normal' data.
 
 Formally, the normal curve is defined by the function
-\begin{equation}\label{E1:Normalpdf}
+\begin{equation}
 \mathrm{f}(y)=\frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{1}{2\sigma ^{2}%
 }\left( y-\mu \right) ^{2}\right) .
+(\#eq:Normalpdf)
 \end{equation}
 
 \marginparjed{Appendix A3.1 provides additional details about the
 normal curve, including a graph and distribution table.}
 
 This curve is a probability density function with the
-whole real line as its domain. From equation (\@ref{E1:Normalpdf}),
-we see that the curve is symmetric about $\mu $\ (the mean and
+whole real line as its domain. From equation (\@ref(eq:Normalpdf),
+we see that the curve is symmetric about $\mu$ (the mean and
 median). The degree of peakedness is controlled by the parameter
-$\sigma ^{2}$. These two parameters, $\mu $\ and $\sigma ^{2}$, are
+$\sigma ^{2}$. These two parameters, $\mu$ and $\sigma ^{2}$, are
 known as the *location*  and *scale parameters*,
 respectively. Appendix A3.1 provides additional details about this
 curve, including a graph and tables of its cumulative distribution
@@ -172,15 +182,12 @@ easy to use and has proved to be successful in many applications.
 
 (ref:Fig11) **Ten Deutsche Mark - German currency featuring scientist Gauss and the normal curve.**
 
-```{r Fig11, fig.cap='(ref:Fig11)', out.width = '80%', fig.align = 'center', echo = FALSE}
+```{r Fig11, fig.cap='(ref:Fig11)', out.width = '60%', fig.align = 'center', echo = FALSE}
 knitr::include_graphics("Chapters/Chapter1/GreyScale256TenDM.jpg")
 
 ```
 
 
-\bigskip
-
-\linejed
 
 \empexjed{MassBodilyInjury}\index{datasets!Massachusetts bodily
 injury claims}
@@ -193,43 +200,50 @@ automobile bodily injury insurance coverages. These are amounts
 incurred for outpatient medical treatments that arise from
 automobile accidents, typically sprains, broken collarbones and the
 like. The data consists of a sample of 272 claims from Massachusetts
-that were closed in 2001 (by ``closed,'' we mean that the claim is
+that were closed in 2001 (by 'closed,' we mean that the claim is
 settled and no additional liabilities can arise from the same
 accident). Rempala and Derrig were interested in developing
-procedures for handling mixtures of ``typical'' claims and others
+procedures for handling mixtures of 'typical' claims and others
 from providers who reported claims fraudulently. For this sample, we
 consider only those typical claims, ignoring the potentially
 fraudulent ones.\index{actuarial \& financial terms and
 concepts!closed claim}
 
-Table \@ref{tab:T1:BISummaryStats} provides several statistics that
+Table \@ref(tab:Table12) provides several statistics that
 summarize different aspects of the distribution. Claim amounts are
 in units of logarithms of thousands of dollars. The average
-logarithmic claim is 0.481, corresponding to \$1,617.77 (=1000 $\exp
-(0.481)$). The smallest and largest claims are -3.101 (\$45) and
-3.912 (\$50,000), respectively.
+logarithmic claim is 0.481, corresponding to \$1,617.77 (=1000 $\exp(0.481)$). The smallest and largest claims are -3.101 (45 dollars) and 3.912 (50,000 dollars), respectively.
 
-\bigskip
+```{r Table12, echo = FALSE}
+injury <- read.csv("CSVData/MassBodilyInjury.csv", header=TRUE)
+injury2<-subset(injury, providerA != 0 )
+LOGCLAIMS<-log(injury2$claims)
+# TABLE 1.2 SUMMARY STATISTICS
+TableOut <- cbind(
+length(LOGCLAIMS),
+mean(LOGCLAIMS),
+quantile(LOGCLAIMS,0.5),
+sd(LOGCLAIMS),
+min(LOGCLAIMS),
+max(LOGCLAIMS),
+quantile(LOGCLAIMS,0.25),
+quantile(LOGCLAIMS,0.75)
+)
+rownames(TableOut) <- "Claims"
+colnames(TableOut) <- c("Number", "Mean", "Median", "Standard Deviation", "Minimum",
+                        "Maximum", "25th Percentile", "75th Percentile")
 
-\begin{table}[h]
-\scalefont{0.9} \caption{\label{T1:BISummaryStats} Summary
-Statistics of Massachusetts Automobile Bodily Injury Claims}
-\begin{tabular}{l|cccccccc}
-\hline
-Variable &  &  &  & Standard &  &  & 25th & 75th \\
-& Number & Mean & Median & Deviation & Minimum & Maximum &
-Percentile & Percentile  \\ \cline{2-9} \vspace{-.05in} \\
-Claims & 272 & 0.481 & 0.793 & 1.101 & -3.101 & 3.912 & -0.114 & 1.168 \\
-\hline
-\multicolumn{9}{l}{\textit{Note: }Data are in logs of thousands of dollars}%
-\end{tabular}
- \scalefont{1.1111}
+TableGen1(TableData=TableOut, 
+         TextTitle='Summary
+Statistics of Massachusetts Automobile Bodily Injury Claims', 
+         Align='r', Digits=3, ColumnSpec=1:8,
+          ColWidth = ColWidth8)
 
-\linetjed
-\end{table}
+```
+
 
 For completeness, here are a few definitions. The *sample* is
-the set of data available for analysis, denoted by $y_1,...,y_n$.
+the set of data available for analysis, denoted by $y_1,\ldots,y_n$.
 Here, $n$ is the number of observations, $y_1$ represents the first
 observation, $y_2$ the second, and so on up to $y_n$ for the $nth$
 observation. Here are a few important summary statistics.
@@ -240,37 +254,37 @@ sample size}\index{symbols!$y$, observed variable, typically the
 outcome of interest}
 
 
-\boxedjed
 
-*Basic Summary Statistics*
+:::: {.blackbox }
+**Basic Summary Statistics**
 
 * The *mean* is the average of observations, that is, the sum of the
 observations divided by the number of units. Using algebraic
-notation, the mean is\
-\begin{equation*}
+notation, the mean is
+$$
 \overline{y}=\frac{1}{n}\left( y_1 + \cdots + y_n \right) =
 \frac{1}{n} \sum_{i=1}^{n} y_i.
-\end{equation*}
+$$
 * The *median* is the middle observation when the observations are ordered by
 size. That is, it is the observation at which 50\% are below it (and
 50\% are above it).
 * The *standard deviation* is a measure of the spread, or scale, of
 the distribution. It is computed as
-\begin{equation*}
+$$
 s_y = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}\left(
 y_i-\overline{y}\right) ^{2}} .
-\end{equation*}
-
-* A \*percentile* is a number at which a specified fraction of the
+$$
+* A *percentile* is a number at which a specified fraction of the
 observations is below it, when the observations are ordered by size.
 For example, the 25th percentile is that number so that 25\% of
 observations are below it.
-\end{boxedminipage}
+:::: 
+
 
 \bigskip\index{plots!histogram}
 
-To help visualize the distribution, Figure \@ref{F1:BIHist} displays
-a \emph{histogram} of the data. Here, the height of the each
+To help visualize the distribution, Figure \@ref(fig:Fig12) displays
+a *histogram* of the data. Here, the height of the each
 rectangle shows the relative frequency of observations that fall
 within the range given by its base. The histogram provides a quick
 visual impression of the distribution; it shows that the range of
@@ -279,18 +293,16 @@ greater than zero and that the distribution is roughly symmetric.
 
 \bigskip
 
-**Normal Curve Approximation.** Figure \@ref{F1:BIHist} also
-shows a normal curve superimposed, using $\overline{y}$ for $\mu $
+**Normal Curve Approximation.** Figure \@ref(fig:Fig12)  also
+shows a normal curve superimposed, using $\overline{y}$ for $\mu$
 and $s_y^{2}$ for $\sigma ^{2}$. With the normal curve, only two
-quantities ($\mu $ and $\sigma ^{2}$) are required to summarize the
-entire distribution. For example, Table \@ref{tab:T1:BISummaryStats}
+quantities ($\mu$ and $\sigma ^{2}$) are required to summarize the
+entire distribution. For example, Table \@ref(tab:Table12)
 shows that 1.168 is the 75th percentile, which is approximately the
-204th (= .$75\times 272$) largest observation from the entire
-sample. From the equation (\@ref{E1:Normalpdf}) normal distribution,
-we have that $z=(y-\mu )/\sigma $ is a standard normal, of which
-0.675\ is the 75th percentile. Thus, $\overline{%
-y}+0.675s_y=0.481+0.675\times 1.101=1.224$ is the 75th percentile
-using the normal curve approximation.
+204th ($=0.75\times 272$) largest observation from the entire
+sample. From the equation \@ref(eq:Normalpdf) normal distribution,
+we have that $z=(y-\mu )/\sigma$ is a standard normal, of which
+0.675\ is the 75th percentile. Thus, $\overline{y}+0.675s_y=$ $0.481+0.675\times 1.101=1.224$ is the 75th percentile using the normal curve approximation.
 
 
                 
@@ -299,14 +311,9 @@ using the normal curve approximation.
 ```{r Fig12, fig.cap='(ref:Fig12)', out.width = '50%', fig.align = 'center', echo = FALSE}
 injury <- read.csv("CSVData/MassBodilyInjury.csv", header=TRUE)
 injury2<-subset(injury, providerA != 0 )
-
 LOGCLAIMS<-log(injury2$claims)
 
-# TABLE 1.2 SUMMARY STATISTICS
-summary(LOGCLAIMS);sd(LOGCLAIMS)
-
 # FIGURE 1.2 
-
 x <- seq(-4, 4, 0.01)
 y <- dnorm(x, mean=mean(LOGCLAIMS), sd=sqrt(var(LOGCLAIMS)))
 hist(LOGCLAIMS, freq=FALSE, main="", ylab="", las=1)
@@ -316,52 +323,61 @@ lines(x,y)
 ```
 
 
-\begin{figure}[htp]
-    \includegraphics[width=0.45\textwidth]
-        {Chapters/Chapter1/F1BIHist.eps} \hfill  $~~~$
-               \includegraphics[width=0.45\textwidth]
-        {Chapters/Chapter1/F1BoxPlot.eps}
-
-      \parbox[t]{2.5in}{\caption{\label{F1:BIHist} \small Bodily Injury Relative Frequency with Normal Curve
-                Superimposed.}} \hfill
-        \parbox[t]{2.5in}{\caption{\label{F1:BoxPlot} \small Box Plot of Bodily Injury
-        Claims.}}
-\end{figure}
-
 
 \bigskip\index{plots!box and whiskers}
 
 **Box Plot.** A quick visual inspection of a variable's
 distribution can reveal some surprising features that are hidden by
-statistics, numerical summary measures. The \emph{box plot}
-\index{plots!box}, also known as a ``box and whiskers'' plot, is one
-such graphical device. Figure \@ref{F1:BoxPlot} illustrates a box
+statistics, numerical summary measures. The *box plot*
+\index{plots!box}, also known as a 'box and whiskers' plot, is one
+such graphical device. Figure \@ref(fig:Fig13) illustrates a box
 plot for the bodily injury claims. Here, the box captures the middle
 50\% of the data, with the three horizontal lines corresponding to
 the 75th, 50th and 25th percentiles, reading from top to bottom. \
-The horizontal lines above and below the box are the ``whiskers.''
-The upper whisker is 1.5 times the \emph{interquartile range} (the
+The horizontal lines above and below the box are the 'whiskers.'
+The upper whisker is 1.5 times the *interquartile range* (the
 difference between the 75th and 25th percentiles) above the 75th
 percentile. Similarly, the lower whisker is 1.5 times the
 interquartile range below the 25th percentile. Individual
 observations outside the whiskers are denoted by small circular
-plotting symbols, and are referred to as ``outliers.''
+plotting symbols, and are referred to as 'outliers.'
 
-\bigskip
+(ref:Fig13) **Box plot of bodily injury claims.**
+
+
+```{r Fig13, fig.cap='(ref:Fig13)', out.width = '50%', fig.align = 'center', echo = FALSE}
+boxplot(LOGCLAIMS, boxwex=.7, las=1)
+text(1, .57, "median", cex=1.2)
+text(1.36, -0.2, "25th percentile", cex=1.2)
+text(1.36, 1.1, "75th percentile", cex=1.2)
+arrows(1.05, -2, 1.05, -3.3, code=3, angle=20, length=0.1)
+#arrows(1.05, -2, 1.05, -3.3, col="blue", code=3, angle=20, length=0.1)
+text(1.15, -2.5, "outliers", cex=1.2)
+text(1.13, 3.9, "outlier", cex=1.2)
+```
+
+
 
 Graphs are powerful tools; they allow analysts to readily visualize
 nonlinear relationships that are hard to comprehend when expressed
 verbally or by mathematical formula. However, by their very
 flexibility, graphs can also readily deceive the analyst. Chapter 21
 will underscore this point. For example, Figure
-\@ref{F1:BIHistRedraw} is a re-drawing of Figure \@ref{F1:BIHist}; the
-difference is that Figure \@ref{F1:BIHistRedraw} uses more, and
+\@ref(fig:Fig14) is a re-drawing of Figure \@ref(fig:Fig12); the
+difference is that Figure \@ref(fig:Fig14) uses more, and
 finer, rectangles. This finer analysis reveals the asymmetric nature
 of the sample distribution that was not evident in Figure
-\@ref{F1:BIHist}.
+\@ref(fig:Fig12).
 
 
-\bigskip
+(ref:Fig14) **Redrawing of Figure 1.2 with an increased number of rectangles.**
+
+```{r Fig14, fig.cap='(ref:Fig14)', out.width = '50%', fig.align = 'center', echo = FALSE}
+hist(LOGCLAIMS, freq=FALSE, nclass=32, main="", ylab="", las=1)
+mtext("Density", side=2, at=.75,las=1, adj=.7,cex=1.1)
+lines(x,y)
+
+```
 
 **Quantile-Quantile Plots.** Increasing the number of
 rectangles can unmask features that were not previously apparent;
@@ -371,10 +387,9 @@ increases. This represents a trade-off. Instead of forcing the
 analyst to make an arbitrary decision about the number of
 rectangles, an alternative is to use a graphical device for
 comparing a distribution to another known as a
-\emph{quantile-quantile}, or \emph{qq},
-plot.\index{plots!quantile-quantile, $qq$}
+*quantile-quantile*, or *qq*, plot.\index{plots!quantile-quantile, $qq$}
 
-Figure \@ref{F1:BIQQPlot} illustrates a $qq$ plot for the bodily
+Figure \@ref(fig:Fig15) illustrates a $qq$ plot for the bodily
 injury data using the normal curve as a reference distribution. For
 each point, the vertical axis gives the quantile using the sample
 distribution. The horizontal axis gives the corresponding quantity
@@ -388,7 +403,7 @@ connecting the 75th and 25th percentiles.)
 \marginparjed{Points in a $qq$ plot close to a straight line
 suggests agreement between the sample and reference distributions.}
 
-In Figure \@ref{F1:BIQQPlot}, the small sample percentiles are
+In Figure \@ref(fig:Fig15), the small sample percentiles are
 consistently smaller than the corresponding values from the standard
 normal, indicating that the distribution is skewed to the left. The
 difference in values at the ends of the distribution are due to the
@@ -396,24 +411,15 @@ outliers noted earlier that could also be interpreted as the sample
 distribution having larger tails than the normal reference
 distribution.
 
+(ref:Fig15) **A $qq$ plot of Bodily Injury Claims, using a normal reference distribution.**
 
+```{r Fig15, fig.cap='(ref:Fig15)', out.width = '50%', fig.align = 'center', echo = FALSE}
+qqnorm(LOGCLAIMS, main="", las=1, ylab="")
+mtext("Sample Quantiles", side=2, at=4.5, las=1,cex=1.1,adj=.4)
+qqline(LOGCLAIMS)
 
+```
 
-\begin{figure}[htp]
-  \begin{center}
-    \includegraphics[width=0.45\textwidth]
-        {Chapters/Chapter1/F1BIHistRedraw.eps}
-      \hfill
-            \includegraphics[width=0.45\textwidth]
-        {Chapters/Chapter1/F1BIQQPlot.eps}
-
-      \end{center}
-           \parbox[t]{2.5in}{\caption {\label{F1:BIHistRedraw}
-           {\small Re-drawing of Figure \@ref{F1:BIHist} with an increased number of rectangles.}}} \hfill
-        \parbox[t]{2.5in}{\caption {\label{F1:BIQQPlot} {\small A $qq$ plot of
-Bodily Injury Claims, using a normal reference distribution.}}}
-
-\end{figure}
 
 
 ## Power Transforms {#S1:PowerTransforms}
@@ -425,14 +431,14 @@ assets of firms, wages of individuals and housing prices of
 households in business and economic applications, it is common to
 consider logarithmic instead of the original units. A log transform
 retains the original ordering (for example, large wages remain large
-on the log wage scale) but serves to ``pull in'' extreme values of
+on the log wage scale) but serves to 'pull in' extreme values of
 the distribution.
 
-To illustrate, Figure \@ref{F1:BIOrig} shows the bodily injury claims
+To illustrate, Figure \@ref(fig:Fig16) shows the bodily injury claims
 distribution in (thousands of) dollars. In order to graph the data
 meaningfully, the largest observation (\$50,000) was removed prior
 to making this plot. Even with this observation removed, Figure
-\@ref{F1:BIOrig} shows that the distribution is heavily lop-sided to
+\@ref(fig:Fig16) shows that the distribution is heavily lop-sided to
 the right, with several large values of claims appearing.
 \index{transformations!logarithmic}
 
@@ -442,7 +448,7 @@ right and a concentration of mass on the left. Many insurance claims
 distributions are right-skewed.}
 
 Distributions that are lopsided in one direction or the other are
-known as \emph{skewed}. Figure \@ref{fig:F1:BIOrig} is an example of a
+known as *skewed*. Figure \@ref(fig:Fig16) is an example of a
 distribution skewed to the right, or positively skewed. Here, the
 tail of the distribution on the right is longer and there is a
 greater concentration of mass to the left. In contrast, a
@@ -450,63 +456,19 @@ left-skewed, or negatively skewed distribution, has a longer tail on
 the left and a greater concentration of mass to the right. Many
 insurance claims distributions are right-skewed (see the text by
 Klugman, Panjer and Willmot, 2008, for extensive discussions). As we
-saw in Figures \@ref{F1:BIHistRedraw} and \@ref{F1:BIQQPlot}, a
+saw in Figures \@ref(fig:Fig14) and \@ref(fig:Fig15), a
 logarithmic transformation yields a distribution that is only mildly
 skewed to the left.
 
+                
+(ref:Fig16) **Distribution of Bodily Injury Claims. Observations are in (thousands of) dollars with the largest observation omitted.**.
 
-\setcounter{figure}{5}
-
-\begin{figure}[htp]
-  \begin{center}
-    \includegraphics[width=.4\textwidth]
-        {Chapters/Chapter1/F1BIOrig.eps}
-    \caption{\label{F1:BIOrig} \small Distribution of Bodily Injury Claims. Observations are in (thousands of)
-dollars with the largest observation omitted.}
-  \end{center}
-\end{figure}
-
-
-
-(ref:F1BIOrig) **Distribution of Bodily Injury Claims**. Observations are in (thousands of)
-dollars with the largest observation omitted.
-
-
-```{r F1:BIOrig, fig.cap='(ref:F1BIOrig)', out.width = '20%', fig.align = 'center', echo = FALSE}
-knitr::include_graphics("C:/Users/jfrees/Dropbox/AAOnlineTextProject/Regression/Chapters/Chapter1/F1BIOrig.png")
-
-```
-
-
-```{r fig.cap='(ref:F1BIOrig)', out.width = '80%', fig.align = 'center', echo = FALSE, eval = FALSE}
-
-eps_file <- "C:/Users/jfrees/Dropbox/AAOnlineTextProject/Regression/Chapters/Chapter1/F1Pareto.eps"
-png_file <- "C:/Users/jfrees/Dropbox/AAOnlineTextProject/Regression/Chapters/Chapter1/F1Pareto.png"
-
-# Use the postscript device to read the EPS file
-temp <- postscript(eps_file)
-
-# Set the device to output PNG
-png(png_file)
-
-
-# Add your plotting commands here if needed
-
-# Close the devices
-dev.off()  # Closes the postscript device
-dev.off()  # Closes the png device
-
-```
-
-
-
-
-```{r fig.cap='(ref:F1BIOrig)', out.width = '80%', fig.align = 'center', echo = FALSE, eval = FALSE}
-library(magick)
-img <- image_read(temp)
-img <- image_read("C:/Users/jfrees/Dropbox/AAOnlineTextProject/Regression/Chapters/Chapter1/F1BIOrig.eps")
-image_write(img, "C:/Users/jfrees/Dropbox/AAOnlineTextProject/Regression/Chapters/Chapter1/F1BIOrig.png")
-knitr::include_graphics("C:/Users/jfrees/Dropbox/AAOnlineTextProject/Regression/Chapters/Chapter1/F1BIOrig.png")
+```{r Fig16, fig.cap='(ref:Fig16)', out.width = '50%', fig.align = 'center', echo = FALSE}
+injury3 = subset(injury, claims < 25 )
+CLAIMS25 <- injury3$claims
+par(mar=c(4.2,4,1.2,.2),cex=1.1)
+hist(CLAIMS25, freq=FALSE,  main="", las=1, ylab="", xlab="CLAIMS")
+mtext("Density", side=2, at=.28, las=1,cex=1.1)
 
 ```
 
@@ -518,11 +480,9 @@ knitr::include_graphics("C:/Users/jfrees/Dropbox/AAOnlineTextProject/Regression/
 Logarithmic transformations are used extensively in applied
 statistics work. One advantage is that they serve to symmetrize
 distributions that are skewed. More generally, we consider
-\emph{power transforms}, also known as the \emph{Box-Cox family of
-transforms}. Within this family of transforms, in lieu of using the
-response $y$, we use a transformed, or rescaled version, $y^{\lambda
-}$. Here, the power $\lambda$ (lambda, a Greek ``el'') is a number
-that may be user specified. Typical values of $\lambda $ that are
+*power transforms*, also known as the *Box-Cox family of transforms*. Within this family of transforms, in lieu of using the
+response $y$, we use a transformed, or rescaled version, $y^{\lambda}$. Here, the power $\lambda$ (lambda, a Greek 'el') is a number
+that may be user specified. Typical values of $\lambda$ that are
 used in practice are $\lambda$=1, 1/2, 0 or -1. When we use
 $\lambda =0$, we mean $\ln (y)$, that is, the natural logarithmic
 transform. More formally, the Box-Cox family can be expressed as
@@ -546,9 +506,9 @@ To illustrate the usefulness of transformations, we simulated 500
 observations from a chi-square distribution with two degrees of
 freedom. Appendix A3.2 introduces this distribution (that we will
 encounter again later in studying the behavior of test statistics).
-The upper left panel of Figure \@ref{F1:ChiSquare} shows the original
+The upper left panel of Figure \@ref(F1:ChiSquare) shows the original
 distribution is heavily skewed to the right. The other panels in
-Figure \@ref{F1:ChiSquare} show the data rescaled using the square
+Figure \@ref(F1:ChiSquare) show the data rescaled using the square
 root, logarithmic and negative reciprocal transformations. The
 logarithmic transformation, in the lower left panel, provides the
 best approximation to symmetry for this example. The negative
@@ -556,32 +516,52 @@ reciprocal transformation is based on $\lambda =-1$, and then
 multiplying the rescaled observations by minus one, so that large
 observations remain large.\index{distributions!chi-square}
 
+(ref:Fig17) **500 simulated observations from a chi-square distribution.** The upper left panel is based on the original distribution. The upper right corresponds to the square root transform, the lower left to the log transform and the lower right to the negative reciprocal transform.
 
-\begin{figure}[htp]
-  \begin{center}
-    \includegraphics[width=1\textwidth]
-        {Chapters/Chapter1/F1Chisquare.eps}
-    \caption{\label{F1:ChiSquare} \small 500
-simulated observations from a chi-square distribution. The upper
-left panel is based on the original distribution. The upper right
-corresponds to the square root transform, the lower left to the log
-transform and the lower right to the negative reciprocal transform.}
-  \end{center}
-\end{figure}
+```{r Fig17, fig.cap='(ref:Fig17)', out.width = '90%', fig.align = 'center', echo = FALSE}
+set.seed(1237)
+X1 <- 10000*rchisq(500*1, df=2)
+X2 <- sqrt(X1)
+X3 <- log(X1)
+X4 <- -1/X1
+
+par(mfrow=c(2, 2), cex=.75, mar=c(3,5,1.5,0))
+hist(X1, freq=FALSE,  nclass=16, main="", xlab="", ylab="", las=1, yaxt="n",xlim=c(0,200000),ylim=c(0,.00005))
+axis(2, at=seq(0,.00005,.00001),las=1, cex=.3, 
+  labels=c("0", "0.00001", "0.00002","0.00003", "0.00004", "0.00005"))
+mtext("Density", side=2, at=.000055, las=1, cex=.75)
+mtext("y", side=1, cex=.75, line=2)
+
+par(mar=c(3,4,1.5,0.2))
+hist(X2, freq=FALSE,  nclass=16, main="", xlab="", ylab="", las=1,xlim=c(0,400), ylim=c(0,.008))
+mtext("Density", side=2, at=.0088, las=1, cex=.75)
+mtext("Square root of y", side=1, cex=.75, line=2)
+
+par(mar=c(3.2,5,1,0))
+hist(X3,  freq=FALSE,  nclass=16, main="", xlab="", ylab="", las=1, ylim=c(0,.4))
+mtext("Density", side=2, at=.44, las=1, cex=.75)
+mtext("Logarithmic y", side=1, cex=.75, line=2)
+
+par(mar=c(3.2,4,1,0.2))
+hist(X4, freq=FALSE,  nclass=16, main="",xlab="", ylab="", las=1, ylim=c(0,100))
+mtext("Density", side=2, at=110, las=1, cex=.75)
+mtext("Negative reciprocal of y", side=1, cex=.75, line=2)
+
+```
 
 
 ## Sampling and the Role of Normality
 
 \index{statistic}
 
-A \emph{statistic} is a summary measure of data, such as a mean,
+A *statistic* is a summary measure of data, such as a mean,
 median or percentile. Collections of statistics are very useful for
 analysts, decision-makers and everyday consumers for understanding
 massive amounts of data that represent complex situations. To this
 point, our focus has been on introducing sensible techniques to
 summarize variables; techniques that will be used repeatedly thought
-this text. However, the true usefulness of the \emph{discipline of
-statistics} is its ability to say something about the unknown, not
+this text. However, the true usefulness of the *discipline of
+statistics* is its ability to say something about the unknown, not
 merely to summarize information already available. To this end, we
 need to make some fairly formal assumptions about the manner in
 which the data are observed. As a science, a strong feature of
@@ -600,27 +580,27 @@ variance operator}
 
 It is customary to assume that the data are drawn from a larger
 population that we are interested in describing. The process of
-drawing the data is known as the \emph{sampling}, or \emph{data
-generating, process}. We denote this sample as $\{y_1,\ldots,y_n\}$.
+drawing the data is known as the *sampling*, or *data
+generating, process*. We denote this sample as $\{y_1,\ldots,y_n\}$.
 So that we may critique, and modify, these sampling assumptions, we
 list them below in detail:\smallskip
 
-\begin{center}
-\begin{tabular}{l}
-\hline \textit{Basic Sampling Assumptions} \\ \hline
-1. $\mathrm{E~}y_i=\mu $ \\
-2. $\mathrm{Var~}y_i=\sigma ^{2}$ \\
-3. $\{y_i\}$ are independent \\
-4. $\{y_i\}$ are normally distributed. \\ \hline
-\end{tabular}
-\end{center}
+$$
+\begin{array}{l}
+\hline \textbf{Basic Sampling Assumptions} \\ \hline
+1. ~\mathrm{E~}y_i=\mu  \\
+2. ~\mathrm{Var~}y_i=\sigma ^{2} \\
+3. ~\{y_i\} \text{ are independent} \\
+4. ~\{y_i\} \text{ are normally distributed}. \\ \hline
+\end{array}
+$$
 
 \marginparjed{Assumption 4 is not required for many statistical
 inference procedures because central limit theorems provide
 approximate normality for many statistics of interest.}
 
-In this basic set-up, $\mu $\ and $\sigma ^{2}$\ serve as
-\emph{parameters} that describe the location and scale of the parent
+In this basic set-up, $\mu$ and $\sigma ^{2}$\ serve as
+*parameters* that describe the location and scale of the parent
 population. The goal is to infer something sensible about them based
 on statistics such as $\overline{y}$ and $s_y^{2}$. For the third
 assumption, we assume independence among the draws. In a sampling
@@ -629,14 +609,14 @@ a population. The fourth assumption is not required for many
 statistical inference procedures because central limit theorems
 provide approximate normality for many statistics of interest.
 However, a formal justification of some statistics, such as
-\textit{t}-statistics, requires this additional
+*t*-statistics, requires this additional
 assumption.\index{theorems!central limit}
 
-Section \@ref{S1:TechSupp} provides an explicit statement of one
+Section \@ref(S1:TechSupp) provides an explicit statement of one
 version of the central limit theorem, giving conditions under which
 $\overline{y}$ is approximately normally distributed. This section
-also discusses a related result, known as an \emph{Edgeworth
-approximation}, that shows that the quality of the normal
+also discusses a related result, known as an *Edgeworth
+approximation*, that shows that the quality of the normal
 approximation is better for symmetric parent populations when
 compared to skewed distributions.
 
@@ -645,7 +625,7 @@ compared to skewed distributions.
 How does this discussion apply to the study of regression analysis?
 After all, so far we have focused only on the simple arithmetic
 average, $\overline{y}$. In subsequent chapters, we will emphasize
-that \emph{linear regression is the study of weighted averages};
+that *linear regression is the study of weighted averages*;
 specifically, many regression coefficients can be expressed as
 weighted averages with appropriately chosen weights. Central limit
 and Edgeworth approximation theorems are available for weighted
@@ -663,19 +643,18 @@ context.}
 Approximating normality will be an important issue in practical
 applications of linear regression. Parts I and II of this book focus
 on linear regression, where we will learn basic regression concepts
-and sampling design. Part III will focus on \emph{nonlinear}
+and sampling design. Part III will focus on *nonlinear*
 regression, involving binary, count and fat-tailed responses, where
 the normal is not the most helpful reference distribution. Ideas
 concerning basic concepts and design will also be used in the
 nonlinear setting.
 
 In regression analysis, we focus on one measurement of interest and
-call this the \emph{dependent variable}. Other measurements are used
-as \emph{explanatory variables}. A goal is to compare differences in
+call this the *dependent variable*. Other measurements are used
+as *explanatory variables*. A goal is to compare differences in
 the dependent variable in terms of differences in the explanatory
-variables. As noted in Section \@ref{S1:Intro}, regression is used
-extensively in many scientific fields. Table
-\@ref{T1:RegressionTerms} lists alternative terms that you may
+variables. As noted in Section \@ref(S1:Intro), regression is used
+extensively in many scientific fields. [Table 1.3] lists alternative terms that you may
 encounter as you read regression applications.
 
 \index{explanatory variable!independent variable}\index{explanatory
@@ -689,35 +668,43 @@ variable!response}\index{dependent
 variable!regressand}\index{dependent variable!left-hand
 side}\index{dependent variable!explained}
 
-\begin{table}[h] \scalefont{0.9}
-\caption{\label{T1:RegressionTerms} Terminology for Regression
-Variables}
-\begin{tabular}{ll}
-\hline \multicolumn{1}{c}{$y$-variable} & \multicolumn{1}{c}{$x$-variable} \\
-Outcome of interest & Explanatory variable \\
-Dependent variable & Independent variable \\
-Endogenous variable & Exogenous variable \\
-Response & Treatment \\
-Regressand & Regressor \\
-Left-hand side variable & Right-hand side variable \\
-Explained variable & Predictor variable \\
-Output & Input \\
+
+<a id=tab:1.3></a> 
+
+[Table 1.3]: \#tab:1.3
+
+Table 1.3. **Terminology for Regression Variables** 
+
+$$
+{\small
+\begin{array}{ll}\hline\hline
+y-\text{Variable} & x-\text{Variable} \\\hline
+\text{Outcome of interest} & \text{Explanatory variable} \\
+\text{Dependent variable} & \text{Independent variable} \\
+\text{Endogenous variable} & \text{Exogenous variable} \\
+\text{Response} & \text{Treatment} \\
+\text{Regressand} & \text{Regressor} \\
+\text{Left-hand side variabl} & \text{Right-hand side variable} \\
+\text{Explained} variable & \text{Predictor variable} \\
+\text{Output} & \text{Input} \\
  \hline
-\end{tabular}\scalefont{1.1111}\end{table}
+\end{array}
+}
+$$
 
 
 
 In the latter part of the nineteenth century and early part of the
 twentieth century, statistics was beginning to make an important
 impact on the development of experimental science. Experimental
-sciences often use \emph{designed studies}, where the data are under
+sciences often use *designed studies*, where the data are under
 the control of an analyst. Designed studies are performed in
 laboratory settings, where there are tight physical restrictions on
 every variable that a researcher thinks may be important. Designed
 studies also occur in larger field experiments, where the mechanisms
 for control are different than in laboratory settings. Agriculture
 and medicine use designed studies. Data from a designed study are
-said to be \emph{experimental data}.
+said to be *experimental data*.
 
 \marginparjed{In designed studies, the data are under the control of
 an analyst. Data from a designed study are said to be experimental
@@ -729,12 +716,11 @@ observations) are assigned various levels of fertilizer. The goal is
 ascertain the effect of fertilizer (the explanatory variable) on the
 corn yield (the response variable). Although researchers attempt to
 make parcels of land as much alike as possible, differences
-inevitably arise. Agricultural researchers use \emph{randomization
-techniques} to assign different levels of fertilizer to each parcel
+inevitably arise. Agricultural researchers use *randomization techniques* to assign different levels of fertilizer to each parcel
 of land. In this way, analysts can explain the variation in corn
 yields in terms of the variation of fertilizer levels. Through the
 use of randomization techniques, researchers using designed studies
-can infer that the treatment has a \emph{causal effect} on the
+can infer that the treatment has a *causal effect* on the
 response. Chapter 6 discusses causality further.
 
 \linejed \index{examples!Rand health insurance
@@ -757,12 +743,12 @@ medical care expenditures and the availability of health insurance.
 A study reported by Manning et al. (1987) sought to answer this
 question using a carefully designed experiment. In this study,
 enrolled households from six cities, between November 1974 and
-February 1977, were \emph{randomly assigned} to one of 14 different
+February 1977, were *randomly assigned* to one of 14 different
 insurance plans. These plans varied by the cost-sharing elements,
 the co-insurance rate (the percentage paid on out-of-pocket
 expenditures which varied by 0, 25, 50 and 95\%) as well as the
 deductible (5, 10 or 15 percent of family income, up to a maximum of
-\$1,000). Thus, there was a \emph{random} assignment to levels of
+\$1,000). Thus, there was a *random* assignment to levels of
 the treatment, the amount of health insurance. The study found that
 more favorable plans resulted in greater total expenditures, even
 after controlling for participants' health status.
@@ -777,37 +763,37 @@ study the effects of smoking on mortality, it is highly unlikely
 that we could get study participants to agree to be randomly
 assigned to smoker/nonsmoker groups for several years just so that
 we could observe their mortality patterns! As with the Section
-\@ref{S1:Intro} Galton study, social science researchers generally
-work with \emph{observational data}. Observational data are not
+\@ref(S1:Intro) Galton study, social science researchers generally
+work with *observational data*. Observational data are not
 under control of the analyst.
 
 With observational data, we can not infer causal relationships but
-we can readily introduce measures of \emph{association}. To
-illustrate, in the Galton data, it is apparent that ``tall'' parents
-are likely to have ``tall'' children and conversely ``short''
-parents are likely to have ``short'' children. Chapter 2 will
+we can readily introduce measures of *association*. To
+illustrate, in the Galton data, it is apparent that 'tall' parents
+are likely to have 'tall' children and conversely 'short'
+parents are likely to have 'short' children. Chapter 2 will
 introduce a correlation and other measures of association. However,
 we can not infer causality from the data. For example, there may be
 another variable, such as family diet, that is related to both
 variables. Good diet in the family could be associated with tall
 heights of parents and adult children, whereas poor diet stifles
 growth. If this were the case, we would call family diet a
-\emph{confounding variable}.
+*confounding variable*.
 
 \marginparjed{With statistical control, we seek to compare a $y$ and
-an $x$, ``controlling for'' the effects of other explanatory
+an $x$, 'controlling for' the effects of other explanatory
 variables.}
 
 In designed experiments such as the Rand Health Insurance
 Experiment, we can control for the effects of variables such as
 health status through random assignment methods. In observational
-studies, we use \emph{statistical control}, rather than experimental
+studies, we use *statistical control*, rather than experimental
 control. To illustrate, for the Galton data, we might split our
-observations into two groups, one for ``good family diet'' and one
-for ``poor family diet,'' and examine the relationship between
+observations into two groups, one for 'good family diet' and one
+for 'poor family diet,' and examine the relationship between
 parents' and children's height for each subgroup. This is the
 essence of the regression method, to compare a $y$ and an $x$,
-``controlling for'' the effects of other explanatory variables.
+'controlling for' the effects of other explanatory variables.
 
 Of course, to use statistical control and regression methods, one
 must record family diet, and any other measures of height that may
@@ -815,7 +801,7 @@ confound the effects of parents' height on the height of their adult
 child. The difficulty in designing studies is trying to imagine all
 of the variables that could possibly affect a response variable, an
 impossible task in most social science problems of interest. To give
-some guidance on when ``enough is enough,'' Chapter 6 will discuss
+some guidance on when 'enough is enough,' Chapter 6 will discuss
 measures of an explanatory variable's importance and its impact on
 model selection.
 
@@ -851,14 +837,14 @@ variables. Regression can be used to identify the variables that are
 important determinants of expected claims.
 
 In competitive markets, insurance companies do not use the same
-price for all insureds. If they did, ``good risks,'' those with
+price for all insureds. If they did, 'good risks,' those with
 lower than average expected claims, would overpay and leave the
-company. In contrast, ``bad risks,'' those with higher than average
+company. In contrast, 'bad risks,' those with higher than average
 expected claims, would remain with the company. If the company
 continued this flat rate pricing policy, premiums would rise (to
 compensate for claims by the increasing share of bad risks) and
 market share would dwindle as the company loses good risks. This
-problem is known as ``adverse selection.'' Using an appropriate set
+problem is known as 'adverse selection.' Using an appropriate set
 of explanatory variables, classification systems can be developed so
 that each insured pays their fair share.
 
@@ -887,8 +873,8 @@ analysis, actuaries will have another quantitative skill that can be
 brought to bear on general problems involving the financial security
 of people, companies and governmental organizations. To help you
 develop insights, this book provides many examples of potential
-``non-actuarial'' applications through featured vignettes labeled as
-``examples'' and illustrative data sets.
+'non-actuarial' applications through featured vignettes labeled as
+'examples' and illustrative data sets.
 
 To help understand potential regression applications, start by
 reviewing the several data sets featured in the Chapter 1 Exercises.
@@ -937,7 +923,7 @@ Hogg, Robert V. (1972). On statistical education. \textit{The
 American Statistician} 26, 8-11.
 
 Klugman, Stuart A, Harry H. Panjer and Gordon E. Willmot (2008).
-\emph{Loss Models: From Data to Decisions}. John Wiley \& Sons,
+*Loss Models: From Data to Decisions*. John Wiley \& Sons,
 Hoboken, New Jersey.
 
 Manning, Willard G., Joseph P. Newhouse, Naihua Duan, Emmett B.
@@ -988,7 +974,7 @@ MEPS at http://www.meps.ahrq.gov/mepsweb/.
 We consider MEPS data from the panels 7 and 8 of 2003 that consists
 of 18,735 individuals between ages 18 and 65. From this sample, we
 took a random sample of 2,000 individuals that appear in the file
-``HealthExpend''. From this sample, there are 157 individuals that
+'HealthExpend'. From this sample, there are 157 individuals that
 had positive inpatient expenditures. There are also 1,352 that had
 positive outpatient expenditures. We will analyze these two samples
 separately.
@@ -1000,7 +986,7 @@ office-based provider visits and emergency room visits excluding
 dental services. (Dental services, compared to other types of health
 care services, are more predictable and occur in a more regular
 basis.) Hospital stays with the same date of admission and
-discharge, known as ``zero-night stays,'' were included in
+discharge, known as 'zero-night stays,' were included in
 outpatient counts and expenditures. (Payments associated with
 emergency room visits that immediately preceded an inpatient stay
 were included in the inpatient expenditures. Prescribed medicines
@@ -1058,10 +1044,10 @@ subsequent periods. The data are publicly available; see
 The DHFS is interested in predictive techniques that provide
 reliable utilization forecasts to update their Medicaid funding rate
 schedule of nursing facilities. In this assignment, we consider the
-data in the file ``WiscNursingHome'' in cost report years 2000 and
+data in the file 'WiscNursingHome' in cost report years 2000 and
 2001. There are 362 facilities in 2000 and 355 facilities in 2001.
 Typically, utilization of nursing home care is measured in patient
-days (``patient days'' is the number of days each patient was in the
+days ('patient days' is the number of days each patient was in the
 facility, summed over all patients). For this exercise, we define
 the outcome variable to be total patient years (TPY), the number of
 total patient days in the cost reporting period divided by number of
@@ -1242,10 +1228,10 @@ Here, we consider health care systems from $n=185$ countries
 throughout the world. As a measure of the quality of care, we use
 LIFEEXP, the life expectancy at birth. This dependent variable, with
 several explanatory variables, are listed in Table
-\@ref{Ex:UNLIFESummStats}. From this table, you will note that
+\@ref(Ex:UNLIFESummStats). From this table, you will note that
 although there are 185 countries consider in this study, not all
 countries provided information for each variable. Data not available
-are noted under the column ``Num Miss.'' The data are from the
+are noted under the column `Num Miss.` The data are from the
 United Nations (UN) Human Development Report.
 
 a. Examine the distribution of the dependent variable, LIFEEXP. Do
@@ -1313,26 +1299,27 @@ theorem.
 
 \bigskip
 
-\boxedjed\index{theorems!central limit}\index{symbols!$\Phi(\cdot)$,
+\index{theorems!central limit}\index{symbols!$\Phi(\cdot)$,
 standard normal distribution function}
 
+:::: {.blackbox }
 \textit{Central Limit Theorem. }Suppose that $y_1,\ldots,y_n$ are
-independently distributed with mean $\mu $, finite variance $\sigma
+independently distributed with mean $\mu$, finite variance $\sigma
 ^{2}$ and $\mathrm{E}|y|^{3}$ is finite. Then,
-\begin{equation*}
-\lim_{n\rightarrow \infty }\Pr \left( \frac{\sqrt{n}}{\sigma }(\overline{y}%
--\mu )\leq x\right) =\Phi \left( x\right) ,
-\end{equation*}
-for each $x,$ where $\Phi \left( .\right) $\ is the standard normal
+$$
+\lim_{n\rightarrow \infty }\Pr \left( \frac{\sqrt{n}}{\sigma }(\overline{y}
+-\mu )\leq x\right) 
+=\Phi \left( x\right) ,
+$$
+for each $x,$ where $\Phi \left( .\right)$ is the standard normal
 distribution function.
-
-\end{boxedminipage}
+::::
 
 \bigskip\index{symbols!$\Pr$, probability operator}
 
 Under the assumptions of this theorem, the re-scaled distribution of
 $\overline{y}$\ approaches a standard normal as the sample size,
-$n$, increases. We interpret this as meaning that, for ``large''
+$n$, increases. We interpret this as meaning that, for 'large'
 sample sizes, the distribution of $\overline{y}$ may be approximated
 by a normal distribution. Empirical investigations have shown that
 sample sizes of $n=25$ through 50 provide adequate approximations
@@ -1343,20 +1330,19 @@ provided by another result from mathematical statistics.
 
 \bigskip
 
-\boxedjed\index{theorems!Edgeworth approximation}
+\index{theorems!Edgeworth approximation}
 
-\textit{Edgeworth Approximation}. Suppose that $y_1,\ldots, y_n$ are
-identically and independently distributed with mean $\mu $, finite variance $%
-\sigma ^{2}$ and $\mathrm{E}|y|^{3}$ is finite. Then,%
-\begin{equation*}
+:::: {.blackbox }
+*Edgeworth Approximation*. Suppose that $y_1,\ldots, y_n$ are
+identically and independently distributed with mean $\mu$, finite variance $\sigma ^{2}$ and $\mathrm{E}|y|^{3}$ is finite. Then,%
+$$
 \Pr \left( \frac{\sqrt{n}}{\sigma }(\overline{y}-\mu )\leq x\right)
 =\Phi
-\left( x\right) +\frac{1}{6}\frac{1}{\sqrt{2\pi }}e^{-x^{2}/2}\frac{\mathrm{E%
+\left( x\right) +\frac{1}{6}\frac{1}{\sqrt{2\pi }}e^{-x^{2}/2}\frac{\mathrm{E
 }(y-\mu )^{3}}{\sigma ^{3}\sqrt{n}}+\frac{h_n}{\sqrt{n}},
-\end{equation*}
+$$
 for each $x,$ where $h_n\rightarrow 0$ as $n\rightarrow \infty .$
-
-\end{boxedminipage}
+::::
 
 \bigskip
 
@@ -1365,7 +1351,7 @@ closer to a normal distribution as the skewness,
 $\mathrm{E}(\overline{y} -\mu )^{3}$, becomes closer to zero. This
 is important in insurance applications because many distributions
 tend to be skewed. Historically, analysts used the second term on
-the right-hand side of the result to provide a ``correction'' for
+the right-hand side of the result to provide a 'correction' for
 the normal curve approximation. See, for example, Beard,
 Pentik\"{a}inen and Pesonen (1984) for further discussion of
 Edgeworth approximations in actuarial science. An alternative (used
