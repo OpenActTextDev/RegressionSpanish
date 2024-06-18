@@ -1,0 +1,46 @@
+
+
+```{r echo = FALSE}
+
+risk1shape=2
+risk1scale=5000
+ERisk1 = mgamma(order=1, shape = risk1shape, scale = risk1scale)
+ERisk1fun <- function(){mgamma(order=1, shape = risk1shape, scale = risk1scale)}
+sdRisk1 = sqrt(mgamma(order=2, shape = risk1shape, scale = risk1scale) - ERisk1**2)
+sdRisk1fun <- function(){sqrt(mgamma(order=2, shape = risk1shape, scale = risk1scale) - ERisk1**2)}
+f1 <- function(x){dgamma(x=x,shape = risk1shape, scale = risk1scale)}
+F1 <- function(x){pgamma(q=x,shape = risk1shape, scale = risk1scale)}
+q1 <- function(x){qgamma(p=x,shape = risk1shape, scale = risk1scale)}
+LowRangeRisk1 <- 0
+UpRangeRisk1 <-  100*ERisk1fun()#Inf
+
+risk2shape=3
+risk2scale =2000
+ERisk2 = mpareto(order=1, shape = risk2shape, scale = risk2scale)
+ERisk2fun <- function(){mpareto(order=1, shape = risk2shape, scale = risk2scale)}
+sdRisk2 = sqrt(mpareto(order=2, shape = risk2shape, scale = risk2scale) - ERisk2**2)
+sdRisk2fun <- function(){sqrt(mpareto(order=2, shape = risk2shape, scale = risk2scale) - ERisk2**2)}
+f2 <- function(x){actuar::dpareto(x=x,shape = risk2shape, scale = risk2scale)}
+F2 <- function(x){actuar::ppareto(q=x,shape = risk2shape, scale = risk2scale)}
+q2 <- function(x){actuar::qpareto(p=x,shape = risk2shape, scale = risk2scale)}
+LowRangeRisk2 <- 0
+UpRangeRisk2 <- 10000*ERisk2fun()#Inf
+
+risk3shape=2
+risk3scale=5000
+ERisk3 = mgamma(order=1, shape = risk3shape, scale = risk3scale)
+ERisk3fun <- function(){mgamma(order=1, shape = risk3shape, scale = risk3scale)}
+sdRisk3 = sqrt(mgamma(order=2, shape = risk3shape, scale = risk3scale) - ERisk3**2)
+sdRisk3fun <- function(){sqrt(mgamma(order=2, shape = risk3shape, scale = risk3scale) - ERisk3**2)}
+f3 <- function(x){dgamma(x=x,shape = risk3shape, scale = risk3scale)}
+F3 <- function(x){pgamma(q=x,shape = risk3shape, scale = risk3scale)}
+q3 <- function(x){qgamma(p=x,shape = risk3shape, scale = risk3scale)}
+LowRangeRisk3 <- 0
+UpRangeRisk3 <-  100*ERisk3fun()#Inf
+
+
+```
+
+
+
+

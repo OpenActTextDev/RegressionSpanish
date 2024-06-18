@@ -1,0 +1,504 @@
+
+```{r ESOptimization, echo = FALSE}
+# This function is for ES1 minimization
+ESKernmin.fct <- function(coeff, Xsim, ExLoss = TRUE){
+  VaR.z0        <- coeff[1]
+  theta.vec     <- coeff[-1]
+  p.num         <- length(theta.vec)    
+  ones          <- rep(1, nrow(Xsim) )  
+  RetClaims     <- rep(0, nrow(Xsim) )
+  if (ExLoss){  # Excess of Loss
+     for (kidx in 1:p.num){RetClaims <- RetClaims + pmin(Xsim[,kidx], theta.vec[kidx]) }
+     } else {  # Quota Share
+                       RetClaims  <- as.vector(Xsim %*% theta.vec)   }
+  ESKern1.fct <- function(ytidle) { as.numeric( mean( 
+                        pmax(RetClaims + bw * ytidle - VaR.z0, 0) ) ) * dnorm(ytidle)  }
+  ESKernmin     <- VaR.z0 + integrate(Vectorize(ESKern1.fct), 
+                                      lower = -6, upper = 6)$value / (1-alpha)     
+  return( ESKernmin )  
+}
+
+
+#Function to Summarize Results
+ESSummary.fct <- function(coeff, Xsim, ExLoss = TRUE){
+  VaR.z0    <- coeff[1]
+  theta.vec <- coeff[-1]
+  p.num     <- length(theta.vec)  
+  ones      <- rep(1, nrow(Xsim) )  
+  RetClaims <- rep(0, nrow(Xsim) )
+  if (ExLoss){  # Excess of Loss
+     for (kidx in 1:p.num){RetClaims <- RetClaims + pmin(Xsim[,kidx], theta.vec[kidx]) }
+     } else {  # Quota Share
+            RetClaims  <- as.vector(Xsim %*% theta.vec)   } 
+  CeededClaims <- rowSums(Xsim) - RetClaims
+  RTC.R     <- mean( CeededClaims )  
+  stddev    <- sd(RetClaims)  
+  VaR       <- as.numeric(quantile(RetClaims, prob = alpha, na.rm = TRUE))
+  Kern.df   <- function(y){ yarg <- (y*ones - RetClaims)/bw
+                            return(mean(pnorm(yarg)) - alpha)}
+  Kern.VaR  <- uniroot(f=Kern.df,lower = VaR - 100, upper = VaR + 100)$root  
+  ESmin     <- as.numeric(VaR.z0 + mean(pmax(RetClaims - VaR.z0, 0)) /(1-alpha) )  
+  ES        <- as.numeric(VaR   + mean(pmax(RetClaims - VaR,   0)) /(1-alpha) ) 
+  ESKern1.fct <- function(y) { as.numeric ( mean( pmax(
+                           RetClaims -  VaR.z0 +  bw * y, 0) ) ) * dnorm(y) }
+  ESKernmin  <- VaR.z0 + integrate(Vectorize(ESKern1.fct), 
+                                   lower = -6, upper = 6)$value / (1-alpha)     
+  ESKern2.fct <- function(y) { as.numeric ( mean( pmax(
+                           RetClaims - Kern.VaR + bw * y, 0) ) ) * dnorm(y) }
+  ESKern     <- Kern.VaR + integrate(Vectorize(ESKern2.fct), lower = -6, 
+                                     upper = 6)$value / (1-alpha) 
+  return( c(RTC.R, VaR, Kern.VaR, ESmin, ES,  ESKernmin, ESKern, stddev) )
+}
+
+
+#Function to Simulated RTC
+RTCR.fct <- function(coeff, Xsim, ExLoss = TRUE){
+  VaR.z0    <- coeff[1]
+  theta.vec <- coeff[-1]
+  p.num     <- length(theta.vec)  
+  RetClaims <- rep(0, nrow(Xsim) )
+  if (ExLoss){  # Excess of Loss
+     for (kidx in 1:p.num){RetClaims <- RetClaims + pmin(Xsim[,kidx], theta.vec[kidx]) }
+     } else {  # Quota Share
+            RetClaims  <- as.vector(Xsim %*% theta.vec)   } 
+  CeededClaims <- rowSums(Xsim) - RetClaims
+  RTC.R     <- mean( CeededClaims )  
+  return( RTC.R )
+}
+
+
+# Gradient Function 
+f0z.fct <- function(coeff, Xsim, ExLoss = TRUE){
+  VaR.z0        <- coeff[1]
+  theta.vec     <- coeff[-1]
+  p.num         <- length(theta.vec)  
+  numLoss       <- nrow(Xsim)
+  ones          <- rep(1, numLoss )  
+  RetClaims     <- rep(0, numLoss )
+  
+  if (ExLoss){  # Excess of Loss
+    for (kidx in 1:p.num){RetClaims <- RetClaims + pmin(Xsim[,kidx], theta.vec[kidx]) }
+       } else { # Quota Share
+                      RetClaims  <- as.vector(Xsim %*% theta.vec)  } 
+  VaR.z0arg     <- (VaR.z0*ones - RetClaims) / bw
+  partial.z0    <- 1 - mean( 1-pnorm(VaR.z0arg) ) / (1 - alpha)   
+  
+  if (ExLoss){  # Excess of Loss
+      mat.check <-  t( 1* ( t(Xsim) > theta.vec) ) 
+    } else {  # Quota Share
+           mat.check <- Xsim
+           }
+  temp          <- ( 1-pnorm(VaR.z0arg) ) %*% mat.check / numLoss
+  partial.theta <- temp / (1 - alpha) 
+  return( c(partial.z0, partial.theta) )
+  }  # end f0z.fct function
+
+
+# Function to Construct a Frontier of Optimal Portfolios
+#  p.z is the number of coefficients (including VaR)
+ThetaOptim.fct <- function(Xsim, ExLoss = TRUE, p.z = 15, RTCmax.vec, starter.coeff) { 
+  Output.mat <- matrix(0,nrow = length(RTCmax.vec), ncol = 1 + 6 + p.z)    
+  f0.ES     <- function(coeff){ESKernmin.fct(coeff, Xsim, ExLoss) } 
+  f0.grad   <- function(coeff){      f0z.fct(coeff, Xsim, ExLoss) }
+  RTC.optim <- function(coeff){     RTCR.fct(coeff, Xsim, ExLoss) }
+  # Use RTCR.fct for empirical RTCs, RTC.fct for lognormal
+
+  # starter.coeff <- rep(0.01, p.z ) ; starter.coeff[1] <- 500 
+  for (jCost in 1:length(RTCmax.vec)){         # Start jCost Loop
+    hin.ES <- function(coeff) {h <- NA         # Constraints in alabama
+      h[1] <- RTCmax.vec[jCost] - RTC.optim(coeff)
+      for (j in 1:p.z){h[j+1] <- 1e6*coeff[j] }
+      if (ExLoss==FALSE){                      # For Quota Share
+        for (j in 2:p.z){h[j+p.z] <-  1e6 * (1.0 - coeff[j]) }
+      }
+      return(h)
+      }
+  if (jCost > 1 ){starter.coeff <- ES.opt$par*1.1}
+    z.params <- rep(0, p.z); LME.EX <- 0
+    tryCatch({ 
+        ES.opt <- alabama::auglag( par=starter.coeff,
+           fn = f0.ES,          # objective function
+           gr = f0.grad,        # gradient objective function
+           hin = hin.ES,        # constraints
+           control.outer=list(method="nlminb",trace=FALSE) )
+        z.params <- ES.opt$par 
+        LME.EX <- ES.opt$lambda[1] },
+        error=function(err) {
+        z.params <- starter.coeff 
+        LME.EX <- 0} )
+    #z.params[is.na(z.params)] <- 0
+    output <- c(RTCmax.vec[jCost], 
+                ESSummary.fct(z.params,Xsim, ExLoss)[-c(4,6)], 
+                z.params[-1] , LME.EX)
+    #output[is.na(output)] <- 0
+    cat("Theory Results",output, "\n") 
+    Output.mat[jCost,] <- output
+    }  # end jCost Loop
+    return(Output.mat)
+    }  # end ThetaOptim.fct function
+
+```
+
+
+
+
+```{r eval = FALSE}
+load(file="../Data/WiscPropFundData/dataout.Rdata")
+# Coverage is in millions, not in logs
+Coverage <- cbind(dataout$CoverageBC,
+                  dataout$CoverageIM,
+                  dataout$CoverageCN,
+                  dataout$CoverageCO,
+                  dataout$CoveragePN,
+                  dataout$CoveragePO)
+colnames(Coverage) <- c("BC", "IM", "CN", "CO", "PN", "PO")
+
+bw= 1
+alpha = 0.80
+
+#rm(simBC1, simCN1, simCO1, simIM1, simPN1, simPO1)
+#save(Prop.array, file = "../Data/WiscPropFundData/SimPropArray.RData")
+load(file = "../Data/WiscPropFundData/SimPropArray.RData")
+# Prop.array <- Prop.array[,1:1000,]
+# save(Prop.array, file = "../Data/WiscPropFundData/SimPropArray1000.RData")
+# Prop.array <- Prop.array[,1:100,]
+# save(Prop.array, file = "../Data/WiscPropFundData/SimPropArray100.RData")
+#load(file = "../Data/WiscPropFundData/SimPropArray100.RData")
+
+nsim <- length(Prop.array[1,,1])
+npol <- length(Prop.array[1,1,])
+nrisk <- length(Prop.array[,1,1])
+
+# PropRetClaimsOLD  <- function(coeff){
+#   VaR.z0        <- coeff[1]
+#   theta.vec     <- coeff[-1]
+#   retainedClaims <- rep(0, nsim) 
+#     for (jrisk in 1:6){
+#       for (jpol in 1:npol){
+#         retainedClaims <- retainedClaims + pmin(theta.vec[jrisk]*Coverage[jpol,jrisk],Prop.array[jrisk,,jpol])
+#       } }
+#     temp1.array <- aperm(Prop.array, c(2, 1,3) )
+#     sumClaims   <- rowSums(temp1.array, dims=1) 
+#     ceededClaims <- sumClaims - retainedClaims 
+#     return( cbind(retainedClaims, ceededClaims) )
+# }
+
+# PropRetClaimsOlly  <- function(coeff){
+#   VaR.z0        <- coeff[1]
+#   theta.vec     <- coeff[-1]
+#   ones <- rep(1, nsim)
+#   limParams <- array(0, dim=c(nrisk, nsim, npol)) 
+#     for (jrisk in 1:6){
+#       for (jpol in 1:npol){
+#         limParams[jrisk,,jpol] <- theta.vec[jrisk]*Coverage[jpol,jrisk]*ones
+#       } }
+#     limClaims <- pmin(Prop.array,limParams )
+#     temp0.array <- aperm(limClaims, c(2, 1,3) )
+#     retainedClaims <- rowSums(temp0.array, dims=1) 
+#     
+#     temp1.array <- aperm(Prop.array, c(2, 1,3) )
+#     sumClaims   <- rowSums(temp1.array, dims=1) 
+#     ceededClaims <- sumClaims - retainedClaims 
+#     return( cbind(retainedClaims, ceededClaims) )
+# }
+
+# CovThetaSmall <- CovTheta[1:2, 1:3]
+# oneSmall <- rep(1, 5)
+# oneSmall <- matrix(1, 2, 5)
+# #temp <- kronecker(CovThetaSmall, oneSmall, FUN = "*")
+# str(temp)
+
+PropRetClaims  <- function(coeff){
+  theta.vec     <- coeff[-1]
+  CovTheta <- matrix(0, nrow = npol, ncol=nrisk )
+  for (jrisk in 1:6){
+    CovTheta[,jrisk] <-Coverage[,jrisk]*theta.vec[jrisk]}
+  TCovTheta <- t(CovTheta)
+
+  limParams <- array(0, dim=c(nrisk, nsim, npol)) 
+  for (jsim in 1:nsim){
+    limParams[,jsim,] <- TCovTheta }
+  limClaims <- pmin(Prop.array,limParams )
+  temp0.array <- aperm(limClaims, c(2, 1,3) )
+  retainedClaims <- rowSums(temp0.array, dims=1) 
+  
+  temp1.array <- aperm(Prop.array, c(2, 1,3) )
+  sumClaims   <- rowSums(temp1.array, dims=1) 
+  ceededClaims <- sumClaims - retainedClaims 
+  return( cbind(retainedClaims, ceededClaims) )
+}
+
+# coeff <- c(23600,rep(100, 6) )
+# sum ( abs(PropRetClaimsNEW(coeff) - PropRetClaimsOLD(coeff) ) )
+# time1 <- Sys.time()
+# temp <- PropRetClaimsNEW(coeff)
+# Sys.time() - time1
+# temp <- PropRetClaimsOLD(coeff) 
+# Sys.time() - time1
+
+
+
+# This function is for ES1 minimization
+PropESKernmin.fct <- function(coeff){
+  VaR.z0        <- coeff[1]
+  theta.vec     <- coeff[-1]
+  RetClaims     <- PropRetClaims(coeff)[,1]
+  ESKern1.fct <- function(ytidle) { as.numeric( mean( 
+                        pmax(RetClaims + bw * ytidle - VaR.z0, 0) ) ) * dnorm(ytidle)  }
+  ESKernmin     <- VaR.z0 + integrate(Vectorize(ESKern1.fct), 
+                                      lower = -6, upper = 6)$value / (1-alpha)     
+  return( ESKernmin )  
+}
+
+#Function to Summarize Results
+PropESSummary.fct <- function(coeff){
+  VaR.z0    <- coeff[1]
+  theta.vec <- coeff[-1]
+  p.num     <- length(theta.vec)  
+  ones      <- rep(1, nsim ) 
+  ClaimsPair <- PropRetClaims(coeff)
+  RetClaims <- ClaimsPair[,1]
+  RTC.R     <- mean( ClaimsPair[,2] )  
+  stddev    <- sd(RetClaims)  
+  VaR       <- as.numeric(quantile(RetClaims, prob = alpha, na.rm = TRUE))
+  Kern.df   <- function(y){ yarg <- (y*ones - RetClaims)/bw
+                            return(mean(pnorm(yarg)) - alpha)}
+  Kern.VaR  <- uniroot(f=Kern.df,lower = VaR - 100, upper = VaR + 100)$root  
+  ESmin     <- as.numeric(VaR.z0 + mean(pmax(RetClaims - VaR.z0, 0)) /(1-alpha) )  
+  ES        <- as.numeric(VaR   + mean(pmax(RetClaims - VaR,   0)) /(1-alpha) ) 
+  ESKern1.fct <- function(y) { as.numeric ( mean( pmax(
+                           RetClaims -  VaR.z0 +  bw * y, 0) ) ) * dnorm(y) }
+  ESKernmin  <- VaR.z0 + integrate(Vectorize(ESKern1.fct), 
+                                   lower = -6, upper = 6)$value / (1-alpha)     
+  ESKern2.fct <- function(y) { as.numeric ( mean( pmax(
+                           RetClaims - Kern.VaR + bw * y, 0) ) ) * dnorm(y) }
+  ESKern     <- Kern.VaR + integrate(Vectorize(ESKern2.fct), lower = -6, 
+                                     upper = 6)$value / (1-alpha) 
+  return( c(RTC.R, VaR, Kern.VaR, ESmin, ES,  ESKernmin, ESKern, stddev) )
+}
+
+# # Gradient Function 
+# Propf0zOLD.fct <- function(coeff){
+#   VaR.z0        <- coeff[1]
+#   theta.vec     <- coeff[-1]
+#   RetClaims     <- PropRetClaims(coeff)[,1]
+#   ones <- rep(1, length(RetClaims ))
+#   
+#   VaR.z0arg     <- (VaR.z0*ones  - RetClaims) / bw
+#   partial.z0    <- 1 - mean( 1-pnorm(VaR.z0arg) ) / (1 - alpha)   
+#   nsim <- length(Prop.array[1,,1])
+#   temp.array <- Prop.array
+#   ones <- rep(1, nsim)
+#   
+#   for (jrisk in 1:6){
+#       for (jpol in 1:npol){
+#         temp.array[jrisk,,jpol] <- Coverage[jpol,jrisk]* 
+#               (Prop.array[jrisk,,jpol] < theta.vec[jrisk]*Coverage[jpol,jrisk]*ones)
+#       }}
+#   #temp1.array <- aperm(temp.array, c(1, 3,2) )
+#   mat.check <- t( rowSums(temp.array, dims=2) )
+#   
+#   temp          <- ( 1-pnorm(VaR.z0arg) ) %*% mat.check / nsim
+#   partial.theta <- temp / (1 - alpha) 
+#   return( c(partial.z0, partial.theta) )
+#   }  # end Propf0z.fct function
+
+# coeff <- c(23600,rep(100, 6) )
+# coeff <- c(1312, 0.03, .4, 2.5, 1.55,1, .16)
+# coeff <- c(26862 	, 4.8, 266, 6000, 12000, 4950, 212 )
+# 
+# temp1 <- PropRetClaims(coeff)
+# temp2 <- PropESKernmin.fct(coeff)
+# temp3 <- Propf0z.fct(coeff)
+# temp4 <- PropESSummary.fct(coeff)
+# 
+# mean(PropRetClaims(coeff)[,2])
+
+
+# Gradient Function 
+Propf0z.fct <- function(coeff){
+  VaR.z0        <- coeff[1]
+  theta.vec     <- coeff[-1]
+  RetClaims     <- PropRetClaims(coeff)[,1]
+  ones          <- rep(1, nsim)
+  VaR.z0arg     <- (VaR.z0*ones  - RetClaims) / bw
+  partial.z0    <- 1 - mean( 1-pnorm(VaR.z0arg) ) / (1 - alpha)   
+  
+  CovTheta <- matrix(0, nrow = npol, ncol=nrisk )
+  for (jrisk in 1:6){
+    CovTheta[,jrisk] <- Coverage[,jrisk]*theta.vec[jrisk] }
+  TCovTheta <- t(CovTheta)
+  TCoverage <- t(Coverage)
+  
+  limParams <- array(0, dim=c(nrisk, nsim, npol)) -> Exp.array 
+  for (jsim in 1:nsim){
+    limParams[,jsim,] <- TCovTheta 
+    Exp.array[,jsim,] <- TCoverage   }
+  temp.array <- Exp.array * (Prop.array < limParams )
+  #temp1.array <- aperm(temp.array, c(1, 3, 2) )
+  mat.check  <- t( rowSums(temp.array, dims=2) )
+  temp       <- ( 1-pnorm(VaR.z0arg) ) %*% mat.check / nsim
+  partial.theta <- temp / (1 - alpha) 
+  return( c(partial.z0, partial.theta) )
+  }  # end Propf0z.fct function
+
+# coeff <- c(23600,rep(100, 6) )
+# sum ( abs(Propf0z.fct(coeff) - Propf0zOLD.fct(coeff) ) )
+# time1 <- Sys.time()
+# temp <- Propf0z.fct(coeff)
+# Sys.time() - time1
+# temp <- Propf0zOLD.fct(coeff)
+# Sys.time() - time1
+
+#save(Prop.array, file = "../Data/WiscPropFundData/SimPropArray.RData")
+load(file = "Data/WiscPropFundData/SimPropArray.RData")
+
+SummaryOut <-cbind(rowSums(Prop.array[1,,]), rowSums(Prop.array[2,,]), rowSums(Prop.array[3,,]) ,
+                   rowSums(Prop.array[4,,]), rowSums(Prop.array[5,,]), rowSums(Prop.array[6,,]) ) 
+dfSummaryOut <- data.frame(SummaryOut)
+
+##################################
+temp1.array <- aperm(Prop.array, c(1, 3,2) )
+TotCost   <- sum( rowSums(temp1.array, dims=2) )/ nsim
+
+CstLev <- 1 - seq(0.05, 0.95, by = 0.10)
+CstLev <- round(CstLev*100)/100
+PropRTCmax.vec<- TotCost * CstLev
+starter.coeff <- c(1000, 0.02, rep (1,5))
+p.z = 7
+
+
+#colMeans(PropRetClaims(starter.coeff))
+
+
+# Function to Construct a Frontier of Optimal Portfolios
+#  p.z is the number of coefficients (including VaR)
+PropThetaOptim.fct <- function(RTCmax.vec=PropRTCmax.vec, starter.coeff) { 
+  Output.mat <- matrix(0,nrow = length(RTCmax.vec), ncol = 1 + 6 + p.z)    
+  RTC.optim <- function(coeff){ mean(PropRetClaims(coeff)[,2]) }
+  # Use RTCR.fct for empirical RTCs, RTC.fct for lognormal
+
+  time1 <- Sys.time()
+
+  for (jCost in 1:length(RTCmax.vec)){         # Start jCost Loop
+     # time1 <- Sys.time()
+    hin.ES <- function(coeff) {h <- NA         # Constraints in alabama
+      h[1] <- RTCmax.vec[jCost] - RTC.optim(coeff)
+      for (j in 1:p.z){h[j+1] <- 1e6*coeff[j] }
+      return(h)
+      }
+  if (jCost > 1 ){starter.coeff <- ES.opt$par*1.1}
+    z.params <- rep(0, 7); LME.EX <- 0
+    tryCatch({ 
+        ES.opt <- alabama::auglag( par=starter.coeff,
+           fn = PropESKernmin.fct,          # objective function
+           gr = Propf0z.fct,        # gradient objective function
+           hin = hin.ES,        # constraints
+           control.outer=list(method="nlminb",trace=FALSE) )
+        z.params <- ES.opt$par 
+        LME.EX <- ES.opt$lambda[1] },
+        error=function(err) {
+        z.params <- starter.coeff 
+        LME.EX <- 0} )
+    #z.params[is.na(z.params)] <- 0
+    output <- c(RTCmax.vec[jCost], 
+                PropESSummary.fct(z.params)[-c(4,6)], 
+                z.params[-1] , LME.EX)
+    #output[is.na(output)] <- 0
+    cat("Theory Results",output,"time take", Sys.time() - time1, "\n") 
+    Output.mat[jCost,] <- output
+
+    }  # end jCost Loop
+  
+  Sys.time() - time1
+          #  Time difference of 19.18719 hours
+  u.names <- paste("u",1:6, sep="")  
+  colnames(Output.mat) <- c("RTCmax", "RTC", "VaR", "Kern.Var",
+                          "ES", "ESKern", "StdDev", u.names, "LME")
+    save(Output.mat, file="../Data/WiscPropFundData/OutMat10KFeb2024.Rdata")
+  
+    return(Output.mat)
+    }  # end PropThetaOptim.fct function
+
+  
+  
+```
+
+
+
+```{r}
+# Risk Transfer Cost Function - Log Normal
+RTC.fct <- function(coeff, ExLoss = TRUE,
+                   locparm = ParamFit[1,], scaleparm = ParamFit[3,]){
+  VaR.z0      <- coeff[1]
+  theta.vec   <- coeff[-1]
+  p.num       <- length(theta.vec)
+  RTCost      <- 0
+  if (ExLoss){  # Excess of Loss
+      for (kidx in 1:p.num){
+         RTCost <- RTCost + actuar::mlnorm(order=1,        
+                 ParamFit[1,kidx], ParamFit[3,kidx])  -
+                 actuar::levlnorm(limit = theta.vec[kidx], locparm[kidx],
+                                  scaleparm[kidx]) }
+     } else {  # Quota Share
+            for (kidx in 1:p.num){RTCost <- RTCost + (1-theta.vec[kidx]) *
+                 actuar::mlnorm(order=1, locparm[kidx], scaleparm[kidx]) } 
+            }
+  return(RTCost)
+}
+
+```
+
+
+
+```{r}
+
+#Function to Construct a Single Optimal Portfolios
+muVary.kidx = 1  # Vary the location of the first risk
+Deltamu1 = 0.01  # Amount of variation
+
+#  This is the ThetaOptim.fct function for a specific row
+ThetaOptimRow.fct <- function(Xsim, ExLoss = TRUE, locparm, scaleparm,
+                          jCost = Comprow, muVar = 3, starter.coeff) { 
+  f0.ES     <- function(coeff){ESKernmin.fct(coeff, Xsim, ExLoss ) } 
+  f0.grad   <- function(coeff){f0z.fct(coeff, Xsim, ExLoss) }
+  RTC.ESRow <- function(coeff){
+    loc.kidx <- rep(0,7)  -> scale.kidx 
+    for (kidx in 1:6){
+      loc.kidx[kidx]   <- locparm[kidx] + Deltamu1*(muVar-3)*(kidx==muVary.kidx)
+      scale.kidx[kidx] <- scaleparm[kidx] 
+      }
+    return(RTC.fct(coeff, ExLoss, loc.kidx, scale.kidx) )
+  }
+    hin.ES <- function(coeff) {h <- NA
+      h[1] <- RTCmax.vec[jCost] - RTC.ESRow(coeff)
+      for (j in 1:7){h[j+1] <- 1e6*coeff[j] }
+      if (ExLoss){h[9] <- 4200 - coeff[2]; h[10] <- 800 - coeff[6] } else {
+        for (j in 2:7){h[j+7] <-  1e6 * (1.0 - coeff[j]) }
+      }
+      return(h)
+      }
+    tryCatch({
+    ES.opt <- alabama::auglag( par=starter.coeff,
+           fn=f0.ES,
+           gr=f0.grad,
+           hin=hin.ES,
+           control.outer=list(method="nlminb",trace=FALSE) )
+        z.params <- ES.opt$par[-1]
+        },
+        error=function(err) {
+    z.params  <- starter.coeff })
+    z.params[is.na(z.params)] <- 0
+    LME     <- ES.opt$lambda[1]
+    output  <- c(RTCmax.vec[jCost], RTC.ESRow( ES.opt$par),
+                ESSummary.fct(ES.opt$par, Xsim, ExLoss)[-c(4,6)], 
+                z.params , LME )
+    output[is.na(output)] <- 0
+    cat("Theory Results",output, "\n") 
+    return(output)
+    }  # end ThetaOptimRow.fct function
+
+```
+
+
+

@@ -1,0 +1,241 @@
+
+
+```{r TableGenerate, echo = FALSE}
+#HtmlEval <- TRUE
+#  Default Widths for Latex
+ColWidth4  <- "1.8cm"
+ColWidth5  <- "1.6cm"
+ColWidth6  <- "1.4cm"
+ColWidth7  <- "1.3cm"
+ColWidth8  <- "1.1cm"
+ColWidth9  <- "1.0cm"
+ColWidth10 <- "0.9cm"
+ColWidth14 <- "0.5cm"
+#  Function to Create a Style for Generating Tables
+TableGen1 <-function(TableData,TextTitle,Align=`r`, Digits=0, 
+                     ColumnSpec=1, ColumnSpec0=1, ColWidth0= "2.5cm", 
+                     BorderRight=1, ColWidth= "1.5cm", 
+                     latexFont= 10){
+
+    if (HtmlEval){ColumnSpec <- ColumnSpec+1
+     TextTitle1 <- paste0('**', TextTitle,'**', collapse='')
+     kableExtra::kbl(TableData, caption=TextTitle1, align = Align,
+                     booktabs = T, digits=Digits) %>%
+     kableExtra::kable_classic(full_width = F, font = 12, 
+                               html_font = "Cambria") %>%
+     kable_styling(bootstrap_options = c("striped", "condensed"))  %>%
+     kableExtra::column_spec(ColumnSpec0, width =  ColWidth0) %>%
+     kableExtra::column_spec(ColumnSpec, width =  ColWidth) %>%
+     kableExtra::column_spec(BorderRight, border_right = TRUE)
+   } else  
+   { ColumnSpec <- ColumnSpec+1
+     TextTitle1 <- paste0('\\textbf{',TextTitle,'}', collapse='')
+     kableExtra::kbl(TableData, caption = TextTitle1, align = Align,
+                     booktabs = T, digits=Digits,escape = FALSE) %>%
+    kableExtra::kable_styling(latex_options = c("striped", "condensed") ,
+                              font = latexFont, protect_latex= TRUE) %>%
+    kableExtra::column_spec(ColumnSpec, width =  ColWidth) %>%
+    kableExtra::column_spec(BorderRight, border_right = TRUE) 
+   }  
+}
+  
+```
+
+```{r GammaParetoSetup, echo = FALSE}
+# Basic Summary Functions for a gamma Distribution
+
+f1 <- function(x){dgamma(x=x,shape = risk1shape, scale = risk1scale)}
+F1 <- function(x){pgamma(q=x,shape = risk1shape, scale = risk1scale)}
+q1 <- function(x){qgamma(p=x,shape = risk1shape, scale = risk1scale)}
+ERisk1fun  <- function(){actuar::mgamma(order=1, shape = risk1shape, 
+                                        scale = risk1scale)}
+sdRisk1fun <- function(){
+       sqrt(actuar::mgamma(order=2, shape = risk1shape, 
+                           scale = risk1scale) - ERisk1fun()**2)}
+RC1 <- function(u){ 
+       ERisk1fun() - actuar::levgamma(limit = u, shape = risk1shape, 
+                                      scale = risk1scale)}
+# Basic Summary Functions for a Pareto Distribution
+f2 <- function(x){actuar::dpareto(x=x,shape = risk2shape, scale = risk2scale)}
+F2 <- function(x){actuar::ppareto(q=x,shape = risk2shape, scale = risk2scale)}
+q2 <- function(x){actuar::qpareto(p=x,shape = risk2shape, scale = risk2scale)}
+ERisk2fun  <- function(){actuar::mpareto(order=1, shape = risk2shape, 
+                                         scale = risk2scale)}
+sdRisk2fun <- function(){ 
+      sqrt(actuar::mpareto(order=2, shape = risk2shape, 
+                           scale = risk2scale) - ERisk2fun()**2)}
+RC2 <- function(u){ 
+      ERisk2fun() - actuar::levpareto(limit = u,shape = risk2shape, 
+                                      scale = risk2scale)}
+#  Additive Risk Transfer Cost
+RTC <- function(u1,u2){ RC1(u1)+RC2(u2) }
+
+```
+
+
+
+```{r echo = FALSE}
+options(digits = 9)
+options(scipen = 9)
+
+risk1shape=2
+risk1scale=5000
+risk2shape=3
+risk2scale =2000
+risk3shape=2
+risk3scale=5000
+
+f3 <- function(x){dgamma(x=x,shape = risk3shape, scale = risk3scale)}
+F3 <- function(x){pgamma(q=x,shape = risk3shape, scale = risk3scale)}
+q3 <- function(x){qgamma(p=x,shape = risk3shape, scale = risk3scale)}
+ERisk3fun <- function(){actuar::mgamma(order=1, shape = risk3shape, scale = risk3scale)}
+
+sdRisk3fun <- function(){
+      sqrt(actuar::mgamma(order=2, shape = risk3shape, 
+                          scale = risk3scale) - ERisk3fun()**2)}
+
+
+LowRangeRisk3 <- 0
+UpRangeRisk3 <-  100*ERisk3fun()#Inf
+
+ParetoQuantile <-function(d,c,u,risk2scale=1000,risk2shape=3,alpha=0.98){
+  d <- d*(d>0); u <- u*(u>0); c <- c*(c>=0)*(c<=1) + 1*(c>1)
+  Quan <- c*(q2(alpha)-d)*(F2(d) <= alpha)*(alpha <= F2(u)) +
+          c*(u-d)*(alpha >= F2(u))
+  if (u > 10e23){  Quan <- c*(q2(alpha)-d)*(F2(d) <= alpha)}
+  return(Quan)
+  }
+
+ParetoCTE <-function(d,c,u,risk2scale=1000,risk2shape=3,alpha=0.98){
+  d <- d*(d>0); u <- u*(u>0);u <- pmin(u,1e10); c <- c*(c>=0)*(c<=1) + 1*(c>1)
+  Quan <- ParetoQuantile(d,c,u,risk2scale,risk2shape,alpha)
+  EX.u    <- levpareto(limit = u,   shape = risk2shape, scale = risk2scale)
+  EX.d    <- levpareto(limit = d,   shape = risk2shape, scale = risk2scale)
+  EX.Quan <- levpareto(limit = Quan,shape = risk2shape, scale = risk2scale)
+  k       <- c/(1-alpha)
+  Case1   <- c/(1-alpha)*(EX.u - EX.d)
+  Case2   <- c*(Quan - d) + c/(1-alpha)*(EX.u - EX.Quan)  
+  Case3   <- c*(u - d) 
+  CTE     <- Case1 *( alpha < F2(d)) + Case2 *(F2(d) <  alpha ) *( alpha < F2(u)) +  Case3 *( alpha > F2(u))
+  return(CTE)
+  }
+
+ParetoRTC <-function(d,c,u,risk2scale=1000,risk2shape=3){
+  d <- d*(d>0)
+  u <- u*(u>0)
+  c <- c*(c>=0)*(c<=1) + 1*(c>1)
+  Prem <- c*risk2scale/(risk2shape-1)*(
+    (risk2scale/(d+risk2scale))**(risk2shape-1)-(risk2scale/(u+risk2scale))**(risk2shape-1))
+  RTC <- ERisk2fun() - Prem
+  return(RTC)
+  }
+
+```
+
+
+```{r Chap5GammaParetoSetup, echo = FALSE}
+# Set up Two Risks, gamma and a Pareto
+
+LowRangeRisk1 <- 0
+UpRangeRisk1  <-  100*ERisk1fun()
+LowRangeRisk2 <- 0
+UpRangeRisk2  <- 10000*ERisk2fun()
+
+Prob.fct <- function(u1,u2,rho,y){
+  u1       <- u1*(u1>0)
+  u2       <- u2*(u2>0)
+  norm.cop <- copula::normalCopula(param=rho, dim = 2,'dispstr' ="un")
+  ProbA <- 0 -> ProbB -> ProbC -> ProbD1 -> ProbD2
+  if (y>u1) { ProbB <- F2(y-u1) - pCopula(c(F1(u1),F2(y-u1)), norm.cop) }
+  if (y>u2) { ProbC <- F1(y-u2) - pCopula(c(F1(y-u2),F2(u2)), norm.cop) }
+  ProbD1.x <- function(x){VineCopula::BiCopHfunc1(F1(x),F2(y-x), family=1, par=rho)*f1(x)}
+  ProbD1.x.vec <- Vectorize(ProbD1.x)
+  ProbD1   <-  cubature::cubintegrate(ProbD1.x.vec, lower = max(0,y-u2), upper = min(y,u1), 
+                                   relTol =1e-4, absTol =1e-8, method = "hcubature")$integral
+  if (y>u2) { ProbD2 <-  copula::pCopula(c(F1(y-u2),F2(u2)), norm.cop) }  
+  ProbTot <- ProbA + ProbB + ProbC + ProbD1 + ProbD2 
+  ProbTot <- ProbTot + (1-ProbTot)*(u1+u2<y)
+  ProbTot <- ProbTot*(y>0)
+  return(ProbTot)
+  }
+
+ExLossCTEShort <- function(u1,u2,rho,alpha){
+    Prob.alpha <- function(y){3e5*(Prob.fct(u1,u2,rho,y) - alpha)}
+    VaR        <- uniroot(Prob.alpha, lower = 0, upper = 10e6)$root
+    Surv.fct.y <- function(y){1-Prob.fct(u1,u2,rho,y)}        
+    Surv.fct.y.vec  <- Vectorize(Surv.fct.y)
+    Sum.limited.Var <- integrate(Surv.fct.y.vec, lower = 0, upper = VaR)$value 
+    TotalRetained   <- actuar::levgamma(limit = u1,shape = risk1shape, scale = risk1scale) +
+                       actuar::levpareto(limit = u2,shape = risk2shape, scale = risk2scale)  
+    CTE        <- VaR + (TotalRetained- Sum.limited.Var)/(1-alpha)  
+    Output     <- list(Prob.fct(u1,u2,rho, y=4.5*RTCmax), VaR, CTE)    
+    return(Output)
+    }
+
+
+```
+
+
+```{r Chap5GammaGammaSetup, echo = FALSE, eval = FALSE}
+# Set up Two Equal (identical) Risks, gamma and a gamma
+
+f1 <- function(x){dgamma(x=x,shape = risk1shape, scale = risk1scale)}
+F1 <- function(x){pgamma(q=x,shape = risk1shape, scale = risk1scale)}
+q1 <- function(x){qgamma(p=x,shape = risk1shape, scale = risk1scale)}
+ERisk1     <- actuar::mgamma(order=1, shape = risk1shape, scale = risk1scale)
+ERisk1fun  <- function(){actuar::mgamma(order=1, shape = risk1shape, scale = risk1scale)}
+sdRisk1    <- sqrt(actuar::mgamma(order=2, shape = risk1shape, scale = risk1scale) - ERisk1**2)
+sdRisk1fun <- function(){sqrt(actuar::mgamma(order=2, shape = risk1shape, scale = risk1scale) - ERisk1**2)}
+LowRangeRisk1 <- 0
+UpRangeRisk1  <-  100*ERisk1fun()#Inf
+RC1 <- function(u){ ERisk1 -actuar::levgamma(limit = u,shape = risk1shape, scale = risk1scale)}
+
+#f2.id <- f1
+F2.id <- F1
+#q2.id <- q1
+ERisk2 <- ERisk1
+ERisk2fun <- ERisk1fun
+sdRisk2 <- sdRisk1
+sdRisk2fun <- sdRisk1fun
+LowRangeRisk2 <- LowRangeRisk1
+UpRangeRisk2 <-  UpRangeRisk1
+RC2 <- RC1
+
+RTC <- function(u1,u2){RC1(u1)+RC2(u2)}
+
+RTCmax = 0.2*( ERisk1+ERisk2) 
+
+Probfct.id <- function(u1,u2,rho,y){
+  u1 = u1*(u1>0)
+  u2 = u2*(u2>0)
+  norm.cop <- copula::normalCopula(param=rho, dim = 2,'dispstr' ="un")
+  ProbA <- 0 -> ProbB -> ProbC -> ProbD1 -> ProbD2
+  if (y>u1)  { ProbB = F2.id(y-u1) - pCopula(c(F1(u1),F2.id(y-u1)), norm.cop) }
+  if (y>u2) { ProbC = F1(y-u2) - pCopula(c(F1(y-u2),F2.id(u2)), norm.cop) }
+  ProbD1.x <- function(x){ BiCopHfunc1(F1(x),F2.id(y-x), family=1, par=rho)*f1(x) }
+  ProbD1.x.vec <- Vectorize(ProbD1.x)
+  ProbD1 =  cubature::cubintegrate(ProbD1.x.vec, lower = max(0,y-u2), upper = min(y,u1), 
+                                   relTol =1e-4, absTol =1e-8, method = "hcubature")$integral
+  if (y>u2) { ProbD2 =  pCopula(c(F1(y-u2),F2.id(u2)), norm.cop) }  
+  ProbTot = ProbA + ProbB + ProbC + ProbD1 + ProbD2 
+  ProbTot = ProbTot + (1-ProbTot)*(u1+u2<y)
+  ProbTot = ProbTot*(y>0)
+  return(ProbTot)
+  }
+
+ExLossCTEShort.id <- function(u1,u2,rho,alpha){
+    Prob.alpha <- function(y){Probfct.id (u1,u2,rho,y) - alpha}
+    VaR <- uniroot(Prob.alpha, lower = 0, upper = 10e6)$root
+    Surv.fct.y <- function(y){1-Probfct.id (u1,u2,rho,y)}        
+    Surv.fct.y.vec <- Vectorize(Surv.fct.y)
+    Sum.limited.Var =  integrate(Surv.fct.y.vec, lower = 0, upper = VaR)$value 
+    TotalRetained <- actuar::levgamma(limit = u1,shape = risk1shape, scale = risk1scale) +
+                     actuar::levgamma(limit = u2,shape = risk1shape, scale = risk1scale) 
+    CTE <- VaR + (TotalRetained- Sum.limited.Var)/(1-alpha)  
+    Output <- list(Probfct.id (u1,u2,rho,y=4.5*RTCmax), VaR, CTE)    
+    return(Output)
+    }
+
+```
+
+

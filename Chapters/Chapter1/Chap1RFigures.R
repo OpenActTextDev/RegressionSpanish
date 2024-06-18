@@ -1,0 +1,127 @@
+#  FILENAME IS Chap1RFigures.txt ;
+
+#setwd("c://BOOK3//CUPBook//Chapter1")
+setwd("C:/Users/jfrees/Dropbox/AAOnlineTextProject/Regression/Chapters/Chapter1/")
+library(HH)
+
+injury = read.csv(choose.files(),header=TRUE)
+injury2 = subset(injury, providerA != 0 )
+attach(injury2)
+
+LOGCLAIMS=log(claims)
+
+#  TABLE 1.2 SUMMARY STATISTICS
+summary(LOGCLAIMS);sd(LOGCLAIMS)
+
+# FIGURE 1.2 
+postscript("F1BIHist.ps")
+par(mar=c(4.2,3,.1,.1),cex=1.3)
+
+x <- seq(-4, 4, 0.01)
+y= dnorm(x, mean=mean(LOGCLAIMS), sd=sqrt(var(LOGCLAIMS)))
+hist(LOGCLAIMS, freq=FALSE, main="", ylab="", las=1)
+mtext("Density", side=2, at=.35,las=1, adj=.7,cex=1.4)
+lines(x,y)
+#lines(x,y, col='blue')
+export.eps("F1BIHist.eps", width=6,height=4)
+dev.off()
+
+# FIGURE 1.3
+postscript("F1BoxPlot.ps")
+par(mar=c(.2,2,.2,.2),cex=1.3)
+boxplot(LOGCLAIMS, boxwex=.7, las=1)
+text(1, .57, "median", cex=1.2)
+text(1.36, -0.2, "25th percentile", cex=1.2)
+text(1.36, 1.1, "75th percentile", cex=1.2)
+arrows(1.05, -2, 1.05, -3.3, code=3, angle=20, length=0.1)
+#arrows(1.05, -2, 1.05, -3.3, col="blue", code=3, angle=20, length=0.1)
+text(1.15, -2.5, "outliers", cex=1.2)
+text(1.13, 3.9, "outlier", cex=1.2)
+export.eps("F1BoxPlot.eps", width=6,height=4)
+dev.off()
+
+# FIGURE 1.4 
+postscript("F1BIHistRedraw.ps")
+par( mar=c(4.2,2.8,.8,.1),cex=1.1)
+hist(LOGCLAIMS, freq=FALSE, nclass=32, main="", ylab="", las=1)
+mtext("Density", side=2, at=.75,las=1, adj=.7,cex=1.1)
+lines(x,y)
+export.eps("F1BIHistRedraw.eps", width=4,height=4)
+dev.off()
+
+# FIGURE 1.5
+postscript("F1BIQQPlot.ps")
+par(mar=c(4.2,3,1.5,.2),cex=1.1)
+qqnorm(LOGCLAIMS, main="", las=1, ylab="")
+mtext("Sample Quantiles", side=2, at=4.5, las=1,cex=1.1,adj=.4)
+qqline(LOGCLAIMS)
+export.eps("F1BIQQPlot.eps", width=4,height=4)
+dev.off()
+
+# FIGURE 1.6
+postscript("F1BIOrig.ps")
+injury3 = subset(injury, claims < 25 )
+CLAIMS25 <- injury3$claims
+par(mar=c(4.2,4,1.2,.2),cex=1.1)
+hist(CLAIMS25, freq=FALSE,  main="", las=1, ylab="", xlab="CLAIMS")
+mtext("Density", side=2, at=.28, las=1,cex=1.1)
+export.eps("F1BIOrig.eps", width=4,height=4)
+#box()
+dev.off()
+
+#  FIGURE 1.7 - SIMULATE CHI-SQUARE, CREATE 3 TRANSFORMATIONS
+set.seed(1237)
+X1 <- 10000*rchisq(500*1, df=2)
+X2 <- sqrt(X1)
+X3 <- log(X1)
+X4 <- -1/X1
+
+par(mfrow=c(2, 2), cex=.75, mar=c(3,5,1.5,0))
+hist(X1, freq=FALSE,  nclass=16, main="", xlab="", ylab="", las=1, yaxt="n",xlim=c(0,200000),ylim=c(0,.00005))
+axis(2, at=seq(0,.00005,.00001),las=1, cex=.3, 
+  labels=c("0", "0.00001", "0.00002","0.00003", "0.00004", "0.00005"))
+mtext("Density", side=2, at=.000055, las=1, cex=.75)
+mtext("y", side=1, cex=.75, line=2)
+
+par(mar=c(3,4,1.5,0.2))
+hist(X2, freq=FALSE,  nclass=16, main="", xlab="", ylab="", las=1,xlim=c(0,400), ylim=c(0,.008))
+mtext("Density", side=2, at=.0088, las=1, cex=.75)
+mtext("Square root of y", side=1, cex=.75, line=2)
+
+par(mar=c(3.2,5,1,0))
+hist(X3,  freq=FALSE,  nclass=16, main="", xlab="", ylab="", las=1, ylim=c(0,.4))
+mtext("Density", side=2, at=.44, las=1, cex=.75)
+mtext("Logarithmic y", side=1, cex=.75, line=2)
+
+par(mar=c(3.2,4,1,0.2))
+hist(X4, freq=FALSE,  nclass=16, main="",xlab="", ylab="", las=1, ylim=c(0,100))
+mtext("Density", side=2, at=110, las=1, cex=.75)
+mtext("Negative reciprocal of y", side=1, cex=.75, line=2)
+export.eps("F1Chisquare.eps", width=6,height=4)
+dev.off()
+
+
+#  FIGURE 1.8 
+postscript("F1Transform.ps")
+z <- seq(-3, 3, 0.01)
+YJTrans <- function(lambda)
+{ lambda0 <- lambda+(lambda==0)
+ lambda2 <- lambda+(lambda==2)
+ yp <- (lambda==0)*log(1+abs(z))+(lambda!=0)*((1+abs(z))^lambda0-1)/lambda0
+ yn <- -(lambda==2)*log(1+abs(z))-(lambda!=2)*((1+abs(z))^(2-lambda2)-1)/(2-lambda2)
+ foo <- yp*(z>=0)+yn*(z<0) 
+ foo}
+
+par(mar=c(3.2,3.2,2.2,0.2),cex=1.3)
+plot(z, YJTrans(0), xlim=c(-3, 3), ylim=c(-3, 3), type="l", ylab="", xlab="", lty=1, las=1)
+mtext("Transformed Values", at=3.5, side=2, las=1, adj=0.35, cex=1.3)
+mtext("Original Values", side=1, line=2, cex=1.3)
+lines(z, YJTrans(0.5), lty=2)
+abline(0, 1, lty=3)
+lines(z, YJTrans(1.5), lty=4)
+lines(z, YJTrans(2), lty=5)
+
+dev.off()
+
+
+
