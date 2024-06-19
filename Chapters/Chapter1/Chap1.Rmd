@@ -68,7 +68,7 @@ Advancement of Sciences. In that address, described in Stigler
 *normal curve*  theory. His discovery arose from his studies of
 properties of natural selection and inheritance.
 
-\empexjed{Galton}\index{datasets!Galton heights}
+\index{datasets!Galton heights}
 
 To illustrate a data set that can be analyzed using regression
 methods, Table \@ref(tab:GaltonTable) displays some data included in
@@ -187,9 +187,7 @@ knitr::include_graphics("Chapters/Chapter1/GreyScale256TenDM.jpg")
 
 ```
 
-
-
-\empexjed{MassBodilyInjury}\index{datasets!Massachusetts bodily
+\index{datasets!Massachusetts bodily
 injury claims}
 
 **Example: Massachusetts Bodily Injury Claims.**
@@ -304,8 +302,6 @@ sample. From the equation \@ref(eq:Normalpdf) normal distribution,
 we have that $z=(y-\mu )/\sigma$ is a standard normal, of which
 0.675\ is the 75th percentile. Thus, $\overline{y}+0.675s_y=$ $0.481+0.675\times 1.101=1.224$ is the 75th percentile using the normal curve approximation.
 
-
-                
 (ref:Fig12) **Bodily Injury Relative Frequency with Normal Curve Superimposed**.
 
 ```{r Fig12, fig.cap='(ref:Fig12)', out.width = '50%', fig.align = 'center', echo = FALSE}
@@ -322,7 +318,13 @@ lines(x,y)
 
 ```
 
+`r HideRCode('Fig12.Hide',"R Code to Produce Figure 1.2")`
 
+```{r ref.label = 'Fig12', eval = FALSE}
+
+```
+
+</div>
 
 \bigskip\index{plots!box and whiskers}
 
@@ -333,7 +335,8 @@ statistics, numerical summary measures. The *box plot*
 such graphical device. Figure \@ref(fig:Fig13) illustrates a box
 plot for the bodily injury claims. Here, the box captures the middle
 50\% of the data, with the three horizontal lines corresponding to
-the 75th, 50th and 25th percentiles, reading from top to bottom. \
+the 75th, 50th and 25th percentiles, reading from top to bottom. 
+
 The horizontal lines above and below the box are the 'whiskers.'
 The upper whisker is 1.5 times the *interquartile range* (the
 difference between the 75th and 25th percentiles) above the 75th
@@ -357,6 +360,13 @@ text(1.13, 3.9, "outlier", cex=1.2)
 ```
 
 
+`r HideRCode('Fig13.Hide',"R Code to Produce Figure 1.3")`
+
+```{r ref.label = 'Fig13', eval = FALSE}
+
+```
+
+</div>
 
 Graphs are powerful tools; they allow analysts to readily visualize
 nonlinear relationships that are hard to comprehend when expressed
@@ -378,6 +388,15 @@ mtext("Density", side=2, at=.75,las=1, adj=.7,cex=1.1)
 lines(x,y)
 
 ```
+
+
+`r HideRCode('Fig14.Hide',"R Code to Produce Figure 1.4")`
+
+```{r ref.label = 'Fig14', eval = FALSE}
+
+```
+
+</div>
 
 **Quantile-Quantile Plots.** Increasing the number of
 rectangles can unmask features that were not previously apparent;
@@ -421,6 +440,13 @@ qqline(LOGCLAIMS)
 ```
 
 
+`r HideRCode('Fig15.Hide',"R Code to Produce Figure 1.5")`
+
+```{r ref.label = 'Fig15', eval = FALSE}
+
+```
+
+</div>
 
 ## Power Transforms {#S1:PowerTransforms}
 \index{transformations!power}
@@ -473,7 +499,13 @@ mtext("Density", side=2, at=.28, las=1,cex=1.1)
 ```
 
 
+`r HideRCode('Fig16.Hide',"R Code to Produce Figure 1.6")`
 
+```{r ref.label = 'Fig16', eval = FALSE}
+
+```
+
+</div>
 
 \index{transformations!Box-Cox family}
 
@@ -506,9 +538,9 @@ To illustrate the usefulness of transformations, we simulated 500
 observations from a chi-square distribution with two degrees of
 freedom. Appendix A3.2 introduces this distribution (that we will
 encounter again later in studying the behavior of test statistics).
-The upper left panel of Figure \@ref(F1:ChiSquare) shows the original
+The upper left panel of Figure \@ref(fig:Fig17) shows the original
 distribution is heavily skewed to the right. The other panels in
-Figure \@ref(F1:ChiSquare) show the data rescaled using the square
+Figure \@ref(fig:Fig17) show the data rescaled using the square
 root, logarithmic and negative reciprocal transformations. The
 logarithmic transformation, in the lower left panel, provides the
 best approximation to symmetry for this example. The negative
@@ -548,6 +580,15 @@ mtext("Density", side=2, at=110, las=1, cex=.75)
 mtext("Negative reciprocal of y", side=1, cex=.75, line=2)
 
 ```
+
+
+`r HideRCode('Fig17.Hide',"R Code to Produce Figure 1.7")`
+
+```{r ref.label = 'Fig17', eval = FALSE}
+
+```
+
+</div>
 
 
 ## Sampling and the Role of Normality
@@ -684,8 +725,8 @@ y-\text{Variable} & x-\text{Variable} \\\hline
 \text{Endogenous variable} & \text{Exogenous variable} \\
 \text{Response} & \text{Treatment} \\
 \text{Regressand} & \text{Regressor} \\
-\text{Left-hand side variabl} & \text{Right-hand side variable} \\
-\text{Explained} variable & \text{Predictor variable} \\
+\text{Left-hand side variable} & \text{Right-hand side variable} \\
+\text{Explained variable } & \text{Predictor variable} \\
 \text{Output} & \text{Input} \\
  \hline
 \end{array}
@@ -726,7 +767,9 @@ response. Chapter 6 discusses causality further.
 \linejed \index{examples!Rand health insurance
 experiment}\index{actuarial \& financial terms and concepts!demand}
 
-\textbf{Example: Rand Health Insurance Experiment}. How are medical
+***
+
+**Example: Rand Health Insurance Experiment**. How are medical
 care expenditures related to the demand for insurance? Many studies
 have established a positive relation between the amount spent on
 medical care and the demand for health insurance. Those in poor
@@ -810,25 +853,25 @@ model selection.
 This book introduces a statistical method, regression analysis. The
 introduction is organized around the traditional triad of
 statistical inference:
-\begin{itemize}
+
 * hypothesis testing,
 * estimation and
 * prediction.
-\end{itemize}
+
 Further, this book shows how this methodology can be used in
 applications that are likely to be of interest to actuaries and to
 other risk analysts. As such, it is helpful to begin with the three
 traditional areas of actuarial applications:
-\begin{itemize}
+
 * pricing,
 * reserving and
 * solvency testing.
-\end{itemize}
+
 
 \index{actuarial \& financial terms and concepts!adverse selection}
 \index{actuarial \& financial terms and concepts!pricing}
 
-\textbf{Pricing and adverse selection.} Regression analysis can be
+**Pricing and adverse selection.** Regression analysis can be
 used to determine insurance prices for many lines of business. For
 example, in private passenger automobile insurance, expected claims
 vary by the insured's gender, age, location (city versus rural),
@@ -910,17 +953,17 @@ methods.
 \scalefont{0.9}
 
 Beard, Robert E.,  Teivo Pentik\"{a}inen and Erkki Pesonen (1984).
-\textit{Risk Theory: The Stochastic Basis of Insurance} (Third
+*Risk Theory: The Stochastic Basis of Insurance* (Third
 Edition). Chapman \& Hall, New York.
 
-Diebold, Francis. X. (2004). \textit{Elements of Forecasting, Third
-Edition.} Thomson, South-Western, Mason, Ohio.
+Diebold, Francis. X. (2004). *Elements of Forecasting, Third
+Edition.* Thomson, South-Western, Mason, Ohio.
 
-Faraway, Julian J. (2005). \textit{Linear Models in R.} Chapman \&
+Faraway, Julian J. (2005). *Linear Models in R.* Chapman \&
 Hall/CRC, New York.
 
-Hogg, Robert V. (1972). On statistical education. \textit{The
-American Statistician} 26, 8-11.
+Hogg, Robert V. (1972). On statistical education. *The
+American Statistician* 26, 8-11.
 
 Klugman, Stuart A, Harry H. Panjer and Gordon E. Willmot (2008).
 *Loss Models: From Data to Decisions*. John Wiley \& Sons,
@@ -929,23 +972,23 @@ Hoboken, New Jersey.
 Manning, Willard G., Joseph P. Newhouse, Naihua Duan, Emmett B.
 Keeler, Arleen Leibowitz and M. Susan Marquis (1987). Health
 insurance and the demand for medical care: Evidence from a
-randomized experiment. \textit{American Economic Review} 77, No. 3,
+randomized experiment. *American Economic Review* 77, No. 3,
 251-277.
 
 Rempala, Grzegorz A. and Richard A. Derrig (2005). Modeling hidden
-exposures in claim severity via the EM algorithm. \textit{North
-American Actuarial Journal} 9, No. 2, 108-128.
+exposures in claim severity via the EM algorithm. *North
+American Actuarial Journal* 9, No. 2, 108-128.
 
 Singer, Judith D. and Willett, J. B. (1990). Improving the teaching
 of applied statistics:  Putting the data back into data analysis.
-\textit{The American Statistician} 44, 223-230.
+*The American Statistician* 44, 223-230.
 
-Stigler, Steven M. (1986). \textit{The History of Statistics:  The
-Measurement of Uncertainty before 1900}. The Belknap Press of
+Stigler, Steven M. (1986). *The History of Statistics:  The
+Measurement of Uncertainty before 1900*. The Belknap Press of
 Harvard University Press, Cambridge, MA.
 
-Weisberg, Sanford (2005). \textit{Applied Linear Regression, Third
-Edition.} John Wiley \& Sons, New York.
+Weisberg, Sanford (2005). *Applied Linear Regression, Third
+Edition.* John Wiley \& Sons, New York.
 
 
 \scalefont{1.1111}
@@ -955,10 +998,9 @@ Edition.} John Wiley \& Sons, New York.
 \scalefont{0.90}
 
 
-\empexjed{HealthExpend}\index{datasets!MEPS health expenditures}
+\index{datasets!MEPS health expenditures}
 
-* \textbf{MEPS health expenditures.}\label{Ex:MedExpend} This exercise considers data
-from the Medical Expenditure Panel Survey (MEPS), conducted by the
+1.1 **MEPS health expenditures.** This exercise considers data from the Medical Expenditure Panel Survey (MEPS), conducted by the
 U.S. Agency of Health Research and Quality. MEPS is a probability
 survey that provides nationally representative estimates of health
 care use, expenditures, sources of payment, and insurance coverage
@@ -993,42 +1035,37 @@ were included in the inpatient expenditures. Prescribed medicines
 that can be linked to hospital admissions were included in inpatient
 expenditures, not in outpatient utilization.)
 
-Part 1: Use only the 157 individuals that had positive inpatient
+**Part 1**: Use only the 157 individuals that had positive inpatient
 expenditures and do the following analysis.
 
 a. Compute descriptive statistics for inpatient (EXPENDIP)
 expenditures.
-
-a(i) What is the typical (mean and median) expenditure?
-
-a(ii) How does the standard deviation compare to the mean? Do the
+   * a(i). What is the typical (mean and median) expenditure?
+   * a(ii). How does the standard deviation compare to the mean? Do the
 data appear to be skewed?
-
 b. Compute a box plot, histogram and a (normal) $qq$ plot for
 EXPENDIP. Comment on the shape of the distribution.
-
 c. Transformations.
-
-c(i) Take a square root transform of inpatient expenditures.
+   * c(i). Take a square root transform of inpatient expenditures.
 Summarize the resulting distribution using a histogram and a $qq$
 plot. Does it appear to be approximately normally distributed?
-
-c(ii). Take a (natural) logarithmic transformation of inpatient
+   * c(ii). Take a (natural) logarithmic transformation of inpatient
 expenditures. Summarize the resulting distribution using a histogram
 and a $qq$ plot. Does it appear to be approximately normally
 distributed?
 
-Part 2: Use only the 1,352 individuals that had positive outpatient
+**Part 2**: Use only the 1,352 individuals that had positive outpatient
 expenditures.
 
 d. Repeat part (a) and compute histograms for expenditures and
 logarithmic expenditures. Comment on the approximate normality for
 each histogram.
 
-\empexjed{WiscNursingHome}\index{datasets!nursing home utilization}
+\index{datasets!nursing home utilization}
 
-* \textbf{Nursing Home Utilization.}\label{Ex:NursHome}
-This exercise considers nursing home data provided by the Wisconsin
+***
+
+1.2 **Nursing Home Utilization.** This exercise considers nursing home data provided by the Wisconsin
 Department of Health and Family Services (DHFS). The State of
 Wisconsin Medicaid program funds nursing home care for individuals
 qualifying on the basis of need and financial status. As part of the
@@ -1058,55 +1095,52 @@ nursing home both measure the size of the facility. Not
 surprisingly, these continuous variables will be important
 predictors of TPY.
 
-\textbf{Part 1:} Use cost report year 2000 data, and do the
+**Part 1:** Use cost report year 2000 data, and do the
 following analysis.
 
 a. Compute descriptive statistics for TPY, NUMBED, and SQRFOOT.
-
 b. Summarize the distribution of TPY using a histogram and a $qq$
 plot. Does it appear to be approximately normally distributed?
-
 c. Transformations. Take a (natural) logarithmic transformation of
 TPY (LOGTPY). Summarize the resulting distribution using a histogram
 and a $qq$ plot. Does it appear to be approximately normally
 distributed?
 
 
-\textbf{Part 2:} Use cost report year 2001 data and repeat parts (a)
+**Part 2:** Use cost report year 2001 data and repeat parts (a)
 and (c).
 
-\empexjed{AutoClaims}\index{datasets!automobile insurance claims}
+\index{datasets!automobile insurance claims}
 
-* \textbf{Automobile Insurance Claims.}\label{Ex:AutoClaims} As an actuarial analyst,
+***
+
+1.3 **Automobile Insurance Claims.** As an actuarial analyst,
 you are working with a large insurance company to help them
 understand their claims distribution for their private passenger
 automobile policies. You have available claims data for a recent
 year, consisting of:
 
-\begin{itemize}
 * STATE CODE: codes 01 through 17 used, with each code randomly
 assigned to an actual individual state
-
 * CLASS: rating class of operator, based on age, gender, marital
 status and use of vehicle
-
 * GENDER:  operator gender AGE: operator age
-
 * PAID: amount paid to settle and close a claim.
 
 You are focusing on older drivers, 50 and higher, for which there
 are $n = 6,773$ claims available.
 
-\end{itemize}
 
 Examine the histogram of the amount PAID and comment on the
 symmetry. Create a new variable, the (natural) logarithmic claims
 paid, LNPAID. Create a histogram and a $qq$ plot of LNPAID. Comment
 on the symmetry of this variable.
 
-\empexjed{HospitalCosts}\index{datasets!hospital costs}
+\index{datasets!hospital costs}
 
-* \textbf{Hospital Costs.}\label{Ex:HospExpend} Suppose
+***
+
+1.4 **Hospital Costs.** Suppose
 that you are an employee benefits actuary working with a medium size
 company in Wisconsin. This company is considering offering, for the
 first time in their industry, hospital insurance coverage to
@@ -1132,18 +1166,19 @@ model the severity of hospital charges, by age and gender.
 a. Examine the distribution of the dependent variable, TOTCHG. Do
 this by making a histogram and then a $qq$ plot, comparing the
 empirical to a normal distribution.
-
 b. Take a natural log transformation and call the new variable
 LNTOTCHG. Examine the distribution of this transformed variable. To
 visualize the logarithmic relationship, plot LNTOTCHG versus TOTCHG.
 
 \newpage
 
-\empexjed{AutoBI}\index{datasets!automobile injury insurance
+\index{datasets!automobile injury insurance
 claims}\index{actuarial \& financial terms and concepts!closed
 claim}
 
-* \textbf{Automobile injury insurance claims.}\label{Ex:IRC}
+***
+
+1.5 **Automobile injury insurance claims.** 
 We consider automobile injury claims data using data from the
 Insurance Research Council (IRC), a division of the American
 Institute for Chartered Property Casualty Underwriters and the
@@ -1157,28 +1192,25 @@ similar studies in 1977, 1987, 1992 and 1997.
 
 a. Compute descriptive statistics for the total economic loss
 (LOSS). What is the typical loss?
-
 b. Compute a histogram and (normal) $qq$ plot for LOSS. Comment on
 the shape of the distribution.
-
 c. Partition the data set into two subsamples, one corresponding to
 those claims that involved an ATTORNEY (=1) and the other where an
 ATTORNEY was not involved (=2).
-
-c(i). For each subsample, compute the typical loss. Does there
+   * c(i). For each subsample, compute the typical loss. Does there
 appear to be a difference in the typical losses by attorney
 involvement?
-
-c(ii) To compare the distributions, compute a boxplot by level of
+   * c(ii) To compare the distributions, compute a boxplot by level of
 attorney involvement.
-
-c(iii). For each subsample, compute a histogram and $qq$ plot.
+   * c(iii). For each subsample, compute a histogram and $qq$ plot.
 Compare the two distributions to one another.
 
 
-\empexjed{NAICExpense}\index{datasets!insurance company expenses}
+\index{datasets!insurance company expenses}
 
-*  \textbf{Insurance Company Expenses.}\label{Ex:NAICExpense}
+***
+
+1.6 **Insurance Company Expenses.** 
 Like other businesses, insurance companies seek to minimize expenses
 associated with doing business in order to enhance profitability. To
 study expenses, this exercise examines a random sample of 500
@@ -1206,16 +1238,16 @@ those expenses related to investment activities of the insurer.
 a. Examine the distribution of the dependent variable, EXPENSES. Do
 this by making a histogram and then a $qq$ plot, comparing the
 empirical to a normal distribution.
-
 b. Take a natural log transformation and examine the distribution of
 this transformed variable. Has the transformation helped to
 symmetrize the distribution?
 
 
-\empexjed{UNLifeExpectancy}\index{datasets!national life
-expectancies}
+\index{datasets!national life expectancies}
 
-* \textbf{National Life Expectancies.}\label{Ex:UNLIFE} Who is doing health care right?
+***
+
+1.7 **National Life Expectancies.** Who is doing health care right?
 Health care decisions are made at the individual, corporate and
 government levels. Virtually every person, corporation and
 government have their own perspective on health care; these
@@ -1226,9 +1258,8 @@ make better decisions in designing improved systems.
 
 Here, we consider health care systems from $n=185$ countries
 throughout the world. As a measure of the quality of care, we use
-LIFEEXP, the life expectancy at birth. This dependent variable, with
-several explanatory variables, are listed in Table
-\@ref(Ex:UNLIFESummStats). From this table, you will note that
+`LIFEEXP`, the life expectancy at birth. This dependent variable, with
+several explanatory variables, are listed in [Table 1.4]. From this table, you will note that
 although there are 185 countries consider in this study, not all
 countries provided information for each variable. Data not available
 are noted under the column `Num Miss.` The data are from the
@@ -1237,51 +1268,83 @@ United Nations (UN) Human Development Report.
 a. Examine the distribution of the dependent variable, LIFEEXP. Do
 this by making a histogram and then a $qq$ plot, comparing the
 empirical to a normal distribution.
-
 b. Take a natural log transformation and examine the distribution of
 this transformed variable. Has the transformation helped to
 symmetrize the distribution?
 
 
 
-\begin{table}[h]
-\scalefont{0.8} \caption{\label{Ex:UNLIFESummStats} \small Life
-Expectancy, Economic and Demographic Characteristics of 185
-Countries}
-\begin{tabular}{ll|crrrrr}
+```{r echo = FALSE, eval = FALSE}
+UNLife <- read.csv("../../CSVData/UNLifeExpectancy.csv", header=TRUE)
+
+UNLifeA <- UNLife[c("BIRTHATTEND", "FEMALEBOSS", "FERTILITY", "GDP",
+                    "HEALTHEXPEND", "ILLITERATE", "PHYSICIAN", "POP",
+                    "PRIVATEHEALTH", "PUBLICEDUCATION", "RESEARCHERS",
+                    "SMOKING", "LIFEEXP")]
+# Summarize the data
+sumVar <- function(Variable){
+       aggregate(Variable ~ 1, data = UNLifeA, na.action=NULL, 
+      FUN = function(x) c(count = sum(is.na(x)), mean = mean(x, na.rm=TRUE), 
+                          med = median(x, na.rm=TRUE), sd = sd(x, na.rm=TRUE),
+                          min = min(x, na.rm=TRUE), max = max(x, na.rm=TRUE))
+       ) }
+
+TableLife <- matrix(0, 13, 6)
+for (trow in 1:13) {
+ TableLife[trow,] <- sumVar(UNLifeA[,trow])$Variable}
+#  TableLife
+rownames(TableLife) <- colnames(UNLifeA)
+
+
+```
+
+
+<a id=tab:1.4></a> 
+
+[Table 1.4]: \#tab:1.4
+
+Table 1.4. **Life Expectancy, Economic and Demographic Characteristics of 185 Countries** 
+
+
+$$
+\small{
+\begin{array}{ll|crrrrr}
 \hline
-&  & Num &        &     & Standard  &   Mini- &  Maxi- \\
-  Variable     & Description & Miss &    Mean    &    Median   & Deviation &    mum &    mum \\\hline
-BIRTH & Births attended  by skilled &          7 &      78.25 &      92.00 &      26.42 &       6.00 &     100.00 \\
- ~~ATTEND& ~~ health personnel (\%)\\
-FEMALE & Legislators, senior officials &         87 &      29.07 &      30.00 &      11.71 &       2.00 &      58.00 \\
- ~~BOSS& ~~ and managers, \% female \\
- FERTILITY & Total fertility rate,&          4 &       3.19 &       2.70 &       1.71 &       0.90 &       7.50 \\
- & ~~ births per woman &          \\
-       GDP & Gross domestic product, &          7 &     247.55 &      14.20 &   1,055.69 &       0.10 &  12,416.50 \\
-       & ~~in billions of USD \\
-HEALTH& 2004 Health expenditure &          5 &     718.01 &     297.50 &   1,037.01 &      15.00 &   6,096.00 \\
-~~ EXPEND & ~~ per capita, PPP in USD \\
-ILLITERATE & Adult illiteracy rate,  &         14 &      17.69 &      10.10 &      19.86 &       0.20 &      76.40 \\
-  & ~~ \% aged 15 and older &      \\
- PHYSICIAN & Physicians,&          3 &     146.08 &     107.50 &     138.55 &       2.00 &     591.00 \\
- & ~~ per 100,000 people \\
-       POP & 2005 population, &          1 &      35.36 &       7.80 &     131.70 &       0.10 &   1,313.00 \\
-       & ~~in millions \\
-PRIVATE & 2004 Private expenditure on  &          1 &       2.52 &       2.40 &       1.33 &       0.30 &       8.50 \\
-~~HEALTH& ~~health, \% of GDP  \\
-PUBLIC & Public expenditure  &         28 &       4.69 &       4.60 &       2.05 &       0.60 &      13.40 \\
-~~EDUCATION& ~~ on education, \% of GDP \\
-RESEAR & Researchers in R \& D,  &         95 &   2,034.66 &     848.00 &   4,942.93 &      15.00 &  45,454.00 \\
- ~~CHERS&~~  per million people &         \\
-   SMOKING & Prevalence of smoking, &         88 &      35.09 &      32.00 &      14.40 &       6.00 &      68.00 \\
-    & ~~(male) \% of adults  \\ \hline
-   LIFEEXP & Life expectancy at birth,&            &      67.05 &      71.00 &      11.08 &      40.50 &      82.30 \\
-   & ~~ in years  \\
+&  & Num &        &     & Std  &   Mini- &  Maxi- \\
+  Variable     & Description & Miss &    Mean    &    Median   & Dev &    mum &    mum \\\hline
+BIRTH & \text{ Births attended  by skilled} &          7 &      78.25 &      92.00 &      26.42 &       6.00 &     100.00 \\
+ ~~ATTEND& ~~ \text{ health personnel} (\%)\\
+FEMALE & \text{ Legislators, senior officials} &         87 &      29.07 &      30.00 &      11.71 &       2.00 &      58.00 \\
+ ~~BOSS& ~~ \text{ and managers, % female }\\
+ FERTILITY & \text{ Total fertility rate,}&          4 &       3.19 &       2.70 &       1.71 &       0.90 &       7.50 \\
+ & ~~ \text{ births per woman }&          \\
+       GDP & \text{ Gross domestic product,} &          7 &     247.55 &      14.20 &   1,055.69 &       0.10 &  12,416.50 \\
+       & ~~\text{ in billions of USD} \\
+HEALTH& \text{ 2004 Health expenditure} &          5 &     718.01 &     297.50 &   1,037.01 &      15.00 &   6,096.00 \\
+~~ EXPEND & ~~ \text{ per capita, PPP in USD} \\
+ILLITERATE & \text{ Adult illiteracy rate,}  &         14 &      17.69 &      10.10 &      19.86 &       0.20 &      76.40 \\
+  & ~~ \% \text{ aged 15 and older} &      \\
+ PHYSICIAN & \text{ Physicians,}&          3 &     146.08 &     107.50 &     138.55 &       2.00 &     591.00 \\
+ & ~~ \text{ per 100,000 people} \\
+       POP & \text{ 2005 population,} &          1 &      35.36 &       7.80 &     131.70 &       0.10 &   1,313.00 \\
+       & ~~\text{ in millions }\\
+PRIVATE & \text{ 2004 Private expenditure}  &          1 &       2.52 &       2.40 &       1.33 &       0.30 &       8.50 \\
+~~HEALTH& ~~\text{on health, % of GDP}  \\
+PUBLIC & \text{ Public expenditure}  &         28 &       4.69 &       4.60 &       2.05 &       0.60 &      13.40 \\
+~~EDUCATION& ~~ \text{ on education, % of GDP} \\
+RESEAR & \text{ Researchers in R & D,}  &         95 &   2,034.66 &     848.00 &   4,942.93 &      15.00 &  45,454.00 \\
+ ~~CHERS&~~  \text{ per million people} &         \\
+   SMOKING & \text{ Prevalence of smoking,} &         88 &      35.09 &      32.00 &      14.40 &       6.00 &      68.00 \\
+    & ~~\text{ (male) % of adults } \\ \hline
+   LIFEEXP & \text{ Life expectancy at birth,}&            &      67.05 &      71.00 &      11.08 &      40.50 &      82.30 \\
+   & ~~ \text{ in years } \\
 \hline
-\end{tabular}
-\textit{Source:} United Nations Human Development Report, available
-at http://hdr.undp.org/en/ . \scalefont{1.25} \end{table}
+\end{array}
+}
+$$
+
+*Source:* United Nations Human Development Report, available
+at http://hdr.undp.org/en/ . \scalefont{1.25}
 
 
 
@@ -1303,7 +1366,7 @@ theorem.
 standard normal distribution function}
 
 :::: {.blackbox }
-\textit{Central Limit Theorem. }Suppose that $y_1,\ldots,y_n$ are
+*Central Limit Theorem.* Suppose that $y_1,\ldots,y_n$ are
 independently distributed with mean $\mu$, finite variance $\sigma
 ^{2}$ and $\mathrm{E}|y|^{3}$ is finite. Then,
 $$
