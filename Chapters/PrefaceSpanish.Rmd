@@ -1,0 +1,247 @@
+
+
+# Prefacio {-}
+
+
+## Prólogo {-}
+
+
+Los actuarios y otros analistas financieros cuantifican situaciones usando
+datos; somos personas de 'números'. Muchos de nuestros enfoques y modelos
+son estilizados, basados en años de experiencia e investigaciones
+realizadas por legiones de analistas. Sin embargo, el mundo financiero y de gestión de riesgos evoluciona rápidamente. Muchos analistas se enfrentan a
+nuevas situaciones en las que los métodos probados simplemente no funcionan.
+Aquí es donde entra un conjunto de herramientas como el análisis de regresión.
+
+La regresión es el estudio de las relaciones entre variables. Es una
+disciplina estadística genérica que no se limita al mundo financiero; tiene aplicaciones en campos de ciencias sociales,
+biológicas y físicas. Puedes usar técnicas de regresión
+para investigar conjuntos de datos grandes y complejos. Para familiarizarte con
+la regresión, este libro explora muchos ejemplos y conjuntos de datos basados en
+aplicaciones actuariales y financieras. Esto no quiere decir que
+no encontrarás aplicaciones fuera del mundo financiero (por ejemplo, un actuario puede necesitar entender la evidencia científica más reciente sobre pruebas genéticas para fines de suscripción). Sin embargo, al familiarizarte con este conjunto de herramientas, verás cómo la regresión
+puede aplicarse en muchas (y a veces nuevas) situaciones.
+
+### ¿Para Quién Es Este Libro? {-}
+
+Este libro está escrito para analistas financieros que enfrentan eventos inciertos
+y desean cuantificar estos eventos utilizando información empírica. No se asume conocimiento previo del sector, aunque los lectores encontrarán la lectura mucho más fácil si tienen interés en las
+aplicaciones discutidas aquí. Este libro está diseñado para estudiantes que
+están siendo introducidos al campo, así como para analistas de la industria
+que deseen repasar técnicas antiguas y (para los capítulos posteriores) obtener una introducción a nuevos desarrollos.
+
+Para leer este libro, asumo un conocimiento comparable a una introducción de un semestre a la probabilidad y estadística; el Apéndice A1 proporciona una
+breve revisión para refrescar conceptos si estás oxidado. Los estudiantes actuariales en
+Norteamérica tendrán una introducción de un año a la probabilidad y
+estadística; este tipo de introducción ayudará a los lectores a captar
+conceptos más rápidamente que una base de un semestre. Finalmente,
+los lectores encontrarán útil el álgebra matricial, o lineal, aunque no es un
+requisito previo para leer este texto.
+
+Los diferentes lectores están interesados en entender la estadística a
+diferentes niveles. Este libro está escrito para acomodar al 'lector de sillón',
+es decir, aquel que lee pasivamente y no se involucra
+intentando realizar los ejercicios del texto. Considera una analogía con
+el fútbol, o cualquier otro juego. Al igual que el mariscal de campo de
+sillón en el fútbol, hay mucho que puedes aprender sobre el juego
+solo con observar. Sin embargo, si quieres agudizar tus habilidades, tienes que salir y jugar el juego. Si realizas los ejercicios o
+reproduces los análisis estadísticos en el texto, te convertirás en un
+mejor jugador. Aún así, este texto está escrito entrelazando ejemplos
+con los principios básicos. Así, incluso el lector de sillón puede obtener
+una sólida comprensión de las técnicas de regresión a través de este texto.
+
+### ¿De Qué Trata Este Libro? {-}
+
+La Tabla de Contenidos proporciona una visión general de los temas tratados,
+organizados en cuatro partes. La primera parte introduce la regresión lineal. Este es el material central del libro, con refrescadores
+sobre estadísticas matemáticas, distribuciones y álgebra matricial entrelazados
+según sea necesario.
+
+La segunda parte se dedica a temas en series temporales. ¿Por qué integrar
+temas de series temporales en un libro de regresión? Las razones son simples,
+pero convincentes; la mayoría de los datos contables, financieros y económicos se vuelven
+disponibles a lo largo del tiempo. Aunque las inferencias transversales son útiles,
+las decisiones empresariales deben tomarse en tiempo real con los datos actualmente
+disponibles. Los Capítulos 7-10 introducen técnicas de series temporales que
+se pueden realizar fácilmente usando herramientas de regresión (y hay
+muchas).
+
+La regresión no lineal es el tema de la tercera parte. Muchas de las herramientas modernas
+de 'modelado predictivo' están basadas en regresión no lineal;
+estas son las herramientas de trabajo en las oficinas estadísticas de la industria financiera y
+de gestión de riesgos.
+
+La cuarta parte se refiere a 'aplicaciones actuariales,' temas que he
+encontrado relevantes en mi investigación y trabajo de consultoría en gestión de riesgos financieros. Los primeros cuatro capítulos de esta parte consisten en
+variaciones de modelos de regresión que son particularmente útiles en la gestión de riesgos. Los últimos dos capítulos se centran en las comunicaciones,
+específicamente, en la redacción de informes y el diseño de gráficos. Comunicar
+información es un aspecto importante de toda disciplina técnica y
+la estadística ciertamente no es una excepción.
+
+Aquí está la traducción al español del texto proporcionado, manteniendo la estructura en Markdown y utilizando un lenguaje simple cuando sea posible:
+
+
+### ¿Cómo Transmite Este Libro Su Mensaje? {-}
+
+**Desarrollo de Capítulos**. Cada capítulo tiene varios ejemplos
+entretejidos con teoría. En los capítulos donde se introduce un modelo, 
+comienzo con un ejemplo y discuto el análisis de datos sin hacer referencia 
+a la teoría. Este análisis se presenta a un nivel intuitivo,
+sin referencia a un modelo específico. Esto es sencillo,
+porque se trata de poco más que ajustar curvas. El objetivo es que los estudiantes
+resuman los datos de manera sensata sin que la noción de un modelo obscurezca un buen análisis de datos. Luego, se proporciona una introducción a la
+teoría en el contexto del ejemplo introductorio. Se siguen uno o más ejemplos adicionales que refuerzan la teoría ya introducida y proporcionan un contexto para explicar la teoría adicional.
+En los Capítulos 5 y 6, que no introducen modelos sino técnicas para el análisis, comienzo con una introducción de la técnica. Esta introducción es seguida por un ejemplo que refuerza la explicación. De esta manera, el análisis de datos se puede omitir fácilmente sin pérdida de continuidad, si el tiempo es una preocupación.
+
+**Datos Reales**. Muchos de los ejercicios piden al lector que trabaje
+con datos reales. La necesidad de trabajar con datos reales está bien
+documentada; por ejemplo, véase Hogg (1972) o Singer y Willett
+(1990). Algunos criterios de Singer y Willett para juzgar un buen conjunto de datos incluyen: (1) autenticidad, (2) disponibilidad de información de fondo, (3) interés y relevancia para el aprendizaje sustantivo, y (4) disponibilidad de elementos con los que los lectores puedan identificarse. Por supuesto, hay algunas desventajas importantes al trabajar con datos reales. Los conjuntos de datos pueden volverse obsoletos rápidamente. Además, el conjunto de datos ideal para ilustrar un problema estadístico específico es difícil de encontrar. Esto se debe a que, con datos reales, casi por definición, varios problemas ocurren simultáneamente. Esto hace que sea difícil aislar un aspecto específico. Particularmente disfruto trabajar con grandes conjuntos de datos. Cuanto mayor es el conjunto de datos, mayor es la necesidad de estadísticas para resumir el contenido informativo.
+
+\marginparjed{Cuanto mayor es el conjunto de datos, mayor es la necesidad de estadísticas para resumir el contenido informativo.}
+
+**Software Estadístico y Datos**. Mi objetivo al escribir este texto
+es llegar a un amplio grupo de estudiantes y analistas de la industria. Por lo tanto,
+para evitar excluir grandes segmentos, elegí no integrar ningún
+paquete de software estadístico específico en el texto. Sin embargo,
+debido a la orientación hacia las aplicaciones, es crucial que la
+metodología presentada pueda lograrse fácilmente utilizando paquetes
+disponibles. Para el curso que enseño en la Universidad de Wisconsin, uso los paquetes estadísticos SAS y `R`. En el sitio web del libro,
+
+**http://research.bus.wisc.edu/RegActuaries**
+
+\bigskip
+
+\empexjed{TermLife}
+
+\noindent los usuarios encontrarán scripts escritos en SAS y R para el
+análisis presentado en el texto. Los datos están disponibles en formato de texto,
+permitiendo a los lectores usar cualquier paquete estadístico que deseen. Cuando veas una nota como esta en el margen, también podrás encontrar este conjunto de datos (\emph{TermLife}) en el sitio web del libro.
+
+**Suplementos Técnicos**. Los suplementos técnicos refuerzan
+y amplían los resultados en el cuerpo principal del texto al proporcionar un tratamiento más formal y matemático del material. Este tratamiento es en
+realidad un suplemento porque las aplicaciones y ejemplos están
+descritos en el cuerpo principal del texto. Para los lectores con suficiente
+fondo matemático, los suplementos proporcionan material adicional
+que es útil para comunicarse con audiencias técnicas. Los
+suplementos técnicos ofrecen una cobertura más profunda y amplia de
+la regresión aplicada.
+
+Creo que los analistas deberían tener una idea de 'lo que ocurre
+bajo el capó,' o 'cómo funciona el motor.' La mayoría de estos temas
+se omitirán en la primera lectura del material. Sin embargo, a medida que
+trabajes con regresión, te enfrentarás a preguntas sobre '¿Por qué?' y necesitarás profundizar en los detalles para ver exactamente
+cómo funciona una técnica en particular. Además, los suplementos técnicos
+proporcionan un menú de elementos opcionales que un instructor puede desear
+cubrir.
+
+**Cursos Sugeridos**. Hay una amplia variedad de temas que
+pueden incluirse en un curso de regresión. Aquí están algunos cursos sugeridos.
+El curso que enseño en la Universidad de Wisconsin es el primero
+en la lista de la siguiente tabla.
+
+$$
+{\small
+\begin{array}{ll}
+\begin{array}{lll}
+\hline
+\textbf{Audiencia} & \textbf{Naturaleza del Curso}& \textbf{Capítulos Sugeridos} \\
+\hline \text{Fondo de un año en} & \text{Introducción a la regresión y}  &
+ \text{Capítulos }
+1-8 ,11-13, 20-21,\\
+~~~\text{probabilidad y estadística} & ~~~\text{modelos de series temporales} &
+~~~\text{solo cuerpo principal del texto} \\
+\text{Fondo de un año en} & \text{Regresión y modelos de}  &
+ \text{ Capítulos } 1-8, 20-21, \text{seleccionados} \\
+~~~\text{probabilidad y estadística} & ~~~\text{series temporales} &
+~~~\text{porciones de los suplementos técnicos} \\
+\text{Fondo de un año en} & \text{Modelado de regresión}  &
+ \text{Capítulos } 1-6, 11-13, 20-21, \text{seleccionados} \\
+~~~\text{probabilidad y estadística} & &
+~~~ \text{porciones de los suplementos técnicos} \\
+\text{Fondo en estadísticas} & \text{Regresión actuarial} &
+\text{ Capítulos } 10-21, \text{seleccionados} \\
+~~~\text{y regresión lineal} &  ~~~\text{modelos}  &
+~~~ \text{porciones de los suplementos técnicos} \\
+ \hline
+\end{array}
+\end{array}
+}
+$$
+
+Además de estos cursos sugeridos, este libro está diseñado para
+lectura complementaria para un curso de series temporales, así como un libro de referencia
+para analistas de la industria. Mi esperanza es que los estudiantes universitarios que utilicen
+las primeras partes del libro en su curso universitario encuentren
+los capítulos posteriores útiles en sus posiciones en la industria. De esta manera,
+espero promover el aprendizaje continuo a lo largo de la vida.
+
+### Agradecimientos {-}
+
+Es apropiado comenzar la sección de agradecimientos agradeciendo a
+los estudiantes del programa actuarial aquí en la Universidad de
+Wisconsin; los estudiantes son socios importantes en el negocio de la creación y difusión del conocimiento en las universidades. A través de sus preguntas
+y comentarios, he aprendido una cantidad tremenda a lo largo de los años. También he
+beneficiado de la \emph{excelente} asistencia de quienes
+me han ayudado a reunir todas las piezas para este libro,
+específicamente, Missy Pinney, Peng Shi, Yunjie (Winnie) Sun y Ziyan
+Xie.
+
+He disfrutado trabajando con varios antiguos estudiantes y colegas
+en problemas de regresión en los últimos años, incluyendo a Katrien
+Antonio, Jie Gao, Paul Johnson, Margie Rosenberg, Jiafeng Sun, Emil
+Valdez y Ping Wang. Sus contribuciones están reflejadas indirectamente
+a lo largo del texto. Debido a mi larga asociación con la
+Universidad de Wisconsin-Madison, soy reacio a retroceder más
+en el tiempo y proporcionar una lista más extensa por temor a olvidar personas
+importantes. También he tenido la suerte de tener una asociación más reciente
+con el Insurance Services Office (ISO). Los colegas en
+ISO me han proporcionado importantes perspectivas sobre aplicaciones.
+A través de este texto que presenta aplicaciones de regresión en
+problemas actuariales y de la industria financiera, espero fomentar
+asociaciones adicionales entre la academia y la industria.
+
+Estoy encantado de reconocer las revisiones detalladas que he recibido
+de los colegas Tim Welnetz y Margie Rosenberg. También deseo
+agradecer a Bob Miller por permitirme incluir nuestro trabajo conjunto sobre
+diseño de gráficos efectivos en el Capítulo 21. Bob me ha enseñado mucho
+sobre regresión a lo largo de los años.
+
+Además, me alegra reconocer el apoyo financiero a través del
+Assurant Health Professorship en Ciencias Actuariales en la Universidad
+de Wisconsin-Madison.
+
+Guardando lo más importante para el final, agradezco a mi familia por su
+apoyo. Mil gracias a mi madre Mary, hermanos Randy, Guy
+y Joe, mi esposa Deirdre y nuestros hijos Nathan y Adam.
+
+
+## Dedicación {-}
+
+
+Hay un viejo dicho, atribuido a Sir Isaac Newton y que se puede encontrar en Google Scholar,
+
+
+\bigskip\bigskip
+
+>Si he visto más lejos, es porque me he subido a los hombros de gigantes.
+
+
+
+ Dedico este libro a la memoria de dos gigantes que
+me ayudaron, y a todos los que los conocieron, a ver más lejos y vivir mejor:
+
+
+**James C. Hickman**
+
+
+y
+
+
+
+**Joseph P. Sullivan.**
+
+
+
+
+\mainmatter
