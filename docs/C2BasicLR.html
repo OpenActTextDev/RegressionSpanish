@@ -770,8 +770,9 @@ desviaciones <span class="math inline">\(\varepsilon _i\)</span>, entonces una e
 no se observan, usamos lo siguiente.</p>
 <div class="blackbox">
 <p><em>Definición</em>. Un estimador de <span class="math inline">\(\sigma ^2\)</span>, el <em>error cuadrático medio (MSE)</em>, se define como
-<span class="math display">\[\begin{equation}
-s^2=\frac{1}{n-2}\sum_{i=1}^{n}e_i{}^2.  \label{BLRs2}
+<span class="math display" id="eq:BLRs2">\[\begin{equation}
+s^2=\frac{1}{n-2}\sum_{i=1}^{n}e_i{}^2.
+\tag{2.3}
 \end{equation}\]</span>
 La raíz cuadrada positiva, <span class="math inline">\(s=\sqrt{s^2},\)</span> se llama la <em>desviación estándar residual</em>.</p>
 </div>
@@ -908,7 +909,7 @@ b_1=r\frac{s_y}{s_x}=\frac{1}{(n-1)s_x^2}\sum_{i=1}^{n}\left(
 x_i-\overline{x}\right) \left( y_i-\overline{y}\right)
 =\sum_{i=1}^{n}w_i\left( y_i-\overline{y}\right)
 =\sum_{i=1}^{n}w_iy_i.
-\tag{2.3}
+\tag{2.4}
 \end{equation}\]</span></p>
 <p>Los ejercicios piden al lector verificar que <span class="math inline">\(b_0\)</span> también puede expresarse como una suma ponderada de las respuestas, por lo que nuestra discusión se refiere a ambos coeficientes de regresión. Dado que los coeficientes de regresión son sumas ponderadas de respuestas, pueden verse afectados drásticamente por observaciones inusuales (ver Sección <a href="C2BasicLR.html#S2:ResidualAnalsis">2.6</a>).</p>
 <p>Como <span class="math inline">\(b_1\)</span> es una suma ponderada, es sencillo derivar la esperanza y la varianza de esta estadística. Por la linealidad de las esperanzas y la Suposición F1, tenemos
@@ -925,10 +926,10 @@ Sustituyendo <span class="math inline">\(\sigma ^2\)</span> por su estimador <sp
 <p><em>Definición</em>. El <em>error estándar</em> de <span class="math inline">\(b_1\)</span>, la desviación estándar estimada de <span class="math inline">\(b_1\)</span>, se define como
 <span class="math display" id="eq:seb1a">\[\begin{equation}
 se(b_1)=\frac{s}{s_x\sqrt{n-1}}.
-\tag{2.4}
+\tag{2.5}
 \end{equation}\]</span></p>
 </div>
-<p>Esta es nuestra medida de la fiabilidad, o precisión, del estimador de la pendiente. Usando la ecuación <a href="C2BasicLR.html#eq:seb1a">(2.4)</a>, vemos que <span class="math inline">\(se(b_1)\)</span> está determinado por tres cantidades: <span class="math inline">\(n\)</span>, <span class="math inline">\(s\)</span> y <span class="math inline">\(s_x\)</span>, de la siguiente manera:</p>
+<p>Esta es nuestra medida de la fiabilidad, o precisión, del estimador de la pendiente. Usando la ecuación <a href="C2BasicLR.html#eq:seb1a">(2.5)</a>, vemos que <span class="math inline">\(se(b_1)\)</span> está determinado por tres cantidades: <span class="math inline">\(n\)</span>, <span class="math inline">\(s\)</span> y <span class="math inline">\(s_x\)</span>, de la siguiente manera:</p>
 <ul>
 <li>Si tenemos más observaciones, de manera que <span class="math inline">\(n\)</span> sea mayor, entonces <span class="math inline">\(se(b_1)\)</span> será menor, manteniendo todo lo demás constante.</li>
 <li>Si las observaciones tienen una mayor tendencia a estar más cerca de la línea, de manera que <span class="math inline">\(s\)</span> sea menor, entonces <span class="math inline">\(se(b_1)\)</span> será menor, manteniendo todo lo demás constante.</li>
@@ -976,7 +977,7 @@ Figure 2.6: <strong>Estos tres diagramas de dispersión muestran la misma relaci
 <span id="cb12-28"><a href="C2BasicLR.html#cb12-28" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> a</span>
 <span id="cb12-29"><a href="C2BasicLR.html#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(a,b)</span></code></pre></div>
 </div>
-<p>La ecuación <a href="C2BasicLR.html#eq:weightb1">(2.3)</a> también implica que el coeficiente de regresión <span class="math inline">\(b_1\)</span> sigue una distribución normal. Es decir, recordemos de la estadística matemática que las combinaciones lineales de variables aleatorias normales también son normales. Así, si se cumple la Suposición F5, entonces <span class="math inline">\(b_1\)</span> sigue una distribución normal. Además, existen varias versiones de los teoremas del límite central para sumas ponderadas (ver, por ejemplo, Serfling, 1980). Así, como se discute en la Sección 1.4, si las respuestas <span class="math inline">\(y_i\)</span> están siquiera aproximadamente distribuidas normalmente, entonces será razonable usar una aproximación normal para la distribución muestral de <span class="math inline">\(b_1\)</span>. Usando <span class="math inline">\(se(b_1)\)</span> como la desviación estándar estimada de <span class="math inline">\(b_1\)</span>, para valores grandes de <span class="math inline">\(n\)</span> tenemos que <span class="math inline">\(\left( b_1-\beta_1\right) /se(b_1)\)</span> tiene una distribución normal estándar aproximada. Aunque no lo probaremos aquí, bajo la Suposición F5 <span class="math inline">\(\left( b_1-\beta_1\right) /se(b_1)\)</span> sigue una distribución <span class="math inline">\(t\)</span> con grados de libertad <span class="math inline">\(df=n-2\)</span>.</p>
+<p>La ecuación <a href="C2BasicLR.html#eq:weightb1">(2.4)</a> también implica que el coeficiente de regresión <span class="math inline">\(b_1\)</span> sigue una distribución normal. Es decir, recordemos de la estadística matemática que las combinaciones lineales de variables aleatorias normales también son normales. Así, si se cumple la Suposición F5, entonces <span class="math inline">\(b_1\)</span> sigue una distribución normal. Además, existen varias versiones de los teoremas del límite central para sumas ponderadas (ver, por ejemplo, Serfling, 1980). Así, como se discute en la Sección 1.4, si las respuestas <span class="math inline">\(y_i\)</span> están siquiera aproximadamente distribuidas normalmente, entonces será razonable usar una aproximación normal para la distribución muestral de <span class="math inline">\(b_1\)</span>. Usando <span class="math inline">\(se(b_1)\)</span> como la desviación estándar estimada de <span class="math inline">\(b_1\)</span>, para valores grandes de <span class="math inline">\(n\)</span> tenemos que <span class="math inline">\(\left( b_1-\beta_1\right) /se(b_1)\)</span> tiene una distribución normal estándar aproximada. Aunque no lo probaremos aquí, bajo la Suposición F5 <span class="math inline">\(\left( b_1-\beta_1\right) /se(b_1)\)</span> sigue una distribución <span class="math inline">\(t\)</span> con grados de libertad <span class="math inline">\(df=n-2\)</span>.</p>
 </div>
 <div id="inferencia-estadística" class="section level2 hasAnchor" number="2.5">
 <h2><span class="header-section-number">2.5</span> Inferencia Estadística<a href="C2BasicLR.html#inferencia-estadística" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1044,8 +1045,9 @@ p-value &amp; \Pr(t_{n-2}&gt;t-\mathrm{ratio}) &amp;
 <p>Para introducir los intervalos de confianza para la pendiente, recordemos que <span class="math inline">\(b_1\)</span> es nuestro estimador puntual de la verdadera pendiente desconocida <span class="math inline">\(\beta_1\)</span>. La Sección 2.4 argumentó que este estimador tiene un error estándar <span class="math inline">\(se(b_1)\)</span> y que <span class="math inline">\(\left( b_1-\beta_1\right) /se(b_1)\)</span> sigue una distribución <span class="math inline">\(t\)</span> con <span class="math inline">\(n-2\)</span> grados de libertad. Las declaraciones de probabilidad se pueden invertir para obtener intervalos de confianza. Usando esta lógica, tenemos el siguiente intervalo de confianza para la pendiente <span class="math inline">\(\beta_1\)</span>.</p>
 <div class="blackbox">
 <p><em>Definición</em>. Un intervalo de confianza del <span class="math inline">\(100(1-\alpha)\)</span>% para la pendiente <span class="math inline">\(\beta_1\)</span> es
-<span class="math display">\[\begin{equation}\label{E2:ConfIntb1}
+<span class="math display" id="eq:ConfIntb1">\[\begin{equation}
 b_1\pm t_{n-2,1-\alpha /2} ~se(b_1).
+\tag{2.6}
 \end{equation}\]</span></p>
 </div>
 <p>Al igual que con las pruebas de hipótesis, <span class="math inline">\(t_{n-2,1-\alpha /2}\)</span> es el percentil (1-<span class="math inline">\(\alpha\)</span> /2) de la distribución <span class="math inline">\(t\)</span> con <span class="math inline">\(df=n-2\)</span> grados de libertad. Debido a la naturaleza bilateral de los intervalos de confianza, el percentil es 1 - (1 - nivel de confianza) / 2. En este texto, por simplicidad, generalmente usamos un intervalo de confianza del 95%, por lo que el percentil es 1-(1-0.95)/2 = 0.975. El intervalo de confianza proporciona un rango de confiabilidad que mide la utilidad de la estimación.</p>
@@ -1085,8 +1087,9 @@ desviación de la respuesta adicional de su media se convierte en la
 única fuente de incertidumbre.</p>
 <div class="blackbox">
 <p><em>Definición</em>. Un intervalo de predicción del <span class="math inline">\(100(1-\alpha)\)</span>% en <span class="math inline">\(x_{\ast}\)</span> es
-<span class="math display">\[\begin{equation}\label{E2:predinteval}
+<span class="math display" id="eq:predinteval">\[\begin{equation}
 \widehat{y}_{\ast} \pm t_{n-2,1-\alpha /2} ~se(pred)
+\tag{2.7}
 \end{equation}\]</span>
 donde el valor <span class="math inline">\(t\)</span> <span class="math inline">\(t_{n-2,1-\alpha /2}\)</span> es el mismo que se usa para la prueba de hipótesis y el intervalo de confianza.</p>
 </div>
@@ -1575,8 +1578,9 @@ Figure 2.11: <strong>Gráfico de dispersión del rendimiento de Lincoln versus e
 \end{equation*}\]</span></p>
 <p>El error estándar estimado resultante, <span class="math inline">\(s = 0.0696\)</span>, es menor que la desviación estándar de los rendimientos de Lincoln, <span class="math inline">\(s_y=0.0859\)</span>. Por lo tanto, el modelo de regresión explica parte de la variabilidad de los rendimientos de Lincoln. Además, el estadístico <span class="math inline">\(t\)</span> asociado con la pendiente <span class="math inline">\(b_1\)</span> resulta ser <span class="math inline">\(t(b_1)=5.64\)</span>, lo cual es significativamente alto. Un aspecto decepcionante es que el estadístico <span class="math inline">\(R^2=35.4\%\)</span> se puede interpretar como que el mercado explica solo un poco más de un tercio de la variabilidad. Por lo tanto, aunque el mercado es claramente un determinante importante, como lo evidencian el alto estadístico <span class="math inline">\(t\)</span>, solo proporciona una explicación parcial del rendimiento de los rendimientos de Lincoln.</p>
 <p>En el contexto del modelo de mercado, podemos interpretar la desviación estándar del mercado, <span class="math inline">\(s_x\)</span>, como <em>riesgo no diversificable</em>. Por lo tanto, el riesgo de un valor puede descomponerse en dos componentes: el componente diversificable y el componente del mercado, que es no diversificable. La idea es que, al combinar varios valores, podemos crear una cartera de valores que, en la mayoría de los casos, reducirá el riesgo de nuestras inversiones en comparación con un solo valor. Nuevamente, la razón para tener un valor es que estamos compensados con rendimientos esperados más altos al tener un valor con mayor riesgo. Para cuantificar el riesgo relativo, no es difícil demostrar que</p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display" id="eq:CAPMVar">\[\begin{equation}
 s_y^2 = b_1^2 s_x^2 + s^2 \frac{n-2}{n-1}.
+\tag{2.8}
 \end{equation}\]</span></p>
 <p>El riesgo de un valor se debe al riesgo del mercado más el riesgo de un componente diversificable. Tenga en cuenta que el riesgo del componente del mercado, <span class="math inline">\(s_x^2\)</span>, es mayor para los valores con pendientes más grandes. Por esta razón, los inversores consideran que los valores con pendientes <span class="math inline">\(b_1\)</span> mayores que uno son “agresivos” y las pendientes menores que uno como “defensivos”.</p>
 </div>
@@ -2594,13 +2598,14 @@ tenemos
 \right).
 \end{equation*}\]</span>
 Para simplificar esta expresión, recuerda que <span class="math inline">\(\overline{x}=n^{-1} \sum_{i=1}^{n}x_i\)</span>. Así,
-<span class="math display">\[\begin{equation}\label{E2:XPXInv}
+<span class="math display" id="eq:XPXInv">\[\begin{equation}
 \left( \mathbf{X}^{\prime }\mathbf{X}\right)^{-1}=\frac{1}{ \sum_{i=1}^{n}x_i^2-n\overline{x}^2}\left(
 \begin{array}{cc}
 n^{-1}\sum\limits_{i=1}^{n}x_i^2 &amp; -\overline{x} \\
 -\overline{x} &amp; 1
 \end{array}
 \right) .
+\tag{2.9}
 \end{equation}\]</span></p>
 <p>La Sección 3.1 discutirá la relación <span class="math inline">\(\mathbf{b}=\left( \mathbf{X}^{\prime}\mathbf{X}\right)^{-1}\mathbf{X}^{\prime}\mathbf{y}\)</span>. Para ilustrar el cálculo, tenemos
 <span class="math display">\[\begin{eqnarray*}
@@ -2685,7 +2690,7 @@ Por la linealidad de las esperanzas, para una matriz no aleatoria <strong>A</str
 <p><strong>Varianzas.</strong> También podemos trabajar con los segundos momentos de vectores aleatorios. La varianza de un vector de variables aleatorias se llama <em>matriz de varianza-covarianza</em>. Se define como
 <span class="math display" id="eq:E2MatrixVar">\[\begin{equation}
 \mathrm{Var} ~ \mathbf{y}  =  \mathrm{E} ( (\mathbf{y} - \mathrm{E} \mathbf{y})(\mathbf{y} - \mathrm{E} \mathbf{y})^{\prime} ).
-\tag{2.5}
+\tag{2.10}
 \end{equation}\]</span>
 Es decir, podemos expresar
 <span class="math display">\[\begin{equation*}
@@ -2717,14 +2722,14 @@ porque <span class="math inline">\(\mathrm{E} ( (y_i - \mathrm{E} y_i)(y_j - \ma
 \end{array}\right).
 \end{equation*}\]</span>
 Además, si las varianzas son idénticas, de modo que <span class="math inline">\(\mathrm{Var}~y_i=\sigma ^2\)</span>, entonces podemos escribir <span class="math inline">\(\mathrm{Var} ~\mathbf{y} = \sigma ^2 \mathbf{I}\)</span>, donde <strong>I</strong> es la matriz identidad <span class="math inline">\(n \times n\)</span>. Por ejemplo, si <span class="math inline">\(y_1, \ldots, y_n\)</span> son i.i.d., entonces <span class="math inline">\(\mathrm{Var} ~\mathbf{y} = \sigma ^2 \mathbf{I}\)</span>.</p>
-<p>A partir de la ecuación <a href="C2BasicLR.html#eq:E2MatrixVar">(2.5)</a>, se puede demostrar que
+<p>A partir de la ecuación <a href="C2BasicLR.html#eq:E2MatrixVar">(2.10)</a>, se puede demostrar que
 <span class="math display" id="eq:E2MatrixVarCalc">\[\begin{equation}
 \mathrm{Var}\left( \mathbf{Ay +B} \right) = \mathrm{Var}\left(
 \mathbf{Ay} \right) = \mathbf{A} \left( \mathrm{Var}~\mathbf{y}
 \right) \mathbf{A}^{\prime}.
-\tag{2.6}
+\tag{2.11}
 \end{equation}\]</span>
-Por ejemplo, si <span class="math inline">\(\mathbf{A} = (a_1, a_2, \ldots,a_n)= \mathbf{a}^{\prime}\)</span> y <strong>B = 0</strong>, entonces la ecuación <a href="C2BasicLR.html#eq:E2MatrixVarCalc">(2.6)</a> se reduce a
+Por ejemplo, si <span class="math inline">\(\mathbf{A} = (a_1, a_2, \ldots,a_n)= \mathbf{a}^{\prime}\)</span> y <strong>B = 0</strong>, entonces la ecuación <a href="C2BasicLR.html#eq:E2MatrixVarCalc">(2.11)</a> se reduce a
 <span class="math display">\[\begin{equation*}
 \mathrm{Var}\left( \sum_{i=1}^n a_i y_i \right) = \mathrm{Var}
 \left( \mathbf{a^{\prime} y}  \right) = \mathbf{a^{\prime}} \left(

@@ -123,6 +123,7 @@ Statistics of Massachusetts Automobile Bodily Injury Claims',
 
 ```
 
+***
 
 Para completar, aquí hay algunas definiciones. La *muestra* es el conjunto de datos disponibles para el análisis, denotado por $y_1,\ldots,y_n$. Aquí, $n$ es el número de observaciones, $y_1$ representa la primera observación, $y_2$ la segunda, y así sucesivamente hasta $y_n$ para la $n$-ésima observación. Aquí hay algunas estadísticas de resumen importantes.
 
@@ -145,7 +146,9 @@ $$
 
 Para ayudar a visualizar la distribución, la Figura \@ref(fig:Fig12) muestra un *histograma* de los datos. Aquí, la altura de cada rectángulo muestra la frecuencia relativa de observaciones que caen dentro del rango dado por su base. El histograma proporciona una impresión visual rápida de la distribución; muestra que el rango de los datos es aproximadamente (-4,4), la tendencia central es ligeramente mayor que cero y que la distribución es aproximadamente simétrica.
 
-**Aproximación de la Curva Normal.** La Figura \@ref(fig:Fig12) también muestra una curva normal superpuesta, utilizando $\overline{y}$ para $\mu$ y $s_y^{2}$ para $\sigma ^{2}$. Con la curva normal, solo se requieren dos cantidades ($\mu$ y $\sigma ^{2}$) para resumir toda la distribución. Por ejemplo, la Tabla \@ref(tab:Table12) muestra que 1.168 es el percentil 75, que es aproximadamente la observación número 204 ($=0.75\times 272$) más grande de toda la muestra. De la ecuación \@ref(eq:Normalpdf) de la distribución normal, tenemos que $z=(y-\mu )/\sigma$ es una normal estándar, de la cual 0.675 es el percentil 75. Así, $\overline{y}+0.675s_y=$ $0.481+0.675\times 1.101=1.224$ es el percentil 75 usando la aproximación de la curva normal.
+#### Aproximación de la Curva Normal {-}
+
+La Figura \@ref(fig:Fig12) también muestra una curva normal superpuesta, utilizando $\overline{y}$ para $\mu$ y $s_y^{2}$ para $\sigma ^{2}$. Con la curva normal, solo se requieren dos cantidades ($\mu$ y $\sigma ^{2}$) para resumir toda la distribución. Por ejemplo, la Tabla \@ref(tab:Table12) muestra que 1.168 es el percentil 75, que es aproximadamente la observación número 204 ($=0.75\times 272$) más grande de toda la muestra. De la ecuación \@ref(eq:Normalpdf) de la distribución normal, tenemos que $z=(y-\mu )/\sigma$ es una normal estándar, de la cual 0.675 es el percentil 75. Así, $\overline{y}+0.675s_y=$ $0.481+0.675\times 1.101=1.224$ es el percentil 75 usando la aproximación de la curva normal.
 
 (ref:Fig12) **Frecuencia Relativa de Lesiones Corporales con Curva Normal Superpuesta**.
 
@@ -170,9 +173,9 @@ lines(x,y)
 </div>
 
 
-**Diagrama de Caja.** Una inspección visual rápida de la distribución de una variable puede revelar algunas características sorprendentes que están ocultas por estadísticas, medidas de resumen numéricas. El *diagrama de caja*, también conocido como diagrama de 'caja y bigotes', es uno de estos dispositivos gráficos. La Figura \@ref(fig:Fig13) ilustra un diagrama de caja para las reclamaciones por lesiones corporales. Aquí, la caja captura el 50\% central de los datos, con las tres líneas horizontales que corresponden a los percentiles 75, 50 y 25, leyendo de arriba a abajo.
+#### Diagrama de Caja {-}
 
-Las líneas horizontales por encima y por debajo de la caja son los 'bigotes'. El bigote superior es 1.5 veces el *rango intercuartílico* (la diferencia entre los percentiles 75 y 25) por encima del percentil 75. De manera similar, el bigote inferior es 1.5 veces el rango intercuartílico por debajo del percentil 25. Las observaciones individuales fuera de los bigotes se denotan con pequeños símbolos de trazado circulares, y se denominan 'valores atípicos'.
+Una inspección visual rápida de la distribución de una variable puede revelar algunas características sorprendentes que están ocultas por estadísticas, medidas de resumen numéricas. El *diagrama de caja*, también conocido como diagrama de 'caja y bigotes', es uno de estos dispositivos gráficos. La Figura \@ref(fig:Fig13) ilustra un diagrama de caja para las reclamaciones por lesiones corporales. Aquí, la caja captura el 50\% central de los datos, con las tres líneas horizontales que corresponden a los percentiles 75, 50 y 25, leyendo de arriba a abajo. Las líneas horizontales por encima y por debajo de la caja son los 'bigotes'. El bigote superior es 1.5 veces el *rango intercuartílico* (la diferencia entre los percentiles 75 y 25) por encima del percentil 75. De manera similar, el bigote inferior es 1.5 veces el rango intercuartílico por debajo del percentil 25. Las observaciones individuales fuera de los bigotes se denotan con pequeños símbolos de trazado circulares, y se denominan 'valores atípicos'.
 
 (ref:Fig13) **Diagrama de Caja de Reclamaciones por Lesiones Corporales.**
 
@@ -210,7 +213,9 @@ lines(x,y)
 
 </div>
 
-**Gráficos Cuantiles-Cuantiles.** Aumentar el número de rectángulos puede descubrir características que no eran evidentes antes; sin embargo, en general hay menos observaciones por rectángulo, lo que significa que la incertidumbre de la estimación de la frecuencia relativa aumenta. Esto representa un compromiso. En lugar de forzar al analista a tomar una decisión arbitraria sobre el número de rectángulos, una alternativa es usar un dispositivo gráfico para comparar una distribución con otra conocida, llamado gráfico de *cuantiles-cuantiles*, o *qq*.
+#### Gráficos Cuantiles-Cuantiles {-}
+
+Aumentar el número de rectángulos puede descubrir características que no eran evidentes antes; sin embargo, en general hay menos observaciones por rectángulo, lo que significa que la incertidumbre de la estimación de la frecuencia relativa aumenta. Esto representa un compromiso. En lugar de forzar al analista a tomar una decisión arbitraria sobre el número de rectángulos, una alternativa es usar un dispositivo gráfico para comparar una distribución con otra conocida, llamado gráfico de *cuantiles-cuantiles*, o *qq*.
 
 La Figura \@ref(fig:Fig15) ilustra un gráfico $qq$ para los datos de lesiones corporales utilizando la curva normal como distribución de referencia. Para cada punto, el eje vertical da el cuantil usando la distribución de la muestra. El eje horizontal da la cantidad correspondiente usando la curva normal. Por ejemplo, anteriormente consideramos el punto del percentil 75. Este punto aparece como (1.168, 0.675) en el gráfico. Para interpretar un gráfico $qq$, si los puntos de los cuantiles se alinean a lo largo de la línea superpuesta, entonces la muestra y la distribución de referencia normal tienen la misma forma. (Esta línea se define conectando los percentiles 75 y 25).
 
@@ -330,7 +335,7 @@ $$
 
 En esta configuración básica, $\mu$ y $\sigma ^{2}$\ sirven como *parámetros* que describen la ubicación y escala de la población de origen. El objetivo es inferir algo sensato sobre ellos basándose en estadísticas como $\overline{y}$ y $s_y^{2}$. Para la tercera suposición, asumimos independencia entre las extracciones. En un esquema de muestreo, esto puede ser garantizado tomando una muestra aleatoria simple de una población. La cuarta suposición no es necesaria para muchos procedimientos de inferencia estadística porque los teoremas del límite central proporcionan una normalidad aproximada para muchas estadísticas de interés. Sin embargo, una justificación formal de algunas estadísticas, como las *t*-estadísticas, requiere esta suposición adicional.
 
-La Sección \@ref(S1:TechSupp) proporciona una declaración explícita de una versión del teorema del límite central, dando condiciones bajo las cuales $\overline{y}$ está aproximadamente distribuido normalmente. Esta sección también discute un resultado relacionado, conocido como *aproximación de Edgeworth*, que muestra que la calidad de la aproximación normal es mejor para poblaciones de origen simétricas en comparación con distribuciones sesgadas.
+La Sección 1.9 proporciona una declaración explícita de una versión del teorema del límite central, dando condiciones bajo las cuales $\overline{y}$ está aproximadamente distribuido normalmente. Esta sección también discute un resultado relacionado, conocido como *aproximación de Edgeworth*, que muestra que la calidad de la aproximación normal es mejor para poblaciones de origen simétricas en comparación con distribuciones sesgadas.
 
 ¿Cómo se aplica esta discusión al estudio del análisis de regresión? Después de todo, hasta ahora nos hemos centrado solo en el promedio aritmético simple, $\overline{y}$. En capítulos posteriores, enfatizaremos que *la regresión lineal es el estudio de promedios ponderados*; específicamente, muchos coeficientes de regresión pueden expresarse como promedios ponderados con pesos apropiadamente elegidos. Los teoremas de límite central y aproximación de Edgeworth están disponibles para promedios ponderados; estos resultados asegurarán la normalidad aproximada de los coeficientes de regresión. Para usar aproximaciones de la curva normal en un contexto de regresión, a menudo transformaremos variables para lograr una simetría aproximada.
 
@@ -373,6 +378,8 @@ Para ilustrar, un ejemplo clásico es considerar el rendimiento de un cultivo co
 
 Un estudio reportado por Manning et al. (1987) buscó responder a esta pregunta utilizando un experimento cuidadosamente diseñado. En este estudio, los hogares inscritos de seis ciudades, entre noviembre de 1974 y febrero de 1977, fueron *asignados aleatoriamente* a uno de 14 planes de seguro diferentes. Estos planes variaban según los elementos de participación en los costos, la tasa de coaseguro (el porcentaje pagado de los gastos de bolsillo que variaba entre 0, 25, 50 y 95\%) así como el deducible (5, 10 o 15 por ciento del ingreso familiar, hasta un máximo de \$1,000). Así, hubo una *asignación aleatoria* a los niveles del tratamiento, la cantidad de seguro de salud. El estudio encontró que los planes más favorables resultaron en mayores gastos totales, incluso después de controlar el estado de salud de los participantes.
 
+***
+
 Para la ciencia actuarial y otras ciencias sociales, los estudios diseñados son la excepción más que la regla. Por ejemplo, si queremos estudiar los efectos del tabaquismo en la mortalidad, es muy poco probable que podamos conseguir que los participantes en el estudio acepten ser asignados aleatoriamente a grupos de fumadores/no fumadores durante varios años solo para observar sus patrones de mortalidad. Al igual que en el estudio de Galton de la Sección \@ref(S1:Intro), los investigadores en ciencias sociales generalmente trabajan con *datos observacionales*. Los datos observacionales no están bajo el control del analista.
 
 Con datos observacionales, no podemos inferir relaciones causales, pero podemos introducir medidas de *asociación*. Para ilustrar, en los datos de Galton, es evidente que los padres 'altos' tienden a tener hijos 'altos' y, a la inversa, los padres 'bajos' tienden a tener hijos 'bajos'. El Capítulo 2 introducirá la correlación y otras medidas de asociación. Sin embargo, no podemos inferir causalidad a partir de los datos. Por ejemplo, puede haber otra variable, como la dieta familiar, que esté relacionada con ambas variables. Una buena dieta en la familia podría estar asociada con alturas altas de los padres y de los hijos adultos, mientras que una dieta pobre limita el crecimiento. Si ese fuera el caso, llamaríamos a la dieta familiar una *variable confusora*.
@@ -396,13 +403,19 @@ Además, este libro muestra cómo esta metodología puede ser utilizada en aplic
 * reservas y
 * pruebas de solvencia.
 
-**Tarificación y selección adversa.** El análisis de regresión puede utilizarse para determinar los precios de seguros para muchas líneas de negocio. Por ejemplo, en el seguro de automóviles de pasajeros privados, las reclamaciones esperadas varían según el género del asegurado, la edad, la ubicación (ciudad versus rural), el propósito del vehículo (trabajo o placer) y una serie de otras variables explicativas. La regresión puede utilizarse para identificar las variables que son determinantes importantes de las reclamaciones esperadas.
+#### Tarificación y selección adversa {-}
+
+El análisis de regresión puede utilizarse para determinar los precios de seguros para muchas líneas de negocio. Por ejemplo, en el seguro de automóviles de pasajeros privados, las reclamaciones esperadas varían según el género del asegurado, la edad, la ubicación (ciudad versus rural), el propósito del vehículo (trabajo o placer) y una serie de otras variables explicativas. La regresión puede utilizarse para identificar las variables que son determinantes importantes de las reclamaciones esperadas.
 
 En mercados competitivos, las compañías de seguros no usan el mismo precio para todos los asegurados. Si lo hicieran, los 'buenos riesgos', aquellos con reclamaciones esperadas inferiores a la media, pagarían de más y abandonarían la compañía. En contraste, los 'malos riesgos', aquellos con reclamaciones esperadas superiores a la media, permanecerían con la compañía. Si la compañía continuara con esta política de precios plana, las primas aumentarían (para compensar las reclamaciones de la creciente proporción de malos riesgos) y la participación en el mercado disminuiría a medida que la compañía pierde buenos riesgos. Este problema se conoce como 'selección adversa'. Usando un conjunto apropiado de variables explicativas, se pueden desarrollar sistemas de clasificación para que cada asegurado pague su parte justa.
 
-**Reservas y pruebas de solvencia.** Tanto la constitución de reservas como las pruebas de solvencia se preocupan por predecir si las obligaciones asociadas con un grupo de pólizas excederán el capital destinado a cumplir con las obligaciones derivadas de las pólizas. La constitución de reservas implica determinar la cantidad apropiada de capital para cumplir con estas obligaciones. Las pruebas de solvencia se centran en evaluar la adecuación del capital para financiar las obligaciones de un bloque de negocio. En algunas áreas de práctica, la regresión puede usarse para pronosticar futuras obligaciones y ayudar a determinar las reservas (ver, por ejemplo, el Capítulo 19). La regresión también puede utilizarse para comparar las características de empresas saludables y financieramente angustiadas para pruebas de solvencia (ver, por ejemplo, el Capítulo 14).
+#### Reservas y pruebas de solvencia {-}
 
-**Otras aplicaciones en gestión de riesgos.** El análisis de regresión es una herramienta cuantitativa que puede aplicarse en una amplia variedad de problemas de negocio, no solo en las áreas tradicionales de tarificación, reservas y pruebas de solvencia. Al familiarizarse con el análisis de regresión, los actuarios tendrán otra habilidad cuantitativa que puede aplicarse a problemas generales relacionados con la seguridad financiera de personas, empresas y organizaciones gubernamentales. Para ayudarte a desarrollar ideas, este libro proporciona muchos ejemplos de aplicaciones potenciales 'no actuariales' a través de viñetas destacadas etiquetadas como 'ejemplos' y conjuntos de datos ilustrativos.
+Tanto la constitución de reservas como las pruebas de solvencia se preocupan por predecir si las obligaciones asociadas con un grupo de pólizas excederán el capital destinado a cumplir con las obligaciones derivadas de las pólizas. La constitución de reservas implica determinar la cantidad apropiada de capital para cumplir con estas obligaciones. Las pruebas de solvencia se centran en evaluar la adecuación del capital para financiar las obligaciones de un bloque de negocio. En algunas áreas de práctica, la regresión puede usarse para pronosticar futuras obligaciones y ayudar a determinar las reservas (ver, por ejemplo, el Capítulo 19). La regresión también puede utilizarse para comparar las características de empresas saludables y financieramente angustiadas para pruebas de solvencia (ver, por ejemplo, el Capítulo 14).
+
+#### Otras aplicaciones en gestión de riesgos{-}
+
+El análisis de regresión es una herramienta cuantitativa que puede aplicarse en una amplia variedad de problemas de negocio, no solo en las áreas tradicionales de tarificación, reservas y pruebas de solvencia. Al familiarizarse con el análisis de regresión, los actuarios tendrán otra habilidad cuantitativa que puede aplicarse a problemas generales relacionados con la seguridad financiera de personas, empresas y organizaciones gubernamentales. Para ayudarte a desarrollar ideas, este libro proporciona muchos ejemplos de aplicaciones potenciales 'no actuariales' a través de viñetas destacadas etiquetadas como 'ejemplos' y conjuntos de datos ilustrativos.
 
 Para entender las posibles aplicaciones de la regresión, comienza revisando los varios conjuntos de datos presentados en los Ejercicios del Capítulo 1. Incluso si no completas los ejercicios para fortalecer tus habilidades de resumen de datos (que requieren el uso de una computadora), una revisión de las descripciones de los problemas te ayudará a familiarizarte con los tipos de aplicaciones en las que un actuario podría usar técnicas de regresión.
 
@@ -470,15 +483,15 @@ c. Transformaciones. Realiza una transformación logarítmica (natural) de TPY (
 
 1.3 **Reclamaciones de Seguros de Automóviles.** Como analista actuarial, estás trabajando con una gran compañía de seguros para ayudarles a entender la distribución de sus reclamaciones para sus pólizas de automóviles particulares. Tienes disponibles datos de reclamaciones para un año reciente, que consisten en:
 
-* CÓDIGO DE ESTADO: códigos del 01 al 17 utilizados, con cada código asignado aleatoriamente a un estado real.
-* CLASE: clase de calificación del operador, basada en edad, género, estado civil y uso del vehículo.
-* GÉNERO: género del operador.
-* EDAD: edad del operador.
-* PAGADO: monto pagado para resolver y cerrar una reclamación.
+* STATE CODE: códigos del 01 al 17 utilizados, con cada código asignado aleatoriamente a un estado real.
+* CLASS: clase de calificación del operador, basada en edad, género, estado civil y uso del vehículo.
+* GENDER: género del operador.
+* AGE: edad del operador.
+* PAID: monto pagado para resolver y cerrar una reclamación.
 
 Te estás enfocando en conductores mayores de 50 años, para los cuales hay $n = 6,773$ reclamaciones disponibles.
 
-Examina el histograma del monto PAGADO y comenta sobre la simetría. Crea una nueva variable, las reclamaciones pagadas en logaritmo natural, LNPAID. Crea un histograma y un gráfico $qq$ de LNPAID. Comenta sobre la simetría de esta variable.
+Examina el histograma del monto PAID y comenta sobre la simetría. Crea una nueva variable, las reclamaciones pagadas en logaritmo natural, LNPAID. Crea un histograma y un gráfico $qq$ de LNPAID. Comenta sobre la simetría de esta variable.
 
 ***
 
