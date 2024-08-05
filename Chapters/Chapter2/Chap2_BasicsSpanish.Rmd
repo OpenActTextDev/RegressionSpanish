@@ -133,7 +133,7 @@ Aquí, usamos la desviación estándar de la muestra $s_y = \sqrt{(n-1)^{-1} \su
 
 Aunque existen otras estadísticas de correlación, el coeficiente de
 correlación ideado por Pearson (1895) tiene varias propiedades deseables. Una propiedad importante es que, para cualquier conjunto de datos, $r$ está
-acotado entre -1 y 1, es decir, $-1\leq r\leq 1$. (El Ejercicio 2A.9
+acotado entre -1 y 1, es decir, $-1\leq r\leq 1$. (El Ejercicio 2.3
 proporciona pasos para comprobar esta propiedad.) Si $r$ es mayor
 que cero, se dice que las variables están *correlacionadas
 positivamente*. Si $r$ es menor que cero, se dice que las variables están
@@ -314,28 +314,145 @@ abline(h = c(10, 12, 14, 16, 18, 20), col = "grey")
 ```{r ref.label = 'VarCTEFig', eval = FALSE}
 ```
 
+</div>
 
-## ¿Es útil el modelo? Algunas medidas de resumen básicas {#S2:SummStats}
 
-Aunque la estadística es la ciencia de resumir datos, también es el arte de argumentar con datos. Esta sección desarrolla algunas de las herramientas básicas usadas para justificar el modelo de regresión lineal básica. Un diagrama de dispersión puede proporcionar una fuerte evidencia *visual* de que $X$ influye en $Y$; desarrollar evidencia *numérica* nos permitirá cuantificar la fuerza de la relación. Además, la evidencia numérica será útil cuando consideremos otros conjuntos de datos donde la evidencia gráfica no sea convincente.
+## Modelo Básico de Regresión Lineal
+\index{modelo de regresión!básica lineal}
+\index{modelo de regresión!simple lineal}
+
+El diagrama de dispersión, el coeficiente de correlación y la línea de regresión ajustada son herramientas útiles para resumir la relación entre dos variables para un conjunto de datos específico. Para inferir relaciones generales, necesitamos modelos para representar los resultados de poblaciones amplias.
+
+Este capítulo se centra en un modelo de "regresión lineal básica". La parte de "regresión lineal" proviene del hecho de que ajustamos una línea a los datos. La parte de "básica" es porque usamos solo una variable explicativa, $x$. Este modelo también se conoce como una "regresión lineal simple". Este texto evita este lenguaje porque da la falsa impresión de que las ideas e interpretaciones de regresión con una variable explicativa son siempre sencillas.
+
+Ahora introducimos dos conjuntos de supuestos del modelo básico, las representaciones "observables" y de "error". Son equivalentes, pero cada una nos ayudará a medida que extendamos los modelos de regresión más allá de lo básico.
+\index{supuestos del modelo!representación observable}
+\index{símbolos!$\beta_0$, intercepto de regresión (poblacional)}
+\index{símbolos!$\beta_1$, coeficiente de regresión (poblacional) asociado con $x_1$}
+
+$$
+{\small
+\begin{array}{l} \hline  \hline
+&\textbf{Modelo Básico de Regresión Lineal} \\
+&\textbf{Supuestos de Muestreo de la Representación Observable} \\ \hline
+\text{F1}. & \mathrm{E}~y_i=\beta_0 + \beta_1 x_i . \\
+\text{F2}.  & \{x_1,\ldots ,x_n\}  \text{son variables no estocásticas}. \\
+\text{F3}. & \mathrm{Var}~y_i=\sigma ^{2}. \\
+\text{F4}. & \{ y_i\} \text{son variables aleatorias independientes}. \\ \hline\
+\end{array}
+}
+$$
+
+La "representación observable" se enfoca en variables que podemos ver (u observar), $(x_i,y_i)$. La inferencia sobre la distribución de $y$ es condicional a las variables explicativas observadas, de modo que podemos tratar $\{x_1,\ldots ,x_n\}$ como variables no estocásticas (supuesto F2). Al considerar tipos de mecanismos de muestreo para $(x_i,y_i)$, es conveniente pensar en un esquema de *muestreo aleatorio estratificado*, donde los valores de $\{x_1,\ldots ,x_n\}$ se tratan como los estratos, o grupos. Bajo el muestreo estratificado, para cada valor único de $x_i$, tomamos una muestra aleatoria de una población. Para ilustrar, supongamos que se está extrayendo de una base de datos de empresas para comprender el rendimiento de las acciones ($y$) y desea estratificar según el tamaño de la empresa. Si la cantidad de activos es una variable continua, entonces podemos imaginar tomar una muestra de tamaño 1 para cada empresa. De esta manera, hipotetizamos una distribución de rendimientos de acciones condicional al tamaño de los activos de la empresa.
+
+*Digresión*: A menudo verá informes que resumen resultados para los "50 mejores gerentes" o las "100 mejores universidades", medidos por alguna variable de resultado. En aplicaciones de regresión, asegúrese de no seleccionar observaciones basadas en una variable dependiente, como el rendimiento más alto de las acciones, porque esto es estratificar basado en el $y$, no en el $x$. El Capítulo 6 discutirá los procedimientos de muestreo con mayor detalle.
+
+El muestreo estratificado también proporciona motivación para el supuesto F4, la independencia entre respuestas. Se puede motivar el supuesto F1 pensando en $(x_i,y_i)$ como una extracción de una población, donde la media de la distribución condicional de $y_i$ dado \{$x_i$\} es lineal en la variable explicativa. El supuesto F3 se conoce como *homocedasticidad*, que discutiremos ampliamente en la Sección 5.7. Ver Goldberger (1991) para más información sobre esta representación.
+\index{homocedasticidad}
+
+Un quinto supuesto que a menudo se usa implícitamente es:
+$$
+\text{F5}. \{y_i\} \text{ están distribuidos normalmente}.
+$$
+Este supuesto no es necesario para muchos procedimientos de inferencia estadística porque los teoremas del límite central proporcionan normalidad aproximada para muchas estadísticas de interés. Sin embargo, la justificación formal para algunas, como las estadísticas $t$, requieren este supuesto adicional.
+
+En contraste con la representación observable, un conjunto alternativo de supuestos se enfoca en las desviaciones, o "errores", en la regresión, definidos como $\varepsilon_i=y_i-\left( \beta_0 + \beta_1 x_i \right)$.
+
+$$
+{\small
+\begin{array}{l} \hline  \hline
+&\textbf{Modelo Básico de Regresión Lineal} \\
+&\textbf{Supuestos de Muestreo de la Representación de Error} \\ \hline
+\text{E1}. & y_i=\beta_0 + \beta_1 x_i + \varepsilon_i . \\
+\text{E2}.  & \{x_1,\ldots ,x_n\}  \text{ son variables no estocásticas}. \\
+\text{E3}. & \mathrm{E}~\varepsilon _i=0 \text{ y } \mathrm{Var}~\varepsilon _i=\sigma ^{2}. \\
+\text{E4}. & \{ \varepsilon_i\} \text{ son variables aleatorias independientes}. \\ \hline\
+\end{array}
+}
+$$
+
+La "representación de error" se basa en la teoría gaussiana de errores (ver Stigler, 1986, para un contexto histórico). El supuesto E1 asume que $y$ es en parte debido a una función lineal de la variable explicativa observada, $x$. Otras variables no observadas que influyen en la medición de $y$ se interpretan como incluidas en el término de "error" $\varepsilon _i$, que también se conoce como el término de "perturbación". La independencia de errores, E4, puede motivarse asumiendo que \{$\varepsilon _i$\} se realizan a través de una muestra aleatoria simple de una población desconocida de errores.
+
+Los supuestos E1-E4 son equivalentes a F1-F4. La representación de error proporciona una base útil para motivar las medidas de ajuste (Sección \@ref(S2:SummStats)). Sin embargo, una desventaja de la representación de error es que desvía la atención de las cantidades observables $(x_i,y_i)$ a una cantidad no observable, \{$\varepsilon _i$\}. Para ilustrar, la base de muestreo, ver \{$\varepsilon _i$\} como una muestra aleatoria simple, no es directamente verificable porque no se puede observar directamente la muestra \{$\varepsilon _i$\}. Además, el supuesto de errores aditivos en E1 será problemático cuando consideremos modelos de regresión no lineales.
+
+La Figura \@ref(fig:NormalCurve) ilustra algunos de los supuestos del modelo básico de regresión lineal. Los datos ($x_1,y_1$), ($x_2,y_2$) y ($x_3,y_3$) son observados y se representan con los símbolos de trazado circulares opacos. Según el modelo, estas observaciones deben estar cerca de la línea de regresión $\mathrm{E}~y = \beta_0 + \beta_1 x$. Cada desviación de la línea es aleatoria. A menudo asumimos que la distribución de desviaciones puede representarse por una curva normal, como en la Figura \@ref(fig:NormalCurve).
+
+(ref:NormalCurve) **La distribución de la respuesta varía según el nivel de la variable explicativa.**
+    
+```{r NormalCurve, fig.cap='(ref:NormalCurve)', out.width = '60%', fig.align = 'center', echo = FALSE}
+
+#  FIGURA 2.4
+par(mar=c(2.1,.2,.2,.2),cex=1.2)
+x <- seq(-2.5, 2.5, by = 0.01)
+y <- dnorm(x, sd=0.8)
+plot(y, x, xlim=c(0, 3), ylim=c(-3, 5), type="l", xaxt="n", yaxt="n", xlab="", ylab="")
+lines(y+1, x+1)
+lines(y+2, x+2)
+axis(1, c(0, 1, 2), labels=c(expression(x[1]), expression(x[2]),expression(x[3])), cex=1.2)
+
+
+abline(0, 1)
+
+segments(0, -3, 0, 5, lty=2)
+segments(1, -3, 1, 5, lty=2)
+segments(2, -3, 2, 5, lty=2)
+
+points(0, 0.3, pch=19)
+points(1, 0.5, pch=19)
+points(2, 1.8, pch=19)
+
+arrows(0.5, 3, 0.6, 0.6, code=2, angle=10, length=0.2)
+text(0.6, 3.5, "Línea de Regresión \n Verdadera Desconocida", cex=.9)
+arrows(1.5, -1.6, 1.2, -0.1, code=2, angle=10, length=0.2)
+text(1.5, -2.3, "Cada Respuesta Tiende \n A Caer Cerca De La Altura De \n La Línea de Regresión", cex=.9)
+text(2.6, -.2, "El Centro De Cada Curva \n Normal Está En La Altura De \n La Línea de Regresión", cex=.9)
+```
+
+Los supuestos del modelo básico de regresión lineal describen la población subyacente. [Tabla 2.2](#Table22) destaca la idea de que las características de esta población pueden resumirse mediante los parámetros $\beta_0$, $\beta_1$ y $\sigma ^{2}$. En la Sección 2.1, resumimos datos de una muestra, introduciendo las estadísticas $b_0$ y $b_1$. La Sección \@ref(S2:SummStats) introducirá $s^{2}$, la estadística correspondiente al parámetro $\sigma ^{2}$.
+
+<a id=Table22></a> 
+
+[Table 2.2]: ./C2BasicLR#Table22
+
+[Table 2.2]{#Table22}. **Medidas Resumen de la Población y la Muestra** 
+
+$$
+{\small
+\begin{array}{llccc}\hline\hline
+& \text{Resumen} \\
+\text{Datos} & \text{Medidas} & \text{Intercepto} & \text{Pendiente} & \text{Varianza} \\\hline
+\text{Población} & \text{Parámetros} & \beta_0 & \beta_1 & \sigma^2 \\
+\text{Muestra} & \text{Estadísticas} & b_0 & b_1 & s^2 \\
+ \hline
+\end{array}
+}
+$$
+
+
+## ¿Es Útil el Modelo? Algunas Medidas de Resumen Básicas {#S2:SummStats}
+
+Aunque la estadística es la ciencia de resumir datos, también es el arte de argumentar con datos. Esta sección desarrolla algunas de las herramientas básicas usadas para justificar el modelo de regresión lineal básica. Un diagrama de dispersión puede proporcionar una fuerte evidencia *visual* de que $x$ influye en $y$; desarrollar evidencia *numérica* nos permitirá cuantificar la fuerza de la relación. Además, la evidencia numérica será útil cuando consideremos otros conjuntos de datos donde la evidencia gráfica no sea convincente.
+
 
 ### Particionando la Variabilidad
 
-Las desviaciones cuadradas, $\left( Y_i-\overline{Y}\right) ^2$, proporcionan una base para medir la dispersión de los datos. Si deseamos estimar la $i$-ésima variable dependiente *sin* conocimiento de $X$, entonces $\overline{Y}$ es una estimación adecuada y $Y_i- \overline{Y}$ representa la desviación de la estimación. Usamos $Total~SS=\sum_{i=1}^{n}\left( Y_i-\overline{Y}\right) ^2$, la suma total de cuadrados, para representar la variación en todas las respuestas.
+Las desviaciones cuadradas, $\left( y_i-\overline{y}\right) ^2$, proporcionan una base para medir la dispersión de los datos. Si deseamos estimar la $i$-ésima variable dependiente *sin* conocimiento de $x$, entonces $\overline{y}$ es una estimación adecuada y $y_i- \overline{y}$ representa la desviación de la estimación. Usamos $Total~SS=\sum_{i=1}^{n}\left( y_i-\overline{y}\right) ^2$, la suma total de cuadrados, para representar la variación en todas las respuestas.
 
-Supongamos ahora que también tenemos conocimiento de $X$, una variable explicativa. Usando la línea de regresión ajustada, para cada observación podemos calcular el *valor ajustado* correspondiente, $\widehat{Y}_i = b_0 + b_1X_i$. El valor ajustado es nuestra estimación *con* conocimiento de la variable explicativa. Como antes, la diferencia entre la respuesta y el valor ajustado, $Y_i- \widehat{Y}_i$, representa la desviación de esta estimación. Ahora tenemos dos "estimaciones" de $Y_i$, que son $\widehat{Y}_i$ y $\overline{Y}$. Presumiblemente, si la línea de regresión es útil, entonces $\widehat{Y}_i$ es una medida más precisa que $\overline{Y}$. Para juzgar esta utilidad, descomponemos algebraicamente la desviación total como:
+Supongamos ahora que también tenemos conocimiento de $x$, una variable explicativa. Usando la línea de regresión ajustada, para cada observación podemos calcular el *valor ajustado* correspondiente, $\widehat{y}_i = b_0 + b_1x_i$. El valor ajustado es nuestra estimación *con* conocimiento de la variable explicativa. Como antes, la diferencia entre la respuesta y el valor ajustado, $y_i- \widehat{y}_i$, representa la desviación de esta estimación. Ahora tenemos dos "estimaciones" de $y_i$, que son $\widehat{y}_i$ y $\overline{y}$. Presumiblemente, si la línea de regresión es útil, entonces $\widehat{y}_i$ es una medida más precisa que $\overline{y}$. Para juzgar esta utilidad, descomponemos algebraicamente la desviación total como:
 
 \begin{equation}
+{\small
 \begin{array}{ccccc}
-\underbrace{Y_i-\overline{Y}} & = &
-\underbrace{Y_i-\widehat{Y}_i}
-& + & \underbrace{\widehat{Y}_i-\overline{Y}} \\
+\underbrace{y_i-\overline{y}} & = &
+\underbrace{y_i-\widehat{y}_i}
+& + & \underbrace{\widehat{y}_i-\overline{y}} \\
 \text{desviación} & = & \text{desviación} & + & \text{desviación} \\
 \text{total} &  & \text{no explicada} &  & \text{explicada} \\
 \end{array}
 (\#eq:deviationdecomp) 
+}
 \end{equation}
-Interpreta esta ecuación como "la desviación sin conocimiento de $X$ es igual a la desviación con conocimiento de $X$ más la desviación explicada por $X$." La Figura \@ref(fig:ANOVADecomp) es una representación geométrica de esta descomposición. En la figura, se eligió una observación por encima de la línea, lo que da una desviación positiva de la línea de regresión ajustada, para hacer que el gráfico sea más fácil de leer. Un buen ejercicio es hacer un boceto aproximado correspondiente a la Figura \@ref(fig:ANOVADecomp) con una observación por debajo de la línea de regresión ajustada.
+Interpreta esta ecuación como "la desviación sin conocimiento de $x$ es igual a la desviación con conocimiento de $x$ más la desviación explicada por $x$." La Figura \@ref(fig:ANOVADecomp) es una representación geométrica de esta descomposición. En la figura, se eligió una observación por encima de la línea, lo que da una desviación positiva de la línea de regresión ajustada, para hacer que el gráfico sea más fácil de leer. Un buen ejercicio es hacer un boceto aproximado correspondiente a la Figura \@ref(fig:ANOVADecomp) con una observación por debajo de la línea de regresión ajustada.
 
 (ref:ANOVADecomp) **Representación geométrica de la descomposición de la desviación.** 
 
@@ -357,31 +474,31 @@ segments(-1, -4, -1, -1, lty = 2)
 points(1, 3, cex=1.5, pch=19)
 
 arrows(1.0, 1, 1.0, 3, code = 3, lty = 1, angle=15, length=0.12, lwd=2)
-text(1.3, 2.2, expression( Y-hat(Y)),cex=0.8) 
+text(1.3, 2.2, expression( y-hat(y)),cex=0.8) 
 arrows(1.0, -1, 1.0, 1, code = 3, lty = 1, angle=15, length=0.12, lwd=2)
-text(1.7, 0, expression(hat(Y)-bar(Y) == b[1](X-bar(X)) ), cex=0.8 )
+text(1.7, 0, expression(hat(y)-bar(y) == b[1](x-bar(x)) ), cex=0.8 )
 arrows(-1, -1.0, 1, -1.0, code = 3, lty = 1, angle=15, length=0.12, lwd = 2)
-text(0, -1.3, expression( X-bar(X)), cex=0.8  )
-text(3.5, 2.7, expression( hat(Y)== b[0]+ b[1]*X), cex=0.8  )
+text(0, -1.3, expression( x-bar(x)), cex=0.8  )
+text(3.5, 2.7, expression( hat(y)== b[0]+ b[1]*x), cex=0.8  )
 
 ```
 
 Ahora, a partir de la descomposición algebraica en la ecuación \@ref(eq:deviationdecomp), eleva al cuadrado cada lado de la ecuación y suma sobre todas las observaciones. Después de un poco de manipulación algebraica, esto da como resultado
 \begin{equation}
-\sum_{i=1}^{n}\left( Y_i-\overline{Y}\right) ^2=\sum_{i=1}^{n}\left(
-Y_i-\widehat{Y}_i\right) ^2+\sum_{i=1}^{n}\left( \widehat{Y}_i-
-\overline{Y}\right) ^2.
+\sum_{i=1}^{n}\left( y_i-\overline{y}\right) ^2=\sum_{i=1}^{n}\left(
+y_i-\widehat{y}_i\right) ^2+\sum_{i=1}^{n}\left( \widehat{y}_i-
+\overline{y}\right) ^2.
 (\#eq:ANOVADecomposition) 
 \end{equation}
 Reescribimos esto como $Total~SS=Error~SS+Regression~SS$ donde $SS$ significa suma de cuadrados. Interpretamos:
 
-* $Total~SS$ como la variación total sin conocimiento de $X$,
+* $Total~SS$ como la variación total sin conocimiento de $x$,
 
-* $Error~SS$ como la variación total que queda después de introducir $X$, y
+* $Error~SS$ como la variación total que queda después de introducir $x$, y
 
-* $Regression~SS$ como la diferencia entre el $Total~SS$ y el $Error~SS$, o la variación total "explicada" mediante el conocimiento de $X$.
+* $Regression~SS$ como la diferencia entre el $Total~SS$ y el $Error~SS$, o la variación total "explicada" mediante el conocimiento de $x$.
 
-Al elevar al cuadrado el lado derecho de la ecuación \@ref(eq:deviationdecomp), tenemos el término de producto cruzado $2\left( Y_i-\widehat{Y}_i\right) \left( \widehat{Y}_i-\overline{Y}\right)$. Con la "manipulación algebraica", se puede comprobar que la suma de los productos cruzados sobre todas las observaciones es cero. Este resultado no es cierto para todas las líneas ajustadas, pero es una propiedad especial de la línea ajustada por mínimos cuadrados.
+Al elevar al cuadrado el lado derecho de la ecuación \@ref(eq:deviationdecomp), tenemos el término de producto cruzado $2\left(y_i-\widehat{y}_i\right) \left( \widehat{y}_i-\overline{y}\right)$. Con la "manipulación algebraica", se puede comprobar que la suma de los productos cruzados sobre todas las observaciones es cero. Este resultado no es cierto para todas las líneas ajustadas, pero es una propiedad especial de la línea ajustada por mínimos cuadrados.
 
 En muchos casos, la descomposición de la variabilidad se reporta a través de un solo estadístico.
 
@@ -443,6 +560,7 @@ s^2=\frac{1}{n-2}\sum_{i=1}^{n}\left( y_i-\widehat{y}_i\right) ^2=
 Esto nos lleva a la *tabla de análisis de varianza* o *ANOVA*:
 
 $$
+{\small
 \begin{array}{llcl}
 \hline \hline
 \text{Tabla ANOVA} \\ \hline
@@ -451,9 +569,9 @@ $$
 \text{Error} & Error~SS & n-2 & MSE \\
 \text{Total} & Total~SS & n-1 &  \\ \hline \hline
 \end{array}
+}
 $$
 
-\scalefont{1.25}
 
 La tabla ANOVA es simplemente un dispositivo de contabilidad utilizado para
 hacer un seguimiento de las fuentes de variabilidad; aparece rutinariamente en
@@ -582,9 +700,7 @@ b = a
 lines(a,b)
 ```
 
-`
-
-r HideRCode('Fig26.Hide',"Código R para producir la Figura 2.6")`
+`r HideRCode('Fig26.Hide',"Código R para producir la Figura 2.6")`
 
 ```{r ref.label = 'BasicLSRE', eval = FALSE}
 ```
@@ -603,11 +719,12 @@ Una vez que hemos ajustado un modelo con un conjunto de datos, podemos hacer una
 Respondemos a la pregunta de si la variable explicativa es importante investigando si $\beta_1=0$. La lógica es que si $\beta_1=0$, entonces el modelo de regresión lineal básico ya no incluye una variable explicativa $x$. Por lo tanto, traducimos nuestra pregunta sobre la importancia de la variable explicativa en una pregunta más específica que puede ser respondida utilizando el marco de pruebas de hipótesis. Esta pregunta más específica es: ¿es válida la hipótesis nula $H_0:\beta_1=0$? Respondemos a esta pregunta observando la estadística de prueba:
 
 :::: {.blackbox }
-\begin{equation*}
+$$
+{\small
 t-\mathrm{ratio}=\frac{\mathrm{valor~estimado~del~parámetro~-~valor~hipotetizado}}
 {\mathrm{error~estándar~del~estimador}}.
-\end{equation*}
-
+}
+$$
 ::::
 
 En el caso de $H_0:\beta_1=0$, examinamos la razón *t* $t(b_1)=b_1/se(b_1)$ porque el valor hipotetizado de $\beta_1$ es 0. Esta es la estandarización apropiada porque, bajo la hipótesis nula y las suposiciones del modelo descritas en la Sección 2.4, la distribución muestral de $t(b_1)$ se puede demostrar que sigue una distribución *t* con $df=n-2$ grados de libertad. Así, para probar la hipótesis nula $H_0$ contra la alternativa $H_{a}:\beta_1\neq 0$, rechazamos $H_0$ a favor de $H_{a}$ si $|t(b_1)|$ excede un valor *t*. Aquí, este valor *t* es un percentil de la distribución *t* usando $df=n-2$ grados de libertad. Denotamos el nivel de significancia como $\alpha$ y este valor *t* como $t_{n-2,1-\alpha /2}$.
@@ -627,12 +744,13 @@ Tomar decisiones comparando una razón *t* con un valor *t* se llama una *prueba
 [Tabla 2.3]{#Table23} **Procedimientos de Toma de Decisiones para Probar $H_0:\beta_1 = d$**
 
 $$
+{\small
 \begin{array}{c|c}
 \hline \text{Hipótesis Alternativa} (H_{a}) & \text{Procedimiento: Rechazar } H_0 \text{ a favor de }  H_{a} \text{ si} \\ \hline
 \beta_1>d & t-\mathrm{ratio}>t_{n-2,1-\alpha }. \\
 \beta_1<d & t-\mathrm{ratio}<-t_{n-2,1-\alpha }. \\
 \beta_1\neq d & |t-\mathrm{ratio}\mathit{|}>t_{n-2,1-\alpha /2}. \\
-\end{array} \\
+\end{array} }\\
 {\small
 \begin{array}{l}
 \hline \text{Notas: El nivel de significancia es } \alpha . \text{Aquí, }t_{n-2,1-\alpha} \text{ es el percentil } (1-\alpha )\\
@@ -651,6 +769,7 @@ Alternativamente, se pueden construir valores de probabilidad ($p$-) y compararl
 [Tabla 2.4]{#Table24} **Valores de Probabilidad para Probar $H_0:\beta_1 = d$**
 
 $$
+{\small
 \begin{array}{c|ccc}
 \hline
 \text{Hipótesis} &  &  &  \\
@@ -659,7 +778,7 @@ $$
 p-value & \Pr(t_{n-2}>t-\mathrm{ratio}) &
 \Pr(t_{n-2}<t-\mathrm{ratio}) & \Pr
 (|t_{n-2}|>|t-\mathrm{ratio}\mathit{|}) \\\hline
-\end{array} \\
+\end{array} }\\
 {\small
 \begin{array}{l}
 \hline \text{Notas: Aquí, }t_{n-2} \text{ es una variable aleatoria distribuida como *t* con } df=n-2 \text{ grados de libertad.}\\
@@ -703,18 +822,17 @@ Para predecir una observación adicional, asumimos que el nivel de la variable e
 Usando nuestros estimadores de mínimos cuadrados, nuestra predicción puntual es
 $\widehat{y}_{\ast} = b_0 + b_1 x_{\ast}$, la altura de la línea de regresión ajustada en $x_{\ast}$. Podemos descomponer el error de predicción en dos partes:
 
-\begin{center}
-\begin{tabular}{ccccc}
-$\underbrace{y_{\ast} - \widehat{y}_{\ast}}$ & = &
-$\underbrace{\beta_0 - b_0 + \left( \beta_1 - b_1 \right) x_{\ast}}$
-& + & $\underbrace{\varepsilon_{\ast}}$ \\
-{\small error de predicción} & {\small =} & {\small error en la estimación
-de la } &
-{\small +} & {\small desviación de la observación adicional} \\
-&  & {\small línea de regresión en *x*}$_{\ast}$ &  & {\small
-respuesta de su media}
-\end{tabular}
-\end{center}
+$$
+\begin{array}{ccccc}
+\underbrace{y_{\ast} - \widehat{y}_{\ast}} & = &
+\underbrace{\beta_0 - b_0 + \left( \beta_1 - b_1 \right) x_{\ast}}
+& + & \underbrace{\varepsilon_{\ast}} \\
+{\small \text{error de predicción}} & {\small =} & {\small \text{error en la estimación de la }} &
+{\small +} & {\small \text{desviación de la observación adicional}} \\
+&  & {\small \text{línea de regresión en } x}_{\ast} &  & {\small
+\text{respuesta de su media}}
+\end{array}
+$$
 
 Se puede demostrar que el error estándar de la predicción es
 \begin{equation*}
@@ -800,7 +918,7 @@ Existen cinco tipos de discrepancias en el modelo que los analistas comúnmente 
 *  **Heterocedasticidad**. La suposición E3 indica que todas las observaciones tienen una variabilidad común (aunque desconocida), conocida como *homocedasticidad*. *Heterocedasticidad* es el término usado cuando la variabilidad varía según la observación.
 
 *  **Relaciones entre Desviaciones del Modelo y Variables Explicativas**.
-Si una variable explicativa tiene la capacidad de ayudar a explicar la desviación $\varepsilon $, entonces deberíamos poder usar esta información para predecir mejor $y$.
+Si una variable explicativa tiene la capacidad de ayudar a explicar la desviación $\varepsilon$, entonces deberíamos poder usar esta información para predecir mejor $y$.
 
 *  **Distribuciones No Normales**. Si la distribución de la desviación representa una desviación seria de la normalidad, entonces los procedimientos de inferencia usuales ya no son válidos.
 
@@ -813,9 +931,7 @@ Esta lista servirá al lector durante el estudio del análisis de regresión. Po
 Gran parte del análisis de residuos se realiza examinando un *residuo estandarizado*, que es un residuo dividido por su error estándar. Un error estándar aproximado del residuo es $s$; en el Capítulo 3 daremos una definición matemática precisa. Hay dos razones por las que a menudo examinamos residuos estandarizados en lugar de residuos básicos. Primero, si las respuestas están distribuidas normalmente, entonces los residuos estandarizados son aproximadamente realizaciones de una distribución normal estándar. Esto proporciona una distribución de referencia para comparar los valores de los residuos estandarizados. Por ejemplo, si un residuo estandarizado supera dos en valor absoluto, esto se considera inusualmente grande y la
 observación se llama *outlier* (punto atípico). Segundo, dado que los residuos estandarizados son adimensionales, podemos transferir la experiencia de un conjunto de datos a otro. Esto es cierto independientemente de si la distribución de referencia normal es aplicable o no.
 
-#### Puntos Atípicos y Puntos de Alta Influencia {-}
-
-Otra parte importante del análisis de residuos es la identificación de observaciones inusuales en un conjunto de datos. Debido a que las estimaciones de regresión son promedios ponderados con pesos que varían según la observación, algunas observaciones son más importantes que otras. Esta ponderación es más importante de lo que muchos usuarios del análisis de regresión se dan cuenta. De hecho, el ejemplo a continuación demuestra que una sola observación puede tener un efecto dramático en un gran conjunto de datos.
+**Puntos Atípicos y Puntos de Alta Influencia.** Otra parte importante del análisis de residuos es la identificación de observaciones inusuales en un conjunto de datos. Debido a que las estimaciones de regresión son promedios ponderados con pesos que varían según la observación, algunas observaciones son más importantes que otras. Esta ponderación es más importante de lo que muchos usuarios del análisis de regresión se dan cuenta. De hecho, el ejemplo a continuación demuestra que una sola observación puede tener un efecto dramático en un gran conjunto de datos.
 
 Hay dos direcciones en las que un punto de datos puede ser inusual: la dirección horizontal y la dirección vertical. Por "inusual", nos referimos a que una observación bajo consideración parece estar lejos de la mayoría del conjunto de datos. Una observación que es inusual en la dirección vertical se llama *punto atípico*. Una observación que es inusual en la dirección horizontal se llama *punto de alta influencia*. Una observación puede ser tanto un punto atípico como un punto de alta influencia.
 
@@ -857,7 +973,7 @@ y & 4.2 & 4.1 & 4.8 & 4.2 & 5.1 & 5.1 & 5.1 & 4.8 & 5.3 &  &  &  &  \\\\
 ")
 ```
 
-(ref:Outlier) **Gráfico de dispersión de 19 puntos base más tres puntos inusuales, etiquetados A, B y C.**
+(ref:Outlier) **Gráfico de dispersión de 19 puntos base más tres puntos inusuales, etiquetados A, B, y C.**
 
 ```{r Outlier, fig.cap='(ref:Outlier)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
@@ -881,6 +997,8 @@ text(9.9, 2.5, "C", cex=1.3)
 ```{r ref.label = 'Outlier', eval = FALSE}
 ```
 
+</div>
+
 Para investigar el efecto de cada tipo de punto aberrante, [Tabla 2.6](#Table26) resume los resultados de cuatro regresiones separadas. La primera regresión es para los diecinueve puntos base. Las otras tres regresiones utilizan los diecinueve puntos base más cada tipo de observación inusual.
 
 <a id=Table26></a> 
@@ -890,6 +1008,7 @@ Para investigar el efecto de cada tipo de punto aberrante, [Tabla 2.6](#Table26)
 [Tabla 2.6]{#Table26}. **Resultados de Cuatro Regresiones** 
 
 $$
+{\small
 \begin{array}{l|rrrrr}
 \hline Datos & b_0 & b_1 & s & R^2(\%) & t(b_1) \\
 \hline
@@ -899,6 +1018,7 @@ $$
 19 \text{ Puntos Base} ~+~ C & 3.356 & 0.155 & 0.865 & 10.3 & 1.44 \\
 \hline
 \end{array}
+}
 $$
 
 [Tabla 2.6](#Table26) muestra que una línea de regresión proporciona un buen ajuste para los diecinueve puntos base. El coeficiente de determinación, $R^2$, indica que alrededor del 89\% de la variabilidad ha sido explicada por la línea. El tamaño del error típico, $s$, es
@@ -910,9 +1030,7 @@ Un punto atípico es inusual en el valor de $y$, pero "inusual en el valor de $y
 
 Cuando se agrega el punto B a los diecinueve puntos base, la línea de regresión proporciona un ajuste *mejor*. El punto B está cerca de estar en la línea de ajuste de regresión generada por los diecinueve puntos base. Así, la línea de regresión ajustada y el tamaño del error típico, $s$, no cambian mucho. Sin embargo, $R^2$ aumenta del 89\% a casi el 95\%. Si pensamos en $R^2$ como $1-(Error~SS)/(Total~SS)$, al agregar el punto B hemos aumentado $Total~SS$, la desviación total cuadrada en los $y$, aunque el $Error~SS$ se mantiene relativamente sin cambios. El punto B no es un punto atípico, pero es un punto de alta influencia.
 
-Para mostrar cuán influyente es este punto, reduce considerablemente el valor de $y$ y llama a este el nuevo punto C. Cuando se agrega este punto a los diecinueve puntos base, la situación empeora dramáticamente. El coeficiente $R^2$ baja del 89\% al 10\%, y el $s$ más que se triplica, de 0.29 a 0.87. Además, los coeficient
-
-es de la línea de regresión cambian drásticamente.
+Para mostrar cuán influyente es este punto, reduce considerablemente el valor de $y$ y llama a este el nuevo punto C. Cuando se agrega este punto a los diecinueve puntos base, la situación empeora dramáticamente. El coeficiente $R^2$ baja del 89\% al 10\%, y el $s$ más que se triplica, de 0.29 a 0.87. Además, los coeficientes de la línea de regresión cambian drásticamente.
 
 La mayoría de los usuarios de la regresión al principio no creen que un punto de veinte pueda tener un efecto tan dramático en el ajuste de la regresión. El ajuste de una línea de regresión siempre puede mejorarse eliminando un punto atípico. Si el punto es un punto de alta influencia y no un punto atípico, no está claro si el ajuste mejorará cuando el punto sea eliminado.
 
@@ -921,9 +1039,6 @@ La mayoría de los usuarios de la regresión al principio no creen que un punto 
 ¡Simplemente porque puedes mejorar dramáticamente un ajuste de regresión omitiendo una observación no significa que siempre debas hacerlo! El objetivo del análisis de datos es comprender la información en los datos. A lo largo del texto, encontraremos muchos conjuntos de datos donde los puntos inusuales proporcionan alguna de la información más interesante sobre los datos. El objetivo de esta subsección es reconocer los efectos de los puntos inusuales; el Capítulo 5 proporcionará opciones para manejar puntos inusuales en tu análisis.
 
 Todas las disciplinas cuantitativas, como contabilidad, economía, programación lineal, etc., practican el arte del *análisis de sensibilidad*. El análisis de sensibilidad es una descripción de los cambios globales en un sistema debido a un pequeño cambio local en un elemento del sistema. Examinar los efectos de observaciones individuales en el ajuste de regresión es un tipo de análisis de sensibilidad.
-
-
-## Construyendo un Mejor Modelo: Análisis de Residuos {#S2:ResidualAnalsis}
 
 
 **Ejemplo: Ventas de Lotería -- Continuación.** La Figura \@ref(fig:PlotWithKenosha) muestra un valor atípico; el punto en la parte superior izquierda del gráfico representa un código postal que incluye a Kenosha, Wisconsin. Las ventas para este código postal son inusualmente altas dada su población. Kenosha está cerca de la frontera con Illinois; los residentes de Illinois probablemente participen en la lotería de Wisconsin, lo que aumenta efectivamente el potencial de ventas en Kenosha. [Tabla 2.7](#Table27) resume el ajuste de la regresión tanto con como sin este código postal.
@@ -935,12 +1050,14 @@ Todas las disciplinas cuantitativas, como contabilidad, economía, programación
 [Tabla 2.7]{#Table27}. **Resultados de la Regresión con y sin Kenosha**
 
 $$
+{\small
 \begin{array}{l|rrrrr}
  \hline
 \text{Datos} & b_0 & b_1 & s & R^2(\%) & t(b_1) \\ \hline
 \text{Con Kenosha} & 469.7 & 0.647 & 3,792 & 78.5 & 13.26 \\
 \text{Sin Kenosha} & -43.5 & 0.662 & 2,728 & 88.3 & 18.82 \\ \hline
 \end{array}
+}
 $$
 
 (ref:PlotWithKenosha) **Gráfico de dispersión de SALES versus POP, con el valor atípico correspondiente a Kenosha marcado.**
@@ -1009,11 +1126,11 @@ mtext("Cuantiles Muestrales", side=2,at=9050,las=1,cex=1.1, adj=.5)
 
 En esta sección, estudiamos una aplicación financiera, el Modelo de Valoración de Activos Financieros, a menudo conocido por el acrónimo CAPM. El nombre es algo engañoso, ya que el modelo realmente trata sobre *rendimientos* basados en activos de capital, no sobre los precios en sí mismos. Los tipos de activos que examinamos son valores de acciones que se negocian en un mercado activo, como la Bolsa de Valores de Nueva York (NYSE). Para una acción en la bolsa, podemos relacionar los rendimientos con los precios mediante la siguiente expresión:
 
-\scalefont{0.9}
-\begin{equation*}
+$$
+{\small
 \mathrm{rendimiento =}\frac{\mathrm{precio~al~final~de~un~período+dividendos-precio~al~inicio~de~un~período}}{\mathrm{precio~al~inicio~de~un~período}}.
-\end{equation*}
-\scalefont{1.1111}
+}
+$$
 
 Si podemos estimar los rendimientos que genera una acción, entonces el conocimiento del precio al inicio de un período financiero genérico nos permite estimar el valor al final del período (precio final más dividendos). Por lo tanto, seguimos la práctica estándar y modelamos los rendimientos de una acción.
 
@@ -1398,8 +1515,9 @@ b_{1}=\frac{\sum_{i=1}^{n}\left( y_i-\overline{y}\right) \left( x_i-
 $$
 d. Establece la fórmula comúnmente utilizada
 $$
-b_{1}=\frac{\sum_{i=1}^{n}x_iy_i-n\overline{x}~\overline{y}}{\sum_{i=1}^{n}x_i^2
-- n\overline{x}^2}.
+b_{1}=
+\frac{\sum_{i=1}^{n}x_iy_i-n\overline{x}~\overline{y}}
+{\sum_{i=1}^{n}x_i^2 - n\overline{x}^2}.
 $$
 
 2.9 **Interpretación de los coeficientes asociados con una variable explicativa binaria.** Supón que $x_i$ solo toma los valores 0 y 1. De las $n$ observaciones, $n_1$ toman el valor $x=0$. Estas $n_1$ observaciones tienen un valor promedio $y$ de $\overline{y}_1$. Las restantes $n-n_1$ observaciones tienen el valor $x=1$ y un valor promedio $y$ de $\overline{y}_2$. Utiliza el Ejercicio 2.8 para demostrar que $b_1 = \overline{y}_2 - \overline{y}_1.$
@@ -1486,6 +1604,7 @@ graficar los datos puede revelar información importante que no es evidente en l
 [Tabla 2.9]{#Table29}. **Datos de Anscombe (1973)**
 
 $$
+{\small
 \begin{array}{c|rrrrrr}
 \hline
 obs &  &  &  &  &  &  \\
@@ -1513,6 +1632,7 @@ num & x_1 & y_1 & y_2 & y_3 & x_2 & y_4 \\
 11 & 5 & 5.68 & 4.74 & 5.73 & 19 & 12.50 \\
 \hline
 \end{array}
+}
 $$
 
 a. Calcula los promedios y desviaciones estándar de cada columna de datos. Verifica que los promedios y desviaciones estándar de cada una de las columnas $x$ son iguales, dentro de dos decimales, y de manera similar para cada una de las columnas $y$.  
@@ -1569,7 +1689,6 @@ tableMat  <- BookSummStats(Xymat)
 colnames(tableMat)  <- c("Media" , "Mediana" , "Desviación Estándar" , 
                          "Mínimo" , "Máximo")
 rownames(tableMat)  <- c("RETURN", "REV" , "LnREV", "PRICEIPO")
-#tableMat1 <- format(round(tableMat, digits=0), big.mark = ',')
 
 TableGen1(TableData=tableMat, 
          TextTitle='Estadísticas Resumen de Cada Variable', 
@@ -1589,6 +1708,7 @@ a. Hipotetizas que las empresas más grandes, medida por ingresos, son más esta
 [Tabla 2.11]{#Table211}. **Resultados de la Regresión con Ingresos Logarítmicos** 
 
 $$
+{\small
 \begin{array}{l|rrr}
 \hline
  &  & \text{Error} &  \\
@@ -1598,6 +1718,7 @@ $$
 \text{LnREV}  & -0.090 & 0.046 & -1.97 \\
 \hline s = 0.8136, & R^2 = 0.03452 \\ \hline
 \end{array}
+}
 $$
 
 b. Ingresos logarítmicos y retornos. <br>
@@ -1794,7 +1915,7 @@ Por ejemplo, supongamos que $c=10$ y
 1 & 2 \\
 6 & 8
 \end{array}
-\right) \text{~~~~ entonces ~~~~ }\mathbf{B}=c\mathbf{A}=\left(
+\right) ~~~~~\text{entonces} ~~~~\mathbf{B}=c\mathbf{A}=\left(
 \begin{array}{cc}
 10 & 20 \\
 60 & 80
@@ -2323,7 +2444,6 @@ Por ejemplo, si $\mathbf{A} = (a_1, a_2, \ldots,a_n)= \mathbf{a}^{\prime}$ y **B
 \sum_{j=1}^{i-1} a_i a_j \mathrm{Cov}(y_i, y_j).
 \end{equation*}
 
-**Definición - Distribución Normal Multivariante.** Un vector de variables aleatorias $\mathbf{y} = \left(y_1, \ldots, y_n \right)^{\prime}$ se dice que es *normal multivariante* si todas las combinaciones lineales de la forma $\sum_{i=1}^n a_i y_i$ están distribuidas normalmente. En este caso, escribimos $\mathbf{y} \sim N (\mathbf{\boldsymbol \mu}, \mathbf{\Sigma} )$, donde $\mathbf{\boldsymbol \mu} = \mathrm{E}~ \mathbf{y}$ es el valor esperado de **y** y $\mathbf{\Sigma}= \mathrm{Var}~\mathbf{y}$ es la matriz de varianza-covarianza de **y**. Según la definición, tenemos que $\mathbf{y}\sim N (\mathbf{\boldsymbol \mu}, \mathbf{\Sigma} )$ implica que $\mathbf{a^{\prime}y}\sim N (\mathbf{a^{\prime} \boldsymbol \mu}, \mathbf{
-
-a^{\prime}\Sigma a})$. Así, si $y_i$ son i.i.d., entonces $\sum_{i=1}^n a_i y_i$ está distribuido normalmente con media $\mu \sum_{i=1}^n a_i$ y varianza $\sigma ^2 \sum_{i=1}^n a_i ^2$.
+**Definición - Distribución Normal Multivariante.** Un vector de variables aleatorias $\mathbf{y} = \left(y_1, \ldots, y_n \right)^{\prime}$ se dice que es *normal multivariante* si todas las combinaciones lineales de la forma $\sum_{i=1}^n a_i y_i$ están distribuidas normalmente. En este caso, escribimos $\mathbf{y} \sim N (\mathbf{\boldsymbol \mu}, \mathbf{\Sigma} )$, donde $\mathbf{\boldsymbol \mu} = \mathrm{E}~ \mathbf{y}$ es el valor esperado de **y** y $\mathbf{\Sigma}= \mathrm{Var}~\mathbf{y}$ es la matriz de varianza-covarianza de **y**. Según la definición, tenemos que $\mathbf{y}\sim N (\mathbf{\boldsymbol \mu}, \mathbf{\Sigma} )$ implica que $\mathbf{a^{\prime}y}\sim N (\mathbf{a^{\prime} \boldsymbol \mu}, \mathbf{a^{\prime}\Sigma a})$. Así, si $y_i$ son i.i.d., entonces $\sum_{i=1}^n a_i y_i$ está distribuido normalmente con media 
+$\mu \sum_{i=1}^n a_i$ y varianza $\sigma ^2 \sum_{i=1}^n a_i ^2$.
 
