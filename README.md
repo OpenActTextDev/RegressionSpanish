@@ -8,4 +8,4 @@ Here are the instructions given to ChapGPT for the translation:
 
 Here are the instructions given to ChapGPT for the conversion from latex to R markdown.
 
->The following is part of latex file. Please translate this into R markdown.
+>The following is part of latex file. Please translate this into R markdown. Please use `$` for inline equations and `$$` for other equations, consistent with MathJax format. Use MathJax for rendering the mathematical expression. This is conversion ("translation") only - no additional interpretations.
