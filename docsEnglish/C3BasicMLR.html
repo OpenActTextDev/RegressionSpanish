@@ -530,55 +530,55 @@ Figure 3.1: <strong>Income versus Face Amount of Term Life Insurance.</strong> T
 <a id="displayCode.Fig31.Hide" href="javascript:togglecode('toggleCode.Fig31.Hide','displayCode.Fig31.Hide');"><i><strong>R Code to Produce Table 3.1 and Figure 3.1</strong></i></a>
 </h5>
 <div id="toggleCode.Fig31.Hide" style="display: none">
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="C3BasicMLR.html#cb30-1" tabindex="-1"></a>Term <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/TermLife.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb30-2"><a href="C3BasicMLR.html#cb30-2" tabindex="-1"></a><span class="co">#  PICK THE SUBSET OF THE DATA CORRESPONDING TO TERM PURCHASE</span></span>
+<span id="cb30-3"><a href="C3BasicMLR.html#cb30-3" tabindex="-1"></a>Term2  <span class="ot">&lt;-</span><span class="fu">subset</span>(Term, FACE <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb30-4"><a href="C3BasicMLR.html#cb30-4" tabindex="-1"></a><span class="co">#  TABLE 3.1 SUMMARY STATISTICS</span></span>
+<span id="cb30-5"><a href="C3BasicMLR.html#cb30-5" tabindex="-1"></a>BookSummStats <span class="ot">&lt;-</span> <span class="cf">function</span>(Xymat){</span>
+<span id="cb30-6"><a href="C3BasicMLR.html#cb30-6" tabindex="-1"></a>meanSummary <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, mean,  <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
+<span id="cb30-7"><a href="C3BasicMLR.html#cb30-7" tabindex="-1"></a>sdSummary   <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, sd,    <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
+<span id="cb30-8"><a href="C3BasicMLR.html#cb30-8" tabindex="-1"></a>minSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, min,   <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
+<span id="cb30-9"><a href="C3BasicMLR.html#cb30-9" tabindex="-1"></a>maxSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, max,   <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
+<span id="cb30-10"><a href="C3BasicMLR.html#cb30-10" tabindex="-1"></a>medSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, median,<span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
+<span id="cb30-11"><a href="C3BasicMLR.html#cb30-11" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meanSummary, medSummary, sdSummary, minSummary, maxSummary)</span>
+<span id="cb30-12"><a href="C3BasicMLR.html#cb30-12" tabindex="-1"></a><span class="fu">return</span>(tableMat)</span>
+<span id="cb30-13"><a href="C3BasicMLR.html#cb30-13" tabindex="-1"></a>}</span>
+<span id="cb30-14"><a href="C3BasicMLR.html#cb30-14" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="C3BasicMLR.html#cb30-15" tabindex="-1"></a>LNFACE <span class="ot">&lt;-</span> <span class="fu">log</span>(Term2<span class="sc">$</span>FACE)</span>
+<span id="cb30-16"><a href="C3BasicMLR.html#cb30-16" tabindex="-1"></a>LNINCOME <span class="ot">&lt;-</span> <span class="fu">log</span>(Term2<span class="sc">$</span>INCOME)</span>
+<span id="cb30-17"><a href="C3BasicMLR.html#cb30-17" tabindex="-1"></a></span>
+<span id="cb30-18"><a href="C3BasicMLR.html#cb30-18" tabindex="-1"></a>Xymat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(Term2<span class="sc">$</span>FACE,</span>
+<span id="cb30-19"><a href="C3BasicMLR.html#cb30-19" tabindex="-1"></a>Term2<span class="sc">$</span>INCOME,Term2<span class="sc">$</span>EDUCATION, Term2<span class="sc">$</span>NUMHH,LNFACE, LNINCOME) ) </span>
+<span id="cb30-20"><a href="C3BasicMLR.html#cb30-20" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">BookSummStats</span>(Xymat)</span>
+<span id="cb30-21"><a href="C3BasicMLR.html#cb30-21" tabindex="-1"></a></span>
+<span id="cb30-22"><a href="C3BasicMLR.html#cb30-22" tabindex="-1"></a><span class="fu">colnames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mean&quot;</span> , <span class="st">&quot;Median&quot;</span> , <span class="st">&quot;Standard Deviation&quot;</span> , </span>
+<span id="cb30-23"><a href="C3BasicMLR.html#cb30-23" tabindex="-1"></a>                         <span class="st">&quot;Minimum&quot;</span> , <span class="st">&quot;Maximum&quot;</span>)</span>
+<span id="cb30-24"><a href="C3BasicMLR.html#cb30-24" tabindex="-1"></a><span class="fu">rownames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;FACE&quot;</span>, <span class="st">&quot;INCOME&quot;</span>, <span class="st">&quot;EDUCATION&quot;</span>, <span class="st">&quot;NUMHH&quot;</span>,</span>
+<span id="cb30-25"><a href="C3BasicMLR.html#cb30-25" tabindex="-1"></a>                         <span class="st">&quot;LNFACE&quot;</span>, <span class="st">&quot;LNINCOME&quot;</span>)</span>
+<span id="cb30-26"><a href="C3BasicMLR.html#cb30-26" tabindex="-1"></a>tableMat1 <span class="ot">&lt;-</span> tableMat</span>
+<span id="cb30-27"><a href="C3BasicMLR.html#cb30-27" tabindex="-1"></a>tableMat1[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>,]  <span class="ot">&lt;-</span> <span class="fu">round</span>(tableMat1[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>,], <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb30-28"><a href="C3BasicMLR.html#cb30-28" tabindex="-1"></a>tableMat1[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">round</span>(tableMat[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,], <span class="at">digits=</span><span class="dv">0</span>), <span class="at">big.mark =</span> <span class="st">&#39;,&#39;</span>)</span>
+<span id="cb30-29"><a href="C3BasicMLR.html#cb30-29" tabindex="-1"></a></span>
+<span id="cb30-30"><a href="C3BasicMLR.html#cb30-30" tabindex="-1"></a></span>
+<span id="cb30-31"><a href="C3BasicMLR.html#cb30-31" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableMat1, </span>
+<span id="cb30-32"><a href="C3BasicMLR.html#cb30-32" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Term Life Summary Statistics&#39;</span>, </span>
+<span id="cb30-33"><a href="C3BasicMLR.html#cb30-33" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">3</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb30-34"><a href="C3BasicMLR.html#cb30-34" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5) </span></code></pre></div>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="C3BasicMLR.html#cb31-1" tabindex="-1"></a>Term <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/TermLife.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
 <span id="cb31-2"><a href="C3BasicMLR.html#cb31-2" tabindex="-1"></a><span class="co">#  PICK THE SUBSET OF THE DATA CORRESPONDING TO TERM PURCHASE</span></span>
 <span id="cb31-3"><a href="C3BasicMLR.html#cb31-3" tabindex="-1"></a>Term2  <span class="ot">&lt;-</span><span class="fu">subset</span>(Term, FACE <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb31-4"><a href="C3BasicMLR.html#cb31-4" tabindex="-1"></a><span class="co">#  TABLE 3.1 SUMMARY STATISTICS</span></span>
-<span id="cb31-5"><a href="C3BasicMLR.html#cb31-5" tabindex="-1"></a>BookSummStats <span class="ot">&lt;-</span> <span class="cf">function</span>(Xymat){</span>
-<span id="cb31-6"><a href="C3BasicMLR.html#cb31-6" tabindex="-1"></a>meanSummary <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, mean,  <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
-<span id="cb31-7"><a href="C3BasicMLR.html#cb31-7" tabindex="-1"></a>sdSummary   <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, sd,    <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
-<span id="cb31-8"><a href="C3BasicMLR.html#cb31-8" tabindex="-1"></a>minSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, min,   <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
-<span id="cb31-9"><a href="C3BasicMLR.html#cb31-9" tabindex="-1"></a>maxSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, max,   <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
-<span id="cb31-10"><a href="C3BasicMLR.html#cb31-10" tabindex="-1"></a>medSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, median,<span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
-<span id="cb31-11"><a href="C3BasicMLR.html#cb31-11" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meanSummary, medSummary, sdSummary, minSummary, maxSummary)</span>
-<span id="cb31-12"><a href="C3BasicMLR.html#cb31-12" tabindex="-1"></a><span class="fu">return</span>(tableMat)</span>
-<span id="cb31-13"><a href="C3BasicMLR.html#cb31-13" tabindex="-1"></a>}</span>
-<span id="cb31-14"><a href="C3BasicMLR.html#cb31-14" tabindex="-1"></a></span>
-<span id="cb31-15"><a href="C3BasicMLR.html#cb31-15" tabindex="-1"></a>LNFACE <span class="ot">&lt;-</span> <span class="fu">log</span>(Term2<span class="sc">$</span>FACE)</span>
-<span id="cb31-16"><a href="C3BasicMLR.html#cb31-16" tabindex="-1"></a>LNINCOME <span class="ot">&lt;-</span> <span class="fu">log</span>(Term2<span class="sc">$</span>INCOME)</span>
-<span id="cb31-17"><a href="C3BasicMLR.html#cb31-17" tabindex="-1"></a></span>
-<span id="cb31-18"><a href="C3BasicMLR.html#cb31-18" tabindex="-1"></a>Xymat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(Term2<span class="sc">$</span>FACE,</span>
-<span id="cb31-19"><a href="C3BasicMLR.html#cb31-19" tabindex="-1"></a>Term2<span class="sc">$</span>INCOME,Term2<span class="sc">$</span>EDUCATION, Term2<span class="sc">$</span>NUMHH,LNFACE, LNINCOME) ) </span>
-<span id="cb31-20"><a href="C3BasicMLR.html#cb31-20" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">BookSummStats</span>(Xymat)</span>
-<span id="cb31-21"><a href="C3BasicMLR.html#cb31-21" tabindex="-1"></a></span>
-<span id="cb31-22"><a href="C3BasicMLR.html#cb31-22" tabindex="-1"></a><span class="fu">colnames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mean&quot;</span> , <span class="st">&quot;Median&quot;</span> , <span class="st">&quot;Standard Deviation&quot;</span> , </span>
-<span id="cb31-23"><a href="C3BasicMLR.html#cb31-23" tabindex="-1"></a>                         <span class="st">&quot;Minimum&quot;</span> , <span class="st">&quot;Maximum&quot;</span>)</span>
-<span id="cb31-24"><a href="C3BasicMLR.html#cb31-24" tabindex="-1"></a><span class="fu">rownames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;FACE&quot;</span>, <span class="st">&quot;INCOME&quot;</span>, <span class="st">&quot;EDUCATION&quot;</span>, <span class="st">&quot;NUMHH&quot;</span>,</span>
-<span id="cb31-25"><a href="C3BasicMLR.html#cb31-25" tabindex="-1"></a>                         <span class="st">&quot;LNFACE&quot;</span>, <span class="st">&quot;LNINCOME&quot;</span>)</span>
-<span id="cb31-26"><a href="C3BasicMLR.html#cb31-26" tabindex="-1"></a>tableMat1 <span class="ot">&lt;-</span> tableMat</span>
-<span id="cb31-27"><a href="C3BasicMLR.html#cb31-27" tabindex="-1"></a>tableMat1[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>,]  <span class="ot">&lt;-</span> <span class="fu">round</span>(tableMat1[<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>,], <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb31-28"><a href="C3BasicMLR.html#cb31-28" tabindex="-1"></a>tableMat1[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,] <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">round</span>(tableMat[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,], <span class="at">digits=</span><span class="dv">0</span>), <span class="at">big.mark =</span> <span class="st">&#39;,&#39;</span>)</span>
-<span id="cb31-29"><a href="C3BasicMLR.html#cb31-29" tabindex="-1"></a></span>
-<span id="cb31-30"><a href="C3BasicMLR.html#cb31-30" tabindex="-1"></a></span>
-<span id="cb31-31"><a href="C3BasicMLR.html#cb31-31" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableMat1, </span>
-<span id="cb31-32"><a href="C3BasicMLR.html#cb31-32" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Term Life Summary Statistics&#39;</span>, </span>
-<span id="cb31-33"><a href="C3BasicMLR.html#cb31-33" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">3</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
-<span id="cb31-34"><a href="C3BasicMLR.html#cb31-34" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5) </span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="C3BasicMLR.html#cb32-1" tabindex="-1"></a>Term <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/TermLife.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb32-2"><a href="C3BasicMLR.html#cb32-2" tabindex="-1"></a><span class="co">#  PICK THE SUBSET OF THE DATA CORRESPONDING TO TERM PURCHASE</span></span>
-<span id="cb32-3"><a href="C3BasicMLR.html#cb32-3" tabindex="-1"></a>Term2  <span class="ot">&lt;-</span><span class="fu">subset</span>(Term, FACE <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb32-4"><a href="C3BasicMLR.html#cb32-4" tabindex="-1"></a>Term2<span class="sc">$</span>LNFACE <span class="ot">&lt;-</span> <span class="fu">log</span>(Term2<span class="sc">$</span>FACE)</span>
-<span id="cb32-5"><a href="C3BasicMLR.html#cb32-5" tabindex="-1"></a>Term2<span class="sc">$</span>LNINCOME <span class="ot">&lt;-</span> <span class="fu">log</span>(Term2<span class="sc">$</span>INCOME)</span>
-<span id="cb32-6"><a href="C3BasicMLR.html#cb32-6" tabindex="-1"></a><span class="co">#  FIGURE 3.1</span></span>
-<span id="cb32-7"><a href="C3BasicMLR.html#cb32-7" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="dv">4</span>,<span class="fl">1.5</span>,<span class="dv">1</span>))</span>
-<span id="cb32-8"><a href="C3BasicMLR.html#cb32-8" tabindex="-1"></a><span class="fu">plot</span>(Term2<span class="sc">$</span>INCOME, Term2<span class="sc">$</span>FACE, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;INCOME (in Millions)&quot;</span>)</span>
-<span id="cb32-9"><a href="C3BasicMLR.html#cb32-9" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;FACE (in Millions)&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">15200000</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span>.<span class="dv">4</span>)</span>
-<span id="cb32-10"><a href="C3BasicMLR.html#cb32-10" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>,<span class="at">at=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">14000000</span>,<span class="dv">2000000</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;2&quot;</span>, </span>
-<span id="cb32-11"><a href="C3BasicMLR.html#cb32-11" tabindex="-1"></a>    <span class="st">&quot;4&quot;</span>, <span class="st">&quot;6&quot;</span>, <span class="st">&quot;8&quot;</span>,<span class="st">&quot;10&quot;</span>,<span class="st">&quot;12&quot;</span>,<span class="st">&quot;14&quot;</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb32-12"><a href="C3BasicMLR.html#cb32-12" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>,<span class="at">at=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">11000000</span>,<span class="dv">1000000</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;0&quot;</span>,<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>,<span class="st">&quot;3&quot;</span>, </span>
-<span id="cb32-13"><a href="C3BasicMLR.html#cb32-13" tabindex="-1"></a>    <span class="st">&quot;4&quot;</span>,<span class="st">&quot;5&quot;</span>, <span class="st">&quot;6&quot;</span>,<span class="st">&quot;7&quot;</span>,<span class="st">&quot;8&quot;</span>,<span class="st">&quot;9&quot;</span>,<span class="st">&quot;10&quot;</span>,<span class="st">&quot;11&quot;</span>))</span>
-<span id="cb32-14"><a href="C3BasicMLR.html#cb32-14" tabindex="-1"></a><span class="fu">plot</span>(Term2<span class="sc">$</span>LNINCOME, Term2<span class="sc">$</span>LNFACE, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;LNINCOME&quot;</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb32-15"><a href="C3BasicMLR.html#cb32-15" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;LNFACE&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="fl">16.8</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span><span class="fl">1.1</span>)</span></code></pre></div>
+<span id="cb31-4"><a href="C3BasicMLR.html#cb31-4" tabindex="-1"></a>Term2<span class="sc">$</span>LNFACE <span class="ot">&lt;-</span> <span class="fu">log</span>(Term2<span class="sc">$</span>FACE)</span>
+<span id="cb31-5"><a href="C3BasicMLR.html#cb31-5" tabindex="-1"></a>Term2<span class="sc">$</span>LNINCOME <span class="ot">&lt;-</span> <span class="fu">log</span>(Term2<span class="sc">$</span>INCOME)</span>
+<span id="cb31-6"><a href="C3BasicMLR.html#cb31-6" tabindex="-1"></a><span class="co">#  FIGURE 3.1</span></span>
+<span id="cb31-7"><a href="C3BasicMLR.html#cb31-7" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="dv">4</span>,<span class="fl">1.5</span>,<span class="dv">1</span>))</span>
+<span id="cb31-8"><a href="C3BasicMLR.html#cb31-8" tabindex="-1"></a><span class="fu">plot</span>(Term2<span class="sc">$</span>INCOME, Term2<span class="sc">$</span>FACE, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;INCOME (in Millions)&quot;</span>)</span>
+<span id="cb31-9"><a href="C3BasicMLR.html#cb31-9" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;FACE (in Millions)&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">15200000</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span>.<span class="dv">4</span>)</span>
+<span id="cb31-10"><a href="C3BasicMLR.html#cb31-10" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>,<span class="at">at=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">14000000</span>,<span class="dv">2000000</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;2&quot;</span>, </span>
+<span id="cb31-11"><a href="C3BasicMLR.html#cb31-11" tabindex="-1"></a>    <span class="st">&quot;4&quot;</span>, <span class="st">&quot;6&quot;</span>, <span class="st">&quot;8&quot;</span>,<span class="st">&quot;10&quot;</span>,<span class="st">&quot;12&quot;</span>,<span class="st">&quot;14&quot;</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb31-12"><a href="C3BasicMLR.html#cb31-12" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>,<span class="at">at=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">11000000</span>,<span class="dv">1000000</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;0&quot;</span>,<span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>,<span class="st">&quot;3&quot;</span>, </span>
+<span id="cb31-13"><a href="C3BasicMLR.html#cb31-13" tabindex="-1"></a>    <span class="st">&quot;4&quot;</span>,<span class="st">&quot;5&quot;</span>, <span class="st">&quot;6&quot;</span>,<span class="st">&quot;7&quot;</span>,<span class="st">&quot;8&quot;</span>,<span class="st">&quot;9&quot;</span>,<span class="st">&quot;10&quot;</span>,<span class="st">&quot;11&quot;</span>))</span>
+<span id="cb31-14"><a href="C3BasicMLR.html#cb31-14" tabindex="-1"></a><span class="fu">plot</span>(Term2<span class="sc">$</span>LNINCOME, Term2<span class="sc">$</span>LNFACE, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;LNINCOME&quot;</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb31-15"><a href="C3BasicMLR.html#cb31-15" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;LNFACE&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="fl">16.8</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span><span class="fl">1.1</span>)</span></code></pre></div>
 </div>
 <p>The Term Life data are <em>multivariate</em> in the sense that several measurements are taken on each household. It is difficult to produce a graph of observations in three or more dimensions on a two-dimensional platform, such as a piece of paper, that is not confusing, misleading, or both. To summarize graphically multivariate data in regression applications, consider using a <em>scatterplot matrix</em> such as in Figure <a href="C3BasicMLR.html#fig:TermLifeSMatrix">3.2</a>. Each square of this figure represents a simple plot of one variable versus another. For each square, the row variable gives the units of the vertical axis and the column variable gives the units of the horizontal axis. The matrix is sometimes called a <em>half scatterplot matrix</em> because only the lower left-hand elements are presented.</p>
 
@@ -655,20 +655,20 @@ LNFACE
 <a id="displayCode.Fig32.Hide" href="javascript:togglecode('toggleCode.Fig32.Hide','displayCode.Fig32.Hide');"><i><strong>R Code to Produce Table 3.2 and Figure 3.2</strong></i></a>
 </h5>
 <div id="toggleCode.Fig32.Hide" style="display: none">
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="C3BasicMLR.html#cb33-1" tabindex="-1"></a>tableCor <span class="ot">&lt;-</span> <span class="fu">cor</span>(Term1)</span>
-<span id="cb33-2"><a href="C3BasicMLR.html#cb33-2" tabindex="-1"></a>tableCor <span class="ot">&lt;-</span> <span class="fu">round</span>(tableCor, <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb33-3"><a href="C3BasicMLR.html#cb33-3" tabindex="-1"></a>tableCor[<span class="fu">upper.tri</span>(tableCor, <span class="at">diag =</span> <span class="cn">TRUE</span>)] <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb33-4"><a href="C3BasicMLR.html#cb33-4" tabindex="-1"></a>tablePrint <span class="ot">&lt;-</span> tableCor[<span class="sc">-</span><span class="dv">1</span>,]</span>
-<span id="cb33-5"><a href="C3BasicMLR.html#cb33-5" tabindex="-1"></a>tablePrint <span class="ot">&lt;-</span> tablePrint[,<span class="sc">-</span><span class="dv">4</span>]</span>
-<span id="cb33-6"><a href="C3BasicMLR.html#cb33-6" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tablePrint, </span>
-<span id="cb33-7"><a href="C3BasicMLR.html#cb33-7" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Term Life Correlations&#39;</span>, </span>
-<span id="cb33-8"><a href="C3BasicMLR.html#cb33-8" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">3</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb33-9"><a href="C3BasicMLR.html#cb33-9" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5)</span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="C3BasicMLR.html#cb34-1" tabindex="-1"></a><span class="co">#  FIGURE 3.2</span></span>
-<span id="cb34-2"><a href="C3BasicMLR.html#cb34-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">2.1</span>,<span class="fl">2.1</span>,<span class="fl">2.1</span>), <span class="at">cex=</span><span class="fl">1.1</span>)</span>
-<span id="cb34-3"><a href="C3BasicMLR.html#cb34-3" tabindex="-1"></a>varTerm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;NUMHH&quot;</span>,<span class="st">&quot;EDUCATION&quot;</span>, <span class="st">&quot;LNINCOME&quot;</span>, <span class="st">&quot;LNFACE&quot;</span>)</span>
-<span id="cb34-4"><a href="C3BasicMLR.html#cb34-4" tabindex="-1"></a>Term1 <span class="ot">&lt;-</span> Term2[varTerm]</span>
-<span id="cb34-5"><a href="C3BasicMLR.html#cb34-5" tabindex="-1"></a><span class="fu">pairs</span>(Term1,<span class="at">upper.panel=</span><span class="cn">NULL</span>, <span class="at">gap=</span><span class="dv">0</span>,<span class="at">cex.labels=</span><span class="fl">1.25</span>, <span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="C3BasicMLR.html#cb32-1" tabindex="-1"></a>tableCor <span class="ot">&lt;-</span> <span class="fu">cor</span>(Term1)</span>
+<span id="cb32-2"><a href="C3BasicMLR.html#cb32-2" tabindex="-1"></a>tableCor <span class="ot">&lt;-</span> <span class="fu">round</span>(tableCor, <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb32-3"><a href="C3BasicMLR.html#cb32-3" tabindex="-1"></a>tableCor[<span class="fu">upper.tri</span>(tableCor, <span class="at">diag =</span> <span class="cn">TRUE</span>)] <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb32-4"><a href="C3BasicMLR.html#cb32-4" tabindex="-1"></a>tablePrint <span class="ot">&lt;-</span> tableCor[<span class="sc">-</span><span class="dv">1</span>,]</span>
+<span id="cb32-5"><a href="C3BasicMLR.html#cb32-5" tabindex="-1"></a>tablePrint <span class="ot">&lt;-</span> tablePrint[,<span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb32-6"><a href="C3BasicMLR.html#cb32-6" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tablePrint, </span>
+<span id="cb32-7"><a href="C3BasicMLR.html#cb32-7" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Term Life Correlations&#39;</span>, </span>
+<span id="cb32-8"><a href="C3BasicMLR.html#cb32-8" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">3</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb32-9"><a href="C3BasicMLR.html#cb32-9" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="C3BasicMLR.html#cb33-1" tabindex="-1"></a><span class="co">#  FIGURE 3.2</span></span>
+<span id="cb33-2"><a href="C3BasicMLR.html#cb33-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">2.1</span>,<span class="fl">2.1</span>,<span class="fl">2.1</span>), <span class="at">cex=</span><span class="fl">1.1</span>)</span>
+<span id="cb33-3"><a href="C3BasicMLR.html#cb33-3" tabindex="-1"></a>varTerm <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;NUMHH&quot;</span>,<span class="st">&quot;EDUCATION&quot;</span>, <span class="st">&quot;LNINCOME&quot;</span>, <span class="st">&quot;LNFACE&quot;</span>)</span>
+<span id="cb33-4"><a href="C3BasicMLR.html#cb33-4" tabindex="-1"></a>Term1 <span class="ot">&lt;-</span> Term2[varTerm]</span>
+<span id="cb33-5"><a href="C3BasicMLR.html#cb33-5" tabindex="-1"></a><span class="fu">pairs</span>(Term1,<span class="at">upper.panel=</span><span class="cn">NULL</span>, <span class="at">gap=</span><span class="dv">0</span>,<span class="at">cex.labels=</span><span class="fl">1.25</span>, <span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="method-of-least-squares-1" class="section level4 unnumbered hasAnchor">
@@ -1432,7 +1432,7 @@ b_j \pm t_{n-(k+1),1-\alpha /2}~se(b_j).
 <a id="displayCode.Motivation.1Silly" href="javascript:togglecode('toggleCode.Motivation.1Silly','displayCode.Motivation.1Silly');"><i><strong></strong></i></a>
 </h5>
 <div id="toggleCode.Motivation.1Silly" style="display: none">
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="C3BasicMLR.html#cb35-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly. Create a table just to update the counter...&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="C3BasicMLR.html#cb34-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly. Create a table just to update the counter...&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:unnamed-chunk-45">Table 3.4: </span>Silly. Create a table just to update the counter…</caption>
 <thead>
@@ -1446,7 +1446,7 @@ b_j \pm t_{n-(k+1),1-\alpha /2}~se(b_j).
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="C3BasicMLR.html#cb36-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="C3BasicMLR.html#cb35-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:unnamed-chunk-46">Table 3.5: </span>Silly.</caption>
 <thead>
@@ -1460,7 +1460,7 @@ b_j \pm t_{n-(k+1),1-\alpha /2}~se(b_j).
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="C3BasicMLR.html#cb37-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="C3BasicMLR.html#cb36-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
 <table>
 <caption><span id="tab:unnamed-chunk-47">Table 3.6: </span>Silly.</caption>
 <thead>
@@ -1746,30 +1746,30 @@ PRICE
 <a id="displayCode.Refrig.Hide" href="javascript:togglecode('toggleCode.Refrig.Hide','displayCode.Refrig.Hide');"><i><strong>R Code to Produce Tables 3.7 and 3.8</strong></i></a>
 </h5>
 <div id="toggleCode.Refrig.Hide" style="display: none">
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="C3BasicMLR.html#cb38-1" tabindex="-1"></a>Refrig <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/Refrigerator.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb38-2"><a href="C3BasicMLR.html#cb38-2" tabindex="-1"></a><span class="co">#  TABLE 3.7 SUMMARY STATISTICS</span></span>
-<span id="cb38-3"><a href="C3BasicMLR.html#cb38-3" tabindex="-1"></a>varFrig <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ECOST&quot;</span>, <span class="st">&quot;RSIZE&quot;</span>, <span class="st">&quot;FSIZE&quot;</span>, <span class="st">&quot;SHELVES&quot;</span>, <span class="st">&quot;FEATURES&quot;</span>, <span class="st">&quot;PRICE&quot;</span>)</span>
-<span id="cb38-4"><a href="C3BasicMLR.html#cb38-4" tabindex="-1"></a>Refrig1 <span class="ot">&lt;-</span> Refrig[varFrig]</span>
-<span id="cb38-5"><a href="C3BasicMLR.html#cb38-5" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">BookSummStats</span>(Refrig1)</span>
-<span id="cb38-6"><a href="C3BasicMLR.html#cb38-6" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="C3BasicMLR.html#cb38-7" tabindex="-1"></a><span class="fu">colnames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mean&quot;</span> , <span class="st">&quot;Median&quot;</span> , <span class="st">&quot;Standard Deviation&quot;</span> , </span>
-<span id="cb38-8"><a href="C3BasicMLR.html#cb38-8" tabindex="-1"></a>                         <span class="st">&quot;Minimum&quot;</span> , <span class="st">&quot;Maximum&quot;</span>)</span>
-<span id="cb38-9"><a href="C3BasicMLR.html#cb38-9" tabindex="-1"></a><span class="fu">rownames</span>(tableMat)  <span class="ot">&lt;-</span> varFrig </span>
-<span id="cb38-10"><a href="C3BasicMLR.html#cb38-10" tabindex="-1"></a></span>
-<span id="cb38-11"><a href="C3BasicMLR.html#cb38-11" tabindex="-1"></a><span class="co"># tableMat1[1:2,] &lt;- format(round(tableMat[1:2,], digits=0), big.mark = &#39;,&#39;)</span></span>
-<span id="cb38-12"><a href="C3BasicMLR.html#cb38-12" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableMat, </span>
-<span id="cb38-13"><a href="C3BasicMLR.html#cb38-13" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Summary Statistics for each variable for 37 Refrigerators&#39;</span>, </span>
-<span id="cb38-14"><a href="C3BasicMLR.html#cb38-14" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">3</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
-<span id="cb38-15"><a href="C3BasicMLR.html#cb38-15" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5) </span></code></pre></div>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="C3BasicMLR.html#cb39-1" tabindex="-1"></a>tableCor <span class="ot">&lt;-</span> <span class="fu">cor</span>(Refrig1)</span>
-<span id="cb39-2"><a href="C3BasicMLR.html#cb39-2" tabindex="-1"></a>tableCor <span class="ot">&lt;-</span> <span class="fu">round</span>(tableCor, <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb39-3"><a href="C3BasicMLR.html#cb39-3" tabindex="-1"></a>tableCor[<span class="fu">upper.tri</span>(tableCor, <span class="at">diag =</span> <span class="cn">TRUE</span>)] <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb39-4"><a href="C3BasicMLR.html#cb39-4" tabindex="-1"></a>tablePrint <span class="ot">&lt;-</span> tableCor[<span class="sc">-</span><span class="dv">1</span>,]</span>
-<span id="cb39-5"><a href="C3BasicMLR.html#cb39-5" tabindex="-1"></a>tablePrint <span class="ot">&lt;-</span> tablePrint[,<span class="sc">-</span><span class="dv">6</span>]</span>
-<span id="cb39-6"><a href="C3BasicMLR.html#cb39-6" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tablePrint, </span>
-<span id="cb39-7"><a href="C3BasicMLR.html#cb39-7" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Matrix of Correlation Coefficients&#39;</span>, </span>
-<span id="cb39-8"><a href="C3BasicMLR.html#cb39-8" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">3</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
-<span id="cb39-9"><a href="C3BasicMLR.html#cb39-9" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="C3BasicMLR.html#cb37-1" tabindex="-1"></a>Refrig <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/Refrigerator.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb37-2"><a href="C3BasicMLR.html#cb37-2" tabindex="-1"></a><span class="co">#  TABLE 3.7 SUMMARY STATISTICS</span></span>
+<span id="cb37-3"><a href="C3BasicMLR.html#cb37-3" tabindex="-1"></a>varFrig <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ECOST&quot;</span>, <span class="st">&quot;RSIZE&quot;</span>, <span class="st">&quot;FSIZE&quot;</span>, <span class="st">&quot;SHELVES&quot;</span>, <span class="st">&quot;FEATURES&quot;</span>, <span class="st">&quot;PRICE&quot;</span>)</span>
+<span id="cb37-4"><a href="C3BasicMLR.html#cb37-4" tabindex="-1"></a>Refrig1 <span class="ot">&lt;-</span> Refrig[varFrig]</span>
+<span id="cb37-5"><a href="C3BasicMLR.html#cb37-5" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">BookSummStats</span>(Refrig1)</span>
+<span id="cb37-6"><a href="C3BasicMLR.html#cb37-6" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="C3BasicMLR.html#cb37-7" tabindex="-1"></a><span class="fu">colnames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mean&quot;</span> , <span class="st">&quot;Median&quot;</span> , <span class="st">&quot;Standard Deviation&quot;</span> , </span>
+<span id="cb37-8"><a href="C3BasicMLR.html#cb37-8" tabindex="-1"></a>                         <span class="st">&quot;Minimum&quot;</span> , <span class="st">&quot;Maximum&quot;</span>)</span>
+<span id="cb37-9"><a href="C3BasicMLR.html#cb37-9" tabindex="-1"></a><span class="fu">rownames</span>(tableMat)  <span class="ot">&lt;-</span> varFrig </span>
+<span id="cb37-10"><a href="C3BasicMLR.html#cb37-10" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="C3BasicMLR.html#cb37-11" tabindex="-1"></a><span class="co"># tableMat1[1:2,] &lt;- format(round(tableMat[1:2,], digits=0), big.mark = &#39;,&#39;)</span></span>
+<span id="cb37-12"><a href="C3BasicMLR.html#cb37-12" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableMat, </span>
+<span id="cb37-13"><a href="C3BasicMLR.html#cb37-13" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Summary Statistics for each variable for 37 Refrigerators&#39;</span>, </span>
+<span id="cb37-14"><a href="C3BasicMLR.html#cb37-14" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">3</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb37-15"><a href="C3BasicMLR.html#cb37-15" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5) </span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="C3BasicMLR.html#cb38-1" tabindex="-1"></a>tableCor <span class="ot">&lt;-</span> <span class="fu">cor</span>(Refrig1)</span>
+<span id="cb38-2"><a href="C3BasicMLR.html#cb38-2" tabindex="-1"></a>tableCor <span class="ot">&lt;-</span> <span class="fu">round</span>(tableCor, <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb38-3"><a href="C3BasicMLR.html#cb38-3" tabindex="-1"></a>tableCor[<span class="fu">upper.tri</span>(tableCor, <span class="at">diag =</span> <span class="cn">TRUE</span>)] <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb38-4"><a href="C3BasicMLR.html#cb38-4" tabindex="-1"></a>tablePrint <span class="ot">&lt;-</span> tableCor[<span class="sc">-</span><span class="dv">1</span>,]</span>
+<span id="cb38-5"><a href="C3BasicMLR.html#cb38-5" tabindex="-1"></a>tablePrint <span class="ot">&lt;-</span> tablePrint[,<span class="sc">-</span><span class="dv">6</span>]</span>
+<span id="cb38-6"><a href="C3BasicMLR.html#cb38-6" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tablePrint, </span>
+<span id="cb38-7"><a href="C3BasicMLR.html#cb38-7" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Matrix of Correlation Coefficients&#39;</span>, </span>
+<span id="cb38-8"><a href="C3BasicMLR.html#cb38-8" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">3</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb38-9"><a href="C3BasicMLR.html#cb38-9" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5)</span></code></pre></div>
 </div>
 <p>A regression model was fit to the data. The fitted regression equation appears in Table <a href="C3BasicMLR.html#tab:RefrigFittedModel">3.9</a>, with <span class="math inline">\(s=60.65\)</span> and <span class="math inline">\(R^2=83.8\%\)</span>.</p>
 <table class=" lightable-classic table table-striped table-condensed" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
@@ -1895,28 +1895,28 @@ FEATURES
 <p><br></p>
 
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:RefrigAddedVarPlot"></span>
-<img src="RegressionMarkdown_files/figure-html/RefrigAddedVarPlot-1.png" alt="An added variable plot. The residuals from the regression of PRICE on the explanatory variables, omitting ECOST, are on the vertical axis. On the horizontal axis are the residuals from the regression fit of ECOST on the other explanatory variables. The correlation coefficient is -0.48." width="60%" />
+<img src="RegressionMarkdown_files/figure-html/RefrigAddedVarPlot-1.png" alt="An added variable plot. The residuals from the regression of PRICE on the explanatory variables, omitting ECOST, are on the horizontal axis. On the vertical axis are the residuals from the regression fit of ECOST on the other explanatory variables. The correlation coefficient is -0.48." width="60%" />
 <p class="caption">
-Figure 3.4: <strong>An added variable plot.</strong> The residuals from the regression of PRICE on the explanatory variables, omitting ECOST, are on the vertical axis. On the horizontal axis are the residuals from the regression fit of ECOST on the other explanatory variables. The correlation coefficient is -0.48.
+Figure 3.4: <strong>An added variable plot.</strong> The residuals from the regression of PRICE on the explanatory variables, omitting ECOST, are on the horizontal axis. On the vertical axis are the residuals from the regression fit of ECOST on the other explanatory variables. The correlation coefficient is -0.48.
 </p>
 </div>
 <h5 style="text-align: center;">
 <a id="displayCode.Refrig2.Hide" href="javascript:togglecode('toggleCode.Refrig2.Hide','displayCode.Refrig2.Hide');"><i><strong>R Code to Produce Figure 3.4</strong></i></a>
 </h5>
 <div id="toggleCode.Refrig2.Hide" style="display: none">
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="C3BasicMLR.html#cb40-1" tabindex="-1"></a>model.refrig1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(PRICE <span class="sc">~</span> RSIZE <span class="sc">+</span> FSIZE <span class="sc">+</span> SHELVES <span class="sc">+</span> FEATURES, <span class="at">data =</span> Refrig1)</span>
-<span id="cb40-2"><a href="C3BasicMLR.html#cb40-2" tabindex="-1"></a><span class="co">#summary(model.refrig1)</span></span>
-<span id="cb40-3"><a href="C3BasicMLR.html#cb40-3" tabindex="-1"></a>model.refrig2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECOST <span class="sc">~</span> RSIZE <span class="sc">+</span> FSIZE <span class="sc">+</span> SHELVES <span class="sc">+</span> FEATURES, <span class="at">data =</span> Refrig1)</span>
-<span id="cb40-4"><a href="C3BasicMLR.html#cb40-4" tabindex="-1"></a><span class="co">#summary(model.refrig2)</span></span>
-<span id="cb40-5"><a href="C3BasicMLR.html#cb40-5" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="C3BasicMLR.html#cb40-6" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="dv">4</span>,.<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">cex=</span><span class="fl">1.1</span>)</span>
-<span id="cb40-7"><a href="C3BasicMLR.html#cb40-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(model.refrig2),<span class="fu">residuals</span>(model.refrig1),</span>
-<span id="cb40-8"><a href="C3BasicMLR.html#cb40-8" tabindex="-1"></a>     <span class="at">xlab=</span><span class="fu">expression</span>(e[<span class="dv">1</span>]),<span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb40-9"><a href="C3BasicMLR.html#cb40-9" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">expression</span>(e[<span class="dv">2</span>]), <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">0</span>, <span class="at">line=</span><span class="dv">3</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="C3BasicMLR.html#cb39-1" tabindex="-1"></a>model.refrig1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(PRICE <span class="sc">~</span> RSIZE <span class="sc">+</span> FSIZE <span class="sc">+</span> SHELVES <span class="sc">+</span> FEATURES, <span class="at">data =</span> Refrig1)</span>
+<span id="cb39-2"><a href="C3BasicMLR.html#cb39-2" tabindex="-1"></a><span class="co">#summary(model.refrig1)</span></span>
+<span id="cb39-3"><a href="C3BasicMLR.html#cb39-3" tabindex="-1"></a>model.refrig2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ECOST <span class="sc">~</span> RSIZE <span class="sc">+</span> FSIZE <span class="sc">+</span> SHELVES <span class="sc">+</span> FEATURES, <span class="at">data =</span> Refrig1)</span>
+<span id="cb39-4"><a href="C3BasicMLR.html#cb39-4" tabindex="-1"></a><span class="co">#summary(model.refrig2)</span></span>
+<span id="cb39-5"><a href="C3BasicMLR.html#cb39-5" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="C3BasicMLR.html#cb39-6" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="dv">4</span>,.<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">cex=</span><span class="fl">1.1</span>)</span>
+<span id="cb39-7"><a href="C3BasicMLR.html#cb39-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(model.refrig2),<span class="fu">residuals</span>(model.refrig1),</span>
+<span id="cb39-8"><a href="C3BasicMLR.html#cb39-8" tabindex="-1"></a>     <span class="at">xlab=</span><span class="fu">expression</span>(e[<span class="dv">1</span>]),<span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb39-9"><a href="C3BasicMLR.html#cb39-9" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">expression</span>(e[<span class="dv">2</span>]), <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">0</span>, <span class="at">line=</span><span class="dv">3</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>)</span></code></pre></div>
 </div>
 <p>The error <span class="math inline">\(\varepsilon\)</span> can be interpreted as the natural variation in a sample. In many situations, this natural variation is small compared to the patterns evident in the nonrandom regression component. Thus, it is useful to think of the error, <span class="math inline">\(\varepsilon_i = y_i - \left( \beta_0 + \beta_1 x_{i1} + \ldots + \beta_k x_{ik} \right)\)</span>, as the response after controlling for the effects of the explanatory variables. In Section 3.3, we saw that a random error can be approximated by a residual, <span class="math inline">\(e_i = y_i - \left( b_0 + b_1 x_{i1} + \cdots + b_k x_{ik} \right)\)</span>. Thus, in the same way, we may think of a residual as the response after “controlling for” the effects of the explanatory variables.</p>
 <p>With this in mind, we can interpret the vertical axis of Figure <a href="C3BasicMLR.html#fig:RefrigAddedVarPlot">3.4</a> as the refrigerator PRICE controlled for effects of RSIZE, FSIZE, SHELVES, and FEATURES. Similarly, we can interpret the horizontal axis as the ECOST controlled for effects of RSIZE, FSIZE, SHELVES, and FEATURES. The plot then provides a graphical representation of the relation between PRICE and ECOST, after controlling for the other explanatory variables. For comparison, a scatter plot of PRICE and ECOST (not shown here) does not control for other explanatory variables. Thus, it is possible that the positive relationship between PRICE and ECOST is not due to a causal relationship but rather one or more additional variables that cause both variables to be large.</p>
-<p>For example, from Table <a href="C3BasicMLR.html#tab:RefrigSumStats">3.7</a>, we see that the freezer size (FSIZE) is positively correlated with both ECOST and PRICE. It certainly seems reasonable that increasing the size of a freezer would cause both the energy cost and the price to increase. Rather, the positive correlation may be due to the fact that large values of FSIZE mean large values of both ECOST and PRICE.</p>
+<p>For example, from Table <a href="C3BasicMLR.html#tab:RefrigCorr">3.8</a>, we see that the freezer size (FSIZE) is positively correlated with both ECOST and PRICE. It certainly seems reasonable that increasing the size of a freezer would cause both the energy cost and the price to increase. Rather, the positive correlation may be due to the fact that large values of FSIZE mean large values of both ECOST and PRICE.</p>
 <p>Variables left out of a regression are called <em>omitted variables</em>. This omission could cause a serious problem in a regression model fit; regression coefficients could be not only strongly significant when they should not be, but they may also be of the incorrect sign. Selecting the proper set of variables to be included in the regression model is an important task; it is the subject of Chapters 5 and 6.</p>
 </div>
 </div>
@@ -2089,14 +2089,14 @@ Figure 3.8: <strong>Plot of <span class="math inline">\(\mathrm{E}~y = \beta_0 +
 <a id="displayCode.Fig38.Hide" href="javascript:togglecode('toggleCode.Fig38.Hide','displayCode.Fig38.Hide');"><i><strong>R Code to Produce Figure 3.8</strong></i></a>
 </h5>
 <div id="toggleCode.Fig38.Hide" style="display: none">
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="C3BasicMLR.html#cb41-1" tabindex="-1"></a><span class="co">#  FIGURE 3.8</span></span>
-<span id="cb41-2"><a href="C3BasicMLR.html#cb41-2" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">3</span>, <span class="dv">16</span>, <span class="at">length=</span><span class="dv">15</span>)</span>
-<span id="cb41-3"><a href="C3BasicMLR.html#cb41-3" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="at">length=</span><span class="dv">15</span>)</span>
-<span id="cb41-4"><a href="C3BasicMLR.html#cb41-4" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(X1,X2) {y <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>X1 <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>X2 <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>(X1<span class="dv">-10</span>)<span class="sc">*</span>(X2<span class="dv">-10</span>)<span class="sc">-</span> .<span class="dv">4</span><span class="sc">*</span>(X1<span class="dv">-10</span>)<span class="sc">^</span><span class="dv">2</span><span class="fl">+.4</span><span class="sc">*</span>(X2<span class="dv">-10</span>)<span class="sc">^</span><span class="dv">2</span>}</span>
-<span id="cb41-5"><a href="C3BasicMLR.html#cb41-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">outer</span>(X1, X2, f)</span>
-<span id="cb41-6"><a href="C3BasicMLR.html#cb41-6" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">2.1</span>,<span class="dv">0</span>,.<span class="dv">1</span>))</span>
-<span id="cb41-7"><a href="C3BasicMLR.html#cb41-7" tabindex="-1"></a><span class="fu">persp</span>(X1, X2, y, <span class="at">theta =</span> <span class="dv">30</span>, <span class="at">phi =</span> <span class="dv">30</span>, <span class="at">expand =</span> <span class="fl">0.5</span>, </span>
-<span id="cb41-8"><a href="C3BasicMLR.html#cb41-8" tabindex="-1"></a>   <span class="at">ticktype=</span><span class="st">&quot;detailed&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="C3BasicMLR.html#cb40-1" tabindex="-1"></a><span class="co">#  FIGURE 3.8</span></span>
+<span id="cb40-2"><a href="C3BasicMLR.html#cb40-2" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">3</span>, <span class="dv">16</span>, <span class="at">length=</span><span class="dv">15</span>)</span>
+<span id="cb40-3"><a href="C3BasicMLR.html#cb40-3" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="at">length=</span><span class="dv">15</span>)</span>
+<span id="cb40-4"><a href="C3BasicMLR.html#cb40-4" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(X1,X2) {y <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>X1 <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>X2 <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>(X1<span class="dv">-10</span>)<span class="sc">*</span>(X2<span class="dv">-10</span>)<span class="sc">-</span> .<span class="dv">4</span><span class="sc">*</span>(X1<span class="dv">-10</span>)<span class="sc">^</span><span class="dv">2</span><span class="fl">+.4</span><span class="sc">*</span>(X2<span class="dv">-10</span>)<span class="sc">^</span><span class="dv">2</span>}</span>
+<span id="cb40-5"><a href="C3BasicMLR.html#cb40-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">outer</span>(X1, X2, f)</span>
+<span id="cb40-6"><a href="C3BasicMLR.html#cb40-6" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">2.1</span>,<span class="dv">0</span>,.<span class="dv">1</span>))</span>
+<span id="cb40-7"><a href="C3BasicMLR.html#cb40-7" tabindex="-1"></a><span class="fu">persp</span>(X1, X2, y, <span class="at">theta =</span> <span class="dv">30</span>, <span class="at">phi =</span> <span class="dv">30</span>, <span class="at">expand =</span> <span class="fl">0.5</span>, </span>
+<span id="cb40-8"><a href="C3BasicMLR.html#cb40-8" tabindex="-1"></a>   <span class="at">ticktype=</span><span class="st">&quot;detailed&quot;</span>)</span></code></pre></div>
 </div>
 <hr />
 </div>
@@ -2114,15 +2114,15 @@ Figure 3.9: <strong>The marginal change in <span class="math inline">\(\mathrm{E
 <a id="displayCode.Fig39.Hide" href="javascript:togglecode('toggleCode.Fig39.Hide','displayCode.Fig39.Hide');"><i><strong>R Code to Produce Figure 3.9</strong></i></a>
 </h5>
 <div id="toggleCode.Fig39.Hide" style="display: none">
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="C3BasicMLR.html#cb42-1" tabindex="-1"></a><span class="co">#  FIGURE 3.9</span></span>
-<span id="cb42-2"><a href="C3BasicMLR.html#cb42-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">90000</span>,<span class="dv">105000</span>,<span class="dv">20</span>)</span>
-<span id="cb42-3"><a href="C3BasicMLR.html#cb42-3" tabindex="-1"></a>Ey <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">*</span>x <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>(x<span class="dv">-97500</span>)<span class="sc">*</span>(x<span class="sc">&gt;</span><span class="dv">97500</span>)</span>
-<span id="cb42-4"><a href="C3BasicMLR.html#cb42-4" tabindex="-1"></a></span>
-<span id="cb42-5"><a href="C3BasicMLR.html#cb42-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.1</span>,.<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb42-6"><a href="C3BasicMLR.html#cb42-6" tabindex="-1"></a><span class="fu">plot</span>(x,Ey, <span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>,  <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb42-7"><a href="C3BasicMLR.html#cb42-7" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;E y&quot;</span>, <span class="at">side=</span><span class="dv">2</span>,<span class="at">las=</span><span class="dv">1</span>, <span class="at">line=</span><span class="fl">1.5</span>,<span class="at">cex=</span><span class="fl">1.1</span>)</span>
-<span id="cb42-8"><a href="C3BasicMLR.html#cb42-8" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">102000</span>,<span class="dv">102000</span>,<span class="fu">expression</span>(beta[<span class="dv">1</span>]<span class="sc">+</span>beta[<span class="dv">2</span>]),<span class="at">cex=</span><span class="fl">1.1</span>)</span>
-<span id="cb42-9"><a href="C3BasicMLR.html#cb42-9" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">94000</span>,<span class="dv">92000</span>,<span class="fu">expression</span>(beta[<span class="dv">1</span>]),<span class="at">cex=</span><span class="fl">1.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="C3BasicMLR.html#cb41-1" tabindex="-1"></a><span class="co">#  FIGURE 3.9</span></span>
+<span id="cb41-2"><a href="C3BasicMLR.html#cb41-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">90000</span>,<span class="dv">105000</span>,<span class="dv">20</span>)</span>
+<span id="cb41-3"><a href="C3BasicMLR.html#cb41-3" tabindex="-1"></a>Ey <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">*</span>x <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>(x<span class="dv">-97500</span>)<span class="sc">*</span>(x<span class="sc">&gt;</span><span class="dv">97500</span>)</span>
+<span id="cb41-4"><a href="C3BasicMLR.html#cb41-4" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="C3BasicMLR.html#cb41-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.1</span>,.<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb41-6"><a href="C3BasicMLR.html#cb41-6" tabindex="-1"></a><span class="fu">plot</span>(x,Ey, <span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>,  <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb41-7"><a href="C3BasicMLR.html#cb41-7" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;E y&quot;</span>, <span class="at">side=</span><span class="dv">2</span>,<span class="at">las=</span><span class="dv">1</span>, <span class="at">line=</span><span class="fl">1.5</span>,<span class="at">cex=</span><span class="fl">1.1</span>)</span>
+<span id="cb41-8"><a href="C3BasicMLR.html#cb41-8" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">102000</span>,<span class="dv">102000</span>,<span class="fu">expression</span>(beta[<span class="dv">1</span>]<span class="sc">+</span>beta[<span class="dv">2</span>]),<span class="at">cex=</span><span class="fl">1.1</span>)</span>
+<span id="cb41-9"><a href="C3BasicMLR.html#cb41-9" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">94000</span>,<span class="dv">92000</span>,<span class="fu">expression</span>(beta[<span class="dv">1</span>]),<span class="at">cex=</span><span class="fl">1.1</span>)</span></code></pre></div>
 </div>
 <p>A rationale for this model is that, in 2007, individuals paid 7.65% of their income for Social Security taxes up to 97,500. No Social Security taxes are excised on wages in excess of 97,500. Thus, one theory is that, for wages in excess of $97,500, individuals have more disposable income per dollar and thus should be more willing to make charitable contributions.</p>
 <p>To model this relationship, define the binary variable <span class="math inline">\(z\)</span> to be zero if <span class="math inline">\(x &lt; 97,500\)</span> and to be one if <span class="math inline">\(x \ge 97,500\)</span>. Define the regression function to be <span class="math inline">\(\mathrm{E}~y = \beta_0 + \beta_1 x + \beta_2 z (x - 97,500)\)</span>. This can be written as:</p>
@@ -2152,12 +2152,12 @@ Figure 3.10: <strong>Plot of expected commissions (<span class="math inline">\(\
 <a id="displayCode.Fig310.Hide" href="javascript:togglecode('toggleCode.Fig310.Hide','displayCode.Fig310.Hide');"><i><strong>R Code to Produce Figure 3.10</strong></i></a>
 </h5>
 <div id="toggleCode.Fig310.Hide" style="display: none">
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="C3BasicMLR.html#cb43-1" tabindex="-1"></a><span class="co">#  FIGURE 3.10</span></span>
-<span id="cb43-2"><a href="C3BasicMLR.html#cb43-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">4.5</span>,.<span class="dv">1</span>,.<span class="dv">1</span>))</span>
-<span id="cb43-3"><a href="C3BasicMLR.html#cb43-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">50</span>,<span class="dv">150</span>,.<span class="dv">1</span>)</span>
-<span id="cb43-4"><a href="C3BasicMLR.html#cb43-4" tabindex="-1"></a>Ey <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">-</span> <span class="dv">1</span><span class="sc">*</span>(x<span class="dv">-100</span>)<span class="sc">*</span>(x<span class="sc">&gt;</span><span class="dv">100</span>) <span class="sc">-</span> <span class="dv">20</span><span class="sc">*</span>(x<span class="sc">&gt;</span><span class="dv">100</span>)</span>
-<span id="cb43-5"><a href="C3BasicMLR.html#cb43-5" tabindex="-1"></a><span class="fu">plot</span>(x,Ey, <span class="at">type=</span><span class="st">&quot;p&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">font.lab=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.1</span>, <span class="at">cex=</span>.<span class="dv">25</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb43-6"><a href="C3BasicMLR.html#cb43-6" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;E y&quot;</span>, <span class="at">side=</span><span class="dv">2</span>,<span class="at">las=</span><span class="dv">1</span>, <span class="at">line=</span><span class="fl">2.8</span>,<span class="at">cex=</span><span class="fl">1.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="C3BasicMLR.html#cb42-1" tabindex="-1"></a><span class="co">#  FIGURE 3.10</span></span>
+<span id="cb42-2"><a href="C3BasicMLR.html#cb42-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">4.5</span>,.<span class="dv">1</span>,.<span class="dv">1</span>))</span>
+<span id="cb42-3"><a href="C3BasicMLR.html#cb42-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">50</span>,<span class="dv">150</span>,.<span class="dv">1</span>)</span>
+<span id="cb42-4"><a href="C3BasicMLR.html#cb42-4" tabindex="-1"></a>Ey <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">-</span> <span class="dv">1</span><span class="sc">*</span>(x<span class="dv">-100</span>)<span class="sc">*</span>(x<span class="sc">&gt;</span><span class="dv">100</span>) <span class="sc">-</span> <span class="dv">20</span><span class="sc">*</span>(x<span class="sc">&gt;</span><span class="dv">100</span>)</span>
+<span id="cb42-5"><a href="C3BasicMLR.html#cb42-5" tabindex="-1"></a><span class="fu">plot</span>(x,Ey, <span class="at">type=</span><span class="st">&quot;p&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">font.lab=</span><span class="dv">1</span>, <span class="at">cex.lab=</span><span class="fl">1.1</span>, <span class="at">cex=</span>.<span class="dv">25</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb42-6"><a href="C3BasicMLR.html#cb42-6" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;E y&quot;</span>, <span class="at">side=</span><span class="dv">2</span>,<span class="at">las=</span><span class="dv">1</span>, <span class="at">line=</span><span class="fl">2.8</span>,<span class="at">cex=</span><span class="fl">1.1</span>)</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -2186,7 +2186,7 @@ collection.</p>
 </div>
 <div id="exercises-2" class="section level2 hasAnchor" number="3.7">
 <h2><span class="header-section-number">3.7</span> Exercises<a href="C3BasicMLR.html#exercises-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>3.1. Consider a fictitious data set of <span class="math inline">\(n = 100\)</span> observations with <span class="math inline">\(s_y = 80\)</span>. We run a regression with three explanatory variables to get <span class="math inline">\(s = 50\)</span>.</p>
+<p>3.1. Consider a fictitious data set of <span class="math inline">\(n = 100\)</span> observations with <span class="math inline">\(s_y = 100\)</span>. We run a regression with three explanatory variables to get <span class="math inline">\(s = 50\)</span>.</p>
 <ol style="list-style-type: lower-alpha">
 <li>Calculate the adjusted coefficient of determination, <span class="math inline">\(R_a^2\)</span>.</li>
 <li>Complete the ANOVA table.</li>
@@ -2237,9 +2237,9 @@ c. Calculate the (unadjusted) coefficient of determination, <span class="math i
 <span class="math display">\[
 \small{
     \mathbf{b} = \begin{pmatrix}
-    0.15 \\
-    0.692 \\
-    2.88
+    0.1538 \\
+    0.6923 \\
+    2.8846
     \end{pmatrix}
     ~~~\text{and}~~~
     \left(\mathbf{X^{\prime} X} \right)^{-1} = \begin{pmatrix}
@@ -2274,7 +2274,7 @@ c. Calculate the (unadjusted) coefficient of determination, <span class="math i
     \text{PRC55P} &amp; \text{Percent of population that is 55 or older} \\
     \text{HHMEDAGE} &amp; \text{Household median age} \\
     \text{MEDINC} &amp; \text{Estimated median household income, in \$1000s} \\
-    \text{POP} &amp; \text{Population, in thousands} \\ \hline
+    \text{POP} &amp; \text{Population} \\ \hline
 \end{array}
 }
 \]</span></p>
@@ -2285,13 +2285,13 @@ c. Calculate the (unadjusted) coefficient of determination, <span class="math i
 <li>Fit a linear model of SALES on all eight explanatory variables. Summarize the fit of this model by citing the residual standard deviation, <span class="math inline">\(s\)</span>, the coefficient of determination, <span class="math inline">\(R^2\)</span> and its adjusted version, <span class="math inline">\(R_a^2\)</span>.</li>
 <li>Based on your part (d) model fit, is MEDSCHYR a statistically significant variable? To respond to this question, use a formal test of hypothesis. State your null and alternative hypotheses, decision-making criterion and your decision-making rule.</li>
 <li>Now fit a more parsimonious model, using SALES as the dependent variable and MEDSCHYR, MEDHVL and POP as explanatory variables. Summarize the fit of this model by citing the residual standard deviation, <span class="math inline">\(s\)</span>, the coefficient of determination, <span class="math inline">\(R^2\)</span> and its adjusted version, <span class="math inline">\(R_a^2\)</span>. How do these values compare to the model fit in part (d)?</li>
-<li>Note that the sign of the regression coefficient associated with MEDSCHYR is now negative. To help interpret this coefficient, compute the corresponding partial correlation coefficient. What is the interpretation of this coefficient?</li>
+<li>Note that the sign of the regression coefficient associated with MEDSCHYR is negative. To help interpret this coefficient, compute the corresponding partial correlation coefficient. What is the interpretation of this coefficient?</li>
 <li>To get further insights into the relation between MEDSCHYR and SALES, produce an added variable plot controlling for the effects of MEDHVL and POP. Check that the correlation associated with this plot agrees with your answer in part (g).</li>
 <li>Re-run the regression in part (f), after removing observation 11. Cite the basic summary statistics from this regression. For this model fit, is MEDSCHYR a statistically significant variable? To respond to this question, use a formal test of hypothesis. State your null and alternative hypotheses, decision-making criterion and your decision-making rule.</li>
 <li>Re-run the regression in part (f), after removing observation 9. Cite the basic summary statistics from this regression.</li>
 </ol>
 <p>3.5. <strong>Insurance Company Expenses</strong>. This exercise considers insurance company data from the NAIC and described in Exercise 1.</p>
-<p>Table <a href="C3BasicMLR.html#tab:NAICVariables">3.10</a> describes several variables that can be used to explain expenses. As with Segal’s (2002) study of life insurers, firm “outputs” consist of premiums written (for property and casualty, these are subdivided into personal and commercial lines) as well as losses (subdivided into short and long tail lines). ASSETS and CASH are commonly used measures of the size of a company. GROUP, STOCK, and MUTUAL describe the organizational structure. Firm “inputs” were gathered from the Bureau of Labor Statistics (BLS, from the Occupational Employee Statistics program). WAGESTAFF is calculated as the average wage in the state where the insurance company is headquartered. AGENTWAGE is calculated as the weighted average of annual wages of the brokerage industry, weighted by the percentage of gross premium written in each state.</p>
+<p>Table <a href="C3BasicMLR.html#tab:NAICVariables">3.10</a> describes several variables that can be used to explain expenses. As with Segal’s (2002) study of life insurers, firm “outputs” consist of premiums written (for property and casualty, these are subdivided into personal and commercial lines) as well as losses (subdivided into short and long tail lines). ASSETS and CASH are commonly used measures of the size of a company. GROUP, STOCK, and MUTUAL describe the organizational structure. Firm “inputs” were gathered from the Bureau of Labor Statistics (BLS, from the Occupational Employee Statistics program). STAFFWAGE is calculated as the average wage in the state where the insurance company is headquartered. AGENTWAGE is calculated as the weighted average of annual wages of the brokerage industry, weighted by the percentage of gross premium written in each state.</p>
 <table class=" lightable-classic table table-striped table-condensed" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:NAICVariables">Table 3.10: </span><strong>Insurer Expense Variables</strong>
@@ -2317,7 +2317,7 @@ Total expenses incurred, in millions of dollars
 </tr>
 <tr>
 <td style="text-align:left;width: 2.5cm; border-right:1px solid;width: 4cm; ">
-LOSSLONG
+LONGLOSS
 </td>
 <td style="text-align:left;width: 1.5cm; width: 12cm; ">
 Losses incurred for long tail lines, in millions of dollars
@@ -2325,7 +2325,7 @@ Losses incurred for long tail lines, in millions of dollars
 </tr>
 <tr>
 <td style="text-align:left;width: 2.5cm; border-right:1px solid;width: 4cm; ">
-LOSSSHORT
+SHORTLOSS
 </td>
 <td style="text-align:left;width: 1.5cm; width: 12cm; ">
 Losses incurred for short tail lines, in millions of dollars
@@ -2419,7 +2419,7 @@ Provide a boxplot of LNEXPENSES by level of GROUP. Which level of group has high
 <li><p>Linear Model on All Variables <br>
 Fit a linear model of LNEXPENSES on all eleven explanatory variables. Summarize the fit of this model by citing the residual standard deviation, <span class="math inline">\(s\)</span>, the coefficient of determination, <span class="math inline">\(R^2\)</span>, and its adjusted version, <span class="math inline">\(R^2_a\)</span>. <br></p></li>
 <li><p>Reduced Model <br>
-Fit a linear model of LNEXPENSES on a reduced model using eight explanatory variables, dropping CASH, STOCK, and MUTUAL. For the explanatory variables, include ASSETS, GROUP, both versions of losses, and gross premiums, as well as the two BLS variables. <br></p>
+Fit a linear model of LNEXPENSES on a reduced model using eight explanatory variables, dropping LNCASH, STOCK, and MUTUAL. For the explanatory variables, include ASSETS, GROUP, both versions of losses, and gross premiums, as well as the two BLS variables. <br></p>
 <p><strong>f(i).</strong> Summarize the fit of this model by citing <span class="math inline">\(s\)</span>, <span class="math inline">\(R^2\)</span>, and <span class="math inline">\(R^2_a\)</span>. <br>
 <strong>f(ii).</strong> Interpret the coefficient associated with commercial lines gross premiums on the logarithmic scale. <br>
 <strong>f(iii).</strong> Suppose that GPWCOMM increases by $1, how much do we expect EXPENSES to increase? Use your answer in part f(ii) and median values of GPWCOMM and EXPENSES for this question. <br></p></li>
@@ -2459,20 +2459,20 @@ Figure 3.11: <strong>Added variable plot of PUBLICEDUCATION versus LIFEEXP, cont
 <a id="displayCode.Fig311.Hide" href="javascript:togglecode('toggleCode.Fig311.Hide','displayCode.Fig311.Hide');"><i><strong>R Code to Produce Figure 3.11</strong></i></a>
 </h5>
 <div id="toggleCode.Fig311.Hide" style="display: none">
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="C3BasicMLR.html#cb44-1" tabindex="-1"></a><span class="co">#  FIGURE 3.11</span></span>
-<span id="cb44-2"><a href="C3BasicMLR.html#cb44-2" tabindex="-1"></a>LifeExp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/UNLifeExpectancy.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb44-3"><a href="C3BasicMLR.html#cb44-3" tabindex="-1"></a><span class="co">#  REMOVE MISSING LIFEEXPs</span></span>
-<span id="cb44-4"><a href="C3BasicMLR.html#cb44-4" tabindex="-1"></a>LifeExp3 <span class="ot">&lt;-</span> <span class="fu">subset</span>(LifeExp, <span class="sc">!</span><span class="fu">is.na</span>(LIFEEXP) )   </span>
-<span id="cb44-5"><a href="C3BasicMLR.html#cb44-5" tabindex="-1"></a>varLife <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;FERTILITY&quot;</span>,<span class="st">&quot;PUBLICEDUCATION&quot;</span>, <span class="st">&quot;REGION&quot;</span>,<span class="st">&quot;COUNTRY&quot;</span>,<span class="st">&quot;LIFEEXP&quot;</span>, <span class="st">&quot;HEALTHEXPEND&quot;</span>)</span>
-<span id="cb44-6"><a href="C3BasicMLR.html#cb44-6" tabindex="-1"></a>LifeExp4 <span class="ot">&lt;-</span> LifeExp3[varLife]</span>
-<span id="cb44-7"><a href="C3BasicMLR.html#cb44-7" tabindex="-1"></a>LifeExp4<span class="sc">$</span>lnHEALTH <span class="ot">&lt;-</span> <span class="fu">log</span>(LifeExp4<span class="sc">$</span>HEALTHEXPEND)</span>
-<span id="cb44-8"><a href="C3BasicMLR.html#cb44-8" tabindex="-1"></a>LifeExp4.good <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(LifeExp4) </span>
-<span id="cb44-9"><a href="C3BasicMLR.html#cb44-9" tabindex="-1"></a></span>
-<span id="cb44-10"><a href="C3BasicMLR.html#cb44-10" tabindex="-1"></a><span class="co">#  ADDED VARIABLE PLOT</span></span>
-<span id="cb44-11"><a href="C3BasicMLR.html#cb44-11" tabindex="-1"></a>model4a <span class="ot">&lt;-</span> <span class="fu">lm</span>(LIFEEXP <span class="sc">~</span> FERTILITY<span class="sc">+</span>lnHEALTH, <span class="at">data=</span>LifeExp4.good)</span>
-<span id="cb44-12"><a href="C3BasicMLR.html#cb44-12" tabindex="-1"></a>model4b <span class="ot">&lt;-</span> <span class="fu">lm</span>(PUBLICEDUCATION <span class="sc">~</span> FERTILITY<span class="sc">+</span>lnHEALTH, <span class="at">data=</span>LifeExp4.good)</span>
-<span id="cb44-13"><a href="C3BasicMLR.html#cb44-13" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(model4b),<span class="fu">residuals</span>(model4a),</span>
-<span id="cb44-14"><a href="C3BasicMLR.html#cb44-14" tabindex="-1"></a><span class="at">xlab=</span><span class="st">&quot;residuals(PUBLICEDUCATION)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;residuals(LIFEEXP)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="C3BasicMLR.html#cb43-1" tabindex="-1"></a><span class="co">#  FIGURE 3.11</span></span>
+<span id="cb43-2"><a href="C3BasicMLR.html#cb43-2" tabindex="-1"></a>LifeExp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/UNLifeExpectancy.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb43-3"><a href="C3BasicMLR.html#cb43-3" tabindex="-1"></a><span class="co">#  REMOVE MISSING LIFEEXPs</span></span>
+<span id="cb43-4"><a href="C3BasicMLR.html#cb43-4" tabindex="-1"></a>LifeExp3 <span class="ot">&lt;-</span> <span class="fu">subset</span>(LifeExp, <span class="sc">!</span><span class="fu">is.na</span>(LIFEEXP) )   </span>
+<span id="cb43-5"><a href="C3BasicMLR.html#cb43-5" tabindex="-1"></a>varLife <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;FERTILITY&quot;</span>,<span class="st">&quot;PUBLICEDUCATION&quot;</span>, <span class="st">&quot;REGION&quot;</span>,<span class="st">&quot;COUNTRY&quot;</span>,<span class="st">&quot;LIFEEXP&quot;</span>, <span class="st">&quot;HEALTHEXPEND&quot;</span>)</span>
+<span id="cb43-6"><a href="C3BasicMLR.html#cb43-6" tabindex="-1"></a>LifeExp4 <span class="ot">&lt;-</span> LifeExp3[varLife]</span>
+<span id="cb43-7"><a href="C3BasicMLR.html#cb43-7" tabindex="-1"></a>LifeExp4<span class="sc">$</span>lnHEALTH <span class="ot">&lt;-</span> <span class="fu">log</span>(LifeExp4<span class="sc">$</span>HEALTHEXPEND)</span>
+<span id="cb43-8"><a href="C3BasicMLR.html#cb43-8" tabindex="-1"></a>LifeExp4.good <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(LifeExp4) </span>
+<span id="cb43-9"><a href="C3BasicMLR.html#cb43-9" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="C3BasicMLR.html#cb43-10" tabindex="-1"></a><span class="co">#  ADDED VARIABLE PLOT</span></span>
+<span id="cb43-11"><a href="C3BasicMLR.html#cb43-11" tabindex="-1"></a>model4a <span class="ot">&lt;-</span> <span class="fu">lm</span>(LIFEEXP <span class="sc">~</span> FERTILITY<span class="sc">+</span>lnHEALTH, <span class="at">data=</span>LifeExp4.good)</span>
+<span id="cb43-12"><a href="C3BasicMLR.html#cb43-12" tabindex="-1"></a>model4b <span class="ot">&lt;-</span> <span class="fu">lm</span>(PUBLICEDUCATION <span class="sc">~</span> FERTILITY<span class="sc">+</span>lnHEALTH, <span class="at">data=</span>LifeExp4.good)</span>
+<span id="cb43-13"><a href="C3BasicMLR.html#cb43-13" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(model4b),<span class="fu">residuals</span>(model4a),</span>
+<span id="cb43-14"><a href="C3BasicMLR.html#cb43-14" tabindex="-1"></a><span class="at">xlab=</span><span class="st">&quot;residuals(PUBLICEDUCATION)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;residuals(LIFEEXP)&quot;</span>)</span></code></pre></div>
 </div>
 
 </div>

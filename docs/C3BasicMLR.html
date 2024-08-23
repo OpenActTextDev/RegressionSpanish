@@ -283,11 +283,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html"><i class="fa fa-check"></i><b>3</b> Regresión Lineal Múltiple - I</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#S3:LSMethod"><i class="fa fa-check"></i><b>3.1</b> Método de Mínimos Cuadrados</a>
-<ul>
-<li class="chapter" data-level="3.1.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#método-de-mínimos-cuadrados-1"><i class="fa fa-check"></i><b>3.1.1</b> Método de Mínimos Cuadrados</a></li>
-<li class="chapter" data-level="3.1.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#caso-general-con-k-variables-explicativas"><i class="fa fa-check"></i><b>3.1.2</b> Caso General con <span class="math inline">\(k\)</span> Variables Explicativas</a></li>
-</ul></li>
+<li class="chapter" data-level="3.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#S3:LSMethod"><i class="fa fa-check"></i><b>3.1</b> Método de Mínimos Cuadrados</a></li>
 <li class="chapter" data-level="3.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#modelo-de-regresión-lineal-y-propiedades-de-los-estimadores"><i class="fa fa-check"></i><b>3.2</b> Modelo de Regresión Lineal y Propiedades de los Estimadores</a>
 <ul>
 <li class="chapter" data-level="3.2.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#función-de-regresión"><i class="fa fa-check"></i><b>3.2.1</b> Función de Regresión</a></li>
@@ -338,16 +334,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Vista previa del capítulo</em>. Este capítulo introduce la regresión lineal en el caso de varios variables explicativas, conocida como <em>regresión lineal múltiple</em>. Muchos conceptos básicos de la regresión lineal se extienden directamente, incluyendo medidas de bondad de ajuste como <span class="math inline">\(R^2\)</span> y la inferencia usando estadísticas <span class="math inline">\(t\)</span>. Los modelos de regresión lineal múltiple proporcionan un marco para resumir datos altamente complejos y multivariados. Debido a que este marco solo requiere linealidad en los parámetros, podemos ajustar modelos que son funciones no lineales de las variables explicativas, proporcionando así un amplio alcance de aplicaciones potenciales.</p>
 <div id="S3:LSMethod" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Método de Mínimos Cuadrados<a href="C3BasicMLR.html#S3:LSMethod" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="método-de-mínimos-cuadrados-1" class="section level3 hasAnchor" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> Método de Mínimos Cuadrados<a href="C3BasicMLR.html#método-de-mínimos-cuadrados-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>El Capítulo 2 trató sobre el problema de una respuesta que depende de una sola variable explicativa. Ahora extendemos el enfoque de ese capítulo y estudiamos cómo una respuesta puede depender de varias variables explicativas.</p>
 <hr />
 <p><strong>Ejemplo: Seguro de Vida Temporal.</strong> Como todas las empresas, las compañías de seguros de vida buscan continuamente nuevas formas de llevar productos al mercado. Aquellos involucrados en el desarrollo de productos desean saber “¿quién compra seguro y cuánto compran?” En economía, esto se conoce como el lado de la <em>demanda</em> de un mercado de productos. Los analistas pueden obtener fácilmente información sobre las características de los clientes actuales a través de las bases de datos de la empresa. Los clientes potenciales, aquellos que no tienen seguro con la compañía, son a menudo el principal objetivo para expandir la cuota de mercado.</p>
 <p>En este ejemplo, examinamos la Encuesta de Finanzas del Consumidor (SCF), una muestra representativa a nivel nacional que contiene información extensa sobre activos, pasivos, ingresos y características demográficas de los encuestados (potenciales clientes en EE. UU.). Estudiamos una muestra aleatoria de 500 hogares con ingresos positivos que fueron entrevistados en la encuesta de 2004. Inicialmente, consideramos el subconjunto de <span class="math inline">\(n=275\)</span> familias que compraron seguro de vida temporal. Deseamos abordar la segunda parte de la pregunta de la demanda y determinar las características de la familia que influyen en la cantidad de seguro comprado. El Capítulo 11 considerará la primera parte, es decir, si un hogar compra o no un seguro, a través de modelos donde la respuesta es una variable aleatoria binaria.</p>
 <p>Para el seguro de vida temporal, la cantidad de seguro se mide por el valor nominal de la póliza, FACE, la cantidad que la compañía pagará en caso de la muerte del asegurado. Las características que resultarán importantes incluyen los ingresos anuales, INCOME, el número de años de EDUCATION del encuestado y el número de miembros del hogar, NUMHH.</p>
-</div>
-<div id="caso-general-con-k-variables-explicativas" class="section level3 hasAnchor" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> Caso General con <span class="math inline">\(k\)</span> Variables Explicativas<a href="C3BasicMLR.html#caso-general-con-k-variables-explicativas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<hr />
 <p>En general, consideraremos conjuntos de datos donde hay <span class="math inline">\(k\)</span> variables explicativas y una variable de respuesta en una muestra de tamaño <span class="math inline">\(n\)</span>. Es decir, los datos consisten en:</p>
 <p><span class="math display">\[
 \left\{
@@ -511,7 +503,7 @@ LNINCOME
 </tr>
 </tbody>
 </table>
-<p>El siguiente paso es medir la relación entre cada <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span>, comenzando con los diagramas de dispersión en la Figura <a href="C3BasicMLR.html#fig:TermLifeTwoPlots">3.1</a>. El panel de la izquierda es un gráfico de FACE versus INCOME; en este panel, vemos una gran concentración en la esquina inferior izquierda que corresponde a hogares con ingresos y cantidades de seguro pequeños. Ambas variables tienen distribuciones sesgadas y su efecto conjunto es altamente no lineal. El panel derecho presenta las mismas variables, pero utilizando transformaciones logarítmicas. Aquí, vemos una relación que se puede aproximar más fácilmente con una línea.</p>
+<p>El siguiente paso es medir la relación entre cada <span class="math inline">\(x\)</span> sobre <span class="math inline">\(y\)</span>, comenzando con los diagramas de dispersión en la Figura <a href="C3BasicMLR.html#fig:TermLifeTwoPlots">3.1</a>. El panel de la izquierda es un gráfico de FACE versus INCOME; en este panel, vemos una gran concentración en la esquina inferior izquierda que corresponde a hogares con ingresos y cantidades de seguro pequeños. Ambas variables tienen distribuciones sesgadas y su efecto conjunto es altamente no lineal. El panel derecho presenta las mismas variables, pero utilizando transformaciones logarítmicas. Aquí, vemos una relación que se puede aproximar más fácilmente con una línea.</p>
 
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:TermLifeTwoPlots"></span>
 <img src="RegressionMarkdown_files/figure-html/TermLifeTwoPlots-1.png" alt="Ingresos versus Monto Nominal del Seguro de Vida Temporal. El panel de la izquierda es un gráfico de monto nominal versus ingresos, mostrando un patrón altamente no lineal. En el panel derecho, el monto nominal versus ingresos está en unidades logarítmicas naturales, sugiriendo un patrón lineal (aunque variable)." width="80%" />
@@ -666,8 +658,8 @@ LNFACE
 <span id="cb32-5"><a href="C3BasicMLR.html#cb32-5" tabindex="-1"></a><span class="fu">pairs</span>(Term1,<span class="at">upper.panel=</span><span class="cn">NULL</span>, <span class="at">gap=</span><span class="dv">0</span>,<span class="at">cex.labels=</span><span class="fl">1.25</span>, <span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="método-de-mínimos-cuadrados-2" class="section level4 unnumbered hasAnchor">
-<h4>Método de Mínimos Cuadrados<a href="C3BasicMLR.html#método-de-mínimos-cuadrados-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="método-de-mínimos-cuadrados-1" class="section level4 unnumbered hasAnchor">
+<h4>Método de Mínimos Cuadrados<a href="C3BasicMLR.html#método-de-mínimos-cuadrados-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Consideremos la pregunta: “¿Puede el conocimiento de la educación, el tamaño del hogar y el ingreso ayudarnos a entender la demanda de seguros?” Las correlaciones en la Tabla <a href="C3BasicMLR.html#tab:TermLifeCorr">3.2</a> y los gráficos en las Figuras <a href="C3BasicMLR.html#fig:TermLifeTwoPlots">3.1</a> y <a href="C3BasicMLR.html#fig:TermLifeSMatrix">3.2</a> sugieren que cada variable, EDUCATION, NUMHH y LNINCOME, puede ser una variable explicativa útil de LNFACE cuando se consideran individualmente. Parece razonable investigar el efecto <em>conjunto</em> de estas variables en una respuesta.</p>
 <p>El concepto geométrico de un <em>plano</em> se utiliza para explorar la relación lineal entre una respuesta y varias variables explicativas. Recuerde que un plano extiende el concepto de una línea a más de dos dimensiones. Un plano puede definirse mediante una ecuación algebraica como</p>
 <p><span class="math display">\[
@@ -708,7 +700,7 @@ y_2 \\
 \vdots \\
 y_n
 \end{pmatrix}
-~~\text{y}~~
+~~~~
 \mathbf{X} = \begin{pmatrix}
 x_{10} &amp; x_{11} &amp; \cdots &amp; x_{1k} \\
 x_{20} &amp; x_{21} &amp; \cdots &amp; x_{2k} \\
@@ -752,8 +744,7 @@ y_{275}
 \]</span></p>
 <p>Por ejemplo, para la primera observación en el conjunto de datos, la variable dependiente es <span class="math inline">\(y_1 = 9.904\)</span> (correspondiente a <span class="math inline">\(\exp(9.904) = \$20,000\)</span>), para un encuestado con 16 años de educación que vive en un hogar con 3 personas y un ingreso logarítmico de 10.669 (<span class="math inline">\(\exp(10.669) = \$43,000\)</span>).</p>
 <hr />
-<p>Bajo el principio de estimación de mínimos cuadrados, nuestro objetivo es elegir los coeficientes <span class="math inline">\(b_0^{\ast}, b_1^{\ast}, \ldots, b_k^{\ast}\)</span> para minimizar la función</p>
-<p>de suma de cuadrados <span class="math inline">\(SS(b_0^{\ast}, b_1^{\ast}, \ldots, b_k^{\ast})\)</span>. Usando cálculo, regresamos a la ecuación para la suma de cuadrados, tomamos derivadas parciales con respecto a cada coeficiente y establecemos estas cantidades igual a cero:</p>
+<p>Bajo el principio de estimación de mínimos cuadrados, nuestro objetivo es elegir los coeficientes <span class="math inline">\(b_0^{\ast}, b_1^{\ast}, \ldots, b_k^{\ast}\)</span> para minimizar la función de suma de cuadrados <span class="math inline">\(SS(b_0^{\ast}, b_1^{\ast}, \ldots, b_k^{\ast})\)</span>. Usando cálculo, regresamos a la ecuación <a href="C3BasicMLR.html#eq:eq31">(3.1)</a>, tomamos derivadas parciales con respecto a cada coeficiente y establecemos estas cantidades igual a cero:</p>
 <p><span class="math display">\[
 \begin{array}{ll}
 \frac{\partial }{\partial b_j^{\ast}}SS(b_0^{\ast}, b_1^{\ast}, \ldots, b_k^{\ast}) &amp;= \sum_{i=1}^{n}\left( -2x_{ij}\right) \left( y_i-\left( b_0^{\ast}+b_1^{\ast}x_{i1}+\ldots+b_k^{\ast}x_{ik}\right) \right) \\
@@ -790,7 +781,6 @@ b_3 \\
 \end{pmatrix}.
 }
 \]</span></p>
-</div>
 </div>
 </div>
 <div id="modelo-de-regresión-lineal-y-propiedades-de-los-estimadores" class="section level2 hasAnchor" number="3.2">
@@ -1009,8 +999,8 @@ INCOME % Cambio
 </tr>
 </tbody>
 </table>
-<p>Podemos usar la misma lógica para interpretar el coeficiente LNINCOME en la ecuación</p>
-<p><a href="C3BasicMLR.html#eq:eq34">(3.4)</a>. A medida que el ingreso logarítmico aumenta en 0.1 unidades, se espera que la demanda de seguros aumente en un 5.06%. Esto se refiere a las unidades logarítmicas en <span class="math inline">\(y\)</span> pero no en <span class="math inline">\(x\)</span>. Podemos usar la misma lógica para decir que a medida que el ingreso logarítmico aumenta en 0.1 unidades, el INCOME aumenta en un 10.52%. Por lo tanto, un cambio del 10.52% en el INCOME corresponde a un cambio del 5.06% en el FACE. Resumiendo, decimos que, manteniendo NUMHH y EDUCATION fijos, esperamos que un aumento del 1% en el INCOME esté asociado con un aumento del 0.482% en <span class="math inline">\(\widehat{\mathrm{FACE}}\)</span> (como antes, esto es cercano a la estimación del parámetro <span class="math inline">\(b_3 = 0.494\)</span>). El coeficiente asociado con el ingreso se conoce como <em>elasticidad</em> en economía. En economía, la elasticidad es la relación entre el cambio porcentual en una variable y el cambio porcentual en otra variable. Matemáticamente, resumimos esto como:</p>
+<p>Podemos usar la misma lógica para interpretar el coeficiente LNINCOME en la ecuación
+<a href="C3BasicMLR.html#eq:eq34">(3.4)</a>. A medida que el ingreso logarítmico aumenta en 0.1 unidades, se espera que la demanda de seguros aumente en un 5.06%. Esto se refiere a las unidades logarítmicas en <span class="math inline">\(y\)</span> pero no en <span class="math inline">\(x\)</span>. Podemos usar la misma lógica para decir que a medida que el ingreso logarítmico aumenta en 0.1 unidades, el INCOME aumenta en un 10.52%. Por lo tanto, un cambio del 10.52% en el INCOME corresponde a un cambio del 5.06% en el FACE. Resumiendo, decimos que, manteniendo NUMHH y EDUCATION fijos, esperamos que un aumento del 1% en el INCOME esté asociado con un aumento del 0.482% en <span class="math inline">\(\widehat{\mathrm{FACE}}\)</span> (como antes, esto es cercano a la estimación del parámetro <span class="math inline">\(b_3 = 0.494\)</span>). El coeficiente asociado con el ingreso se conoce como <em>elasticidad</em> en economía. En economía, la elasticidad es la relación entre el cambio porcentual en una variable y el cambio porcentual en otra variable. Matemáticamente, resumimos esto como:</p>
 <p><span class="math display">\[
 \frac{\partial \ln y}{\partial \ln x} = \left(\frac{\partial y}{y}\right)/\left(\frac{\partial x}{x}\right).
 \]</span></p>
@@ -1101,14 +1091,16 @@ es un estimador insesgado del vector de parámetros <span class="math inline">\(
 <p>Dado que la independencia implica covarianza cero, de la Suposición F4 tenemos que <span class="math inline">\(\mathrm{Cov}(y_i,y_j) = 0\)</span> para <span class="math inline">\(i \neq j\)</span>. A partir de esto, de la Suposición F3 y de la definición de la varianza de un vector, tenemos que</p>
 <p><span class="math display">\[
 \small{
-\mathrm{Var~}\mathbf{y} = \left(
+\begin{array}{ll}
+\mathrm{Var~}\mathbf{y} &amp;= \left(
 \begin{array}{cccc}
 \mathrm{Var~}y_1 &amp; \mathrm{Cov}(y_1,y_2) &amp; \cdots &amp; \mathrm{Cov}(y_1,y_n) \\
 \mathrm{Cov}(y_2,y_1) &amp; \mathrm{Var~}y_2 &amp; \cdots &amp; \mathrm{Cov}(y_2,y_n) \\
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
 \mathrm{Cov}(y_n,y_1) &amp; \mathrm{Cov}(y_n,y_2) &amp; \cdots &amp; \mathrm{Var~}y_n
 \end{array}
-\right) = \left(
+\right) \\
+&amp;= \left(
 \begin{array}{cccc}
 \sigma^2 &amp; 0 &amp; \cdots &amp; 0 \\
 0 &amp; \sigma^2 &amp; \cdots &amp; 0 \\
@@ -1116,6 +1108,7 @@ es un estimador insesgado del vector de parámetros <span class="math inline">\(
 0 &amp; 0 &amp; \cdots &amp; \sigma^2
 \end{array}
 \right) = \sigma^2 \mathbf{I},
+\end{array}
 }
 \]</span></p>
 <p>donde <span class="math inline">\(\mathbf{I}\)</span> es una matriz identidad de <span class="math inline">\(n \times n\)</span>. Ahora estamos en condiciones de enunciar la segunda propiedad importante de los estimadores de regresión por mínimos cuadrados.</p>
@@ -1124,13 +1117,16 @@ es un estimador insesgado del vector de parámetros <span class="math inline">\(
 </div>
 <p>Para establecer la Propiedad 2, a partir de la propiedad de la matriz de varianza, tenemos que</p>
 <p><span class="math display">\[
+\small{
 \begin{array}{ll}
 \mathrm{Var~}\mathbf{b} &amp; = \mathrm{Var~}\left((\mathbf{X^{\prime}X)}^{-1}\mathbf{X}^{\prime}\mathbf{y}\right) = (\mathbf{X^{\prime}X)}^{-1} \mathbf{X}^{\prime} \mathrm{Var~}\mathbf{y} \mathbf{X} (\mathbf{X^{\prime}X)}^{-1} \\
 &amp;= (\mathbf{X^{\prime}X)}^{-1} \mathbf{X}^{\prime} \sigma^2 \mathbf{I} \mathbf{X} (\mathbf{X^{\prime}X)}^{-1} = \sigma^2 (\mathbf{X^{\prime}X)}^{-1},
 \end{array}
+}
 \]</span></p>
 <p>como se requiere. Esta propiedad importante nos permitirá medir la precisión del estimador <span class="math inline">\(\mathbf{b}\)</span> cuando discutamos la inferencia estadística. Específicamente, por la definición de la varianza de un vector (ver Sección 2.11.4),</p>
 <p><span class="math display" id="eq:eq36">\[
+\small{
 \mathrm{Var~}\mathbf{b}=
 \begin{pmatrix}
 \mathrm{Var~}b_0 &amp; \mathrm{Cov}(b_0,b_1) &amp; \cdots &amp; \mathrm{Cov}(b_0,b_k) \\
@@ -1139,6 +1135,7 @@ es un estimador insesgado del vector de parámetros <span class="math inline">\(
 \mathrm{Cov}(b_k,b_0) &amp; \mathrm{Cov}(b_k,b_1) &amp; \cdots &amp; \mathrm{Var~}b_k
 \end{pmatrix}
 = \sigma^2 (\mathbf{X^{\prime}X)}^{-1}.
+}
 \tag{3.6}
 \]</span></p>
 <p>Así, por ejemplo, <span class="math inline">\(\mathrm{Var~}b_j\)</span> es <span class="math inline">\(\sigma^2\)</span> veces la entrada diagonal <span class="math inline">\((j+1)\)</span> de <span class="math inline">\((\mathbf{X^{\prime}X)}^{-1}\)</span>. Como otro ejemplo, <span class="math inline">\(\mathrm{Cov}(b_0,b_j)\)</span> es <span class="math inline">\(\sigma^2\)</span> veces el elemento en la primera fila y la columna <span class="math inline">\((j+1)\)</span> de <span class="math inline">\((\mathbf{X^{\prime}X)}^{-1}\)</span>.</p>
@@ -1902,9 +1899,9 @@ FEATURES
 <p><br></p>
 
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:RefrigAddedVarPlot"></span>
-<img src="RegressionMarkdown_files/figure-html/RefrigAddedVarPlot-1.png" alt="Un gráfico de variables añadidas. Los residuos de la regresión de PRICE sobre las variables explicativas, omitiendo ECOST, están en el eje vertical. En el eje horizontal están los residuos de la regresión de ECOST sobre las demás variables explicativas. El coeficiente de correlación es -0.48." width="60%" />
+<img src="RegressionMarkdown_files/figure-html/RefrigAddedVarPlot-1.png" alt="Un gráfico de variables añadidas. Los residuos de la regresión de PRICE sobre las variables explicativas, omitiendo ECOST, están en el eje horizontal. En el eje vertical están los residuos de la regresión de ECOST sobre las demás variables explicativas. El coeficiente de correlación es -0.48." width="60%" />
 <p class="caption">
-Figure 3.4: <strong>Un gráfico de variables añadidas.</strong> Los residuos de la regresión de PRICE sobre las variables explicativas, omitiendo ECOST, están en el eje vertical. En el eje horizontal están los residuos de la regresión de ECOST sobre las demás variables explicativas. El coeficiente de correlación es -0.48.
+Figure 3.4: <strong>Un gráfico de variables añadidas.</strong> Los residuos de la regresión de PRICE sobre las variables explicativas, omitiendo ECOST, están en el eje horizontal. En el eje vertical están los residuos de la regresión de ECOST sobre las demás variables explicativas. El coeficiente de correlación es -0.48.
 </p>
 </div>
 <h5 style="text-align: center;">
@@ -1923,7 +1920,7 @@ Figure 3.4: <strong>Un gráfico de variables añadidas.</strong> Los residuos de
 </div>
 <p>El error <span class="math inline">\(\varepsilon\)</span> puede interpretarse como la variación natural en una muestra. En muchas situaciones, esta variación natural es pequeña en comparación con los patrones evidentes en el componente de regresión no aleatorio. Por lo tanto, es útil pensar en el error, <span class="math inline">\(\varepsilon_i = y_i - \left( \beta_0 + \beta_1 x_{i1} + \ldots + \beta_k x_{ik} \right)\)</span>, como la respuesta después de controlar por los efectos de las variables explicativas. En la Sección 3.3, vimos que un error aleatorio puede aproximarse mediante un residuo, <span class="math inline">\(e_i = y_i - \left( b_0 + b_1 x_{i1} + \cdots + b_k x_{ik} \right)\)</span>. De la misma manera, podemos pensar en un residuo como la respuesta después de “controlar” los efectos de las variables explicativas.</p>
 <p>Con esto en mente, podemos interpretar el eje vertical de la Figura <a href="C3BasicMLR.html#fig:RefrigAddedVarPlot">3.4</a> como el precio del refrigerador (PRICE) controlado por los efectos de RSIZE, FSIZE, SHELVES y FEATURES. De manera similar, podemos interpretar el eje horizontal como ECOST controlado por los efectos de RSIZE, FSIZE, SHELVES y FEATURES. El gráfico proporciona entonces una representación gráfica de la relación entre PRICE y ECOST, después de controlar por las demás variables explicativas. En comparación, un diagrama de dispersión de PRICE y ECOST (no mostrado aquí) no controla por las demás variables explicativas. Por lo tanto, es posible que la relación positiva entre PRICE y ECOST no se deba a una relación causal, sino más bien a una o más variables adicionales que hacen que ambas variables sean grandes.</p>
-<p>Por ejemplo, de la Tabla <a href="C3BasicMLR.html#tab:RefrigSumStats">3.7</a>, vemos que el tamaño del congelador (FSIZE) está positivamente correlacionado tanto con ECOST como con PRICE. Ciertamente parece razonable que aumentar el tamaño de un congelador cause que tanto el costo de energía como el precio aumenten. Más bien, la correlación positiva puede deberse al hecho de que valores grandes de FSIZE significan valores grandes tanto de ECOST como de PRICE.</p>
+<p>Por ejemplo, de la Tabla <a href="C3BasicMLR.html#tab:RefrigCorr">3.8</a>, vemos que el tamaño del congelador (FSIZE) está positivamente correlacionado tanto con ECOST como con PRICE. Ciertamente parece razonable que aumentar el tamaño de un congelador cause que tanto el costo de energía como el precio aumenten. Más bien, la correlación positiva puede deberse al hecho de que valores grandes de FSIZE significan valores grandes tanto de ECOST como de PRICE.</p>
 <p>Las variables omitidas en una regresión se llaman <em>variables omitidas</em>. Esta omisión podría causar un problema serio en el ajuste del modelo de regresión; los coeficientes de regresión podrían no solo ser significativamente fuertes cuando no deberían serlo, sino que también podrían tener el signo incorrecto. Seleccionar el conjunto adecuado de variables para incluir en el modelo de regresión es una tarea importante; es el tema de los Capítulos 5 y 6.</p>
 </div>
 </div>
@@ -2072,7 +2069,7 @@ Figure 3.7: <strong>Gráfico de LNFACE versus LNINCOME, con el código de letra 
 <p><span class="math display">\[
 0.182 \approx \frac{\partial y }{\partial x_1 } = \frac{\partial ~ \mathrm{ln}~COST}{\partial ~ \mathrm{ln}~NUMPOL}= \frac{ \frac{\partial ~ COST}{\partial ~NUMPOL}} {\frac{COST}{NUMPOL}},
 \]</span></p>
-<p>o <span class="math inline">\(\frac{\partial ~ COST}{\partial ~NUMPOL} \approx 0.182 \frac{COST}{NUMPOL}\)</span>. El costo mediano es $15,992,000, por lo que el costo marginal por póliza en estos valores medianos es <span class="math inline">\(0.182 \times (15992000/15944) = \$182.55\)</span>.</p>
+<p>o <span class="math inline">\(\frac{\partial ~ COST}{\partial ~NUMPOL} \approx 0.182 \frac{COST}{NUMPOL}\)</span>. El costo mediano es $15,992,000, por lo que el costo marginal por póliza en estos valores medianos es <span class="math inline">\(0.182 \times (15992000/15944) =\)</span> $182.55.</p>
 <hr />
 <div id="caso-especial-funciones-de-respuesta-curvilíneas" class="section level4 unnumbered hasAnchor">
 <h4>Caso Especial: Funciones de Respuesta Curvilíneas<a href="C3BasicMLR.html#caso-especial-funciones-de-respuesta-curvilíneas" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -2176,15 +2173,15 @@ Figure 3.10: <strong>Gráfico de comisiones esperadas (<span class="math inline"
 <p><strong>Referencias del Capítulo</strong></p>
 <ul>
 <li>Bates, Douglas M. y Watts, D. G. (1988). <em>Nonlinear Regression Analysis and its Applications</em>. John Wiley &amp; Sons, Nueva York.</li>
-<li>Lemaire, Jean (2002). ¿Por qué viven las mujeres más tiempo que los hombres? <em>North American Actuarial Journal</em>, 6(4), 21-37.</li>
+<li>Lemaire, Jean (2002). Why do females live longer than males? <em>North American Actuarial Journal</em>, 6(4), 21-37.</li>
 <li>Goldberger, Arthur (1991). <em>A Course in Econometrics</em>. Harvard University Press, Cambridge.</li>
 <li>Plackett, R.L. (1960). <em>Regression Analysis</em>. Clarendon Press, Oxford, Inglaterra.</li>
-<li>Segal, Dan (2002). Un análisis económico de los gastos de las compañías de seguros de vida. <em>North American Actuarial Journal</em>, 6(4), 81-94.</li>
+<li>Segal, Dan (2002). An economic analysis of life insurance company expenses. <em>North American Actuarial Journal</em>, 6(4), 81-94.</li>
 </ul>
 </div>
 <div id="ejercicios-2" class="section level2 hasAnchor" number="3.7">
 <h2><span class="header-section-number">3.7</span> Ejercicios<a href="C3BasicMLR.html#ejercicios-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>3.1. Considera un conjunto de datos ficticio de <span class="math inline">\(n = 100\)</span> observaciones con <span class="math inline">\(s_y = 80\)</span>. Realizamos una regresión con tres variables explicativas para obtener <span class="math inline">\(s = 50\)</span>.</p>
+<p>3.1. Considera un conjunto de datos ficticio de <span class="math inline">\(n = 100\)</span> observaciones con <span class="math inline">\(s_y = 100\)</span>. Realizamos una regresión con tres variables explicativas para obtener <span class="math inline">\(s = 50\)</span>.</p>
 <ol style="list-style-type: lower-alpha">
 <li>Calcula el coeficiente de determinación ajustado, <span class="math inline">\(R_a^2\)</span>.</li>
 <li>Completa la tabla de ANOVA.</li>
@@ -2237,9 +2234,9 @@ Figure 3.10: <strong>Gráfico de comisiones esperadas (<span class="math inline"
 <p><span class="math display">\[
 \small{
     \mathbf{b} = \begin{pmatrix}
-    0.15 \\
-    0.692 \\
-    2.88
+    0.1538 \\
+    0.6923 \\
+    2.8846
     \end{pmatrix}
     ~~~\text{y}~~~
     \left(\mathbf{X^{\prime} X} \right)^{-1} = \begin{pmatrix}
@@ -2274,7 +2271,7 @@ Figure 3.10: <strong>Gráfico de comisiones esperadas (<span class="math inline"
     \text{PRC55P} &amp; \text{Porcentaje de la población que tiene 55 años o más} \\
     \text{HHMEDAGE} &amp; \text{Edad mediana del hogar} \\
     \text{MEDINC} &amp; \text{Ingreso mediano estimado del hogar, en \$1000s} \\
-    \text{POP} &amp; \text{Población, en miles} \\ \hline
+    \text{POP} &amp; \text{Población} \\ \hline
 \end{array}
 }
 \]</span></p>
@@ -2285,13 +2282,13 @@ Figure 3.10: <strong>Gráfico de comisiones esperadas (<span class="math inline"
 <li>Ajusta un modelo lineal de SALES en las ocho variables explicativas. Resume el ajuste de este modelo citando la desviación estándar de los residuos, <span class="math inline">\(s\)</span>, el coeficiente de determinación, <span class="math inline">\(R^2\)</span> y su versión ajustada, <span class="math inline">\(R_a^2\)</span>.</li>
 <li>Basado en el ajuste del modelo de la parte (d), ¿es MEDSCHYR una variable estadísticamente significativa? Para responder a esta pregunta, utiliza una prueba formal de hipótesis. Expón tus hipótesis nula y alternativa, criterio de decisión y regla de decisión.</li>
 <li>Ahora ajusta un modelo más parsimonioso, usando SALES como variable dependiente y MEDSCHYR, MEDHVL y POP como variables explicativas. Resume el ajuste de este modelo citando la desviación estándar de los residuos, <span class="math inline">\(s\)</span>, el coeficiente de determinación, <span class="math inline">\(R^2\)</span> y su versión ajustada, <span class="math inline">\(R_a^2\)</span>. ¿Cómo se comparan estos valores con el ajuste del modelo en la parte (d)?</li>
-<li>Observa que el signo del coeficiente de regresión asociado con MEDSCHYR ahora es negativo. Para ayudar a interpretar este coeficiente, calcula el coeficiente de correlación parcial correspondiente. ¿Cuál es la interpretación de este coeficiente?</li>
+<li>Observa que el signo del coeficiente de regresión asociado con MEDSCHYR es negativo. Para ayudar a interpretar este coeficiente, calcula el coeficiente de correlación parcial correspondiente. ¿Cuál es la interpretación de este coeficiente?</li>
 <li>Para obtener más información sobre la relación entre MEDSCHYR y SALES, produce un gráfico de variable añadida controlando los efectos de MEDHVL y POP. Verifica que la correlación asociada con este gráfico concuerde con tu respuesta en la parte (g).</li>
 <li>Vuelve a ejecutar la regresión en la parte (f), después de eliminar la observación 11. Cita las estadísticas descriptivas básicas de esta regresión. Para este ajuste del modelo, ¿es MEDSCHYR una variable estadísticamente significativa? Para responder a esta pregunta, utiliza una prueba formal de hipótesis. Expón tus hipótesis nula y alternativa, criterio de decisión y regla de decisión.</li>
 <li>Vuelve a ejecutar la regresión en la parte (f), después de eliminar la observación 9. Cita las estadísticas descriptivas básicas de esta regresión.</li>
 </ol>
-<p>3.5. <strong>Gastos de Compañías de Seguros</strong>. Este ejercicio considera los datos de compañías de seguros del NAIC y descritos en el Ejercicio 1.</p>
-<p>La Tabla <a href="C3BasicMLR.html#tab:NAICVariables">3.10</a> describe varias variables que pueden ser usadas para explicar los gastos. Al igual que en el estudio de Segal (2002) sobre los aseguradores de vida, los “outputs” de la empresa consisten en primas emitidas (para propiedad y accidentes, estas se subdividen en líneas personales y comerciales) así como pérdidas (subdivididas en líneas de corto y largo plazo). ASSETS y CASH son medidas comúnmente usadas del tamaño de una empresa. GROUP, STOCK y MUTUAL describen la estructura organizacional. Los “inputs” de la empresa se recopilaron del Bureau of Labor Statistics (BLS, del programa Occupational Employee Statistics). WAGESTAFF se calcula como el salario promedio en el estado donde está ubicada la compañía de seguros. AGENTWAGE se calcula como el salario promedio ponderado de la industria de corretaje, ponderado por el porcentaje de prima bruta escrita en cada estado.</p>
+<p>3.5. <strong>Gastos de Compañías de Seguros</strong>. Este ejercicio considera los datos de compañías de seguros del NAIC y descritos en el Ejercicio 1.6.</p>
+<p>La Tabla <a href="C3BasicMLR.html#tab:NAICVariables">3.10</a> describe varias variables que pueden ser usadas para explicar los gastos. Al igual que en el estudio de Segal (2002) sobre los aseguradores de vida, los “outputs” de la empresa consisten en primas emitidas (para propiedad y accidentes, estas se subdividen en líneas personales y comerciales) así como pérdidas (subdivididas en líneas de corto y largo plazo). ASSETS y CASH son medidas comúnmente usadas del tamaño de una empresa. GROUP, STOCK y MUTUAL describen la estructura organizacional. Los “inputs” de la empresa se recopilaron del Bureau of Labor Statistics (BLS, del programa Occupational Employee Statistics). STAFFWAGE se calcula como el salario promedio en el estado donde está ubicada la compañía de seguros. AGENTWAGE se calcula como el salario promedio ponderado de la industria de corretaje, ponderado por el porcentaje de prima bruta escrita en cada estado.</p>
 <table class=" lightable-classic table table-striped table-condensed" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:NAICVariables">Table 3.10: </span><strong>Variables de Gastos de Aseguradoras</strong>
@@ -2407,28 +2404,20 @@ Salario promedio anual del agente de seguros, en miles de dólares
 </table>
 <p>Una inspección preliminar de los datos mostró que muchas empresas no informaron pérdidas de seguros en 2005. Para este ejercicio, consideramos las 384 compañías con algunas pérdidas en el archivo <code>NAICExpense.csv</code>.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Estadísticas Descriptivas <br>
-Produce estadísticas descriptivas de la variable de respuesta y las variables explicativas (no binarias). Nota el patrón de sesgo para cada variable. Observa que muchas variables tienen valores negativos. <br></p></li>
-<li><p>Transformación de Variables <br>
-Transforma cada variable no binaria mediante la transformación logarítmica modificada, <span class="math inline">\(\ln(1+x)\)</span>. Produce estadísticas descriptivas de estas variables explicativas no binarias modificadas. Denota LNEXPENSES (<span class="math inline">\(= \ln(1+\text{EXPENSES})\)</span>) como la variable de gastos modificada. <br>
+<li><p>Produce estadísticas descriptivas de la variable de respuesta y las variables explicativas (no binarias). Nota el patrón de sesgo para cada variable. Observa que muchas variables tienen valores negativos. <br></p></li>
+<li><p>Transforma cada variable no binaria mediante la transformación logarítmica modificada, <span class="math inline">\(\ln(1+x)\)</span>. Produce estadísticas descriptivas de estas variables explicativas no binarias modificadas. Denota LNEXPENSES (<span class="math inline">\(= \ln(1+\text{EXPENSES})\)</span>) como la variable de gastos modificada. <br>
 Para el análisis posterior, usa solo las variables modificadas descritas en la parte (b). <br></p></li>
-<li><p>Tabla de Correlaciones <br>
-Produce una tabla de correlaciones para las variables no binarias. ¿Cuáles son las tres variables más correlacionadas con LNEXPENSES? <br></p></li>
-<li><p>Diagrama de Caja de LNEXPENSES por GROUP <br>
-Proporciona un diagrama de caja de LNEXPENSES por nivel de GROUP. ¿Qué nivel de grupo tiene mayores gastos? <br></p></li>
-<li><p>Modelo Lineal en Todas las Variables <br>
-Ajusta un modelo lineal de LNEXPENSES en las once variables explicativas. Resume el ajuste de este modelo citando la desviación estándar de los residuos, <span class="math inline">\(s\)</span>, el coeficiente de determinación, <span class="math inline">\(R^2\)</span>, y su versión ajustada, <span class="math inline">\(R^2_a\)</span>. <br></p></li>
-<li><p>Modelo Reducido <br>
-Ajusta un modelo lineal de LNEXPENSES en un modelo reducido usando ocho variables explicativas, eliminando CASH, STOCK y MUTUAL. Para las variables explicativas, incluye ASSETS, GROUP, ambas versiones de pérdidas y primas brutas, así como las dos variables del BLS. <br></p>
+<li><p>Produce una tabla de correlaciones para las variables no binarias. ¿Cuáles son las tres variables más correlacionadas con LNEXPENSES? <br></p></li>
+<li><p>Proporciona un diagrama de caja de LNEXPENSES por nivel de GROUP. ¿Qué nivel de grupo tiene mayores gastos? <br></p></li>
+<li><p>Ajusta un modelo lineal de LNEXPENSES en las once variables explicativas. Resume el ajuste de este modelo citando la desviación estándar de los residuos, <span class="math inline">\(s\)</span>, el coeficiente de determinación, <span class="math inline">\(R^2\)</span>, y su versión ajustada, <span class="math inline">\(R^2_a\)</span>. <br></p></li>
+<li><p>Ajusta un modelo lineal de LNEXPENSES en un modelo reducido usando ocho variables explicativas, eliminando LNCASH, STOCK y MUTUAL. Para las variables explicativas, incluye ASSETS, GROUP, ambas versiones de pérdidas y primas brutas, así como las dos variables del BLS. <br></p>
 <p><strong>f(i).</strong> Resume el ajuste de este modelo citando <span class="math inline">\(s\)</span>, <span class="math inline">\(R^2\)</span>, y <span class="math inline">\(R^2_a\)</span>. <br>
 <strong>f(ii).</strong> Interpreta el coeficiente asociado con las primas brutas comerciales en la escala logarítmica. <br>
 <strong>f(iii).</strong> Supón que GPWCOMM aumenta en $1, ¿cuánto esperamos que aumenten los EXPENSES? Usa tu respuesta en la parte f(ii) y los valores medianos de GPWCOMM y EXPENSES para esta pregunta. <br></p></li>
-<li><p>Términos Cuadráticos <br>
-Eleva al cuadrado cada una de las dos variables de pérdidas y las dos de primas brutas. Ajusta un modelo lineal de LNEXPENSES en un modelo reducido usando doce variables explicativas, las ocho variables de la parte (f) y los cuatro términos cuadrados adicionales que acabas de crear. <br>
+<li><p>Eleva al cuadrado cada una de las dos variables de pérdidas y las dos de primas brutas. Ajusta un modelo lineal de LNEXPENSES en un modelo reducido usando doce variables explicativas, las ocho variables de la parte (f) y los cuatro términos cuadrados adicionales que acabas de crear. <br>
 <strong>g(i).</strong> Resume el ajuste de este modelo citando <span class="math inline">\(s\)</span>, <span class="math inline">\(R^2\)</span>, y <span class="math inline">\(R^2_a\)</span>. <br>
 <strong>g(ii).</strong> ¿Los términos cuadráticos parecen ser variables explicativas útiles? <br></p></li>
-<li><p>Excluyendo Variables del BLS <br>
-Ahora omite las dos variables del BLS, por lo que estás ajustando un modelo de LNEXPENSES en ASSETS, GROUP, ambas versiones de pérdidas y primas brutas, así como términos cuadráticos. Resume el ajuste de este modelo citando <span class="math inline">\(s\)</span>, <span class="math inline">\(R^2\)</span>, y <span class="math inline">\(R^2_a\)</span>. Comenta sobre el número de observaciones usadas para ajustar este modelo comparado con la parte (f). <br></p></li>
+<li><p>Ahora omite las dos variables del BLS, por lo que estás ajustando un modelo de LNEXPENSES en ASSETS, GROUP, ambas versiones de pérdidas y primas brutas, así como términos cuadráticos. Resume el ajuste de este modelo citando <span class="math inline">\(s\)</span>, <span class="math inline">\(R^2\)</span>, y <span class="math inline">\(R^2_a\)</span>. Comenta sobre el número de observaciones usadas para ajustar este modelo comparado con la parte (f). <br></p></li>
 <li><p>Términos de Interacción <br>
 Elimina los términos cuadráticos de la parte (g) y agrega términos de interacción con la variable ficticia GROUP. Así, ahora hay once variables: ASSETS, GROUP, ambas versiones de pérdidas y primas brutas, así como interacciones de GROUP con ASSETS y ambas versiones de pérdidas y primas brutas. <br>
 <strong>i(i).</strong> Resume el ajuste de este modelo citando <span class="math inline">\(s\)</span>, <span class="math inline">\(R^2\)</span>, y <span class="math inline">\(R^2_a\)</span>. <br>
@@ -2437,14 +2426,10 @@ Elimina los términos cuadráticos de la parte (g) y agrega términos de interac
 </ol>
 <p>3.6 <strong>Expectativas de Vida Nacionales</strong>. Continuamos el análisis iniciado en los Ejercicios 1 y 2. Ahora ajusta un modelo de regresión en LIFEEXP usando tres variables explicativas: FERTILITY, PUBLICEDUCATION y lnHEALTH (la transformación logarítmica natural de PRIVATEHEALTH).</p>
 <ol style="list-style-type: lower-alpha">
-<li>Interpretación del Coeficiente de Educación Pública <br>
-Interpreta el coeficiente de regresión asociado con PUBLICEDUCATION. <br></li>
-<li>Interpretación del Coeficiente de Gastos en Salud <br>
-Interpreta el coeficiente de regresión asociado con los gastos en salud sin usar la escala logarítmica para los gastos. <br></li>
-<li>Significación Estadística de PUBLICEDUCATION <br>
-Basado en el ajuste del modelo, ¿es PUBLICEDUCATION una variable estadísticamente significativa? Para responder a esta pregunta, usa una prueba formal de hipótesis. Expón tus hipótesis nula y alternativa, criterio de decisión, y regla de decisión. <br></li>
-<li>Gráfico de Variable Añadida <br>
-El signo negativo del coeficiente de PUBLICEDUCATION es sorprendente, dado que el signo de la correlación entre PUBLICEDUCATION y LIFEEXP es positivo y la intuición sugiere una relación positiva. Para verificar este resultado, aparece un gráfico de variable añadida en la Figura <a href="C3BasicMLR.html#fig:UNLIFE2">3.11</a>. <br>
+<li>Interpreta el coeficiente de regresión asociado con PUBLICEDUCATION. <br></li>
+<li>Interpreta el coeficiente de regresión asociado con los gastos en salud sin usar la escala logarítmica para los gastos. <br></li>
+<li>Basado en el ajuste del modelo, ¿es PUBLICEDUCATION una variable estadísticamente significativa? Para responder a esta pregunta, usa una prueba formal de hipótesis. Expón tus hipótesis nula y alternativa, criterio de decisión, y regla de decisión. <br></li>
+<li>El signo negativo del coeficiente de PUBLICEDUCATION es sorprendente, dado que el signo de la correlación entre PUBLICEDUCATION y LIFEEXP es positivo y la intuición sugiere una relación positiva. Para verificar este resultado, aparece un gráfico de variable añadida en la Figura <a href="C3BasicMLR.html#fig:UNLIFE2">3.11</a>. <br>
 <strong>d(i).</strong> Para un gráfico de variable añadida, describe su propósito y un método para producirlo. <br>
 <strong>d(ii).</strong> Calcula la correlación correspondiente al gráfico de variable añadida que aparece en la Figura <a href="C3BasicMLR.html#fig:UNLIFE2">3.11</a>. <br></li>
 </ol>

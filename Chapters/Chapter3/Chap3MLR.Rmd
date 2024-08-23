@@ -1022,7 +1022,7 @@ The added variable plot provides additional links between the regression methodo
 <br>
 
 
-(ref:RefrigAddedVarPlot) **An added variable plot.** The residuals from the regression of PRICE on the explanatory variables, omitting ECOST, are on the vertical axis. On the horizontal axis are the residuals from the regression fit of ECOST on the other explanatory variables. The correlation coefficient is -0.48.
+(ref:RefrigAddedVarPlot) **An added variable plot.** The residuals from the regression of PRICE on the explanatory variables, omitting ECOST, are on the horizontal axis. On the vertical axis are the residuals from the regression fit of ECOST on the other explanatory variables. The correlation coefficient is -0.48.
 
 ```{r RefrigAddedVarPlot, fig.cap='(ref:RefrigAddedVarPlot)', fig.align='center', out.width="60%", echo = FALSE}
 
@@ -1051,7 +1051,7 @@ The error $\varepsilon$ can be interpreted as the natural variation in a sample.
 
 With this in mind, we can interpret the vertical axis of Figure \@ref(fig:RefrigAddedVarPlot) as the refrigerator PRICE controlled for effects of RSIZE, FSIZE, SHELVES, and FEATURES. Similarly, we can interpret the horizontal axis as the ECOST controlled for effects of RSIZE, FSIZE, SHELVES, and FEATURES. The plot then provides a graphical representation of the relation between PRICE and ECOST, after controlling for the other explanatory variables. For comparison, a scatter plot of PRICE and ECOST (not shown here) does not control for other explanatory variables. Thus, it is possible that the positive relationship between PRICE and ECOST is not due to a causal relationship but rather one or more additional variables that cause both variables to be large.
 
-For example, from Table \@ref(tab:RefrigSumStats), we see that the freezer size (FSIZE) is positively correlated with both ECOST and PRICE. It certainly seems reasonable that increasing the size of a freezer would cause both the energy cost and the price to increase. Rather, the positive correlation may be due to the fact that large values of FSIZE mean large values of both ECOST and PRICE.
+For example, from Table \@ref(tab:RefrigCorr), we see that the freezer size (FSIZE) is positively correlated with both ECOST and PRICE. It certainly seems reasonable that increasing the size of a freezer would cause both the energy cost and the price to increase. Rather, the positive correlation may be due to the fact that large values of FSIZE mean large values of both ECOST and PRICE.
 
 Variables left out of a regression are called *omitted variables*. This omission could cause a serious problem in a regression model fit; regression coefficients could be not only strongly significant when they should not be, but they may also be of the incorrect sign. Selecting the proper set of variables to be included in the regression model is an important task; it is the subject of Chapters 5 and 6.
 
@@ -1460,7 +1460,7 @@ collection.
 
 ## Exercises
 
-3.1. Consider a fictitious data set of $n = 100$ observations with $s_y = 80$. We run a regression with three explanatory variables to get $s = 50$.
+3.1. Consider a fictitious data set of $n = 100$ observations with $s_y = 100$. We run a regression with three explanatory variables to get $s = 50$.
 
 a. Calculate the adjusted coefficient of determination, $R_a^2$.
 b. Complete the ANOVA table.
@@ -1515,9 +1515,9 @@ From the fitted regression model, we have $s = 1.373$ and
 $$
 \small{
     \mathbf{b} = \begin{pmatrix}
-    0.15 \\ 
-    0.692 \\ 
-    2.88
+    0.1538 \\ 
+    0.6923 \\ 
+    2.8846
     \end{pmatrix}
     ~~~\text{and}~~~
     \left(\mathbf{X^{\prime} X} \right)^{-1} = \begin{pmatrix}
@@ -1554,7 +1554,7 @@ $$
     \text{PRC55P} & \text{Percent of population that is 55 or older} \\ 
     \text{HHMEDAGE} & \text{Household median age} \\ 
     \text{MEDINC} & \text{Estimated median household income, in \$1000s} \\ 
-    \text{POP} & \text{Population, in thousands} \\ \hline 
+    \text{POP} & \text{Population} \\ \hline 
 \end{array}
 }
 $$
@@ -1565,7 +1565,7 @@ c. Produce a scatter plot matrix of all explanatory variables and SALES. In the 
 d. Fit a linear model of SALES on all eight explanatory variables. Summarize the fit of this model by citing the residual standard deviation, $s$, the coefficient of determination, $R^2$ and its adjusted version, $R_a^2$.
 e. Based on your part (d) model fit, is MEDSCHYR a statistically significant variable? To respond to this question, use a formal test of hypothesis. State your null and alternative hypotheses, decision-making criterion and your decision-making rule.
 f. Now fit a more parsimonious model, using SALES as the dependent variable and MEDSCHYR, MEDHVL and POP as explanatory variables. Summarize the fit of this model by citing the residual standard deviation, $s$, the coefficient of determination, $R^2$ and its adjusted version, $R_a^2$. How do these values compare to the model fit in part (d)?
-g. Note that the sign of the regression coefficient associated with MEDSCHYR is now negative. To help interpret this coefficient, compute the corresponding partial correlation coefficient. What is the interpretation of this coefficient?
+g. Note that the sign of the regression coefficient associated with MEDSCHYR is negative. To help interpret this coefficient, compute the corresponding partial correlation coefficient. What is the interpretation of this coefficient?
 h. To get further insights into the relation between MEDSCHYR and SALES, produce an added variable plot controlling for the effects of MEDHVL and POP. Check that the correlation associated with this plot agrees with your answer in part (g).
 i. Re-run the regression in part (f), after removing observation 11. Cite the basic summary statistics from this regression. For this model fit, is MEDSCHYR a statistically significant variable? To respond to this question, use a formal test of hypothesis. State your null and alternative hypotheses, decision-making criterion and your decision-making rule.
 j. Re-run the regression in part (f), after removing observation 9. Cite the basic summary statistics from this regression.
@@ -1574,11 +1574,11 @@ j. Re-run the regression in part (f), after removing observation 9. Cite the bas
 
 3.5. **Insurance Company Expenses**. This exercise considers insurance company data from the NAIC and described in Exercise 1.
 
-Table \@ref(tab:NAICVariables) describes several variables that can be used to explain expenses. As with Segal's (2002) study of life insurers, firm "outputs" consist of premiums written (for property and casualty, these are subdivided into personal and commercial lines) as well as losses (subdivided into short and long tail lines). ASSETS and CASH are commonly used measures of the size of a company. GROUP, STOCK, and MUTUAL describe the organizational structure. Firm "inputs" were gathered from the Bureau of Labor Statistics (BLS, from the Occupational Employee Statistics program). WAGESTAFF is calculated as the average wage in the state where the insurance company is headquartered. AGENTWAGE is calculated as the weighted average of annual wages of the brokerage industry, weighted by the percentage of gross premium written in each state.
+Table \@ref(tab:NAICVariables) describes several variables that can be used to explain expenses. As with Segal's (2002) study of life insurers, firm "outputs" consist of premiums written (for property and casualty, these are subdivided into personal and commercial lines) as well as losses (subdivided into short and long tail lines). ASSETS and CASH are commonly used measures of the size of a company. GROUP, STOCK, and MUTUAL describe the organizational structure. Firm "inputs" were gathered from the Bureau of Labor Statistics (BLS, from the Occupational Employee Statistics program). STAFFWAGE is calculated as the average wage in the state where the insurance company is headquartered. AGENTWAGE is calculated as the weighted average of annual wages of the brokerage industry, weighted by the percentage of gross premium written in each state.
 
 ```{r NAICVariables, echo=FALSE}
 # Table: Insurer Expense Variables
-  varExpense <- c("EXPENSES", "LOSSLONG", "LOSSSHORT", "GPWPERSONAL", "GPWCOMM", "ASSETS", "CASH", "GROUP", "STOCK", "MUTUAL", "STAFFWAGE", "AGENTWAGE")
+  varExpense <- c("EXPENSES", "LONGLOSS", "SHORTLOSS", "GPWPERSONAL", "GPWCOMM", "ASSETS", "CASH", "GROUP", "STOCK", "MUTUAL", "STAFFWAGE", "AGENTWAGE")
   Description <- 
     c("Total expenses incurred, in millions of dollars",
       "Losses incurred for long tail lines, in millions of dollars",
@@ -1615,7 +1615,7 @@ Provide a boxplot of LNEXPENSES by level of GROUP. Which level of group has high
 e. Linear Model on All Variables <br>
 Fit a linear model of LNEXPENSES on all eleven explanatory variables. Summarize the fit of this model by citing the residual standard deviation, $s$, the coefficient of determination, $R^2$, and its adjusted version, $R^2_a$. <br>
 f. Reduced Model <br>
-Fit a linear model of LNEXPENSES on a reduced model using eight explanatory variables, dropping CASH, STOCK, and MUTUAL. For the explanatory variables, include ASSETS, GROUP, both versions of losses, and gross premiums, as well as the two BLS variables. <br>
+Fit a linear model of LNEXPENSES on a reduced model using eight explanatory variables, dropping LNCASH, STOCK, and MUTUAL. For the explanatory variables, include ASSETS, GROUP, both versions of losses, and gross premiums, as well as the two BLS variables. <br>
 
    **f(i).** Summarize the fit of this model by citing $s$, $R^2$, and $R^2_a$. <br>
    **f(ii).** Interpret the coefficient associated with commercial lines gross premiums on the logarithmic scale. <br>
