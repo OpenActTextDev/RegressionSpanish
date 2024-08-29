@@ -1,0 +1,56 @@
+
+#  FILENAME IS TermLifeCatVar12Feb2008.txt ;
+
+setwd("R://Book3//CUPBook//Chapter4")
+
+Term = read.table(choose.files(),  quote = "",header=TRUE)
+names(Term)
+attach(Term)
+
+postscript("Fig41Boxplot1.ps")
+boxplot(LNFACE ~ MARSTAT, data=Term, ylab="LNFACE",xlab="Marital Status")
+
+table(MARSTAT)
+Term0 <- subset(Term, MARSTAT==0)
+Term1 <- subset(Term, MARSTAT==1)
+Term2 <- subset(Term, MARSTAT==2)
+
+summary(Term0$LNFACE);sd(Term0$LNFACE)
+summary(Term1$LNFACE);sd(Term1$LNFACE)
+summary(Term2$LNFACE);sd(Term2$LNFACE)
+
+#  MAKE BINARY VARIABLES
+MAR0 <- 1*(Term$MARSTAT == 0)
+MAR1 <- 1*(Term$MARSTAT == 1)
+MAR2 <- 1*(Term$MARSTAT == 2)
+
+Check1<-data.frame(Term$MARSTAT, MAR0, MAR1, MAR2)
+fix(Check1)
+
+#  CHECK THE DEPENDENCIES AMONG MARO, MAR1, MAR2
+cor(cbind(MAR0, MAR1, MAR2))
+
+#  SECTION 4.1 OUTPUT
+model5<-lm(LNFACE ~ LNINCOME+EDUCATION+NUMHH +MAR0+MAR1, data=Term)
+summary(model5)
+
+model6<-lm(LNFACE ~ LNINCOME+EDUCATION+NUMHH +MAR0+MAR2, data=Term)
+summary(model6)
+
+model7<-lm(LNFACE ~ LNINCOME+EDUCATION+NUMHH +MAR1+MAR2, data=Term)
+summary(model7)
+
+#  CREATE THE CATEGORICAL VARIABLE - A "FACTOR"
+MSFactor <- factor(Term$MARSTAT)
+str(MSFactor)
+model8<-lm(LNFACE ~ LNINCOME+EDUCATION+NUMHH +MSFactor, data=Term)
+summary(model8)
+anova(model8)
+
+#  COMPARE MODEL WITHOUT FACTOR TO THE ONE WITH
+#  THE F-RATIO TURNS OUT TO BE 3.696
+qf(0.95, 2, 206)      # GET THE F-VALUE
+1- pf(3.696, 2, 206)  #  GET THE p-VALUE
+
+
+

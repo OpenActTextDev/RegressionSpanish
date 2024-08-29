@@ -1,0 +1,598 @@
+
+\section{Technical Supplement - Matrix Expressions}
+
+\subsection{Expressing Models with Categorical Variables in
+Matrix Form}
+
+In Chapter 4, we explored the analysis for models of the form
+$\mathbf{y=X}  \boldsymbol \beta + \boldsymbol \varepsilon$ where
+$\mathbf{X}$ is a matrix of explanatory variables such that
+$\mathbf{X}^{\prime }\mathbf{X}$ is invertible. In this section, we
+show how to use this model to form two models with categorical
+variables. In the next section, we will consider models where
+$\mathbf{X}^{\prime }\mathbf{X}$ need not be invertible.
+
+\textbf{One Categorical Variable Model.} Consider the model with one
+categorical variable introduced in Section 4.3, $y_{j}=\mu_{j} +
+\varepsilon_{j}.$ In this model, there are $c$ levels of the
+categorical variable. As in equation (\ref{E4:OneFactor}), this
+model can be written as
+\begin{equation*}
+y=\mu _{1}x_{1}+\mu _{2}x_{2}+\ldots +\mu _{c}x_{c}+\varepsilon.
+\end{equation*}
+where $x_{j}$ is an indicator variable that the observation falls in the $j$%
+th level. Using matrix notation, equation (\ref{E4:OneFactor}) can
+be expressed as
+
+\begin{equation}\label{E4:MatrixOneFactor}
+\mathbf{y}=%
+\begin{bmatrix}
+y_{1,1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+y_{n_{1},1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+y_{1,c} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+y_{n_{c},c}%
+\end{bmatrix}%
+=%
+\begin{bmatrix}
+1 & 0 & \cdot \cdot \cdot  & 0 \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+1 & 0 & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+0 & 0 & \cdot \cdot \cdot  & 1 \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+0 & 0 & \cdot \cdot \cdot  & 1%
+\end{bmatrix}%
+\begin{bmatrix}
+\mu _{1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\mu _{c}%
+\end{bmatrix}%
++%
+\begin{bmatrix}
+\varepsilon_{1,1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\varepsilon_{n_{1},1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\varepsilon_{1,c} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\varepsilon_{n_{c},c}%
+\end{bmatrix}%
+=\mathbf{X\ \boldsymbol \beta + \boldsymbol \varepsilon} \text{\ \ \
+\ }
+\end{equation}
+
+
+
+To make the notation more compact, we write $\mathbf{0}$ and
+$\mathbf{1}$ for a column of zeros and ones, respectively. With this
+convention, another way to express equation
+(\ref{E4:MatrixOneFactor}) is
+
+\begin{center}
+\begin{equation}\label{E4:Matrix2OneFactor}
+\mathbf{y}=%
+\begin{bmatrix}
+\mathbf{1}_1 & \mathbf{0}_1 & \cdot \cdot \cdot  & \mathbf{0}%
+_{1} \\
+\mathbf{0}_{2} & \mathbf{1}_2 & \cdot \cdot \cdot  & \mathbf{0}%
+_{2} \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\mathbf{0}_c & \mathbf{0}_c & \cdot \cdot \cdot  & \mathbf{1}_c
+\end{bmatrix}
+\begin{bmatrix}
+\mu _{1} \\
+\mu _{2} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\mu _{c}%
+\end{bmatrix}%
++\boldsymbol \varepsilon =\mathbf{X \boldsymbol \beta +\boldsymbol
+\varepsilon }\text{ \ \ \ }
+\end{equation}
+\end{center}
+
+
+\noindent Here, $\mathbf{0}_{1}$ and $\mathbf{1}_{1}$ stand for
+vector columns of
+length $n_{1}$ of zeros and ones, respectively, and similarly for $\mathbf{0}%
+_{2}, \mathbf{1}_2, \ldots, \mathbf{0}_c, \mathbf{1}_c$.
+
+Equation (\ref{E4:Matrix2OneFactor}) allows us to apply the
+machinery developed for the regression model to the model with one
+categorical variable. As an intermediate calculation, we have
+
+\begin{center}
+\begin{eqnarray}\label{E4:OneFactorXPrimeX}
+(\mathbf{X^{\prime }X})^{-1} &=&\left(
+\begin{bmatrix}
+\mathbf{1}_1 & \mathbf{0}_2 & \cdot \cdot \cdot  & \mathbf{0}_c \\
+\mathbf{0}_1 & \mathbf{1}_2 & \cdot \cdot \cdot  & \mathbf{0}_c \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\mathbf{0}_{1} & \mathbf{0}_{2} & \cdot \cdot \cdot  & \mathbf{1}_c%
+\end{bmatrix}^{\prime }%
+\begin{bmatrix}
+\mathbf{1}_1 & \mathbf{0}_1 & \cdot \cdot \cdot  & \mathbf{0}%
+_{1} \\
+\mathbf{0}_{2} & \mathbf{1}_2 & \cdot \cdot \cdot  & \mathbf{0}%
+_{2} \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\mathbf{0}_{c} & \mathbf{0}_{c} & \cdot \cdot \cdot  & \mathbf{1}_c
+\end{bmatrix} \notag
+\right) ^{-1} \\
+&=&%
+\begin{bmatrix}
+n_1 & 0 & \cdot \cdot \cdot  & 0 \\
+0 & n_2 & \cdot \cdot \cdot  & 0 \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+0 & 0 & \cdot \cdot \cdot  & n_c%
+\end{bmatrix}%
+^{-1}=%
+\begin{bmatrix}
+\frac{1}{n_1} & 0 & \cdot \cdot \cdot  & 0 \\
+0 & \frac{1}{n_2} & \cdot \cdot \cdot  & 0 \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+0 & 0 & \cdot \cdot \cdot  & \frac{1}{n_c}
+\end{bmatrix}%
+.
+\end{eqnarray}
+\end{center}
+
+Thus, the parameter estimates are
+
+\begin{center}
+\begin{eqnarray}\label{E4:OneFactorXPrimeXinvXPrimey}
+\mathbf{b} &=&%
+\begin{bmatrix}
+\hat{\mu}_{1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\hat{\mu}_{c}%
+\end{bmatrix}%
+=\mathbf{(X}^{\prime }\mathbf{X)}^{-1}\mathbf{X}^{\prime }\mathbf{y}=%
+\begin{bmatrix}
+\frac{1}{n_1} & 0 & \cdot \cdot \cdot  & 0 \\
+0 & \frac{1}{n_2} & \cdot \cdot \cdot  & 0 \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+0 & 0 & \cdot \cdot \cdot  & \frac{1}{n_c}
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{1}_1 & \mathbf{0}_2 & \cdot \cdot \cdot  & \mathbf{0}_c \\
+\mathbf{0}_1 & \mathbf{1}_2 & \cdot \cdot \cdot  & \mathbf{0}_c \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\mathbf{0}_{1} & \mathbf{0}_{2} & \cdot \cdot \cdot  & \mathbf{1}_c%
+\end{bmatrix} ^{\prime }
+\begin{bmatrix}
+y_{1,1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+y_{n_{1},1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+y_{1,c} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+y_{n_{c},c}%
+\end{bmatrix} \notag
+\\
+&=&%
+\begin{bmatrix}
+\frac{1}{n_1} & 0 & \cdot \cdot \cdot  & 0 \\
+0 & \frac{1}{n_2} & \cdot \cdot \cdot  & 0 \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+0 & 0 & \cdot \cdot \cdot  & \frac{1}{n_c}
+\end{bmatrix}
+\begin{bmatrix}
+\sum_{i=1}^{n_{1}}y_{i1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\sum_{i=1}^{n_{c}}y_{ic}%
+\end{bmatrix}%
+=%
+\begin{bmatrix}
+\bar{y}_{1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\bar{y}_{c}%
+\end{bmatrix}%
+\end{eqnarray}
+\end{center}
+
+Of course, the fact that $\bar{y}_{j}$ is the least squares estimate
+of $\mu_{j}$ could have been obtained directly from equation
+(\ref{E4:OneFactor}). However, by rewriting the model in matrix
+regression notation, we can appeal to linear regression model
+results and need not prove properties of models with categorical
+variables from first principles. That is, because this model is in
+regression format, we immediately have all the properties of the
+regression model.
+
+To illustrate, from equation (\ref{E4:OneFactorXPrimeXinvXPrimey}),
+the vector of fitted values is
+
+\begin{center}
+\[
+\mathbf{\hat{y}}=\mathbf{Xb}=
+\begin{bmatrix}
+\mathbf{1}_1 & \mathbf{0}_2 & \cdot \cdot \cdot  & \mathbf{0}_c \\
+\mathbf{0}_1 & \mathbf{1}_2 & \cdot \cdot \cdot  & \mathbf{0}_c \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\mathbf{0}_{1} & \mathbf{0}_{2} & \cdot \cdot \cdot  & \mathbf{1}_c%
+\end{bmatrix}
+\begin{bmatrix}
+\bar{y}_{1} \\
+\bar{y}_{2} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\bar{y}_{c}%
+\end{bmatrix}%
+=%
+\begin{bmatrix}
+\mathbf{1}_{1}\bar{y}_{1} \\
+\mathbf{1}_{2}\bar{y}_{2} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\mathbf{1}_{c}\bar{y}_{c}%
+\end{bmatrix}%
+.
+\]
+\end{center}
+
+\noindent This establishes $\hat{y}_{ij}=\bar{y}_{j}$. Now, we have
+
+\begin{center}
+\[
+\text{Error SS}=\mathbf{(y-\hat{y})^{\prime }(y-\hat{y})}=\sum_{j=1}^{c}%
+\sum_{i=1}^{n_{j}}(y_{ij}-\bar{y}_{j})^{2},
+\]
+\end{center}
+
+\noindent and $s^{2}=$ Error MS = (Error SS) / $(n-c)$. This yields
+the one Factor ANOVA table that appears in Section 4.3. As
+another example, we have that the standard error of $\hat{%
+\mu}_{j}$ is
+
+\begin{center}
+\[
+se(\hat{\mu}_{j})=s ~ \sqrt{j\text{th \textit{diagonal element} of }\mathbf{(X}%
+^{\prime }\mathbf{X)}^{-1}}=s/\sqrt{n_{j}}.
+\]
+\end{center}
+
+\textbf{One Categorical and One Continuous Variable Model.} As
+another illustration, we consider the variable intercept and
+constant slope model in Table \ref{{T4:OneFactorCovariate}}. This
+can be expressed as a regression model using binary variables as
+
+\begin{center}
+\[
+y_{ij}=\beta _{01}z_{i1}+\beta _{02}z_{i2}+...+\beta
+_{0c}z_{ic}+\beta _{1}x_{ij}+\varepsilon_{ij}.
+\]
+\end{center}
+
+\noindent Here, $z_{ij}$ is an indicator variable that the observation falls in the $j$%
+th level. This can be expressed as $\mathbf{y}=%
+\mathbf{X \boldsymbol \beta + \boldsymbol \varepsilon}$ where
+
+\begin{center}
+\[
+\mathbf{X}=%
+\begin{bmatrix}
+\mathbf{1}_1 & \mathbf{0}_{1} & \cdot \cdot \cdot  & \mathbf{0}%
+_{1} & \mathbf{x}_{1} \\
+\mathbf{0}_{2} & \mathbf{1}_2 & \cdot \cdot \cdot  & \mathbf{0}%
+_{2} & \mathbf{x}_{2} \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  & \cdot  \\
+\mathbf{0}_{c} & \mathbf{0}_{c} & \cdot \cdot \cdot  & \mathbf{1}_c & \mathbf{x}_{c}%
+\end{bmatrix}%
+\text{ \ \ \ \ and \ \ \ }\boldsymbol \beta=%
+\begin{bmatrix}
+\beta _{01} \\
+\beta _{02} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\beta _{0c} \\
+\beta _{1}%
+\end{bmatrix}
+\]
+\end{center}
+
+\noindent As before, $\mathbf{0}_{j}$ and $\mathbf{1}_j$ stand for
+vector columns of length $n_{j}$ of zeros and ones, respectively.
+Further, $\mathbf{x}_{j}=(x_{1j},x_{2j},...,x_{n_{j},j})^{\prime }$
+is the column of the continuous variable at the $j$th level. Now,
+straight-forward matrix algebra techniques provide the least squares
+estimates.
+
+\subsection{General Linear Model}
+
+Recall the general linear model from Section 4.5. That is, we use
+\begin{equation*}
+y_{i}=x_{i0}\beta _{0}+x_{i1}\beta _{1}+...+x_{ik}\beta
+_{k}+\varepsilon_{i},
+\end{equation*}
+\noindent or, in matrix notation, $ \mathbf{y=X \boldsymbol \beta +
+\boldsymbol \varepsilon.}$ Here, the error terms
+$\{\varepsilon_{i}\}$ are assumed to be i.i.d. random variables
+with E $\varepsilon_{i}=0$ and Var $\varepsilon_{i}=\sigma ^{2}$. The explanatory variables $%
+\{x_{i0},x_{i1},x_{i2},...,x_{ik}\}$ are assumed to be non-random.
+
+In the general linear model, we do not require that
+$\mathbf{X}^{\prime }\mathbf{X}$ be invertible. As we have seen in
+Chapter 4, an important reason for this generalization relates to
+handling categorical variables. That is, in order to use categorical
+variables, they are generally re-coded using binary variables. For
+this re-coding, generally some type of restrictions need to be made
+on the set of parameters associated with the indicator variables.
+However, it is not always clear what type of restrictions are the
+most intuitive. By expressing the model without requiring that $\mathbf{X}%
+^{\prime }\mathbf{X}$ be invertible, the restrictions can be imposed after
+the estimation is done, not before.
+
+\textbf{Normal Equations.} Even when $\mathbf{X}^{\prime
+}\mathbf{X}$ is not invertible, solutions to the normal equations
+still provide least squares estimates of $\boldsymbol \beta $. That
+is, the sum of squares is
+\begin{equation*}
+SS(\mathbf{b}^{\ast })=\mathbf{(y-Xb}^{\ast }\mathbf{)}^{\prime }\mathbf{%
+(y-Xb}^{\ast }\mathbf{),}
+\end{equation*}
+where $\mathbf{b}^{\ast }=(b_{0}^{\ast },b_{1}^{\ast
+},\ldots,b_{k}^{\ast })^{\prime }$ is a vector of candidate
+estimates. Solutions of the normal equations are those vectors
+$\mathbf{b}^{\circ }$ that satisfy the normal equations
+\begin{equation}\label{E4:NormalEquations}
+\mathbf{X}^{\prime }\mathbf{Xb}^{\circ }=\mathbf{X}^{\prime }\mathbf{y.}%
+\end{equation}
+
+\noindent We use the notation $^{\circ }$ to remind ourselves that
+$\mathbf{b}^{\circ }$ need not be unique. However, it is a minimizer
+of the sum of squares. To see
+this, consider another candidate vector $\mathbf{b}^{\ast }$ and note that $SS(%
+\mathbf{b}^{\ast })=\mathbf{y}^{\prime }\mathbf{y-2b}^{\ast \prime }\mathbf{X%
+}^{\prime }\mathbf{y+b}^{\ast \prime }\mathbf{X}^{\prime
+}\mathbf{Xb}^{\ast } $. Then, using equation
+(\ref{E4:NormalEquations}), we have
+\begin{eqnarray*}
+SS(\mathbf{b}^{\ast })-SS(\mathbf{b}^{\circ }) &=&-2\mathbf{b}^{\ast \prime }%
+\mathbf{X}^{\prime }\mathbf{y}+\mathbf{b}^{\ast \prime }\mathbf{X}^{\prime }%
+\mathbf{Xb}^{\ast }-(-2\mathbf{b}^{\circ \prime }\mathbf{Xy}+\mathbf{b}%
+^{\circ \prime }\mathbf{X}^{\prime }\mathbf{Xb}^{\circ }) \\
+&=&-2\mathbf{b}^{\ast \prime }\mathbf{Xb}^{\circ }+\mathbf{b}^{\ast \prime }%
+\mathbf{X}^{\prime }\mathbf{Xb}^{\ast }+\mathbf{b}^{\circ \prime }\mathbf{X}%
+^{\prime }\mathbf{Xb}^{\circ } \\
+&=&\mathbf{(b}^{\ast }\mathbf{-b}^{\circ }\mathbf{)}^{\prime }\mathbf{X}%
+^{\prime }\mathbf{X(b}^{\ast }\mathbf{-b}^{\circ }\mathbf{)}=\mathbf{z}%
+^{\prime }\mathbf{z}\geq 0,
+\end{eqnarray*}
+\noindent where $\mathbf{z}=\mathbf{X(b}^{\ast }\mathbf{-b}^{\circ
+}\mathbf{)}$. Thus, any other candidate $\mathbf{b}^{\ast }$ yields
+a sum of squares at least as large as $SS(\mathbf{b}^{\circ })$.
+
+\textbf{Unique Fitted Values.} Despite the fact that there may be
+(infinitely) many solutions to the normal equations, the resulting fitted
+values, $\mathbf{\hat{y}}=\mathbf{Xb}^{\circ }$, are unique. To see this,
+suppose that $\mathbf{b}_{1}^{\circ }$ and $\mathbf{b}_{2}^{\circ }$ are two
+different solutions of equation (\ref{E4:NormalEquations}). Let $\mathbf{\hat{y}}_{1}=\mathbf{Xb%
+}_{1}^{\circ }$ and $\mathbf{\hat{y}}_{2}=\mathbf{Xb}_{2}^{\circ }$
+denote the vectors of fitted values generated by these estimates.
+Then,
+\begin{equation*}
+\mathbf{(\hat{y}}_{1}\mathbf{-\hat{y}}_{2}\mathbf{)}^{\prime }\mathbf{(\hat{y%
+}}_{1}\mathbf{-\hat{y}}_{2}\mathbf{)}=\mathbf{(b}_{1}^{\circ }\mathbf{-b}%
+_{2}^{\circ }\mathbf{)}^{\prime }\mathbf{X}^{\prime
+}\mathbf{X(b}_{1}^{\circ }\mathbf{-b}_{2}^{\circ }\mathbf{)}=0
+\end{equation*}
+because $\mathbf{X}^{\prime }\mathbf{X(b}_{1}^{\circ
+}\mathbf{-b}_{2}^{\circ
+}\mathbf{)}=\mathbf{X}^{\prime }\mathbf{y-X}^{\prime }\mathbf{y}=\mathbf{0}$%
+, from equation (\ref{E4:NormalEquations}). Hence we have that $\mathbf{\hat{y}}_{1}\mathbf{=%
+\hat{y}}_{2}$ for any choice of $\mathbf{b}_{1}^{\circ }$ and $\mathbf{b}%
+_{2}^{\circ }$, thus establishing the uniqueness of the fitted values.
+
+\qquad Because the fitted values are unique, the residuals are also
+unique. Thus, the error sum of squares and estimates of variability
+(such as $s^2$) are also unique.
+
+\textbf{Generalized Inverses.} A \emph{generalized inverse} of a
+matrix $\mathbf{A}$
+is a matrix $\mathbf{B}$ such that $\mathbf{ABA=A}$. We use the notation $%
+\mathbf{A}^{\mathbf{-}}$ to denote the generalized inverse of $\mathbf{A}$.
+In the case that $\mathbf{A}$ is invertible, then $\mathbf{A}^{\mathbf{-}}$
+is unique and equals $\mathbf{A}^{\mathbf{-1}}$. Although there are several
+definitions of generalized inverses, the above definition suffices for our
+purposes. See Searle (1987) for further discussion of alternative
+definitions of generalized inverses.
+
+\qquad With this definition, it can be shown that a solution to the
+equation $\mathbf{Ab=c}$ can be expressed as $\mathbf{b=A}^{-}
+\mathbf{c}$. Thus, we
+can express a least squares estimate of $\boldsymbol \beta$ as $\mathbf{b}^{%
+\mathbf{\circ }}=\mathbf{(X}^{\prime }\mathbf{X)}^{\mathbf{-}}\mathbf{X}%
+^{\prime }\mathbf{y}$. Statistical software packages can calculate versions
+of $\mathbf{(X}^{\prime }\mathbf{X)}^{\mathbf{-}}$ and thus generate $%
+\mathbf{b}^{\mathbf{\circ }}$.
+
+\textbf{Estimable Functions.} Above, we saw that each fitted value $\hat{y}%
+_{i}$ is unique. Because fitted values are simply linear combinations of
+parameters estimates, it seems reasonable to ask what other linear
+combinations of parameter estimates are unique. To this end, we say that $%
+\mathbf{C \boldsymbol \beta }$ is an \textit{estimable function} of parameters if $%
+\mathbf{Cb}^{\circ }$ does not depend (\emph{is invariant}) to the
+choice of $\mathbf{b}^{\circ }$. Because fitted values are invariant
+to the choice of $\mathbf{b}^{\circ }$, we have that
+$\mathbf{X}=\mathbf{C}$ produces one type of estimable function.
+Interestingly, it turns out that all estimable functions are of the
+form $\mathbf{LXb}^{\circ }$, that is, $\mathbf{C}=\mathbf{LX}$. See
+Searle (1987, page 284) for a demonstration of this. Thus, all
+estimable
+function are linear combinations of fitted values, that is, $\mathbf{LXb}%
+^{\circ }=\mathbf{L\hat{y}}$.
+
+Estimable functions are unbiased and a variance that does not depend
+on the choice of the generalized inverse. That is, it can be shown
+that $ \text{E }\mathbf{Cb}^{\circ }=\mathbf{C \boldsymbol
+\beta}$ and $ \text{Var }\mathbf{Cb}^{\circ }=\sigma ^{2}\mathbf{C(X}^{\prime }\mathbf{X)}%
+^{-}\mathbf{C}^{\prime }$ does not depend on the choice of $\mathbf{(X}%
+^{\prime }\mathbf{X)}^{-}.$
+
+\textbf{Testable Hypotheses.} As described in Section
+4.2, if is often of interest to test H$_{0}$: $\mathbf{C \boldsymbol \beta }=\mathbf{d}$%
+, where $\mathbf{d}$ is a specified vector. This hypothesis is said
+to be \textit{testable} if $\mathbf{C \boldsymbol \beta }$ is an
+estimable function, $\mathbf{C} $ is of full row rank, and the rank
+of $\mathbf{C}$ is less than the rank of $\mathbf{X}$. For
+consistency with the notation of Section 4.2, let $p$ be the rank of
+$\mathbf{C}$ and $k+1$ be the rank of $\mathbf{X}$. Recall that the
+rank of a matrix is the smaller of the number of linearly
+independent rows and linearly independent columns. When we say that $\mathbf{%
+C}$ has full row rank, we mean that there are $p$ rows in $\mathbf{C}$, so
+that the number of rows equals the rank.
+
+\textbf{General Linear Hypothesis.} As in Section 4.2, the test
+statistic for examining H$_{0}$: $\mathbf{C \boldsymbol
+\beta}=\mathbf{d}$ is
+\begin{equation*}
+F-\text{ratio}=\frac{\mathbf{(Cb}^{\circ }\mathbf{-d)}^{\prime }\mathbf{(C(X}%
+^{\prime }\mathbf{X)}^{-}\mathbf{C}^{\prime }\mathbf{)}^{-1}\mathbf{(Cb}%
+^{\circ }\mathbf{-d)}}{ps_{full}^{2}}.
+\end{equation*}
+Note that the statistic $F$-ratio does not depend on the choice of
+$\mathbf{b}^{\circ}$ because $\mathbf{C b}^{\circ}$ is invariant to
+$\mathbf{b}^{\circ}$. If H$_{0}$: $\mathbf{C \boldsymbol \beta
+}=\mathbf{d}$ is a testable hypothesis and the errors
+$\varepsilon_{i}$ are i.i.d. N$(0,\sigma ^{2})$, then the $F$-ratio
+has an $F$-distribution with $df_{1}=p$ and $df_{2}=n-(k+1)$.
+
+\textbf{One Categorical Variable Model.} We now illustrate the
+general linear model by considering an over-parameterized version of
+the one factor model that appears in equation
+(\ref{E4:OneFactorTau}) using
+\begin{equation*}
+y_{ij}=\mu +\tau _{j}+e_{ij}=\mu +\tau _{1}x_{i1}+\tau
+_{2}x_{i2}+...+\tau _{c}x_{ic}+\varepsilon_{ij}.
+\end{equation*}
+At this point we do not impose additional restrictions in the
+parameters. As with equation (\ref{E4:MatrixOneFactor}), this can be
+written in matrix form as
+\begin{equation*}
+\mathbf{y}=
+\begin{bmatrix}
+\mathbf{1}_1 & \mathbf{1}_1 & \mathbf{0}_1 & \cdot
+\cdot \cdot  & \mathbf{0}_1 \\
+\mathbf{1}_2 & \mathbf{0}_2 & \mathbf{1}_{\mathbf{2}} & \cdot
+\cdot \cdot  & \mathbf{0}_2 \\
+\cdot  & \cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\mathbf{1}_c & \mathbf{0}_c & \mathbf{0}_c & \cdot \cdot \cdot  &
+\mathbf{1}_c
+\end{bmatrix}
+\begin{bmatrix}
+\mu  \\
+\tau _{1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\tau _{c}
+\end{bmatrix}
++\boldsymbol \varepsilon = \mathbf{X \boldsymbol \beta +\boldsymbol
+\varepsilon}
+\end{equation*}
+Thus, the $\mathbf{X}^{\prime }\mathbf{X}$ matrix is
+\begin{equation*}
+\mathbf{X}^{\prime }\mathbf{X}=%
+\begin{bmatrix}
+n & n_1 & n_2 & \cdot \cdot \cdot  & n_c \\
+n_1 & n_1 & 0 & \cdot \cdot \cdot  & 0 \\
+n_{2} & 0 & n_2 & \cdot \cdot \cdot  & 0 \\
+\cdot  & \cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+\cdot  & \cdot  & \cdot  & \cdot \cdot \cdot  & \cdot  \\
+n_c & 0 & 0 & \cdot \cdot \cdot  & n_c%
+\end{bmatrix}.
+\end{equation*}
+
+\noindent where $n=n_{1}+n_{2}+...+n_{c}$. This matrix is not
+invertible. To see this, note that by adding the last $c$ rows
+together yields the first row. Thus, the last $c$ rows are an exact
+linear combination of the first row, meaning that the matrix is not
+full rank.
+
+The (non-unique) least squares estimates can be expressed as
+\begin{equation*}
+\mathbf{b}^{\circ }=%
+\begin{bmatrix}
+\mu ^{\circ } \\
+\tau _{1}^{\circ } \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\tau _{c}^{\circ }%
+\end{bmatrix}%
+=\mathbf{(X}^{\prime }\mathbf{X)}^{-}\mathbf{X}^{\prime }\mathbf{y.}
+\end{equation*}
+Estimable functions are linear combinations of fitted values.
+Because fitted values are $\hat{y}_{ij}=\bar{y}_{j}$, estimable
+functions can be expressed as $ L=\sum_{j=1}^{c}a_{i}\bar{y}_{j} $
+where $a_{1},...,a_{c}$ are constants. This linear combination of
+fitted values is an unbiased estimator of $\text{E
+}L=\sum_{i=1}^{c}a_{i}(\mu +\tau _{i}). $
+
+Thus, for example, by choosing $a_{1}=1$, and the other $a_{i}=0$,
+we see that $\mu
++\tau _{1}$ is estimable. As another example, by choosing $a_{1}=1,a_{2}=-1$%
+, and the other $a_{i}=0$, we see that $\tau _{1}-\tau _{2}$ is
+estimable. It can be shown that $\mu $ is not an estimable parameter
+without further restrictions on $\tau _{1},...,\tau _{c}$.

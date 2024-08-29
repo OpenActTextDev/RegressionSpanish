@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Regresión Lineal Básica | Modelado de Regresión con Aplicaciones Actuariales y Financieras</title>
   <meta name="description" content="Development of a research monograph that provides quantitative tools to assess the relevance of dependence in insurance risk management." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Regresión Lineal Básica | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
   <meta property="og:type" content="book" />
@@ -308,6 +308,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.6" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#lectura-adicional-y-referencias"><i class="fa fa-check"></i><b>3.6</b> Lectura Adicional y Referencias</a></li>
 <li class="chapter" data-level="3.7" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#ejercicios-2"><i class="fa fa-check"></i><b>3.7</b> Ejercicios</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html"><i class="fa fa-check"></i><b>4</b> Regresión Lineal Múltiple - II</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#S4:BinaryVar"><i class="fa fa-check"></i><b>4.1</b> El Papel de las Variables Binarias</a></li>
+<li class="chapter" data-level="4.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#S4:SeveralCoeff"><i class="fa fa-check"></i><b>4.2</b> Inferencia Estadística para Varios Coeficientes</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#S4:SetsRegCoeff"><i class="fa fa-check"></i><b>4.2.1</b> Conjuntos de Coeficientes de Regresión</a></li>
+<li class="chapter" data-level="4.2.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#S4:GenLinHypo"><i class="fa fa-check"></i><b>4.2.2</b> La Hipótesis Lineal General</a></li>
+<li class="chapter" data-level="4.2.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#S4:SetsInference"><i class="fa fa-check"></i><b>4.2.3</b> Estimando y Prediciendo Varios Coeficientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#modelo-anova-de-un-factor"><i class="fa fa-check"></i><b>4.3</b> Modelo ANOVA de Un Factor</a></li>
+<li class="chapter" data-level="4.4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#combinando-variables-explicativas-categóricas-y-continuas"><i class="fa fa-check"></i><b>4.4</b> Combinando Variables Explicativas Categóricas y Continuas</a></li>
+<li class="chapter" data-level="4.5" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#lecturas-adicionales-y-referencias-2"><i class="fa fa-check"></i><b>4.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="4.6" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#ejercicios-3"><i class="fa fa-check"></i><b>4.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="4.7" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#suplemento-técnico---expresiones-matriciales"><i class="fa fa-check"></i><b>4.7</b> Suplemento Técnico - Expresiones Matriciales</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#expresión-de-modelos-con-variables-categóricas-en-forma-matricial"><i class="fa fa-check"></i><b>4.7.1</b> Expresión de Modelos con Variables Categóricas en Forma Matricial</a></li>
+<li class="chapter" data-level="4.7.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#cálculo-recursivo-de-mínimos-cuadrados"><i class="fa fa-check"></i><b>4.7.2</b> Cálculo Recursivo de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="4.7.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#modelo-lineal-general-1"><i class="fa fa-check"></i><b>4.7.3</b> Modelo Lineal General</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
@@ -427,38 +447,38 @@ SALES
 <a id="displayCode.Fig21.Hide" href="javascript:togglecode('toggleCode.Fig21.Hide','displayCode.Fig21.Hide');"><i><strong>Código R para producir la Figura 2.1 y la Tabla 2.1</strong></i></a>
 </h5>
 <div id="toggleCode.Fig21.Hide" style="display: none">
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="C2BasicLR.html#cb7-1" tabindex="-1"></a>Lot <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/WiscLottery.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb7-2"><a href="C2BasicLR.html#cb7-2" tabindex="-1"></a><span class="co">#  FIGURA 2.1</span></span>
-<span id="cb7-3"><a href="C2BasicLR.html#cb7-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">cex=</span><span class="fl">1.3</span>, <span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.1</span>,<span class="fl">1.2</span>,<span class="dv">1</span>))</span>
-<span id="cb7-4"><a href="C2BasicLR.html#cb7-4" tabindex="-1"></a><span class="fu">hist</span>(Lot<span class="sc">$</span>POP, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">&quot;POP&quot;</span>)</span>
-<span id="cb7-5"><a href="C2BasicLR.html#cb7-5" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Frecuencia&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">30</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.3</span>, <span class="at">adj=</span>.<span class="dv">6</span>)</span>
-<span id="cb7-6"><a href="C2BasicLR.html#cb7-6" tabindex="-1"></a><span class="fu">hist</span>(Lot<span class="sc">$</span>SALES, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">&quot;SALES&quot;</span>)</span>
-<span id="cb7-7"><a href="C2BasicLR.html#cb7-7" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Frecuencia&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">34</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.3</span>, <span class="at">adj=</span>.<span class="dv">6</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="C2BasicLR.html#cb8-1" tabindex="-1"></a><span class="co">#  TABLA 2.1 ESTADÍSTICAS RESUMEN</span></span>
-<span id="cb8-2"><a href="C2BasicLR.html#cb8-2" tabindex="-1"></a>BookSummStats <span class="ot">&lt;-</span> <span class="cf">function</span>(Xymat){</span>
-<span id="cb8-3"><a href="C2BasicLR.html#cb8-3" tabindex="-1"></a>meanSummary <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, mean,  <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
-<span id="cb8-4"><a href="C2BasicLR.html#cb8-4" tabindex="-1"></a>sdSummary   <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, sd,    <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
-<span id="cb8-5"><a href="C2BasicLR.html#cb8-5" tabindex="-1"></a>minSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, min,   <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
-<span id="cb8-6"><a href="C2BasicLR.html#cb8-6" tabindex="-1"></a>maxSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, max,   <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
-<span id="cb8-7"><a href="C2BasicLR.html#cb8-7" tabindex="-1"></a>medSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, median,<span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
-<span id="cb8-8"><a href="C2BasicLR.html#cb8-8" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meanSummary, medSummary, sdSummary, minSummary, maxSummary)</span>
-<span id="cb8-9"><a href="C2BasicLR.html#cb8-9" tabindex="-1"></a><span class="fu">return</span>(tableMat)</span>
-<span id="cb8-10"><a href="C2BasicLR.html#cb8-10" tabindex="-1"></a>}</span>
-<span id="cb8-11"><a href="C2BasicLR.html#cb8-11" tabindex="-1"></a>Xymat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(Lot<span class="sc">$</span>POP,Lot<span class="sc">$</span>SALES)) </span>
-<span id="cb8-12"><a href="C2BasicLR.html#cb8-12" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">BookSummStats</span>(Xymat)</span>
-<span id="cb8-13"><a href="C2BasicLR.html#cb8-13" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="C2BasicLR.html#cb8-14" tabindex="-1"></a><span class="fu">colnames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Promedio&quot;</span> , <span class="st">&quot;Mediana&quot;</span> , <span class="st">&quot;Desviación Estándar&quot;</span> , </span>
-<span id="cb8-15"><a href="C2BasicLR.html#cb8-15" tabindex="-1"></a>                         <span class="st">&quot;Mínimo&quot;</span> , <span class="st">&quot;Máximo&quot;</span>)</span>
-<span id="cb8-16"><a href="C2BasicLR.html#cb8-16" tabindex="-1"></a><span class="fu">rownames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;POP&quot;</span>, <span class="st">&quot;SALES&quot;</span>)</span>
-<span id="cb8-17"><a href="C2BasicLR.html#cb8-17" tabindex="-1"></a>tableMat1 <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">round</span>(tableMat, <span class="at">digits=</span><span class="dv">0</span>), <span class="at">big.mark =</span> <span class="st">&#39;,&#39;</span>)</span>
-<span id="cb8-18"><a href="C2BasicLR.html#cb8-18" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="C2BasicLR.html#cb8-19" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableMat1, </span>
-<span id="cb8-20"><a href="C2BasicLR.html#cb8-20" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Estadísticas Resumen de Cada Variable&#39;</span>, </span>
-<span id="cb8-21"><a href="C2BasicLR.html#cb8-21" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">0</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
-<span id="cb8-22"><a href="C2BasicLR.html#cb8-22" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5) <span class="sc">%&gt;%</span></span>
-<span id="cb8-23"><a href="C2BasicLR.html#cb8-23" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="at">general =</span> <span class="st">&quot;Frees y Miller (2003)&quot;</span>, </span>
-<span id="cb8-24"><a href="C2BasicLR.html#cb8-24" tabindex="-1"></a>           <span class="at">general_title =</span> <span class="st">&quot;Fuente:&quot;</span>, </span>
-<span id="cb8-25"><a href="C2BasicLR.html#cb8-25" tabindex="-1"></a>           <span class="at">footnote_as_chunk =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="C2BasicLR.html#cb7-1" aria-hidden="true" tabindex="-1"></a>Lot <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/WiscLottery.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb7-2"><a href="C2BasicLR.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  FIGURA 2.1</span></span>
+<span id="cb7-3"><a href="C2BasicLR.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">cex=</span><span class="fl">1.3</span>, <span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.1</span>,<span class="fl">1.2</span>,<span class="dv">1</span>))</span>
+<span id="cb7-4"><a href="C2BasicLR.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(Lot<span class="sc">$</span>POP, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">&quot;POP&quot;</span>)</span>
+<span id="cb7-5"><a href="C2BasicLR.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Frecuencia&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">30</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.3</span>, <span class="at">adj=</span>.<span class="dv">6</span>)</span>
+<span id="cb7-6"><a href="C2BasicLR.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(Lot<span class="sc">$</span>SALES, <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">&quot;SALES&quot;</span>)</span>
+<span id="cb7-7"><a href="C2BasicLR.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Frecuencia&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">34</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.3</span>, <span class="at">adj=</span>.<span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="C2BasicLR.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  TABLA 2.1 ESTADÍSTICAS RESUMEN</span></span>
+<span id="cb8-2"><a href="C2BasicLR.html#cb8-2" aria-hidden="true" tabindex="-1"></a>BookSummStats <span class="ot">&lt;-</span> <span class="cf">function</span>(Xymat){</span>
+<span id="cb8-3"><a href="C2BasicLR.html#cb8-3" aria-hidden="true" tabindex="-1"></a>meanSummary <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, mean,  <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
+<span id="cb8-4"><a href="C2BasicLR.html#cb8-4" aria-hidden="true" tabindex="-1"></a>sdSummary   <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, sd,    <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
+<span id="cb8-5"><a href="C2BasicLR.html#cb8-5" aria-hidden="true" tabindex="-1"></a>minSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, min,   <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
+<span id="cb8-6"><a href="C2BasicLR.html#cb8-6" aria-hidden="true" tabindex="-1"></a>maxSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, max,   <span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
+<span id="cb8-7"><a href="C2BasicLR.html#cb8-7" aria-hidden="true" tabindex="-1"></a>medSummary  <span class="ot">&lt;-</span> <span class="fu">sapply</span>(Xymat, median,<span class="at">na.rm=</span><span class="cn">TRUE</span>) </span>
+<span id="cb8-8"><a href="C2BasicLR.html#cb8-8" aria-hidden="true" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">cbind</span>(meanSummary, medSummary, sdSummary, minSummary, maxSummary)</span>
+<span id="cb8-9"><a href="C2BasicLR.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(tableMat)</span>
+<span id="cb8-10"><a href="C2BasicLR.html#cb8-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-11"><a href="C2BasicLR.html#cb8-11" aria-hidden="true" tabindex="-1"></a>Xymat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(Lot<span class="sc">$</span>POP,Lot<span class="sc">$</span>SALES)) </span>
+<span id="cb8-12"><a href="C2BasicLR.html#cb8-12" aria-hidden="true" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">BookSummStats</span>(Xymat)</span>
+<span id="cb8-13"><a href="C2BasicLR.html#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="C2BasicLR.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Promedio&quot;</span> , <span class="st">&quot;Mediana&quot;</span> , <span class="st">&quot;Desviación Estándar&quot;</span> , </span>
+<span id="cb8-15"><a href="C2BasicLR.html#cb8-15" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;Mínimo&quot;</span> , <span class="st">&quot;Máximo&quot;</span>)</span>
+<span id="cb8-16"><a href="C2BasicLR.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;POP&quot;</span>, <span class="st">&quot;SALES&quot;</span>)</span>
+<span id="cb8-17"><a href="C2BasicLR.html#cb8-17" aria-hidden="true" tabindex="-1"></a>tableMat1 <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">round</span>(tableMat, <span class="at">digits=</span><span class="dv">0</span>), <span class="at">big.mark =</span> <span class="st">&#39;,&#39;</span>)</span>
+<span id="cb8-18"><a href="C2BasicLR.html#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="C2BasicLR.html#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableMat1, </span>
+<span id="cb8-20"><a href="C2BasicLR.html#cb8-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Estadísticas Resumen de Cada Variable&#39;</span>, </span>
+<span id="cb8-21"><a href="C2BasicLR.html#cb8-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">0</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb8-22"><a href="C2BasicLR.html#cb8-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5) <span class="sc">%&gt;%</span></span>
+<span id="cb8-23"><a href="C2BasicLR.html#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="at">general =</span> <span class="st">&quot;Frees y Miller (2003)&quot;</span>, </span>
+<span id="cb8-24"><a href="C2BasicLR.html#cb8-24" aria-hidden="true" tabindex="-1"></a>           <span class="at">general_title =</span> <span class="st">&quot;Fuente:&quot;</span>, </span>
+<span id="cb8-25"><a href="C2BasicLR.html#cb8-25" aria-hidden="true" tabindex="-1"></a>           <span class="at">footnote_as_chunk =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 <p>Como muestra la Tabla <a href="C2BasicLR.html#tab:SummaryStats">2.1</a>, las estadísticas resumen básicas
 dan ideas útiles de la estructura de las características clave de los datos.
@@ -486,11 +506,11 @@ Figure 2.2: <strong>Un gráfico de dispersión de los datos de la lotería</stro
 <a id="displayCode.Fig22.Hide" href="javascript:togglecode('toggleCode.Fig22.Hide','displayCode.Fig22.Hide');"><i><strong>Código R para Producir la Figura 2.2</strong></i></a>
 </h5>
 <div id="toggleCode.Fig22.Hide" style="display: none">
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="C2BasicLR.html#cb9-1" tabindex="-1"></a><span class="co">#Lot &lt;- read.csv(&quot;CSVData/WiscLottery.csv&quot;, header=TRUE)</span></span>
-<span id="cb9-2"><a href="C2BasicLR.html#cb9-2" tabindex="-1"></a><span class="co">#  FIGURA 2.2, CON CORRELACIONES</span></span>
-<span id="cb9-3"><a href="C2BasicLR.html#cb9-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.8</span>,<span class="dv">2</span>,<span class="dv">1</span>),<span class="at">cex=</span><span class="fl">1.1</span>)</span>
-<span id="cb9-4"><a href="C2BasicLR.html#cb9-4" tabindex="-1"></a><span class="fu">plot</span>(Lot<span class="sc">$</span>POP, Lot<span class="sc">$</span>SALES, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">&quot;POP&quot;</span>)</span>
-<span id="cb9-5"><a href="C2BasicLR.html#cb9-5" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;SALES&quot;</span>,<span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">36000</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="C2BasicLR.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lot &lt;- read.csv(&quot;CSVData/WiscLottery.csv&quot;, header=TRUE)</span></span>
+<span id="cb9-2"><a href="C2BasicLR.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  FIGURA 2.2, CON CORRELACIONES</span></span>
+<span id="cb9-3"><a href="C2BasicLR.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.8</span>,<span class="dv">2</span>,<span class="dv">1</span>),<span class="at">cex=</span><span class="fl">1.1</span>)</span>
+<span id="cb9-4"><a href="C2BasicLR.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Lot<span class="sc">$</span>POP, Lot<span class="sc">$</span>SALES, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">&quot;POP&quot;</span>)</span>
+<span id="cb9-5"><a href="C2BasicLR.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;SALES&quot;</span>,<span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">36000</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>)</span></code></pre></div>
 </div>
 <p>Una forma de resumir la fuerza de la relación entre dos variables es a través de una estadística de <em>correlación</em>.</p>
 <div class="blackbox">
@@ -631,33 +651,33 @@ Figure 2.3: <strong>Gráfico de la Expectativa de Cola Condicional (CTE) frente 
 <a id="displayCode.Fig23.Hide" href="javascript:togglecode('toggleCode.Fig23.Hide','displayCode.Fig23.Hide');"><i><strong>Código R para producir la Figura 2.3</strong></i></a>
 </h5>
 <div id="toggleCode.Fig23.Hide" style="display: none">
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="C2BasicLR.html#cb10-1" tabindex="-1"></a><span class="co"># FIGURA 2.3</span></span>
-<span id="cb10-2"><a href="C2BasicLR.html#cb10-2" tabindex="-1"></a><span class="co"># simulación</span></span>
-<span id="cb10-3"><a href="C2BasicLR.html#cb10-3" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
-<span id="cb10-4"><a href="C2BasicLR.html#cb10-4" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
-<span id="cb10-5"><a href="C2BasicLR.html#cb10-5" tabindex="-1"></a>Var <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
-<span id="cb10-6"><a href="C2BasicLR.html#cb10-6" tabindex="-1"></a>CTE <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
-<span id="cb10-7"><a href="C2BasicLR.html#cb10-7" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
-<span id="cb10-8"><a href="C2BasicLR.html#cb10-8" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
-<span id="cb10-9"><a href="C2BasicLR.html#cb10-9" tabindex="-1"></a>    S[j] <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fu">exp</span>(.<span class="dv">08</span> <span class="sc">*</span> <span class="dv">10</span> <span class="sc">+</span> .<span class="dv">15</span> <span class="sc">*</span> (<span class="dv">10</span> <span class="sc">^</span> .<span class="dv">5</span>) <span class="sc">*</span> <span class="fu">rnorm</span>(<span class="dv">1</span>))</span>
-<span id="cb10-10"><a href="C2BasicLR.html#cb10-10" tabindex="-1"></a>    C[j] <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>.<span class="dv">06</span> <span class="sc">*</span> <span class="dv">10</span>) <span class="sc">*</span> <span class="fu">max</span>(<span class="dv">0</span>, <span class="dv">110</span> <span class="sc">-</span> S[j]) </span>
-<span id="cb10-11"><a href="C2BasicLR.html#cb10-11" tabindex="-1"></a>  }</span>
-<span id="cb10-12"><a href="C2BasicLR.html#cb10-12" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="fu">sort</span>(C)</span>
-<span id="cb10-13"><a href="C2BasicLR.html#cb10-13" tabindex="-1"></a>  Var[i] <span class="ot">&lt;-</span> C[<span class="dv">950</span>]</span>
-<span id="cb10-14"><a href="C2BasicLR.html#cb10-14" tabindex="-1"></a>  CTE[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(C[<span class="dv">950</span><span class="sc">:</span><span class="dv">1000</span>])  </span>
-<span id="cb10-15"><a href="C2BasicLR.html#cb10-15" tabindex="-1"></a>}</span>
-<span id="cb10-16"><a href="C2BasicLR.html#cb10-16" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="C2BasicLR.html#cb10-17" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(CTE <span class="sc">~</span> Var)</span>
-<span id="cb10-18"><a href="C2BasicLR.html#cb10-18" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="fu">round</span>(model<span class="sc">$</span>coef[<span class="dv">1</span>], <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb10-19"><a href="C2BasicLR.html#cb10-19" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fu">round</span>(model<span class="sc">$</span>coef[<span class="dv">2</span>], <span class="at">digits =</span> <span class="dv">3</span>)</span>
-<span id="cb10-20"><a href="C2BasicLR.html#cb10-20" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(model)<span class="sc">$</span>r.squared, <span class="at">digits =</span> <span class="dv">4</span>)</span>
-<span id="cb10-21"><a href="C2BasicLR.html#cb10-21" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="C2BasicLR.html#cb10-22" tabindex="-1"></a><span class="fu">plot</span>(Var, CTE,</span>
-<span id="cb10-23"><a href="C2BasicLR.html#cb10-23" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Estimaciones de VaR&quot;</span>)),</span>
-<span id="cb10-24"><a href="C2BasicLR.html#cb10-24" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Estimaciones de CTE&quot;</span>)),</span>
-<span id="cb10-25"><a href="C2BasicLR.html#cb10-25" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">12</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">20</span>), <span class="at">xaxs =</span> <span class="st">&quot;i&quot;</span>, <span class="at">yaxs =</span> <span class="st">&quot;i&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.4</span>)</span>
-<span id="cb10-26"><a href="C2BasicLR.html#cb10-26" tabindex="-1"></a><span class="fu">lines</span>(Var, model<span class="sc">$</span>fitted, <span class="at">lwd =</span> .<span class="dv">5</span>)</span>
-<span id="cb10-27"><a href="C2BasicLR.html#cb10-27" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">16</span>, <span class="dv">18</span>, <span class="dv">20</span>), <span class="at">col =</span> <span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="C2BasicLR.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># FIGURA 2.3</span></span>
+<span id="cb10-2"><a href="C2BasicLR.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># simulación</span></span>
+<span id="cb10-3"><a href="C2BasicLR.html#cb10-3" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
+<span id="cb10-4"><a href="C2BasicLR.html#cb10-4" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
+<span id="cb10-5"><a href="C2BasicLR.html#cb10-5" aria-hidden="true" tabindex="-1"></a>Var <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
+<span id="cb10-6"><a href="C2BasicLR.html#cb10-6" aria-hidden="true" tabindex="-1"></a>CTE <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
+<span id="cb10-7"><a href="C2BasicLR.html#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb10-8"><a href="C2BasicLR.html#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb10-9"><a href="C2BasicLR.html#cb10-9" aria-hidden="true" tabindex="-1"></a>    S[j] <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> <span class="fu">exp</span>(.<span class="dv">08</span> <span class="sc">*</span> <span class="dv">10</span> <span class="sc">+</span> .<span class="dv">15</span> <span class="sc">*</span> (<span class="dv">10</span> <span class="sc">^</span> .<span class="dv">5</span>) <span class="sc">*</span> <span class="fu">rnorm</span>(<span class="dv">1</span>))</span>
+<span id="cb10-10"><a href="C2BasicLR.html#cb10-10" aria-hidden="true" tabindex="-1"></a>    C[j] <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>.<span class="dv">06</span> <span class="sc">*</span> <span class="dv">10</span>) <span class="sc">*</span> <span class="fu">max</span>(<span class="dv">0</span>, <span class="dv">110</span> <span class="sc">-</span> S[j]) </span>
+<span id="cb10-11"><a href="C2BasicLR.html#cb10-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-12"><a href="C2BasicLR.html#cb10-12" aria-hidden="true" tabindex="-1"></a>  C <span class="ot">&lt;-</span> <span class="fu">sort</span>(C)</span>
+<span id="cb10-13"><a href="C2BasicLR.html#cb10-13" aria-hidden="true" tabindex="-1"></a>  Var[i] <span class="ot">&lt;-</span> C[<span class="dv">950</span>]</span>
+<span id="cb10-14"><a href="C2BasicLR.html#cb10-14" aria-hidden="true" tabindex="-1"></a>  CTE[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(C[<span class="dv">950</span><span class="sc">:</span><span class="dv">1000</span>])  </span>
+<span id="cb10-15"><a href="C2BasicLR.html#cb10-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-16"><a href="C2BasicLR.html#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="C2BasicLR.html#cb10-17" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(CTE <span class="sc">~</span> Var)</span>
+<span id="cb10-18"><a href="C2BasicLR.html#cb10-18" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="fu">round</span>(model<span class="sc">$</span>coef[<span class="dv">1</span>], <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb10-19"><a href="C2BasicLR.html#cb10-19" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fu">round</span>(model<span class="sc">$</span>coef[<span class="dv">2</span>], <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb10-20"><a href="C2BasicLR.html#cb10-20" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">summary</span>(model)<span class="sc">$</span>r.squared, <span class="at">digits =</span> <span class="dv">4</span>)</span>
+<span id="cb10-21"><a href="C2BasicLR.html#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="C2BasicLR.html#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Var, CTE,</span>
+<span id="cb10-23"><a href="C2BasicLR.html#cb10-23" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Estimaciones de VaR&quot;</span>)),</span>
+<span id="cb10-24"><a href="C2BasicLR.html#cb10-24" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Estimaciones de CTE&quot;</span>)),</span>
+<span id="cb10-25"><a href="C2BasicLR.html#cb10-25" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">12</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">20</span>), <span class="at">xaxs =</span> <span class="st">&quot;i&quot;</span>, <span class="at">yaxs =</span> <span class="st">&quot;i&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.4</span>)</span>
+<span id="cb10-26"><a href="C2BasicLR.html#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(Var, model<span class="sc">$</span>fitted, <span class="at">lwd =</span> .<span class="dv">5</span>)</span>
+<span id="cb10-27"><a href="C2BasicLR.html#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">16</span>, <span class="dv">18</span>, <span class="dv">20</span>), <span class="at">col =</span> <span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -901,25 +921,25 @@ Total
 <a id="displayCode.LotANOVA.Hide" href="javascript:togglecode('toggleCode.LotANOVA.Hide','displayCode.LotANOVA.Hide');"><i><strong>Código R para Producir la Tabla ANOVA de Lotería</strong></i></a>
 </h5>
 <div id="toggleCode.LotANOVA.Hide" style="display: none">
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="C2BasicLR.html#cb11-1" tabindex="-1"></a><span class="co">#Lot &lt;- read.csv(&quot;CSVData/WiscLottery.csv&quot;, header=TRUE)</span></span>
-<span id="cb11-2"><a href="C2BasicLR.html#cb11-2" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="C2BasicLR.html#cb11-3" tabindex="-1"></a>model.basiclinearreg<span class="ot">&lt;-</span><span class="fu">lm</span>(Lot<span class="sc">$</span>SALES <span class="sc">~</span> Lot<span class="sc">$</span>POP)</span>
-<span id="cb11-4"><a href="C2BasicLR.html#cb11-4" tabindex="-1"></a><span class="co">#summary(model.basiclinearreg)</span></span>
-<span id="cb11-5"><a href="C2BasicLR.html#cb11-5" tabindex="-1"></a>ANOVA <span class="ot">&lt;-</span> <span class="fu">anova</span>(model.basiclinearreg)</span>
-<span id="cb11-6"><a href="C2BasicLR.html#cb11-6" tabindex="-1"></a>row1 <span class="ot">&lt;-</span> <span class="fu">c</span>(ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">1</span>], ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Df</span><span class="st">`</span>[<span class="dv">1</span>], ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Mean Sq</span><span class="st">`</span>[<span class="dv">1</span>])</span>
-<span id="cb11-7"><a href="C2BasicLR.html#cb11-7" tabindex="-1"></a>row2 <span class="ot">&lt;-</span> <span class="fu">c</span>(ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">2</span>], ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Df</span><span class="st">`</span>[<span class="dv">2</span>], ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Mean Sq</span><span class="st">`</span>[<span class="dv">2</span>])</span>
-<span id="cb11-8"><a href="C2BasicLR.html#cb11-8" tabindex="-1"></a>row3 <span class="ot">&lt;-</span> <span class="fu">c</span>(ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">1</span>]<span class="sc">+</span>ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">2</span>], </span>
-<span id="cb11-9"><a href="C2BasicLR.html#cb11-9" tabindex="-1"></a>          ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Df</span><span class="st">`</span>[<span class="dv">1</span>] <span class="sc">+</span>ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Df</span><span class="st">`</span>[<span class="dv">2</span>], <span class="cn">NaN</span>)</span>
-<span id="cb11-10"><a href="C2BasicLR.html#cb11-10" tabindex="-1"></a>ANOVATable <span class="ot">&lt;-</span> <span class="fu">rbind</span>(row1, row2, row3)</span>
-<span id="cb11-11"><a href="C2BasicLR.html#cb11-11" tabindex="-1"></a>ANOVATable1 <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">round</span>(ANOVATable, <span class="at">digits =</span> <span class="dv">0</span>), <span class="at">big.mark =</span> <span class="st">&#39;,&#39;</span>)</span>
-<span id="cb11-12"><a href="C2BasicLR.html#cb11-12" tabindex="-1"></a>ANOVATable1[<span class="dv">3</span>,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb11-13"><a href="C2BasicLR.html#cb11-13" tabindex="-1"></a><span class="fu">rownames</span>(ANOVATable1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Regresión&quot;</span>, <span class="st">&quot;Error&quot;</span>, <span class="st">&quot;Total&quot;</span>)</span>
-<span id="cb11-14"><a href="C2BasicLR.html#cb11-14" tabindex="-1"></a><span class="fu">colnames</span>(ANOVATable1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Suma de Cuadrados&quot;</span>, <span class="st">&quot;$df$&quot;</span>, <span class="st">&quot;Cuadrado Medio&quot;</span>)</span>
-<span id="cb11-15"><a href="C2BasicLR.html#cb11-15" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="C2BasicLR.html#cb11-16" tabindex="-1"></a><span class="fu">kable</span>(ANOVATable1, <span class="at">align =</span> <span class="st">&#39;r&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-17"><a href="C2BasicLR.html#cb11-17" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">&quot;center&quot;</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-18"><a href="C2BasicLR.html#cb11-18" tabindex="-1"></a>     kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>(<span class="at">font =</span> <span class="dv">12</span>,  </span>
-<span id="cb11-19"><a href="C2BasicLR.html#cb11-19" tabindex="-1"></a>                               <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="C2BasicLR.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lot &lt;- read.csv(&quot;CSVData/WiscLottery.csv&quot;, header=TRUE)</span></span>
+<span id="cb11-2"><a href="C2BasicLR.html#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="C2BasicLR.html#cb11-3" aria-hidden="true" tabindex="-1"></a>model.basiclinearreg<span class="ot">&lt;-</span><span class="fu">lm</span>(Lot<span class="sc">$</span>SALES <span class="sc">~</span> Lot<span class="sc">$</span>POP)</span>
+<span id="cb11-4"><a href="C2BasicLR.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(model.basiclinearreg)</span></span>
+<span id="cb11-5"><a href="C2BasicLR.html#cb11-5" aria-hidden="true" tabindex="-1"></a>ANOVA <span class="ot">&lt;-</span> <span class="fu">anova</span>(model.basiclinearreg)</span>
+<span id="cb11-6"><a href="C2BasicLR.html#cb11-6" aria-hidden="true" tabindex="-1"></a>row1 <span class="ot">&lt;-</span> <span class="fu">c</span>(ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">1</span>], ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Df</span><span class="st">`</span>[<span class="dv">1</span>], ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Mean Sq</span><span class="st">`</span>[<span class="dv">1</span>])</span>
+<span id="cb11-7"><a href="C2BasicLR.html#cb11-7" aria-hidden="true" tabindex="-1"></a>row2 <span class="ot">&lt;-</span> <span class="fu">c</span>(ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">2</span>], ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Df</span><span class="st">`</span>[<span class="dv">2</span>], ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Mean Sq</span><span class="st">`</span>[<span class="dv">2</span>])</span>
+<span id="cb11-8"><a href="C2BasicLR.html#cb11-8" aria-hidden="true" tabindex="-1"></a>row3 <span class="ot">&lt;-</span> <span class="fu">c</span>(ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">1</span>]<span class="sc">+</span>ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">2</span>], </span>
+<span id="cb11-9"><a href="C2BasicLR.html#cb11-9" aria-hidden="true" tabindex="-1"></a>          ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Df</span><span class="st">`</span>[<span class="dv">1</span>] <span class="sc">+</span>ANOVA<span class="sc">$</span><span class="st">`</span><span class="at">Df</span><span class="st">`</span>[<span class="dv">2</span>], <span class="cn">NaN</span>)</span>
+<span id="cb11-10"><a href="C2BasicLR.html#cb11-10" aria-hidden="true" tabindex="-1"></a>ANOVATable <span class="ot">&lt;-</span> <span class="fu">rbind</span>(row1, row2, row3)</span>
+<span id="cb11-11"><a href="C2BasicLR.html#cb11-11" aria-hidden="true" tabindex="-1"></a>ANOVATable1 <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">round</span>(ANOVATable, <span class="at">digits =</span> <span class="dv">0</span>), <span class="at">big.mark =</span> <span class="st">&#39;,&#39;</span>)</span>
+<span id="cb11-12"><a href="C2BasicLR.html#cb11-12" aria-hidden="true" tabindex="-1"></a>ANOVATable1[<span class="dv">3</span>,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb11-13"><a href="C2BasicLR.html#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(ANOVATable1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Regresión&quot;</span>, <span class="st">&quot;Error&quot;</span>, <span class="st">&quot;Total&quot;</span>)</span>
+<span id="cb11-14"><a href="C2BasicLR.html#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(ANOVATable1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Suma de Cuadrados&quot;</span>, <span class="st">&quot;$df$&quot;</span>, <span class="st">&quot;Cuadrado Medio&quot;</span>)</span>
+<span id="cb11-15"><a href="C2BasicLR.html#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="C2BasicLR.html#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(ANOVATable1, <span class="at">align =</span> <span class="st">&#39;r&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-17"><a href="C2BasicLR.html#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">&quot;center&quot;</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-18"><a href="C2BasicLR.html#cb11-18" aria-hidden="true" tabindex="-1"></a>     kableExtra<span class="sc">::</span><span class="fu">kable_classic</span>(<span class="at">font =</span> <span class="dv">12</span>,  </span>
+<span id="cb11-19"><a href="C2BasicLR.html#cb11-19" aria-hidden="true" tabindex="-1"></a>                               <span class="at">html_font =</span> <span class="st">&quot;Cambria&quot;</span>) </span></code></pre></div>
 </div>
 <p>De esta tabla, puede verificar que <span class="math inline">\(R^2=78.5\%\)</span> y <span class="math inline">\(s=3,792.\)</span></p>
 </div>
@@ -974,35 +994,35 @@ Figure 2.6: <strong>Estos tres diagramas de dispersión muestran la misma relaci
 <a id="displayCode.Fig26.Hide" href="javascript:togglecode('toggleCode.Fig26.Hide','displayCode.Fig26.Hide');"><i><strong>Código R para producir la Figura 2.6</strong></i></a>
 </h5>
 <div id="toggleCode.Fig26.Hide" style="display: none">
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="C2BasicLR.html#cb12-1" tabindex="-1"></a><span class="co">#  FIGURA 2.6 AQUÍ</span></span>
-<span id="cb12-2"><a href="C2BasicLR.html#cb12-2" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="C2BasicLR.html#cb12-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>),<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">3.8</span>,<span class="fl">2.8</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb12-4"><a href="C2BasicLR.html#cb12-4" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="fl">2.5</span>,<span class="fl">1.5</span>,<span class="fl">1.7</span>,<span class="fl">2.6</span>,<span class="fl">2.8</span>,.<span class="dv">9</span>,.<span class="dv">88</span>,.<span class="dv">8</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.45</span>,<span class="fl">1.8</span>,<span class="fl">2.2</span>,<span class="fl">2.1</span>)</span>
-<span id="cb12-5"><a href="C2BasicLR.html#cb12-5" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">5</span>,<span class="fl">2.2</span>,<span class="fl">2.6</span>,<span class="fl">2.5</span>,.<span class="dv">8</span>,<span class="fl">1.5</span>,<span class="fl">2.3</span>,<span class="fl">2.4</span>,.<span class="dv">75</span>,.<span class="dv">7</span>,<span class="fl">1.3</span>,<span class="fl">1.5</span>,<span class="fl">1.7</span>,<span class="fl">2.3</span>,<span class="fl">2.3</span>,<span class="fl">2.7</span>,<span class="fl">1.25</span>)</span>
-<span id="cb12-6"><a href="C2BasicLR.html#cb12-6" tabindex="-1"></a><span class="fu">plot</span>(x,y, <span class="at">xlim=</span><span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">3</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">3.5</span>), <span class="at">bty=</span><span class="st">&quot;l&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb12-7"><a href="C2BasicLR.html#cb12-7" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;y&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="fl">3.5</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb12-8"><a href="C2BasicLR.html#cb12-8" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;x&quot;</span>, <span class="at">side=</span><span class="dv">1</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb12-9"><a href="C2BasicLR.html#cb12-9" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">75</span>,<span class="fl">2.75</span>, <span class="at">by =</span> .<span class="dv">001</span>)</span>
-<span id="cb12-10"><a href="C2BasicLR.html#cb12-10" tabindex="-1"></a>b <span class="ot">=</span> a</span>
-<span id="cb12-11"><a href="C2BasicLR.html#cb12-11" tabindex="-1"></a><span class="fu">lines</span>(a,b)</span>
-<span id="cb12-12"><a href="C2BasicLR.html#cb12-12" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="C2BasicLR.html#cb12-13" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="fl">2.5</span>,<span class="fl">1.5</span>,<span class="fl">1.7</span>,<span class="fl">2.6</span>,<span class="fl">2.8</span>,.<span class="dv">9</span>,.<span class="dv">88</span>,.<span class="dv">8</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.45</span>,<span class="fl">1.8</span>,<span class="fl">2.2</span>,<span class="fl">2.45</span>)</span>
-<span id="cb12-14"><a href="C2BasicLR.html#cb12-14" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="fl">2.5</span>,<span class="fl">1.2</span>,<span class="fl">1.6</span>,<span class="fl">2.4</span>,<span class="fl">2.6</span>,<span class="fl">1.1</span>,<span class="fl">1.11</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.45</span>,<span class="fl">1.6</span>,<span class="fl">1.95</span>,<span class="fl">2.3</span>,<span class="fl">2.7</span>)</span>
-<span id="cb12-15"><a href="C2BasicLR.html#cb12-15" tabindex="-1"></a><span class="fu">plot</span>(x,y, <span class="at">xlim=</span><span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">3</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">3.5</span>), <span class="at">bty=</span><span class="st">&quot;l&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb12-16"><a href="C2BasicLR.html#cb12-16" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;y&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="fl">3.5</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb12-17"><a href="C2BasicLR.html#cb12-17" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;x&quot;</span>, <span class="at">side=</span><span class="dv">1</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb12-18"><a href="C2BasicLR.html#cb12-18" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">75</span>,<span class="fl">2.75</span>, <span class="at">by =</span> .<span class="dv">001</span>)</span>
-<span id="cb12-19"><a href="C2BasicLR.html#cb12-19" tabindex="-1"></a>b <span class="ot">=</span> a</span>
-<span id="cb12-20"><a href="C2BasicLR.html#cb12-20" tabindex="-1"></a><span class="fu">lines</span>(a,b)</span>
-<span id="cb12-21"><a href="C2BasicLR.html#cb12-21" tabindex="-1"></a></span>
-<span id="cb12-22"><a href="C2BasicLR.html#cb12-22" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="fl">2.5</span>,<span class="fl">1.5</span>,<span class="fl">1.7</span>,<span class="fl">2.6</span>,<span class="fl">2.8</span>,<span class="fl">2.6</span>,<span class="fl">1.5</span>,<span class="dv">2</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.45</span>,<span class="fl">1.8</span>,<span class="fl">2.2</span>,<span class="fl">2.45</span>)</span>
-<span id="cb12-23"><a href="C2BasicLR.html#cb12-23" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="fl">2.5</span>,<span class="fl">1.2</span>,<span class="fl">1.6</span>,<span class="fl">2.4</span>,<span class="fl">2.6</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="fl">2.4</span>,<span class="fl">1.3</span>,<span class="fl">1.55</span>,<span class="fl">1.6</span>,<span class="fl">1.95</span>,<span class="fl">1.6</span>,<span class="fl">2.7</span>)</span>
-<span id="cb12-24"><a href="C2BasicLR.html#cb12-24" tabindex="-1"></a><span class="fu">plot</span>(x,y, <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.5</span>,<span class="dv">5</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fl">5.5</span>), <span class="at">bty=</span><span class="st">&quot;l&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb12-25"><a href="C2BasicLR.html#cb12-25" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;y&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="fl">5.1</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb12-26"><a href="C2BasicLR.html#cb12-26" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;x&quot;</span>, <span class="at">side=</span><span class="dv">1</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb12-27"><a href="C2BasicLR.html#cb12-27" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span>.<span class="dv">5</span>,<span class="fl">4.5</span>, <span class="at">by =</span> .<span class="dv">001</span>)</span>
-<span id="cb12-28"><a href="C2BasicLR.html#cb12-28" tabindex="-1"></a>b <span class="ot">=</span> a</span>
-<span id="cb12-29"><a href="C2BasicLR.html#cb12-29" tabindex="-1"></a><span class="fu">lines</span>(a,b)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="C2BasicLR.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  FIGURA 2.6 AQUÍ</span></span>
+<span id="cb12-2"><a href="C2BasicLR.html#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="C2BasicLR.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>),<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">3.8</span>,<span class="fl">2.8</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb12-4"><a href="C2BasicLR.html#cb12-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="fl">2.5</span>,<span class="fl">1.5</span>,<span class="fl">1.7</span>,<span class="fl">2.6</span>,<span class="fl">2.8</span>,.<span class="dv">9</span>,.<span class="dv">88</span>,.<span class="dv">8</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.45</span>,<span class="fl">1.8</span>,<span class="fl">2.2</span>,<span class="fl">2.1</span>)</span>
+<span id="cb12-5"><a href="C2BasicLR.html#cb12-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">5</span>,<span class="fl">2.2</span>,<span class="fl">2.6</span>,<span class="fl">2.5</span>,.<span class="dv">8</span>,<span class="fl">1.5</span>,<span class="fl">2.3</span>,<span class="fl">2.4</span>,.<span class="dv">75</span>,.<span class="dv">7</span>,<span class="fl">1.3</span>,<span class="fl">1.5</span>,<span class="fl">1.7</span>,<span class="fl">2.3</span>,<span class="fl">2.3</span>,<span class="fl">2.7</span>,<span class="fl">1.25</span>)</span>
+<span id="cb12-6"><a href="C2BasicLR.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y, <span class="at">xlim=</span><span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">3</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">3.5</span>), <span class="at">bty=</span><span class="st">&quot;l&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb12-7"><a href="C2BasicLR.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;y&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="fl">3.5</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb12-8"><a href="C2BasicLR.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;x&quot;</span>, <span class="at">side=</span><span class="dv">1</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb12-9"><a href="C2BasicLR.html#cb12-9" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">75</span>,<span class="fl">2.75</span>, <span class="at">by =</span> .<span class="dv">001</span>)</span>
+<span id="cb12-10"><a href="C2BasicLR.html#cb12-10" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> a</span>
+<span id="cb12-11"><a href="C2BasicLR.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(a,b)</span>
+<span id="cb12-12"><a href="C2BasicLR.html#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="C2BasicLR.html#cb12-13" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="fl">2.5</span>,<span class="fl">1.5</span>,<span class="fl">1.7</span>,<span class="fl">2.6</span>,<span class="fl">2.8</span>,.<span class="dv">9</span>,.<span class="dv">88</span>,.<span class="dv">8</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.45</span>,<span class="fl">1.8</span>,<span class="fl">2.2</span>,<span class="fl">2.45</span>)</span>
+<span id="cb12-14"><a href="C2BasicLR.html#cb12-14" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="fl">2.5</span>,<span class="fl">1.2</span>,<span class="fl">1.6</span>,<span class="fl">2.4</span>,<span class="fl">2.6</span>,<span class="fl">1.1</span>,<span class="fl">1.11</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.45</span>,<span class="fl">1.6</span>,<span class="fl">1.95</span>,<span class="fl">2.3</span>,<span class="fl">2.7</span>)</span>
+<span id="cb12-15"><a href="C2BasicLR.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y, <span class="at">xlim=</span><span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">3</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">3.5</span>), <span class="at">bty=</span><span class="st">&quot;l&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb12-16"><a href="C2BasicLR.html#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;y&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="fl">3.5</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb12-17"><a href="C2BasicLR.html#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;x&quot;</span>, <span class="at">side=</span><span class="dv">1</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb12-18"><a href="C2BasicLR.html#cb12-18" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">75</span>,<span class="fl">2.75</span>, <span class="at">by =</span> .<span class="dv">001</span>)</span>
+<span id="cb12-19"><a href="C2BasicLR.html#cb12-19" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> a</span>
+<span id="cb12-20"><a href="C2BasicLR.html#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(a,b)</span>
+<span id="cb12-21"><a href="C2BasicLR.html#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="C2BasicLR.html#cb12-22" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="fl">2.5</span>,<span class="fl">1.5</span>,<span class="fl">1.7</span>,<span class="fl">2.6</span>,<span class="fl">2.8</span>,<span class="fl">2.6</span>,<span class="fl">1.5</span>,<span class="dv">2</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.45</span>,<span class="fl">1.8</span>,<span class="fl">2.2</span>,<span class="fl">2.45</span>)</span>
+<span id="cb12-23"><a href="C2BasicLR.html#cb12-23" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="fl">2.3</span>,<span class="fl">2.5</span>,<span class="fl">1.2</span>,<span class="fl">1.6</span>,<span class="fl">2.4</span>,<span class="fl">2.6</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="fl">2.4</span>,<span class="fl">1.3</span>,<span class="fl">1.55</span>,<span class="fl">1.6</span>,<span class="fl">1.95</span>,<span class="fl">1.6</span>,<span class="fl">2.7</span>)</span>
+<span id="cb12-24"><a href="C2BasicLR.html#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y, <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">1.5</span>,<span class="dv">5</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="fl">5.5</span>), <span class="at">bty=</span><span class="st">&quot;l&quot;</span>, <span class="at">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb12-25"><a href="C2BasicLR.html#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;y&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="fl">5.1</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb12-26"><a href="C2BasicLR.html#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;x&quot;</span>, <span class="at">side=</span><span class="dv">1</span>, <span class="at">line=</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb12-27"><a href="C2BasicLR.html#cb12-27" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span>.<span class="dv">5</span>,<span class="fl">4.5</span>, <span class="at">by =</span> .<span class="dv">001</span>)</span>
+<span id="cb12-28"><a href="C2BasicLR.html#cb12-28" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> a</span>
+<span id="cb12-29"><a href="C2BasicLR.html#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(a,b)</span></code></pre></div>
 </div>
 <p>La ecuación <a href="C2BasicLR.html#eq:weightb1">(2.4)</a> también implica que el coeficiente de regresión <span class="math inline">\(b_1\)</span> sigue una distribución normal. Es decir, recordemos de la estadística matemática que las combinaciones lineales de variables aleatorias normales también son normales. Así, si se cumple la Suposición F5, entonces <span class="math inline">\(b_1\)</span> sigue una distribución normal. Además, existen varias versiones de los teoremas del límite central para sumas ponderadas (ver, por ejemplo, Serfling, 1980). Así, como se discute en la Sección 1.4, si las respuestas <span class="math inline">\(y_i\)</span> están siquiera aproximadamente distribuidas normalmente, entonces será razonable usar una aproximación normal para la distribución muestral de <span class="math inline">\(b_1\)</span>. Usando <span class="math inline">\(se(b_1)\)</span> como la desviación estándar estimada de <span class="math inline">\(b_1\)</span>, para valores grandes de <span class="math inline">\(n\)</span> tenemos que <span class="math inline">\(\left( b_1-\beta_1\right) /se(b_1)\)</span> tiene una distribución normal estándar aproximada. Aunque no lo probaremos aquí, bajo la Suposición F5 <span class="math inline">\(\left( b_1-\beta_1\right) /se(b_1)\)</span> sigue una distribución <span class="math inline">\(t\)</span> con grados de libertad <span class="math inline">\(df=n-2\)</span>.</p>
 </div>
@@ -1135,20 +1155,20 @@ Interpretamos estos resultados señalando primero que nuestra mejor estimación 
 <a id="displayCode.Section25.Hide" href="javascript:togglecode('toggleCode.Section25.Hide','displayCode.Section25.Hide');"><i><strong>Código R para producir los análisis de la Sección 2.5</strong></i></a>
 </h5>
 <div id="toggleCode.Section25.Hide" style="display: none">
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="C2BasicLR.html#cb13-1" tabindex="-1"></a><span class="co">#  RESULTADOS DE LA SECCIÓN 2.1</span></span>
-<span id="cb13-2"><a href="C2BasicLR.html#cb13-2" tabindex="-1"></a>model.basiclinearreg<span class="ot">&lt;-</span><span class="fu">lm</span>(SALES <span class="sc">~</span> POP, <span class="at">data =</span> Lot)</span>
-<span id="cb13-3"><a href="C2BasicLR.html#cb13-3" tabindex="-1"></a><span class="fu">summary</span>(model.basiclinearreg)</span>
-<span id="cb13-4"><a href="C2BasicLR.html#cb13-4" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="C2BasicLR.html#cb13-5" tabindex="-1"></a><span class="co">#  SECCIÓN 2.5.2 INTERVALOS DE CONFIANZA</span></span>
-<span id="cb13-6"><a href="C2BasicLR.html#cb13-6" tabindex="-1"></a><span class="fu">confint</span>(model.basiclinearreg)</span>
-<span id="cb13-7"><a href="C2BasicLR.html#cb13-7" tabindex="-1"></a><span class="fu">confint</span>(model.basiclinearreg, <span class="at">level=</span>.<span class="dv">90</span>)</span>
-<span id="cb13-8"><a href="C2BasicLR.html#cb13-8" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="C2BasicLR.html#cb13-9" tabindex="-1"></a><span class="co">#  SECCIÓN 2.5.3 INTERVALOS DE PREDICCIÓN</span></span>
-<span id="cb13-10"><a href="C2BasicLR.html#cb13-10" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(POP <span class="ot">&lt;-</span> <span class="dv">10000</span>)</span>
-<span id="cb13-11"><a href="C2BasicLR.html#cb13-11" tabindex="-1"></a><span class="fu">predict</span>(model.basiclinearreg, newdata, <span class="at">interval=</span><span class="st">&quot;prediction&quot;</span>)</span>
-<span id="cb13-12"><a href="C2BasicLR.html#cb13-12" tabindex="-1"></a><span class="fu">predict</span>(model.basiclinearreg, newdata, <span class="at">interval=</span><span class="st">&quot;prediction&quot;</span>, <span class="at">level=</span>.<span class="dv">90</span>)</span>
-<span id="cb13-13"><a href="C2BasicLR.html#cb13-13" tabindex="-1"></a><span class="co">#  PROPORCIONA EL PERCENTIL 97.5 DE UNA DISTRIBUCIÓN T, SOLO PARA COMPROBAR</span></span>
-<span id="cb13-14"><a href="C2BasicLR.html#cb13-14" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">975</span>, <span class="dv">48</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="C2BasicLR.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  RESULTADOS DE LA SECCIÓN 2.1</span></span>
+<span id="cb13-2"><a href="C2BasicLR.html#cb13-2" aria-hidden="true" tabindex="-1"></a>model.basiclinearreg<span class="ot">&lt;-</span><span class="fu">lm</span>(SALES <span class="sc">~</span> POP, <span class="at">data =</span> Lot)</span>
+<span id="cb13-3"><a href="C2BasicLR.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.basiclinearreg)</span>
+<span id="cb13-4"><a href="C2BasicLR.html#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="C2BasicLR.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  SECCIÓN 2.5.2 INTERVALOS DE CONFIANZA</span></span>
+<span id="cb13-6"><a href="C2BasicLR.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model.basiclinearreg)</span>
+<span id="cb13-7"><a href="C2BasicLR.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model.basiclinearreg, <span class="at">level=</span>.<span class="dv">90</span>)</span>
+<span id="cb13-8"><a href="C2BasicLR.html#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="C2BasicLR.html#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  SECCIÓN 2.5.3 INTERVALOS DE PREDICCIÓN</span></span>
+<span id="cb13-10"><a href="C2BasicLR.html#cb13-10" aria-hidden="true" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(POP <span class="ot">&lt;-</span> <span class="dv">10000</span>)</span>
+<span id="cb13-11"><a href="C2BasicLR.html#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model.basiclinearreg, newdata, <span class="at">interval=</span><span class="st">&quot;prediction&quot;</span>)</span>
+<span id="cb13-12"><a href="C2BasicLR.html#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model.basiclinearreg, newdata, <span class="at">interval=</span><span class="st">&quot;prediction&quot;</span>, <span class="at">level=</span>.<span class="dv">90</span>)</span>
+<span id="cb13-13"><a href="C2BasicLR.html#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  PROPORCIONA EL PERCENTIL 97.5 DE UNA DISTRIBUCIÓN T, SOLO PARA COMPROBAR</span></span>
+<span id="cb13-14"><a href="C2BasicLR.html#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">975</span>, <span class="dv">48</span>)</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -1214,19 +1234,19 @@ Figure 2.7: <strong>Gráfico de dispersión de 19 puntos base más tres puntos i
 <a id="displayCode.Fig27.Hide" href="javascript:togglecode('toggleCode.Fig27.Hide','displayCode.Fig27.Hide');"><i><strong>Código R para Producir la Figura 2.7</strong></i></a>
 </h5>
 <div id="toggleCode.Fig27.Hide" style="display: none">
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="C2BasicLR.html#cb14-1" tabindex="-1"></a><span class="co">#  EJEMPLO 2.6 PUNTO ATÍPICO</span></span>
-<span id="cb14-2"><a href="C2BasicLR.html#cb14-2" tabindex="-1"></a>OUTLR  <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/OutlierExample.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-3"><a href="C2BasicLR.html#cb14-3" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="C2BasicLR.html#cb14-4" tabindex="-1"></a><span class="co">#  FIGURA 2.7</span></span>
-<span id="cb14-5"><a href="C2BasicLR.html#cb14-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.1</span>,<span class="fl">1.1</span>,.<span class="dv">1</span>), <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb14-6"><a href="C2BasicLR.html#cb14-6" tabindex="-1"></a><span class="fu">plot</span>(OUTLR<span class="sc">$</span>X, OUTLR<span class="sc">$</span>Y, <span class="at">xlab=</span><span class="st">&quot;x&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">9</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb14-7"><a href="C2BasicLR.html#cb14-7" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;y&quot;</span>, <span class="at">at=</span><span class="fl">5.5</span>,<span class="at">side=</span><span class="dv">2</span>,<span class="at">las=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">1.3</span>, <span class="at">line=</span><span class="fl">2.3</span>)</span>
-<span id="cb14-8"><a href="C2BasicLR.html#cb14-8" tabindex="-1"></a><span class="fu">points</span>(<span class="fl">4.3</span>, <span class="fl">8.0</span>)</span>
-<span id="cb14-9"><a href="C2BasicLR.html#cb14-9" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">4.7</span>, <span class="fl">8.0</span>, <span class="st">&quot;A&quot;</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb14-10"><a href="C2BasicLR.html#cb14-10" tabindex="-1"></a><span class="fu">points</span>(<span class="fl">9.5</span>, <span class="fl">8.0</span>)</span>
-<span id="cb14-11"><a href="C2BasicLR.html#cb14-11" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">9.9</span>, <span class="fl">8.0</span>, <span class="st">&quot;B&quot;</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
-<span id="cb14-12"><a href="C2BasicLR.html#cb14-12" tabindex="-1"></a><span class="fu">points</span>(<span class="fl">9.5</span>, <span class="fl">2.5</span>)</span>
-<span id="cb14-13"><a href="C2BasicLR.html#cb14-13" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">9.9</span>, <span class="fl">2.5</span>, <span class="st">&quot;C&quot;</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="C2BasicLR.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  EJEMPLO 2.6 PUNTO ATÍPICO</span></span>
+<span id="cb14-2"><a href="C2BasicLR.html#cb14-2" aria-hidden="true" tabindex="-1"></a>OUTLR  <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/OutlierExample.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb14-3"><a href="C2BasicLR.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="C2BasicLR.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  FIGURA 2.7</span></span>
+<span id="cb14-5"><a href="C2BasicLR.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.1</span>,<span class="fl">1.1</span>,.<span class="dv">1</span>), <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb14-6"><a href="C2BasicLR.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(OUTLR<span class="sc">$</span>X, OUTLR<span class="sc">$</span>Y, <span class="at">xlab=</span><span class="st">&quot;x&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">9</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb14-7"><a href="C2BasicLR.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;y&quot;</span>, <span class="at">at=</span><span class="fl">5.5</span>,<span class="at">side=</span><span class="dv">2</span>,<span class="at">las=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">1.3</span>, <span class="at">line=</span><span class="fl">2.3</span>)</span>
+<span id="cb14-8"><a href="C2BasicLR.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fl">4.3</span>, <span class="fl">8.0</span>)</span>
+<span id="cb14-9"><a href="C2BasicLR.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">4.7</span>, <span class="fl">8.0</span>, <span class="st">&quot;A&quot;</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb14-10"><a href="C2BasicLR.html#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fl">9.5</span>, <span class="fl">8.0</span>)</span>
+<span id="cb14-11"><a href="C2BasicLR.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">9.9</span>, <span class="fl">8.0</span>, <span class="st">&quot;B&quot;</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span>
+<span id="cb14-12"><a href="C2BasicLR.html#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fl">9.5</span>, <span class="fl">2.5</span>)</span>
+<span id="cb14-13"><a href="C2BasicLR.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">9.9</span>, <span class="fl">2.5</span>, <span class="st">&quot;C&quot;</span>, <span class="at">cex=</span><span class="fl">1.3</span>)</span></code></pre></div>
 </div>
 <p>Para investigar el efecto de cada tipo de punto aberrante, <a href="C2BasicLR.html#Table26">Tabla 2.6</a> resume los resultados de cuatro regresiones separadas. La primera regresión es para los diecinueve puntos base. Las otras tres regresiones utilizan los diecinueve puntos base más cada tipo de observación inusual.</p>
 <p><a id=Table26></a></p>
@@ -1278,17 +1298,17 @@ Figure 2.8: <strong>Gráfico de dispersión de SALES versus POP, con el valor at
 <a id="displayCode.Fig28.Hide" href="javascript:togglecode('toggleCode.Fig28.Hide','displayCode.Fig28.Hide');"><i><strong>Código R para producir la Figura 2.8 y la Tabla 2.7</strong></i></a>
 </h5>
 <div id="toggleCode.Fig28.Hide" style="display: none">
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="C2BasicLR.html#cb15-1" tabindex="-1"></a>Lot <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/WiscLottery.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb15-2"><a href="C2BasicLR.html#cb15-2" tabindex="-1"></a><span class="co">#  FIGURA 2.8</span></span>
-<span id="cb15-3"><a href="C2BasicLR.html#cb15-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.9</span>,<span class="dv">2</span>,<span class="dv">1</span>),<span class="at">cex=</span><span class="fl">1.1</span>)</span>
-<span id="cb15-4"><a href="C2BasicLR.html#cb15-4" tabindex="-1"></a><span class="fu">plot</span>(Lot<span class="sc">$</span>POP, Lot<span class="sc">$</span>SALES, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">&quot;POP&quot;</span>)</span>
-<span id="cb15-5"><a href="C2BasicLR.html#cb15-5" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;SALES&quot;</span>,<span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">36000</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>)</span>
-<span id="cb15-6"><a href="C2BasicLR.html#cb15-6" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">5000</span>, <span class="dv">24000</span>, <span class="st">&quot;Kenosha&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="C2BasicLR.html#cb16-1" tabindex="-1"></a><span class="co">#  TABLA 2.7</span></span>
-<span id="cb16-2"><a href="C2BasicLR.html#cb16-2" tabindex="-1"></a>model.basiclinearreg<span class="ot">&lt;-</span><span class="fu">lm</span>(SALES <span class="sc">~</span> POP, Lot)</span>
-<span id="cb16-3"><a href="C2BasicLR.html#cb16-3" tabindex="-1"></a><span class="fu">summary</span>(model.basiclinearreg)</span>
-<span id="cb16-4"><a href="C2BasicLR.html#cb16-4" tabindex="-1"></a>model.Kenosha<span class="ot">&lt;-</span><span class="fu">lm</span>(SALES <span class="sc">~</span> POP, Lot, <span class="at">subset=</span><span class="sc">-</span><span class="fu">c</span>(<span class="dv">9</span>))</span>
-<span id="cb16-5"><a href="C2BasicLR.html#cb16-5" tabindex="-1"></a><span class="fu">summary</span>(model.Kenosha)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="C2BasicLR.html#cb15-1" aria-hidden="true" tabindex="-1"></a>Lot <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/WiscLottery.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb15-2"><a href="C2BasicLR.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  FIGURA 2.8</span></span>
+<span id="cb15-3"><a href="C2BasicLR.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.9</span>,<span class="dv">2</span>,<span class="dv">1</span>),<span class="at">cex=</span><span class="fl">1.1</span>)</span>
+<span id="cb15-4"><a href="C2BasicLR.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Lot<span class="sc">$</span>POP, Lot<span class="sc">$</span>SALES, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">xlab =</span> <span class="st">&quot;POP&quot;</span>)</span>
+<span id="cb15-5"><a href="C2BasicLR.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;SALES&quot;</span>,<span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span><span class="dv">36000</span>, <span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>)</span>
+<span id="cb15-6"><a href="C2BasicLR.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">5000</span>, <span class="dv">24000</span>, <span class="st">&quot;Kenosha&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="C2BasicLR.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  TABLA 2.7</span></span>
+<span id="cb16-2"><a href="C2BasicLR.html#cb16-2" aria-hidden="true" tabindex="-1"></a>model.basiclinearreg<span class="ot">&lt;-</span><span class="fu">lm</span>(SALES <span class="sc">~</span> POP, Lot)</span>
+<span id="cb16-3"><a href="C2BasicLR.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.basiclinearreg)</span>
+<span id="cb16-4"><a href="C2BasicLR.html#cb16-4" aria-hidden="true" tabindex="-1"></a>model.Kenosha<span class="ot">&lt;-</span><span class="fu">lm</span>(SALES <span class="sc">~</span> POP, Lot, <span class="at">subset=</span><span class="sc">-</span><span class="fu">c</span>(<span class="dv">9</span>))</span>
+<span id="cb16-5"><a href="C2BasicLR.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model.Kenosha)</span></code></pre></div>
 </div>
 <p>Para los propósitos de inferencia sobre la pendiente, la presencia de Kenosha no altera los resultados de manera dramática. Ambas estimaciones de la pendiente son cualitativamente similares y los correspondientes valores <span class="math inline">\(t\)</span> son muy altos, muy por encima de los umbrales para la significancia estadística. Sin embargo, hay diferencias notables al evaluar la calidad del ajuste. El coeficiente de determinación, <span class="math inline">\(R^2\)</span>, aumentó del 78.5% al 88.3% al eliminar Kenosha. Además, nuestro “desviación típica” <span class="math inline">\(s\)</span> disminuyó en más de $1,000. Esto es particularmente importante si queremos ajustar nuestros intervalos de predicción.</p>
 <p>Para verificar la exactitud de nuestras suposiciones, también es común revisar la suposición de normalidad. Una forma de hacerlo es mediante el gráfico <span class="math inline">\(qq\)</span>, introducido en la Sección 1.2. Los dos paneles en las Figuras <a href="C2BasicLR.html#fig:QQplotsKenosha">2.9</a> son gráficos <span class="math inline">\(qq\)</span> con y sin el código postal de Kenosha. Recuerda que los puntos “cercanos” a una línea indican normalidad aproximada. En el panel derecho de la Figura <a href="C2BasicLR.html#fig:QQplotsKenosha">2.9</a>, la secuencia parece ser lineal, por lo que los residuos están aproximadamente distribuidos de manera normal. Este no es el caso en el panel izquierdo, donde la secuencia de puntos parece aumentar dramáticamente para grandes cuantiles. Lo interesante es que la no-normalidad de la distribución se debe a un solo valor atípico, no a un patrón de sesgo común a todas las observaciones.</p>
@@ -1303,20 +1323,20 @@ Figure 2.9: <strong>Gráficos <span class="math inline">\(qq\)</span> de los res
 <a id="displayCode.Fig29.Hide" href="javascript:togglecode('toggleCode.Fig29.Hide','displayCode.Fig29.Hide');"><i><strong>Código R para producir la Figura 2.9</strong></i></a>
 </h5>
 <div id="toggleCode.Fig29.Hide" style="display: none">
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="C2BasicLR.html#cb17-1" tabindex="-1"></a><span class="co">#Lot &lt;- read.csv(&quot;CSVData/WiscLottery.csv&quot;, header=TRUE)</span></span>
-<span id="cb17-2"><a href="C2BasicLR.html#cb17-2" tabindex="-1"></a><span class="co">#  FIGURA 2.9</span></span>
-<span id="cb17-3"><a href="C2BasicLR.html#cb17-3" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="C2BasicLR.html#cb17-4" tabindex="-1"></a><span class="co">#  TABLA 2.7</span></span>
-<span id="cb17-5"><a href="C2BasicLR.html#cb17-5" tabindex="-1"></a>model.basiclinearreg<span class="ot">&lt;-</span><span class="fu">lm</span>(SALES <span class="sc">~</span> POP, Lot)</span>
-<span id="cb17-6"><a href="C2BasicLR.html#cb17-6" tabindex="-1"></a><span class="co">#summary(model.basiclinearreg)</span></span>
-<span id="cb17-7"><a href="C2BasicLR.html#cb17-7" tabindex="-1"></a>model.Kenosha<span class="ot">&lt;-</span><span class="fu">lm</span>(SALES <span class="sc">~</span> POP, Lot, <span class="at">subset=</span><span class="sc">-</span><span class="fu">c</span>(<span class="dv">9</span>))</span>
-<span id="cb17-8"><a href="C2BasicLR.html#cb17-8" tabindex="-1"></a><span class="co">#summary(model.Kenosha)</span></span>
-<span id="cb17-9"><a href="C2BasicLR.html#cb17-9" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="C2BasicLR.html#cb17-10" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.9</span>,<span class="fl">1.7</span>,<span class="dv">1</span>),<span class="at">cex=</span><span class="fl">1.1</span>)</span>
-<span id="cb17-11"><a href="C2BasicLR.html#cb17-11" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(model.basiclinearreg), <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb17-12"><a href="C2BasicLR.html#cb17-12" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Cuantiles Muestrales&quot;</span>, <span class="at">side=</span><span class="dv">2</span>,<span class="at">at=</span><span class="dv">20500</span>,<span class="at">las=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span>.<span class="dv">5</span>)</span>
-<span id="cb17-13"><a href="C2BasicLR.html#cb17-13" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(model.Kenosha), <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb17-14"><a href="C2BasicLR.html#cb17-14" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Cuantiles Muestrales&quot;</span>, <span class="at">side=</span><span class="dv">2</span>,<span class="at">at=</span><span class="dv">9050</span>,<span class="at">las=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span>.<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="C2BasicLR.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lot &lt;- read.csv(&quot;CSVData/WiscLottery.csv&quot;, header=TRUE)</span></span>
+<span id="cb17-2"><a href="C2BasicLR.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  FIGURA 2.9</span></span>
+<span id="cb17-3"><a href="C2BasicLR.html#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="C2BasicLR.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  TABLA 2.7</span></span>
+<span id="cb17-5"><a href="C2BasicLR.html#cb17-5" aria-hidden="true" tabindex="-1"></a>model.basiclinearreg<span class="ot">&lt;-</span><span class="fu">lm</span>(SALES <span class="sc">~</span> POP, Lot)</span>
+<span id="cb17-6"><a href="C2BasicLR.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(model.basiclinearreg)</span></span>
+<span id="cb17-7"><a href="C2BasicLR.html#cb17-7" aria-hidden="true" tabindex="-1"></a>model.Kenosha<span class="ot">&lt;-</span><span class="fu">lm</span>(SALES <span class="sc">~</span> POP, Lot, <span class="at">subset=</span><span class="sc">-</span><span class="fu">c</span>(<span class="dv">9</span>))</span>
+<span id="cb17-8"><a href="C2BasicLR.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(model.Kenosha)</span></span>
+<span id="cb17-9"><a href="C2BasicLR.html#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="C2BasicLR.html#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.9</span>,<span class="fl">1.7</span>,<span class="dv">1</span>),<span class="at">cex=</span><span class="fl">1.1</span>)</span>
+<span id="cb17-11"><a href="C2BasicLR.html#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(model.basiclinearreg), <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb17-12"><a href="C2BasicLR.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Cuantiles Muestrales&quot;</span>, <span class="at">side=</span><span class="dv">2</span>,<span class="at">at=</span><span class="dv">20500</span>,<span class="at">las=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span>.<span class="dv">5</span>)</span>
+<span id="cb17-13"><a href="C2BasicLR.html#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(model.Kenosha), <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb17-14"><a href="C2BasicLR.html#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Cuantiles Muestrales&quot;</span>, <span class="at">side=</span><span class="dv">2</span>,<span class="at">at=</span><span class="dv">9050</span>,<span class="at">las=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span>.<span class="dv">5</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="S2:CAPM" class="section level2 hasAnchor" number="2.7">
@@ -1343,86 +1363,122 @@ donde <span class="math inline">\(r\)</span> es el rendimiento de la acción y <
 <a id="displayCode.Motivation.1Silly" href="javascript:togglecode('toggleCode.Motivation.1Silly','displayCode.Motivation.1Silly');"><i><strong></strong></i></a>
 </h5>
 <div id="toggleCode.Motivation.1Silly" style="display: none">
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="C2BasicLR.html#cb18-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly. Crear una tabla solo para actualizar el contador...&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="C2BasicLR.html#cb18-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly. Crear una tabla solo para actualizar el contador...&quot;</span>)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-25">Table 2.2: </span>Silly. Crear una tabla solo para actualizar el contador…</caption>
+<caption>
+<span id="tab:unnamed-chunk-25">Table 2.2: </span>Silly. Crear una tabla solo para actualizar el contador…
+</caption>
 <thead>
-<tr class="header">
-<th align="right">x</th>
+<tr>
+<th style="text-align:right;">
+x
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">2</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="C2BasicLR.html#cb19-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="C2BasicLR.html#cb19-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-26">Table 2.3: </span>Silly.</caption>
+<caption>
+<span id="tab:unnamed-chunk-26">Table 2.3: </span>Silly.
+</caption>
 <thead>
-<tr class="header">
-<th align="right">x</th>
+<tr>
+<th style="text-align:right;">
+x
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">2</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="C2BasicLR.html#cb20-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly. &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="C2BasicLR.html#cb20-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly. &quot;</span>)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-27">Table 2.4: </span>Silly.</caption>
+<caption>
+<span id="tab:unnamed-chunk-27">Table 2.4: </span>Silly.
+</caption>
 <thead>
-<tr class="header">
-<th align="right">x</th>
+<tr>
+<th style="text-align:right;">
+x
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">2</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="C2BasicLR.html#cb21-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="C2BasicLR.html#cb21-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-28">Table 2.5: </span>Silly.</caption>
+<caption>
+<span id="tab:unnamed-chunk-28">Table 2.5: </span>Silly.
+</caption>
 <thead>
-<tr class="header">
-<th align="right">x</th>
+<tr>
+<th style="text-align:right;">
+x
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">2</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="C2BasicLR.html#cb22-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="C2BasicLR.html#cb22-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-29">Table 2.6: </span>Silly.</caption>
+<caption>
+<span id="tab:unnamed-chunk-29">Table 2.6: </span>Silly.
+</caption>
 <thead>
-<tr class="header">
-<th align="right">x</th>
+<tr>
+<th style="text-align:right;">
+x
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">2</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
 </tr>
 </tbody>
 </table>
 <table>
-<caption><span id="tab:unnamed-chunk-30">Table 2.7: </span>Silly.</caption>
+<caption>
+<span id="tab:unnamed-chunk-30">Table 2.7: </span>Silly.
+</caption>
 <thead>
-<tr class="header">
-<th align="right">x</th>
+<tr>
+<th style="text-align:right;">
+x
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="right">2</td>
+<tr>
+<td style="text-align:right;">
+2
+</td>
 </tr>
 </tbody>
 </table>
@@ -1523,42 +1579,42 @@ Figure 2.11: <strong>Gráfico de dispersión del rendimiento de Lincoln versus e
 <a id="displayCode.CAPMAnalysis.Hide" href="javascript:togglecode('toggleCode.CAPMAnalysis.Hide','displayCode.CAPMAnalysis.Hide');"><i><strong>Código R para producir la Tabla 2.8 y las Figuras 2.10 y 2.11</strong></i></a>
 </h5>
 <div id="toggleCode.CAPMAnalysis.Hide" style="display: none">
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="C2BasicLR.html#cb23-1" tabindex="-1"></a>CAPM <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/CAPM.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb23-2"><a href="C2BasicLR.html#cb23-2" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="C2BasicLR.html#cb23-3" tabindex="-1"></a><span class="co">#  TABLA 2.8 ESTADÍSTICAS RESUMEN</span></span>
-<span id="cb23-4"><a href="C2BasicLR.html#cb23-4" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="C2BasicLR.html#cb23-5" tabindex="-1"></a>Xymat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(CAPM<span class="sc">$</span>LINCOLN,CAPM<span class="sc">$</span>MARKET)) </span>
-<span id="cb23-6"><a href="C2BasicLR.html#cb23-6" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">BookSummStats</span>(Xymat)</span>
-<span id="cb23-7"><a href="C2BasicLR.html#cb23-7" tabindex="-1"></a><span class="fu">colnames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Promedio&quot;</span> , <span class="st">&quot;Mediana&quot;</span> , <span class="st">&quot;Desviación Estándar&quot;</span> , </span>
-<span id="cb23-8"><a href="C2BasicLR.html#cb23-8" tabindex="-1"></a>                         <span class="st">&quot;Mínimo&quot;</span> , <span class="st">&quot;Máximo&quot;</span>)</span>
-<span id="cb23-9"><a href="C2BasicLR.html#cb23-9" tabindex="-1"></a><span class="fu">rownames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;LINCOLN&quot;</span>, <span class="st">&quot;MARKET&quot;</span>)</span>
-<span id="cb23-10"><a href="C2BasicLR.html#cb23-10" tabindex="-1"></a><span class="co">#tableMat1 &lt;- format(round(tableMat, digits=0), big.mark = &#39;,&#39;)</span></span>
-<span id="cb23-11"><a href="C2BasicLR.html#cb23-11" tabindex="-1"></a></span>
-<span id="cb23-12"><a href="C2BasicLR.html#cb23-12" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableMat, </span>
-<span id="cb23-13"><a href="C2BasicLR.html#cb23-13" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Estadísticas Resumen de 60 Observaciones Mensuales&#39;</span>, </span>
-<span id="cb23-14"><a href="C2BasicLR.html#cb23-14" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">4</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
-<span id="cb23-15"><a href="C2BasicLR.html#cb23-15" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5) <span class="sc">%&gt;%</span></span>
-<span id="cb23-16"><a href="C2BasicLR.html#cb23-16" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="at">general =</span> <span class="st">&quot;Center for Research on Security Prices, University of Chicago&quot;</span>, </span>
-<span id="cb23-17"><a href="C2BasicLR.html#cb23-17" tabindex="-1"></a>           <span class="at">general_title =</span> <span class="st">&quot;Fuente:&quot;</span>, </span>
-<span id="cb23-18"><a href="C2BasicLR.html#cb23-18" tabindex="-1"></a>           <span class="at">footnote_as_chunk =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="C2BasicLR.html#cb24-1" tabindex="-1"></a><span class="co">#  FIGURA 2.10</span></span>
-<span id="cb24-2"><a href="C2BasicLR.html#cb24-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.1</span>,<span class="dv">2</span>,<span class="dv">1</span>),<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb24-3"><a href="C2BasicLR.html#cb24-3" tabindex="-1"></a>foo <span class="ot">&lt;-</span> <span class="fu">ts</span>(CAPM, <span class="at">freq =</span> <span class="dv">12</span>, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1986</span>, <span class="dv">1</span>))</span>
-<span id="cb24-4"><a href="C2BasicLR.html#cb24-4" tabindex="-1"></a><span class="fu">ts.plot</span>(foo[,<span class="dv">2</span>], foo[,<span class="dv">3</span>], <span class="at">xlab=</span><span class="st">&quot;Año&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">type=</span><span class="st">&quot;o&quot;</span>, <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb24-5"><a href="C2BasicLR.html#cb24-5" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Rendimiento Mensual&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span>.<span class="dv">38</span>,<span class="at">las=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span>.<span class="dv">5</span>)</span>
-<span id="cb24-6"><a href="C2BasicLR.html#cb24-6" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">1986</span>, <span class="fl">0.3</span>, <span class="fu">c</span>(<span class="st">&quot;LINCOLN&quot;</span>, <span class="st">&quot;MARKET&quot;</span>), <span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">0.5</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="C2BasicLR.html#cb25-1" tabindex="-1"></a><span class="co">#  FIGURA 2.11</span></span>
-<span id="cb25-2"><a href="C2BasicLR.html#cb25-2" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="C2BasicLR.html#cb25-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.1</span>,<span class="fl">1.4</span>,<span class="fl">0.2</span>),<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb25-4"><a href="C2BasicLR.html#cb25-4" tabindex="-1"></a><span class="fu">plot</span>(CAPM<span class="sc">$</span>MARKET, CAPM<span class="sc">$</span>LINCOLN, <span class="at">xlab=</span><span class="st">&quot;MARKET&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.4</span>),<span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb25-5"><a href="C2BasicLR.html#cb25-5" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;LINCOLN&quot;</span>, <span class="at">side=</span><span class="dv">2</span>,<span class="at">at=</span><span class="fl">0.46</span>,<span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span>.<span class="dv">5</span>)</span>
-<span id="cb25-6"><a href="C2BasicLR.html#cb25-6" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(LINCOLN <span class="sc">~</span> MARKET, <span class="at">data =</span> CAPM)</span>
-<span id="cb25-7"><a href="C2BasicLR.html#cb25-7" tabindex="-1"></a><span class="fu">abline</span>(reg)</span>
-<span id="cb25-8"><a href="C2BasicLR.html#cb25-8" tabindex="-1"></a><span class="fu">arrows</span>(<span class="sc">-</span><span class="fl">0.22</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="sc">-</span><span class="fl">0.22</span>, <span class="sc">-</span><span class="fl">0.22</span>,<span class="at">length=</span><span class="fl">0.1</span>, <span class="at">angle =</span> <span class="dv">10</span>)</span>
-<span id="cb25-9"><a href="C2BasicLR.html#cb25-9" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="fl">0.22</span>, <span class="sc">-</span><span class="fl">0.08</span>, <span class="st">&quot;COLAPSO DE OCTUBRE, 1987&quot;</span>, <span class="at">cex=</span><span class="fl">0.8</span>)</span>
-<span id="cb25-10"><a href="C2BasicLR.html#cb25-10" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">0.1</span>, <span class="fl">0.02</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.27</span>,<span class="at">length=</span><span class="fl">0.1</span>, <span class="at">angle =</span> <span class="dv">10</span>)</span>
-<span id="cb25-11"><a href="C2BasicLR.html#cb25-11" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">0.1</span>, <span class="fl">0.02</span>, <span class="fl">0.06</span>, <span class="fl">0.3</span>,<span class="at">length=</span><span class="fl">0.1</span>, <span class="at">angle =</span> <span class="dv">10</span>)</span>
-<span id="cb25-12"><a href="C2BasicLR.html#cb25-12" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.16</span>, <span class="fl">0.02</span>, <span class="st">&quot;PUNTOS ATÍPICOS DE 1990&quot;</span>, <span class="at">cex=</span><span class="fl">0.8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="C2BasicLR.html#cb23-1" aria-hidden="true" tabindex="-1"></a>CAPM <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/CAPM.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb23-2"><a href="C2BasicLR.html#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="C2BasicLR.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  TABLA 2.8 ESTADÍSTICAS RESUMEN</span></span>
+<span id="cb23-4"><a href="C2BasicLR.html#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="C2BasicLR.html#cb23-5" aria-hidden="true" tabindex="-1"></a>Xymat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(CAPM<span class="sc">$</span>LINCOLN,CAPM<span class="sc">$</span>MARKET)) </span>
+<span id="cb23-6"><a href="C2BasicLR.html#cb23-6" aria-hidden="true" tabindex="-1"></a>tableMat  <span class="ot">&lt;-</span> <span class="fu">BookSummStats</span>(Xymat)</span>
+<span id="cb23-7"><a href="C2BasicLR.html#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Promedio&quot;</span> , <span class="st">&quot;Mediana&quot;</span> , <span class="st">&quot;Desviación Estándar&quot;</span> , </span>
+<span id="cb23-8"><a href="C2BasicLR.html#cb23-8" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;Mínimo&quot;</span> , <span class="st">&quot;Máximo&quot;</span>)</span>
+<span id="cb23-9"><a href="C2BasicLR.html#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(tableMat)  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;LINCOLN&quot;</span>, <span class="st">&quot;MARKET&quot;</span>)</span>
+<span id="cb23-10"><a href="C2BasicLR.html#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">#tableMat1 &lt;- format(round(tableMat, digits=0), big.mark = &#39;,&#39;)</span></span>
+<span id="cb23-11"><a href="C2BasicLR.html#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="C2BasicLR.html#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableMat, </span>
+<span id="cb23-13"><a href="C2BasicLR.html#cb23-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Estadísticas Resumen de 60 Observaciones Mensuales&#39;</span>, </span>
+<span id="cb23-14"><a href="C2BasicLR.html#cb23-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;r&#39;</span>, <span class="at">Digits=</span><span class="dv">4</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb23-15"><a href="C2BasicLR.html#cb23-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth5) <span class="sc">%&gt;%</span></span>
+<span id="cb23-16"><a href="C2BasicLR.html#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="at">general =</span> <span class="st">&quot;Center for Research on Security Prices, University of Chicago&quot;</span>, </span>
+<span id="cb23-17"><a href="C2BasicLR.html#cb23-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">general_title =</span> <span class="st">&quot;Fuente:&quot;</span>, </span>
+<span id="cb23-18"><a href="C2BasicLR.html#cb23-18" aria-hidden="true" tabindex="-1"></a>           <span class="at">footnote_as_chunk =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="C2BasicLR.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  FIGURA 2.10</span></span>
+<span id="cb24-2"><a href="C2BasicLR.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.1</span>,<span class="dv">2</span>,<span class="dv">1</span>),<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb24-3"><a href="C2BasicLR.html#cb24-3" aria-hidden="true" tabindex="-1"></a>foo <span class="ot">&lt;-</span> <span class="fu">ts</span>(CAPM, <span class="at">freq =</span> <span class="dv">12</span>, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1986</span>, <span class="dv">1</span>))</span>
+<span id="cb24-4"><a href="C2BasicLR.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(foo[,<span class="dv">2</span>], foo[,<span class="dv">3</span>], <span class="at">xlab=</span><span class="st">&quot;Año&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">type=</span><span class="st">&quot;o&quot;</span>, <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb24-5"><a href="C2BasicLR.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Rendimiento Mensual&quot;</span>, <span class="at">side=</span><span class="dv">2</span>, <span class="at">at=</span>.<span class="dv">38</span>,<span class="at">las=</span><span class="dv">1</span>,<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span>.<span class="dv">5</span>)</span>
+<span id="cb24-6"><a href="C2BasicLR.html#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">1986</span>, <span class="fl">0.3</span>, <span class="fu">c</span>(<span class="st">&quot;LINCOLN&quot;</span>, <span class="st">&quot;MARKET&quot;</span>), <span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">cex=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="C2BasicLR.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  FIGURA 2.11</span></span>
+<span id="cb25-2"><a href="C2BasicLR.html#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="C2BasicLR.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.1</span>,<span class="fl">3.1</span>,<span class="fl">1.4</span>,<span class="fl">0.2</span>),<span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb25-4"><a href="C2BasicLR.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(CAPM<span class="sc">$</span>MARKET, CAPM<span class="sc">$</span>LINCOLN, <span class="at">xlab=</span><span class="st">&quot;MARKET&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.2</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.4</span>),<span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb25-5"><a href="C2BasicLR.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;LINCOLN&quot;</span>, <span class="at">side=</span><span class="dv">2</span>,<span class="at">at=</span><span class="fl">0.46</span>,<span class="at">las=</span><span class="dv">1</span>, <span class="at">cex=</span><span class="fl">1.1</span>, <span class="at">adj=</span>.<span class="dv">5</span>)</span>
+<span id="cb25-6"><a href="C2BasicLR.html#cb25-6" aria-hidden="true" tabindex="-1"></a>reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(LINCOLN <span class="sc">~</span> MARKET, <span class="at">data =</span> CAPM)</span>
+<span id="cb25-7"><a href="C2BasicLR.html#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(reg)</span>
+<span id="cb25-8"><a href="C2BasicLR.html#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="sc">-</span><span class="fl">0.22</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="sc">-</span><span class="fl">0.22</span>, <span class="sc">-</span><span class="fl">0.22</span>,<span class="at">length=</span><span class="fl">0.1</span>, <span class="at">angle =</span> <span class="dv">10</span>)</span>
+<span id="cb25-9"><a href="C2BasicLR.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="fl">0.22</span>, <span class="sc">-</span><span class="fl">0.08</span>, <span class="st">&quot;COLAPSO DE OCTUBRE, 1987&quot;</span>, <span class="at">cex=</span><span class="fl">0.8</span>)</span>
+<span id="cb25-10"><a href="C2BasicLR.html#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">0.1</span>, <span class="fl">0.02</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.27</span>,<span class="at">length=</span><span class="fl">0.1</span>, <span class="at">angle =</span> <span class="dv">10</span>)</span>
+<span id="cb25-11"><a href="C2BasicLR.html#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(<span class="fl">0.1</span>, <span class="fl">0.02</span>, <span class="fl">0.06</span>, <span class="fl">0.3</span>,<span class="at">length=</span><span class="fl">0.1</span>, <span class="at">angle =</span> <span class="dv">10</span>)</span>
+<span id="cb25-12"><a href="C2BasicLR.html#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.16</span>, <span class="fl">0.02</span>, <span class="st">&quot;PUNTOS ATÍPICOS DE 1990&quot;</span>, <span class="at">cex=</span><span class="fl">0.8</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="puntos-inusuales" class="section level4 unnumbered hasAnchor">
@@ -1592,68 +1648,68 @@ s_y^2 = b_1^2 s_x^2 + s^2 \frac{n-2}{n-1}.
 <p>Esta sección proporciona orientación para interpretar la salida de los paquetes estadísticos. La mayoría de los paquetes estadísticos generan salidas similares. A continuación, se presentan tres ejemplos de paquetes estadísticos estándar: <code>EXCEL</code>, <code>SAS</code> y <code>R</code>. El símbolo de anotación “[.]” marca una cantidad estadística que se describe en la leyenda. Así, esta sección proporciona un enlace entre la notación utilizada en el texto y la salida de algunos de los paquetes estadísticos estándar.</p>
 <hr />
 <p><strong>Salida en EXCEL</strong></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="C2BasicLR.html#cb26-1" tabindex="-1"></a>Regression Statistics</span>
-<span id="cb26-2"><a href="C2BasicLR.html#cb26-2" tabindex="-1"></a>Multiple R              <span class="fl">0.886283</span>[F]</span>
-<span id="cb26-3"><a href="C2BasicLR.html#cb26-3" tabindex="-1"></a>R Square                <span class="fl">0.785497</span>[k]</span>
-<span id="cb26-4"><a href="C2BasicLR.html#cb26-4" tabindex="-1"></a>Adjusted R Square       <span class="fl">0.781028</span>[l]</span>
-<span id="cb26-5"><a href="C2BasicLR.html#cb26-5" tabindex="-1"></a>Standard Error          <span class="fl">3791.758</span>[j]</span>
-<span id="cb26-6"><a href="C2BasicLR.html#cb26-6" tabindex="-1"></a>Observations              <span class="dv">50</span>[a]</span>
-<span id="cb26-7"><a href="C2BasicLR.html#cb26-7" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="C2BasicLR.html#cb26-8" tabindex="-1"></a>ANOVA</span>
-<span id="cb26-9"><a href="C2BasicLR.html#cb26-9" tabindex="-1"></a>           df              SS          MS             F     Significance F</span>
-<span id="cb26-10"><a href="C2BasicLR.html#cb26-10" tabindex="-1"></a>Regression   <span class="dv">1</span>[m]   <span class="dv">2527165015</span> [p]  <span class="dv">2527165015</span> [s]  <span class="fl">175.773</span>[u]   <span class="fl">1.15757E-17</span>[v]</span>
-<span id="cb26-11"><a href="C2BasicLR.html#cb26-11" tabindex="-1"></a>Residual    <span class="dv">48</span>[n]   <span class="fl">690116754.8</span>[q]  <span class="fl">14377432.39</span>[t]</span>
-<span id="cb26-12"><a href="C2BasicLR.html#cb26-12" tabindex="-1"></a>Total       <span class="dv">49</span>[o]   <span class="dv">3217281770</span> [r]</span>
-<span id="cb26-13"><a href="C2BasicLR.html#cb26-13" tabindex="-1"></a></span>
-<span id="cb26-14"><a href="C2BasicLR.html#cb26-14" tabindex="-1"></a>        Coefficients    Standard Error      t Stat         P<span class="sc">-</span>value</span>
-<span id="cb26-15"><a href="C2BasicLR.html#cb26-15" tabindex="-1"></a>Intercept    <span class="fl">469.7036</span>[b] <span class="fl">702.9061896</span>[d]   <span class="fl">0.668230846</span>[f] <span class="fl">0.507187</span>[h]</span>
-<span id="cb26-16"><a href="C2BasicLR.html#cb26-16" tabindex="-1"></a>X Variable <span class="dv">1</span> <span class="fl">0.647095</span>[c] <span class="fl">0.048808085</span>[e]   <span class="fl">13.25794257</span>[g] <span class="fl">1.16E-17</span>[i]</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="C2BasicLR.html#cb26-1" aria-hidden="true" tabindex="-1"></a>Regression Statistics</span>
+<span id="cb26-2"><a href="C2BasicLR.html#cb26-2" aria-hidden="true" tabindex="-1"></a>Multiple R              <span class="fl">0.886283</span>[F]</span>
+<span id="cb26-3"><a href="C2BasicLR.html#cb26-3" aria-hidden="true" tabindex="-1"></a>R Square                <span class="fl">0.785497</span>[k]</span>
+<span id="cb26-4"><a href="C2BasicLR.html#cb26-4" aria-hidden="true" tabindex="-1"></a>Adjusted R Square       <span class="fl">0.781028</span>[l]</span>
+<span id="cb26-5"><a href="C2BasicLR.html#cb26-5" aria-hidden="true" tabindex="-1"></a>Standard Error          <span class="fl">3791.758</span>[j]</span>
+<span id="cb26-6"><a href="C2BasicLR.html#cb26-6" aria-hidden="true" tabindex="-1"></a>Observations              <span class="dv">50</span>[a]</span>
+<span id="cb26-7"><a href="C2BasicLR.html#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="C2BasicLR.html#cb26-8" aria-hidden="true" tabindex="-1"></a>ANOVA</span>
+<span id="cb26-9"><a href="C2BasicLR.html#cb26-9" aria-hidden="true" tabindex="-1"></a>           df              SS          MS             F     Significance F</span>
+<span id="cb26-10"><a href="C2BasicLR.html#cb26-10" aria-hidden="true" tabindex="-1"></a>Regression   <span class="dv">1</span>[m]   <span class="dv">2527165015</span> [p]  <span class="dv">2527165015</span> [s]  <span class="fl">175.773</span>[u]   <span class="fl">1.15757E-17</span>[v]</span>
+<span id="cb26-11"><a href="C2BasicLR.html#cb26-11" aria-hidden="true" tabindex="-1"></a>Residual    <span class="dv">48</span>[n]   <span class="fl">690116754.8</span>[q]  <span class="fl">14377432.39</span>[t]</span>
+<span id="cb26-12"><a href="C2BasicLR.html#cb26-12" aria-hidden="true" tabindex="-1"></a>Total       <span class="dv">49</span>[o]   <span class="dv">3217281770</span> [r]</span>
+<span id="cb26-13"><a href="C2BasicLR.html#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="C2BasicLR.html#cb26-14" aria-hidden="true" tabindex="-1"></a>        Coefficients    Standard Error      t Stat         P<span class="sc">-</span>value</span>
+<span id="cb26-15"><a href="C2BasicLR.html#cb26-15" aria-hidden="true" tabindex="-1"></a>Intercept    <span class="fl">469.7036</span>[b] <span class="fl">702.9061896</span>[d]   <span class="fl">0.668230846</span>[f] <span class="fl">0.507187</span>[h]</span>
+<span id="cb26-16"><a href="C2BasicLR.html#cb26-16" aria-hidden="true" tabindex="-1"></a>X Variable <span class="dv">1</span> <span class="fl">0.647095</span>[c] <span class="fl">0.048808085</span>[e]   <span class="fl">13.25794257</span>[g] <span class="fl">1.16E-17</span>[i]</span></code></pre></div>
 <hr />
 <p><strong>El Sistema SAS</strong></p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="C2BasicLR.html#cb27-1" tabindex="-1"></a>                         The REG Procedure</span>
-<span id="cb27-2"><a href="C2BasicLR.html#cb27-2" tabindex="-1"></a>                    Dependent Variable<span class="sc">:</span> SALES</span>
-<span id="cb27-3"><a href="C2BasicLR.html#cb27-3" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="C2BasicLR.html#cb27-4" tabindex="-1"></a>                        Analysis of Variance</span>
-<span id="cb27-5"><a href="C2BasicLR.html#cb27-5" tabindex="-1"></a>                               Sum of           Mean</span>
-<span id="cb27-6"><a href="C2BasicLR.html#cb27-6" tabindex="-1"></a>Source                   DF        Squares         Square     F Value      Pr <span class="sc">&gt;</span> F</span>
-<span id="cb27-7"><a href="C2BasicLR.html#cb27-7" tabindex="-1"></a>Model                  <span class="dv">1</span>[m]   <span class="dv">2527165015</span>[p]   <span class="dv">2527165015</span>[s]   <span class="fl">175.77</span>[u]    <span class="sc">&lt;</span>.<span class="dv">0001</span>[v]</span>
-<span id="cb27-8"><a href="C2BasicLR.html#cb27-8" tabindex="-1"></a>Error                 <span class="dv">48</span>[n]    <span class="dv">690116755</span>[q]     <span class="dv">14377432</span>[t]</span>
-<span id="cb27-9"><a href="C2BasicLR.html#cb27-9" tabindex="-1"></a>Corrected Total       <span class="dv">49</span>[o]   <span class="dv">3217281770</span>[r]</span>
-<span id="cb27-10"><a href="C2BasicLR.html#cb27-10" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="C2BasicLR.html#cb27-11" tabindex="-1"></a>        Root MSE           <span class="fl">3791.75848</span>[j]    R<span class="sc">-</span>Square     <span class="fl">0.7855</span>[k]</span>
-<span id="cb27-12"><a href="C2BasicLR.html#cb27-12" tabindex="-1"></a>        Dependent Mean     <span class="fl">6494.82900</span>[H]    Adj R<span class="sc">-</span>Sq     <span class="fl">0.7810</span>[l]</span>
-<span id="cb27-13"><a href="C2BasicLR.html#cb27-13" tabindex="-1"></a>        Coeff Var            <span class="fl">58.38119</span>[I]</span>
-<span id="cb27-14"><a href="C2BasicLR.html#cb27-14" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="C2BasicLR.html#cb27-15" tabindex="-1"></a>                        Parameter Estimates</span>
-<span id="cb27-16"><a href="C2BasicLR.html#cb27-16" tabindex="-1"></a>                           Parameter       Standard</span>
-<span id="cb27-17"><a href="C2BasicLR.html#cb27-17" tabindex="-1"></a>Variable     Label        DF     Estimate        Error      t  Value    Pr <span class="sc">&gt;</span> <span class="er">|</span>t<span class="sc">|</span></span>
-<span id="cb27-18"><a href="C2BasicLR.html#cb27-18" tabindex="-1"></a>Intercept    Intercept     <span class="dv">1</span>   <span class="fl">469.70360</span>[b]  <span class="fl">702.90619</span>[d]    <span class="fl">0.67</span>[f]    <span class="fl">0.5072</span>[h]</span>
-<span id="cb27-19"><a href="C2BasicLR.html#cb27-19" tabindex="-1"></a>POP          POP           <span class="dv">1</span>     <span class="fl">0.64709</span>[c]    <span class="fl">0.04881</span>[e]   <span class="fl">13.26</span>[g]    <span class="sc">&lt;</span>.<span class="dv">0001</span>[i]</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="C2BasicLR.html#cb27-1" aria-hidden="true" tabindex="-1"></a>                         The REG Procedure</span>
+<span id="cb27-2"><a href="C2BasicLR.html#cb27-2" aria-hidden="true" tabindex="-1"></a>                    Dependent Variable<span class="sc">:</span> SALES</span>
+<span id="cb27-3"><a href="C2BasicLR.html#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="C2BasicLR.html#cb27-4" aria-hidden="true" tabindex="-1"></a>                        Analysis of Variance</span>
+<span id="cb27-5"><a href="C2BasicLR.html#cb27-5" aria-hidden="true" tabindex="-1"></a>                               Sum of           Mean</span>
+<span id="cb27-6"><a href="C2BasicLR.html#cb27-6" aria-hidden="true" tabindex="-1"></a>Source                   DF        Squares         Square     F Value      Pr <span class="sc">&gt;</span> F</span>
+<span id="cb27-7"><a href="C2BasicLR.html#cb27-7" aria-hidden="true" tabindex="-1"></a>Model                  <span class="dv">1</span>[m]   <span class="dv">2527165015</span>[p]   <span class="dv">2527165015</span>[s]   <span class="fl">175.77</span>[u]    <span class="sc">&lt;</span>.<span class="dv">0001</span>[v]</span>
+<span id="cb27-8"><a href="C2BasicLR.html#cb27-8" aria-hidden="true" tabindex="-1"></a>Error                 <span class="dv">48</span>[n]    <span class="dv">690116755</span>[q]     <span class="dv">14377432</span>[t]</span>
+<span id="cb27-9"><a href="C2BasicLR.html#cb27-9" aria-hidden="true" tabindex="-1"></a>Corrected Total       <span class="dv">49</span>[o]   <span class="dv">3217281770</span>[r]</span>
+<span id="cb27-10"><a href="C2BasicLR.html#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="C2BasicLR.html#cb27-11" aria-hidden="true" tabindex="-1"></a>        Root MSE           <span class="fl">3791.75848</span>[j]    R<span class="sc">-</span>Square     <span class="fl">0.7855</span>[k]</span>
+<span id="cb27-12"><a href="C2BasicLR.html#cb27-12" aria-hidden="true" tabindex="-1"></a>        Dependent Mean     <span class="fl">6494.82900</span>[H]    Adj R<span class="sc">-</span>Sq     <span class="fl">0.7810</span>[l]</span>
+<span id="cb27-13"><a href="C2BasicLR.html#cb27-13" aria-hidden="true" tabindex="-1"></a>        Coeff Var            <span class="fl">58.38119</span>[I]</span>
+<span id="cb27-14"><a href="C2BasicLR.html#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="C2BasicLR.html#cb27-15" aria-hidden="true" tabindex="-1"></a>                        Parameter Estimates</span>
+<span id="cb27-16"><a href="C2BasicLR.html#cb27-16" aria-hidden="true" tabindex="-1"></a>                           Parameter       Standard</span>
+<span id="cb27-17"><a href="C2BasicLR.html#cb27-17" aria-hidden="true" tabindex="-1"></a>Variable     Label        DF     Estimate        Error      t  Value    Pr <span class="sc">&gt;</span> <span class="er">|</span>t<span class="sc">|</span></span>
+<span id="cb27-18"><a href="C2BasicLR.html#cb27-18" aria-hidden="true" tabindex="-1"></a>Intercept    Intercept     <span class="dv">1</span>   <span class="fl">469.70360</span>[b]  <span class="fl">702.90619</span>[d]    <span class="fl">0.67</span>[f]    <span class="fl">0.5072</span>[h]</span>
+<span id="cb27-19"><a href="C2BasicLR.html#cb27-19" aria-hidden="true" tabindex="-1"></a>POP          POP           <span class="dv">1</span>     <span class="fl">0.64709</span>[c]    <span class="fl">0.04881</span>[e]   <span class="fl">13.26</span>[g]    <span class="sc">&lt;</span>.<span class="dv">0001</span>[i]</span></code></pre></div>
 <hr />
 <p><strong>Salida en R</strong></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="C2BasicLR.html#cb28-1" tabindex="-1"></a>Analysis of Variance Table</span>
-<span id="cb28-2"><a href="C2BasicLR.html#cb28-2" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="C2BasicLR.html#cb28-3" tabindex="-1"></a>Response<span class="sc">:</span> SALES</span>
-<span id="cb28-4"><a href="C2BasicLR.html#cb28-4" tabindex="-1"></a>          Df     Sum Sq      Mean Sq        F value         <span class="fu">Pr</span>(<span class="sc">&gt;</span>F)</span>
-<span id="cb28-5"><a href="C2BasicLR.html#cb28-5" tabindex="-1"></a>POP        <span class="dv">1</span>[m] <span class="dv">2527165015</span>[p] <span class="dv">2527165015</span>[s] <span class="fl">175.77304</span>[u] <span class="sc">&lt;</span><span class="fl">2.22e-16</span>[v]<span class="sc">**</span><span class="er">*</span></span>
-<span id="cb28-6"><a href="C2BasicLR.html#cb28-6" tabindex="-1"></a>Residuals <span class="dv">48</span>[n]  <span class="dv">690116755</span>[q]   <span class="dv">14377432</span>[t]</span>
-<span id="cb28-7"><a href="C2BasicLR.html#cb28-7" tabindex="-1"></a><span class="sc">---</span></span>
-<span id="cb28-8"><a href="C2BasicLR.html#cb28-8" tabindex="-1"></a>Call<span class="sc">:</span> <span class="fu">lm</span>(<span class="at">formula =</span> SALES <span class="sc">~</span> POP)</span>
-<span id="cb28-9"><a href="C2BasicLR.html#cb28-9" tabindex="-1"></a></span>
-<span id="cb28-10"><a href="C2BasicLR.html#cb28-10" tabindex="-1"></a>Residuals<span class="sc">:</span></span>
-<span id="cb28-11"><a href="C2BasicLR.html#cb28-11" tabindex="-1"></a>   Min     1Q Median     3Q    Max</span>
-<span id="cb28-12"><a href="C2BasicLR.html#cb28-12" tabindex="-1"></a> <span class="sc">-</span><span class="dv">6047</span>  <span class="sc">-</span><span class="dv">1461</span>   <span class="sc">-</span><span class="dv">670</span>    <span class="dv">486</span>  <span class="dv">18229</span></span>
-<span id="cb28-13"><a href="C2BasicLR.html#cb28-13" tabindex="-1"></a></span>
-<span id="cb28-14"><a href="C2BasicLR.html#cb28-14" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
-<span id="cb28-15"><a href="C2BasicLR.html#cb28-15" tabindex="-1"></a>            Estimate     Std. Error t value     <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)</span>
-<span id="cb28-16"><a href="C2BasicLR.html#cb28-16" tabindex="-1"></a>(Intercept) <span class="fl">469.7036</span>[b] <span class="fl">702.9062</span>[d]  <span class="fl">0.67</span>[f]    <span class="fl">0.51</span>     [h]</span>
-<span id="cb28-17"><a href="C2BasicLR.html#cb28-17" tabindex="-1"></a>POP           <span class="fl">0.6471</span>[c]   <span class="fl">0.0488</span>[e] <span class="fl">13.26</span>[g]   <span class="sc">&lt;</span><span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span>[i]</span>
-<span id="cb28-18"><a href="C2BasicLR.html#cb28-18" tabindex="-1"></a><span class="sc">---</span></span>
-<span id="cb28-19"><a href="C2BasicLR.html#cb28-19" tabindex="-1"></a>Signif. codes<span class="sc">:</span>  <span class="dv">0</span> ?<span class="sc">**</span><span class="er">*</span>? <span class="fl">0.001</span> ?<span class="sc">**</span>? <span class="fl">0.01</span> ?<span class="sc">*</span>? <span class="fl">0.05</span> ?.? <span class="fl">0.1</span> ? ? <span class="dv">1</span></span>
-<span id="cb28-20"><a href="C2BasicLR.html#cb28-20" tabindex="-1"></a></span>
-<span id="cb28-21"><a href="C2BasicLR.html#cb28-21" tabindex="-1"></a>Residual standard error<span class="sc">:</span> <span class="dv">3792</span>[j] on <span class="dv">48</span>[n] degrees of freedom</span>
-<span id="cb28-22"><a href="C2BasicLR.html#cb28-22" tabindex="-1"></a>Multiple R<span class="sc">-</span>Squared<span class="sc">:</span> <span class="fl">0.785</span>[k],      Adjusted R<span class="sc">-</span>squared<span class="sc">:</span> <span class="fl">0.781</span>[l]</span>
-<span id="cb28-23"><a href="C2BasicLR.html#cb28-23" tabindex="-1"></a>F<span class="sc">-</span>statistic<span class="sc">:</span>  <span class="dv">176</span>[u] on <span class="dv">1</span>[m] and <span class="dv">48</span>[n] DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="er">&lt;</span><span class="fl">2e-16</span>[v]</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="C2BasicLR.html#cb28-1" aria-hidden="true" tabindex="-1"></a>Analysis of Variance Table</span>
+<span id="cb28-2"><a href="C2BasicLR.html#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="C2BasicLR.html#cb28-3" aria-hidden="true" tabindex="-1"></a>Response<span class="sc">:</span> SALES</span>
+<span id="cb28-4"><a href="C2BasicLR.html#cb28-4" aria-hidden="true" tabindex="-1"></a>          Df     Sum Sq      Mean Sq        F value         <span class="fu">Pr</span>(<span class="sc">&gt;</span>F)</span>
+<span id="cb28-5"><a href="C2BasicLR.html#cb28-5" aria-hidden="true" tabindex="-1"></a>POP        <span class="dv">1</span>[m] <span class="dv">2527165015</span>[p] <span class="dv">2527165015</span>[s] <span class="fl">175.77304</span>[u] <span class="sc">&lt;</span><span class="fl">2.22e-16</span>[v]<span class="sc">**</span><span class="er">*</span></span>
+<span id="cb28-6"><a href="C2BasicLR.html#cb28-6" aria-hidden="true" tabindex="-1"></a>Residuals <span class="dv">48</span>[n]  <span class="dv">690116755</span>[q]   <span class="dv">14377432</span>[t]</span>
+<span id="cb28-7"><a href="C2BasicLR.html#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb28-8"><a href="C2BasicLR.html#cb28-8" aria-hidden="true" tabindex="-1"></a>Call<span class="sc">:</span> <span class="fu">lm</span>(<span class="at">formula =</span> SALES <span class="sc">~</span> POP)</span>
+<span id="cb28-9"><a href="C2BasicLR.html#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="C2BasicLR.html#cb28-10" aria-hidden="true" tabindex="-1"></a>Residuals<span class="sc">:</span></span>
+<span id="cb28-11"><a href="C2BasicLR.html#cb28-11" aria-hidden="true" tabindex="-1"></a>   Min     1Q Median     3Q    Max</span>
+<span id="cb28-12"><a href="C2BasicLR.html#cb28-12" aria-hidden="true" tabindex="-1"></a> <span class="sc">-</span><span class="dv">6047</span>  <span class="sc">-</span><span class="dv">1461</span>   <span class="sc">-</span><span class="dv">670</span>    <span class="dv">486</span>  <span class="dv">18229</span></span>
+<span id="cb28-13"><a href="C2BasicLR.html#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="C2BasicLR.html#cb28-14" aria-hidden="true" tabindex="-1"></a>Coefficients<span class="sc">:</span></span>
+<span id="cb28-15"><a href="C2BasicLR.html#cb28-15" aria-hidden="true" tabindex="-1"></a>            Estimate     Std. Error t value     <span class="fu">Pr</span>(<span class="sc">&gt;</span><span class="er">|</span>t<span class="sc">|</span>)</span>
+<span id="cb28-16"><a href="C2BasicLR.html#cb28-16" aria-hidden="true" tabindex="-1"></a>(Intercept) <span class="fl">469.7036</span>[b] <span class="fl">702.9062</span>[d]  <span class="fl">0.67</span>[f]    <span class="fl">0.51</span>     [h]</span>
+<span id="cb28-17"><a href="C2BasicLR.html#cb28-17" aria-hidden="true" tabindex="-1"></a>POP           <span class="fl">0.6471</span>[c]   <span class="fl">0.0488</span>[e] <span class="fl">13.26</span>[g]   <span class="sc">&lt;</span><span class="fl">2e-16</span> <span class="sc">**</span><span class="er">*</span>[i]</span>
+<span id="cb28-18"><a href="C2BasicLR.html#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb28-19"><a href="C2BasicLR.html#cb28-19" aria-hidden="true" tabindex="-1"></a>Signif. codes<span class="sc">:</span>  <span class="dv">0</span> ?<span class="sc">**</span><span class="er">*</span>? <span class="fl">0.001</span> ?<span class="sc">**</span>? <span class="fl">0.01</span> ?<span class="sc">*</span>? <span class="fl">0.05</span> ?.? <span class="fl">0.1</span> ? ? <span class="dv">1</span></span>
+<span id="cb28-20"><a href="C2BasicLR.html#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-21"><a href="C2BasicLR.html#cb28-21" aria-hidden="true" tabindex="-1"></a>Residual standard error<span class="sc">:</span> <span class="dv">3792</span>[j] on <span class="dv">48</span>[n] degrees of freedom</span>
+<span id="cb28-22"><a href="C2BasicLR.html#cb28-22" aria-hidden="true" tabindex="-1"></a>Multiple R<span class="sc">-</span>Squared<span class="sc">:</span> <span class="fl">0.785</span>[k],      Adjusted R<span class="sc">-</span>squared<span class="sc">:</span> <span class="fl">0.781</span>[l]</span>
+<span id="cb28-23"><a href="C2BasicLR.html#cb28-23" aria-hidden="true" tabindex="-1"></a>F<span class="sc">-</span>statistic<span class="sc">:</span>  <span class="dv">176</span>[u] on <span class="dv">1</span>[m] and <span class="dv">48</span>[n] DF,  p<span class="sc">-</span>value<span class="sc">:</span> <span class="er">&lt;</span><span class="fl">2e-16</span>[v]</span></code></pre></div>
 <hr />
 <p><strong>Definición de Anotación de Leyenda, Símbolo</strong></p>
 <p>[a] Número de observaciones <span class="math inline">\(n\)</span>. <br>

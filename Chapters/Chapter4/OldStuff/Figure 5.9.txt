@@ -1,0 +1,20 @@
+## Figure 5.9
+DRGabc<-character(length=526)
+
+for (i in 1:526)
+{DRGabc[i]<-if (DRG[i]==209) "A" else if (DRG[i]==391) "B" else if (DRG[i]==430) "C" else "D"}
+
+pdf("R:/Book3/Figures/Figure5_9.pdf", width=6,height=6,pointsize = 11)
+
+plot(log(CHG_NUM)~log(NO.DSCHG),data=hosp,subset=DRG==209|DRG==391|DRG==430,type="p",pch=as.character(DRGabc),cex=0.6, xlim=c(2,9.2),xaxp=c(1.5,9,5),xlab="NO DSCHG",ylim=c(5.9,9.8),yaxp=c(6.0,9.6,3),ylab="CHG_NUM",las=1)
+
+
+dev.off()
+
+
+postscript("R:/Book3/Figures/Figure5_9.ps", width=6,height=6,pointsize = 11)
+
+plot(log(CHG_NUM)~log(NO.DSCHG),data=hosp,subset=DRG==209|DRG==391|DRG==430,type="p",pch=as.character(DRGabc),cex=0.6, xlim=c(2,9.2),xaxp=c(1.5,9,5),xlab="NO DSCHG",ylim=c(5.9,9.8),yaxp=c(6.0,9.6,3),ylab="CHG_NUM",las=1)
+
+
+dev.off()

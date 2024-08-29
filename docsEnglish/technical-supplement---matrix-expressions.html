@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Technical Supplement - Matrix Expressions | Regression Modeling with Actuarial and Financial Applications</title>
+  <meta name="description" content="Development of a research monograph that provides quantitative tools to assess the relevance of dependence in insurance risk management." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Technical Supplement - Matrix Expressions | Regression Modeling with Actuarial and Financial Applications" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Development of a research monograph that provides quantitative tools to assess the relevance of dependence in insurance risk management." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Technical Supplement - Matrix Expressions | Regression Modeling with Actuarial and Financial Applications" />
+  
+  <meta name="twitter:description" content="Development of a research monograph that provides quantitative tools to assess the relevance of dependence in insurance risk management." />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="C4MLRANOVA.html"/>
+<link rel="next" href="bibliography.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Regression Modeling With Actuarial and Financial Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#dedication"><i class="fa fa-check"></i>Dedication</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#forward"><i class="fa fa-check"></i>Forward</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#who-is-this-book-for"><i class="fa fa-check"></i>Who Is This Book For?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#what-is-this-book-about"><i class="fa fa-check"></i>What Is This Book About?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-does-this-book-deliver-its-message"><i class="fa fa-check"></i>How Does This Book Deliver Its Message?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="chap-1.html"><a href="chap-1.html"><i class="fa fa-check"></i><b>1</b> Chap 1</a></li>
+<li class="chapter" data-level="2" data-path="chap-2.html"><a href="chap-2.html"><i class="fa fa-check"></i><b>2</b> Chap 2</a></li>
+<li class="chapter" data-level="3" data-path="chap-3.html"><a href="chap-3.html"><i class="fa fa-check"></i><b>3</b> Chap 3</a></li>
+<li class="chapter" data-level="4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html"><i class="fa fa-check"></i><b>4</b> Multiple Linear Regression - II</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#S4:BinaryVar"><i class="fa fa-check"></i><b>4.1</b> The Role of Binary Variables</a></li>
+<li class="chapter" data-level="4.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#S4:SeveralCoeff"><i class="fa fa-check"></i><b>4.2</b> Statistical Inference for Several Coefficients</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#S4:SetsRegCoeff"><i class="fa fa-check"></i><b>4.2.1</b> Sets of Regression Coefficients</a></li>
+<li class="chapter" data-level="4.2.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#S4:GenLinHypo"><i class="fa fa-check"></i><b>4.2.2</b> The General Linear Hypothesis</a></li>
+<li class="chapter" data-level="4.2.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#estimating-and-predicting-several-coefficients"><i class="fa fa-check"></i><b>4.2.3</b> Estimating and Predicting Several Coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#one-factor-anova-model"><i class="fa fa-check"></i><b>4.3</b> One Factor ANOVA Model</a></li>
+<li class="chapter" data-level="4.4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#combining-categorical-and-continuous-explanatory-variables"><i class="fa fa-check"></i><b>4.4</b> Combining Categorical and Continuous Explanatory Variables</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#combining-a-factor-and-covariate"><i class="fa fa-check"></i><b>4.4.1</b> Combining a Factor and Covariate</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#further-reading-and-references"><i class="fa fa-check"></i><b>4.5</b> Further Reading and References</a></li>
+<li class="chapter" data-level="4.6" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#exercises"><i class="fa fa-check"></i><b>4.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="technical-supplement---matrix-expressions.html"><a href="technical-supplement---matrix-expressions.html"><i class="fa fa-check"></i><b>5</b> Technical Supplement - Matrix Expressions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="technical-supplement---matrix-expressions.html"><a href="technical-supplement---matrix-expressions.html#expressing-models-with-categorical-variables-in-matrix-form"><i class="fa fa-check"></i><b>5.1</b> Expressing Models with Categorical Variables in Matrix Form</a></li>
+<li class="chapter" data-level="5.2" data-path="technical-supplement---matrix-expressions.html"><a href="technical-supplement---matrix-expressions.html#technical-supplement---matrix-expressions-1"><i class="fa fa-check"></i><b>5.2</b> Technical Supplement - Matrix Expressions</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="technical-supplement---matrix-expressions.html"><a href="technical-supplement---matrix-expressions.html#expressing-models-with-categorical-variables-in-matrix-form-1"><i class="fa fa-check"></i><b>5.2.1</b> Expressing Models with Categorical Variables in Matrix Form</a></li>
+<li class="chapter" data-level="5.2.2" data-path="technical-supplement---matrix-expressions.html"><a href="technical-supplement---matrix-expressions.html#one-categorical-and-one-continuous-variable-model"><i class="fa fa-check"></i><b>5.2.2</b> One Categorical and One Continuous Variable Model</a></li>
+<li class="chapter" data-level="5.2.3" data-path="technical-supplement---matrix-expressions.html"><a href="technical-supplement---matrix-expressions.html#calculating-least-squares-recursively"><i class="fa fa-check"></i><b>5.2.3</b> Calculating Least Squares Recursively</a></li>
+<li class="chapter" data-level="5.2.4" data-path="technical-supplement---matrix-expressions.html"><a href="technical-supplement---matrix-expressions.html#partitioned-matrix-results"><i class="fa fa-check"></i><b>5.2.4</b> Partitioned Matrix Results</a></li>
+<li class="chapter" data-level="5.2.5" data-path="technical-supplement---matrix-expressions.html"><a href="technical-supplement---matrix-expressions.html#general-linear-model-1"><i class="fa fa-check"></i><b>5.2.5</b> General Linear Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Regression Modeling with Actuarial and Financial Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="technical-supplement---matrix-expressions" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Technical Supplement - Matrix Expressions<a href="technical-supplement---matrix-expressions.html#technical-supplement---matrix-expressions" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="expressing-models-with-categorical-variables-in-matrix-form" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Expressing Models with Categorical Variables in Matrix Form<a href="technical-supplement---matrix-expressions.html#expressing-models-with-categorical-variables-in-matrix-form" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Chapter 3 showed how to write the regression model equation in the form <span class="math inline">\(\mathbf{y = X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}\)</span> where <span class="math inline">\(\mathbf{X}\)</span> is a matrix of explanatory variables. This form permits straightforward calculation of regression coefficients, <span class="math inline">\(\mathbf{b} = \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{y}\)</span>. This section shows how the model and calculations reduce to simpler expressions when the explanatory variables are categorical.</p>
+<p><strong>One Categorical Variable Model.</strong> Consider the model with one categorical variable introduced in Section <span class="math inline">\(\ref{S4:OneFactor}\)</span> with <span class="math inline">\(c\)</span> levels of the categorical variable. From equation (<span class="math inline">\(\ref{E4:OneFactor}\)</span>), this model can be written as</p>
+<p><span class="math display">\[
+\mathbf{y} =
+\begin{bmatrix}
+y_{1,1} \\
+\vdots \\
+y_{n_1,1} \\
+\vdots \\
+y_{1,c} \\
+\vdots \\
+y_{n_{c},c}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 &amp; 0 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; 0 &amp; \cdots &amp; \cdots \\
+0 &amp; 0 &amp; \cdots &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+\mu_1 \\
+\vdots \\
+\mu_c
+\end{bmatrix}
++
+\begin{bmatrix}
+\varepsilon_{1,1} \\
+\vdots \\
+\varepsilon_{n_1,1} \\
+\vdots \\
+\varepsilon_{1,c} \\
+\vdots \\
+\varepsilon_{n_{c},c}
+\end{bmatrix}
+= \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+\]</span></p>
+<p>To make the notation more compact, we write <span class="math inline">\(\mathbf{0}\)</span> and <span class="math inline">\(\mathbf{1}\)</span> for a column of zeros and ones, respectively. With this convention, another way to express equation (<span class="math inline">\(\ref{E4:MatrixOneFactor}\)</span>) is</p>
+<p><span class="math display">\[
+\mathbf{y} =
+\begin{bmatrix}
+\mathbf{1}_1 &amp; \mathbf{0}_1 &amp; \cdots &amp; \mathbf{0}_1 \\
+\mathbf{0}_2 &amp; \mathbf{1}_2 &amp; \cdots &amp; \mathbf{0}_2 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\mathbf{0}_c &amp; \mathbf{0}_c &amp; \cdots &amp; \mathbf{1}_c
+\end{bmatrix}
+\begin{bmatrix}
+\mu_1 \\
+\mu_2 \\
+\vdots \\
+\mu_c
+\end{bmatrix}
++ \boldsymbol{\varepsilon} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+\]</span></p>
+<p>Here, <span class="math inline">\(\mathbf{0}_1\)</span> and <span class="math inline">\(\mathbf{1}_1\)</span> stand for vector columns of length <span class="math inline">\(n_1\)</span> of zeros and ones, respectively, and similarly for <span class="math inline">\(\mathbf{0}_2, \mathbf{1}_2, \ldots, \mathbf{0}_c, \mathbf{1}_c\)</span>.</p>
+<p>Equation (<span class="math inline">\(\ref{E4:Matrix2OneFactor}\)</span>) allows us to apply the machinery developed for the regression model to the model with one categorical variable. As an intermediate calculation, we have</p>
+<p><span class="math display">\[
+(\mathbf{X}^{\prime} \mathbf{X})^{-1} = \left(
+\begin{bmatrix}
+\mathbf{1}_1 &amp; \mathbf{0}_2 &amp; \cdots &amp; \mathbf{0}_c \\
+\mathbf{0}_1 &amp; \mathbf{1}_2 &amp; \cdots &amp; \mathbf{0}_c \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\mathbf{0}_1 &amp; \mathbf{0}_2 &amp; \cdots &amp; \mathbf{1}_c
+\end{bmatrix}^{\prime}
+\begin{bmatrix}
+\mathbf{1}_1 &amp; \mathbf{0}_1 &amp; \cdots &amp; \mathbf{0}_1 \\
+\mathbf{0}_2 &amp; \mathbf{1}_2 &amp; \cdots &amp; \mathbf{0}_2 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\mathbf{0}_c &amp; \mathbf{0}_c &amp; \cdots &amp; \mathbf{1}_c
+\end{bmatrix}
+\right)^{-1}
+\]</span></p>
+<p><span class="math display">\[
+=
+\begin{bmatrix}
+n_1 &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; n_2 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; n_c
+\end{bmatrix}^{-1}
+=
+\begin{bmatrix}
+\frac{1}{n_1} &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \frac{1}{n_2} &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \frac{1}{n_c}
+\end{bmatrix}
+\]</span></p>
+<p>Thus, the parameter estimates are</p>
+<p><span class="math display">\[
+\mathbf{b} =
+\begin{bmatrix}
+\hat{\mu}_1 \\
+\vdots \\
+\hat{\mu}_c
+\end{bmatrix}
+=
+(\mathbf{X}^{\prime} \mathbf{X})^{-1} \mathbf{X}^{\prime} \mathbf{y} =
+\begin{bmatrix}
+\frac{1}{n_1} &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \frac{1}{n_2} &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \frac{1}{n_c}
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{1}_1 &amp; \mathbf{0}_2 &amp; \cdots &amp; \mathbf{0}_c \\
+\mathbf{0}_1 &amp; \mathbf{1}_2 &amp; \cdots &amp; \mathbf{0}_c \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\mathbf{0}_1 &amp; \mathbf{0}_2 &amp; \cdots &amp; \mathbf{1}_c
+\end{bmatrix}^{\prime}
+\begin{bmatrix}
+y_{1,1} \\
+\vdots \\
+y_{n_1,1} \\
+\vdots \\
+y_{1,c} \\
+\vdots \\
+y_{n_{c},c}
+\end{bmatrix}
+\]</span></p>
+<p><span class="math display">\[
+=
+\begin{bmatrix}
+\frac{1}{n_1} &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \frac{1}{n_2} &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \frac{1}{n_c}
+\end{bmatrix}
+\begin{bmatrix}
+\sum_{i=1}^{n_1} y_{i1} \\
+\vdots \\
+\sum_{i=1}^{n_c} y_{ic}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\bar{y}_1 \\
+\vdots \\
+\bar{y}_c
+\end{bmatrix}
+\]</span></p>
+</div>
+<div id="technical-supplement---matrix-expressions-1" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Technical Supplement - Matrix Expressions<a href="technical-supplement---matrix-expressions.html#technical-supplement---matrix-expressions-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="expressing-models-with-categorical-variables-in-matrix-form-1" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Expressing Models with Categorical Variables in Matrix Form<a href="technical-supplement---matrix-expressions.html#expressing-models-with-categorical-variables-in-matrix-form-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Chapter 3 showed how to write the regression model equation in the form <span class="math inline">\(\mathbf{y = X \boldsymbol \beta + \boldsymbol \varepsilon}\)</span> where <span class="math inline">\(\mathbf{X}\)</span> is a matrix of explanatory variables. This form permits straightforward calculation of regression coefficients, <span class="math inline">\(\mathbf{b} = \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{y}\)</span>. This section shows how the model and calculations reduce to simpler expressions when the explanatory variables are categorical.</p>
+<p><strong>One Categorical Variable Model.</strong> Consider the model with one categorical variable introduced in Section <span class="math inline">\(\ref{S4:OneFactor}\)</span> with <span class="math inline">\(c\)</span> levels of the categorical variable. From equation (<span class="math inline">\(\ref{E4:OneFactor}\)</span>), this model can be written as</p>
+<p><span class="math display">\[
+\mathbf{y} =
+\begin{bmatrix}
+y_{1,1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+y_{n_1,1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+y_{1,c} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+y_{n_{c},c}%
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 &amp; 0 &amp; \cdot \cdot \cdot  &amp; 0 \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+1 &amp; 0 &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+0 &amp; 0 &amp; \cdot \cdot \cdot  &amp; 1 \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+0 &amp; 0 &amp; \cdot \cdot \cdot  &amp; 1%
+\end{bmatrix}%
+\begin{bmatrix}
+\mu_1 \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\mu_c
+\end{bmatrix}
++
+\begin{bmatrix}
+\varepsilon_{1,1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\varepsilon_{n_1,1} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\varepsilon_{1,c} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\varepsilon_{n_{c},c}
+\end{bmatrix}
+= \mathbf{X} \boldsymbol \beta + \boldsymbol \varepsilon .
+\]</span></p>
+<p>To make the notation more compact, we write <span class="math inline">\(\mathbf{0}\)</span> and <span class="math inline">\(\mathbf{1}\)</span> for a column of zeros and ones, respectively. With this convention, another way to express equation (<span class="math inline">\(\ref{E4:MatrixOneFactor}\)</span>) is</p>
+<p><span class="math display">\[
+\mathbf{y} =
+\begin{bmatrix}
+\mathbf{1}_1 &amp; \mathbf{0}_1 &amp; \cdot \cdot \cdot  &amp; \mathbf{0}_1 \\
+\mathbf{0}_2 &amp; \mathbf{1}_2 &amp; \cdot \cdot \cdot  &amp; \mathbf{0}_2 \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\mathbf{0}_c &amp; \mathbf{0}_c &amp; \cdot \cdot \cdot  &amp; \mathbf{1}_c
+\end{bmatrix}
+\begin{bmatrix}
+\mu_1 \\
+\mu_2 \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\mu_c%
+\end{bmatrix}
++ \boldsymbol \varepsilon = \mathbf{X} \boldsymbol \beta +
+\boldsymbol \varepsilon .
+\]</span></p>
+<p>Here, <span class="math inline">\(\mathbf{0}_1\)</span> and <span class="math inline">\(\mathbf{1}_1\)</span> stand for vector columns of length <span class="math inline">\(n_1\)</span> of zeros and ones, respectively, and similarly for <span class="math inline">\(\mathbf{0}_2, \mathbf{1}_2, \ldots, \mathbf{0}_c, \mathbf{1}_c\)</span>.</p>
+<p>Equation (<span class="math inline">\(\ref{E4:Matrix2OneFactor}\)</span>) allows us to apply the machinery developed for the regression model to the model with one categorical variable. As an intermediate calculation, we have</p>
+<p><span class="math display">\[
+(\mathbf{X}^{\prime} \mathbf{X})^{-1} =
+\left(
+\begin{bmatrix}
+\mathbf{1}_1 &amp; \mathbf{0}_2 &amp; \cdot \cdot \cdot  &amp; \mathbf{0}_c \\
+\mathbf{0}_1 &amp; \mathbf{1}_2 &amp; \cdot \cdot \cdot  &amp; \mathbf{0}_c \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\mathbf{0}_1 &amp; \mathbf{0}_2 &amp; \cdot \cdot \cdot  &amp; \mathbf{1}_c
+\end{bmatrix}^{\prime}
+\begin{bmatrix}
+\mathbf{1}_1 &amp; \mathbf{0}_1 &amp; \cdot \cdot \cdot  &amp; \mathbf{0}_1 \\
+\mathbf{0}_2 &amp; \mathbf{1}_2 &amp; \cdot \cdot \cdot  &amp; \mathbf{0}_2 \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\mathbf{0}_c &amp; \mathbf{0}_c &amp; \cdot \cdot \cdot  &amp; \mathbf{1}_c
+\end{bmatrix}
+\right)^{-1}
+=
+\begin{bmatrix}
+n_1 &amp; 0 &amp; \cdot \cdot \cdot  &amp; 0 \\
+0 &amp; n_2 &amp; \cdot \cdot \cdot  &amp; 0 \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+0 &amp; 0 &amp; \cdot \cdot \cdot  &amp; n_c
+\end{bmatrix}^{-1}
+=
+\begin{bmatrix}
+\frac{1}{n_1} &amp; 0 &amp; \cdot \cdot \cdot  &amp; 0 \\
+0 &amp; \frac{1}{n_2} &amp; \cdot \cdot \cdot  &amp; 0 \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+0 &amp; 0 &amp; \cdot \cdot \cdot  &amp; \frac{1}{n_c}
+\end{bmatrix}.
+\]</span></p>
+<p>Thus, the parameter estimates are</p>
+$$
+=
+<span class="math display">\[\begin{bmatrix}
+\hat{\mu}_1 \\
+\cdot  \\
+\cdot
+
+  \\
+\cdot  \\
+\hat{\mu}_c \\
+\end{bmatrix}\]</span>
+<p>.
+$$</p>
+</div>
+<div id="one-categorical-and-one-continuous-variable-model" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> One Categorical and One Continuous Variable Model<a href="technical-supplement---matrix-expressions.html#one-categorical-and-one-continuous-variable-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As another illustration, we consider the variable intercept and constant slope model. This model is summarized as <span class="math inline">\(\mathbf{y} = \mathbf{X} \boldsymbol \beta + \boldsymbol \varepsilon\)</span> where</p>
+<p><span class="math display">\[
+\mathbf{X} =
+\begin{bmatrix}
+\mathbf{1}_1 &amp; \mathbf{0}_1 &amp; \cdot \cdot \cdot  &amp; \mathbf{0}_1 &amp; \mathbf{x}_1 \\
+\mathbf{0}_2 &amp; \mathbf{1}_2 &amp; \cdot \cdot \cdot  &amp; \mathbf{0}_2 &amp; \mathbf{x}_2 \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  &amp; \cdot  \\
+\mathbf{0}_{c} &amp; \mathbf{0}_{c} &amp; \cdot \cdot \cdot  &amp; \mathbf{1}_c &amp; \mathbf{x}_{c}
+\end{bmatrix}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\boldsymbol \beta =
+\begin{bmatrix}
+\beta_{01} \\
+\beta_{02} \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\beta_{0c} \\
+\beta_1
+\end{bmatrix}.
+\]</span></p>
+<p>Here, <span class="math inline">\(\mathbf{0}_j\)</span> and <span class="math inline">\(\mathbf{1}_j\)</span> stand for vector columns of length <span class="math inline">\(n_j\)</span> of zeros and ones, respectively, and <span class="math inline">\(\mathbf{x}_j = (x_{1j}, x_{2j}, \ldots, x_{n_j, j})^{\prime}\)</span> is the column of the continuous variable at the <span class="math inline">\(j\)</span>th level. Straightforward matrix algebra techniques provide the least squares estimates.</p>
+</div>
+<div id="calculating-least-squares-recursively" class="section level3 hasAnchor" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> Calculating Least Squares Recursively<a href="technical-supplement---matrix-expressions.html#calculating-least-squares-recursively" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When computing regression coefficients using least squares, <span class="math inline">\(\mathbf{b} = \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{y}\)</span>, for some applications, the dimension of <span class="math inline">\(\mathbf{X}^{\prime} \mathbf{X}\)</span> can be large, causing computational difficulties. Fortunately, for some problems, the computations can be partitioned into smaller problems that can be solved recursively.</p>
+<div id="recursive-least-squares-calculation" class="section level4 hasAnchor" number="5.2.3.1">
+<h4><span class="header-section-number">5.2.3.1</span> Recursive Least Squares Calculation<a href="technical-supplement---matrix-expressions.html#recursive-least-squares-calculation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Suppose that the regression function can be written as</p>
+<p><span class="math display">\[
+\mathrm{E}~\mathbf{y} = \mathbf{X} \boldsymbol \beta = \left(
+\mathbf{X}_1 : \mathbf{X}_2
+\right) \left(
+\begin{array}{c}
+\boldsymbol \beta_1 \\
+\boldsymbol \beta_2 \\
+\end{array}
+\right),
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{X}_1\)</span> has dimensions <span class="math inline">\(n \times k_1\)</span>, <span class="math inline">\(\mathbf{X}_2\)</span> has dimensions <span class="math inline">\(n \times k_2\)</span>, <span class="math inline">\(k_1 + k_2 = k\)</span>, <span class="math inline">\(\boldsymbol \beta_1\)</span> has dimensions <span class="math inline">\(k_1 \times 1\)</span>, and <span class="math inline">\(\boldsymbol \beta_2\)</span> has dimensions <span class="math inline">\(k_2 \times 1\)</span>. Define <span class="math inline">\(\mathbf{Q}_1 = \mathbf{I} - \mathbf{X}_1 \left(\mathbf{X}_1^{\prime} \mathbf{X}_1\right)^{-1} \mathbf{X}_1^{\prime}\)</span>. Then, the least squares estimator can be computed as:</p>
+<p><span class="math display">\[
+\mathbf{b} = \left(
+\begin{array}{c}
+\mathbf{b}_1 \\
+\mathbf{b}_2 \\
+\end{array}
+\right)
+=
+\left(
+\begin{array}{c}
+(\mathbf{X}_1^{\prime} \mathbf{X}_1)^{-1} \mathbf{X}_1^{\prime}
+\left(
+\mathbf{y} - \mathbf{X}_2 \mathbf{b}_2
+\right) \\
+\left(\mathbf{X}_2^{\prime} \mathbf{Q}_1 \mathbf{X}_2\right)^{-1} \mathbf{X}_2^{\prime} \mathbf{Q}_1 \mathbf{y} \\
+\end{array}
+\right).
+\]</span></p>
+<p>Equation (<span class="math inline">\(\ref{E4:PartitionOLS}\)</span>) provides the first step in the recursion. It can easily be iterated to allow for a more detailed decomposition of <span class="math inline">\(\mathbf{X}\)</span>.</p>
+<p><strong>Special Case: One Categorical and One Continuous Variable Model.</strong> To illustrate the relevance of equation (<span class="math inline">\(\ref{E4:PartitionOLS}\)</span>), consider the model summarized in equation (<span class="math inline">\(\ref{E4:CategoricalContinuous}\)</span>). Here, the dimension of <span class="math inline">\(\mathbf{X}\)</span> is <span class="math inline">\(n \times (c+1)\)</span> and so the dimension of <span class="math inline">\(\mathbf{X}^{\prime} \mathbf{X}\)</span> is <span class="math inline">\((c+1) \times (c+1)\)</span>. Taking the inverse of this matrix could be difficult if <span class="math inline">\(c\)</span> is large. To apply equation (<span class="math inline">\(\ref{E4:PartitionOLS}\)</span>), we define</p>
+<p><span class="math display">\[
+\mathbf{X}_1 =
+\begin{bmatrix}
+\mathbf{1}_1 &amp; \mathbf{0}_1 &amp; \cdot \cdot \cdot  &amp; \mathbf{0}_1 \\
+\mathbf{0}_2 &amp; \mathbf{1}_2 &amp; \cdot \cdot \cdot  &amp; \mathbf{0}_2 \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\cdot  &amp; \cdot  &amp; \cdot \cdot \cdot  &amp; \cdot  \\
+\mathbf{0}_c &amp; \mathbf{0}_c &amp; \cdot \cdot \cdot  &amp; \mathbf{1}_c
+\end{bmatrix}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\mathbf{X}_2 =
+\begin{bmatrix}
+\mathbf{x}_1 \\
+\mathbf{x}_2 \\
+\cdot  \\
+\cdot  \\
+\cdot  \\
+\mathbf{x}_c
+\end{bmatrix}.
+\]</span></p>
+<p>In this case, we have seen how it is straightforward to compute <span class="math inline">\(\left(\mathbf{X}_1^{\prime} \mathbf{X}_1\right)^{-1}\)</span> without requiring matrix inversion. This makes calculating <span class="math inline">\(\mathbf{Q}_1\)</span> straightforward. With this, we can compute <span class="math inline">\(\mathbf{X}_2^{\prime} \mathbf{Q}_1 \mathbf{X}_2\)</span> and, because it is a scalar, immediately get its inverse. This provides <span class="math inline">\(\mathbf{b}_2\)</span> which is then used to calculate <span class="math inline">\(\mathbf{b}_1\)</span>. Although this procedure is not as direct as <span class="math inline">\(\mathbf{b} = \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{y}\)</span>, it can be computationally efficient.</p>
+</div>
+</div>
+<div id="partitioned-matrix-results" class="section level3 hasAnchor" number="5.2.4">
+<h3><span class="header-section-number">5.2.4</span> Partitioned Matrix Results<a href="technical-supplement---matrix-expressions.html#partitioned-matrix-results" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To establish equation (<span class="math inline">\(\ref{E4:PartitionOLS}\)</span>), we use results standard in matrix algebra regarding the inverses of partitioned matrices.</p>
+<p><strong>Partitioned Matrix Results.</strong> Suppose that we can partition the <span class="math inline">\((p+q) \times (p+q)\)</span> matrix <span class="math inline">\(\mathbf{B}\)</span> as</p>
+<p><span class="math display">\[
+\mathbf{B} =
+\begin{bmatrix}
+\mathbf{B}_{11} &amp; \mathbf{B}_{12} \\
+\mathbf{B}_{12}^{\prime} &amp; \mathbf{B}_{22}
+\end{bmatrix},
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{B}_{11}\)</span> is a <span class="math inline">\(p \times p\)</span> invertible matrix, <span class="math inline">\(\mathbf{B}_{22}\)</span> is a <span class="math inline">\(q \times q\)</span> invertible matrix, and <span class="math inline">\(\mathbf{B}_{12}\)</span> is a <span class="math inline">\(p \times q\)</span> matrix. Then</p>
+<p><span class="math display">\[
+\mathbf{B}^{-1} =
+\begin{bmatrix}
+\mathbf{C}_{11}^{-1} &amp;
+- \mathbf{B}_{11}^{-1} \mathbf{B}_{12} \mathbf{C}_{22}^{-1} \\
+- \mathbf{C}_{22}^{-1} \mathbf{B}_{12}^{\prime} \mathbf{B}_{11}^{-1} &amp;
+\mathbf{C}_{22}^{-1}
+\end{bmatrix},
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\mathbf{C}_{11} = \mathbf{B}_{11} - \mathbf{B}_{12} \mathbf{B}_{22}^{-1} \mathbf{B}_{12}^{\prime}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\mathbf{C}_{22} = \mathbf{B}_{22} - \mathbf{B}_{12}^{\prime} \mathbf{B}_{11}^{-1} \mathbf{B}_{12}.
+\]</span></p>
+<p>To verify equation (<span class="math inline">\(\ref{E4:PartitionMatrixInverse1}\)</span>), multiply <span class="math inline">\(\mathbf{B}^{-1}\)</span> by <span class="math inline">\(\mathbf{B}\)</span> to obtain the identity matrix <span class="math inline">\(\mathbf{I}\)</span>. Further,</p>
+<p>$$
+<em>{11}^{-1} = </em>{11}^{-1} + <em>{11}^{-1} </em>{12} <em>{22}^{-1} </em>{12}^{} _{11}^{-1}.
+$$</p>
+<p>Now, we first write the least squares estimator as
+<span class="math display">\[
+\mathbf{b} = \left( \mathbf{X}^{\prime}\mathbf{X}\right)^{-1}
+\mathbf{X}^{\prime} \mathbf{y} = \left( \left(
+  \begin{array}{c}
+    \mathbf{X}_1^{\prime} \\
+    \mathbf{X}_2^{\prime} \\
+  \end{array}
+\right)
+\left( \mathbf{X}_1 : \mathbf{X}_2 \right)\right)^{-1}
+\left(
+  \begin{array}{c}
+    \mathbf{X}_1^{\prime} \\
+    \mathbf{X}_2^{\prime} \\
+  \end{array}
+\right) \mathbf{y}
+\]</span>
+<span class="math display">\[
+= \left(
+  \begin{array}{cc}
+    \mathbf{X}_1^{\prime} \mathbf{X}_1 &amp; \mathbf{X}_1^{\prime} \mathbf{X}_2 \\
+    \mathbf{X}_2^{\prime} \mathbf{X}_1 &amp; \mathbf{X}_2^{\prime} \mathbf{X}_2 \\
+  \end{array}
+\right)^{-1}
+\left(
+  \begin{array}{c}
+    \mathbf{X}_1^{\prime} \mathbf{y} \\
+    \mathbf{X}_2^{\prime} \mathbf{y} \\
+  \end{array}
+\right) = \left(
+  \begin{array}{c}
+    \mathbf{b}_1 \\
+    \mathbf{b}_2 \\
+  \end{array}
+\right).
+\]</span>
+To apply the partitioned matrix results, we define
+<span class="math display">\[
+\mathbf{Q}_j = \mathbf{I} - \mathbf{X}_j
+\left(\mathbf{X}_j^{\prime}\mathbf{X}_j \right)^{-1}
+\mathbf{X}_j^{\prime},
+\]</span>
+<span class="math inline">\(j=1,2,\)</span> and <span class="math inline">\(\mathbf{B}_{j,k} = \mathbf{X}_j^{\prime}\mathbf{X}_k\)</span> for
+<span class="math inline">\(j,k=1,2.\)</span> This means that $_{11}=_1^{}_1 -
+_1^{}_2
+(_2^{}_2)^{-1}
+_2^{}_1^{} = _1^{}
+_2 <em>1 $ and similarly $</em>{22} =
+_2^{} _1 _2 $. From the second row,
+we have
+<span class="math display">\[
+\mathbf{b}_2 = \mathbf{C}_{22}^{-1} \left(
+-\mathbf{B}_{12}^{\prime} \mathbf{B}_{11}^{-1}\mathbf{X}_1^{\prime}
+\mathbf{y} +
+\mathbf{X}_2^{\prime} \mathbf{y} \right)
+\]</span>
+<span class="math display">\[
+= \left(\mathbf{X}_2^{\prime} \mathbf{Q}_1 \mathbf{X}_2
+\right)^{-1} \left( - \mathbf{X}_2^{\prime} \mathbf{X}_1
+(\mathbf{X}_1^{\prime}\mathbf{X}_1)^{-1} \mathbf{X}_1^{\prime}
+\mathbf{y} + \mathbf{X}_2^{\prime}\mathbf{y} \right)
+\]</span>
+<span class="math display">\[
+= \left(\mathbf{X}_2^{\prime} \mathbf{Q}_1 \mathbf{X}_2
+\right)^{-1} \mathbf{X}_2^{\prime} \mathbf{Q}_1\mathbf{y}.
+\]</span>
+From the first row,
+<span class="math display">\[
+\mathbf{b}_1 = \mathbf{C}_{11}^{-1}
+\mathbf{X}_1^{\prime}\mathbf{y} -
+\mathbf{B}_{11}^{-1}\mathbf{B}_{12}\mathbf{C}_{22}^{-1}
+\mathbf{X}_2^{\prime}\mathbf{y}
+\]</span>
+<span class="math display">\[
+= \left( \mathbf{B}_{11}^{-1} + \mathbf{B}_{11}^{-1}
+\mathbf{B}_{12} \mathbf{C}_{22}^{-1} \mathbf{B}_{21}
+\mathbf{B}_{11}^{-1} \right) \mathbf{X}_1^{\prime}\mathbf{y} -
+\mathbf{B}_{11}^{-1}\mathbf{B}_{12}\mathbf{C}_{22}^{-1}
+\mathbf{X}_2^{\prime}\mathbf{y}
+\]</span>
+<span class="math display">\[
+= \mathbf{B}_{11}^{-1}\mathbf{X}_1^{\prime}\mathbf{y} -
+\mathbf{B}_{11}^{-1} \mathbf{B}_{12} \mathbf{C}_{22}^{-1} \left(
+-\mathbf{B}_{21} \mathbf{B}_{11}^{-1}
+\mathbf{X}_1^{\prime}\mathbf{y} + \mathbf{X}_2^{\prime}\mathbf{y}
+\right)
+\]</span>
+<span class="math display">\[
+= \mathbf{B}_{11}^{-1}\mathbf{X}_1^{\prime}\mathbf{y} -
+\mathbf{B}_{11}^{-1} \mathbf{B}_{12} \mathbf{b}_2
+\]</span>
+<span class="math display">\[
+= (\mathbf{X}_1^{\prime}\mathbf{X}_1)^{-1}\mathbf{X}_1^{\prime}\mathbf{y} -
+(\mathbf{X}_1^{\prime}\mathbf{X}_1)^{-1} \mathbf{X}_1^{\prime}\mathbf{X}_2 \mathbf{b}_2
+\]</span>
+<span class="math display">\[
+= (\mathbf{X}_1^{\prime}\mathbf{X}_1)^{-1}\mathbf{X}_1^{\prime}
+\left(
+\mathbf{y} - \mathbf{X}_2 \mathbf{b}_2
+\right).
+\]</span>
+This establishes equation (<span class="math inline">\(\ref{E4:PartitionOLS}\)</span>).</p>
+<p><strong>Reparameterized Model</strong>. For the partitioned regression
+function in equation (<span class="math inline">\(\ref{E4:PartitionedModel}\)</span>), define <span class="math inline">\(\mathbf{A}= \left( \mathbf{X}_1^{\prime} \mathbf{X}_1 \right)^{-1} \mathbf{X}_1^{\prime} \mathbf{X}_2\)</span> and <span class="math inline">\(\mathbf{E}_2 = \mathbf{X}_2 - \mathbf{X}_1 \mathbf{A}\)</span>. If one were to run a ``multivariate’’
+regression using <span class="math inline">\(\mathbf{X}_2\)</span> as the response and <span class="math inline">\(\mathbf{X}_1\)</span>
+as explanatory variables, then the parameter estimates would be
+<span class="math inline">\(\mathbf{A}\)</span> and the residuals <span class="math inline">\(\mathbf{E}_2\)</span>.</p>
+<p>With these definitions, use equation (<span class="math inline">\(\ref{E4:PartitionedModel}\)</span>) to
+define the reparameterized regression model
+<span class="math display">\[
+\mathbf{y} = \mathbf{X}_1 \boldsymbol \beta _1 + \mathbf{X}_2
+\boldsymbol \beta _2 + \boldsymbol \varepsilon = \mathbf{X}_1
+\boldsymbol \beta _1 + (\mathbf{E}_2 + \mathbf{X}_1
+\mathbf{A})\boldsymbol \beta _2 + \boldsymbol \varepsilon
+\]</span>
+<span class="math display">\[
+= \mathbf{X}_1 \boldsymbol \alpha _1 + \mathbf{E}_2 \boldsymbol
+\beta _2 + \boldsymbol \varepsilon,
+\]</span>
+where $_1 = _1 +
+_2 $ is a new vector of parameters. The
+reason for introducing this new parameterization is that now the
+vector of explanatory variables is <em>orthogonal</em> to the other
+explanatory variables, that is, straightforward algebra shows that
+<span class="math inline">\(\mathbf{X}_1^{\prime }\mathbf{E}_2=\mathbf{0}\)</span>.</p>
+By equation (<span class="math inline">\(\ref{E4:PartitionOLS}\)</span>), the vector of least squares
+estimates is
+<span class="math display">\[
+\mathbf{a} =
+\begin{bmatrix}
+\mathbf{a}_1 \\ \mathbf{b}_2
+\end{bmatrix}
+=
+\left(
+\begin{bmatrix}
+\mathbf{X}_1^{\prime} \\ \mathbf{E}_2^{\prime}
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{X}_1 &amp; \mathbf{E}_2
+\end{bmatrix}
+\right) ^{-1}
+\begin{bmatrix}
+\mathbf{X}_1^{\prime} \\ \mathbf{E}_2^{\prime}
+\end{bmatrix}
+\mathbf{y}
+\]</span>
+$$
+=
+<span class="math display">\[\begin{bmatrix}
+\left( \mathbf{X}_1^{\prime} \mathbf{X}_1 \right)^{-1}
+\mathbf{X}_1^{
+
+\prime} \mathbf{y} \\
+\left( \mathbf{E}_2^{\prime}\mathbf{E}_2\right) ^{-1}
+\mathbf{E}_2^{\prime}\mathbf{y}
+\end{bmatrix}\]</span>
+<p>.
+$$</p>
+<p><strong>Extra Sum of Squares</strong>. Suppose that we wish to consider the
+increase in the error sum of squares going from a <em>reduced</em> model
+<span class="math display">\[
+\mathbf{y} = \mathbf{X}_1 \boldsymbol \beta_1 + \boldsymbol
+\varepsilon
+\]</span>
+to a <em>full</em> model
+<span class="math display">\[
+\mathbf{y} = \mathbf{X}_1 \boldsymbol \beta_1 + \mathbf{X}_2
+\boldsymbol \beta_2 + \boldsymbol \varepsilon.
+\]</span>
+For the reduced model, the error sum of squares is
+<span class="math display">\[
+(\text{Error SS})_{reduced} = \mathbf{y}^{\prime} \mathbf{y} -
+\mathbf{y}^{\prime} \mathbf{X}_1 (\mathbf{X}_1^{\prime}
+\mathbf{X}_1)^{-1} \mathbf{X}_1^{\prime} \mathbf{y}.
+\]</span>
+Using the reparameterized version of the full model, the error sum
+of squares is
+<span class="math display">\[
+(\text{Error SS})_{full} = \mathbf{y}^{\prime} \mathbf{y} -
+\mathbf{a}^{\prime}
+\begin{bmatrix}
+\mathbf{X}_1^{\prime} \\ \mathbf{E}_2^{\prime}
+\end{bmatrix} \mathbf{y}
+\]</span>
+<span class="math display">\[
+= \mathbf{y}^{\prime}\mathbf{y} -
+\begin{bmatrix}
+\left( \mathbf{X}_1^{\prime} \mathbf{X}_1 \right)^{-1}
+\mathbf{X}_1^{\prime} \mathbf{y} \\
+\left( \mathbf{E}_2^{\prime}\mathbf{E}_2\right)^{-1}
+\mathbf{E}_2^{\prime} \mathbf{y}
+\end{bmatrix}^{\prime}
+\begin{bmatrix}
+\mathbf{X}_1^{\prime} \mathbf{y} \\
+\mathbf{E}_2^{\prime}\mathbf{y}
+\end{bmatrix}
+\]</span>
+<span class="math display">\[
+= \mathbf{y}^{\prime} \mathbf{y} - \mathbf{y}^{\prime}
+\mathbf{X}_1 (\mathbf{X}_1^{\prime} \mathbf{X}_1)^{-1}
+\mathbf{X}_1^{\prime} \mathbf{y} - \mathbf{y}^{\prime} \mathbf{E}_2
+(\mathbf{E}_2^{\prime} \mathbf{E}_2)^{-1} \mathbf{E}_2^{\prime}
+\mathbf{y}.
+\]</span>
+Thus, the reduction in the error sum of squares by adding
+<span class="math inline">\(\mathbf{X}_2\)</span> to the model is
+<span class="math display">\[
+(\text{Error SS})_{reduced} - (\text{Error
+SS})_{full} = \mathbf{y}^{\prime} \mathbf{E}_2 (\mathbf{E}_2^{\prime}
+\mathbf{E}_2)^{-1} \mathbf{E}_2^{\prime} \mathbf{y}.
+\]</span>
+As noted in Section 4.3, the quantity <span class="math inline">\((\text{Error SS})_{reduced} - (\text{Error
+SS})_{full}\)</span> is called the <em>extra sum of squares</em>, or Type
+III sum of squares. It is produced automatically by some statistical
+software packages, thus obviating the need to run separate
+regressions.</p>
+</div>
+<div id="general-linear-model-1" class="section level3 hasAnchor" number="5.2.5">
+<h3><span class="header-section-number">5.2.5</span> General Linear Model<a href="technical-supplement---matrix-expressions.html#general-linear-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Recall the general linear model from Section 4.4. That is, we use
+<span class="math display">\[
+y_i = \beta_0 x_{i0} + \beta_1 x_{i1} + \ldots + \beta _k x_{ik} +
+\varepsilon_i,
+\]</span>
+or, in matrix notation, $ = + $. As before, we use Assumptions F1-F4 (or E1-E4) so that
+the disturbance terms are i.i.d. with mean zero and common variance <span class="math inline">\(\sigma^2\)</span>, and the explanatory variables
+<span class="math inline">\(\{x_{i0},x_{i1},x_{i2},\ldots,x_{ik}\}\)</span> are non-stochastic.</p>
+<p>In the general linear model, we do not require that
+<span class="math inline">\(\mathbf{X}^{\prime}\mathbf{X}\)</span> be invertible. As we have seen in
+Chapter 4, an important reason for this generalization relates to
+handling categorical variables. That is, in order to use categorical
+variables, they are generally re-coded using binary variables. For
+this re-coding, generally some type of restrictions need to be made
+on the set of parameters associated with the indicator variables.
+However, it is not always clear what type of restrictions are the
+most intuitive. By expressing the model without requiring that <span class="math inline">\(\mathbf{X}^{\prime}\mathbf{X}\)</span> be invertible, the restrictions can be imposed
+after the estimation is done, not before.</p>
+<p><strong>Normal Equations.</strong> Even when <span class="math inline">\(\mathbf{X}^{\prime}\mathbf{X}\)</span>
+is not invertible, solutions to the normal equations still provide
+least squares estimates of $$. That is, the sum of
+squares is
+<span class="math display">\[
+SS(\mathbf{b}^{\ast}) = \mathbf{(y - Xb}^{\ast}\mathbf{)}^{\prime}\mathbf{(y - Xb}^{\ast}\mathbf{)},
+\]</span>
+where
+<span class="math inline">\(\mathbf{b}^{\ast} = (b_0^{\ast}, b_1^{\ast}, \ldots, b_k^{\ast})^{\prime}\)</span>
+is a vector of candidate estimates. Solutions of the normal
+equations are those vectors <span class="math inline">\(\mathbf{b}^{\circ }\)</span> that satisfy the
+normal equations
+<span class="math display">\[
+\mathbf{X}^{\prime}\mathbf{Xb}^{\circ } = \mathbf{X}^{\prime}\mathbf{y}.
+\]</span></p>
+<p>We use the notation <span class="math inline">\(^{\circ }\)</span> to remind ourselves that
+<span class="math inline">\(\mathbf{b}^{\circ }\)</span> need not be unique. However, it is a minimizer
+of the sum of squares. To see this, consider another candidate vector <span class="math inline">\(\mathbf{b}^{\ast}\)</span> and note that
+<span class="math display">\[
+SS(\mathbf{b}^{\ast}) = \mathbf{y}^{\prime}\mathbf{y} - 2\mathbf{b}^{\ast \prime }\mathbf{X}^{\prime}\mathbf{y} + \mathbf{b}^{\ast \prime }\mathbf{X}^{\prime}\mathbf{Xb}^{\ast}.
+\]</span>
+Then, using equation <span class="math inline">\(\ref{E4:NormalEquations}\)</span>, we have
+<span class="math display">\[
+SS(\mathbf{b}^{\ast}) - SS(\mathbf{b}^{\circ }) = -2\mathbf{b}^{\ast \prime }\mathbf{X}^{\prime}\mathbf{y} + \mathbf{b}^{\ast \prime }\mathbf{X}^{\prime}\mathbf{Xb}^{\ast} - (-2\mathbf{b}^{\circ \prime }\mathbf{Xy} + \mathbf{b}^{\circ \prime }\mathbf{X}^{\prime}\mathbf{Xb}^{\circ })
+\]</span>
+<span class="math display">\[
+= -2\mathbf{b}^{\ast \prime }\mathbf{Xb}^{\circ } + \mathbf{b}^{\ast \prime }\mathbf{X}^{\prime}\mathbf{Xb}^{\ast} + \mathbf{b}^{\circ \prime }\mathbf{X}^{\prime}\mathbf{Xb}^{\circ }
+\]</span>
+<span class="math display">\[
+= \mathbf{(b}^{\ast} - \mathbf{b}^{\circ})^{\prime} \mathbf{X}^{\prime} \mathbf{X} (\mathbf{b}^{\ast} - \mathbf{b}^{\circ}) = \mathbf{z}^{\prime} \mathbf{z} \geq 0,
+\]</span>
+where <span class="math inline">\(\mathbf{z} = \mathbf{X} (\mathbf{b}^{\ast} - \mathbf{b}^{\circ})\)</span>. Thus, any other candidate <span class="math inline">\(\mathbf{b}^{\ast}\)</span> yields a sum of squares at least as large as <span class="math inline">\(SS(\mathbf{b}^{\circ})\)</span>.</p>
+<p><strong>Unique Fitted Values.</strong> Despite the fact that there may be (infinitely) many solutions to the normal equations, the resulting fitted values, <span class="math inline">\(\mathbf{\hat{y}} = \mathbf{Xb}^{\circ}\)</span>, are unique. To see this, suppose that <span class="math inline">\(\mathbf{b}_1^{\circ}\)</span> and <span class="math inline">\(\mathbf{b}_2^{\circ}\)</span> are two different solutions of equation <span class="math inline">\(\ref{E4:NormalEquations}\)</span>. Let <span class="math inline">\(\mathbf{\hat{y}}_1 = \mathbf{Xb}_1^{\circ}\)</span> and <span class="math inline">\(\mathbf{\hat{y}}_2 = \mathbf{Xb}_2^{\circ}\)</span> denote the vectors of fitted values generated by these estimates. Then,
+<span class="math display">\[
+\mathbf{(\hat{y}}_1 - \mathbf{\hat{y}}_2)^{\prime} (\mathbf{\hat{y}}_1 - \mathbf{\hat{y}}_2) = \mathbf{(b}_1^{\circ} - \mathbf{b}_2^{\circ})^{\prime} \mathbf{X}^{\prime} \mathbf{X} (\mathbf{b}_1^{\circ} - \mathbf{b}_2^{\circ}) = 0
+\]</span>
+because <span class="math inline">\(\mathbf{X}^{\prime} \mathbf{X} (\mathbf{b}_1^{\circ} - \mathbf{b}_2^{\circ}) = \mathbf{X}^{\prime} \mathbf{y} - \mathbf{X}^{\prime} \mathbf{y} = \mathbf{0}\)</span>, from equation <span class="math inline">\(\ref{E4:NormalEquations}\)</span>. Hence we have that <span class="math inline">\(\mathbf{\hat{y}}_1 = \mathbf{\hat{y}}_2\)</span> for any choice of <span class="math inline">\(\mathbf{b}_1^{\circ}\)</span> and <span class="math inline">\(\mathbf{b}_2^{\circ}\)</span>, thus establishing the uniqueness of the fitted values.</p>
+<p>Because the fitted values are unique, the residuals are also unique. Thus, the error sum of squares and estimates of variability (such as <span class="math inline">\(s^2\)</span>) are also unique.</p>
+<p><strong>Generalized Inverses.</strong> A <em>generalized inverse</em> of a matrix <span class="math inline">\(\mathbf{A}\)</span> is a matrix <span class="math inline">\(\mathbf{B}\)</span> such that <span class="math inline">\(\mathbf{ABA = A}\)</span>. We use the notation <span class="math inline">\(\mathbf{A}^{\mathbf{-}}\)</span> to denote the generalized inverse of <span class="math inline">\(\mathbf{A}\)</span>. In the case that <span class="math inline">\(\mathbf{A}\)</span> is invertible, then <span class="math inline">\(\mathbf{A}^{\mathbf{-}}\)</span> is unique and equals <span class="math inline">\(\mathbf{A}^{\mathbf{-1}}\)</span>. Although there are several definitions of generalized inverses, the above definition suffices for our purposes. See Searle (1987) for further discussion of alternative definitions of generalized inverses.</p>
+<p>With this definition, it can be shown that a solution to the equation <span class="math inline">\(\mathbf{Ab = c}\)</span> can be expressed as <span class="math inline">\(\mathbf{b = A}^{-} \mathbf{c}\)</span>. Thus, we can express a least squares estimate of <span class="math inline">\(\boldsymbol \beta\)</span> as <span class="math inline">\(\mathbf{b}^{\circ} = (\mathbf{X}^{\prime} \mathbf{X})^{-} \mathbf{X}^{\prime} \mathbf{y}\)</span>. Statistical software packages can calculate versions of <span class="math inline">\((\mathbf{X}^{\prime} \mathbf{X})^{-}\)</span> and thus generate <span class="math inline">\(\mathbf{b}^{\circ}\)</span>.</p>
+<p><strong>Estimable Functions.</strong> Above, we saw that each fitted value <span class="math inline">\(\hat{y}_i\)</span> is unique. Because fitted values are simply linear combinations of parameter estimates, it seems reasonable to ask what other linear combinations of parameter estimates are unique. To this end, we say that <span class="math inline">\(\mathbf{C \boldsymbol \beta}\)</span> is an <em>estimable function</em> of parameters if <span class="math inline">\(\mathbf{Cb}^{\circ}\)</span> does not depend (is invariant) on the choice of <span class="math inline">\(\mathbf{b}^{\circ}\)</span>. Because fitted values are invariant to the choice of <span class="math inline">\(\mathbf{b}^{\circ}\)</span>, we have that <span class="math inline">\(\mathbf{C = X}\)</span> produces one type of estimable function. Interestingly, it turns out that all estimable functions are of the form <span class="math inline">\(\mathbf{LXb}^{\circ}\)</span>, that is, <span class="math inline">\(\mathbf{C} = \mathbf{LX}\)</span>. See Searle (1987, page 284) for a demonstration of this. Thus, all estimable functions are linear combinations of fitted values, that is, <span class="math inline">\(\mathbf{LXb}^{\circ} = \mathbf{L\hat{y}}\)</span>.</p>
+<p>Estimable functions are unbiased and have a variance that does not depend on the choice of the generalized inverse. That is, it can be shown that $ ^{} = $ and $ ^{} = ^2 ^{} )^{-} ^{}$ does not depend on the choice of <span class="math inline">\(\mathbf{(X}^{\prime} \mathbf{X})^{-}\)</span>.</p>
+<p><strong>Testable Hypotheses.</strong> As described in Section <span class="math inline">\(\ref{S4:SeveralCoeff}\)</span>, it is often of interest to test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mathbf{C \boldsymbol \beta} = \mathbf{d}\)</span>, where <span class="math inline">\(\mathbf{d}\)</span> is a specified vector. This hypothesis is said to be <em>testable</em> if <span class="math inline">\(\mathbf{C \boldsymbol \beta}\)</span> is an estimable function, <span class="math inline">\(\mathbf{C}\)</span> is of full row rank, and the rank of <span class="math inline">\(\mathbf{C}\)</span> is less than the rank of <span class="math inline">\(\mathbf{X}\)</span>. For consistency with the notation of Section <span class="math inline">\(\ref{S4:SeveralCoeff}\)</span>, let <span class="math inline">\(p\)</span> be the rank of <span class="math inline">\(\mathbf{C}\)</span> and <span class="math inline">\(k + 1\)</span> be the rank of <span class="math inline">\(\mathbf{X}\)</span>. Recall that the rank of a matrix is the smaller of the number of linearly independent rows and linearly independent columns. When we say that <span class="math inline">\(\mathbf{C}\)</span> has full row rank, we mean that there are <span class="math inline">\(p\)</span> rows in <span class="math inline">\(\mathbf{C}\)</span>, so that the number of rows equals the rank.</p>
+<p><strong>General Linear Hypothesis.</strong> As in Section <span class="math inline">\(\ref{S4:SeveralCoeff}\)</span>, the test statistic for examining <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mathbf{C \boldsymbol \beta} = \mathbf{d}\)</span> is
+<span class="math display">\[
+F\text{-ratio} = \frac{\mathbf{(Cb}^{\circ} - \mathbf{d})^{\prime} \mathbf{(C(X}^{\prime} \mathbf{X})^{-} \mathbf{C}^{\prime})^{-1} \mathbf{(Cb}^{\circ} - \mathbf{d})}{ps_{full}^2}.
+\]</span>
+Note that the statistic <span class="math inline">\(F\)</span>-ratio does not depend on the choice of <span class="math inline">\(\mathbf{b}^{\circ}\)</span> because <span class="math inline">\(\mathbf{C b}^{\circ}\)</span> is invariant to <span class="math inline">\(\mathbf{b}^{\circ}\)</span>. If <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mathbf{C \boldsymbol \beta} = \mathbf{d}\)</span> is a testable hypothesis and the errors <span class="math inline">\(\varepsilon_i\)</span> are i.i.d. <span class="math inline">\(\text{N}(0, \sigma^2)\)</span>, then the <span class="math inline">\(F\)</span>-ratio has an <span class="math inline">\(F\)</span>-distribution with <span class="math inline">\(df_1 = p\)</span> and <span class="math inline">\(df_2 = n - (k + 1)\)</span>.</p>
+<p><strong>One Categorical Variable Model.</strong> We now illustrate the general linear model by considering an over-parameterized version of the one factor model that appears in equation <span class="math inline">\(\ref{E4:OneFactorTau}\)</span> using
+<span class="math display">\[
+y_{ij} = \mu + \tau_j + e_{ij} = \mu + \tau_1 x_{i1} + \tau_2 x_{i2} + \ldots + \tau_c x_{ic} + \varepsilon_{ij}.
+\]</span>
+At this point, we do not impose additional restrictions in the parameters. As with equation <span class="math inline">\(\ref{E4:MatrixOneFactor}\)</span>, this can be written in matrix form as
+<span class="math display">\[
+\mathbf{y} =
+\begin{bmatrix}
+\mathbf{1}_1 &amp; \mathbf{1}_1 &amp; \mathbf{0}_1 &amp; \cdots &amp; \mathbf{0}_1 \\
+\mathbf{1}_2 &amp; \mathbf{0}_2 &amp; \mathbf{1}_{\mathbf{2}} &amp; \cdots &amp; \mathbf{0}_2 \\
+\cdots &amp; \cdots &amp; \cdots &amp; \cdots &amp; \cdots \\
+\mathbf{1}_c &amp; \mathbf{0}_c &amp; \mathbf{0}_c &amp; \cdots &amp; \mathbf{1}_c
+\end{bmatrix}
+\begin{bmatrix}
+\mu \\
+\tau_1 \\
+\cdots \\
+\cdots \\
+\cdots \\
+\tau_c
+\end{bmatrix}
++ \boldsymbol \varepsilon = \mathbf{X \boldsymbol \beta + \boldsymbol \varepsilon}
+\]</span>
+Thus, the <span class="math inline">\(\mathbf{X}^{\prime} \mathbf{X}\)</span> matrix is
+<span class="math display">\[
+\mathbf{X}^{\prime} \mathbf{X} =
+\begin{bmatrix}
+n &amp; n_1 &amp; n_2 &amp; \cdots &amp; n_c \\
+n_1 &amp; n_1 &amp; 0 &amp; \cdots &amp; 0 \\
+n_2 &amp; 0 &amp; n_2 &amp; \cdots &amp; 0 \\
+\cdots &amp; \cdots &amp; \cdots &amp; \cdots &amp; \cdots \\
+\cdots &amp; \cdots &amp; \cdots &amp; \cdots &amp; \cdots \\
+\cdots &amp; \cdots &amp; \cdots &amp; \cdots &amp; \cdots \\
+n_c &amp; 0 &amp; 0 &amp; \cdots &amp; n_c
+\end{bmatrix}.
+\]</span></p>
+<p>where <span class="math inline">\(n = n_1 + n_2 + \ldots + n_{c}\)</span>. This matrix is not invertible. To see this, note that by adding the last <span class="math inline">\(c\)</span> rows together yields the first row. Thus, the last <span class="math inline">\(c\)</span> rows are an exact linear combination of the first row, meaning that the matrix is not full rank.</p>
+<p>The (non-unique) least squares estimates can be expressed as
+<span class="math display">\[
+\mathbf{b}^{\circ} =
+\begin{bmatrix}
+\mu^{\circ} \\
+\tau_1^{\circ} \\
+\cdots \\
+\cdots \\
+\cdots \\
+\tau_c^{\circ}
+\end{bmatrix}
+= (\mathbf{X}^{\prime} \mathbf{X})^{-} \mathbf{X}^{\prime} \mathbf{y}.
+\]</span>
+Estimable functions are linear combinations of fitted values. Because fitted values are <span class="math inline">\(\hat{y}_{ij} = \bar{y}_j\)</span>, estimable functions can be expressed as $ L = _{j=1}^{c} a_j {y}_j $ where <span class="math inline">\(a_1, \ldots, a_{c}\)</span> are constants. This linear combination of fitted values is an unbiased estimator of <span class="math inline">\(\text{E } L = \sum_{i=1}^{c} a_i (\mu + \tau_i)\)</span>.</p>
+<p>Thus, for example, by choosing <span class="math inline">\(a_1 = 1\)</span> and the other <span class="math inline">\(a_i = 0\)</span>, we see that <span class="math inline">\(\mu + \tau_1\)</span> is estimable. As another example, by choosing <span class="math inline">\(a_1 = 1\)</span>, <span class="math inline">\(a_2 = -1\)</span>, and the other <span class="math inline">\(a_i = 0\)</span>, we see that <span class="math inline">\(\tau_1 - \tau_2\)</span> is estimable. It can be shown that <span class="math inline">\(\mu\)</span> is not an estimable parameter without further restrictions on <span class="math inline">\(\tau_1, \ldots, \tau_c\)</span>.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="C4MLRANOVA.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bibliography.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
