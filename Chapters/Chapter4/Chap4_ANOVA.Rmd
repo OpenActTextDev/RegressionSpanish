@@ -11,11 +11,7 @@
 
 *Chapter Preview*. This chapter extends the discussion of multiple linear regression by introducing statistical inference for handling several coefficients simultaneously. To motivate this extension, this chapter considers coefficients associated with *categorical variables*. These variables allow us to group observations into distinct categories. This chapter shows how to incorporate categorical variables into regression functions using binary variables, thus considerably widening the scope of potential applications for regression analysis. Statistical inference for several coefficients allows analysts to make decisions about categorical variables, as well as other important applications. Categorical explanatory variables also provide the basis for an *ANOVA* model, a special type of regression model that permits easier analysis and interpretation.
 
-## The Role of Binary Variables {#S4:BinaryVar}
-
-\index{explanatory variable!categorical}
-\index{explanatory variable!factor}
-\index{categorical variable}
+## The Role of Binary Variables {#Sec41}
 
 *Categorical variables* provide labels for observations to denote membership in distinct groups, or categories. A binary variable is a special case of a categorical variable. To illustrate, a binary variable may tell us whether or not someone has health insurance. A categorical variable could tell us whether someone has:
 
@@ -75,9 +71,9 @@ Through the use of binary variables, we do not make use of the ordering of categ
 - 2, for living with a partner
 - 0, for other (SCF further breaks down this category into separated, divorced, widowed, never married, inapplicable, persons age 17 or less, and no further persons).
 
-As before, the dependent variable is $y =$ LNFACE, the amount that the company will pay in the event of the death of the named insured (in logarithmic dollars). Table \@ref(tab:MaritalSumStats) summarizes the dependent variable by the level of the categorical variable. This table shows that the marital status "married" is the most prevalent in the sample and that those married choose to have the most life insurance coverage. Figure \@ref(fig:BoxFACEMARSTAT) gives a more complete picture of the distribution of LNFACE for each of the three types of marital status. The table and figure also suggest that those living together have less life insurance coverage than the other two categories.
+As before, the dependent variable is $y =$ LNFACE, the amount that the company will pay in the event of the death of the named insured (in logarithmic dollars). Table \@ref(tab:Tab41) summarizes the dependent variable by the level of the categorical variable. This table shows that the marital status "married" is the most prevalent in the sample and that those married choose to have the most life insurance coverage. Figure \@ref(fig:Fig41) gives a more complete picture of the distribution of LNFACE for each of the three types of marital status. The table and figure also suggest that those living together have less life insurance coverage than the other two categories.
 
-```{r MaritalSumStats, echo = FALSE}
+```{r Tab41, echo = FALSE}
 tableout <- 
   data.frame(
     MARSTAT <- c(0,1,2,""),
@@ -96,10 +92,10 @@ TableGen1(TableData=tableout ,
 
 ```
 
-(ref:BoxFACEMARSTAT) **Box Plots of Logarithmic Face, by Level of Marital Status** 
+(ref:Fig41) **Box Plots of Logarithmic Face, by Level of Marital Status** 
 
 
-```{r BoxFACEMARSTAT, fig.cap='(ref:BoxFACEMARSTAT)', echo=FALSE, out.width="60%"}
+```{r Fig41, fig.cap='(ref:Fig41)', echo=FALSE, out.width="60%"}
 library(HH)
 Term   <- read.csv("CSVData/TermLife.csv", header=TRUE)
 Term2  <- subset(Term, FACE > 0)
@@ -117,10 +113,10 @@ mtext("LNFACE", side=2, at=17.2, las=1, cex=1.1, adj=.4)
 
 `r HideRCode('Fig41.Hide',"R Code to Produce Table 4.1 and Figure 4.1")`
 
-```{r ref.label = 'MaritalSumStats', eval = FALSE}
+```{r ref.label = 'Tab41', eval = FALSE}
 ```
 
-```{r ref.label = 'BoxFACEMARSTAT', eval = FALSE}
+```{r ref.label = 'Fig41', eval = FALSE}
 ```
 
 </div>
@@ -157,11 +153,10 @@ The difference between $\widehat{y}_m$ and $\widehat{y}_{lt}$ is $0.789.$ Thus, 
 
 Similarly, we can interpret $-0.557$ to be the difference between the "other" category and the married category, holding other explanatory variables fixed. For the difference in fitted values between the "other" and the "living together" categories, we may use $-0.557 - (-0.789) = 0.232.$
 
-Although the regression was run using MAR0 and MAR2, any two out of the three would produce the same ANOVA Table (Table \@ref(tab:MSTermLifeANOVA)). However, the choice of binary variables does impact the regression coefficients. Table \@ref(tab:MSTermLifeRegrCoeff) shows three models, omitting MAR1, MAR2, and MAR0, respectively. For each fit, the coefficients associated with the continuous variables remain the same. As we have seen, the binary variable interpretations are with respect to the omitted category, known as the *reference level*. Although they change from model to model, their overall interpretation remains the same. That is, if we would like to estimate the difference in coverage between the "other" and the "living together" category, the estimate would be $0.232$, regardless of the model.
+Although the regression was run using MAR0 and MAR2, any two out of the three would produce the same ANOVA Table (Table \@ref(tab:Tab42)). However, the choice of binary variables does impact the regression coefficients. Table \@ref(tab:Tab43) shows three models, omitting MAR1, MAR2, and MAR0, respectively. For each fit, the coefficients associated with the continuous variables remain the same. As we have seen, the binary variable interpretations are with respect to the omitted category, known as the *reference level*. Although they change from model to model, their overall interpretation remains the same. That is, if we would like to estimate the difference in coverage between the "other" and the "living together" category, the estimate would be $0.232$, regardless of the model.
 
-\index{categorical variable!reference level}
 
-```{r MSTermLifeANOVA, echo = FALSE}
+```{r Tab42, echo = FALSE}
 # Example ANOVA Table
 
 tableout <-  data.frame(
@@ -179,7 +174,7 @@ TableGen1(TableData=tableout ,
 ```
 
 
-Although the three models in Table \@ref(tab:MSTermLifeRegrCoeff) are
+Although the three models in Table \@ref(tab:Tab43) are
 the same except for different choices of parameters, they do appear
 different. In particular, the $t$-ratios differ and give different
 appearances of statistical significance. For example, both of the
@@ -193,7 +188,7 @@ level. To assess the overall importance of marital status (not just
 each binary variable), Section 4.2 will introduce
 tests of sets of regression coefficients.
 
-```{r MSTermLifeRegrCoeff, echo=FALSE, results='asis'}
+```{r Tab43, echo=FALSE, results='asis'}
 tableout <- 
   data.frame(
     # Explanatory_Variable = c("LNINCOME", "EDUCATION", "NUMHH", "Intercept", "MAR0", "MAR1", "MAR2"),
@@ -226,15 +221,15 @@ In most insurance studies, individuals choose insurance plans making it difficul
 
 Keeler and Rolph (1988) organized an individual's expenditures into episodes of treatment; each episode contains spending associated with a given bout of illness, chronic condition or procedure. Episodes were classified as hospital, dental or outpatient; this classification was based primarily on diagnoses, not by location of services. Thus, for example, outpatient services preceding or following a hospitalization, as well as related drugs and tests, were included as part of a hospital episode.
 
-For simplicity, here we report only results for hospital episodes. Although families were randomly assigned to plans, Keeler and Rolph (1988) used regression methods to control for participant attributes and isolate the effects of plan cost-sharing. Table \@ref(tab:RandHIECoefficients) summarizes the regression coefficients, based on a sample of $n=1,967$ episode expenditures. In this regression, logarithmic expenditure was the dependent variable.
+For simplicity, here we report only results for hospital episodes. Although families were randomly assigned to plans, Keeler and Rolph (1988) used regression methods to control for participant attributes and isolate the effects of plan cost-sharing. Table \@ref(tab:Tab44) summarizes the regression coefficients, based on a sample of $n=1,967$ episode expenditures. In this regression, logarithmic expenditure was the dependent variable.
 
 The cost-sharing categorical variable was decomposed into five binary variables so that no functional form was imposed on the response to insurance. These variables are "Co-ins25," "Co-ins50," and "Co-ins95," for coinsurance rates 25, 50 and 95\%, respectively, and "Indiv Deductible" for the plan with individual deductibles. The omitted variable is the free insurance plan with 0\% coinsurance. The HIE was conducted in six cities; a categorical variable to control for the location was represented with five binary variables, Dayton, Fitchburg, Franklin, Charleston and Georgetown, with Seattle being the omitted variable. A categorical factor with $c=6$ levels was used for age and sex; binary variables in the model consisted of "Age 0-2," "Age 3-5," "Age 6-17," "Woman age 18-65," and "Man age 46-65," the omitted category was "Man age 18-45." Other control variables included a health status scale, socioeconomic status, number of medical visits in the year prior to the experiment on a logarithmic scale and race.
 
-Table \@ref(tab:RandHIECoefficients) summarizes the effects of the variables. As noted by Keeler and Rolph, there were large differences by site and age although the regression only served to summarize $R^2=11\%$ of the variability. For the cost-sharing variables, only "Co-ins95" was statistically significant, and this only at the 5\% level, not the 1\% level.
+Table \@ref(tab:Tab44) summarizes the effects of the variables. As noted by Keeler and Rolph, there were large differences by site and age although the regression only served to summarize $R^2=11\%$ of the variability. For the cost-sharing variables, only "Co-ins95" was statistically significant, and this only at the 5\% level, not the 1\% level.
 
 The paper of Keeler and Rolph (1988) examines other types of episode expenditures, as well as the frequency of expenditures. They concluded that cost-sharing of health insurance plans has little effect on the amount of expenditures per episode although there are important differences in the frequency of episodes. This is because an episode of treatment is composed of two decisions. The amount of treatment is made jointly between the patient and the physician and is largely unaffected by the type of health insurance plan. The decision to seek health care treatment is made by the patient; this decision-making process is more susceptible to economic incentives in cost-sharing aspects of health insurance plans.
 
-```{r RandHIECoefficients, echo=FALSE}
+```{r Tab44, echo=FALSE}
 tableout <- 
   data.frame(
     Variable = c("Intercept", "Dayton", "Fitchburg", "Franklin", 
@@ -266,11 +261,11 @@ TableGen1(TableData=tableout ,
 
 
 
-## Statistical Inference for Several Coefficients {#S4:SeveralCoeff}
+## Statistical Inference for Several Coefficients {#Sec42}
 
-It can be useful to examine several regression coefficients at the same time. For example, when assessing the effect of a categorical variable with $c$ levels, we need to say something jointly about the $c-1$ binary variables that enter the regression equation. To do this, Section \@ref(S4:SetsRegCoeff) introduces a method for handling linear combinations of regression coefficients. Section \@ref(S4:GenLinHypo) shows how to test several linear combinations, and Section \@ref(S4:SetsInference) presents other inference applications.
+It can be useful to examine several regression coefficients at the same time. For example, when assessing the effect of a categorical variable with $c$ levels, we need to say something jointly about the $c-1$ binary variables that enter the regression equation. To do this, Section \@ref(Sec421) introduces a method for handling linear combinations of regression coefficients. Section \@ref(Sec422) shows how to test several linear combinations, and Section \@ref(Sec423) presents other inference applications.
 
-### Sets of Regression Coefficients {#S4:SetsRegCoeff}
+### Sets of Regression Coefficients {#Sec421}
 
 Recall that our regression coefficients are specified by $\boldsymbol{\beta} = \left( \beta_0, \beta_1, \ldots, \beta_k \right)^{\prime},$ a $(k+1) \times 1$ vector. It will be convenient to express linear combinations of the regression coefficients using the notation $\mathbf{C} \boldsymbol{\beta},$ where $\mathbf{C}$ is a $p \times (k+1)$ matrix that is user-specified and depends on the application. Some applications involve estimating $\mathbf{C} \boldsymbol{\beta}$. Others involve testing whether $\mathbf{C} \boldsymbol{\beta}$ equals a specific known value (denoted as $\mathbf{d}$). We call $H_0:\mathbf{C \boldsymbol{\beta} = d}$ the *general linear hypothesis*. To demonstrate the broad variety of applications in which sets of regression coefficients can be used, we now present a series of special cases.
 
@@ -385,7 +380,7 @@ $$
 
 From a list of $k+p$ variables $x_1, \ldots, x_{k+p}$, you may drop any $p$ that you deem appropriate. The additional variables do not need to be the last $p$ in the regression specification. Dropping $x_{k+1}, \ldots, x_{k+p}$ is for notational convenience only.
 
-### The General Linear Hypothesis {#S4:GenLinHypo}
+### The General Linear Hypothesis {#Sec422}
 
 To recap, the general linear hypothesis can be stated as $H_0:\mathbf{C \boldsymbol{\beta} =d}$. Here, $\mathbf{C}$ is a $p \times (k+1)$ matrix, $\mathbf{d}$ is a $p \times 1$ vector, and both $\mathbf{C}$ and $\mathbf{d}$ are user-specified and depend on the application at hand. Although $k+1$ is the number of regression coefficients, $p$ is the number of restrictions under $H_0$ on these coefficients. (For those readers with knowledge of advanced matrix algebra, $p$ is the rank of $\mathbf{C}$.) This null hypothesis is tested against the alternative $H_a:\mathbf{C \boldsymbol{\beta} \neq d}$. This may be obvious, but we do require $p \leq k+1$ because we cannot test more constraints than free parameters.
 
@@ -446,7 +441,7 @@ This difference is known as a *Type III Sum of Squares*. When testing the import
 
 ***
 
-**Example: Term Life Insurance - Continued.** Before discussing the logic and the implications of the $F$-test, let us illustrate its use. In the Term Life Insurance example, suppose that we wish to understand the impact of marital status. Table \@ref(tab:MSTermLifeRegrCoeff) presented a mixed message in terms of $t$-ratios; sometimes they were statistically significant and sometimes not. It would be helpful to have a formal test to give a definitive answer, at least in terms of statistical significance. Specifically, we consider a regression model using LNINCOME, EDUCATION, NUMHH, MAR0, and MAR2 as explanatory variables. The model equation is
+**Example: Term Life Insurance - Continued.** Before discussing the logic and the implications of the $F$-test, let us illustrate its use. In the Term Life Insurance example, suppose that we wish to understand the impact of marital status. Table \@ref(tab:Tab43) presented a mixed message in terms of $t$-ratios; sometimes they were statistically significant and sometimes not. It would be helpful to have a formal test to give a definitive answer, at least in terms of statistical significance. Specifically, we consider a regression model using LNINCOME, EDUCATION, NUMHH, MAR0, and MAR2 as explanatory variables. The model equation is
 
 $$
 \small{
@@ -459,7 +454,7 @@ $$
 
 Our goal is to test $H_0: \beta_4 = \beta_5 = 0$.
 
-i. We begin by running a regression model with all $k+p=5$ variables. The results were reported in Table \@ref(tab:MSTermLifeANOVA), where we saw that $(Error~SS)_{full} = 615.62$ and $s_{full}^2 = (1.513)^2 = 2.289$.
+i. We begin by running a regression model with all $k+p=5$ variables. The results were reported in Table \@ref(tab:Tab42), where we saw that $(Error~SS)_{full} = 615.62$ and $s_{full}^2 = (1.513)^2 = 2.289$.
 ii. The next step is to run the reduced model without MAR0 and MAR2. This was done in Table 3.3 of Chapter 3, where we saw that $(Error~SS)_{reduced} = 630.43$.
 iii. We then calculate the test statistic
 $$
@@ -517,7 +512,7 @@ statistical packages.
 For example, in our Term Life Insurance example, testing the
 adequacy of the model means evaluating $H_0: \beta_1 = \beta_2
 =\beta_3 =\beta_4 =\beta_5 = 0$. From Table
-\@ref(tab:MSTermLifeANOVA), the $F$-ratio is 68.66 / 2.29 = 29.98.
+\@ref(tab:Tab42), the $F$-ratio is 68.66 / 2.29 = 29.98.
 With $df_1=5$ and $df_2 = 269$, we have that the $F$-value is
 approximately 2.248 and the corresponding $p$-value is $\Pr(F >
 29.98) \approx 0$. This leads us to reject strongly the notion that
@@ -541,7 +536,7 @@ The $R^2$ measure is used because of the easy interpretations
 associated with it.
 
 
-### Estimating and Predicting Several Coefficients {#S4:SetsInference}
+### Estimating and Predicting Several Coefficients {#Sec423}
 
 #### Estimating Linear Combinations of Regression Coefficients {-}
 
@@ -641,7 +636,7 @@ $$
 
 Equation \@ref(eq:eq46) generalizes the prediction interval introduced in Section 2.4.
 
-## One Factor ANOVA Model
+## One Factor ANOVA Model {#Sec43}
 
 Section 4.1 showed how to incorporate unordered
 categorical variables, or factors, into a linear regression model
@@ -687,18 +682,18 @@ insurer's risk classification system is based on:
 approximate distance of the commute).
 
 These factors are summarized by the risk class categorical variable
-CLASS. Table \@ref(tab:AutoSumStats) shows 18 risk classes - further
+CLASS. Table \@ref(tab:Tab45) shows 18 risk classes - further
 classification information is not given here to protect proprietary
 interests of the insurer.
 
-Table \@ref(tab:AutoSumStats) summarizes the results from $n=6,773$
+Table \@ref(tab:Tab45) summarizes the results from $n=6,773$
 claims for drivers aged 50 and above. We can see that the median
 claim varies from a low of \$707.40 (CLASS F7) to a high of
 1,231.25 (CLASS C72). The distribution of claims turns out to be
 skewed, so we consider $y$ = logarithmic claims. The table presents
 means, medians and standard deviations. Because the distribution of
 logarithmic claims is less skewed, means are close to medians.
-Figure \@ref(fig:BoxplotAuto) shows the distribution of logarithmic
+Figure \@ref(fig:Fig42) shows the distribution of logarithmic
 claims by risk class.
 
 ```{r echo=FALSE, eval = FALSE}
@@ -738,7 +733,7 @@ TableGen1(TableData=bigblock1 ,
 ```
 
 
-```{r AutoSumStats, echo = FALSE}
+```{r Tab45, echo = FALSE}
 AutoC   <- read.csv("CSVData/AutoClaims.csv", header=TRUE)
 #  CREATE A TABLE OF MEANS AND STANDARD DEVIATIONS
 library(Hmisc)
@@ -772,9 +767,9 @@ TableGen1(TableData=bigblock1 ,
 
 ```
 
-(ref:BoxplotAuto) **Box Plots of Logarithmic Claims by Risk Class** 
+(ref:Fig42) **Box Plots of Logarithmic Claims by Risk Class** 
 
-```{r BoxplotAuto, fig.cap='(ref:BoxplotAuto)', echo=FALSE, out.width="100%"}
+```{r Fig42, fig.cap='(ref:Fig42)', echo=FALSE, out.width="100%"}
 library(HH)
 AutoC   <- read.csv("CSVData/AutoClaims.csv", header=TRUE)
 #  AUTO CLAIMS
@@ -788,10 +783,10 @@ boxplot(log(PAID) ~ CLASS,cex=.6, cex.labels=2, data = AutoC,
 
 `r HideRCode('Fig42.Hide',"R Code to Produce Table 4.5 and Figure 4.2")`
 
-```{r ref.label = 'AutoSumStats', eval = FALSE}
+```{r ref.label = 'Tab45', eval = FALSE}
 ```
 
-```{r ref.label = 'BoxplotAuto', eval = FALSE}
+```{r ref.label = 'Fig42', eval = FALSE}
 ```
 
 </div>
@@ -854,9 +849,9 @@ Factor~ SS  & = Total ~SS - Error ~SS \\
 & = \sum_{j=1}^{c}n_j(\bar{y}_j-\bar{y})^2.
 \end{array}
 $$
-The last two equalities follow from algebra manipulation. The $Factor ~SS$ plays the same role as the $Regression ~SS$ in Chapters 2 and 3. The variability decomposition is summarized in Table \@ref(tab:OneFactorANOVA).
+The last two equalities follow from algebra manipulation. The $Factor ~SS$ plays the same role as the $Regression ~SS$ in Chapters 2 and 3. The variability decomposition is summarized in Table \@ref(tab:Tab46).
 
-```{r OneFactorANOVA, echo=FALSE}
+```{r Tab46, echo=FALSE}
 library(knitr)
 anova_data <- data.frame(
   Source = c("Factor", "Error", "Total"),
@@ -894,10 +889,10 @@ Here, the *t*-value $t_{n-c,1-\alpha /2}$ is a percentile from the *t*-distribut
 
 **Example: Automobile Claims - Continued.** To illustrate, the
 ANOVA table summarizing the fit for the automobile claims data
-appears in Table \@ref(tab:ANOVAAuto). Here, we see that the mean
+appears in Table \@ref(tab:Tab47). Here, we see that the mean
 square error is $s^2 = 1.14.$
 
-```{r ANOVAAuto, echo=FALSE}
+```{r Tab47, echo=FALSE}
 library(knitr)
 anova_auto <- data.frame(
   Source = c("CLASS", "Error", "Total"),
@@ -1047,7 +1042,7 @@ $$
 \hat{\tau}_j = \hat{\mu}_j - \hat{\mu} = \bar{y}_j - \bar{y}.
 $$
 
-## Combining Categorical and Continuous Explanatory Variables
+## Combining Categorical and Continuous Explanatory Variables {#Sec44}
 
 There are several ways to combine categorical and continuous
 explanatory variables. We initially present the case of only one
@@ -1064,12 +1059,12 @@ Let us begin with the simplest models that use a factor and a
 covariate. In Section 4.3, we introduced the one
 factor model $y_{ij} = \mu_j + \varepsilon_{ij}$. In Chapter 2, we
 introduced basic linear regression in terms of one continuous
-variable, or covariate, using $y_{ij} = \beta_0 + \beta_1 x_{ij} + \varepsilon_{ij}$. Table \@ref(tab:OneFactorCovariate) summarizes
+variable, or covariate, using $y_{ij} = \beta_0 + \beta_1 x_{ij} + \varepsilon_{ij}$. Table \@ref(tab:Tab48) summarizes
 different approaches that could be used to represent combinations of
 a factor and covariate.
 
 
-```{r OneFactorCovariate, echo = FALSE}
+```{r Tab48, echo = FALSE}
 # Create a data frame for the one factor and one covariate models table
 one_factor_covariate <- data.frame(
   Model_Description = c(
@@ -1194,7 +1189,7 @@ text(20,23,expression(y==beta["0,2"]+beta["1,2"]*x),cex=1.1)
 
 ```
 
-For each model presented in Table \@ref(tab:OneFactorCovariate),
+For each model presented in Table \@ref(tab:Tab48),
 parameter estimates can be calculated using the method of least
 squares. As usual, this means writing the expected response, $E[y_{ij}]$, as a function of known variables and unknown parameters.
 For the regression model with variable intercept and constant slope,
@@ -1306,7 +1301,7 @@ mtext("CHGNUM", side=2, at=10.1, las=1, cex=1.1, adj=.4)
 ```
 
 
-```{r DRGModels, echo = FALSE}
+```{r Tab49, echo = FALSE}
 
 tableout <- data.frame(
   Model_Description = c(
@@ -1333,16 +1328,16 @@ TableGen1(TableData=tableout ,
 ```
 
 
-Each of the five models defined in Table \@ref(tab:OneFactorCovariate)
+Each of the five models defined in Table \@ref(tab:Tab48)
 was fit to this subset of the Hospital case study. The summary
-statistics are in Table \@ref(tab:DRGModels). For this data set, there
+statistics are in Table \@ref(tab:Tab49). For this data set, there
 are $n = 79$ observations and $c = 3$ levels of the DRG factor. For each
 model, the model degrees of freedom is the number of model
 parameters minus one. The error degrees of freedom is the number of
 observations minus the number of model parameters.
 
 
-Using binary variables, each of the models in Table \@ref(tab:OneFactorCovariate) can be written in a regression format. As we have seen in Section 4.2, when a model can be written as a subset of another, larger model, we have formal testing procedures available to decide which model is more appropriate. To illustrate this testing procedure with our DRG example, from Table \@ref(tab:DRGModels) and the associated plots, it seems clear that the DRG factor is important. Further, a $t$-test, not presented here, shows that the covariate $x$ is important. Thus, let's compare the full model $E[y_{ij}] = \beta_{0,j} + \beta_{1,j}x$ to the reduced model $E[y_{ij}] = \beta_{0,j} + \beta_1x$. In other words, is there a different slope for each DRG?
+Using binary variables, each of the models in Table \@ref(tab:Tab48) can be written in a regression format. As we have seen in Section 4.2, when a model can be written as a subset of another, larger model, we have formal testing procedures available to decide which model is more appropriate. To illustrate this testing procedure with our DRG example, from Table \@ref(tab:Tab49) and the associated plots, it seems clear that the DRG factor is important. Further, a $t$-test, not presented here, shows that the covariate $x$ is important. Thus, let's compare the full model $E[y_{ij}] = \beta_{0,j} + \beta_{1,j}x$ to the reduced model $E[y_{ij}] = \beta_{0,j} + \beta_1x$. In other words, is there a different slope for each DRG?
 
 Using the notation from Section 4.2, we call the variable intercept and slope the full model. Under the null hypothesis, $H_0: \beta_{1,1} = \beta_{1,2} = \beta_{1,3}$, we get the variable intercept, constant slope model. Thus, using the $F$-ratio in equation \@ref(eq:eq42), we have
 
@@ -1373,9 +1368,9 @@ $$
 (\#eq:eq412)
 $$
 
-Here, the variables $x_1$, $x_2$, and $x_3$ are known as the *main effects*. Table \@ref(tab:TwoFactorModel) helps interpret this equation. Specifically, there are six types of people that we could encounter: males and females who are young, middle-aged, or old. We have six parameters in equation \@ref(eq:eq412). Table \@ref(tab:TwoFactorModel) provides the link between the parameters and the types of people. By using the interaction terms, we do not impose any prior specifications on the additive effects of each factor. From Table \@ref(tab:TwoFactorModel), we see that the interpretation of the regression coefficients in equation \@ref(eq:eq412) is not straightforward. However, using the additive model with interaction terms is equivalent to creating a new categorical variable with six levels, one for each type of person. If the interaction terms are critical in your study, you may wish to create a new factor that incorporates the interaction terms simply for ease of interpretation.
+Here, the variables $x_1$, $x_2$, and $x_3$ are known as the *main effects*. Table \@ref(tab:Tab410) helps interpret this equation. Specifically, there are six types of people that we could encounter: males and females who are young, middle-aged, or old. We have six parameters in equation \@ref(eq:eq412). Table \@ref(tab:Tab410) provides the link between the parameters and the types of people. By using the interaction terms, we do not impose any prior specifications on the additive effects of each factor. From Table \@ref(tab:Tab410), we see that the interpretation of the regression coefficients in equation \@ref(eq:eq412) is not straightforward. However, using the additive model with interaction terms is equivalent to creating a new categorical variable with six levels, one for each type of person. If the interaction terms are critical in your study, you may wish to create a new factor that incorporates the interaction terms simply for ease of interpretation.
 
-```{r TwoFactorModel, echo = FALSE}
+```{r Tab410, echo = FALSE}
 # Create a data frame for the two-factor model table
 two_factor_model <- data.frame(
   Sex = c("Male", "Male", "Male", "Female", "Female", "Female"),
@@ -1428,18 +1423,17 @@ Thus, for a set of data and a specified general linear model, fitted values are 
 To summarize, for general linear models, parameter estimates may not be unique and thus not meaningful. An important part of regression models is the interpretation of regression coefficients. This interpretation is not necessarily available in the general linear model context. However, for general linear models, we may still discuss the importance of an individual variable or collection of variables through partial *F*-tests. Further, fitted values, and the corresponding exercise of prediction, works in the general linear model context. The advantage of the general linear model context is that we need not worry about the type of restrictions to impose on the parameters. Although not the subject of this text, this advantage is particularly important in complicated experimental designs used in the life sciences. The reader will find that general linear model estimation routines are widely available in statistical software packages available on the market today.
 
 
-## Further Reading and References
+## Further Reading and References {#Sec45}
 
 There are several good linear model books that focus on categorical variables and analysis of variable techniques. Hocking (2003) and Searle (1987) are good examples.
 
-#### Chapter References {-}
-
+**Chapter References**
 
 - Hocking, Ronald R. (2003). *Methods and Applications of Linear Models: Regression and the Analysis of Variance* John Wiley and Sons, New York.
 - Keeler, Emmett B., and John E. Rolph (1988). The demand for episodes of treatment in the Health Insurance Experiment. *Journal of Health Economics* 7: 337-367.
 - Searle, Shayle R. (1987). *Linear Models for Unbalanced Data*. John Wiley & Sons, New York.
 
-## Exercises
+## Exercises  {#Sec46}
 
 
 4.1. In this exercise, we consider relating two statistics that summarize how well a regression model fits, the $F$-ratio and $R^2$, the coefficient of determination. (Here, the $F$-ratio is the statistic used to test model adequacy, not a partial $F$ statistic.)
@@ -1540,11 +1534,11 @@ c. Test whether $POP$, $MEDSCHYR$, and $MEDHVL$ are jointly important explanator
 4.7. **National Life Expectancies**. We continue the analysis begun in Exercises 1.7, 2.22, and 3.6.
 
 a. Consider the regression using three explanatory variables, $FERTILITY$, $PUBLICEDUCATION$, and $\ln{HEALTH}$ that you did in Exercise 3.6. Test whether $PUBLICEDUCATION$ and $\ln{HEALTH}$ are jointly statistically significant, using a partial $F$-test. State your null and alternative hypotheses, decision-making criterion, and your decision-making rules. (Hint: Use the coefficient of determination form for calculating the test statistic.) Provide an approximate $p$-value for the test.
-b. We now introduce the $REGION$ variable, summarized in Table 4.11. A boxplot of life expectancies versus $REGION$ is given in Figure \@ref(fig:UNLIFEPlot3). Describe what we learn from the Table and boxplot about the effect of $REGION$ on $LIFEEXP$.
+b. We now introduce the $REGION$ variable, summarized in Table 4.11. A boxplot of life expectancies versus $REGION$ is given in Figure \@ref(fig:Fig48). Describe what we learn from the Table and boxplot about the effect of $REGION$ on $LIFEEXP$.
 
-(ref:UNLIFEPlot3) **Boxplots of LIFEEXP by REGION** 
+(ref:Fig48) **Boxplots of LIFEEXP by REGION** 
 
-```{r UNLIFEPlot3, fig.cap='(ref:UNLIFEPlot3)', echo=FALSE, out.width="60%"}
+```{r Fig48, fig.cap='(ref:Fig48)', echo=FALSE, out.width="60%"}
    ## Figure 4.8
 #  FIGURE 3.11
 LifeExp <- read.csv("CSVData/UNLifeExpectancy.csv", header=TRUE)
@@ -1581,9 +1575,9 @@ d. Fit a regression model using three explanatory variables, $FERTILITY$, $PUBLI
       **d(iii)**. Provide the (usual ordinary least squares) point estimate for the difference in life expectancies between a country from Sub-Saharan Africa and a high-income OECD (Organization for Economic Co-operation and Development) country.
 
 
-## Technical Supplement - Matrix Expressions
+## Technical Supplement - Matrix Expressions {#Sec47}
 
-### Expressing Models with Categorical Variables in Matrix Form
+### Expressing Models with Categorical Variables in Matrix Form {#Sec471}
 
 Chapter 3 showed how to write the regression model equation in the form $\mathbf{y = X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}$ where $\mathbf{X}$ is a matrix of explanatory variables. This form permits straightforward calculation of regression coefficients, $\mathbf{b} = \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{y}$. This section shows how the model and calculations reduce to simpler expressions when the explanatory variables are categorical.
 
@@ -1814,7 +1808,7 @@ $$
 
 Here, $\mathbf{0}_j$ and $\mathbf{1}_j$ stand for vector columns of length $n_j$ of zeros and ones, respectively, and $\mathbf{x}_j = (x_{1j}, x_{2j}, \ldots, x_{n_j, j})^{\prime}$ is the column of the continuous variable at the $j$th level. Straightforward matrix algebra techniques provide the least squares estimates.
 
-### Calculating Least Squares Recursively
+### Calculating Least Squares Recursively {#Sec472}
 
 When computing regression coefficients using least squares, $\mathbf{b} = \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{y}$, for some applications, the dimension of $\mathbf{X}^{\prime} \mathbf{X}$ can be large, causing computational difficulties. Fortunately, for some problems, the computations can be partitioned into smaller problems that can be solved recursively.
 
@@ -2128,7 +2122,7 @@ III sum of squares. It is produced automatically by some statistical
 software packages, thus obviating the need to run separate
 regressions.
 
-### General Linear Model
+### General Linear Model {#Sec473}
 
 Recall the general linear model from Section 4.4. That is, we use
 $$

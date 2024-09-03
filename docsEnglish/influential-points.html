@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Influential Points | Regression Modeling with Actuarial and Financial Applications</title>
+  <meta name="description" content="Development of a research monograph that provides quantitative tools to assess the relevance of dependence in insurance risk management." />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Influential Points | Regression Modeling with Actuarial and Financial Applications" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Development of a research monograph that provides quantitative tools to assess the relevance of dependence in insurance risk management." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Influential Points | Regression Modeling with Actuarial and Financial Applications" />
+  
+  <meta name="twitter:description" content="Development of a research monograph that provides quantitative tools to assess the relevance of dependence in insurance risk management." />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="C5VarSelect.html"/>
+<link rel="next" href="selection-criteria.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Regression Modeling With Actuarial and Financial Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#dedication"><i class="fa fa-check"></i>Dedication</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#forward"><i class="fa fa-check"></i>Forward</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#who-is-this-book-for"><i class="fa fa-check"></i>Who Is This Book For?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#what-is-this-book-about"><i class="fa fa-check"></i>What Is This Book About?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-does-this-book-deliver-its-message"><i class="fa fa-check"></i>How Does This Book Deliver Its Message?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="C5VarSelect.html"><a href="C5VarSelect.html"><i class="fa fa-check"></i><b>1</b> Variable Selection</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#S5:Iterative"><i class="fa fa-check"></i><b>1.1</b> An Iterative Approach to Data Analysis and Modeling</a></li>
+<li class="chapter" data-level="1.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#S5:Automatic"><i class="fa fa-check"></i><b>1.2</b> Automatic Variable Selection Procedures</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#stepwise-regression-algorithm"><i class="fa fa-check"></i><b>1.2.1</b> Stepwise Regression Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#S5:ResidualAnalysis"><i class="fa fa-check"></i><b>1.3</b> Residual Analysis</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#S5:Residuals"><i class="fa fa-check"></i><b>1.3.1</b> Residuals</a></li>
+<li class="chapter" data-level="1.3.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#S5:ResidualsOutliers"><i class="fa fa-check"></i><b>1.3.2</b> Using Residuals to Identify Outliers</a></li>
+<li class="chapter" data-level="1.3.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#S5:ResidualsExplanatory"><i class="fa fa-check"></i><b>1.3.3</b> Using Residuals to Select Explanatory Variables</a></li>
+<li class="chapter" data-level="1.3.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#T5:LiquidSumStats"><i class="fa fa-check"></i><b>1.3.4</b> Summary Statistics of the Stock Liquidity Variables</a></li>
+<li class="chapter" data-level="1.3.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#T5:LiquidCorr"><i class="fa fa-check"></i><b>1.3.5</b> Correlation Matrix of the Stock Liquidity</a></li>
+<li class="chapter" data-level="1.3.6" data-path="C5VarSelect.html"><a href="C5VarSelect.html#T5:LiquidResidCorr1"><i class="fa fa-check"></i><b>1.3.6</b> First Table of Correlations</a></li>
+<li class="chapter" data-level="1.3.7" data-path="C5VarSelect.html"><a href="C5VarSelect.html#T5:LiquidResidCorr2"><i class="fa fa-check"></i><b>1.3.7</b> Second Table of Correlations</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="influential-points.html"><a href="influential-points.html"><i class="fa fa-check"></i><b>2</b> Influential Points</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="influential-points.html"><a href="influential-points.html#S5:Leverage"><i class="fa fa-check"></i><b>2.1</b> Leverage</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="influential-points.html"><a href="influential-points.html#cooks-distance"><i class="fa fa-check"></i><b>2.1.1</b> Cook’s Distance</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="influential-points.html"><a href="influential-points.html#collinearity"><i class="fa fa-check"></i><b>2.2</b> Collinearity</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="influential-points.html"><a href="influential-points.html#what-is-collinearity"><i class="fa fa-check"></i><b>2.2.1</b> What is Collinearity?</a></li>
+<li class="chapter" data-level="2.2.2" data-path="influential-points.html"><a href="influential-points.html#variance-inflation-factors"><i class="fa fa-check"></i><b>2.2.2</b> Variance Inflation Factors</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="influential-points.html"><a href="influential-points.html#collinearity-and-leverage"><i class="fa fa-check"></i><b>2.3</b> Collinearity and Leverage</a></li>
+<li class="chapter" data-level="2.4" data-path="influential-points.html"><a href="influential-points.html#suppressor-variables"><i class="fa fa-check"></i><b>2.4</b> Suppressor Variables</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="influential-points.html"><a href="influential-points.html#example-suppressor-variable"><i class="fa fa-check"></i><b>2.4.1</b> Example: Suppressor Variable</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="influential-points.html"><a href="influential-points.html#orthogonal-variables"><i class="fa fa-check"></i><b>2.5</b> Orthogonal Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="selection-criteria.html"><a href="selection-criteria.html"><i class="fa fa-check"></i><b>3</b> Selection Criteria</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="selection-criteria.html"><a href="selection-criteria.html#goodness-of-fit"><i class="fa fa-check"></i><b>3.1</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="3.2" data-path="selection-criteria.html"><a href="selection-criteria.html#model-validation"><i class="fa fa-check"></i><b>3.2</b> Model Validation</a></li>
+<li class="chapter" data-level="3.3" data-path="selection-criteria.html"><a href="selection-criteria.html#cross-validation"><i class="fa fa-check"></i><b>3.3</b> Cross-Validation</a></li>
+<li class="chapter" data-level="3.4" data-path="selection-criteria.html"><a href="selection-criteria.html#heteroscedasticity"><i class="fa fa-check"></i><b>3.4</b> Heteroscedasticity</a></li>
+<li class="chapter" data-level="3.5" data-path="selection-criteria.html"><a href="selection-criteria.html#detecting-heteroscedasticity"><i class="fa fa-check"></i><b>3.5</b> Detecting Heteroscedasticity</a></li>
+<li class="chapter" data-level="3.6" data-path="selection-criteria.html"><a href="selection-criteria.html#heteroscedasticity-consistent-standard-errors"><i class="fa fa-check"></i><b>3.6</b> Heteroscedasticity Consistent Standard Errors</a></li>
+<li class="chapter" data-level="3.7" data-path="selection-criteria.html"><a href="selection-criteria.html#weighted-least-squares"><i class="fa fa-check"></i><b>3.7</b> Weighted Least Squares</a></li>
+<li class="chapter" data-level="3.8" data-path="selection-criteria.html"><a href="selection-criteria.html#transformations"><i class="fa fa-check"></i><b>3.8</b> Transformations</a></li>
+<li class="chapter" data-level="3.9" data-path="selection-criteria.html"><a href="selection-criteria.html#further-reading-and-references"><i class="fa fa-check"></i><b>3.9</b> Further Reading and References</a></li>
+<li class="chapter" data-level="3.10" data-path="selection-criteria.html"><a href="selection-criteria.html#exercises"><i class="fa fa-check"></i><b>3.10</b> Exercises</a></li>
+<li class="chapter" data-level="3.11" data-path="selection-criteria.html"><a href="selection-criteria.html#technical-supplements-for-chapter-5"><i class="fa fa-check"></i><b>3.11</b> Technical Supplements for Chapter 5</a>
+<ul>
+<li class="chapter" data-level="3.11.1" data-path="selection-criteria.html"><a href="selection-criteria.html#projection-matrix"><i class="fa fa-check"></i><b>3.11.1</b> Projection Matrix</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Regression Modeling with Actuarial and Financial Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="influential-points" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Influential Points<a href="influential-points.html#influential-points" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Not all points are created equal – in this section, we will see that specific observations can have a disproportionate effect on the overall regression fit. We will call such points “influential.” This is not too surprising; we have already seen that regression coefficient estimates are <em>weighted</em> sums of responses (see Section 3.2.4). Some observations have heavier weights than others and thus have a greater influence on the regression coefficient estimates. Of course, simply because an observation is influential does not mean that it is incorrect or that its impact on the model is misleading. As analysts, we would simply like to know whether our fitted model is sensitive to mild changes, such as the removal of a single point, so that we feel comfortable generalizing our results from the sample to a larger population.</p>
+<p>To assess influence, we think of observations as being unusual responses, given a set of explanatory variables, or having an unusual set of explanatory variables. We have already seen in Section <a href="C5VarSelect.html#S5:ResidualAnalysis">1.3</a> how to assess unusual responses using residuals. This section focuses on unusual sets of explanatory variables.</p>
+<div id="S5:Leverage" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Leverage<a href="influential-points.html#S5:Leverage" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We introduced this topic in Section 2.6, where we called an observation having an unusual explanatory variable a “high leverage point.” With more than one explanatory variable, determining whether an observation is a high leverage point is not as straightforward. For example, it is possible for an observation to be “not unusual” for any single variable and yet still be unusual in the space of explanatory variables. Consider the fictitious data set represented in Figure <a href="influential-points.html#fig:F5Ellipsoid">2.1</a>. Visually, it seems clear that the point marked in the upper right-hand corner is unusual. However, it is not unusual when examining the histogram of either <span class="math inline">\(x_1\)</span> or <span class="math inline">\(x_2\)</span>. It is only unusual when the explanatory variables are considered jointly.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:F5Ellipsoid"></span>
+<img src="RegressionMarkdown_files/figure-html/F5Ellipsoid-1.png" alt="The ellipsoid represents most of the data. The arrow marks an unusual point." width="100%" />
+<p class="caption">
+Figure 2.1: <strong>The ellipsoid represents most of the data.</strong> The arrow marks an unusual point.
+</p>
+</div>
+<p>For two explanatory variables, this is apparent when examining the data graphically. Because it is difficult to examine graphically data having more than two explanatory variables, we need a numerical procedure for assessing leverage.</p>
+<p>To define the concept of leverage in multiple linear regression, we use some concepts from matrix algebra. Specifically, in Section 3.1, we showed that the vector of least squares regression coefficients could be calculated using</p>
+<p><span class="math display">\[
+\mathbf{b} = \mathbf{(X}^{\prime}\mathbf{X)}^{-1}\mathbf{X}^{\prime}\mathbf{y}.
+\]</span></p>
+<p>Thus, we can express the vector of fitted values <span class="math inline">\(\hat{y} = (\hat{y}_1, \ldots, \hat{y}_n)^{\prime}\)</span> as</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = \mathbf{Xb}.
+\]</span></p>
+<p>Similarly, the vector of residuals is the vector of response minus the vector of fitted values, that is, <span class="math inline">\(\mathbf{e} = \mathbf{y - \hat{y}}\)</span>.</p>
+<p>From the expression for the regression coefficients <span class="math inline">\(\mathbf{b}\)</span> in equation (3.4), we have</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = \mathbf{X(X}^{\prime}\mathbf{X)}^{-1}\mathbf{X}^{\prime}\mathbf{y}.
+\]</span></p>
+<p>This equation suggests defining <span class="math inline">\(\mathbf{H} = \mathbf{X(X}^{\prime}\mathbf{X)}^{-1} \mathbf{X}^{\prime}\)</span>, so that</p>
+<p><span class="math display">\[
+\mathbf{\hat{y}} = \mathbf{Hy}.
+\]</span></p>
+<p>From this, the matrix <span class="math inline">\(\mathbf{H}\)</span> is said to <em>project</em> the vector of responses <span class="math inline">\(\mathbf{y}\)</span> onto the vector of fitted values <span class="math inline">\(\mathbf{\hat{y}}\)</span>. Alternatively, you may think of <span class="math inline">\(\mathbf{H}\)</span> as the matrix that puts the “hat,” or caret, on <span class="math inline">\(\mathbf{y}\)</span>. From the <span class="math inline">\(i\)</span>th row of the vector equation <span class="math inline">\(\mathbf{\hat{y} = Hy}\)</span>, we have</p>
+<p><span class="math display">\[
+\hat{y}_i = h_{i1}y_1 + h_{i2}y_2 + \ldots + h_{ii}y_i + \ldots + h_{in}y_{n}.
+\]</span></p>
+<p>Here, <span class="math inline">\(h_{ij}\)</span> is the number in the <span class="math inline">\(i\)</span>th row and <span class="math inline">\(j\)</span>th column of <span class="math inline">\(\mathbf{H}\)</span>. From this expression, we see that the larger is <span class="math inline">\(h_{ii}\)</span>, the larger is the effect that the <span class="math inline">\(i\)</span>th response <span class="math inline">\((y_i)\)</span> has on the corresponding fitted value <span class="math inline">\((\hat{y}_i)\)</span>. Thus, we call <span class="math inline">\(h_{ii}\)</span> the <em>leverage</em> for the <span class="math inline">\(i\)</span>th observation. Because <span class="math inline">\(h_{ii}\)</span> is the <span class="math inline">\(i\)</span>th diagonal element of <span class="math inline">\(\mathbf{H}\)</span>, a direct expression for <span class="math inline">\(h_{ii}\)</span> is</p>
+<p><span class="math display">\[
+h_{ii} = \mathbf{x}_i^{\prime}\mathbf{(X}^{\prime}\mathbf{X)}^{-1}\mathbf{x}_i,
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{x}_i = (x_{i0}, x_{i1}, \ldots, x_{ik})^{\prime}\)</span>. Because the values <span class="math inline">\(h_{ii}\)</span> are calculated based on the explanatory variables, the values of the response variable do not affect the calculation of leverages.</p>
+<p>Large leverage values indicate that an observation may exhibit a disproportionate effect on the fit, essentially because it is distant from the other observations (when looking at the space of explanatory variables). How large is large? Some guidelines are available from matrix algebra, where we have that</p>
+<p><span class="math display">\[
+\frac{1}{n} \leq h_{ii} \leq 1
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\bar{h} = \frac{1}{n}\sum_{i=1}^{n}h_{ii} = \frac{k+1}{n}.
+\]</span></p>
+<p>Thus, each leverage is bounded by <span class="math inline">\(n^{-1}\)</span> and <span class="math inline">\(1\)</span> and the average leverage equals the number of regression coefficients divided by the number of observations. From these and related arguments, we use a widely adopted convention and declare an observation to be a <em>high leverage point</em> if the leverage exceeds three times the average, that is, if <span class="math inline">\(h_{ii} &gt; 3(k+1)/n\)</span>.</p>
+<p>Having identified high leverage points, as with outliers, it is important for the analyst to search for special causes that may have produced these unusual points. To illustrate, in Section 2.7 we identified the 1987 market crash as the reason behind the high leverage point. Further, high leverage points are often due to clerical errors in coding the data, which may or may not be easy to rectify. In general, the options for dealing with high leverage points are similar to those available for dealing with outliers.</p>
+<p><strong>Options for Handling High Leverage Points</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Include the observation in the summary statistics but comment on its effect. For example, an observation may barely exceed a cut-off and its effect may not be important in the overall analysis.</p></li>
+<li><p>Delete the observation from the data set. Again, the basic rationale for this action is that the observation is deemed not representative of some larger population. An intermediate course of action between (i) and (ii) is to present the analysis both with and without the high leverage point. In this way, the impact of the point is fully demonstrated, and the reader of your analysis may decide which option is more appropriate.</p></li>
+<li><p>Choose another variable to represent the information. In some instances, another explanatory variable will be available to serve as a replacement. For example, in an apartment rents example, we could use the number of bedrooms to replace a square footage variable as a measure of apartment size. Although an apartment’s square footage may be unusually large causing it to be a high leverage point, it may have one, two, or three bedrooms, depending on the sample examined.</p></li>
+<li><p>Use a nonlinear transformation of an explanatory variable. To illustrate, with our Stock Liquidity example in Section <a href="C5VarSelect.html#S5:ResidualsExplanatory">1.3.3</a>, we can transform the debt-to-equity DEB_EQ continuous variable into a variable that indicates the presence of “high” debt-to-equity. For example, we might code DE_IND <span class="math inline">\(=1\)</span> if DEB_EQ <span class="math inline">\(&gt;5\)</span> and DE_IND <span class="math inline">\(=0\)</span> if DEB_EQ <span class="math inline">\(\leq 5\)</span>. With this recoding, we still retain information on the financial leverage of a company without allowing the large values of DEB_EQ to drive the regression fit.</p></li>
+</ol>
+<p>Some analysts use “robust” estimation methodologies as an alternative to least squares estimation. The basic idea of these techniques is to reduce the effect of any particular observation. These techniques are useful in reducing the effect of both outliers and high leverage points. This tactic may be viewed as intermediate between one extreme procedure, ignoring the effect of unusual points, and another extreme, giving unusual points full credibility by deleting them from the data set. The word <em>robust</em> is meant to suggest that these estimation methodologies are “healthy” even when attacked by an occasional bad observation (a germ). We have seen that this is not true for least squares estimation.</p>
+<div id="cooks-distance" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Cook’s Distance<a href="influential-points.html#cooks-distance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To quantify how influential a point is, a measure that considers both the response and explanatory variables is <em>Cook’s Distance</em>. This distance, <span class="math inline">\(D_i\)</span>, is defined as</p>
+<p><span class="math display">\[
+D_i = \frac{\sum_{j=1}^{n}(\hat{y}_j - \hat{y}_{j(i)})^2}{(k+1)s^2}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+D_i = \left(\frac{e_i}{se(e_i)}\right)^2 \frac{h_{ii}}{(k+1)(1-h_{ii})}.
+\]</span></p>
+<p>The first expression provides a definition. Here, <span class="math inline">\(\hat{y}_{j(i)}\)</span> is the prediction of the <span class="math inline">\(j\)</span>th observation, computed leaving the <span class="math inline">\(i\)</span>th observation out of the regression fit. To measure the impact of the <span class="math inline">\(i\)</span>th observation, we compare the fitted values with and without the <span class="math inline">\(i\)</span>th observation. Each difference is then squared and summed over all observations to summarize the impact.</p>
+<p>The second equation provides another interpretation of the distance <span class="math inline">\(D_i\)</span>. The first part, <span class="math inline">\(\left(\frac{e_i}{se(e_i)}\right)^2\)</span>, is the square of the <span class="math inline">\(i\)</span>th standardized residual. The second part, <span class="math inline">\(\frac{h_{ii}}{(k+1)(1-h_{ii})}\)</span>, is attributable solely to the leverage. Thus, the distance <span class="math inline">\(D_i\)</span> is composed of a measure for outliers times a measure for leverage. In this way, Cook’s distance accounts for both the response and explanatory variables.</p>
+<p>To get an idea of the expected size of <span class="math inline">\(D_i\)</span> for a point that is not unusual, recall that we expect the standardized residuals to be about one and the leverage <span class="math inline">\(h_{ii}\)</span> to be about <span class="math inline">\((k+1)/n\)</span>. Thus, we anticipate that <span class="math inline">\(D_i\)</span> should be about <span class="math inline">\(1/n\)</span>. Another rule of thumb is to compare <span class="math inline">\(D_i\)</span> to an <em>F</em>-distribution with <span class="math inline">\(df_1 = k + 1\)</span> and <span class="math inline">\(df_2 = n - (k + 1)\)</span> degrees of freedom. Values of <span class="math inline">\(D_i\)</span> that are large compared to this distribution merit attention.</p>
+<hr />
+<p><strong>Example: Outliers and High Leverage Points - Continued.</strong> To illustrate, we return to our example in Section 2.6. In this example, we considered 19 “good,” or base, points plus each of the three types of unusual points, labeled A, B, and C. Table <a href="#T5:Outliers"><strong>??</strong></a> summarizes the calculations.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="influential-points.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example data for the table</span></span>
+<span id="cb1-2"><a href="influential-points.html#cb1-2" aria-hidden="true" tabindex="-1"></a>outliers_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-3"><a href="influential-points.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Observation =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>),</span>
+<span id="cb1-4"><a href="influential-points.html#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Standardized_residual =</span> <span class="fu">c</span>(<span class="fl">4.00</span>, <span class="fl">0.77</span>, <span class="sc">-</span><span class="fl">4.01</span>),</span>
+<span id="cb1-5"><a href="influential-points.html#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Leverage =</span> <span class="fu">c</span>(<span class="fl">0.067</span>, <span class="fl">0.550</span>, <span class="fl">0.550</span>),</span>
+<span id="cb1-6"><a href="influential-points.html#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Cooks_distance =</span> <span class="fu">c</span>(<span class="fl">0.577</span>, <span class="fl">0.363</span>, <span class="fl">9.832</span>)</span>
+<span id="cb1-7"><a href="influential-points.html#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="influential-points.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Output table</span></span>
+<span id="cb2-2"><a href="influential-points.html#cb2-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(outliers_data, <span class="at">caption =</span> <span class="st">&quot;Measures of Three Types of Unusual Points&quot;</span>)</span></code></pre></div>
+<table>
+<caption>
+<span id="tab:unnamed-chunk-8">Table 2.1: </span>Measures of Three Types of Unusual Points
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Observation
+</th>
+<th style="text-align:right;">
+Standardized_residual
+</th>
+<th style="text-align:right;">
+Leverage
+</th>
+<th style="text-align:right;">
+Cooks_distance
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:right;">
+4.00
+</td>
+<td style="text-align:right;">
+0.067
+</td>
+<td style="text-align:right;">
+0.577
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+0.77
+</td>
+<td style="text-align:right;">
+0.550
+</td>
+<td style="text-align:right;">
+0.363
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:right;">
+-4.01
+</td>
+<td style="text-align:right;">
+0.550
+</td>
+<td style="text-align:right;">
+9.832
+</td>
+</tr>
+</tbody>
+</table>
+<p>As noted in Section 2.6, from the standardized residual column we see that both points A and C are outliers. To judge the size of the leverages, because there are <span class="math inline">\(n = 20\)</span> points, the leverages are bounded by 0.05 and 1.00 with the average leverage being <span class="math inline">\(\bar{h} = 2/20 = 0.10\)</span>. Using 0.3 (<span class="math inline">\(= 3 \times \bar{h}\)</span>) as a cut-off, both points B and C are high leverage points. Note that their values are the same. This is because, from Figure 2.7, the values of the explanatory variables are the same and only the response variable has been changed. The column for Cook’s distance captures both types of unusual behavior. Because the typical value of <span class="math inline">\(D_i\)</span> is <span class="math inline">\(1/n\)</span> or 0.05, Cook’s distance provides one statistic to alert us to the fact that each point is unusual in one respect or another. In particular, point C has a very large <span class="math inline">\(D_i\)</span>, reflecting the fact that it is both an outlier and a high leverage point. The 95th percentile of an <em>F</em>-distribution with <span class="math inline">\(df_1 = 2\)</span> and <span class="math inline">\(df_2 = 18\)</span> is 3.555. The fact that point C has a value of <span class="math inline">\(D_i\)</span> that well exceeds this cut-off indicates the substantial influence of this point.</p>
+</div>
+</div>
+<div id="collinearity" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Collinearity<a href="influential-points.html#collinearity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="what-is-collinearity" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> What is Collinearity?<a href="influential-points.html#what-is-collinearity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>Collinearity</em>, or <em>multicollinearity</em>, occurs when one explanatory variable is, or nearly is, a linear combination of the other explanatory variables. Intuitively, with collinear data, it is useful to think of explanatory variables as being highly correlated with one another. If an explanatory variable is collinear, then the question arises as to whether it is redundant, that is, whether the variable provides little additional information over and above the information in the other explanatory variables. The issues are: Is collinearity important? If so, how does it affect our model fit and how do we detect it? To address the first question, consider a somewhat pathological example.</p>
+<hr />
+<p><strong>Example: Perfectly Correlated Explanatory Variables.</strong> Joe Finance was asked to fit the model <span class="math inline">\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2\)</span> to a data set. His resulting fitted model was <span class="math inline">\(\hat{y} = -87 + x_1 + 18x_2\)</span>. The data set under consideration is:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="influential-points.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example data</span></span>
+<span id="cb3-2"><a href="influential-points.html#cb3-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-3"><a href="influential-points.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb3-4"><a href="influential-points.html#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_i =</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">83</span>, <span class="dv">63</span>, <span class="dv">103</span>),</span>
+<span id="cb3-5"><a href="influential-points.html#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_i1 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">10</span>),</span>
+<span id="cb3-6"><a href="influential-points.html#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_i2 =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">10</span>)</span>
+<span id="cb3-7"><a href="influential-points.html#cb3-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="influential-points.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the data in table format</span></span>
+<span id="cb4-2"><a href="influential-points.html#cb4-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(data, <span class="at">caption =</span> <span class="st">&quot;Data for Example of Perfectly Correlated Explanatory Variables&quot;</span>)</span></code></pre></div>
+<table>
+<caption>
+<span id="tab:unnamed-chunk-10">Table 2.2: </span>Data for Example of Perfectly Correlated Explanatory Variables
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+i
+</th>
+<th style="text-align:right;">
+y_i
+</th>
+<th style="text-align:right;">
+x_i1
+</th>
+<th style="text-align:right;">
+x_i2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+83
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+63
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+</tbody>
+</table>
+<p>Joe checked the fit for each observation. Joe was very happy because he fit the data perfectly! For example, for the third observation, the fitted value is <span class="math inline">\(\hat{y}_3 = -87 + 6 + 18 \cdot 8 = 63\)</span>, which is equal to the third response, <span class="math inline">\(y_3\)</span>. Because the response equals the fitted value, the residual is zero. You may check that this is true for each observation and thus the <span class="math inline">\(R^2\)</span> turned out to be <span class="math inline">\(100\%\)</span>.</p>
+<p>However, Jane Actuary came along and fit the model <span class="math inline">\(\hat{y} = -7 + 9x_1 + 2x_2\)</span>. Jane performed the same careful checks that Joe did and also got a perfect fit (<span class="math inline">\(R^2 = 1\)</span>). Who is right?</p>
+<p>The answer is both and neither one. There are, in fact, an infinite number of fits. This is due to the perfect relationship <span class="math inline">\(x_2 = 5 + \frac{x_1}{2}\)</span> between the two explanatory variables.</p>
+<hr />
+<p>This example illustrates some important facts about collinearity.</p>
+<div id="collinearity-facts" class="section level4 hasAnchor" number="2.2.1.1">
+<h4><span class="header-section-number">2.2.1.1</span> Collinearity Facts<a href="influential-points.html#collinearity-facts" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><p>Collinearity neither precludes us from getting good fits nor from making predictions of new observations. Note that in the above example we got perfect fits.</p></li>
+<li><p>Estimates of error variances and, therefore, tests of model adequacy, are still reliable.</p></li>
+<li><p>In cases of serious collinearity, standard errors of individual regression coefficients are larger than cases where, other things equal, serious collinearity does not exist. With large standard errors, individual regression coefficients may not be meaningful. Further, because a large standard error means that the corresponding <em>t</em>-ratio is small, it is difficult to detect the importance of a variable.</p></li>
+</ul>
+<hr />
+<p>To detect collinearity, begin with a matrix of correlation coefficients of the explanatory variables. This matrix is simple to create, easy to interpret, and quickly captures linear relationships between pairs of variables. A scatterplot matrix provides a visual reinforcement of the summary statistics in the correlation matrix.</p>
+</div>
+</div>
+<div id="variance-inflation-factors" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Variance Inflation Factors<a href="influential-points.html#variance-inflation-factors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Correlation and scatterplot matrices capture only relationships between pairs of variables. To capture more complex relationships among several variables, we introduce the <em>variance inflation factor (VIF)</em>. To define a <em>VIF</em>, suppose that the set of explanatory variables is labeled <span class="math inline">\(x_1, x_2, \ldots, x_k\)</span>. Now, run the regression using <span class="math inline">\(x_j\)</span> as the “response” and the other <span class="math inline">\(x\)</span>’s <span class="math inline">\((x_1, x_2, \ldots, x_{j-1}, x_{j+1}, \ldots, x_k)\)</span> as the explanatory variables. Denote the coefficient of determination from this regression by <span class="math inline">\(R_j^2\)</span>. We interpret <span class="math inline">\(R_j = \sqrt{R_j^2}\)</span> as the multiple correlation coefficient between <span class="math inline">\(x_j\)</span> and linear combinations of the other <span class="math inline">\(x\)</span>’s. From this coefficient of determination, we define the variance inflation factor</p>
+<p><span class="math display">\[
+VIF_j = \frac{1}{1 - R_j^2}, \text{ for } j = 1, 2, \ldots, k.
+\]</span></p>
+<p>A larger <span class="math inline">\(R_j^2\)</span> results in a larger <span class="math inline">\(VIF_j\)</span>; this means greater collinearity between <span class="math inline">\(x_j\)</span> and the other <span class="math inline">\(x\)</span>’s. Now, <span class="math inline">\(R_j^2\)</span> alone is enough to capture the linear relationship of interest. However, we use <span class="math inline">\(VIF_j\)</span> in lieu of <span class="math inline">\(R_j^2\)</span> as our measure for collinearity because of the algebraic relationship:</p>
+<p><span class="math display">\[
+se(b_j) = s \frac{\sqrt{VIF_j}}{s_{x_j} \sqrt{n-1}}
+\]</span></p>
+<p>Here, <span class="math inline">\(se(b_j)\)</span> and <span class="math inline">\(s\)</span> are standard errors and residual standard deviation from a full regression fit of <span class="math inline">\(y\)</span> on <span class="math inline">\(x_1, \ldots, x_{k}\)</span>. Further, <span class="math inline">\(s_{x_j} = \sqrt{(n-1)^{-1} \sum_{i=1}^{n} (x_{ij} - \bar{x}_j)^2}\)</span> is the sample standard deviation of the <span class="math inline">\(j\)</span>th variable <span class="math inline">\(x_j\)</span>.</p>
+<p>Thus, a larger <span class="math inline">\(VIF_j\)</span> results in a larger standard error associated with the <span class="math inline">\(j\)</span>th slope, <span class="math inline">\(b_j\)</span>. Recall that <span class="math inline">\(se(b_j)\)</span> is <span class="math inline">\(s\)</span> times the square root of the <span class="math inline">\((j+1)\)</span>st diagonal element of <span class="math inline">\((\mathbf{X&#39;} \mathbf{X})^{-1}\)</span>. The idea is that when collinearity occurs, the matrix <span class="math inline">\(\mathbf{X&#39;} \mathbf{X}\)</span> has properties similar to the number zero. When we attempt to calculate the inverse of <span class="math inline">\(\mathbf{X&#39;} \mathbf{X}\)</span>, this is analogous to dividing by zero for scalar numbers. As a rule of thumb, when <span class="math inline">\(VIF_j\)</span> exceeds 10 (which is equivalent to <span class="math inline">\(R_j^2 &gt; 90\%\)</span>), we say that severe collinearity exists. This may signal a need for action. <em>Tolerance</em>, defined as the reciprocal of the variance inflation factor, is another measure of collinearity used by some analysts.</p>
+<p>For example, with <span class="math inline">\(k=2\)</span> explanatory variables in the model, then <span class="math inline">\(R_1^2\)</span> is the squared correlation between the two explanatory variables, say <span class="math inline">\(r_{12}^2\)</span>. Then, from the equation</p>
+<p><span class="math display">\[
+se(b_j) = \left( s_{x_j} \sqrt{n-1} \right)^{-1} \left( 1 - r_{12}^2 \right)^{-1/2}
+\]</span></p>
+<p>for <span class="math inline">\(j=1,2\)</span>. Thus, as the correlation approaches one in absolute value, <span class="math inline">\(|r_{12}| \rightarrow 1\)</span>, then the standard error becomes large meaning that the corresponding <span class="math inline">\(t\)</span>-statistic becomes small. Thus, a high <span class="math inline">\(VIF\)</span> may mean small <span class="math inline">\(t\)</span>-statistics even though variables are jointly statistically significant. Further, one can check that the correlation between <span class="math inline">\(b_1\)</span> and <span class="math inline">\(b_2\)</span> is <span class="math inline">\(-r_{12}\)</span>, indicating that the coefficient estimates are highly correlated.</p>
+<hr />
+<p><strong>Example: Stock Market Liquidity - Continued.</strong> As an example, consider a regression of VOLUME on PRICE, SHARE, and VALUE. Unlike the explanatory variables considered in Section <span class="math inline">\(\ref{S5:ResidualsExplanatory}\)</span>, these three explanatory variables are not measures of trading activity. From a regression fit, we have <span class="math inline">\(R^2 = 61\%\)</span> and <span class="math inline">\(s = 6.72\)</span>. The statistics associated with the regression coefficients are in Table <span class="math inline">\(\ref{T5:LiquidRegression}\)</span>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="influential-points.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example data</span></span>
+<span id="cb5-2"><a href="influential-points.html#cb5-2" aria-hidden="true" tabindex="-1"></a>liquid_regression <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-3"><a href="influential-points.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_j =</span> <span class="fu">c</span>(<span class="st">&quot;PRICE&quot;</span>, <span class="st">&quot;SHARE&quot;</span>, <span class="st">&quot;VALUE&quot;</span>),</span>
+<span id="cb5-4"><a href="influential-points.html#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">s_x_j =</span> <span class="fu">c</span>(<span class="fl">21.37</span>, <span class="fl">115.1</span>, <span class="fl">8.157</span>),</span>
+<span id="cb5-5"><a href="influential-points.html#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">b_j =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.022</span>, <span class="fl">0.054</span>, <span class="fl">0.313</span>),</span>
+<span id="cb5-6"><a href="influential-points.html#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">se_b_j =</span> <span class="fu">c</span>(<span class="fl">0.035</span>, <span class="fl">0.010</span>, <span class="fl">0.162</span>),</span>
+<span id="cb5-7"><a href="influential-points.html#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">t_b_j =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.63</span>, <span class="fl">5.19</span>, <span class="fl">1.94</span>),</span>
+<span id="cb5-8"><a href="influential-points.html#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">VIF_j =</span> <span class="fu">c</span>(<span class="fl">1.5</span>, <span class="fl">3.8</span>, <span class="fl">4.7</span>)</span>
+<span id="cb5-9"><a href="influential-points.html#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-10"><a href="influential-points.html#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="influential-points.html#cb5-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(liquid_regression, <span class="at">caption =</span> <span class="st">&quot;Statistics from a Regression of VOLUME on PRICE, SHARE and VALUE&quot;</span>)</span></code></pre></div>
+<table>
+<caption>
+<span id="tab:unnamed-chunk-11">Table 2.3: </span>Statistics from a Regression of VOLUME on PRICE, SHARE and VALUE
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+x_j
+</th>
+<th style="text-align:right;">
+s_x_j
+</th>
+<th style="text-align:right;">
+b_j
+</th>
+<th style="text-align:right;">
+se_b_j
+</th>
+<th style="text-align:right;">
+t_b_j
+</th>
+<th style="text-align:right;">
+VIF_j
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+PRICE
+</td>
+<td style="text-align:right;">
+21.370
+</td>
+<td style="text-align:right;">
+-0.022
+</td>
+<td style="text-align:right;">
+0.035
+</td>
+<td style="text-align:right;">
+-0.63
+</td>
+<td style="text-align:right;">
+1.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SHARE
+</td>
+<td style="text-align:right;">
+115.100
+</td>
+<td style="text-align:right;">
+0.054
+</td>
+<td style="text-align:right;">
+0.010
+</td>
+<td style="text-align:right;">
+5.19
+</td>
+<td style="text-align:right;">
+3.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VALUE
+</td>
+<td style="text-align:right;">
+8.157
+</td>
+<td style="text-align:right;">
+0.313
+</td>
+<td style="text-align:right;">
+0.162
+</td>
+<td style="text-align:right;">
+1.94
+</td>
+<td style="text-align:right;">
+4.7
+</td>
+</tr>
+</tbody>
+</table>
+<p>You may check that the relationship in equation</p>
+<p><span class="math display">\[
+se(b_j) = s \frac{\sqrt{VIF_j}}{s_{x_j} \sqrt{n-1}}
+\]</span></p>
+<p>is valid for each of the explanatory variables in Table <span class="math inline">\(\ref{T5:LiquidRegression}\)</span>. Because each <span class="math inline">\(VIF\)</span> statistic is less than ten, there is little reason to suspect severe collinearity. This is interesting because you may recall that there is a perfect relationship between PRICE, SHARE, and VALUE in that we defined the market value to be VALUE = PRICE <span class="math inline">\(\times\)</span> SHARE. However, the relationship is multiplicative, and hence is nonlinear. Because the variables are not linearly related, it is valid to enter all three into the regression model.</p>
+<hr />
+<p>For collinearity, we are only interested in detecting linear trends, so nonlinear relationships between variables are not an issue here. For example, we have seen that it is sometimes useful to retain both an explanatory variable <span class="math inline">\((x)\)</span> and its square <span class="math inline">\((x^2)\)</span>, despite the fact that there is a perfect (nonlinear) relationship between the two. Still, we must check that nonlinear relationships are not approximately linear over the sampling region. Even though the relationship is theoretically nonlinear, if it is close to linear for our available sample, then problems of collinearity might arise. Figure <a href="influential-points.html#fig:Nearlinear">2.2</a> illustrates this situation.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Nearlinear"></span>
+<img src="RegressionMarkdown_files/figure-html/Nearlinear-1.png" alt="The ellipsoid represents most of the data. The arrow marks an unusual point." width="100%" />
+<p class="caption">
+Figure 2.2: <strong>The ellipsoid represents most of the data.</strong> The arrow marks an unusual point.
+</p>
+</div>
+<p>What can we do in the presence of collinearity? One option is to center each variable, by subtracting its average and dividing by its standard deviation. For example, create a new variable <span class="math inline">\(x_{ij}^{\ast} = (x_{ij} - \bar{x}_j) / s_{x_j}\)</span>. Occasionally, one variable appears as millions of units and another variable appears as fractions of units. Compared to the first mentioned variable, the second mentioned variable is close to a constant column of zeroes, at least if one uses single-precision (eight significant digits) arithmetic. If this is true, then the second variable looks very much like a linear shift of the constant column of ones corresponding to the intercept. This is a problem even using double-precision arithmetic because, with the least squares operations, we are implicitly squaring numbers that can make these columns appear even more similar.</p>
+<p>This problem is simply a computational one and is easy to rectify. Simply recode the variables so that the units are of similar order of magnitude. Some data analysts automatically center all variables to avoid these problems. This is a legitimate approach because regression techniques search for linear relationships; location and scale shifts do not affect linear relationships.</p>
+<p>Another option is to simply not explicitly account for collinearity in the analysis but to discuss some of its implications when interpreting the results of the regression analysis. This approach is probably the most commonly adopted one. It is a fact of life that, when dealing with business and economic data, collinearity does tend to exist among variables. Because the data tends to be observational in lieu of experimental in nature, there is little that the analyst can do to avoid this situation.</p>
+<p>In the best-case situation, an auxiliary variable that provides similar information and that eases the collinearity problem is available to replace a variable. Similar to our discussion of high leverage points, a transformed version of the explanatory variable may also be a useful substitute. In some situations, such an ideal replacement is not available and we are forced to remove one or more variables. Deciding which variables to remove is a difficult choice. When deciding among variables, often the choice will be dictated by the investigator’s judgment as to which is the most relevant set of variables.</p>
+</div>
+</div>
+<div id="collinearity-and-leverage" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Collinearity and Leverage<a href="influential-points.html#collinearity-and-leverage" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Measures of collinearity and leverage share common characteristics, and yet are designed to capture different aspects of a data set. Both are useful for data and model criticism; they are applied after a preliminary model fit with the objective of improving model specification. Further, both are calculated using only the explanatory variables; values of the responses do not enter into either calculation.</p>
+<p>Our measure of collinearity, the variance inflation factor, is designed to help us with model criticism. It is a measure calculated for each explanatory variable, designed to explain the relationship with other explanatory variables.</p>
+<p>The leverage statistic is designed to help us with data criticism. It is a measure calculated for each observation to help us explain how unusual an observation is with respect to other observations.</p>
+<p>Collinearity may be masked, or induced, by high leverage points, as pointed out by Mason and Gunst (1985) and Hadi (1988). Figures <a href="influential-points.html#fig:F5CollMask">2.3</a> and <a href="#fig:F5CollInduce"><strong>??</strong></a> provide illustrations of each case. These simple examples underscore an important point; data criticism and model criticism are not separate exercises.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:F5CollMask"></span>
+<img src="RegressionMarkdown_files/figure-html/F5CollMask-1.png" alt="With the exception of the marked point, \(x_1\) and \(x_2\) are highly linearly related." width="100%" />
+<p class="caption">
+Figure 2.3: <strong>With the exception of the marked point, <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are highly linearly related.</strong>
+</p>
+</div>
+
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="influential-points.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span></span>
+<span id="cb6-2"><a href="influential-points.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">#  FIGURE 5.7</span></span>
+<span id="cb6-3"><a href="influential-points.html#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="influential-points.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="at">Random.seed &lt;- 1:15</span></span>
+<span id="cb6-5"><a href="influential-points.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">x&lt;-runif(18,min=0,max=1.2)</span></span>
+<span id="cb6-6"><a href="influential-points.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="at">y&lt;-runif(18,min=0,max=1.2)</span></span>
+<span id="cb6-7"><a href="influential-points.html#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="at">par(mar=c(3.2,4.4,.2,.2))</span></span>
+<span id="cb6-8"><a href="influential-points.html#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="at">plot(x,y,type=&quot;p&quot;,pch=1,cex=1.5,xlim=c(0,3),</span></span>
+<span id="cb6-9"><a href="influential-points.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="at">   ylim=c(0,3),xaxt=&quot;n&quot;,yaxt=&quot;n&quot;,xlab=&quot;&quot;,ylab=&quot;&quot;,cex.lab=1)</span></span>
+<span id="cb6-10"><a href="influential-points.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="at">mtext(expression(x[2]), side=1, line=2,cex=1.4)</span></span>
+<span id="cb6-11"><a href="influential-points.html#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="at">mtext(expression(x[1]), side=2, line=2, cex=1.4, las=1)</span></span>
+<span id="cb6-12"><a href="influential-points.html#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="at">points(2,2,pch=1,cex=1.5)</span></span>
+<span id="cb6-13"><a href="influential-points.html#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="at">arrows(1.4,2.25,1.9,2.05,code=2,lwd=2,angle=5,length=0.15)</span></span>
+<span id="cb6-14"><a href="influential-points.html#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="at">text(1.5,2.5,&quot;HIGH LEVERAGE,COLLINEARITY </span><span class="sc">\n</span><span class="at">CREATING POINT&quot;,cex=1.0)</span></span></code></pre></div>
+<p>The examples in Figures <a href="influential-points.html#fig:F5CollMask">2.3</a> and <a href="#fig:F5CollInduce"><strong>??</strong></a> also help us to see one way in which high leverage points may affect standard errors of regression coefficients. Recall, in Section <span class="math inline">\(\ref{S5:Leverage}\)</span>, we saw that high leverage points may affect the model fitted values. In Figures <a href="influential-points.html#fig:F5CollMask">2.3</a> and <a href="#fig:F5CollInduce"><strong>??</strong></a>, we see that high leverage points affect collinearity. Thus, from equation</p>
+<p><span class="math display">\[
+se(b_j) = s \sqrt{(j+1)^{\text{st}} \text{ diagonal element of } (\mathbf{X}^{\prime} \mathbf{X})^{-1}},
+\]</span></p>
+<p>we have that high leverage points can also affect our standard errors of regression coefficients.</p>
+</div>
+<div id="suppressor-variables" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Suppressor Variables<a href="influential-points.html#suppressor-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As we have seen, severe collinearity can seriously inflate standard errors of regression coefficients. Because we rely on these standard errors for judging the usefulness of explanatory variables, our model selection procedures and inferences may be deficient in the presence of severe collinearity. Despite these drawbacks, mild collinearity in a data set should not be viewed as a deficiency of the data set; it is simply an attribute of the available explanatory variables.</p>
+<p>Even if one explanatory variable is nearly a linear combination of the others, that does not necessarily mean that the information that it provides is redundant. To illustrate, we now consider a <em>suppressor variable</em>, an explanatory variable that increases the importance of other explanatory variables when included in the model.</p>
+<div id="example-suppressor-variable" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Example: Suppressor Variable<a href="influential-points.html#example-suppressor-variable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Figure <a href="influential-points.html#fig:Fig58">2.4</a> shows a scatterplot matrix of a hypothetical data set of fifty observations. This data set contains a response and two explanatory variables. Table <span class="math inline">\(\ref{T5:Suppress}\)</span> provides the corresponding matrix of correlation coefficients. Here, we see that the two explanatory variables are highly correlated. Now recall, for regression with one explanatory variable, that the correlation coefficient squared is the coefficient of determination. Thus, using Table <span class="math inline">\(\ref{T5:Suppress}\)</span>, for a regression of <span class="math inline">\(y\)</span> on <span class="math inline">\(x_1\)</span>, the coefficient of determination is <span class="math inline">\((0.188)^2=3.5\%\)</span>. Similarly, for a regression of <span class="math inline">\(y\)</span> on <span class="math inline">\(x_2\)</span>, the coefficient of determination is <span class="math inline">\((-0.022)^2=0.04\%\)</span>. However, for a regression of <span class="math inline">\(y\)</span> on <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>, the coefficient of determination turns out to be a surprisingly high <span class="math inline">\(80.7\%\)</span>. The interpretation is that individually, both <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> have little impact on <span class="math inline">\(y\)</span>. However, when taken jointly, the two explanatory variables have a significant effect on <span class="math inline">\(y\)</span>. Although Table <span class="math inline">\(\ref{T5:Suppress}\)</span> shows that <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are strongly linearly related, this relationship does not mean that <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> provide the same information. In fact, in this example the two variables complement one another.</p>
+
+<pre><code>  [,1]   [,2]   [,3]</code></pre>
+[1,] 1.000 0.972 0.188
+[2,] 0.972 1.000 -0.022
+[3,] 0.188 -0.022 1.000
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig58"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig58-1.png" alt="Scatterplot matrix of a response and two explanatory variable for the suppressor variable example" width="100%" />
+<p class="caption">
+Figure 2.4: <strong>Scatterplot matrix of a response and two explanatory variable for the suppressor variable example</strong>
+</p>
+</div>
+</div>
+</div>
+<div id="orthogonal-variables" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Orthogonal Variables<a href="influential-points.html#orthogonal-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Another way to understand the impact of collinearity is to study the case when there are <em>no</em> relationships among sets of explanatory variables. Mathematically, two matrices <span class="math inline">\(\mathbf{X}_1\)</span> and <span class="math inline">\(\mathbf{X}_2\)</span> are said to be <em>orthogonal</em> if</p>
+<p><span class="math display">\[
+\mathbf{X}_1^{\prime}\mathbf{X}_2 = \mathbf{0}.
+\]</span></p>
+<p>Intuitively, because we generally work with centered variables (with zero averages), this means that each column of <span class="math inline">\(\mathbf{X}_1\)</span> is uncorrelated with each column of <span class="math inline">\(\mathbf{X}_2\)</span>. Although unlikely to occur with observational data in the social sciences, when designing experimental treatments or constructing high degree polynomials, applications of orthogonal variables are regularly used (see for example, Hocking, 2003). For our purposes, we will work with orthogonal variables simply to understand the logical consequences of a total lack of collinearity.</p>
+<p>Suppose that <span class="math inline">\(\mathbf{x}_2\)</span> is an explanatory variable that is orthogonal to <span class="math inline">\(\mathbf{X}_1\)</span>, where <span class="math inline">\(\mathbf{X}_1\)</span> is a matrix of explanatory variables that includes the intercept. Then, it is straightforward to check that the addition of <span class="math inline">\(\mathbf{x}_2\)</span> to the regression equation does not change the fit for coefficients corresponding to <span class="math inline">\(\mathbf{X}_1\)</span>. That is, without <span class="math inline">\(\mathbf{x}_2\)</span>, the coefficients corresponding to <span class="math inline">\(\mathbf{X}_1\)</span> would be calculated as</p>
+<p><span class="math display">\[
+\mathbf{b}_1 = \left(\mathbf{X}_1^{\prime} \mathbf{X}_1\right)^{-1} \mathbf{X}_1^{\prime} \mathbf{y}.
+\]</span></p>
+<p>Using the orthogonal <span class="math inline">\(\mathbf{x}_2\)</span> as part of the least squares calculation would not change the result for <span class="math inline">\(\mathbf{b}_1\)</span> (see the recursive least squares calculation in Section 4.7.2).</p>
+<p>Further, the variance inflation factor for <span class="math inline">\(\mathbf{x}_2\)</span> is 1, indicating that the standard error is unaffected by the other explanatory variables. In the same vein, the reduction in the error sum of squares by adding the orthogonal variable <span class="math inline">\(\mathbf{x}_2\)</span> is due only to that variable, and not its interaction with other variables in <span class="math inline">\(\mathbf{X}_1\)</span>.</p>
+<p>Orthogonal variables can be created for observational social science data (as well as other collinear data) using the method of <em>principal components</em>. With this method, one uses a linear transformation of the matrix of explanatory variables of the form,</p>
+<p><span class="math display">\[
+\mathbf{X}^{\ast} = \mathbf{X} \mathbf{P},
+\]</span></p>
+<p>so that the resulting matrix <span class="math inline">\(\mathbf{X}^{\ast}\)</span> is composed of orthogonal columns. The transformed regression function is</p>
+<p><span class="math display">\[
+\mathrm{E~}\mathbf{y} = \mathbf{X} \boldsymbol \beta = \mathbf{X} \mathbf{P} \mathbf{P}^{-1} \boldsymbol \beta = \mathbf{X}^{\ast} \boldsymbol \beta^{\ast},
+\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol \beta^{\ast} = \mathbf{P}^{-1} \boldsymbol \beta\)</span> is the set of new regression coefficients. Estimation proceeds as before, with the orthogonal set of explanatory variables. By choosing the matrix <span class="math inline">\(\mathbf{P}\)</span> appropriately, each column of <span class="math inline">\(\mathbf{X}^{\ast}\)</span> has an identifiable contribution. Thus, we can readily use variable selection techniques to identify the “principal components” portions of <span class="math inline">\(\mathbf{X}^{\ast}\)</span> to use in the regression equation. Principal components regression is a widely used method in some application areas, such as psychology. It can easily address highly collinear data in a disciplined manner. The main drawback of this technique is that the resulting parameter estimates are difficult to interpret.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="C5VarSelect.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="selection-criteria.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

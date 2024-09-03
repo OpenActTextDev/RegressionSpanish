@@ -7,7 +7,7 @@
 
 *Vista previa del capítulo*. Este capítulo introduce la regresión lineal en el caso de varios variables explicativas, conocida como *regresión lineal múltiple*. Muchos conceptos básicos de la regresión lineal se extienden directamente, incluyendo medidas de bondad de ajuste como $R^2$ y la inferencia usando estadísticas $t$. Los modelos de regresión lineal múltiple proporcionan un marco para resumir datos altamente complejos y multivariados. Debido a que este marco solo requiere linealidad en los parámetros, podemos ajustar modelos que son funciones no lineales de las variables explicativas, proporcionando así un amplio alcance de aplicaciones potenciales.
 
-## Método de Mínimos Cuadrados {#S3:LSMethod}
+## Método de Mínimos Cuadrados {#Sec31}
 
 
 El Capítulo 2 trató sobre el problema de una respuesta que depende de una sola variable explicativa. Ahora extendemos el enfoque de ese capítulo y estudiamos cómo una respuesta puede depender de varias variables explicativas.
@@ -39,9 +39,9 @@ La $i$-ésima observación corresponde a la $i$-ésima fila, que consiste en $(x
 
 #### Resumiendo los Datos {-}
 
-Comenzamos el análisis de los datos examinando cada variable por separado. La Tabla \@ref(tab:FaceSumStats) proporciona estadísticas descriptivas básicas de las cuatro variables. Para FACE e INCOME, vemos que la media es mucho mayor que la mediana, lo que sugiere que la distribución está sesgada hacia la derecha. Los histogramas (no reportados aquí) muestran que este es el caso. Será útil considerar también sus transformaciones logarítmicas, LNFACE y LNINCOME, respectivamente, que también se informan en la Tabla \@ref(tab:FaceSumStats).
+Comenzamos el análisis de los datos examinando cada variable por separado. La Tabla \@ref(tab:Tab31) proporciona estadísticas descriptivas básicas de las cuatro variables. Para FACE e INCOME, vemos que la media es mucho mayor que la mediana, lo que sugiere que la distribución está sesgada hacia la derecha. Los histogramas (no reportados aquí) muestran que este es el caso. Será útil considerar también sus transformaciones logarítmicas, LNFACE y LNINCOME, respectivamente, que también se informan en la Tabla \@ref(tab:Tab31).
 
-```{r FaceSumStats, echo = FALSE}
+```{r Tab31, echo = FALSE}
 Term <- read.csv("CSVData/TermLife.csv", header=TRUE)
 #  SELECCIONAR EL SUBCONJUNTO DE DATOS CORRESPONDIENTE A LA COMPRA DE SEGURO
 Term2  <-subset(Term, FACE > 0)
@@ -78,11 +78,11 @@ TableGen1(TableData=tableMat1,
          ColWidth = ColWidth5) 
 ```
 
-El siguiente paso es medir la relación entre cada $x$ sobre $y$, comenzando con los diagramas de dispersión en la Figura \@ref(fig:TermLifeTwoPlots). El panel de la izquierda es un gráfico de FACE versus INCOME; en este panel, vemos una gran concentración en la esquina inferior izquierda que corresponde a hogares con ingresos y cantidades de seguro pequeños. Ambas variables tienen distribuciones sesgadas y su efecto conjunto es altamente no lineal. El panel derecho presenta las mismas variables, pero utilizando transformaciones logarítmicas. Aquí, vemos una relación que se puede aproximar más fácilmente con una línea.
+El siguiente paso es medir la relación entre cada $x$ sobre $y$, comenzando con los diagramas de dispersión en la Figura \@ref(fig:Fig31). El panel de la izquierda es un gráfico de FACE versus INCOME; en este panel, vemos una gran concentración en la esquina inferior izquierda que corresponde a hogares con ingresos y cantidades de seguro pequeños. Ambas variables tienen distribuciones sesgadas y su efecto conjunto es altamente no lineal. El panel derecho presenta las mismas variables, pero utilizando transformaciones logarítmicas. Aquí, vemos una relación que se puede aproximar más fácilmente con una línea.
 
-(ref:TermLifeTwoPlots) **Ingresos versus Monto Nominal del Seguro de Vida Temporal.** El panel de la izquierda es un gráfico de monto nominal versus ingresos, mostrando un patrón altamente no lineal. En el panel derecho, el monto nominal versus ingresos está en unidades logarítmicas naturales, sugiriendo un patrón lineal (aunque variable).
+(ref:Fig31) **Ingresos versus Monto Nominal del Seguro de Vida Temporal.** El panel de la izquierda es un gráfico de monto nominal versus ingresos, mostrando un patrón altamente no lineal. En el panel derecho, el monto nominal versus ingresos está en unidades logarítmicas naturales, sugiriendo un patrón lineal (aunque variable).
 
-```{r TermLifeTwoPlots, fig.cap='(ref:TermLifeTwoPlots)', echo=FALSE, fig.align='center', out.width = "80%"}
+```{r Fig31, fig.cap='(ref:Fig31)', echo=FALSE, fig.align='center', out.width = "80%"}
 Term <- read.csv("CSVData/TermLife.csv", header=TRUE)
 #  SELECCIONAR EL SUBCONJUNTO DE DATOS CORRESPONDIENTE A LA COMPRA DE SEGURO
 Term2  <-subset(Term, FACE > 0)
@@ -106,19 +106,19 @@ mtext("LNFACE", side=2, at=16.8, las=1, cex=1.1, adj=1.1)
 
 `r HideRCode('Fig31.Hide',"Código R para producir la Tabla 3.1 y la Figura 3.1")`
 
-```{r ref.label = 'FaceSumStats', eval = FALSE}
+```{r ref.label = 'Tab31', eval = FALSE}
 ```
 
-```{r ref.label = 'TermLifeTwoPlots', eval = FALSE}
+```{r ref.label = 'Fig31', eval = FALSE}
 ```
 
 </div>
 
-Los datos de Seguro de Vida Temporal son *multivariados* en el sentido de que se toman varias mediciones en cada hogar. Es difícil producir un gráfico de observaciones en tres o más dimensiones en una plataforma bidimensional, como una hoja de papel, que no sea confuso, engañoso o ambos. Para resumir gráficamente datos multivariados en aplicaciones de regresión, considere usar una *matriz de diagramas de dispersión* como en la Figura \@ref(fig:TermLifeSMatrix). Cada cuadrado de esta figura representa un gráfico simple de una variable contra otra. Para cada cuadrado, la variable de la fila da las unidades del eje vertical y la variable de la columna da las unidades del eje horizontal. La matriz a veces se llama una *matriz de dispersión parcial* porque solo se presentan los elementos en la parte inferior izquierda.
+Los datos de Seguro de Vida Temporal son *multivariados* en el sentido de que se toman varias mediciones en cada hogar. Es difícil producir un gráfico de observaciones en tres o más dimensiones en una plataforma bidimensional, como una hoja de papel, que no sea confuso, engañoso o ambos. Para resumir gráficamente datos multivariados en aplicaciones de regresión, considere usar una *matriz de diagramas de dispersión* como en la Figura \@ref(fig:Fig32). Cada cuadrado de esta figura representa un gráfico simple de una variable contra otra. Para cada cuadrado, la variable de la fila da las unidades del eje vertical y la variable de la columna da las unidades del eje horizontal. La matriz a veces se llama una *matriz de dispersión parcial* porque solo se presentan los elementos en la parte inferior izquierda.
 
-(ref:TermLifeSMatrix) **Matriz de diagramas de dispersión de cuatro variables.** Cada cuadrado es un diagrama de dispersión.
+(ref:Fig32) **Matriz de diagramas de dispersión de cuatro variables.** Cada cuadrado es un diagrama de dispersión.
 
-```{r TermLifeSMatrix, fig.cap='(ref:TermLifeSMatrix)', echo=FALSE, fig.align='center', out.width = "80%", fig.asp=1.1}
+```{r Fig32, fig.cap='(ref:Fig32)', echo=FALSE, fig.align='center', out.width = "80%", fig.asp=1.1}
 
 #  FIGURA 3.2
 par(mar=c(4.1,2.1,2.1,2.1), cex=1.1)
@@ -128,9 +128,9 @@ pairs(Term1,upper.panel=NULL, gap=0,cex.labels=1.25, las=1)
 
 ```
 
-La matriz de diagramas de dispersión se puede resumir numéricamente usando una matriz de correlación. Cada correlación en la Tabla \@ref(tab:TermLifeCorr) corresponde a un cuadrado de la matriz de diagramas de dispersión en la Figura \@ref(fig:TermLifeSMatrix). Los analistas a menudo presentan tablas de correlaciones porque son fáciles de interpretar. Sin embargo, recuerde que un coeficiente de correlación solo mide la magnitud de las relaciones lineales. Por lo tanto, una tabla de correlaciones proporciona una idea de las relaciones lineales, pero puede pasar por alto una relación no lineal que se puede revelar en una matriz de diagramas de dispersión.
+La matriz de diagramas de dispersión se puede resumir numéricamente usando una matriz de correlación. Cada correlación en la Tabla \@ref(tab:Tab32) corresponde a un cuadrado de la matriz de diagramas de dispersión en la Figura \@ref(fig:Fig32). Los analistas a menudo presentan tablas de correlaciones porque son fáciles de interpretar. Sin embargo, recuerde que un coeficiente de correlación solo mide la magnitud de las relaciones lineales. Por lo tanto, una tabla de correlaciones proporciona una idea de las relaciones lineales, pero puede pasar por alto una relación no lineal que se puede revelar en una matriz de diagramas de dispersión.
 
-```{r TermLifeCorr, echo=FALSE}
+```{r Tab32, echo=FALSE}
 tableCor <- cor(Term1)
 tableCor <- round(tableCor, digits = 3)
 tableCor[upper.tri(tableCor, diag = TRUE)] <- ""
@@ -146,10 +146,10 @@ La matriz de diagramas de dispersión y la correspondiente matriz de correlació
 
 `r HideRCode('Fig32.Hide',"Código R para producir la Tabla 3.2 y la Figura 3.2")`
 
-```{r ref.label = 'TermLifeCorr', eval = FALSE}
+```{r ref.label = 'Tab32', eval = FALSE}
 ```
 
-```{r ref.label = 'TermLifeSMatrix', eval = FALSE}
+```{r ref.label = 'Fig32', eval = FALSE}
 ```
 
 </div>
@@ -157,7 +157,7 @@ La matriz de diagramas de dispersión y la correspondiente matriz de correlació
 
 #### Método de Mínimos Cuadrados {-}
 
-Consideremos la pregunta: "¿Puede el conocimiento de la educación, el tamaño del hogar y el ingreso ayudarnos a entender la demanda de seguros?" Las correlaciones en la Tabla \@ref(tab:TermLifeCorr) y los gráficos en las Figuras \@ref(fig:TermLifeTwoPlots) y \@ref(fig:TermLifeSMatrix) sugieren que cada variable, EDUCATION, NUMHH y LNINCOME, puede ser una variable explicativa útil de LNFACE cuando se consideran individualmente. Parece razonable investigar el efecto *conjunto* de estas variables en una respuesta.
+Consideremos la pregunta: "¿Puede el conocimiento de la educación, el tamaño del hogar y el ingreso ayudarnos a entender la demanda de seguros?" Las correlaciones en la Tabla \@ref(tab:Tab32) y los gráficos en las Figuras \@ref(fig:Fig31) y \@ref(fig:Fig32) sugieren que cada variable, EDUCATION, NUMHH y LNINCOME, puede ser una variable explicativa útil de LNFACE cuando se consideran individualmente. Parece razonable investigar el efecto *conjunto* de estas variables en una respuesta.
 
 El concepto geométrico de un *plano* se utiliza para explorar la relación lineal entre una respuesta y varias variables explicativas. Recuerde que un plano extiende el concepto de una línea a más de dos dimensiones. Un plano puede definirse mediante una ecuación algebraica como
 
@@ -165,11 +165,11 @@ $$
 y = b_0 + b_1 x_1 + \ldots + b_k x_k.
 $$
 
-Esta ecuación define un plano en \(k+1\) dimensiones. La Figura \@ref(fig:3DPlane) muestra un plano en tres dimensiones. En esta figura, hay una variable de respuesta, LNFACE, y dos variables explicativas, EDUCATION y LNINCOME (NUMHH se mantiene fijo). Es difícil graficar más de tres dimensiones de una manera significativa.
+Esta ecuación define un plano en $k+1$ dimensiones. La Figura \@ref(fig:Fig33) muestra un plano en tres dimensiones. En esta figura, hay una variable de respuesta, LNFACE, y dos variables explicativas, EDUCATION y LNINCOME (NUMHH se mantiene fijo). Es difícil graficar más de tres dimensiones de una manera significativa.
 
-(ref:3DPlane) **Un ejemplo de un plano tridimensional**
+(ref:Fig33) **Un ejemplo de un plano tridimensional**
 
-```{r 3DPlane, fig.cap='(ref:3DPlane)', echo=FALSE, fig.align='center', out.width = "50%"}
+```{r Fig33, fig.cap='(ref:Fig33)', echo=FALSE, fig.align='center', out.width = "50%"}
 #  FIGURA 3.3 PLANO TRIDIMENSIONAL
 par(mar=c(0,2,0,1), cex=0.9)
 EDUCATION <- seq(3, 16, length=15)
@@ -181,29 +181,29 @@ persp(EDUCATION, LNINCOME, LNFACE, theta = 30, phi = 30, expand = 0.5, ticktype=
 
 ```
 
-Necesitamos una manera de determinar un plano basado en los datos. La dificultad es que en la mayoría de las aplicaciones de análisis de regresión, el número de observaciones, \(n\), excede con creces el número de observaciones requeridas para ajustar un plano, \(k+1\). Por lo tanto, generalmente no es posible encontrar un solo plano que pase por todas las \(n\) observaciones. Como en el Capítulo 2, utilizamos el *método de mínimos cuadrados* para determinar un plano a partir de los datos.
+Necesitamos una manera de determinar un plano basado en los datos. La dificultad es que en la mayoría de las aplicaciones de análisis de regresión, el número de observaciones, $n$, excede con creces el número de observaciones requeridas para ajustar un plano, $k+1$. Por lo tanto, generalmente no es posible encontrar un solo plano que pase por todas las $n$ observaciones. Como en el Capítulo 2, utilizamos el *método de mínimos cuadrados* para determinar un plano a partir de los datos.
 
-El método de mínimos cuadrados se basa en determinar los valores de \(b_0^{\ast},b_1^{\ast},\ldots,b_k^{\ast}\) que minimizan la cantidad
+El método de mínimos cuadrados se basa en determinar los valores de $b_0^{\ast},b_1^{\ast},\ldots,b_k^{\ast}$ que minimizan la cantidad
 
-$$
+\begin{equation}
 SS(b_0^{\ast},b_1^{\ast},\ldots,b_k^{\ast})=\sum_{i=1}^{n}\left( y_i-\left( b_0^{\ast}+b_1^{\ast}x_{i1}+\ldots+b_k^{\ast}x_{ik}\right) \right) ^2.
 (\#eq:eq31)
-$$
+\end{equation}
 
-Dejamos de usar la notación con asterisco, o estrella, y usamos \(b_0, b_1, \ldots, b_k\) para denotar los mejores valores, conocidos como las *estimaciones de mínimos cuadrados*. Con las estimaciones de mínimos cuadrados, definimos el *plano de regresión de mínimos cuadrados, o ajustado*, como
+Dejamos de usar la notación con asterisco, o estrella, y usamos $b_0, b_1, \ldots, b_k$ para denotar los mejores valores, conocidos como las *estimaciones de mínimos cuadrados*. Con las estimaciones de mínimos cuadrados, definimos el *plano de regresión de mínimos cuadrados, o ajustado*, como
 
 $$
 \widehat{y} = b_0 + b_1 x_1 + \ldots + b_k x_k.
 $$
 
-Las estimaciones de mínimos cuadrados se determinan minimizando \(SS(b_0^{\ast},b_1^{\ast},\ldots,b_k^{\ast})\). Es difícil escribir los estimadores de mínimos cuadrados resultantes utilizando una fórmula simple a menos que se recurra a la notación matricial. Debido a su importancia en los modelos estadísticos aplicados, se proporciona una fórmula explícita para los estimadores a continuación. Sin embargo, estas fórmulas han sido programadas en una gran variedad de paquetes de software estadístico y de hojas de cálculo. La disponibilidad de estos paquetes permite a los analistas de datos concentrarse en las ideas del procedimiento de estimación en lugar de enfocarse en los detalles de los procedimientos de cálculo.
+Las estimaciones de mínimos cuadrados se determinan minimizando $SS(b_0^{\ast},b_1^{\ast},\ldots,b_k^{\ast})$. Es difícil escribir los estimadores de mínimos cuadrados resultantes utilizando una fórmula simple a menos que se recurra a la notación matricial. Debido a su importancia en los modelos estadísticos aplicados, se proporciona una fórmula explícita para los estimadores a continuación. Sin embargo, estas fórmulas han sido programadas en una gran variedad de paquetes de software estadístico y de hojas de cálculo. La disponibilidad de estos paquetes permite a los analistas de datos concentrarse en las ideas del procedimiento de estimación en lugar de enfocarse en los detalles de los procedimientos de cálculo.
 
-Como ejemplo, se ajustó un plano de regresión a los datos de Seguro de Vida Temporal donde se utilizaron tres variables explicativas, \(x_1\) para EDUCATION, \(x_2\) para NUMHH y \(x_3\) para LNINCOME. El plano de regresión ajustado resultante es
+Como ejemplo, se ajustó un plano de regresión a los datos de Seguro de Vida Temporal donde se utilizaron tres variables explicativas, $x_1$ para EDUCATION, $x_2$ para NUMHH y $x_3$ para LNINCOME. El plano de regresión ajustado resultante es
 
-$$
+\begin{equation}
 \widehat{y} = 2.584 + 0.206 x_1 + 0.306 x_2 + 0.494 x_3.
 (\#eq:eq32)
-$$
+\end{equation}
 
 #### Notación Matricial {-}
 
@@ -280,19 +280,19 @@ Este es un sistema de $k+1$ ecuaciones y $k+1$ incógnitas que se puede resolver
 
 Podemos expresar el vector de parámetros a minimizar como $\mathbf{b}^{\ast}=(b_0^{\ast}, b_1^{\ast}, \ldots, b_k^{\ast})^{\prime}$. Usando esto, la suma de cuadrados se puede escribir como $SS(\mathbf{b}^{\ast}) = (\mathbf{y-Xb}^{\ast})^{\prime}(\mathbf{y-Xb}^{\ast})$. Así, en forma matricial, la solución al problema de minimización se puede expresar como $\frac{\partial}{\partial \mathbf{b}^{\ast}} SS(\mathbf{b}^{\ast}) = \mathbf{0}$. Esta solución satisface las *ecuaciones normales*:
 
-$$
+\begin{equation}
 \mathbf{X^{\prime}Xb} = \mathbf{X}^{\prime}\mathbf{y}.
 (\#eq:eq33)
-$$
+\end{equation}
 
 Aquí, se ha eliminado la notación de asterisco (*) para denotar el hecho de que $\mathbf{b} = (b_0, b_1, \ldots, b_k)^{\prime}$ representa el mejor vector de valores en el sentido de minimizar $SS(\mathbf{b}^{\ast})$ sobre todas las opciones de $\mathbf{b}^{\ast}$.
 
 El estimador de mínimos cuadrados $\mathbf{b}$ no necesita ser único. Sin embargo, suponiendo que las variables explicativas no son combinaciones lineales entre sí, tenemos que $\mathbf{X^{\prime}X}$ es invertible. En este caso, podemos escribir la solución única como:
 
-$$
+\begin{equation}
 \mathbf{b} = \left( \mathbf{X^{\prime}X} \right)^{-1} \mathbf{X}^{\prime} \mathbf{y}.
 (\#eq:eq34)
-$$
+\end{equation}
 
 Para ilustrar, para el ejemplo de Seguro de Vida Temporal, la ecuación \@ref(eq:eq34) produce:
 
@@ -316,18 +316,18 @@ $$
 
 
 
-## Modelo de Regresión Lineal y Propiedades de los Estimadores
+## Modelo de Regresión Lineal y Propiedades de los Estimadores {#Sec32}
 
 En la sección anterior, aprendimos cómo utilizar el método de mínimos cuadrados para ajustar un plano de regresión con un conjunto de datos. Esta sección describe los supuestos que sustentan el modelo de regresión y algunas de las propiedades resultantes de los estimadores de los coeficientes de regresión. Con el modelo y los datos ajustados, podremos hacer inferencias sobre el conjunto de datos de la muestra a una población más grande. Además, más adelante utilizaremos estos supuestos del modelo de regresión para ayudarnos a mejorar la especificación del modelo en el Capítulo 5.
 
-### Función de Regresión
+### Función de Regresión {#Sec321}
 
 La mayoría de los supuestos del modelo de regresión lineal múltiple se trasladarán directamente de los supuestos del modelo de regresión lineal básico introducidos en la Sección 2.2. La principal diferencia es que ahora resumimos la relación entre la variable respuesta y las variables explicativas a través de la *función de regresión*:
 
-$$
+\begin{equation}
 \mathrm{E~}y = \beta_0 x_0 + \beta_1 x_1 + \ldots + \beta_k x_k,
 (\#eq:eq35)
-$$
+\end{equation}
 
 que es lineal en los parámetros $\beta_0,\ldots,\beta_k$. De aquí en adelante, usaremos $x_0 = 1$ para la variable asociada con el parámetro $\beta_0$; esto es lo predeterminado en la mayoría de los paquetes estadísticos, y la mayoría de las aplicaciones de regresión incluyen el término de intercepto $\beta_0$. El intercepto es el valor esperado de $y$ cuando todas las variables explicativas son iguales a cero. Aunque rara vez es de interés, el término $\beta_0$ sirve para establecer la altura del plano de regresión ajustado.
 
@@ -337,7 +337,7 @@ $$
 \beta_j = \frac{\partial }{\partial x_j}\mathrm{E}~y.
 $$
 
-### Interpretación del Coeficiente de Regresión
+### Interpretación del Coeficiente de Regresión {#Sec322}
 
 Examinemos las estimaciones de los coeficientes de regresión del ejemplo de Seguro de Vida Temporal y enfoquémonos inicialmente en el *signo* de los coeficientes. Por ejemplo, en la ecuación \@ref(eq:eq34), el coeficiente asociado con NUMHH es $b_2 = 0.306 > 0$. Si consideramos dos hogares que tienen el mismo ingreso y el mismo nivel de educación, entonces se espera que el hogar más grande (en términos de NUMHH) demande *más* seguro de vida temporal bajo el modelo de regresión. Esta es una interpretación sensata; los hogares más grandes tienen más dependientes para los cuales el seguro de vida temporal puede proporcionar activos financieros necesarios en caso de la muerte prematura de un sostén de la familia. El coeficiente positivo asociado con el ingreso ($b_3 = 0.494$) también es plausible; los hogares con mayores ingresos tienen más dinero disponible para comprar seguros. El signo positivo asociado con EDUCATION ($b_1 = 0.206)$ también es razonable; más educación sugiere que los encuestados son más conscientes de sus necesidades de seguro, otras cosas iguales.
 
@@ -405,7 +405,7 @@ $$
 $$
 
 
-### Suposiciones del Modelo
+### Suposiciones del Modelo {#Sec323}
 
 Como en la Sección 2.2 para una sola variable explicativa, existen dos conjuntos de suposiciones que se pueden utilizar para la regresión lineal múltiple. Son conjuntos equivalentes, cada uno con ventajas comparativas a medida que avanzamos en nuestro estudio de la regresión. La representación de "observables" se centra en las variables de interés $(x_{i1}, \ldots, x_{ik}, y_i)$. La "representación del error" proporciona una base para motivar nuestras medidas de bondad de ajuste y el estudio del análisis de residuales. Sin embargo, el segundo conjunto de suposiciones se centra en el caso de errores aditivos y oscurece la base de muestreo del modelo.
 
@@ -434,9 +434,9 @@ $$
 
 Para motivar aún más las Suposiciones F2 y F4, generalmente asumimos que nuestros datos han sido obtenidos como resultado de un esquema de muestreo estratificado, donde cada valor único de $\{x_{i1}, \ldots, x_{ik}\}$ se trata como un estrato. Es decir, para cada valor de $\{x_{i1}, \ldots, x_{ik}\}$, tomamos una muestra aleatoria de respuestas de una población. Así, las respuestas dentro de cada estrato son independientes entre sí, al igual que las respuestas de diferentes estratos. El Capítulo 6 discutirá esta base de muestreo en mayor detalle.
 
-### Propiedades de los Estimadores de los Coeficientes de Regresión
+### Propiedades de los Estimadores de los Coeficientes de Regresión {#Sec324}
 
-La Sección \@ref(S3:LSMethod) describió el método de mínimos cuadrados para estimar los coeficientes de regresión. Con las suposiciones del modelo de regresión, podemos establecer algunas propiedades básicas de estos estimadores. Para hacerlo, de la Sección 2.11.4, tenemos que la esperanza de un vector es el vector de esperanzas, de modo que
+La Sección \@ref(Sec31) describió el método de mínimos cuadrados para estimar los coeficientes de regresión. Con las suposiciones del modelo de regresión, podemos establecer algunas propiedades básicas de estos estimadores. Para hacerlo, de la Sección 2.11.4, tenemos que la esperanza de un vector es el vector de esperanzas, de modo que
 
 $$
 \small{
@@ -545,7 +545,7 @@ $$
 
 como se requiere. Esta propiedad importante nos permitirá medir la precisión del estimador $\mathbf{b}$ cuando discutamos la inferencia estadística. Específicamente, por la definición de la varianza de un vector (ver Sección 2.11.4),
 
-$$
+\begin{equation}
 \small{
 \mathrm{Var~}\mathbf{b}=
 \begin{pmatrix}
@@ -557,7 +557,7 @@ $$
 = \sigma^2 (\mathbf{X^{\prime}X)}^{-1}.
 }
 (\#eq:eq36)
-$$
+\end{equation}
 
 Así, por ejemplo, $\mathrm{Var~}b_j$ es $\sigma^2$ veces la entrada diagonal $(j+1)$ de $(\mathbf{X^{\prime}X)}^{-1}$. Como otro ejemplo, $\mathrm{Cov}(b_0,b_j)$ es $\sigma^2$ veces el elemento en la primera fila y la columna $(j+1)$ de $(\mathbf{X^{\prime}X)}^{-1}$.
 
@@ -587,7 +587,7 @@ de modo que $\mathbf{b}$ es una combinación lineal de respuestas. Con la Suposi
 
 
 
-## Estimación y Bondad de Ajuste
+## Estimación y Bondad de Ajuste {#Sec33}
 
 #### Desviación Estándar Residual {-}
 
@@ -598,10 +598,10 @@ Nuestro estimador para $\sigma^2$ puede desarrollarse utilizando el principio de
 :::: {.blackbox }
 *Definición.* Un estimador de $\sigma^2$, el *error cuadrático medio (MSE)*, se define como
 
-$$
+\begin{equation}
 s^2 = \frac{1}{n-(k+1)}\sum_{i=1}^{n}\left( y_i - \widehat{y}_i \right)^2.
 (\#eq:eq37)
-$$
+\end{equation}
 
 La raíz cuadrada positiva, $s = \sqrt{s^2}$, se llama la *desviación estándar residual*.
 ::::
@@ -614,10 +614,10 @@ A diferencia de los errores, existen ciertas dependencias entre los residuales. 
 
 La raíz cuadrada positiva de $s^2$ es nuestro estimador de $\sigma$. Usando los residuales, se puede expresar como
 
-$$
+\begin{equation}
 s = \sqrt{\frac{1}{n-(k+1)}\sum_{i=1}^{n}e_i^2}.
 (\#eq:eq38)
-$$
+\end{equation}
 
 Debido a que se basa en residuales, nos referimos a $s$ como la *desviación estándar residual*. La cantidad $s$ es una medida de nuestro "error típico". Por esta razón, $s$ también se llama el *error estándar de la estimación*.
 
@@ -693,20 +693,20 @@ $$
 
 Al hablar del coeficiente de determinación, se puede establecer que siempre que se añade una variable explicativa al modelo, $R^2$ nunca disminuye. Esto es cierto, independientemente de si la variable adicional es útil o no. Nos gustaría una medida de ajuste que disminuyera cuando se introducen variables inútiles en el modelo como variables explicativas. Para evitar esta anomalía, una estadística ampliamente utilizada es el *coeficiente de determinación ajustado por grados de libertad*, definido por
 
-$$
+\begin{equation}
 R_{a}^2 = 1 - \frac{(Error~SS) / [n - (k + 1)]}{(Total~SS) / (n - 1)} = 1 - \frac{s^2}{s_{y}^2}.
 (\#eq:eq39)
-$$
+\end{equation}
 
 Para interpretar esta estadística, observe que $s_y^2$ no depende del modelo ni de las variables del modelo. Por lo tanto, $s^2$ y $R_a^2$ son medidas equivalentes de ajuste del modelo. A medida que el ajuste del modelo mejora, $R_{a}^2$ se hace más grande y $s^2$ se hace más pequeño, y viceversa. Dicho de otro modo, elegir un modelo con el menor $s^2$ es equivalente a elegir un modelo con el mayor $R_a^2$.
 
 
 *** 
 
-**Ejemplo: Seguro de Vida a Término - Continuación.** Para ilustrar, la Tabla \@ref(tab:ANOVATerm) muestra las estadísticas resumen para la regresión de LNFACE sobre EDUCATION, NUMHH y LNINCOME. A partir de la columna de grados de libertad, recordamos que hay tres variables explicativas y 275 observaciones. Como medidas de ajuste del modelo, el coeficiente de determinación es $R^2 = 34.3\%$ (=$328.47 / 958.90$) y la desviación estándar residual es $s = 1.525$ (=$\sqrt{2.326}$). Si intentáramos estimar el monto nominal logarítmico sin conocimiento de las variables explicativas EDUCATION, NUMHH y LNINCOME, entonces el tamaño del error típico sería $s_y = 1.871$ (=$\sqrt{958.90 / 274}$). Así, al aprovechar nuestro conocimiento de las variables explicativas, hemos podido reducir el tamaño del error típico. La medida de ajuste del modelo que compara estas dos estimaciones de variabilidad es el coeficiente de determinación ajustado, $R_a^2 = 1 - 2.326 / 1.871^2 = 33.6\%$.
+**Ejemplo: Seguro de Vida a Término - Continuación.** Para ilustrar, la Tabla \@ref(tab:Tab33) muestra las estadísticas resumen para la regresión de LNFACE sobre EDUCATION, NUMHH y LNINCOME. A partir de la columna de grados de libertad, recordamos que hay tres variables explicativas y 275 observaciones. Como medidas de ajuste del modelo, el coeficiente de determinación es $R^2 = 34.3\%$ (=$328.47 / 958.90$) y la desviación estándar residual es $s = 1.525$ (=$\sqrt{2.326}$). Si intentáramos estimar el monto nominal logarítmico sin conocimiento de las variables explicativas EDUCATION, NUMHH y LNINCOME, entonces el tamaño del error típico sería $s_y = 1.871$ (=$\sqrt{958.90 / 274}$). Así, al aprovechar nuestro conocimiento de las variables explicativas, hemos podido reducir el tamaño del error típico. La medida de ajuste del modelo que compara estas dos estimaciones de variabilidad es el coeficiente de determinación ajustado, $R_a^2 = 1 - 2.326 / 1.871^2 = 33.6\%$.
 
 
-```{r ANOVATerm, echo = FALSE}
+```{r Tab33, echo = FALSE}
 
 row1 <- c(328.47, 3, 109.49)
 row2 <- c(630.43, 271,  2.326)
@@ -761,9 +761,9 @@ Todas las variables fueron estadísticamente significativas. El número de perso
 
 
 
-## Inferencia Estadística para un Coeficiente Único
+## Inferencia Estadística para un Coeficiente Único {#Sec34}
 
-### La Prueba *t*
+### La Prueba *t* {#Sec341}
 
 En muchas aplicaciones, una sola variable es de interés principal, y otras variables se incluyen en la regresión para controlar fuentes adicionales de variabilidad. Para ilustrar, un agente de ventas podría estar interesado en el efecto que tiene el ingreso sobre la cantidad de seguros demandados. En un análisis de regresión, también se podrían incluir otras variables explicativas como el género de un individuo, tipo de ocupación, edad, tamaño del hogar, nivel educativo, etc. Al incluir estas variables explicativas adicionales, esperamos obtener una mejor comprensión de la relación entre el ingreso y la demanda de seguros. Para llegar a conclusiones sensatas, necesitaremos algunas reglas para decidir si una variable es importante o no.
 
@@ -863,7 +863,7 @@ $$
 \end{array}
 $$
 
-Para ilustrar el cálculo de los errores estándar, primero notemos que, según la Tabla \@ref(tab:ANOVATerm), tenemos que la desviación estándar residual es $s=1.525$. Usando un paquete estadístico, tenemos
+Para ilustrar el cálculo de los errores estándar, primero notemos que, según la Tabla \@ref(tab:Tab33), tenemos que la desviación estándar residual es $s=1.525$. Usando un paquete estadístico, tenemos
 
 $$
 \small{
@@ -881,18 +881,18 @@ Para ilustrar, podemos calcular $se(b_3)=s \times \sqrt{0.002585} = 0.078$, como
 Con esta información, podemos calcular inmediatamente las razones $t$ para verificar si un coeficiente asociado con una variable individual es significativamente diferente de cero. Por ejemplo, la razón $t$ para la variable LNINCOME es $t(b_3) = \frac{0.494}{0.078} = 6.3$. La interpretación es que $b_3$ está más de cuatro errores estándar por encima de cero, y por lo tanto LNINCOME es una variable importante en el modelo. Más formalmente, podemos estar interesados en probar la hipótesis nula de que $H_0:\beta_3 = 0$ frente a $H_0:\beta_3 \neq 0$. A un nivel de significancia del 5%, el valor $t$ es 1.96, porque $df=275-(1+3)=271$. Por lo tanto, rechazamos la hipótesis nula en favor de la hipótesis alternativa, que el ingreso logarítmico (LNINCOME) es importante para determinar el monto logarítmico del seguro.
 
 
-### Intervalos de Confianza
+### Intervalos de Confianza {#Sec342}
 
 Los *intervalos de confianza* para los parámetros son otra forma de describir la fuerza de la contribución de la $j$-ésima variable explicativa. La estadística $b_j$ se llama una *estimación puntual* del parámetro $\beta_j$. Para proporcionar un rango de confianza, usamos el intervalo de confianza:
 
-$$
+\begin{equation}
 b_j \pm t_{n-(k+1),1-\alpha /2}~se(b_j).
 (\#eq:eq310)
-$$
+\end{equation}
 
 Aquí, el valor $t$ $t_{n-(k+1),1-\alpha /2}$ es un percentil de la distribución $t$ con $df=n-(k+1)$ grados de libertad. Usamos el mismo valor $t$ que en la prueba de hipótesis bilateral. De hecho, hay una dualidad entre el intervalo de confianza y la prueba de hipótesis bilateral. Por ejemplo, no es difícil comprobar que si un valor hipotético cae fuera del intervalo de confianza, entonces $H_0$ será rechazado en favor de $H_{a}$. Además, el conocimiento del $p$-valor, la estimación puntual y el error estándar se puede utilizar para determinar un intervalo de confianza.
 
-### Gráficos de Variables Añadidas
+### Gráficos de Variables Añadidas {#Sec343}
 
 Para representar datos multivariados de forma gráfica, hemos visto que una matriz de dispersión es una herramienta útil. Sin embargo, la principal limitación de la matriz de dispersión es que solo captura relaciones entre pares de variables. Cuando los datos se pueden resumir utilizando un modelo de regresión, una herramienta gráfica que no tiene esta limitación es el *gráfico de variables añadidas*. El gráfico de variables añadidas también se llama *gráfico de regresión parcial* porque, como veremos, se construye en términos de los residuos de ciertos ajustes de regresión. También veremos que el gráfico de variables añadidas se puede resumir en términos de un coeficiente de correlación parcial, proporcionando así un vínculo entre correlación y regresión. Para introducir estas ideas, trabajamos en el contexto del siguiente ejemplo.
 
@@ -902,7 +902,7 @@ Para representar datos multivariados de forma gráfica, hemos visto que una matr
 
 Tanto los consumidores como los fabricantes están interesados en modelos de precios de refrigeradores. Otras cosas iguales, los consumidores generalmente prefieren refrigeradores más grandes con menores costos de energía y que tengan más características. Debido a las fuerzas de la oferta y la demanda, esperaríamos que los consumidores paguen más por estos refrigeradores. Un refrigerador más grande con menores costos de energía y que tiene más características a un precio similar se considera una ganga para el consumidor. ¿Cuánto estaría dispuesto a pagar el consumidor por este espacio adicional? Un modelo de precios para refrigeradores en el mercado proporciona algo de información sobre esta cuestión.
 
-Para este fin, analizamos datos de $n=37$ refrigeradores. La Tabla \@ref(tab:RefrigSumStats) proporciona las estadísticas descriptivas básicas para la variable de respuesta PRICE y las cinco variables explicativas. De esta tabla, vemos que el precio promedio de los refrigeradores es $\overline{y} = \$626.40$, con una desviación estándar de $s_{y} = \$139.80$. De manera similar, la cantidad promedio anual para operar un refrigerador, o ECOST promedio, es \$70.51.
+Para este fin, analizamos datos de $n=37$ refrigeradores. La Tabla \@ref(tab:Tab37) proporciona las estadísticas descriptivas básicas para la variable de respuesta PRICE y las cinco variables explicativas. De esta tabla, vemos que el precio promedio de los refrigeradores es $\overline{y} = \$626.40$, con una desviación estándar de $s_{y} = \$139.80$. De manera similar, la cantidad promedio anual para operar un refrigerador, o ECOST promedio, es \$70.51.
 
 `r HideRCode('Motivation.1Silly',"")`
 
@@ -920,7 +920,7 @@ knitr::kable(2, caption = "Silly.")
 </div>
 
 
-```{r RefrigSumStats, echo = FALSE}
+```{r Tab37, echo = FALSE}
 Refrig <- read.csv("CSVData/Refrigerator.csv", header=TRUE)
 #  TABLE 3.7 SUMMARY STATISTICS
 varFrig <- c("ECOST", "RSIZE", "FSIZE", "SHELVES", "FEATURES", "PRICE")
@@ -939,9 +939,9 @@ TableGen1(TableData=tableMat,
 ```
 
 
-Para analizar las relaciones entre pares de variables, la Tabla \@ref(tab:RefrigCorr) proporciona una matriz de coeficientes de correlación. En la tabla, vemos que hay relaciones lineales fuertes entre PRICE y tanto el espacio del congelador (FSIZE) como el número de FEATURES. Sorprendentemente, también hay una fuerte correlación positiva entre PRICE y ECOST. Recordemos que ECOST es el costo de energía; uno podría esperar que los refrigeradores de mayor precio deberían tener menores costos de energía.
+Para analizar las relaciones entre pares de variables, la Tabla \@ref(tab:Tab38) proporciona una matriz de coeficientes de correlación. En la tabla, vemos que hay relaciones lineales fuertes entre PRICE y tanto el espacio del congelador (FSIZE) como el número de FEATURES. Sorprendentemente, también hay una fuerte correlación positiva entre PRICE y ECOST. Recordemos que ECOST es el costo de energía; uno podría esperar que los refrigeradores de mayor precio deberían tener menores costos de energía.
 
-```{r RefrigCorr, echo=FALSE}
+```{r Tab38, echo=FALSE}
 tableCor <- cor(Refrig1)
 tableCor <- round(tableCor, digits = 3)
 tableCor[upper.tri(tableCor, diag = TRUE)] <- ""
@@ -957,17 +957,17 @@ TableGen1(TableData=tablePrint,
 `r HideRCode('Refrig.Hide',"R Code to Produce Tables 3.7 and 3.8")`
 
 
-```{r ref.label = 'RefrigSumStats', eval = FALSE}
+```{r ref.label = 'Tab37', eval = FALSE}
 ```
 
-```{r ref.label = 'RefrigCorr', eval = FALSE}
+```{r ref.label = 'Tab38', eval = FALSE}
 ```
 
 </div>
 
-Se ajustó un modelo de regresión a los datos. La ecuación de regresión ajustada aparece en la Tabla \@ref(tab:RefrigFittedModel), con $s=60.65$ y $R^2=83.8\%$.
+Se ajustó un modelo de regresión a los datos. La ecuación de regresión ajustada aparece en la Tabla \@ref(tab:Tab39), con $s=60.65$ y $R^2=83.8\%$.
 
-```{r RefrigFittedModel, echo=FALSE}
+```{r Tab39, echo=FALSE}
 tableout <- data.frame(
     Term = c("Intercepto", "ECOST", "RSIZE", "FSIZE", "SHELVES", "FEATURES"),
     Coefficient = c(798, -6.96, 76.5, 137, 37.9, 23.8),
@@ -982,7 +982,7 @@ TableGen1(TableData=tableout,
          ColWidth = ColWidth5)
 ```
 
-De la Tabla \@ref(tab:RefrigFittedModel), las variables explicativas parecen ser buenos predictores de los precios de los refrigeradores. Juntas, estas variables explican el 83.8% de la variabilidad. Para entender los precios, el error típico ha disminuido de $s_{y} = \$139.80$ a $s = \$60.65$. Los $t$-ratios para cada una de las variables explicativas superan el valor absoluto de dos, lo que indica que cada variable es importante de manera individual.
+De la Tabla \@ref(tab:Tab39), las variables explicativas parecen ser buenos predictores de los precios de los refrigeradores. Juntas, estas variables explican el 83.8% de la variabilidad. Para entender los precios, el error típico ha disminuido de $s_{y} = \$139.80$ a $s = \$60.65$. Los $t$-ratios para cada una de las variables explicativas superan el valor absoluto de dos, lo que indica que cada variable es importante de manera individual.
 
 Lo que sorprende del ajuste de la regresión es el coeficiente negativo asociado con el costo de energía. Recordemos que podemos interpretar $b_{ECOST} = -6.96$ como que, por cada aumento de un dólar en ECOST, esperamos que el PRICE disminuya en \$6.96. Esta relación negativa está conforme con nuestra intuición económica. Sin embargo, es sorprendente que el mismo conjunto de datos nos haya mostrado que existe una relación positiva entre PRICE y ECOST. Esta aparente anomalía se debe a que la correlación solo mide las relaciones entre pares de variables, mientras que el ajuste de la regresión puede considerar varias variables simultáneamente. Para proporcionar más información sobre esta aparente anomalía, ahora introducimos el *gráfico de variables añadidas*.
 
@@ -1000,15 +1000,15 @@ El gráfico de variables añadidas proporciona vínculos adicionales entre la me
 
 2. Realiza una regresión de ECOST sobre RSIZE, FSIZE, SHELVES y FEATURES. Calcula los residuos de esta regresión, los cuales etiquetamos como $e_2$.
 
-3. Grafica $e_1$ versus $e_2$. Este es el gráfico de variables añadidas de PRICE versus ECOST, controlando por los efectos de RSIZE, FSIZE, SHELVES y FEATURES. Este gráfico aparece en la Figura \@ref(fig:RefrigAddedVarPlot).
+3. Grafica $e_1$ versus $e_2$. Este es el gráfico de variables añadidas de PRICE versus ECOST, controlando por los efectos de RSIZE, FSIZE, SHELVES y FEATURES. Este gráfico aparece en la Figura \@ref(fig:Fig34).
 :::: 
 
 <br>
 
 
-(ref:RefrigAddedVarPlot) **Un gráfico de variables añadidas.** Los residuos de la regresión de PRICE sobre las variables explicativas, omitiendo ECOST, están en el eje horizontal. En el eje vertical están los residuos de la regresión de ECOST sobre las demás variables explicativas. El coeficiente de correlación es -0.48.
+(ref:Fig34) **Un gráfico de variables añadidas.** Los residuos de la regresión de PRICE sobre las variables explicativas, omitiendo ECOST, están en el eje horizontal. En el eje vertical están los residuos de la regresión de ECOST sobre las demás variables explicativas. El coeficiente de correlación es -0.48.
 
-```{r RefrigAddedVarPlot, fig.cap='(ref:RefrigAddedVarPlot)', fig.align='center', out.width="60%", echo = FALSE}
+```{r Fig34, fig.cap='(ref:Fig34)', fig.align='center', out.width="60%", echo = FALSE}
 
 model.refrig1 <- lm(PRICE ~ RSIZE + FSIZE + SHELVES + FEATURES, data = Refrig1)
 #summary(model.refrig1)
@@ -1025,7 +1025,7 @@ mtext(expression(e[2]), side=2, at=0, line=3, las=1, cex=1.1)
 
 `r HideRCode('Refrig2.Hide',"Código en R para producir la Figura 3.4")`
 
-```{r ref.label = 'RefrigAddedVarPlot', eval = FALSE}
+```{r ref.label = 'Fig34', eval = FALSE}
 ```
 
 </div>
@@ -1033,36 +1033,36 @@ mtext(expression(e[2]), side=2, at=0, line=3, las=1, cex=1.1)
 
 El error $\varepsilon$ puede interpretarse como la variación natural en una muestra. En muchas situaciones, esta variación natural es pequeña en comparación con los patrones evidentes en el componente de regresión no aleatorio. Por lo tanto, es útil pensar en el error, $\varepsilon_i = y_i - \left( \beta_0 + \beta_1 x_{i1} + \ldots + \beta_k x_{ik} \right)$, como la respuesta después de controlar por los efectos de las variables explicativas. En la Sección 3.3, vimos que un error aleatorio puede aproximarse mediante un residuo, $e_i = y_i - \left( b_0 + b_1 x_{i1} + \cdots + b_k x_{ik} \right)$. De la misma manera, podemos pensar en un residuo como la respuesta después de "controlar" los efectos de las variables explicativas.
 
-Con esto en mente, podemos interpretar el eje vertical de la Figura \@ref(fig:RefrigAddedVarPlot) como el precio del refrigerador (PRICE) controlado por los efectos de RSIZE, FSIZE, SHELVES y FEATURES. De manera similar, podemos interpretar el eje horizontal como ECOST controlado por los efectos de RSIZE, FSIZE, SHELVES y FEATURES. El gráfico proporciona entonces una representación gráfica de la relación entre PRICE y ECOST, después de controlar por las demás variables explicativas. En comparación, un diagrama de dispersión de PRICE y ECOST (no mostrado aquí) no controla por las demás variables explicativas. Por lo tanto, es posible que la relación positiva entre PRICE y ECOST no se deba a una relación causal, sino más bien a una o más variables adicionales que hacen que ambas variables sean grandes.
+Con esto en mente, podemos interpretar el eje vertical de la Figura \@ref(fig:Fig34) como el precio del refrigerador (PRICE) controlado por los efectos de RSIZE, FSIZE, SHELVES y FEATURES. De manera similar, podemos interpretar el eje horizontal como ECOST controlado por los efectos de RSIZE, FSIZE, SHELVES y FEATURES. El gráfico proporciona entonces una representación gráfica de la relación entre PRICE y ECOST, después de controlar por las demás variables explicativas. En comparación, un diagrama de dispersión de PRICE y ECOST (no mostrado aquí) no controla por las demás variables explicativas. Por lo tanto, es posible que la relación positiva entre PRICE y ECOST no se deba a una relación causal, sino más bien a una o más variables adicionales que hacen que ambas variables sean grandes.
 
-Por ejemplo, de la Tabla \@ref(tab:RefrigCorr), vemos que el tamaño del congelador (FSIZE) está positivamente correlacionado tanto con ECOST como con PRICE. Ciertamente parece razonable que aumentar el tamaño de un congelador cause que tanto el costo de energía como el precio aumenten. Más bien, la correlación positiva puede deberse al hecho de que valores grandes de FSIZE significan valores grandes tanto de ECOST como de PRICE.
+Por ejemplo, de la Tabla \@ref(tab:Tab38), vemos que el tamaño del congelador (FSIZE) está positivamente correlacionado tanto con ECOST como con PRICE. Ciertamente parece razonable que aumentar el tamaño de un congelador cause que tanto el costo de energía como el precio aumenten. Más bien, la correlación positiva puede deberse al hecho de que valores grandes de FSIZE significan valores grandes tanto de ECOST como de PRICE.
 
 Las variables omitidas en una regresión se llaman *variables omitidas*. Esta omisión podría causar un problema serio en el ajuste del modelo de regresión; los coeficientes de regresión podrían no solo ser significativamente fuertes cuando no deberían serlo, sino que también podrían tener el signo incorrecto. Seleccionar el conjunto adecuado de variables para incluir en el modelo de regresión es una tarea importante; es el tema de los Capítulos 5 y 6.
 
 
-### Coeficientes de Correlación Parcial
+### Coeficientes de Correlación Parcial {#Sec344}
 
 Como vimos en el Capítulo 2, una estadística de correlación es una cantidad útil para resumir gráficos. La correlación en el gráfico de variables añadidas se llama *coeficiente de correlación parcial*. Se define como la correlación entre los residuos $e_1$ y $e_2$ y se denota por $r(y,x_j | x_1, \ldots, x_{j-1}, x_{j+1}, \ldots, x_k)$. Debido a que resume un gráfico de variables añadidas, podemos interpretar $r(y,x_j | x_1, \ldots, x_{j-1}, x_{j+1}, \ldots, x_k)$ como la correlación entre $y$ y $x_j$, en presencia de las otras variables explicativas. Por ejemplo, la correlación entre PRICE y ECOST en presencia de las otras variables explicativas es -0.48.
 
 El coeficiente de correlación parcial también se puede calcular utilizando
 
-$$
+\begin{equation}
 r(y,x_j | x_1, \ldots, x_{j-1}, x_{j+1}, \ldots, x_k) = \frac{t(b_j)}{\sqrt{t(b_j)^2 + n - (k + 1)}}.
 (\#eq:eq311)
-$$
+\end{equation}
 
-Aquí, $t(b_j)$ es el $t$-ratio para $b_j$ de una regresión de $y$ sobre $x_1, \ldots, x_k$ (incluyendo la variable $x_j$). Un aspecto importante de esta ecuación es que nos permite calcular coeficientes de correlación parcial ejecutando solo una regresión. Por ejemplo, en la Tabla \@ref(tab:RefrigFittedModel), la correlación parcial entre PRICE y ECOST en presencia de las otras variables explicativas es $\frac{-3.1}{\sqrt{(-3.1)^2 + 37 - (5 + 1)}} \approx -0.48$.
+Aquí, $t(b_j)$ es el $t$-ratio para $b_j$ de una regresión de $y$ sobre $x_1, \ldots, x_k$ (incluyendo la variable $x_j$). Un aspecto importante de esta ecuación es que nos permite calcular coeficientes de correlación parcial ejecutando solo una regresión. Por ejemplo, en la Tabla \@ref(tab:Tab39), la correlación parcial entre PRICE y ECOST en presencia de las otras variables explicativas es $\frac{-3.1}{\sqrt{(-3.1)^2 + 37 - (5 + 1)}} \approx -0.48$.
 
-El cálculo de coeficientes de correlación parcial es más rápido cuando se usa la relación con el $t$-ratio, pero puede fallar en detectar relaciones no lineales. La información en la Tabla \@ref(tab:RefrigFittedModel) nos permite calcular los cinco coeficientes de correlación parcial en el Ejemplo del Precio de los Refrigeradores después de ejecutar solo una regresión. El procedimiento de tres pasos para producir gráficos de variables añadidas requiere diez regresiones, dos para cada una de las cinco variables explicativas. Por supuesto, al producir gráficos de variables añadidas, podemos detectar relaciones no lineales que son omitidas por los coeficientes de correlación.
+El cálculo de coeficientes de correlación parcial es más rápido cuando se usa la relación con el $t$-ratio, pero puede fallar en detectar relaciones no lineales. La información en la Tabla \@ref(tab:Tab39) nos permite calcular los cinco coeficientes de correlación parcial en el Ejemplo del Precio de los Refrigeradores después de ejecutar solo una regresión. El procedimiento de tres pasos para producir gráficos de variables añadidas requiere diez regresiones, dos para cada una de las cinco variables explicativas. Por supuesto, al producir gráficos de variables añadidas, podemos detectar relaciones no lineales que son omitidas por los coeficientes de correlación.
 
 Los coeficientes de correlación parcial proporcionan otra interpretación para los $t$-ratios. La ecuación muestra cómo calcular una estadística de correlación a partir de un $t$-ratio, proporcionando así otro vínculo entre la correlación y el análisis de regresión. Además, de la ecuación vemos que cuanto mayor es el $t$-ratio, mayor es el coeficiente de correlación parcial. Es decir, un $t$-ratio alto significa que existe una gran correlación entre la respuesta y la variable explicativa, controlando por las otras variables explicativas. Esto proporciona una respuesta parcial a la pregunta que suelen hacer los consumidores de análisis de regresión: "¿Cuál es la variable más importante?"
 
 
-## Algunas Variables Explicativas Especiales
+## Algunas Variables Explicativas Especiales {#Sec35}
 
 El modelo de regresión lineal es la base de una rica familia de modelos. Esta sección ofrece varios ejemplos para ilustrar la riqueza de esta familia. Estos ejemplos demuestran el uso de (i) variables binarias, (ii) transformación de variables explicativas y (iii) términos de interacción. Esta sección también sirve para subrayar el significado del adjetivo *lineal* en la frase "regresión lineal"; la función de regresión es lineal en los parámetros pero puede ser una función altamente no lineal de las variables explicativas.
 
-### Variables Binarias
+### Variables Binarias {#Sec351}
 
 Las variables categóricas proporcionan una etiqueta numérica para mediciones de observaciones que caen en grupos distintos, o *categorías*. Debido a la agrupación, las variables categóricas son discretas y generalmente toman un número finito de valores. Comenzamos nuestra discusión con una variable categórica que puede tomar uno de solo dos valores, una *variable binaria*. Una discusión más detallada sobre las variables categóricas es el tema del Capítulo 4.
 
@@ -1072,11 +1072,11 @@ Las variables categóricas proporcionan una etiqueta numérica para mediciones d
 
 La variable binaria SINGLE se define como uno si el encuestado está soltero y 0 en caso contrario. La variable SINGLE también se conoce como una variable *indicadora* porque indica si el encuestado está soltero o no. Otro nombre para este tipo importante de variable es una variable *dummy*. Podríamos usar 0 y 100, o 20 y 36, o cualquier otro par de valores distintos. Sin embargo, 0 y 1 son convenientes para la interpretación de los valores de los parámetros, discutidos a continuación. Para simplificar la discusión, presentamos ahora un modelo utilizando solo LNINCOME y SINGLE como variables explicativas.
 
-Para nuestra muestra de $n = 275$ hogares, 57 son solteros y los otros 218 no lo son. Para ver las relaciones entre LNFACE, LNINCOME y SINGLE, la Figura \@ref(fig:LinesLetterPlot) introduce un *gráfico de letras* de LNFACE versus LNINCOME, con SINGLE como la variable de código. Podemos ver que la Figura \@ref(fig:LinesLetterPlot) es un diagrama de dispersión de LNFACE versus LNINCOME, usando 50 hogares seleccionados aleatoriamente de nuestra muestra de 275 (para mayor claridad del gráfico). Sin embargo, en lugar de usar el mismo símbolo de gráfico para cada observación, hemos codificado los símbolos para que podamos entender fácilmente el comportamiento de una tercera variable, SINGLE. En otras aplicaciones, puede optar por usar otros símbolos de gráfico como $\clubsuit$, $\heartsuit$, $\spadesuit$, y así sucesivamente, o usar diferentes colores, para codificar información adicional. Para esta aplicación, se seleccionaron los códigos de letras "S" para solteros y "o" para otros porque recuerdan al lector la naturaleza del esquema de codificación. Independientemente del esquema de codificación, el punto importante es que un gráfico de letras es un dispositivo útil para representar gráficamente tres o más variables en dos dimensiones. La principal restricción es que la información adicional debe estar categorizada, como con las variables binarias, para que el esquema de codificación funcione.
+Para nuestra muestra de $n = 275$ hogares, 57 son solteros y los otros 218 no lo son. Para ver las relaciones entre LNFACE, LNINCOME y SINGLE, la Figura \@ref(fig:Fig35) introduce un *gráfico de letras* de LNFACE versus LNINCOME, con SINGLE como la variable de código. Podemos ver que la Figura \@ref(fig:Fig35) es un diagrama de dispersión de LNFACE versus LNINCOME, usando 50 hogares seleccionados aleatoriamente de nuestra muestra de 275 (para mayor claridad del gráfico). Sin embargo, en lugar de usar el mismo símbolo de gráfico para cada observación, hemos codificado los símbolos para que podamos entender fácilmente el comportamiento de una tercera variable, SINGLE. En otras aplicaciones, puede optar por usar otros símbolos de gráfico como $\clubsuit$, $\heartsuit$, $\spadesuit$, y así sucesivamente, o usar diferentes colores, para codificar información adicional. Para esta aplicación, se seleccionaron los códigos de letras "S" para solteros y "o" para otros porque recuerdan al lector la naturaleza del esquema de codificación. Independientemente del esquema de codificación, el punto importante es que un gráfico de letras es un dispositivo útil para representar gráficamente tres o más variables en dos dimensiones. La principal restricción es que la información adicional debe estar categorizada, como con las variables binarias, para que el esquema de codificación funcione.
 
-(ref:LinesLetterPlot) **Gráfico de letras de LNFACE versus LNINCOME, con el código de letra 'S' para solteros y 'o' para otros.** Las líneas de regresión ajustadas han sido superpuestas. La línea inferior es para solteros y la línea superior es para otros.
+(ref:Fig35) **Gráfico de letras de LNFACE versus LNINCOME, con el código de letra 'S' para solteros y 'o' para otros.** Las líneas de regresión ajustadas han sido superpuestas. La línea inferior es para solteros y la línea superior es para otros.
 
-```{r LinesLetterPlot, fig.cap='(ref:LinesLetterPlot)', echo=FALSE, out.width="100%"}
+```{r Fig35, fig.cap='(ref:Fig35)', echo=FALSE, out.width="100%"}
 Term <- read.csv("CSVData/TermLife.csv", header=TRUE)
 Term2  <-subset(Term, FACE > 0)
 
@@ -1114,7 +1114,7 @@ arrows(13.3,9, 12.8, 12, code=2, angle=10, length=0.2)
 ```
 
 
-La Figura \@ref(fig:LinesLetterPlot) sugiere que LNFACE es más bajo para aquellos solteros que para otros para un nivel dado de ingreso. Por lo tanto, ahora consideramos un modelo de regresión, `LNFACE = β_0 + β_1 LNINCOME + β_2 SINGLE + ϵ`. La función de regresión se puede escribir como:
+La Figura \@ref(fig:Fig35) sugiere que LNFACE es más bajo para aquellos solteros que para otros para un nivel dado de ingreso. Por lo tanto, ahora consideramos un modelo de regresión, `LNFACE = β_0 + β_1 LNINCOME + β_2 SINGLE + ϵ`. La función de regresión se puede escribir como:
 
 $$
 \text{E } y = 
@@ -1137,32 +1137,32 @@ $$
 }
 $$
 
-Para interpretar $b_2 = -0.800$, decimos que esperamos que el logaritmo de la cara sea menor en 0.80 para un encuestado que es soltero en comparación con la otra categoría. Esto asume que otras cosas, como el ingreso, permanecen constantes. Para una interpretación gráfica, las dos líneas de regresión ajustadas están superpuestas en la Figura \@ref(fig:LinesLetterPlot).
+Para interpretar $b_2 = -0.800$, decimos que esperamos que el logaritmo de la cara sea menor en 0.80 para un encuestado que es soltero en comparación con la otra categoría. Esto asume que otras cosas, como el ingreso, permanecen constantes. Para una interpretación gráfica, las dos líneas de regresión ajustadas están superpuestas en la Figura \@ref(fig:Fig35).
 
 ***
 
 
-### Transformación de Variables Explicativas
+### Transformación de Variables Explicativas {#Sec352}
 
 Los modelos de regresión tienen la capacidad de representar relaciones complejas y *no lineales* entre la respuesta esperada y las variables explicativas. Por ejemplo, los textos tempranos sobre regresión, como Plackett (1960, Capítulo 6), dedican un capítulo completo al modelo de regresión polinómica,
 
-$$
+\begin{equation}
 \text{E } y  =  \beta_0 + \beta_1 x + \beta_2 x^2 + \ldots + \beta_p x^p.
 (\#eq:eq312)
-$$
+\end{equation}
 
 Aquí, la idea es que un polinomio de orden $p$ en $x$ puede usarse para aproximar funciones generales y desconocidas no lineales de $x$.
 
-El tratamiento moderno de la regresión polinómica no requiere un capítulo completo porque el modelo en la ecuación \@ref(eq:eq312) puede expresarse como un caso especial del modelo de regresión lineal. Es decir, con la función de regresión en la ecuación \@ref(eq:eq35), $\text{E } y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_k x_k$, podemos elegir $k = p$ y $x_1 =x$, \(x_2 = x^2\), \(\ldots\), \(x_p = x^p\). Así, con estas elecciones de variables explicativas, podemos modelar una función altamente no lineal de \(x\).
+El tratamiento moderno de la regresión polinómica no requiere un capítulo completo porque el modelo en la ecuación \@ref(eq:eq312) puede expresarse como un caso especial del modelo de regresión lineal. Es decir, con la función de regresión en la ecuación \@ref(eq:eq35), $\text{E } y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_k x_k$, podemos elegir $k = p$ y $x_1 =x$, $x_2 = x^2$, $\ldots$, $x_p = x^p$. Así, con estas elecciones de variables explicativas, podemos modelar una función altamente no lineal de $x$.
 
-No estamos restringidos a potencias de \(x\) en nuestra elección de transformaciones. Por ejemplo, el modelo \(\text{E } y = \beta_0 + \beta_1 \ln x\), proporciona otra forma de representar una curva suavemente inclinada en \(x\). Este modelo puede escribirse como un caso especial del modelo de regresión lineal básico usando \(x^{\ast} = \ln x\) como la versión transformada de \(x\).
+No estamos restringidos a potencias de $x$ en nuestra elección de transformaciones. Por ejemplo, el modelo $\text{E } y = \beta_0 + \beta_1 \ln x$, proporciona otra forma de representar una curva suavemente inclinada en $x$. Este modelo puede escribirse como un caso especial del modelo de regresión lineal básico usando $x^{\ast} = \ln x$ como la versión transformada de $x$.
 
-Las transformaciones de las variables explicativas no tienen que ser funciones suaves. Para ilustrar, en algunas aplicaciones, es útil categorizar una variable explicativa continua. Por ejemplo, supongamos que \(x\) representa el número de años de educación, que varía de 0 a 17. Si nos basamos en información auto-reportada por nuestra muestra de personas mayores, puede haber una cantidad considerable de error en la medición de \(x\). Podríamos optar por usar una transformación menos informativa, pero más confiable, de \(x\) como \(x^{\ast}\), una variable binaria para haber completado 13 años de escolaridad (terminar la secundaria). Formalmente, codificaríamos \(x^{\ast} = 1\) si \(x \geq 13\) y \(x^{\ast} = 0\) si \(x < 13\).
+Las transformaciones de las variables explicativas no tienen que ser funciones suaves. Para ilustrar, en algunas aplicaciones, es útil categorizar una variable explicativa continua. Por ejemplo, supongamos que $x$ representa el número de años de educación, que varía de 0 a 17. Si nos basamos en información auto-reportada por nuestra muestra de personas mayores, puede haber una cantidad considerable de error en la medición de $x$. Podríamos optar por usar una transformación menos informativa, pero más confiable, de $x$ como $x^{\ast}$, una variable binaria para haber completado 13 años de escolaridad (terminar la secundaria). Formalmente, codificaríamos \$x^{\ast} = 1$ si $x \geq 13$ y $x^{\ast} = 0$ si $x < 13$.
 
-Así, hay varias formas en que las funciones no lineales de las variables explicativas pueden usarse en el modelo de regresión. Un ejemplo de un modelo de regresión no lineal es \(y  =  \beta_0 + \exp (\beta_1 x) + \varepsilon.\) Estos típicamente surgen en aplicaciones científicas de regresiones donde hay principios científicos fundamentales que guían el desarrollo del modelo complejo.
+Así, hay varias formas en que las funciones no lineales de las variables explicativas pueden usarse en el modelo de regresión. Un ejemplo de un modelo de regresión no lineal es $y  =  \beta_0 + \exp (\beta_1 x) + \varepsilon.$ Estos típicamente surgen en aplicaciones científicas de regresiones donde hay principios científicos fundamentales que guían el desarrollo del modelo complejo.
 
 
-### Términos de Interacción
+### Términos de Interacción {#Sec353}
 
 Hasta ahora hemos discutido cómo las variables explicativas, digamos $x_1$ y $x_2$, afectan la respuesta media de manera aditiva, es decir, $\mathrm{E}~y = \beta_0 + \beta_1 x_1 + \beta_2 x_2$. Aquí, esperamos que $y$ aumente en $\beta_1$ por cada unidad que aumente $x_1$, manteniendo $x_2$ fijo. ¿Qué pasa si la tasa marginal de aumento de $\mathrm{E}~y$ difiere para valores altos de $x_2$ en comparación con valores bajos de $x_2$? Una forma de representar esto es crear una *variable de interacción* $x_3 = x_1 \times x_2$ y considerar el modelo $\mathrm{E}~y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3$.
 
@@ -1172,11 +1172,11 @@ $$
 \frac{\partial \mathrm{E}~y}{\partial x_1} = \frac{\partial}{\partial x_1} \left(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 \right) = \beta_1 + \beta_3 x_2 .
 $$
 
-De esta manera, podemos permitir funciones más complicadas de $x_1$ y $x_2$. La Figura \@ref(fig:interaction) ilustra esta estructura compleja. A partir de esta figura y los cálculos anteriores, vemos que los cambios parciales de $\mathrm{E}~y$ debido al movimiento de $x_1$ dependen del valor de $x_2$. De esta manera, decimos que los cambios parciales debidos a cada variable no son independientes, sino que "se mueven juntos."
+De esta manera, podemos permitir funciones más complicadas de $x_1$ y $x_2$. La Figura \@ref(fig:Fig36) ilustra esta estructura compleja. A partir de esta figura y los cálculos anteriores, vemos que los cambios parciales de $\mathrm{E}~y$ debido al movimiento de $x_1$ dependen del valor de $x_2$. De esta manera, decimos que los cambios parciales debidos a cada variable no son independientes, sino que "se mueven juntos."
 
-(ref:interaction) **Gráfico de $\mathrm{E}~y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2$ versus $x_1$ y $x_2$.**
+(ref:Fig36) **Gráfico de $\mathrm{E}~y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2$ versus $x_1$ y $x_2$.**
 
-```{r interaction, fig.cap='(ref:interaction)', echo=FALSE, out.width='60%'}
+```{r Fig36, fig.cap='(ref:Fig36)', echo=FALSE, out.width='60%'}
 
 #  FIGURA 3.6
 X1 <- seq(3, 16, length=15)
@@ -1212,11 +1212,11 @@ $$
 \end{cases}
 $$
 
-Así, a través de este único modelo con cuatro parámetros, podemos crear dos líneas de regresión separadas, una para los solteros y otra para los demás. La Figura \@ref(fig:letterinteract) muestra las dos líneas de regresión ajustadas para nuestros datos.
+Así, a través de este único modelo con cuatro parámetros, podemos crear dos líneas de regresión separadas, una para los solteros y otra para los demás. La Figura \@ref(fig:Fig37) muestra las dos líneas de regresión ajustadas para nuestros datos.
 
-(ref:letterinteract) **Gráfico de LNFACE versus LNINCOME, con el código de letra `S` para solteros y `o` para otros.** Las líneas de regresión ajustadas han sido superpuestas. La línea inferior es para solteros y la línea superior es para otros.
+(ref:Fig37) **Gráfico de LNFACE versus LNINCOME, con el código de letra `S` para solteros y `o` para otros.** Las líneas de regresión ajustadas han sido superpuestas. La línea inferior es para solteros y la línea superior es para otros.
 
-```{r letterinteract, fig.cap='(ref:letterinteract)', echo=FALSE, out.width='100%'}
+```{r Fig37, fig.cap='(ref:Fig37)', echo=FALSE, out.width='100%'}
 
 modelM0Interact <- lm(LNFACE ~ LNINCOME+MAR0+MAR0*LNINCOME)
 #summary(modelM0Interact)
@@ -1313,7 +1313,7 @@ $$
 \mathrm{E} y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_{11} x_1^2 + \beta_{22} x_2^2 + \beta_{12} x_1 x_2.
 $$
 
-La Figura \@ref(fig:Curvilinear) ilustra esta función de respuesta. De manera similar, la función de respuesta para un modelo de segundo orden con tres variables explicativas es:
+La Figura \@ref(fig:Fig38) ilustra esta función de respuesta. De manera similar, la función de respuesta para un modelo de segundo orden con tres variables explicativas es:
 
 $$
 \mathrm{E} y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_{11} x_1^2 + \beta_{22} x_2^2 + \beta_{33} x_3^2 + \beta_{12} x_1 x_2 + \beta_{13} x_1 x_3 + \beta_{23} x_2 x_3.
@@ -1321,9 +1321,9 @@ $$
 
 Cuando hay más de una variable explicativa, los modelos de tercer orden y de órdenes superiores rara vez se utilizan en aplicaciones.
 
-(ref:Curvilinear) **Gráfico de $\mathrm{E}~y = \beta_0 + \beta_1~x_1 + \beta_2~x_2 + \beta_{11}~x_1^2 + \beta_{22}~x_2^2 + \beta_{12}~x_1~x_2$ versus $x_1$ y $x_2$.**
+(ref:Fig38) **Gráfico de $\mathrm{E}~y = \beta_0 + \beta_1~x_1 + \beta_2~x_2 + \beta_{11}~x_1^2 + \beta_{22}~x_2^2 + \beta_{12}~x_1~x_2$ versus $x_1$ y $x_2$.**
 
-```{r Curvilinear, fig.cap='(ref:Curvilinear)', echo=FALSE, out.width='60%'}
+```{r Fig38, fig.cap='(ref:Fig38)', echo=FALSE, out.width='60%'}
 
 #  FIGURA 3.8
 X1 <- seq(3, 16, length=15)
@@ -1338,7 +1338,7 @@ persp(X1, X2, y, theta = 30, phi = 30, expand = 0.5,
 
 `r HideRCode('Fig38.Hide',"Código R para producir la Figura 3.8")`
 
-```{r ref.label = 'Curvilinear', eval = FALSE}
+```{r ref.label = 'Fig38', eval = FALSE}
 ```
 
 </div>
@@ -1347,11 +1347,11 @@ persp(X1, X2, y, theta = 30, phi = 30, expand = 0.5,
 
 #### Caso Especial: Funciones No Lineales de una Variable Continua {-}
 
-En algunas aplicaciones, esperamos que la respuesta tenga cambios abruptos en el comportamiento en ciertos valores de una variable explicativa, incluso si la variable es continua. Por ejemplo, supongamos que estamos tratando de modelar las contribuciones benéficas de un individuo ($y$) en función de sus ingresos ($x$). Para los datos de 2007, un modelo simple que podríamos considerar es el que se muestra en la Figura \@ref(fig:Charity).
+En algunas aplicaciones, esperamos que la respuesta tenga cambios abruptos en el comportamiento en ciertos valores de una variable explicativa, incluso si la variable es continua. Por ejemplo, supongamos que estamos tratando de modelar las contribuciones benéficas de un individuo ($y$) en función de sus ingresos ($x$). Para los datos de 2007, un modelo simple que podríamos considerar es el que se muestra en la Figura \@ref(fig:Fig39).
 
-(ref:Charity) **El cambio marginal en $\mathrm{E}~y$ es menor por debajo de \$97,500.** El parámetro $\beta_2$ representa la diferencia en las pendientes.
+(ref:Fig39) **El cambio marginal en $\mathrm{E}~y$ es menor por debajo de \$97,500.** El parámetro $\beta_2$ representa la diferencia en las pendientes.
 
-```{r Charity, fig.cap='(ref:Charity)', echo=FALSE, out.width='60%'}
+```{r Fig39, fig.cap='(ref:Fig39)', echo=FALSE, out.width='60%'}
 
 #  FIGURA 3.9
 x <- seq(90000,105000,20)
@@ -1367,7 +1367,7 @@ text(94000,92000,expression(beta[1]),cex=1.1)
 
 `r HideRCode('Fig39.Hide',"Código R para producir la Figura 3.9")`
 
-```{r ref.label = 'Charity', eval = FALSE}
+```{r ref.label = 'Fig39', eval = FALSE}
 ```
 
 </div>
@@ -1385,9 +1385,9 @@ $$
 
 Para estimar este modelo, realizaríamos una regresión de $y$ sobre dos variables explicativas, $x_1 = x$ y $x_2 = z \times (x - 97,500)$. Si $\beta_2 > 0$, entonces la tasa marginal de contribuciones benéficas es mayor para ingresos que superan los \$97,500.
 
-La Figura \@ref(fig:Charity) ilustra esta relación, conocida como *regresión lineal por tramos* o a veces un modelo de "barra rota". El cambio abrupto en la Figura \@ref(fig:Charity) en $x = 97,500$ se llama "cambio de pendiente". Tenemos relaciones lineales por encima y por debajo del cambio de pendiente y hemos usado una variable binaria para unir las dos partes. No estamos restringidos a un solo cambio de pendiente. Por ejemplo, supongamos que deseamos hacer un estudio histórico de los ingresos gravables federales para los contribuyentes solteros de 1992. Entonces, había tres tramos impositivos: la tasa marginal por debajo de 21,450 era del 15%, por encima de 51,900 era del 31%, y en medio era del 28%. Para este ejemplo, usaríamos dos cambios de pendiente, en 21,450 y 51,900.
+La Figura \@ref(fig:Fig39) ilustra esta relación, conocida como *regresión lineal por tramos* o a veces un modelo de "barra rota". El cambio abrupto en la Figura \@ref(fig:Fig39) en $x = 97,500$ se llama "cambio de pendiente". Tenemos relaciones lineales por encima y por debajo del cambio de pendiente y hemos usado una variable binaria para unir las dos partes. No estamos restringidos a un solo cambio de pendiente. Por ejemplo, supongamos que deseamos hacer un estudio histórico de los ingresos gravables federales para los contribuyentes solteros de 1992. Entonces, había tres tramos impositivos: la tasa marginal por debajo de 21,450 era del 15%, por encima de 51,900 era del 31%, y en medio era del 28%. Para este ejemplo, usaríamos dos cambios de pendiente, en 21,450 y 51,900.
 
-Además, la regresión lineal por tramos no está restringida a funciones de respuesta continuas. Por ejemplo, supongamos que estamos estudiando las comisiones pagadas a los corredores de bolsa ($y$) en función del número de acciones compradas por un cliente ($x$). Podríamos esperar ver la relación ilustrada en la Figura \@ref(fig:Break). Aquí, la discontinuidad en $x = 100$ refleja los gastos administrativos de comerciar en lotes irregulares, ya que se llaman transacciones de menos de 100 acciones. El menor costo marginal para transacciones superiores a 100 acciones simplemente refleja las economías de escala al hacer negocios en volúmenes mayores. Un modelo de regresión para esto es $\mathrm{E}~y = \beta_0 + \beta_1 x + \beta_2 z + \beta_3 z x$ donde $z = 0$ si $x < 100$ y $z = 1$ si $x \geq 100$. La función de regresión representada en la Figura \@ref(fig:Break) es:
+Además, la regresión lineal por tramos no está restringida a funciones de respuesta continuas. Por ejemplo, supongamos que estamos estudiando las comisiones pagadas a los corredores de bolsa ($y$) en función del número de acciones compradas por un cliente ($x$). Podríamos esperar ver la relación ilustrada en la Figura \@ref(fig:Fig310). Aquí, la discontinuidad en $x = 100$ refleja los gastos administrativos de comerciar en lotes irregulares, ya que se llaman transacciones de menos de 100 acciones. El menor costo marginal para transacciones superiores a 100 acciones simplemente refleja las economías de escala al hacer negocios en volúmenes mayores. Un modelo de regresión para esto es $\mathrm{E}~y = \beta_0 + \beta_1 x + \beta_2 z + \beta_3 z x$ donde $z = 0$ si $x < 100$ y $z = 1$ si $x \geq 100$. La función de regresión representada en la Figura \@ref(fig:Fig310) es:
 
 $$
 \mathrm{E}~y = \begin{cases}
@@ -1396,9 +1396,9 @@ $$
 \end{cases}
 $$
 
-(ref:Break) **Gráfico de comisiones esperadas ($\mathrm{E}~y$) versus número de acciones negociadas ($x$)**. El cambio en $x=100$ refleja ahorros en gastos administrativos. La pendiente más baja para $x \ge 100$ refleja economías de escala en gastos.
+(ref:Fig310) **Gráfico de comisiones esperadas ($\mathrm{E}~y$) versus número de acciones negociadas ($x$)**. El cambio en $x=100$ refleja ahorros en gastos administrativos. La pendiente más baja para $x \ge 100$ refleja economías de escala en gastos.
 
-```{r Break, fig.cap='(ref:Break)', echo=FALSE, out.width='60%'}
+```{r Fig310, fig.cap='(ref:Fig310)', echo=FALSE, out.width='60%'}
 #  FIGURA 3.10
 par(mar=c(4.1,4.5,.1,.1))
 x <- seq(50,150,.1)
@@ -1410,13 +1410,13 @@ mtext("E y", side=2,las=1, line=2.8,cex=1.1)
 
 `r HideRCode('Fig310.Hide',"Código R para producir la Figura 3.10")`
 
-```{r ref.label = 'Break', eval = FALSE}
+```{r ref.label = 'Fig310', eval = FALSE}
 ```
 
 </div>
 
 
-## Lectura Adicional y Referencias
+## Lectura Adicional y Referencias {#Sec36}
 
 Para las pruebas de los resultados del Capítulo 3, remitimos al lector a Goldberger (1991). Los modelos de regresión no lineales se discuten, por ejemplo, en Bates y Watts (1988).
 
@@ -1430,7 +1430,7 @@ El Capítulo 3 ha introducido los fundamentos de la regresión lineal múltiple.
 - Plackett, R.L. (1960). *Regression Analysis*. Clarendon Press, Oxford, Inglaterra.
 - Segal, Dan (2002). An economic analysis of life insurance company expenses. *North American Actuarial Journal*, 6(4), 81-94.
 
-## Ejercicios
+## Ejercicios {#Sec37}
 
 3.1. Considera un conjunto de datos ficticio de $n = 100$ observaciones con $s_y = 100$. Realizamos una regresión con tres variables explicativas para obtener $s = 50$.
 
@@ -1547,9 +1547,9 @@ j. Vuelve a ejecutar la regresión en la parte (f), después de eliminar la obse
 
 3.5. **Gastos de Compañías de Seguros**. Este ejercicio considera los datos de compañías de seguros del NAIC y descritos en el Ejercicio 1.6.
 
-La Tabla \@ref(tab:NAICVariables) describe varias variables que pueden ser usadas para explicar los gastos. Al igual que en el estudio de Segal (2002) sobre los aseguradores de vida, los "outputs" de la empresa consisten en primas emitidas (para propiedad y accidentes, estas se subdividen en líneas personales y comerciales) así como pérdidas (subdivididas en líneas de corto y largo plazo). ASSETS y CASH son medidas comúnmente usadas del tamaño de una empresa. GROUP, STOCK y MUTUAL describen la estructura organizacional. Los "inputs" de la empresa se recopilaron del Bureau of Labor Statistics (BLS, del programa Occupational Employee Statistics). STAFFWAGE se calcula como el salario promedio en el estado donde está ubicada la compañía de seguros. AGENTWAGE se calcula como el salario promedio ponderado de la industria de corretaje, ponderado por el porcentaje de prima bruta escrita en cada estado.
+La Tabla \@ref(tab:Tab312) describe varias variables que pueden ser usadas para explicar los gastos. Al igual que en el estudio de Segal (2002) sobre los aseguradores de vida, los "outputs" de la empresa consisten en primas emitidas (para propiedad y accidentes, estas se subdividen en líneas personales y comerciales) así como pérdidas (subdivididas en líneas de corto y largo plazo). ASSETS y CASH son medidas comúnmente usadas del tamaño de una empresa. GROUP, STOCK y MUTUAL describen la estructura organizacional. Los "inputs" de la empresa se recopilaron del Bureau of Labor Statistics (BLS, del programa Occupational Employee Statistics). STAFFWAGE se calcula como el salario promedio en el estado donde está ubicada la compañía de seguros. AGENTWAGE se calcula como el salario promedio ponderado de la industria de corretaje, ponderado por el porcentaje de prima bruta escrita en cada estado.
 
-```{r NAICVariables, echo=FALSE}
+```{r Tab312, echo=FALSE}
 # Tabla: Variables de Gastos de Aseguradoras
   varExpense <- c("EXPENSES", "LOSSLONG", "LOSSSHORT", "GPWPERSONAL", "GPWCOMM", "ASSETS", "CASH", "GROUP", "STOCK", "MUTUAL", "STAFFWAGE", "AGENTWAGE")
   Description <- 
@@ -1602,13 +1602,13 @@ Elimina los términos cuadráticos de la parte (g) y agrega términos de interac
 a. Interpreta el coeficiente de regresión asociado con PUBLICEDUCATION. <br>
 b. Interpreta el coeficiente de regresión asociado con los gastos en salud sin usar la escala logarítmica para los gastos. <br>
 c. Basado en el ajuste del modelo, ¿es PUBLICEDUCATION una variable estadísticamente significativa? Para responder a esta pregunta, usa una prueba formal de hipótesis. Expón tus hipótesis nula y alternativa, criterio de decisión, y regla de decisión. <br>
-d. El signo negativo del coeficiente de PUBLICEDUCATION es sorprendente, dado que el signo de la correlación entre PUBLICEDUCATION y LIFEEXP es positivo y la intuición sugiere una relación positiva. Para verificar este resultado, aparece un gráfico de variable añadida en la Figura \@ref(fig:UNLIFE2). <br>
+d. El signo negativo del coeficiente de PUBLICEDUCATION es sorprendente, dado que el signo de la correlación entre PUBLICEDUCATION y LIFEEXP es positivo y la intuición sugiere una relación positiva. Para verificar este resultado, aparece un gráfico de variable añadida en la Figura \@ref(fig:Fig311). <br>
    **d(i).** Para un gráfico de variable añadida, describe su propósito y un método para producirlo. <br>
-   **d(ii).** Calcula la correlación correspondiente al gráfico de variable añadida que aparece en la Figura \@ref(fig:UNLIFE2). <br>
+   **d(ii).** Calcula la correlación correspondiente al gráfico de variable añadida que aparece en la Figura \@ref(fig:Fig311). <br>
 
-(ref:UNLIFE2) **Gráfico de variable añadida de PUBLICEDUCATION versus LIFEEXP, controlando por FERTILITY y lnHEALTH**
+(ref:Fig311) **Gráfico de variable añadida de PUBLICEDUCATION versus LIFEEXP, controlando por FERTILITY y lnHEALTH**
 
-```{r UNLIFE2, fig.cap='(ref:UNLIFE2)', echo=FALSE, out.width = "60%", fig.asp=1.1}
+```{r Fig311, fig.cap='(ref:Fig311)', echo=FALSE, out.width = "60%", fig.asp=1.1}
 #  FIGURA 3.11
 LifeExp <- read.csv("CSVData/UNLifeExpectancy.csv", header=TRUE)
 #  ELIMINAR LIFEEXPs MISSING
@@ -1628,7 +1628,7 @@ xlab="residuos(PUBLICEDUCATION)",ylab="residuos(LIFEEXP)")
 
 `r HideRCode('Fig311.Hide',"Código R para producir la Figura 3.11")`
 
-```{r ref.label = 'UNLIFE2', eval = FALSE}
+```{r ref.label = 'Fig311', eval = FALSE}
 ```
 
 </div>

@@ -11,11 +11,7 @@
 
 *Vista previa del capítulo*. Este capítulo amplía la discusión sobre la regresión lineal múltiple al introducir la inferencia estadística para manejar varios coeficientes simultáneamente. Para motivar esta extensión, este capítulo considera los coeficientes asociados con *variables categóricas*. Estas variables nos permiten agrupar observaciones en distintas categorías. Este capítulo muestra cómo incorporar variables categóricas en funciones de regresión utilizando variables binarias, ampliando así considerablemente el alcance de las posibles aplicaciones del análisis de regresión. La inferencia estadística para varios coeficientes permite a los analistas tomar decisiones sobre variables categóricas, así como otras aplicaciones importantes. Las variables explicativas categóricas también proporcionan la base para un modelo de *ANOVA*, un tipo especial de modelo de regresión que permite un análisis e interpretación más sencillos.
 
-## El Papel de las Variables Binarias {#S4:BinaryVar}
-
-\index{variable explicativa!categórica}
-\index{variable explicativa!factor}
-\index{variable categórica}
+## El Papel de las Variables Binarias {#Sec41}
 
 Las *variables categóricas* proporcionan etiquetas para observaciones, para denotar la pertenencia a grupos o categorías distintas. Una variable binaria es un caso especial de una variable categórica. Para ilustrar, una variable binaria puede indicarnos si alguien tiene o no seguro de salud. Una variable categórica podría indicarnos si alguien tiene:
 
@@ -52,20 +48,13 @@ $$
 
 Esto da el número aproximado de años de escolaridad que completaron las personas en cada categoría.
 
-\index{variable categórica!factor}
-\index{variable categórica!ficticia}
-
 La asignación de puntuaciones numéricas y el tratamiento de la variable como continua tiene implicaciones importantes para la interpretación en la modelización de regresión. Recordemos que el coeficiente de regresión es el cambio marginal en la respuesta esperada; en este caso, el $\beta$ para EDUCATION evalúa el incremento en $\mathrm{E }~y$ por unidad de cambio en EDUCATION. Si registramos EDUCATION como un rango en un modelo de regresión, entonces el $\beta$ para EDUCATION corresponde al incremento en $\mathrm{E }~y$ al pasar de EDUCATION=1 a EDUCATION=2 (de baja a intermedia); este incremento es el mismo que al pasar de EDUCATION=2 a EDUCATION=3 (de intermedia a alta). ¿Queremos modelar este incremento como igual? Esta es una suposición que el analista hace con esta codificación de EDUCATION; puede ser o no válida, pero ciertamente necesita ser reconocida.
 
-\index{variable categórica!no ordenada}
-\index{símbolos!$c$, número de niveles en una variable categórica}
 
 Debido a esta interpretación de los coeficientes, los analistas rara vez usan rangos u otras puntuaciones numéricas para resumir variables categóricas *no ordenadas*. La forma más directa de manejar factores en la regresión es mediante el uso de variables binarias. Una variable categórica con $c$ niveles puede representarse utilizando $c$ variables binarias, una para cada categoría. Por ejemplo, supongamos que no estábamos seguros de la dirección del efecto de la educación y decidimos tratarla como un factor. Entonces, podríamos codificar $c=3$ variables binarias: (1) una variable para indicar educación baja, (2) una para indicar educación intermedia, y (3) una para indicar educación alta. Estas variables binarias son a menudo conocidas como *variables ficticias*. En el análisis de regresión con un término de intercepción, utilizamos solo $c-1$ de estas variables binarias; la variable restante entra implícitamente a través del término de intercepción. Al identificar una variable como un factor, la mayoría de los paquetes de software estadístico crearán automáticamente variables binarias para usted.
 
 A través del uso de variables binarias, no utilizamos el orden de las categorías dentro de un factor. Debido a que no se hace ninguna suposición sobre el orden de las categorías, para el ajuste del modelo no importa qué variable se omita con respecto al ajuste del modelo. Sin embargo, sí importa para la interpretación de los coeficientes de regresión. Consideremos el siguiente ejemplo.
 
-
-\index{datasets!seguro de vida temporal}
 
 ***
 
@@ -75,9 +64,9 @@ A través del uso de variables binarias, no utilizamos el orden de las categorí
 - 2, para viviendo con una pareja
 - 0, para otro (SCF desglosa aún más esta categoría en separado, divorciado, viudo, nunca casado, inaplicable, personas de 17 años o menos, y sin más personas).
 
-Como antes, la variable dependiente es $y =$ LNFACE, la cantidad que la compañía pagará en caso de fallecimiento del asegurado nombrado (en dólares logarítmicos). La Tabla \@ref(tab:MaritalSumStats) resume la variable dependiente según el nivel de la variable categórica. Esta tabla muestra que el estado civil "casado" es el más prevalente en la muestra y que los casados eligen tener la mayor cobertura de seguro de vida. La Figura \@ref(fig:BoxFACEMARSTAT) da una visión más completa de la distribución de LNFACE para cada uno de los tres tipos de estado civil. La tabla y la figura también sugieren que aquellos que viven juntos tienen menos cobertura de seguro de vida que las otras dos categorías.
+Como antes, la variable dependiente es $y =$ LNFACE, la cantidad que la compañía pagará en caso de fallecimiento del asegurado nombrado (en dólares logarítmicos). La Tabla \@ref(tab:Tab41) resume la variable dependiente según el nivel de la variable categórica. Esta tabla muestra que el estado civil "casado" es el más prevalente en la muestra y que los casados eligen tener la mayor cobertura de seguro de vida. La Figura \@ref(fig:Fig41) da una visión más completa de la distribución de LNFACE para cada uno de los tres tipos de estado civil. La tabla y la figura también sugieren que aquellos que viven juntos tienen menos cobertura de seguro de vida que las otras dos categorías.
 
-```{r MaritalSumStats, echo = FALSE}
+```{r Tab41, echo = FALSE}
 tableout <- 
   data.frame(
     MARSTAT <- c(0,1,2,""),
@@ -96,10 +85,10 @@ TableGen1(TableData=tableout ,
 
 ```
 
-(ref:BoxFACEMARSTAT) **Diagramas de Caja del Logaritmo del Monto de Cobertura, por Nivel de Estado Civil** 
+(ref:Fig41) **Diagramas de Caja del Logaritmo del Monto de Cobertura, por Nivel de Estado Civil** 
 
 
-```{r BoxFACEMARSTAT, fig.cap='(ref:BoxFACEMARSTAT)', echo=FALSE, out.width="60%"}
+```{r Fig41, fig.cap='(ref:Fig41)', echo=FALSE, out.width="60%"}
 library(HH)
 Term   <- read.csv("CSVData/TermLife.csv", header=TRUE)
 Term2  <- subset(Term, FACE > 0)
@@ -117,10 +106,10 @@ mtext("LNFACE", side=2, at=17.2, las=1, cex=1.1, adj=.4)
 
 `r HideRCode('Fig41.Hide',"Código R para Producir la Tabla 4.1 y la Figura 4.1")`
 
-```{r ref.label = 'MaritalSumStats', eval = FALSE}
+```{r ref.label = 'Tab41', eval = FALSE}
 ```
 
-```{r ref.label = 'BoxFACEMARSTAT', eval = FALSE}
+```{r ref.label = 'Fig41', eval = FALSE}
 ```
 
 </div>
@@ -159,11 +148,11 @@ La diferencia entre $\widehat{y}_m$ y $\widehat{y}_{lt}$ es $0.789.$ Así, podem
 
 De manera similar, podemos interpretar $-0.557$ como la diferencia entre la categoría "otro" y la categoría de casados, manteniendo fijas las otras variables explicativas. Para la diferencia en los valores ajustados entre las categorías "otro" y "viviendo juntos", podemos usar $-0.557 - (-0.789) = 0.232.$
 
-Aunque la regresión se realizó utilizando MAR0 y MAR2, cualquier dos de las tres producirían la misma Tabla ANOVA (Tabla \@ref(tab:MSTermLifeANOVA)). Sin embargo, la elección de las variables binarias sí afecta los coeficientes de regresión. La Tabla \@ref(tab:MSTermLifeRegrCoeff) muestra tres modelos, omitiendo MAR1, MAR2, y MAR0, respectivamente. Para cada ajuste, los coeficientes asociados con las variables continuas permanecen iguales. Como hemos visto, las interpretaciones de las variables binarias son con respecto a la categoría omitida, conocida como el *nivel de referencia*. Aunque cambian de un modelo a otro, su interpretación general sigue siendo la misma. Es decir, si queremos estimar la diferencia en la cobertura entre la categoría "otro" y la categoría "viviendo juntos", la estimación sería $0.232$, sin importar el modelo.
+Aunque la regresión se realizó utilizando MAR0 y MAR2, cualquier dos de las tres producirían la misma Tabla ANOVA (Tabla \@ref(tab:Tab42)). Sin embargo, la elección de las variables binarias sí afecta los coeficientes de regresión. La Tabla \@ref(tab:Tab43) muestra tres modelos, omitiendo MAR1, MAR2, y MAR0, respectivamente. Para cada ajuste, los coeficientes asociados con las variables continuas permanecen iguales. Como hemos visto, las interpretaciones de las variables binarias son con respecto a la categoría omitida, conocida como el *nivel de referencia*. Aunque cambian de un modelo a otro, su interpretación general sigue siendo la misma. Es decir, si queremos estimar la diferencia en la cobertura entre la categoría "otro" y la categoría "viviendo juntos", la estimación sería $0.232$, sin importar el modelo.
 
 \index{variable categórica!nivel de referencia}
 
-```{r MSTermLifeANOVA, echo = FALSE}
+```{r Tab42, echo = FALSE}
 # Ejemplo de Tabla ANOVA
 
 tableout <-  data.frame(
@@ -180,9 +169,9 @@ TableGen1(TableData=tableout ,
          ColWidth = ColWidth4) 
 ```
 
-Aunque los tres modelos en la Tabla \@ref(tab:MSTermLifeRegrCoeff) son iguales excepto por diferentes elecciones de parámetros, parecen diferentes. En particular, los $t$-ratios difieren y muestran diferentes apariencias de significancia estadística. Por ejemplo, ambos $t$-ratios asociados con el estado civil en el Modelo 2 son menores que 2 en valor absoluto, lo que sugiere que el estado civil es poco importante. En contraste, tanto el Modelo 1 como el Modelo 3 tienen al menos una variable binaria de estado civil que supera 2 en valor absoluto, lo que sugiere significancia estadística. Por lo tanto, se puede influir en la *apariencia* de significancia estadística al alterar la elección del nivel de referencia. Para evaluar la importancia general del estado civil (no solo cada variable binaria), la Sección 4.2 introducirá pruebas de conjuntos de coeficientes de regresión.
+Aunque los tres modelos en la Tabla \@ref(tab:Tab43) son iguales excepto por diferentes elecciones de parámetros, parecen diferentes. En particular, los $t$-ratios difieren y muestran diferentes apariencias de significancia estadística. Por ejemplo, ambos $t$-ratios asociados con el estado civil en el Modelo 2 son menores que 2 en valor absoluto, lo que sugiere que el estado civil es poco importante. En contraste, tanto el Modelo 1 como el Modelo 3 tienen al menos una variable binaria de estado civil que supera 2 en valor absoluto, lo que sugiere significancia estadística. Por lo tanto, se puede influir en la *apariencia* de significancia estadística al alterar la elección del nivel de referencia. Para evaluar la importancia general del estado civil (no solo cada variable binaria), la Sección 4.2 introducirá pruebas de conjuntos de coeficientes de regresión.
 
-```{r MSTermLifeRegrCoeff, echo=FALSE, results='asis'}
+```{r Tab43, echo=FALSE, results='asis'}
 tableout <- 
   data.frame(
     # Explanatory_Variable = c("LNINCOME", "EDUCATION", "NUMHH", "Intercept", "MAR0", "MAR1", "MAR2"),
@@ -214,15 +203,15 @@ En la mayoría de los estudios de seguros, los individuos eligen planes de segur
 
 Keeler y Rolph (1988) organizaron los gastos de un individuo en episodios de tratamiento; cada episodio contiene gastos asociados con un determinado ataque de enfermedad, condición crónica o procedimiento. Los episodios se clasificaron como hospitalarios, dentales o ambulatorios; esta clasificación se basó principalmente en diagnósticos, no en la ubicación de los servicios. Así, por ejemplo, los servicios ambulatorios que preceden o siguen a una hospitalización, así como los medicamentos y pruebas relacionados, se incluyeron como parte de un episodio hospitalario.
 
-Para simplificar, aquí solo informamos resultados para episodios hospitalarios. Aunque las familias fueron asignadas aleatoriamente a los planes, Keeler y Rolph (1988) utilizaron métodos de regresión para controlar los atributos de los participantes y aislar los efectos del compartir costos en los planes. La Tabla \@ref(tab:RandHIECoefficients) resume los coeficientes de regresión, basados en una muestra de $n=1,967$ gastos por episodio. En esta regresión, el gasto logarítmico fue la variable dependiente.
+Para simplificar, aquí solo informamos resultados para episodios hospitalarios. Aunque las familias fueron asignadas aleatoriamente a los planes, Keeler y Rolph (1988) utilizaron métodos de regresión para controlar los atributos de los participantes y aislar los efectos del compartir costos en los planes. La Tabla \@ref(tab:Tab44) resume los coeficientes de regresión, basados en una muestra de $n=1,967$ gastos por episodio. En esta regresión, el gasto logarítmico fue la variable dependiente.
 
 La variable categórica de compartir costos se descompuso en cinco variables binarias para que no se impusiera ninguna forma funcional en la respuesta al seguro. Estas variables son "Co-ins25," "Co-ins50," y "Co-ins95," para tasas de coaseguro del 25, 50 y 95\%, respectivamente, y "Deducible Indiv" para el plan con deducibles individuales. La variable omitida es el plan de seguro gratuito con 0\% de coaseguro. El HIE se llevó a cabo en seis ciudades; una variable categórica para controlar la ubicación se representó con cinco variables binarias, Dayton, Fitchburg, Franklin, Charleston y Georgetown, siendo Seattle la variable omitida. Se utilizó un factor categórico con $c=6$ niveles para la edad y el sexo; las variables binarias en el modelo consistieron en "Edad 0-2," "Edad 3-5," "Edad 6-17," "Mujer edad 18-65," y "Hombre edad 46-65," siendo la categoría omitida "Hombre edad 18-45." Otras variables de control incluyeron una escala de estado de salud, el estado socioeconómico, el número de visitas médicas en el año anterior al experimento en una escala logarítmica y la raza.
 
-La Tabla \@ref(tab:RandHIECoefficients) resume los efectos de las variables. Como señalaron Keeler y Rolph, hubo grandes diferencias según la ubicación y la edad, aunque la regresión solo explicó $R^2=11\%$ de la variabilidad. Para las variables de compartir costos, solo "Co-ins95" fue estadísticamente significativa, y esto solo al nivel del 5\%, no al nivel del 1\%.
+La Tabla \@ref(tab:Tab44) resume los efectos de las variables. Como señalaron Keeler y Rolph, hubo grandes diferencias según la ubicación y la edad, aunque la regresión solo explicó $R^2=11\%$ de la variabilidad. Para las variables de compartir costos, solo "Co-ins95" fue estadísticamente significativa, y esto solo al nivel del 5\%, no al nivel del 1\%.
 
 El estudio de Keeler y Rolph (1988) examina otros tipos de gastos por episodio, así como la frecuencia de los gastos. Concluyeron que el compartir costos en los planes de seguro médico tiene poco efecto sobre la cantidad de gastos por episodio, aunque hay diferencias importantes en la frecuencia de episodios. Esto se debe a que un episodio de tratamiento está compuesto por dos decisiones. La cantidad de tratamiento es decidida conjuntamente entre el paciente y el médico y, en gran medida, no se ve afectada por el tipo de plan de seguro médico. La decisión de buscar tratamiento médico la toma el paciente; este proceso de toma de decisiones es más susceptible a los incentivos económicos en los aspectos de compartir costos de los planes de seguro médico.
 
-```{r RandHIECoefficients, echo=FALSE}
+```{r Tab44, echo=FALSE}
 tableout <- 
   data.frame(
     Variable = c("Intercepto", "Dayton", "Fitchburg", "Franklin", 
@@ -253,11 +242,11 @@ TableGen1(TableData=tableout ,
 *Fuente*: Keeler y Rolph (1988)
 
 
-## Inferencia Estadística para Varios Coeficientes {#S4:SeveralCoeff}
+## Inferencia Estadística para Varios Coeficientes {#Sec42}
 
-Puede ser útil examinar varios coeficientes de regresión al mismo tiempo. Por ejemplo, cuando se evalúa el efecto de una variable categórica con $c$ niveles, necesitamos decir algo de manera conjunta sobre las $c-1$ variables binarias que ingresan a la ecuación de regresión. Para hacer esto, la Sección \@ref(S4:SetsRegCoeff) introduce un método para manejar combinaciones lineales de coeficientes de regresión. La Sección \@ref(S4:GenLinHypo) muestra cómo probar varias combinaciones lineales, y la Sección \@ref(S4:SetsInference) presenta otras aplicaciones de inferencia.
+Puede ser útil examinar varios coeficientes de regresión al mismo tiempo. Por ejemplo, cuando se evalúa el efecto de una variable categórica con $c$ niveles, necesitamos decir algo de manera conjunta sobre las $c-1$ variables binarias que ingresan a la ecuación de regresión. Para hacer esto, la Sección \@ref(Sec421) introduce un método para manejar combinaciones lineales de coeficientes de regresión. La Sección \@ref(Sec422) muestra cómo probar varias combinaciones lineales, y la Sección \@ref(Sec423) presenta otras aplicaciones de inferencia.
 
-### Conjuntos de Coeficientes de Regresión {#S4:SetsRegCoeff}
+### Conjuntos de Coeficientes de Regresión {#Sec421}
 
 Recordemos que nuestros coeficientes de regresión se especifican como $\boldsymbol{\beta} = \left( \beta_0, \beta_1, \ldots, \beta_k \right)^{\prime},$ un vector de tamaño $(k+1) \times 1$. Será conveniente expresar combinaciones lineales de los coeficientes de regresión utilizando la notación $\mathbf{C} \boldsymbol{\beta},$ donde $\mathbf{C}$ es una matriz de tamaño $p \times (k+1)$ que es especificada por el usuario y depende de la aplicación. Algunas aplicaciones involucran la estimación de $\mathbf{C} \boldsymbol{\beta}$. Otras involucran probar si $\mathbf{C} \boldsymbol{\beta}$ es igual a un valor específico conocido (denotado como $\mathbf{d}$). Llamamos a $H_0:\mathbf{C \boldsymbol{\beta} = d}$ la *hipótesis lineal general*. Para demostrar la amplia variedad de aplicaciones en las que se pueden usar conjuntos de coeficientes de regresión, ahora presentamos una serie de casos especiales.
 
@@ -372,7 +361,7 @@ $$
 
 De una lista de $k+p$ variables $x_1, \ldots, x_{k+p}$, puedes eliminar cualquier $p$ que consideres apropiado. Las variables adicionales no necesitan ser las últimas $p$ en la especificación de la regresión. Eliminar $x_{k+1}, \ldots, x_{k+p}$ es solo por conveniencia notacional.
 
-### La Hipótesis Lineal General {#S4:GenLinHypo}
+### La Hipótesis Lineal General {#Sec422}
 
 Para resumir, la hipótesis lineal general se puede expresar como $H_0:\mathbf{C \boldsymbol{\beta} = d}$. Aquí, $\mathbf{C}$ es una matriz de $p \times (k+1)$, $\mathbf{d}$ es un vector de $p \times 1$, y tanto $\mathbf{C}$ como $\mathbf{d}$ son especificados por el usuario y dependen de la aplicación en cuestión. Aunque $k+1$ es el número de coeficientes de regresión, $p$ es el número de restricciones bajo $H_0$ sobre estos coeficientes. (Para aquellos lectores con conocimiento de álgebra matricial avanzada, $p$ es el rango de $\mathbf{C}$). Esta hipótesis nula se prueba contra la alternativa $H_a:\mathbf{C \boldsymbol{\beta} \neq d}$. Esto puede ser obvio, pero requerimos que $p \leq k+1$ porque no podemos probar más restricciones que los parámetros libres.
 
@@ -433,7 +422,7 @@ Esta diferencia se conoce como una *Suma de Cuadrados Tipo III*. Al probar la im
 
 ***
 
-**Ejemplo: Seguro de Vida Temporal - Continuación.** Antes de discutir la lógica y las implicaciones de la prueba $F$, vamos a ilustrar su uso. En el ejemplo del Seguro de Vida Temporal, supongamos que deseamos entender el impacto del estado civil. La Tabla \@ref(tab:MSTermLifeRegrCoeff) presentó un mensaje mixto en términos de cocientes $t$; a veces eran estadísticamente significativos y otras veces no. Sería útil tener una prueba formal para dar una respuesta definitiva, al menos en términos de significancia estadística. Específicamente, consideramos un modelo de regresión utilizando LNINCOME, EDUCATION, NUMHH, MAR0, y MAR2 como variables explicativas. La ecuación del modelo es
+**Ejemplo: Seguro de Vida Temporal - Continuación.** Antes de discutir la lógica y las implicaciones de la prueba $F$, vamos a ilustrar su uso. En el ejemplo del Seguro de Vida Temporal, supongamos que deseamos entender el impacto del estado civil. La Tabla \@ref(tab:Tab43) presentó un mensaje mixto en términos de cocientes $t$; a veces eran estadísticamente significativos y otras veces no. Sería útil tener una prueba formal para dar una respuesta definitiva, al menos en términos de significancia estadística. Específicamente, consideramos un modelo de regresión utilizando LNINCOME, EDUCATION, NUMHH, MAR0, y MAR2 como variables explicativas. La ecuación del modelo es
 
 $$
 \small{
@@ -446,7 +435,7 @@ $$
 
 Nuestro objetivo es probar $H_0: \beta_4 = \beta_5 = 0$.
 
-i. Comenzamos ejecutando un modelo de regresión con todas las $k+p=5$ variables. Los resultados se informaron en la Tabla \@ref(tab:MSTermLifeANOVA), donde vimos que $(Error~SS)_{full} = 615.62$ y $s_{full}^2 = (1.513)^2 = 2.289$.
+i. Comenzamos ejecutando un modelo de regresión con todas las $k+p=5$ variables. Los resultados se informaron en la Tabla \@ref(tab:Tab42), donde vimos que $(Error~SS)_{full} = 615.62$ y $s_{full}^2 = (1.513)^2 = 2.289$.
 ii. El siguiente paso es ejecutar el modelo reducido sin MAR0 y MAR2. Esto se hizo en la Tabla 3.3 del Capítulo 3, donde vimos que $(Error~SS)_{reduced} = 630.43$.
 iii. Luego calculamos la estadística de prueba
 $$
@@ -485,7 +474,7 @@ $$
 
 Esta estadística de prueba es una característica regular de la tabla ANOVA para muchos paquetes estadísticos.
 
-Por ejemplo, en nuestro ejemplo de Seguro de Vida Temporal, probar la adecuación del modelo significa evaluar $H_0: \beta_1 = \beta_2 = \beta_3 = \beta_4 = \beta_5 = 0$. En la Tabla \@ref(tab:MSTermLifeANOVA), el cociente $F$ es 68.66 / 2.29 = 29.98. Con $df_1=5$ y $df_2 = 269$, el valor $F$ es aproximadamente 2.248 y el valor $p$ correspondiente es $\Pr(F > 29.98) \approx 0$. Esto nos lleva a rechazar firmemente la idea de que las variables explicativas no son útiles para entender la cobertura del seguro de vida temporal, reafirmando lo que aprendimos en el análisis gráfico y de correlación. Cualquier otro resultado sería sorprendente.
+Por ejemplo, en nuestro ejemplo de Seguro de Vida Temporal, probar la adecuación del modelo significa evaluar $H_0: \beta_1 = \beta_2 = \beta_3 = \beta_4 = \beta_5 = 0$. En la Tabla \@ref(tab:Tab42), el cociente $F$ es 68.66 / 2.29 = 29.98. Con $df_1=5$ y $df_2 = 269$, el valor $F$ es aproximadamente 2.248 y el valor $p$ correspondiente es $\Pr(F > 29.98) \approx 0$. Esto nos lleva a rechazar firmemente la idea de que las variables explicativas no son útiles para entender la cobertura del seguro de vida temporal, reafirmando lo que aprendimos en el análisis gráfico y de correlación. Cualquier otro resultado sería sorprendente.
 
 Para otra expresión, dividiendo por $Total~SS$, podemos escribir
 
@@ -495,7 +484,7 @@ $$
 
 Dado que tanto el cociente $F$ como $R^2$ son medidas del ajuste del modelo, parece intuitivamente plausible que estén relacionados de alguna manera. Una consecuencia de esta relación es que, a medida que $R^2$ aumenta, también lo hace el cociente $F$ y viceversa. El cociente $F$ se usa porque su distribución muestral es conocida bajo una hipótesis nula, por lo que podemos hacer afirmaciones sobre significancia estadística. La medida $R^2$ se usa debido a las interpretaciones fáciles asociadas con ella.
 
-### Estimando y Prediciendo Varios Coeficientes {#S4:SetsInference}
+### Estimando y Prediciendo Varios Coeficientes {#Sec423}
 
 #### Estimación de Combinaciones Lineales de Coeficientes de Regresión {-}
 
@@ -541,7 +530,7 @@ $$
 
 La ecuación \@ref(eq:eq46) generaliza el intervalo de predicción introducido en la Sección 2.4.
 
-## Modelo ANOVA de Un Factor
+## Modelo ANOVA de Un Factor {#Sec43}
 
 La Sección 4.1 mostró cómo incorporar variables categóricas no ordenadas, o factores, en un modelo de regresión lineal mediante el uso de variables binarias. Los factores son importantes en la investigación en ciencias sociales; pueden usarse para clasificar a las personas por género, etnia, estado civil, etc., o clasificar empresas por región geográfica, estructura organizativa, y así sucesivamente. En los estudios de seguros, las aseguradoras usan factores para categorizar a los asegurados según un "sistema de clasificación de riesgos." Aquí, la idea es crear grupos de asegurados con características de riesgo similares que tendrán experiencias de reclamaciones similares. Estos grupos forman la base del precio del seguro, de modo que a cada asegurado se le cobra un monto adecuado a su categoría de riesgo. Este proceso a veces se conoce como "segmentación."
 
@@ -561,19 +550,19 @@ Para establecer la notación para el modelo ANOVA de un factor, ahora consideram
 - Características del operador del automóvil (edad, género, estado civil y si es el conductor principal u ocasional de un automóvil).
 - Características del vehículo (uso en la ciudad o en el campo, si el vehículo se usa para ir a la escuela o al trabajo, para negocios o placer, y si se usa para ir al trabajo, la distancia aproximada del trayecto).
 
-Estos factores se resumen en la variable categórica de clase de riesgo CLASS. La Tabla \@ref(tab:AutoSumStats) muestra 18 clases de riesgo - no se proporciona información adicional de clasificación aquí para proteger los intereses propietarios de la aseguradora.
+Estos factores se resumen en la variable categórica de clase de riesgo CLASS. La Tabla \@ref(tab:Tab45) muestra 18 clases de riesgo - no se proporciona información adicional de clasificación aquí para proteger los intereses propietarios de la aseguradora.
 
 
-La Tabla \@ref(tab:AutoSumStats) resume los resultados de $n=6,773$
+La Tabla \@ref(tab:Tab45) resume los resultados de $n=6,773$
 reclamaciones para conductores de 50 años o más. Podemos ver que la reclamación mediana varía desde un mínimo de 707.40 (CLASE F7) hasta un máximo de 1,231.25 (CLASE C72). La distribución de las reclamaciones resulta ser asimétrica, por lo que consideramos $y$ = reclamaciones logarítmicas. La tabla presenta
 medias, medianas y desviaciones estándar. Dado que la distribución de las
 reclamaciones logarítmicas es menos asimétrica, las medias están cerca de las medianas.
-La Figura \@ref(fig:BoxplotAuto) muestra la distribución de las
+La Figura \@ref(fig:Fig42) muestra la distribución de las
 reclamaciones logarítmicas por clase de riesgo.
 
 
 
-```{r AutoSumStats, echo = FALSE}
+```{r Tab45, echo = FALSE}
 AutoC   <- read.csv("CSVData/AutoClaims.csv", header=TRUE)
 #  CREAR UNA TABLA DE MEDIAS Y DESVIACIONES ESTÁNDAR
 library(Hmisc)
@@ -604,9 +593,9 @@ TableGen1(TableData=bigblock1 ,
 
 ```
 
-(ref:BoxplotAuto) **Diagramas de Caja de Reclamaciones Logarítmicas por Clase de Riesgo** 
+(ref:Fig42) **Diagramas de Caja de Reclamaciones Logarítmicas por Clase de Riesgo** 
 
-```{r BoxplotAuto, fig.cap='(ref:BoxplotAuto)', echo=FALSE, out.width="100%"}
+```{r Fig42, fig.cap='(ref:Fig42)', echo=FALSE, out.width="100%"}
 library(HH)
 AutoC   <- read.csv("CSVData/AutoClaims.csv", header=TRUE)
 #  RECLAMACIONES DE AUTOMÓVILES
@@ -620,10 +609,10 @@ boxplot(log(PAID) ~ CLASS,cex=.6, cex.labels=2, data = AutoC,
 
 `r HideRCode('Fig42.Hide',"Código R para Producir la Tabla 4.5 y la Figura 4.2")`
 
-```{r ref.label = 'AutoSumStats', eval = FALSE}
+```{r ref.label = 'Tab45', eval = FALSE}
 ```
 
-```{r ref.label = 'BoxplotAuto', eval = FALSE}
+```{r ref.label = 'Fig42', eval = FALSE}
 ```
 
 </div>
@@ -681,9 +670,9 @@ Factor~ SS  & = Total ~SS - Error ~SS \\
 & = \sum_{j=1}^{c}n_j(\bar{y}_j-\bar{y})^2.
 \end{array}
 $$
-Las dos últimas igualdades se derivan de la manipulación algebraica. El $Factor ~SS$ desempeña el mismo papel que el $Regression ~SS$ en los Capítulos 2 y 3. La descomposición de la variabilidad se resume en la Tabla \@ref(tab:OneFactorANOVA).
+Las dos últimas igualdades se derivan de la manipulación algebraica. El $Factor ~SS$ desempeña el mismo papel que el $Regression ~SS$ en los Capítulos 2 y 3. La descomposición de la variabilidad se resume en la Tabla \@ref(tab:Tab46).
 
-```{r OneFactorANOVA, echo=FALSE}
+```{r Tab46, echo=FALSE}
 library(knitr)
 anova_data <- data.frame(
   Fuente = c("Factor", "Error", "Total"),
@@ -717,9 +706,9 @@ Aquí, el valor *t* $t_{n-c,1-\alpha /2}$ es un percentil de la distribución *t
 
 *** 
 
-**Ejemplo: Reclamaciones de Automóviles - Continuación.** Para ilustrar, la tabla ANOVA que resume el ajuste para los datos de reclamaciones de automóviles se presenta en la Tabla \@ref(tab:ANOVAAuto). Aquí, vemos que la media cuadrática del error es $s^2 = 1.14.$
+**Ejemplo: Reclamaciones de Automóviles - Continuación.** Para ilustrar, la tabla ANOVA que resume el ajuste para los datos de reclamaciones de automóviles se presenta en la Tabla \@ref(tab:Tab47). Aquí, vemos que la media cuadrática del error es $s^2 = 1.14.$
 
-```{r ANOVAAuto, echo=FALSE}
+```{r Tab47, echo=FALSE}
 library(knitr)
 anova_auto <- data.frame(
   Fuente = c("CLASS", "Error", "Total"),
@@ -798,15 +787,15 @@ $$
 
 
 
-## Combinando Variables Explicativas Categóricas y Continuas
+## Combinando Variables Explicativas Categóricas y Continuas {#Sec44}
 
 Existen varias formas de combinar variables explicativas categóricas y continuas. Inicialmente, presentamos el caso de solo una variable categórica y una variable continua. Luego, presentamos brevemente el caso general, llamado *modelo lineal general*. Cuando se combinan modelos de variables categóricas y continuas, usamos la terminología *factor* para la variable categórica y *covariable* para la variable continua.
 
 #### Combinando un Factor y una Covariable {-}
 
-Comencemos con los modelos más simples que utilizan un factor y una covariable. En la Sección 4.3, introdujimos el modelo de un solo factor $y_{ij} = \mu_j + \varepsilon_{ij}$. En el Capítulo 2, introdujimos la regresión lineal básica en términos de una variable continua, o covariable, usando $y_{ij} = \beta_0 + \beta_1 x_{ij} + \varepsilon_{ij}$. La Tabla \@ref(tab:OneFactorCovariate) resume diferentes enfoques que podrían usarse para representar combinaciones de un factor y una covariable.
+Comencemos con los modelos más simples que utilizan un factor y una covariable. En la Sección 4.3, introdujimos el modelo de un solo factor $y_{ij} = \mu_j + \varepsilon_{ij}$. En el Capítulo 2, introdujimos la regresión lineal básica en términos de una variable continua, o covariable, usando $y_{ij} = \beta_0 + \beta_1 x_{ij} + \varepsilon_{ij}$. La Tabla \@ref(tab:Tab48) resume diferentes enfoques que podrían usarse para representar combinaciones de un factor y una covariable.
 
-```{r OneFactorCovariate, echo = FALSE}
+```{r Tab48, echo = FALSE}
 # Crear un marco de datos para la tabla de un factor y una covariable
 one_factor_covariate <- data.frame(
   Descripcion_Del_Modelo = c(
@@ -928,7 +917,7 @@ text(20, 23, expression(y == beta["0,2"] + beta["1,2"] * x), cex = 1.1)
 
 </div>
 
-Para cada modelo presentado en la Tabla \@ref(tab:OneFactorCovariate),
+Para cada modelo presentado en la Tabla \@ref(tab:Tab48),
 las estimaciones de los parámetros pueden calcularse utilizando el método de mínimos cuadrados. Como es habitual, esto significa escribir la respuesta esperada, $\mathrm{E }~y_{ij}$, como una función de variables conocidas y parámetros desconocidos.
 Para el modelo de regresión con intercepto variable y pendiente constante,
 las estimaciones de mínimos cuadrados pueden expresarse de manera compacta como:
@@ -1038,7 +1027,7 @@ mtext("CHGNUM", side=2, at=10.1, las=1, cex=1.1, adj=.4)
 ```
 </div>
 
-```{r DRGModels, echo = FALSE}
+```{r Tab49, echo = FALSE}
 
 tableout <- data.frame(
   Model_Description = c(
@@ -1066,9 +1055,9 @@ TableGen1(TableData=tableout ,
 
 
 
-Cada uno de los cinco modelos definidos en la Tabla \@ref(tab:OneFactorCovariate) fue ajustado a este subconjunto del estudio de caso hospitalario. Las estadísticas resumen se encuentran en la Tabla \@ref(tab:DRGModels). Para este conjunto de datos, hay $n = 79$ observaciones y $c = 3$ niveles del factor DRG. Para cada modelo, los grados de libertad del modelo son el número de parámetros del modelo menos uno. Los grados de libertad del error son el número de observaciones menos el número de parámetros del modelo.
+Cada uno de los cinco modelos definidos en la Tabla \@ref(tab:Tab48) fue ajustado a este subconjunto del estudio de caso hospitalario. Las estadísticas resumen se encuentran en la Tabla \@ref(tab:Tab49). Para este conjunto de datos, hay $n = 79$ observaciones y $c = 3$ niveles del factor DRG. Para cada modelo, los grados de libertad del modelo son el número de parámetros del modelo menos uno. Los grados de libertad del error son el número de observaciones menos el número de parámetros del modelo.
 
-Usando variables binarias, cada uno de los modelos en la Tabla \@ref(tab:OneFactorCovariate) puede escribirse en un formato de regresión. Como hemos visto en la Sección 4.2, cuando un modelo puede escribirse como un subconjunto de otro modelo más grande, tenemos procedimientos formales de prueba disponibles para decidir cuál modelo es más apropiado. Para ilustrar este procedimiento de prueba con nuestro ejemplo de DRG, a partir de la Tabla \@ref(tab:DRGModels) y los gráficos asociados, parece claro que el factor DRG es importante. Además, una prueba $t$, que no se presenta aquí, muestra que la covariable $x$ es importante. Por lo tanto, comparemos el modelo completo $\mathrm{E}~y_{ij} = \beta_{0,j} + \beta_{1,j}x$ con el modelo reducido $\mathrm{E}~y_{ij} = \beta_{0,j} + \beta_1x$. En otras palabras, ¿hay una pendiente diferente para cada DRG?
+Usando variables binarias, cada uno de los modelos en la Tabla \@ref(tab:Tab48) puede escribirse en un formato de regresión. Como hemos visto en la Sección 4.2, cuando un modelo puede escribirse como un subconjunto de otro modelo más grande, tenemos procedimientos formales de prueba disponibles para decidir cuál modelo es más apropiado. Para ilustrar este procedimiento de prueba con nuestro ejemplo de DRG, a partir de la Tabla \@ref(tab:Tab49) y los gráficos asociados, parece claro que el factor DRG es importante. Además, una prueba $t$, que no se presenta aquí, muestra que la covariable $x$ es importante. Por lo tanto, comparemos el modelo completo $\mathrm{E}~y_{ij} = \beta_{0,j} + \beta_{1,j}x$ con el modelo reducido $\mathrm{E}~y_{ij} = \beta_{0,j} + \beta_1x$. En otras palabras, ¿hay una pendiente diferente para cada DRG?
 
 Usando la notación de la Sección 4.2, llamamos al intercepto y la pendiente variables el modelo completo. Bajo la hipótesis nula, $H_0: \beta_{1,1} = \beta_{1,2} = \beta_{1,3}$, obtenemos el modelo con intercepto variable y pendiente constante. Así, usando el cociente $F$ en la ecuación \@ref(eq:eq42), tenemos:
 
@@ -1102,9 +1091,9 @@ $$
 (\#eq:eq412)
 $$
 
-Aquí, las variables $x_1$, $x_2$, y $x_3$ se conocen como los *efectos principales*. La Tabla \@ref(tab:TwoFactorModel) ayuda a interpretar esta ecuación. Específicamente, hay seis tipos de personas que podríamos encontrar: hombres y mujeres que son jóvenes, de mediana edad o ancianos. Tenemos seis parámetros en la ecuación \@ref(eq:eq412). La Tabla \@ref(tab:TwoFactorModel) proporciona el enlace entre los parámetros y los tipos de personas. Al usar los términos de interacción, no imponemos ninguna especificación previa sobre los efectos aditivos de cada factor. De la Tabla \@ref(tab:TwoFactorModel), vemos que la interpretación de los coeficientes de regresión en la ecuación \@ref(eq:eq412) no es directa. Sin embargo, usar el modelo aditivo con términos de interacción es equivalente a crear una nueva variable categórica con seis niveles, uno para cada tipo de persona. Si los términos de interacción son críticos en su estudio, puede ser conveniente crear un nuevo factor que incorpore los términos de interacción simplemente para facilitar la interpretación.
+Aquí, las variables $x_1$, $x_2$, y $x_3$ se conocen como los *efectos principales*. La Tabla \@ref(tab:Tab410) ayuda a interpretar esta ecuación. Específicamente, hay seis tipos de personas que podríamos encontrar: hombres y mujeres que son jóvenes, de mediana edad o ancianos. Tenemos seis parámetros en la ecuación \@ref(eq:eq412). La Tabla \@ref(tab:Tab410) proporciona el enlace entre los parámetros y los tipos de personas. Al usar los términos de interacción, no imponemos ninguna especificación previa sobre los efectos aditivos de cada factor. De la Tabla \@ref(tab:Tab410), vemos que la interpretación de los coeficientes de regresión en la ecuación \@ref(eq:eq412) no es directa. Sin embargo, usar el modelo aditivo con términos de interacción es equivalente a crear una nueva variable categórica con seis niveles, uno para cada tipo de persona. Si los términos de interacción son críticos en su estudio, puede ser conveniente crear un nuevo factor que incorpore los términos de interacción simplemente para facilitar la interpretación.
 
-```{r TwoFactorModel, echo = FALSE}
+```{r Tab410, echo = FALSE}
 # Crear un marco de datos para la tabla del modelo de dos factores
 two_factor_model <- data.frame(
   Sexo = c("Masculino", "Masculino", "Masculino", "Femenino", "Femenino", "Femenino"),
@@ -1155,17 +1144,17 @@ Por lo tanto, para un conjunto de datos y un modelo lineal general especificado,
 En resumen, para los modelos lineales generales, las estimaciones de los parámetros pueden no ser únicas y, por lo tanto, no significativas. Una parte importante de los modelos de regresión es la interpretación de los coeficientes de regresión. Esta interpretación no está necesariamente disponible en el contexto del modelo lineal general. Sin embargo, para los modelos lineales generales, todavía podemos discutir la importancia de una variable individual o colección de
  variables a través de pruebas parciales *F*. Además, los valores ajustados, y el correspondiente ejercicio de predicción, funcionan en el contexto del modelo lineal general. La ventaja del contexto del modelo lineal general es que no necesitamos preocuparnos por el tipo de restricciones a imponer en los parámetros. Aunque no es el tema de este texto, esta ventaja es particularmente importante en los diseños experimentales complicados utilizados en las ciencias de la vida. El lector encontrará que las rutinas de estimación del modelo lineal general están ampliamente disponibles en los paquetes de software estadístico disponibles en el mercado hoy en día.
 
-## Lecturas Adicionales y Referencias
+## Lecturas Adicionales y Referencias  {#Sec45}
 
 Hay varios buenos libros sobre modelos lineales que se enfocan en variables categóricas y técnicas de análisis de variables. Hocking (2003) y Searle (1987) son buenos ejemplos.
 
-#### Referencias del Capítulo {-}
+**Referencias del Capítulo**
 
 - Hocking, Ronald R. (2003). *Methods and Applications of Linear Models: Regression and the Analysis of Variance* John Wiley and Sons, New York.
 - Keeler, Emmett B., and John E. Rolph (1988). The demand for episodes of treatment in the Health Insurance Experiment. *Journal of Health Economics* 7: 337-367.
 - Searle, Shayle R. (1987). *Linear Models for Unbalanced Data*. John Wiley & Sons, New York.
 
-## Ejercicios
+## Ejercicios {#Sec46}
 
 4.1. En este ejercicio, consideramos la relación entre dos estadísticas que resumen qué tan bien se ajusta un modelo de regresión, la razón $F$ y $R^2$, el coeficiente de determinación. (Aquí, la razón $F$ es la estadística utilizada para probar la adecuación del modelo, no una estadística parcial $F$).
 
@@ -1268,11 +1257,11 @@ c. Para determinar formalmente si se debe usar el modelo de tres o de ocho varia
 
 a. Considera la regresión utilizando tres variables explicativas, FERTILITY, PUBLICEDUCATION, y ln(HEALTH) que hiciste en el Ejercicio 3.6. Prueba si PUBLICEDUCATION y ln(HEALTH) son conjuntamente estadísticamente significativos, usando una prueba parcial $F$. Establece tus hipótesis nula y alternativa, el criterio de toma de decisiones y tus reglas de toma de decisiones. (Sugerencia: Usa la forma del coeficiente de determinación para calcular el estadístico de la prueba.) Proporciona un valor aproximado de $p$ para la prueba.
 
-b. Ahora introducimos la variable REGION, resumida en la Tabla 4.11. Un diagrama de caja de las expectativas de vida versus REGION se muestra en la Figura \@ref(fig:UNLIFEPlot3). Describe lo que aprendemos de la Tabla y el diagrama de caja sobre el efecto de REGION en LIFEEXP.
+b. Ahora introducimos la variable REGION, resumida en la Tabla 4.11. Un diagrama de caja de las expectativas de vida versus REGION se muestra en la Figura \@ref(fig:Fig48). Describe lo que aprendemos de la Tabla y el diagrama de caja sobre el efecto de REGION en LIFEEXP.
 
-(ref:UNLIFEPlot3) **Diagramas de Caja de LIFEEXP por REGION** 
+(ref:Fig48) **Diagramas de Caja de LIFEEXP por REGION** 
 
-```{r UNLIFEPlot3, fig.cap='(ref:UNLIFEPlot3)', echo=FALSE, out.width="60%"}
+```{r Fig48, fig.cap='(ref:Fig48)', echo=FALSE, out.width="60%"}
    ## Figura 4.8
 #  FIGURA 3.11
 LifeExp <- read.csv("CSVData/UNLifeExpectancy.csv", header=TRUE)
@@ -1309,9 +1298,9 @@ d. Ajusta un modelo de regresión utilizando tres variables explicativas, FERTIL
    **d(ii)**. Proporciona un intervalo de confianza del 95% para la diferencia en expectativas de vida entre un estado árabe y un país de África Subsahariana.<br>
    **d(iii)**. Proporciona la estimación puntual (usualmente de mínimos cuadrados ordinarios) para la diferencia en expectativas de vida entre un país de África Subsahariana y un país de altos ingresos de la OECD (Organización para la Cooperación y el Desarrollo Económico).
 
-## Suplemento Técnico - Expresiones Matriciales
+## Suplemento Técnico - Expresiones Matriciales {#Sec47}
 
-### Expresión de Modelos con Variables Categóricas en Forma Matricial
+### Expresión de Modelos con Variables Categóricas en Forma Matricial {#Sec471}
 
 El Capítulo 3 mostró cómo escribir la ecuación del modelo de regresión en la forma $\mathbf{y = X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}$ donde $\mathbf{X}$ es una matriz de variables explicativas. Esta forma permite el cálculo directo de los coeficientes de regresión, $\mathbf{b} = \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{y}$. Esta sección muestra cómo el modelo y los cálculos se reducen a expresiones más simples cuando las variables explicativas son categóricas.
 
@@ -1535,7 +1524,7 @@ $$
 
 Aquí, $\mathbf{0}_j$ y $\mathbf{1}_j$ representan columnas de vectores de longitud $n_j$ de ceros y unos, respectivamente, y $\mathbf{x}_j = (x_{1j}, x_{2j}, \ldots, x_{n_j, j})^{\prime}$ es la columna de la variable continua en el nivel $j$. Técnicas de álgebra matricial sencillas proporcionan las estimaciones por mínimos cuadrados.
 
-### Cálculo Recursivo de Mínimos Cuadrados
+### Cálculo Recursivo de Mínimos Cuadrados {#Sec472}
 
 Cuando se calculan los coeficientes de regresión utilizando mínimos cuadrados, $\mathbf{b} = \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{y}$, para algunas aplicaciones, la dimensión de $\mathbf{X}^{\prime} \mathbf{X}$ puede ser grande, lo que causa dificultades computacionales. Afortunadamente, para algunos problemas, los cálculos se pueden dividir en problemas más pequeños que se pueden resolver de forma recursiva.
 
@@ -1845,7 +1834,7 @@ $$
 $$
 Como se mencionó en la Sección 4.3, la cantidad $(Error ~SS)_{reduced} - (Error ~SS)_{full}$ se llama *suma extra de cuadrados*, o suma de cuadrados Tipo III. Esto se produce automáticamente por algunos paquetes de software estadístico, evitando así la necesidad de ejecutar regresiones separadas.
 
-### Modelo Lineal General
+### Modelo Lineal General {#Sec43}
 
 Recuerda el modelo lineal general de la Sección 4.4. Es decir, usamos
 $$

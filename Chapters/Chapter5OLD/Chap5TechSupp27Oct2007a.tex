@@ -1,0 +1,927 @@
+\newpage
+
+\section{Technical Supplements for Chapter 5}
+
+\subsection{Projection Matrix}
+
+\textbf{Fitted Values and Residuals.} In Section 3.1, we showed that
+the vector of least squares regression coefficients could be
+calculated using $\mathbf{b}=\mathbf{(X}^{\prime }\mathbf{X)}^{-1}\mathbf{X}^{\prime }\mathbf{y%
+}$. Thus, we can express the vector of fitted values $\hat{y}=(\hat{y}%
+_{1},...,\hat{y}_{n})^{\prime }$ as
+\begin{equation}\label{E5:FittedValues}
+\mathbf{\hat{y}}=\mathbf{Xb}
+\end{equation}
+Similarly, the vector of residuals is the vector of response minus
+the vector of fitted values, that is,
+$\mathbf{e}=\mathbf{y-\hat{y}}$.
+
+\textbf{Hat Matrix.} From equation (\ref{E5:FittedValues}), we have $\mathbf{\hat{y}}=%
+\mathbf{X(X}^{\prime }\mathbf{X)}^{-1}\mathbf{X}^{\prime
+}\mathbf{y}$. This
+equation suggests defining $\mathbf{H}=\mathbf{X(X}^{\prime }\mathbf{X)}^{-1}%
+\mathbf{X}^{\prime }$, so that $\mathbf{\hat{y}}=\mathbf{Hy}$. From this,
+the matrix $\mathbf{H}$ is said to \textit{project} the vector of responses $%
+\mathbf{y}$ onto the vector of fitted values $\mathbf{\hat{y}}$.
+Alternatively, you may think of $\mathbf{H}$ as the matrix that puts
+the
+"hat," or carat, on $\mathbf{y}$. From the $i$th row of the vector equation $%
+\mathbf{\hat{y}=Hy}$, we have
+\begin{equation*}
+\hat{y}_{i}=h_{i1}y_{1}+h_{i2}y_{2}+...+h_{ii}y_{i}+...+h_{in}y_{n}.
+\end{equation*}
+Here, $h_{ij}$ is the number in the $i$th row and $j$th column of
+$\mathbf{H} $. Because of this relationship, $h_{ii}$ is called
+the $i$th leverage. Because $h_{ii}$ is the $i$th diagonal element of $%
+\mathbf{H}$, a direct expression for $h_{ii}$ is
+\begin{equation}\label{E5:Leverage}
+h_{ii}=\mathbf{x}_{i}^{\prime }\mathbf{(X}^{\prime }\mathbf{X)}^{-1}\mathbf{x%
+}_{i}
+\end{equation} where
+$\mathbf{x}_{i}=(x_{i0},x_{i1},\ldots,x_{ik})^{\prime }$. From this
+expression, using matrix algebra results, it is easy to calculate
+the following bounds on $h_{ii}$, $ n^{-1}\leq h_{ii}\leq 1.$
+
+Now, because $\mathbf{H}^{\prime }=\mathbf{H}$, the hat matrix is
+symmetric. Further, it is also an \textit{idempotent} matrix due to the property that $%
+\mathbf{HH}=\mathbf{H}$. To see this, we have that $\mathbf{HH}=\mathbf{(X(%
+\mathbf{X}^{\prime }X)}^{\mathbf{-1}}\mathbf{X}^{\prime }\mathbf{)(X(\mathbf{%
+X}^{\prime }X)}^{\mathbf{-1}}\mathbf{X}^{\prime }\mathbf{)}=\mathbf{X(%
+\mathbf{X}^{\prime }X)}^{\mathbf{-1}}\mathbf{(\mathbf{X}^{\prime }X)(\mathbf{%
+X}^{\prime }X)}^{\mathbf{-1}}\mathbf{X}^{\prime }=\mathbf{X(\mathbf{X}%
+^{\prime }X)}^{\mathbf{-1}}\mathbf{X}^{\prime }=\mathbf{H}$.
+Similarly, it is easy to check that $\mathbf{I-H}$ is idempotent.
+Now, because H is idempotent, from some results in matrix algebra,
+it is straightforward to show that $\sum_{i=1}^{n}h_{ii}=k+1$. As
+discussed in Section 5.2, we use our bounds and the average
+leverage, $\bar{h}=(k+1)/n$, to help identify observations with
+unusually high leverage.
+
+\textbf{Variance of Residuals.} Using the model equation $\mathbf{y}=\mathbf{%
+X \boldsymbol \beta + \boldsymbol \varepsilon}$, equation
+(\ref{E5:FittedValues}) and the hat matrix, we can express the
+vector of residuals as
+\begin{equation}\label{E5:Residuals}
+\mathbf{e}=\mathbf{y-Hy}=\mathbf{(I-H)(X \boldsymbol \beta
++\boldsymbol \varepsilon)}=\mathbf{(I-H) \boldsymbol \varepsilon}.
+\end{equation}
+The last equality is due to the fact that $\mathbf{(I-H)X}=\mathbf{X-HX}=%
+\mathbf{X-X}=\mathbf{0}$. Using $\text{Var } \boldsymbol \varepsilon
+= \sigma ^2 \mathbf{I}$, we have
+\begin{center}
+\[
+\text{Var }\mathbf{e}=\text{Var }\left[ \mathbf{(I-H)\boldsymbol \varepsilon}\right] =%
+\mathbf{(I-H)}\text{Var }\boldsymbol \varepsilon \mathbf{(I-H)}=\sigma ^{2}\mathbf{(I-H)I(I-H)}%
+=\sigma ^{2}\mathbf{(I-H)}.
+\]
+\end{center}
+The last equality comes from the fact that $\mathbf{I-H}$ is
+idempotent. Thus, we have that
+\begin{equation}\label{E5:VarResiduals}
+\text{Var }e_{i}=\sigma ^{2}(1-h_{ii})\text{ \ and \ Cov }%
+(e_{i},e_{j})=-\sigma ^{2}h_{ij}.
+\end{equation}
+Thus, although the true errors $\boldsymbol \varepsilon$ are
+uncorrelated, there is a small negative correlation among residuals
+$\mathbf e$.
+
+\textbf{Dominance of the Error in the Residual.} Examining the $i$th
+row of equation (\ref{E5:Residuals}), we have that the $i$th
+residual
+\begin{equation}\label{E5:ResidualsErrors}
+e_{i}=\varepsilon_{i} - \sum_{j=1}^{n} h_{ij} \varepsilon_{j}
+\end{equation}
+can be expressed as a linear combination of independent errors. The
+relation $ \mathbf{H}=\mathbf{HH}$ yields
+\begin{equation}\label{E5:Leverages}
+h_{ii}=\sum_{j=1}^{n} h_{ij}^{2}.
+\end{equation}
+Because $h_{ii}$ is, on average, $(k+1)/n$, this indicates that each
+$h_{ij}$ is small relative to 1. Thus, when interpreting equation
+(\ref{E5:ResidualsErrors}), we say that most of the information in
+$e_{i}$ is due to $\varepsilon_{i}$.
+
+\textbf{Correlations with Residuals.} First define $\mathbf{x}%
+^{j}=(x_{1j},x_{2j},\dots,x_{nj})^{\prime }$ to be the column representing the $j$%
+th variable. With this notation, we can partition the matrix of explanatory
+variables as $\mathbf{X}=\left( \mathbf{x}^{0},\mathbf{x}^{1},\dots,\mathbf{x}^{k}%
+\right)$. Now, examining the $j$th column of the relation $\mathbf{(I-H)X}=%
+\mathbf{0}$, we have $\mathbf{(I-H)x}^{j}=\mathbf{0}$. With $%
+\mathbf{e}=\mathbf{(I-H) \boldsymbol \varepsilon}$, this yields $
+\mathbf{e}^{\prime }\mathbf{x}^{j}=\boldsymbol \varepsilon^{\prime }\mathbf{(I-H)x}%
+^{j}=0,$ for $j=0,1,\ldots,k.$ This result has several implications.
+If the intercept is in the model, then
+$\mathbf{x}^{0}=(1,1,\ldots,1)^{\prime }$ is a vector of ones. Here, $\mathbf{\hat{%
+e}}^{\prime }\mathbf{x}^{0}=0$ means that $\sum_{i=1}^{n}\hat{e}_{i}=0$ or,
+the average residual is zero. Further, because $\mathbf{\hat{e}}^{\prime }%
+\mathbf{x}^{j}=0$, it is easy to check that the sample correlation between $%
+\mathbf{\hat{e}}$ and $\mathbf{x}^{j}$ is zero. Along the same line, we also
+have that $\mathbf{\hat{e}}^{\prime }\mathbf{\hat{y}}=\mathbf{e}^{\prime }%
+\mathbf{(I-H)Xb}=\mathbf{0}$. Thus, using the same argument as above, the
+sample correlation between $\mathbf{\hat{e}}$ and $\mathbf{\hat{y}}$ is zero.
+
+\marginparjed{When a vector of ones is present, then the average
+residual is zero.}
+
+\textbf{Multiple Correlation Coefficient.} For an example of a non-zero
+correlation, consider $r(\mathbf{y,\hat{y}})$, the sample correlation
+between $\mathbf{y}$ and $\mathbf{\hat{y}}$. Because $\mathbf{(I-H)x}^{0}=%
+\mathbf{0}$, we have $\mathbf{x}^{0}=\mathbf{Hx}^{0}$ and thus, $\mathbf{%
+\hat{y}}^{\prime }\mathbf{x}^{0}\mathbf{=y}^{\prime }\mathbf{Hx}^{0}\mathbf{%
+=y^{\prime} x^{0}}$. Assuming $\mathbf{x}^{0}=(1,1,\ldots,1)^{\prime
+}$, this means that $\sum_{i=1}^{n}\hat{y}_{i}=$
+$\sum_{i=1}^{n}y_{i}$, so that the average fitted value is
+$\bar{y}$. Now,
+
+\marginparjed{When a vector of ones is present, then the average
+fitted value is $\bar{y}$.}
+
+\begin{center}
+\[
+r(\mathbf{y,\hat{y}})=\frac{\sum_{i=1}^{n}(y_{i}-\bar{y})(\hat{y}_{i}-\bar{y}%
+)}{(n-1)s_{y}s_{\hat{y}}}.
+\]
+\end{center}
+Recall that $(n-1)s_{y}^{2}=\sum_{i=1}^{n}(y_{i}-\bar{y})^{2}=$ Total SS and $%
+(n-1)s_{\hat{y}}^{2}=\sum_{i=1}^{n}(\hat{y}_{i}-\bar{y})^{2}=$
+Regress SS. Further, with $\mathbf{x}^{0}=(1,1,\ldots,1)^{\prime }$,
+\begin{center}
+\begin{eqnarray*}
+\sum_{i=1}^{n}(y_{i}-\bar{y})(\hat{y}_{i}-\bar{y}) &=&(\mathbf{y}-\bar{y}%
+\mathbf{x}^{0})^{\prime }(\mathbf{\hat{y}}-\bar{y}\mathbf{x}^{0})=\mathbf{y}%
+^{\prime }\mathbf{\hat{y}}-\bar{y}^{2}\mathbf{x}^{0\prime }\mathbf{x}^{0} \\
+&=&\mathbf{y}^{\prime }\mathbf{Xb}-n\bar{y}^{2}=\text{Regress SS.}
+\end{eqnarray*}
+\end{center}
+This yields
+\begin{center}
+\[
+r(\mathbf{y,\hat{y}})=\frac{\text{Regress SS}}{\sqrt{\left( \text{Total SS}%
+\right) \left( \text{Regress SS}\right) }}=\sqrt{\frac{\text{Regress SS}}{%
+\text{Total SS}}}=\sqrt{R^{2}}.
+\]
+\end{center}
+That is, the coefficient of determination can be interpreted as the
+square root of the correlation between the observed and fitted
+responses.
+
+\subsection{Leave One Out Statistics}
+
+\textbf{Notation.} To test the sensitivity of regression quantities,
+there are a number of statistics of interest that are based on the
+notion of ``leaving out,'' or omitting, an observation. To this end,
+the subscript notation $(i)$ means to \textit{leave out} the $i$th
+observation. For example, omitting the row of explanatory variables
+$\mathbf{x}_{i}^{\prime }=(x_{i0},x_{i1},\dots,x_{ik})$ from
+$\mathbf{X}$ yields $\mathbf{X}_{(i)}$, a
+$(n-1)\times (k+1)$ matrix of explanatory variables. Similarly, $\mathbf{y}%
+_{(i)}$ is a $(n-1)\times 1$ vector, based on removing the $i$th row from $%
+\mathbf{y}$.
+
+\textbf{Basic Matrix Result.} Suppose that $\mathbf{A}$ is an invertible, $%
+p\times p$ matrix and $\mathbf{z}$ is a $p\times 1$ vector. The
+following result from matrix algebra provides an important tool for
+understanding leave one out statistics in linear regression
+analysis.
+\begin{equation}\label{E5:MatrixInversionResult}
+\left( \mathbf{A-zz}^{\prime }\right) ^{-1}=\mathbf{A}^{-1}+\frac{\mathbf{A}%
+^{-1}\mathbf{zz}^{\prime }\mathbf{A}^{-1}}{1-\mathbf{z}^{\prime }\mathbf{A}%
+^{-1}\mathbf{z}}.
+\end{equation}
+To check this result, simply multiply $\mathbf{A-zz}^{\prime }$ by
+the right hand side of equation (\ref{E5:MatrixInversionResult}) to
+get $\mathbf{I}$, the identity matrix.
+
+\textbf{Vector of Regression Coefficients.} Omitting the $i$th
+observation, our new vector of regression coefficients is $
+\mathbf{b}_{(i)}=\left( \mathbf{X}_{(i)}^{\prime
+}\mathbf{X}_{(i)}\right) ^{-1}\mathbf{X}_{(i)}^{\prime
+}\mathbf{y}_{(i)}. $ An alternative expression for
+$\mathbf{b}_{(i)}$ that is simpler to compute turns out to be
+\begin{equation}\label{E5:LOORegressionCoeff}
+\mathbf{b}_{(i)}=\mathbf{b}-\frac{\left( \mathbf{X}^{\prime }\mathbf{X}%
+\right) ^{-1}\mathbf{x}_{i} e_{i}}{1-h_{ii}}
+\end{equation}
+To verify equation (\ref{E5:LOORegressionCoeff}), first use equation
+(\ref{E5:MatrixInversionResult}) with $\mathbf{A}=\mathbf{X}^{\prime
+}\mathbf{X}$ and $\mathbf{z}=\mathbf{x}_{i}$ to get
+\begin{center}
+\[
+\left( \mathbf{X}_{(i)}^{\prime }\mathbf{X}_{(i)}\right) ^{-1}=(\mathbf{X}%
+^{\prime }\mathbf{X-x}_{i}\mathbf{x}_{i}^{\prime })^{-1}=(\mathbf{X}^{\prime
+}\mathbf{X})^{-1}+\frac{\left( \mathbf{X}^{\prime }\mathbf{X}\right) ^{-1}%
+\mathbf{x}_{i}\mathbf{x}_{i}^{\prime }\left( \mathbf{X}^{\prime }\mathbf{X}%
+\right) ^{-1}}{1-h_{ii}},
+\]
+\end{center}
+where, from equation (\ref{E5:Leverage}), we have $h_{ii}=\mathbf{x}_{i}^{\prime }%
+\mathbf{(X}^{\prime }\mathbf{X)}^{-1}\mathbf{x}_{i}$. Multiplying
+each side
+by $\mathbf{X}_{(i)}^{\prime }\mathbf{y}_{(i)}=\mathbf{X}^{\prime }\mathbf{y}%
+-\mathbf{x}_{i}y_{i}$ yields
+
+\begin{center}
+\begin{eqnarray*}
+\mathbf{b}_{(i)} &=&\left( \mathbf{X}_{(i)}^{\prime }\mathbf{X}_{(i)}\right)
+^{-1}\mathbf{X}_{(i)}^{\prime }\mathbf{y}_{(i)}=\left( (\mathbf{X}^{\prime }%
+\mathbf{X})^{-1}+\frac{\left( \mathbf{X}^{\prime }\mathbf{X}\right) ^{-1}%
+\mathbf{x}_{i}\mathbf{x}_{i}^{\prime }\left( \mathbf{X}^{\prime }\mathbf{X}%
+\right) ^{-1}}{1-h_{ii}}\right) \left( \mathbf{X}^{\prime }\mathbf{y}-%
+\mathbf{x}_{i}y_{i}\right)  \\
+&=&\mathbf{b}-\left( \mathbf{X}^{\prime }\mathbf{X}\right) ^{-1}\mathbf{x}%
+_{i}y_{i}+\frac{\left( \mathbf{X}^{\prime }\mathbf{X}\right) ^{-1}\mathbf{x}%
+_{i}\mathbf{x}_{i}^{\prime }\mathbf{b}-\left( \mathbf{X}^{\prime }\mathbf{X}%
+\right) ^{-1}\mathbf{x}_{i}\mathbf{x}_{i}^{\prime }\left( \mathbf{X}^{\prime
+}\mathbf{X}\right) ^{-1}\mathbf{x}_{i}y_{i}}{1-h_{ii}} \\
+&=&\mathbf{b}-\frac{\left( 1-h_{ii}\right) \left( \mathbf{X}^{\prime }%
+\mathbf{X}\right) ^{-1}\mathbf{x}_{i}y_{i}-\left( \mathbf{X}^{\prime }%
+\mathbf{X}\right) ^{-1}\mathbf{x}_{i}\mathbf{x}_{i}^{\prime }\mathbf{b}%
+-\left( \mathbf{X}^{\prime }\mathbf{X}\right) ^{-1}\mathbf{x}_{i}h_{ii}y_{i}%
+}{1-h_{ii}} \\
+&=&\mathbf{b}-\frac{\left( \mathbf{X}^{\prime }\mathbf{X}\right) ^{-1}%
+\mathbf{x}_{i}y_{i}-\left( \mathbf{X}^{\prime }\mathbf{X}\right) ^{-1}%
+\mathbf{x}_{i}\mathbf{x}_{i}^{\prime }\mathbf{b}}{1-h_{ii}}=\mathbf{b}-\frac{%
+\left( \mathbf{X}^{\prime }\mathbf{X}\right) ^{-1}\mathbf{x}_{i} e_{i}}{%
+1-h_{ii}}.\text{ }
+\end{eqnarray*}%
+\qquad
+\end{center}
+
+\noindent This establishes equation (\ref{E5:LOORegressionCoeff}).
+
+\textbf{Cook's Distance.} To measure the effect, or
+\textit{influence}, of omitting the \textit{i}th observation, Cook
+examined the difference between fitted values with and without the
+observation. We define Cook's Distance to be
+\begin{center}
+\[
+D_{i}=\frac{\left( \mathbf{\hat{y}-\hat{y}}_{(i)}\right) ^{\prime }\left(
+\mathbf{\hat{y}-\hat{y}}_{(i)}\right) }{(k+1)s^{2}}
+\]
+\end{center}
+where $\mathbf{\hat{y}}_{(i)}=\mathbf{Xb}_{(i)}$ is the vector of
+fitted values calculated omitting the $i$th point. Using equation
+(\ref{E5:LOORegressionCoeff}) and $\mathbf{\hat{y}}=\mathbf{Xb}$, an
+alternative expression for Cook's Distance is
+\begin{center}
+\begin{eqnarray*}
+D_{i} &=&\frac{\left( \mathbf{b-b}_{(i)}\right) ^{\prime }\left( \mathbf{X}%
+^{\prime }\mathbf{X}\right) \left( \mathbf{b-b}_{(i)}\right) }{(k+1)s^{2}} \\
+&=&\frac{e_{i}^{2}}{(1-h_{ii})^{2}}\frac{\mathbf{x}_{i}^{\prime
+}\left( \mathbf{X}^{\prime }\mathbf{X}\right) ^{-1}\left(
+\mathbf{X}^{\prime
+}\mathbf{X}\right) \left( \mathbf{X}^{\prime }\mathbf{X}\right) ^{-1}\mathbf{%
+x}_{i}}{(k+1)s^{2}} \\
+&=&\frac{e_{i}^{2}}{(1-h_{ii})^{2}}\frac{h_{ii}}{(k+1)s^{2}}=\left(
+\frac{e_{i}^{2}}{s\sqrt{1-h_{ii}}}\right) ^{2}\frac{h_{ii}}{%
+(k+1)(1-h_{ii})}.
+\end{eqnarray*}
+\end{center}
+This result is not only useful computationally, it also serves to
+decompose
+the statistic into the part due to the standardized residual, $\left( e%
+_{i}/\left( s\left( 1-h_{ii}\right) ^{1/2}\right) \right) ^{2}$, and
+due to the leverage, $h_{ii}/\left( \left( k+1\right) \left(
+1-h_{ii}\right) \right) $.
+
+
+\textbf{Leave One Out Residual.} The leave one out residual is defined by $%
+e_{(i)}=y_{i}-\mathbf{x}_{i}^{\prime }\mathbf{b}_{(i)}$. It is used
+in computing the \textit{PRESS} statistic, described in Section 5.5.
+A simple computational expression is $e_{(i)}=e_{i}/(1-h_{ii})$. To
+verify this, use equation (\ref{E5:LOORegressionCoeff}) to get
+\begin{center}
+\begin{eqnarray*}
+e_{(i)} &=&y_{i}-\mathbf{x}_{i}^{\prime }\mathbf{b}_{(i)}=y_{i}-%
+\mathbf{x}_{i}^{\prime }\left( \mathbf{b}-\frac{\left( \mathbf{X}^{\prime }%
+\mathbf{X}\right) ^{-1}\mathbf{x}_{i}e_{i}}{1-h_{ii}}\right)  \\
+&=&e_{i}+\frac{\mathbf{x}_{i}\left( \mathbf{X}^{\prime }\mathbf{X}%
+\right)
+^{-1}\mathbf{x}_{i}e_{i}}{1-h_{ii}}=e_{i}+\frac{h_{ii}
+e_{i}}{1-h_{ii}}=\frac{e_{i}}{1-h_{ii}}.
+\end{eqnarray*}
+\end{center}
+
+\textbf{Leave One Out Variance Estimate.} The leave one out estimate
+of the variance is defined by
+$s_{(i)}^{2}=((n-1)-(k+1))^{-1}\sum_{j\neq i}\left(
+y_{j}-\mathbf{x}_{j}^{\prime }\mathbf{b}_{(i)}\right) ^{2}$. It is
+used in the definition of the \textit{studentized residual}, defined
+in Section 5.1. A simple computational expression is given by
+\begin{equation}\label{E5:LOOVarianceEstimate}
+s_{(i)}^{2}=\frac{(n-(k+1))s^{2}-\frac{e_{i}^{2}}{1-h_{ii}}}{%
+(n-1)-(k+1)}.
+\end{equation}
+To see this, first note that from equation (\ref{E5:Residuals}), we have $\mathbf{He%
+}=\mathbf{H(I-H)\boldsymbol \varepsilon}=\mathbf{0}$, because
+$\mathbf{H}=\mathbf{HH}$. In
+particular, from the $i$th row of $\mathbf{He}=\mathbf{0}$, we have $%
+\sum_{j=1}^{n}h_{ij}e_{j}=0$. Now, using equations
+(\ref{E5:Leverages}) and (\ref{E5:LOORegressionCoeff}), we have
+
+\begin{center}
+\begin{eqnarray*}
+\sum_{j\neq i}\left( y_{j}-\mathbf{x}_{j}^{\prime }\mathbf{b}_{(i)}\right)
+^{2} &=&\sum_{j=1}^{n}\left( y_{j}-\mathbf{x}_{j}^{\prime }\mathbf{b}%
+_{(i)}\right) ^{2}-\left( y_{i}-\mathbf{x}_{i}^{\prime }\mathbf{b}%
+_{(i)}\right) ^{2} \\
+&=&\sum_{j=1}^{n}\left( y_{j}-\mathbf{x}_{j}^{\prime }\mathbf{b}+\frac{%
+\mathbf{x}_{j}^{\prime }\mathbf{(X}^{\prime }\mathbf{X)}^{-1}\mathbf{x}_{i}%
+e_{i}}{1-h_{ii}}\right) -e_{(i)}^{2} \\
+&=&\sum_{j=1}^{n}(e_{j}+\frac{h_{ij}e_{i}}{1-h_{ii}})^{2}-\frac{%
+e_{i}^{2}}{(1-h_{ii})^{2}} \\
+&=&\sum_{j=1}^{n}e_{j}^{2}+0+\frac{e_{i}^{2}}{(1-h_{ii})^{2}}%
+h_{ii}-\frac{e_{i}^{2}}{(1-h_{ii})^{2}} \\
+&=&\sum_{j=1}^{n}e_{j}^{2}-\frac{e_{i}^{2}}{1-h_{ii}}%
+=(n-(k+1))s^{2}-\frac{e_{i}^{2}}{1-h_{ii}}.
+\end{eqnarray*}%
+\qquad
+\end{center}
+
+This establishes equation (\ref{E5:LOOVarianceEstimate}).
+
+\subsection{Omitting Variables}
+
+\textbf{Notation.} To measure the effect on regression quantities, there are
+a number of statistics of interest that are based on the notion of omitting
+an explanatory variable. To this end, the superscript notation $(j)$ means
+to omit the $j$th variable, where $j=0,1,...,k$. First, recall that $\mathbf{%
+x}^{j}=(x_{1j},x_{2j},\ldots,x_{nj})^{\prime }$ is the column representing the $j$%
+th variable. Further, define $\mathbf{X}^{(j)}$ to be the $n\times k$ matrix
+of explanatory variables defined by removing $\mathbf{x}^{j}$ from $\mathbf{X%
+}$. For example, taking $j=k$, we often partition $\mathbf{X}$ as $\mathbf{X}%
+=\left( \mathbf{X}^{(k)}: \mathbf{x}^k \right) $.
+
+
+\textbf{Basic Matrix Result.} Suppose that we can partition the $(p+q)\times
+(p+q)$ matrix $\mathbf{B}$ as
+\begin{equation*}
+\mathbf{B}=%
+\begin{bmatrix}
+\mathbf{B}_{11} & \mathbf{B}_{12} \\
+\mathbf{B}_{12}^{\prime } & \mathbf{B}_{22}%
+\end{bmatrix},
+\end{equation*}
+where $\mathbf{B}_{11}$ is a $p\times p$ invertible matrix,
+$\mathbf{B}_{22}$ is a $q\times q$ invertible matrix, and
+$\mathbf{B}_{12}$ is a $p\times q$ matrix. Then
+\begin{equation}\label{E5:PartitionMatrixInverse}
+\mathbf{B}^{-1}=%
+\begin{bmatrix}
+\mathbf{C}_{11}^{-1} & \mathbf{-B}_{11}^{-1}\mathbf{B}_{12}\mathbf{C}%
+_{22}^{-1} \\
+\mathbf{-C}_{22}^{-1}\mathbf{B}_{12}^{\prime }\mathbf{B}_{11}^{-1} & \mathbf{%
+C}_{22}^{-1}%
+\end{bmatrix},
+\end{equation}
+where $\mathbf{C}_{11}=\mathbf{B}_{11}\mathbf{-B}_{12}\mathbf{B}_{22}^{-1}%
+\mathbf{B}_{12}^{\prime }$ and $\mathbf{C}_{22}=\mathbf{B}_{22}\mathbf{-B}%
+_{12}^{\prime }\mathbf{B}_{11}^{-1}\mathbf{B}_{12}$. To check this result,
+simply multiply $\mathbf{B}^{-1}$ by $\mathbf{B}$ to get $\mathbf{I}$, the
+identity matrix.
+
+\textbf{Reparameterized Model}. Define $\boldsymbol
+\beta^{(k)}=(\beta _{0},\beta _{1},\ldots,\beta _{k-1})^{\prime }$.
+With this additional notation, the model
+$\mathbf{y}=\mathbf{X\boldsymbol \beta + \boldsymbol \varepsilon}$
+can be rewritten as
+\begin{equation}\label{E5:OVEquation}
+\mathbf{y}=\mathbf{X}^{(k)}{\boldsymbol \beta
+}^{(k)}+\mathbf{x}^{k}\beta _{k}+ \boldsymbol \varepsilon.
+\end{equation}
+Now, suppose we run a regression using $\mathbf{x}^{k}$ as the
+response vector and $\mathbf{X}^{(k)}$ as the matrix of explanatory
+variables. Then,
+the vector of ``parameter estimates'' is $\mathbf{A}=\left( \mathbf{X}%
+^{(k)\prime }\mathbf{X}^{(k)}\right) ^{-1}\mathbf{X}^{(k)\prime }\mathbf{x}%
+^{k}$. Thus,
+\begin{center}
+\[
+\mathbf{e}_{1}=\mathbf{x}^{k}\mathbf{-X}^{(k)}\mathbf{A}=\mathbf{x}%
+^{k}-\mathbf{X}^{(k)}\left( \mathbf{X}^{(k)\prime }\mathbf{X}^{(k)}\right)
+^{-1}\mathbf{X}^{(k)\prime }\mathbf{x}^{k}
+\]
+\end{center}
+can be thought of as the ``residuals'' of this regression. Substituting $%
+\mathbf{x}^{k}=\mathbf{e_{1}}+\mathbf{X}^{(k)}\mathbf{A}$ in
+equation (\ref{E5:OVEquation}) yields
+\begin{equation}\label{E5:OVEquationReParam}
+\mathbf{y}=\mathbf{X}^{(k)}(\mathbf{\beta }^{(k)}+\mathbf{A}\beta _{k})+%
+\mathbf{e}_{1} \beta_{k} + \boldsymbol \varepsilon =
+\mathbf{X}^{(k)} \boldsymbol \alpha_{1} + \mathbf{e_{1}} \beta_{k} +
+\boldsymbol \varepsilon.
+\end{equation}
+With the new vector of parameters $\boldsymbol
+\alpha_{1}=\boldsymbol \beta ^{(k)}+\mathbf{A}\beta _{k}$, equation
+(\ref{E5:OVEquationReParam}) is a \textit{reparameterized} version
+of equation (\ref{E5:OVEquation}). The reason for introducing this
+new parameterization is that now the vector of explanatory variables
+is \textit{orthogonal} to the other explanatory variables, that is,
+straightforward algebra shows that $\mathbf{X}^{(k)\prime
+}\mathbf{e}_{1}=\mathbf{0}$.
+
+With the notation $\mathbf{X}^{\ast} = (\mathbf{X}^{(k)}:
+\mathbf{e}_{1})$ and $\boldsymbol \alpha = (\boldsymbol
+\alpha_{1}^{\prime }, \beta_{k})^{\prime }$, we may now use least
+squares techniques to estimate the model
+$\mathbf{y}=\mathbf{X}^{\ast }\boldsymbol \alpha + \boldsymbol
+\varepsilon$. To this
+end, by equation (\ref{E5:PartitionMatrixInverse}) and the orthogonality of $\mathbf{X}^{(k)}$ and $%
+\mathbf{e_{1}}$, we have
+
+\begin{center}
+\begin{eqnarray*}
+\left( \mathbf{X}^{\ast \prime }\mathbf{X}^{\ast }\right) ^{-1} &=&\left(
+\begin{bmatrix}
+\mathbf{X}^{(k)\prime } & \mathbf{e}_{1}^{\prime }%
+\end{bmatrix}%
+\begin{bmatrix}
+\mathbf{X}^{(k)} \\
+\mathbf{e}_{1}%
+\end{bmatrix}%
+\right) ^{-1}=%
+\begin{bmatrix}
+\mathbf{X}^{(k)\prime }\mathbf{X}^{(k)} & 0 \\
+0 & \mathbf{e}_{1}^{\prime }\mathbf{e}_{1}%
+\end{bmatrix}%
+^{-1} \\
+&=&%
+\begin{bmatrix}\label{E5:OVXPX}
+\left( \mathbf{X}^{(k)\prime }\mathbf{X}^{(k)}\right) ^{-1} & 0 \\
+0 & \left( \mathbf{e}_{1}^{\prime }\mathbf{e}_{1}\right) ^{-1}%
+\end{bmatrix}.
+\end{eqnarray*}
+\end{center}
+
+Thus, the vector of least squares estimates is
+
+\begin{center}
+\begin{eqnarray} \label{E5:OVLSEstimates}
+\mathbf{a} &=&%
+\begin{bmatrix} \notag
+\mathbf{a}_{1} \\
+b_{k}%
+\end{bmatrix}
+=\left( \mathbf{X}^{\ast \prime }\mathbf{X}^{\ast }\right) ^{-1}\mathbf{X}%
+^{\ast }\mathbf{y}=%
+\begin{bmatrix} \notag
+\left( \mathbf{X}^{(k)\prime }\mathbf{X}^{(k)}\right) ^{-1} & 0 \\
+0 & \left( \mathbf{e}_{1}^{\prime }\mathbf{e}_{1}\right) ^{-1}%
+\end{bmatrix}%
+\begin{bmatrix} \notag
+\mathbf{X}^{(k)\prime }\mathbf{y} \\
+\mathbf{e}_{1}^{\prime }\mathbf{y}%
+\end{bmatrix}
+\\
+&=&%
+\begin{bmatrix}
+\left( \mathbf{X}^{(k)\prime }\mathbf{X}^{(k)}\right) ^{-1}\mathbf{X}%
+^{(k)\prime }\mathbf{y} \\
+\left( \mathbf{e}_{1}^{\prime }\mathbf{e}_{1}\right) ^{-1}%
+\mathbf{e}_{1}^{\prime }\mathbf{y}%
+\end{bmatrix}.
+\end{eqnarray}
+\end{center}
+
+From equation (TS4.2), the error sum of squares is
+
+\begin{center}
+\begin{eqnarray} \label{E5:OVErrorSS}
+\text{Error SS} &=&\mathbf{y}^{\prime }\mathbf{y}-\mathbf{a}^{\prime }%
+\mathbf{X}^{\mathbf{\ast }\prime }\mathbf{y}=\mathbf{y}^{\prime }\mathbf{y}-%
+\begin{bmatrix} \notag
+\left( \mathbf{X}^{(k)\prime }\mathbf{X}^{(k)}\right) ^{-1}\mathbf{X}%
+^{(k)\prime }\mathbf{y} \\
+\left( \mathbf{e}_{1}^{\prime }\mathbf{y}\right) ^{\prime }/\left(
+\mathbf{e}_{1}^{\prime }\mathbf{e}_{1}\right)
+\end{bmatrix}%
+^{\prime }%
+\begin{bmatrix} \notag
+\mathbf{X}^{(k)\prime }\mathbf{y} \\
+\mathbf{e}_{1}^{\prime }\mathbf{y}%
+\end{bmatrix}
+\\
+&=&\mathbf{y}^{\prime }\mathbf{y}-\mathbf{y}^{\prime }\mathbf{X}^{(k)}(%
+\mathbf{X}^{(k)\prime }(\mathbf{X}^{(k)})^{-1}\mathbf{X}^{(k)\prime }\mathbf{%
+y}-\frac{\left( \mathbf{e}_{1}^{\prime }\mathbf{y}\right) ^{2}}{%
+\mathbf{e}_{1}^{\prime }\mathbf{e}_{1}}.
+\end{eqnarray}
+\end{center}
+
+We may now use this expression for the Error SS for computing several
+quantities of interest.
+
+\textbf{Variance Inflation Factor}. We first would like to establish the
+relationship between the definition of the standard error of $b_{j}$ given by
+\begin{center}
+\[
+se(b_{j})=s\sqrt{(j+1)\text{th \textit{diagonal element} of }\mathbf{(X}%
+^{\prime }\mathbf{X)}^{-1}}
+\]
+\end{center}
+and the relationship involving the variance inflation factor,
+\begin{center}
+\[
+se(b_{j})=s\frac{\sqrt{VIF_{j}}}{s_{x_{j}}\sqrt{n-1}}.
+\]
+\end{center}
+By symmetry of the independent variables, we only need consider only
+the case where $j=k$. Thus, we would like to establish
+\begin{equation}\label{E5:VIFXPX}
+(k+1)\text{st diagonal element of }(\mathbf{X}^{\prime }\mathbf{X}%
+)^{-1}=VIF_{k}/((n-1)s_{x_{k}}^{2}).
+\end{equation}
+First consider the reparameterized model in equation
+(\ref{E5:OVEquationReParam}). From equation
+(\ref{E5:OVLSEstimates}), we can express the regression coefficient estimate $b_{k}=(\mathbf{%
+e}_{1}^{\prime }\mathbf{y})/(\mathbf{e}_{1}^{\prime }\mathbf{%
+e}_{1})$. From equation (\ref{E5:OVXPX}), we have that Var $b_{k}=\sigma ^{2}(%
+\mathbf{e}_{1}^{\prime }\mathbf{e}_{1})^{-1}$ and thus
+\begin{equation}\label{E5:StdErrorReparam}
+se(b_{k})=s(\mathbf{e}_{1}^{\prime }\mathbf{e}_{1})^{-1/2}.
+\end{equation}
+Thus, the $(k+1)$st diagonal element of $(\mathbf{X}^{\ast \prime }\mathbf{X}%
+^{\ast })^{-1}$ is $\mathbf{e}_{1}^{\prime }\mathbf{e}_{1}$
+which is also the $(k+1)$st diagonal element of $(\mathbf{X}^{\prime }%
+\mathbf{X})^{-1}$. Alternatively, this can be verified directly
+using equation (\ref{E5:PartitionMatrixInverse}).
+
+Now, suppose that we run a regression using $\mathbf{x}^{k}$ as the
+response vector and $\mathbf{X}^{(k)}$ as the matrix of explanatory
+variables. As noted below equation (\ref{E5:OVEquation}),
+$\mathbf{e}_{1}$
+represents the ``residuals'' from this regression and thus $\mathbf{e}%
+_{1}^{\prime }\mathbf{e}_{1}$ represents the error sum of squares.
+For
+this regression, the total sum of squares is $\sum_{i=1}^{n}(x_{ik}-\bar{x}%
+_{k})^{2}=(n-1)s_{x_{k}}^{2}$ and the coefficient of determination is $%
+R_{k}^{2}$. Thus,
+\begin{center}
+\[
+\mathbf{e}_{1}^{\prime }\mathbf{e}_{1}=\text{``Error SS''}=\text{%
+``Total SS'' }(1-R_{k}^{2})=(n-1)s_{x_{k}}^{2}/VIF_{k}.
+\]
+\end{center}
+This establishes equation (\ref{E5:VIFXPX}).
+
+
+\textbf{Extra Sum of Squares}. Suppose that we wish to consider the increase
+in the error sum of squares going from a \textit{reduced} model
+\begin{center}
+\[
+\mathbf{y}=\mathbf{X}^{(k)}\boldsymbol \beta^{(k)}+ \boldsymbol
+\varepsilon
+\]
+\end{center}
+to a \textit{full} model
+\begin{center}
+\[
+\mathbf{y}=\mathbf{X}^{(k)}\boldsymbol
+\beta^{(k)}+\mathbf{x}_{k}\beta _{k}+ \boldsymbol \varepsilon.
+\]
+\end{center}
+For the reduced model, from equation (TS4.2), the error sum of
+squares is
+
+\begin{equation}\label{E5:ESSReduced}
+(\text{Error SS})_{reduced}=\mathbf{y}^{\prime }\mathbf{y}-\mathbf{y}%
+^{\prime }\mathbf{X}^{(k)}(\mathbf{X}^{(k)\prime }\mathbf{X}^{(k)})^{-1}%
+\mathbf{X}^{(k)})^{\prime }\mathbf{y}.
+\end{equation}
+Using the reparameterized version of the full model, from equation
+(\ref{E5:OVErrorSS}), the error sum of squares is
+\begin{equation}\label{E5:ESSFull}
+(\text{Error SS})_{full}=\mathbf{y}^{\prime }\mathbf{y}-\mathbf{y}^{\prime }%
+\mathbf{X}^{(k)}(\mathbf{X}^{(k)\prime }\mathbf{X}^{(k)})^{-1}\mathbf{X}%
+^{(k)})^{\prime }\mathbf{y}-\left( \mathbf{e}_{1}^{\prime }\mathbf{y}%
+\right) ^{2}/\left( \mathbf{e}_{1}^{\prime }\mathbf{e}%
+_{1}\right)
+\end{equation}
+Thus, the reduction in the error sum of squares by adding
+$\mathbf{x}^{k}$ to the model is
+\begin{equation}\label{E5:ESSReduction}
+(\text{Error SS})_{reduced}-(\text{Error SS})_{full}=\left( \mathbf{e}%
+_{1}^{\prime }\mathbf{y}\right) ^{2}/\left( \mathbf{e}_{1}^{\prime }%
+\mathbf{e}_{1}\right) .
+\end{equation}
+As noted in Section 4.3, the quantity (Error SS)$_{reduced}-$ (Error SS)$%
+_{full}$ is called the \textit{extra sum of squares}, or Type III Sum of
+Squares. It is produced automatically by some statistical software packages,
+thus obviating the need to run separate regressions.
+
+\textbf{Establishing }$\mathbf{t}^{\mathbf{2}}\mathbf{=F}$. For testing the
+null hypothesis H$_{0}$: $\beta _{k}=0$, the material in Section 4.3
+provides a description of a test based on the \textit{t-}statistic, $%
+t(b_{k})=b_{k}/se(b_{k})$. An alternative test procedure, described
+in Sections 4.3, uses the test statistic
+\begin{center}
+\[
+F-\text{ratio}=\frac{(\text{Error SS})_{reduced}-(\text{Error SS}%
+)_{full}}{p \times (\text{Error MS})_{full}}=\frac{\left( \mathbf{e}%
+_{1}^{\prime }\mathbf{y}\right) ^{2}}{s^{2}\mathbf{e}_{1}^{\prime }%
+\mathbf{e}_{1}}
+\]%
+\end{center}
+from equation (\ref{E5:ESSReduction}). Alternatively, from equations
+(\ref{E5:OVLSEstimates}) and (\ref{E5:StdErrorReparam}), we have
+\begin{equation}\label{E5:tStat}
+t(b_{k})=\frac{b_{k}}{se(b_{k})}=\frac{\left( \mathbf{e}_{1}^{\prime }%
+\mathbf{y}\right) /\left( \mathbf{e}_{1}^{\prime }\mathbf{e}%
+_{1}\right) }{s/\sqrt{\mathbf{e}_{1}^{\prime }\mathbf{e}_{1}}}=%
+\frac{\left( \mathbf{e}_{1}^{\prime }\mathbf{y}\right) }{s\sqrt{%
+\mathbf{e}_{1}^{\prime }\mathbf{e}_{1}}}.
+\end{equation}
+
+\noindent Thus, $t(b_{k})^{2}=F-$ratio.
+
+\textbf{Partial Correlation Coefficients.} From the full regression model $%
+\mathbf{y}=\mathbf{X}^{(k)}\boldsymbol \beta^{(k)}+\mathbf{x}_{k}\beta _{k}+\boldsymbol \varepsilon$%
+, consider two separate regressions. A regression using
+$\mathbf{x}^{k}$ as the response vector and $\mathbf{X}^{(k)}$ as
+the matrix of explanatory variables yields the residuals
+$\mathbf{e}_{1}$. Similarly, a regression $\mathbf{y}$ as the response vector and $%
+\mathbf{X}^{(k)}$ as the matrix of explanatory variables yields the
+residuals
+\begin{center}
+\[
+\mathbf{e}_{2}=\mathbf{y}-\mathbf{X}^{(k)}\left(
+\mathbf{X}^{(k)\prime }\mathbf{X}^{(k)}\right)
+^{-1}\mathbf{X}^{(k)}\mathbf{y.}
+\]
+\end{center}
+If $x^{0}=(1,1,\ldots,1)^{\prime}$, then the average of $%
+\mathbf{e}_{1}$ and $\mathbf{e}_{2}$ is zero. In this case, the
+sample correlation between $\mathbf{e}_{1}$ and $\mathbf{e}_{2}$ is
+\begin{center}
+\[
+r(\mathbf{e}_{1},\mathbf{e}_{2})=\frac{\sum_{i=1}^{n}e_{1i}%
+e_{2i}}{\sqrt{\left( \sum_{i=1}^{n}e_{i1}^{2}\right) \left(
+\sum_{i=1}^{n}e_{i2}^{2}\right) }}=\frac{\mathbf{e}_{1}^{\prime }%
+\mathbf{e}_{2}}{\sqrt{\left( \mathbf{e}_{1}^{\prime }\mathbf{%
+e}_{1}\right) \left( \mathbf{e}_{2}^{\prime }\mathbf{e}%
+_{2}\right) }}.
+\]%
+\end{center}
+Because $\mathbf{e}_{1}$ is a vector of residuals using $\mathbf{X}%
+^{(k)}$ as the matrix of explanatory variables, we have that
+$\mathbf{e}_{1}^{\prime }\mathbf{X}^{(k)}=0$. Thus, for the
+numerator, we have
+\newline $\mathbf{e}_{1}^{\prime }\mathbf{e}_{2}=%
+\mathbf{e}_{1}^{\prime }\left( \mathbf{y}-\mathbf{X}^{(k)}\left(
+\mathbf{X}^{(k)\prime }\mathbf{X}^{(k)}\right) ^{-1}\mathbf{X}^{(k)}\mathbf{y%
+}\right) =\mathbf{e}_{1}^{\prime }\mathbf{y.}$ From equations
+(\ref{E5:ESSReduced}) and (\ref{E5:ESSFull}), we have that
+\begin{center}
+\[
+(n-(k+1))s^{2}=(\text{Error SS})_{full}=\mathbf{e}_{1}^{\prime }%
+\mathbf{e}_{2}-\left( \mathbf{e}_{1}^{\prime }\mathbf{y}\right)
+^{2}/\left( \mathbf{e}_{1}^{\prime }\mathbf{e}_{1}\right) =%
+\mathbf{e}_{1}^{\prime }\mathbf{e}_{2}-\left( \mathbf{e}%
+_{1}^{\prime }\mathbf{e}_{2}\right) ^{2}/\left( \mathbf{e}%
+_{1}^{\prime }\mathbf{e}_{1}\right).
+\]
+\end{center}
+Thus, from equation (\ref{E5:tStat})
+\begin{center}
+\begin{eqnarray*}
+\frac{t(b_{k})}{\sqrt{t(b_{k})^{2}+n-(k+1)}} &=&\frac{\mathbf{e}%
+_{1}^{\prime }\mathbf{y}/\left( s\sqrt{\mathbf{e}_{1}^{\prime }\mathbf{%
+e}_{1}}\right) }{\sqrt{\frac{\left( \mathbf{e}_{1}^{\prime }%
+\mathbf{y}\right) ^{2}}{s^{2}\mathbf{e}_{1}^{\prime }\mathbf{e}%
+_{1}}+n-(k+1)}} \\
+&=&\frac{\mathbf{e}_{1}^{\prime }\mathbf{y}}{\sqrt{\left( \mathbf{\hat{%
+e}}_{1}^{\prime }\mathbf{y}\right) ^{2}+\mathbf{e}_{1}^{\prime }%
+\mathbf{e}_{1}s^{2}\left( n-(k+1)\right) }} \\
+&=&\frac{\mathbf{e}_{1}^{\prime }\mathbf{e}_{2}}{\sqrt{\left(
+\mathbf{e}_{1}^{\prime }\mathbf{e}_{2}\right) ^{2}+\mathbf{\hat{e%
+}}_{1}^{\prime }\mathbf{e}_{1}\left( \mathbf{e}_{2}^{\prime }%
+\mathbf{e}_{2}-\frac{\left( \mathbf{e}_{1}^{\prime }\mathbf{\hat{%
+e}}_{2}\right) ^{2}}{\mathbf{e}_{1}^{\prime }\mathbf{e}_{1}}%
+\right) }} \\
+&=&\frac{\mathbf{e}_{1}^{\prime }\mathbf{e}_{2}}{\sqrt{\mathbf{%
+e}_{1}^{\prime }\mathbf{e}_{1}\mathbf{e}_{2}^{\prime }%
+\mathbf{e}_{2}}}=r(\mathbf{e}_{1},\mathbf{e}_{2})
+\end{eqnarray*}
+\end{center}
+This establishes the relationship between the partial correlation
+coefficient and the \textit{t-}ratio statistic.
+
+\subsection{Effect of Model Misspecification}
+
+\textbf{Notation.} Partition the matrix of explanatory variables $\mathbf{X}$
+into two submatrices, each having $n$ rows, so that $\mathbf{X}=(\mathbf{X}%
+_{1} : \mathbf{X}_{2})$. For convenience, assume that $\mathbf{X}_{1}$ is an $%
+n\times p$ matrix. Similarly, partition the vector of parameters
+$\boldsymbol \beta =\left( \boldsymbol \beta _{1}^{\prime },
+\boldsymbol \beta _{2}^{\prime }\right) ^{\prime }$ such that
+$\mathbf{X \boldsymbol \beta }=\mathbf{X}_{1} \boldsymbol \beta_{1}+
+\mathbf{X}_{2} \boldsymbol \beta_{2}$. We compare the full, or
+``long,'' model
+\begin{center}
+\[
+\mathbf{y}=\mathbf{X \boldsymbol \beta }+\boldsymbol \varepsilon = \mathbf{X}_{1} \boldsymbol \beta_{1}+%
+\mathbf{X}_{2} \boldsymbol \beta_{2}+\boldsymbol \varepsilon
+\]
+\end{center}
+to the reduced, or ``short,'' model
+\begin{center}
+\[
+\mathbf{y}=\mathbf{X}_{1} \boldsymbol \beta_{1}+\boldsymbol
+\varepsilon.
+\]
+\end{center}
+This simply generalizes the set-up earlier to allow for omitting
+several variables.
+
+\textbf{Effect of Underfitting.} Suppose that the true representation is the
+long model but we mistakenly run the short model. Our parameter estimates
+when running the short model are given by $\mathbf{b}_{1}=\mathbf{(X}%
+_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{X}_{1}^{\prime
+}\mathbf{y} $. These estimates are biased because
+\begin{center}
+\begin{eqnarray*}
+\text{Bias} &=&\text{E }\mathbf{b}_{1}-\boldsymbol \beta_{1}
+=\text{E}\mathbf{(X%
+}_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{X}_{1}^{\prime }\mathbf{y%
+}-\boldsymbol \beta_{1}
+=\mathbf{(X}_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1}%
+\mathbf{X}_{1}^{\prime }\text{E }\mathbf{y}-\boldsymbol \beta_{1} \\
+&=&\mathbf{(X}_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{X}%
+_{1}^{\prime }\left( \mathbf{X}_{1}\boldsymbol \beta_{1}+\mathbf{X}_{2}\boldsymbol \beta_{2}\right)
+- \boldsymbol \beta_{1}=\mathbf{(X}_{1}^{\prime }\mathbf{X}%
+_{1}\mathbf{)}^{-1}\mathbf{X}_{1}^{\prime }\mathbf{X}_{2}\boldsymbol \beta_{2}=%
+\mathbf{A \boldsymbol \beta }_{2}.
+\end{eqnarray*}
+\end{center}
+Here, $\mathbf{A}=\mathbf{(X}_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1}%
+\mathbf{X}_{1}^{\prime }\mathbf{X}_{2}$ is called the \textit{alias}, or
+bias, matrix. When running the short model, the estimated variance is $%
+s_{1}^{2}=(\mathbf{y}^{\prime }\mathbf{y}-\mathbf{b}_{1}^{\prime }\mathbf{X}%
+_{1}^{\prime }\mathbf{y})/(n-p)$. It can be shown that
+\begin{equation}\label{E5:AliasBias}
+\text{E }s_{1}^{2}=\sigma ^{2}+(n-p)^{-1}\boldsymbol
+\beta_{2}^{\prime }\left(
+\mathbf{X}_{2}^{\prime }\mathbf{X}_{2}-\mathbf{X}_{2}^{\prime }\mathbf{X}_{1}%
+\mathbf{(X}_{1}^{\prime
+}\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{X}_{1}^{\prime
+}\mathbf{X}_{2}\right) \boldsymbol \beta_{2}.
+\end{equation}
+Thus, $s_{1}^{2}$ is an ``overbiased'' estimate of $\sigma ^{2}$.
+
+Let $\mathbf{x}_{1i}^{\prime }$ and $\mathbf{x}_{2i}^{\prime }$ be
+the $i$th rows of $\mathbf{X}_{1}$ and $\mathbf{X}_{2}$,
+respectively. Using
+the fitted short model, the $i$th fitted value is $\hat{y}_{1i}=\mathbf{x}%
+_{1i}^{\prime }\mathbf{b}_{1}$. The true $i$th expected response is E $\hat{y%
+}_{1i}=\mathbf{x}_{1i}^{\prime } \boldsymbol \beta_{1}+$
+$\mathbf{x}_{2i}^{\prime } \boldsymbol \beta_{2}$. Thus, the bias of
+the $i$th fitted value is
+
+\begin{center}
+\begin{eqnarray*}
+\text{Bias}(\hat{y}_{1i}) &=&\text{E }\hat{y}_{1i}-\text{E }y_{i}=\mathbf{x}%
+_{1i}^{\prime }\text{E }\mathbf{b}_{1}-\left( \mathbf{x}_{1i}^{\prime }%
+\boldsymbol \beta_{1}+\mathbf{x}_{2i}^{\prime } \boldsymbol \beta_{2}\right)  \\
+&=&\mathbf{x}_{1i}^{\prime }(\boldsymbol \beta_{1}+\mathbf{A \boldsymbol \beta }%
+_{2})-\left( \mathbf{x}_{1i}^{\prime }\boldsymbol \beta_{1}+\mathbf{x}%
+_{2i}^{\prime }\boldsymbol \beta_{2}\right) =(\mathbf{x}_{1i}^{\prime }\mathbf{%
+A}-\mathbf{x}_{2i}^{\prime })\boldsymbol \beta_{2}.
+\end{eqnarray*}
+\end{center}
+
+Using this and equation (\ref{E5:AliasBias}), straightforward
+algebra show that
+\begin{equation}\label{E5:SumBias}
+\text{E }s_{1}^{2}=\sigma ^{2}+(n-p)^{-1}\sum_{i=1}^{n}(\text{Bias}(\hat{y}%
+_{1i}))^{2}.
+\end{equation}
+
+\textbf{Effect of Overfitting.} Now suppose that the true representation is
+the short model but we mistakenly use the large model. With the alias matrix
+$\mathbf{A}=\mathbf{(X}_{1}^{\prime }\mathbf{X}_{1}%
+\mathbf{)}^{-1}\mathbf{X}_{1}^{\prime }\mathbf{X}_{2},$ we can \textit{%
+reparameterize} the long model
+\begin{center}
+\[
+\mathbf{y}=\mathbf{X}_{1}\boldsymbol
+\beta_{1}+\mathbf{X}_{2}\boldsymbol \beta_{2} + \boldsymbol
+\varepsilon
+=\mathbf{X}_{1}\left( \boldsymbol \beta_{1}+\mathbf{A \boldsymbol \beta }%
+_{2}\right) +\mathbf{E}_{1}\boldsymbol \beta_{2} + \boldsymbol
+\varepsilon = \mathbf{X}_{1}%
+\boldsymbol \alpha_{1}+\mathbf{E}_{1}\boldsymbol \beta_{2} +
+\boldsymbol \varepsilon
+\]
+\end{center}
+where
+$\mathbf{E}_{1}=\mathbf{X}_{2}\mathbf{-X}_{1}\mathbf{A}$\textbf{\
+}and $\boldsymbol \alpha_{1}=\boldsymbol \beta_{1}+\mathbf{A
+\boldsymbol \beta}_{2}$. The advantage of this new parameterization
+is that $\mathbf{X}_{1}$ is
+orthogonal to $\mathbf{E}_{1}$ because $\mathbf{X}_{1}^{\prime }\mathbf{E}%
+_{1}=\mathbf{X}_{1}^{\prime }(\mathbf{X}_{2}-\mathbf{X}_{1}\mathbf{A})=%
+\mathbf{0}$. With $\mathbf{X}^{\ast }=(\mathbf{X}%
+_{1}: \mathbf{E}_{1})$ and $\boldsymbol \alpha =(\boldsymbol \alpha_{1}^{\prime }%
+\boldsymbol \beta_{1}^{\prime })^{\prime }$, the vector of least
+square estimates is
+\begin{center}
+\begin{eqnarray*}
+\mathbf{a} &=&%
+\begin{bmatrix}
+\mathbf{a}_{1} \\
+\mathbf{b}_{1}%
+\end{bmatrix}%
+=\left( \mathbf{X}^{\ast \prime }\mathbf{X}^{\ast }\right) ^{-1}\mathbf{X}%
+^{\ast \prime }\mathbf{y} \\
+&=&%
+\begin{bmatrix}
+\mathbf{(X}_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1} & 0 \\
+0 & \mathbf{(E}_{1}^{\prime }\mathbf{E}_{1}\mathbf{)}^{-1}%
+\end{bmatrix}%
+\begin{bmatrix}
+\mathbf{X}_{1}^{\prime }\mathbf{y} \\
+\mathbf{E}_{1}^{\prime }\mathbf{y}%
+\end{bmatrix}%
+=%
+\begin{bmatrix}
+\mathbf{(X}_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{X}_{1}^{\prime
+}\mathbf{y} \\
+\mathbf{(E}_{1}^{\prime }\mathbf{E}_{1}\mathbf{)}^{-1}\mathbf{E}_{1}^{\prime
+}\mathbf{y}%
+\end{bmatrix}%
+.
+\end{eqnarray*}
+\end{center}
+
+From the true (short) model, E $\mathbf{y}=\mathbf{X}_{1}\boldsymbol \beta_{1}$%
+, we have that E $\mathbf{b}_{2}=(\mathbf{E}_{1}^{\prime }\mathbf{E}%
+_{1})^{-1}\mathbf{E}_{1}^{\prime }$E $\mathbf{y}=(\mathbf{E}_{1}^{\prime }%
+\mathbf{E}_{1})^{-1}\mathbf{E}_{1}^{\prime }$E $(\mathbf{X}_{1}\mathbf{\beta
+}_{1})=\mathbf{0}$, because $\mathbf{X}_{1}^{\prime }\mathbf{E}_{1}=\mathbf{%
+0.}$  The least squares estimate of $\boldsymbol \beta_{1}$ is $\mathbf{b}_{1}=\mathbf{a%
+}_{1}-\mathbf{Ab}_{2}$. Because E $\mathbf{a}_{1}=$
+$\mathbf{(X}_{1}^{\prime
+}\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{X}_{1}^{\prime }$E
+$\mathbf{y}=\boldsymbol \beta_{1}$ under the short model, we have E $\mathbf{b}_{1}=$ E $\mathbf{a}%
+_{1}-\mathbf{A}$E $\mathbf{b}_{2}=\boldsymbol
+\beta_{1}-\mathbf{0}=\boldsymbol \beta_{1}$. Thus, even though we mistakenly run the long model, $\mathbf{b}%
+_{1}$ is still an unbiased estimator of $\boldsymbol \beta_{1}$ and $\mathbf{b}%
+_{2}$ is an unbiased estimator of $\mathbf{0}$. Thus, there is no
+bias in
+the $i$th fitted value because E $\hat{y}_{i}=$ E $(\mathbf{x}_{1i}^{\prime }%
+\mathbf{b}_{1}+\mathbf{x}_{2i}^{\prime }\mathbf{b}_{2})=\mathbf{x}%
+_{1i}^{\prime }\boldsymbol \beta_{1}=$ E $y_{i}$.
+
+$\mathbf{C}_{\mathbf{p}}$\textbf{\ Statistic.} Suppose initially that the
+true representation is the long model but we mistakenly use the short model.
+The $i$th fitted value is $\hat{y}_{1i}=$ $\mathbf{x}_{1i}^{\prime }\mathbf{b%
+}_{1}$ that has mean square error
+\begin{center}
+\[
+\text{MSE }\hat{y}_{1i}=\text{E}(\hat{y}_{1i}-\text{E }\hat{y}_{1i})^{2}=%
+\text{Var }\hat{y}_{1i}+\left( \text{Bias }\hat{y}_{1i}\right) ^{2}.
+\]
+\end{center}
+For the first part, we have that Var $\hat{y}_{1i}=$ Var  $\left( \mathbf{x}%
+_{1i}^{\prime }\mathbf{b}_{1}\right) =$ Var $\left( \mathbf{x}_{1i}^{\prime }%
+\mathbf{(X}_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{X}_{1}^{\prime
+}\mathbf{y}\right) =\sigma ^{2}\mathbf{x}_{1i}\mathbf{(X}_{1}^{\prime }%
+\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{x}_{1i}^{\prime }$. We can think of $%
+\mathbf{x}_{1i}\mathbf{(X}_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{%
+x}_{1i}^{\prime }$ as the $i$th leverage, as in equation
+(\ref{E5:Leverage}). Thus, $\sum_{i=1}^{n}\mathbf{x}_{1i}\mathbf{%
+(X}_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{x}_{1i}^{\prime }=p$,
+the number of columns of $\mathbf{X}_{1}$. With this, we can define the
+\textit{standardized total error}
+
+\begin{center}
+\begin{eqnarray*}
+\frac{\sum_{i=1}^{n}\text{MSE }\hat{y}_{1i}}{\sigma ^{2}} &=&\frac{%
+\sum_{i=1}^{n}\left( \text{Var }\hat{y}_{1i}+\left( \text{Bias }\hat{y}%
+_{1i}\right) ^{2}\right) }{\sigma ^{2}} \\
+&=&\frac{\sigma ^{2}\sum_{i=1}^{n}\left( \mathbf{x}_{1i}\mathbf{(X}%
+_{1}^{\prime }\mathbf{X}_{1}\mathbf{)}^{-1}\mathbf{x}_{1i}^{\prime }+\left(
+\text{Bias }\hat{y}_{1i}\right) ^{2}\right) }{\sigma ^{2}}=p+\sigma
+^{-2}\sum_{i=1}^{n}\left( \text{Bias }\hat{y}_{1i}\right) ^{2}.
+\end{eqnarray*}
+\end{center}
+
+Now, if $\sigma ^{2}$ is known, from equation (\ref{E5:SumBias}), an
+unbiased estimate of the standardized total error is $
+p+(n-p)(s_{1}^{2}-\sigma ^{2})/\sigma ^{2}.$ Because $\sigma ^{2}$
+is unknown, it must be estimated. If we are not sure whether the
+long or short model is the appropriate representation, a
+conservative choice is to use $s^{2}$ from the long, or full, model.
+Even if the short model is the true model, $s^{2}$ from the long
+model is still an unbiased estimate of $\sigma ^{2}$. Thus, we
+define
+
+\begin{center}
+\[
+C_{p}=p+(n-p)(s_{1}^{2}-s^{2})/s^{2.}
+\]
+\end{center}
+
+If the short model is correct, then E $s_{1}^{2}=$ E $s^{2}=\sigma ^{2}$ and
+E $C_{p}\approx p$. If the long model is true, then E $s_{1}^{2}>\sigma ^{2}$
+and E $C_{p}>p$.

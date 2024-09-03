@@ -8,4 +8,12 @@ Here are the instructions given to ChapGPT for the translation:
 
 Here are the instructions given to ChapGPT for the conversion from latex to R markdown.
 
->For consistency, please use the basic version of ChatGPT. The following is part of latex file. Please translate this into R markdown. Please use `$` for inline equations and `$$` for other equations, consistent with MathJax format. Use MathJax for rendering the mathematical expression. This is conversion ("translation") only - no additional interpretations. Variables are words in all upper case, so please do not changes these.
+>For consistency, please use the basic version of ChatGPT. The following is part of latex file. Please translate this into R markdown. Please use `$` for inline equations and `$$` for other equations, consistent with MathJax format. Use MathJax for rendering the mathematical expression. This is conversion ("translation") only - no additional interpretations. Variables are words in all upper case, so please do not change these nor use inline equation format for them.
+
+
+(ref:Extrapolation) **Extrapolation outside of the sampling region may be biased** 
+
+```{r Extrapolation, fig.cap='(ref:Extrapolation)', echo=FALSE, fig.align='center', out.width = "80%"}
+#Term <- read.csv("CSVData/TermLife.csv", header=TRUE)
+
+```

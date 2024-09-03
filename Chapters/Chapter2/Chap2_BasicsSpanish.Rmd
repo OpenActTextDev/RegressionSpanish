@@ -5,7 +5,7 @@
 
 *Vista previa del capítulo*. Este capítulo considera la regresión en el caso de tener solo una variable explicativa. A pesar de esta aparente simplicidad, la mayoría de las ideas profundas de la regresión pueden desarrollarse en este marco. Al limitarnos al caso de una variable, podemos expresar muchos cálculos usando álgebra simple. Esto nos permitirá desarrollar nuestra intuición sobre las técnicas de regresión al reforzarla con demostraciones simples. Además, podemos ilustrar las relaciones entre dos variables gráficamente porque estamos trabajando en solo dos dimensiones. Las herramientas gráficas resultan ser importantes para desarrollar un vínculo entre los datos y un modelo.
 
-## Correlaciones y Mínimos Cuadrados
+## Correlaciones y Mínimos Cuadrados  {#Sec21}
 
 La regresión trata sobre relaciones. Específicamente, estudiaremos cómo dos variables, una $x$ y una $y$, están relacionadas. Queremos poder responder preguntas como, si cambiamos el nivel de $x$, ¿qué pasará con el nivel de $y$? Si comparamos dos "sujetos" que parecen similares excepto por la medición de $x$, ¿cómo diferirán sus mediciones de $y$? Entender las relaciones entre variables es fundamental para la gestión cuantitativa, particularmente en ciencias actuariales donde la incertidumbre es tan prevalente.
 
@@ -21,11 +21,11 @@ Aunque muchas variables económicas y demográficas podrían influir en las vent
 Una notación adicional será útil posteriormente. En esta muestra, hay cincuenta áreas geográficas y usamos subíndices para identificar cada área. Por ejemplo, $y_1$ = 1,285.4 representa las ventas para la primera área en la muestra que tiene una población de $x_1$ = 435. Llamamos al par ordenado ($x_1$, $y_1$) = (435, 1285.4) la primera *observación*. Extendiendo esta notación, la muestra completa que contiene cincuenta observaciones puede representarse por ($x_1$, $y_1$), ..., ($x_{50}$, $y_{50}$). Los puntos suspensivos ( ... ) significan que el patrón continúa hasta que se encuentra el último objeto. A menudo hablaremos de un miembro genérico de la muestra, refiriéndonos a ($x_i$, $y_i$) como la $i$-ésima observación.
 
 
-Los conjuntos de datos pueden complicarse, por lo que será útil si comienza trabajando con cada variable por separado. Los dos paneles en la Figura \@ref(fig:HistPopSales) muestran histogramas que dan una impresión visual rápida de la distribución de cada variable de forma aislada. La Tabla \@ref(tab:SummaryStats) proporciona resúmenes numéricos correspondientes. Para ilustrar, para la variable población (POP), vemos que el área con el menor número contenía 280 personas, mientras que la más grande contenía 39,098. El promedio, sobre 50 códigos postales, fue de 9,311.04. Para nuestra segunda variable, las ventas fueron tan bajas como 189 y tan altas como 33,181.
+Los conjuntos de datos pueden complicarse, por lo que será útil si comienza trabajando con cada variable por separado. Los dos paneles en la Figura \@ref(fig:Fig21) muestran histogramas que dan una impresión visual rápida de la distribución de cada variable de forma aislada. La Tabla \@ref(tab:Tab21) proporciona resúmenes numéricos correspondientes. Para ilustrar, para la variable población (POP), vemos que el área con el menor número contenía 280 personas, mientras que la más grande contenía 39,098. El promedio, sobre 50 códigos postales, fue de 9,311.04. Para nuestra segunda variable, las ventas fueron tan bajas como 189 y tan altas como 33,181.
 
-(ref:HistPopSales) **Histogramas de Población y Ventas.** Cada distribución está sesgada a la derecha, lo que indica que hay muchas áreas pequeñas en comparación con unas pocas áreas con mayores ventas y poblaciones.
+(ref:Fig21) **Histogramas de Población y Ventas.** Cada distribución está sesgada a la derecha, lo que indica que hay muchas áreas pequeñas en comparación con unas pocas áreas con mayores ventas y poblaciones.
 
-```{r HistPopSales, fig.cap='(ref:HistPopSales)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig21, fig.cap='(ref:Fig21)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 Lot <- read.csv("CSVData/WiscLottery.csv", header=TRUE)
 #  FIGURA 2.1
@@ -37,7 +37,7 @@ mtext("Frecuencia", side=2, at=34, las=1, cex=1.3, adj=.6)
 
 ```
 
-```{r SummaryStats, echo = FALSE}
+```{r Tab21, echo = FALSE}
 #  TABLA 2.1 ESTADÍSTICAS RESUMEN
 BookSummStats <- function(Xymat){
 meanSummary <- sapply(Xymat, mean,  na.rm=TRUE) 
@@ -67,17 +67,17 @@ TableGen1(TableData=tableMat1,
 
 `r HideRCode('Fig21.Hide',"Código R para producir la Figura 2.1 y la Tabla 2.1")`
 
-```{r ref.label = 'HistPopSales', eval = FALSE}
+```{r ref.label = 'Fig21', eval = FALSE}
 ```
 
-```{r ref.label = 'SummaryStats', eval = FALSE}
+```{r ref.label = 'Tab21', eval = FALSE}
 ```
 
 </div>
 
 \bigskip
 
-Como muestra la Tabla \@ref(tab:SummaryStats), las estadísticas resumen básicas
+Como muestra la Tabla \@ref(tab:Tab21), las estadísticas resumen básicas
 dan ideas útiles de la estructura de las características clave de los datos.
 Después de entender la información en cada variable de forma aislada,
 podemos comenzar a explorar la relación entre las dos variables.
@@ -87,17 +87,17 @@ podemos comenzar a explorar la relación entre las dos variables.
 
 La herramienta gráfica básica utilizada para investigar la relación
 entre dos variables es un *gráfico de dispersión*, como se muestra en la Figura
-\@ref(fig:SalesVsPoP). Aunque podemos perder los valores exactos de las
+\@ref(fig:Fig22). Aunque podemos perder los valores exactos de las
 observaciones al graficar los datos, ganamos una impresión visual de la
 relación entre la población y las ventas. En la Figura
-\@ref(fig:SalesVsPoP) vemos que las áreas con poblaciones más grandes tienden
+\@ref(fig:Fig22) vemos que las áreas con poblaciones más grandes tienden
 a comprar más boletos de lotería. ¿Qué tan fuerte es esta relación?
 ¿Puede el conocimiento de la población del área ayudarnos a anticipar los
 ingresos por ventas de lotería? Exploramos estas dos preguntas a continuación.
 
-(ref:SalesVsPoP) **Un gráfico de dispersión de los datos de la lotería**. Cada uno de los 50 símbolos de la gráfica corresponde a un código postal en el estudio. Esta figura sugiere que las áreas postales con poblaciones más grandes tienen mayores ingresos de lotería.
+(ref:Fig22) **Un gráfico de dispersión de los datos de la lotería**. Cada uno de los 50 símbolos de la gráfica corresponde a un código postal en el estudio. Esta figura sugiere que las áreas postales con poblaciones más grandes tienen mayores ingresos de lotería.
 
-```{r SalesVsPoP, fig.cap='(ref:SalesVsPoP)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig22, fig.cap='(ref:Fig22)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 #Lot <- read.csv("CSVData/WiscLottery.csv", header=TRUE)
 #  FIGURA 2.2, CON CORRELACIONES
@@ -109,7 +109,7 @@ mtext("SALES",side=2, at=36000, las=1, cex=1.1)
 
 `r HideRCode('Fig22.Hide',"Código R para Producir la Figura 2.2")`
 
-```{r ref.label = 'SalesVsPoP', eval = FALSE}
+```{r ref.label = 'Fig22', eval = FALSE}
 ```
 
 </div>
@@ -191,7 +191,7 @@ podríamos cambiar fácilmente los valores de $x$ y $y$ para que sean más repre
 de un conjunto de datos de negocios.
 
 ¿Qué tan fuerte es la relación entre $y$ y $x$ para los datos de la lotería? Gráficamente, la respuesta es un gráfico de dispersión, como en la Figura
-\@ref(fig:SalesVsPoP). Numéricamente, la respuesta principal es el
+\@ref(fig:Fig22). Numéricamente, la respuesta principal es el
 coeficiente de correlación, que resulta ser $r$ = 0.886 para este
 conjunto de datos. Interpretamos esta estadística diciendo que SALES y POP están
 correlacionados (positivamente). La fuerza de la relación es
@@ -252,7 +252,7 @@ La línea que determinan, $\widehat{y}=b_0+b_1x$, se llama la *línea de regresi
 
 Hemos eliminado la notación de asterisco, o estrella, porque $b_0$ y $b_1$ ya no son valores "candidatos".
 
-¿Proporciona este procedimiento una línea sensata para nuestras ventas de lotería de Wisconsin? Anteriormente, calculamos $r=0.886$. A partir de esto y de las estadísticas básicas resumidas en la Tabla \@ref(tab:SummaryStats), tenemos $b_1 = 0.886 \left( 8,103\right) /11,098=0.647$ y $b_0 = 6,495-(0.647)9,311 = 469.7$. Esto produce la línea de regresión ajustada 
+¿Proporciona este procedimiento una línea sensata para nuestras ventas de lotería de Wisconsin? Anteriormente, calculamos $r=0.886$. A partir de esto y de las estadísticas básicas resumidas en la Tabla \@ref(tab:Tab21), tenemos $b_1 = 0.886 \left( 8,103\right) /11,098=0.647$ y $b_0 = 6,495-(0.647)9,311 = 469.7$. Esto produce la línea de regresión ajustada 
 \begin{equation*}
 \widehat{y} = 469.7 + (0.647)x.
 \end{equation*}
@@ -274,11 +274,11 @@ C(Z)= \mathrm{e}^{-0.06(10)} \mathrm{max} \left(0, 110-S(Z) \right),
 basado en una tasa de descuento del 6%.
 
 
-Para estimar el VaR y el CTE, para cada $i$, se simularon 1000 variables aleatorias normales estándar i.i.d. y se usaron para calcular 1000 valores presentes, $C_{i1}, \ldots, C_{i,1000}.$ El percentil 95 de estos valores presentes es la estimación del valor en riesgo, denotado como $VaR_i.$ El promedio de los 50 valores presentes más altos ($= (1-.05) \times 1000$) es la estimación de la expectativa de cola condicional, denotada como $CTE_i$. Manistre y Hancock (2005) realizaron este cálculo $i=1, \ldots, 1000$ veces; el resultado se presenta en la Figura \@ref(fig:VarCTEFig). El diagrama de dispersión muestra una relación fuerte pero no perfecta entre el $VaR$ y el $CTE$, el coeficiente de correlación resulta ser $r=0.782$.
+Para estimar el VaR y el CTE, para cada $i$, se simularon 1000 variables aleatorias normales estándar i.i.d. y se usaron para calcular 1000 valores presentes, $C_{i1}, \ldots, C_{i,1000}.$ El percentil 95 de estos valores presentes es la estimación del valor en riesgo, denotado como $VaR_i.$ El promedio de los 50 valores presentes más altos ($= (1-.05) \times 1000$) es la estimación de la expectativa de cola condicional, denotada como $CTE_i$. Manistre y Hancock (2005) realizaron este cálculo $i=1, \ldots, 1000$ veces; el resultado se presenta en la Figura \@ref(fig:Fig23). El diagrama de dispersión muestra una relación fuerte pero no perfecta entre el $VaR$ y el $CTE$, el coeficiente de correlación resulta ser $r=0.782$.
 
-(ref:VarCTEFig) **Gráfico de la Expectativa de Cola Condicional (CTE) frente al Valor en Riesgo (VaR).** Basado en $n=1,000$ simulaciones de un bono put europeo a 10 años. *Fuente*: Manistre y Hancock (2005).
+(ref:Fig23) **Gráfico de la Expectativa de Cola Condicional (CTE) frente al Valor en Riesgo (VaR).** Basado en $n=1,000$ simulaciones de un bono put europeo a 10 años. *Fuente*: Manistre y Hancock (2005).
 
-```{r VarCTEFig, fig.cap='(ref:VarCTEFig)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig23, fig.cap='(ref:Fig23)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 # FIGURA 2.3
 # simulación
@@ -311,15 +311,14 @@ abline(h = c(10, 12, 14, 16, 18, 20), col = "grey")
 
 `r HideRCode('Fig23.Hide',"Código R para producir la Figura 2.3")`
 
-```{r ref.label = 'VarCTEFig', eval = FALSE}
+```{r ref.label = 'Fig23', eval = FALSE}
 ```
 
 </div>
 
 
-## Modelo Básico de Regresión Lineal
-\index{modelo de regresión!básica lineal}
-\index{modelo de regresión!simple lineal}
+## Modelo Básico de Regresión Lineal  {#Sec22}
+
 
 El diagrama de dispersión, el coeficiente de correlación y la línea de regresión ajustada son herramientas útiles para resumir la relación entre dos variables para un conjunto de datos específico. Para inferir relaciones generales, necesitamos modelos para representar los resultados de poblaciones amplias.
 
@@ -373,13 +372,13 @@ $$
 
 La "representación de error" se basa en la teoría gaussiana de errores (ver Stigler, 1986, para un contexto histórico). El supuesto E1 asume que $y$ es en parte debido a una función lineal de la variable explicativa observada, $x$. Otras variables no observadas que influyen en la medición de $y$ se interpretan como incluidas en el término de "error" $\varepsilon _i$, que también se conoce como el término de "perturbación". La independencia de errores, E4, puede motivarse asumiendo que \{$\varepsilon _i$\} se realizan a través de una muestra aleatoria simple de una población desconocida de errores.
 
-Los supuestos E1-E4 son equivalentes a F1-F4. La representación de error proporciona una base útil para motivar las medidas de ajuste (Sección \@ref(S2:SummStats)). Sin embargo, una desventaja de la representación de error es que desvía la atención de las cantidades observables $(x_i,y_i)$ a una cantidad no observable, \{$\varepsilon _i$\}. Para ilustrar, la base de muestreo, ver \{$\varepsilon _i$\} como una muestra aleatoria simple, no es directamente verificable porque no se puede observar directamente la muestra \{$\varepsilon _i$\}. Además, el supuesto de errores aditivos en E1 será problemático cuando consideremos modelos de regresión no lineales.
+Los supuestos E1-E4 son equivalentes a F1-F4. La representación de error proporciona una base útil para motivar las medidas de ajuste (Sección \@ref(Sec23)). Sin embargo, una desventaja de la representación de error es que desvía la atención de las cantidades observables $(x_i,y_i)$ a una cantidad no observable, \{$\varepsilon _i$\}. Para ilustrar, la base de muestreo, ver \{$\varepsilon _i$\} como una muestra aleatoria simple, no es directamente verificable porque no se puede observar directamente la muestra \{$\varepsilon _i$\}. Además, el supuesto de errores aditivos en E1 será problemático cuando consideremos modelos de regresión no lineales.
 
-La Figura \@ref(fig:NormalCurve) ilustra algunos de los supuestos del modelo básico de regresión lineal. Los datos ($x_1,y_1$), ($x_2,y_2$) y ($x_3,y_3$) son observados y se representan con los símbolos de trazado circulares opacos. Según el modelo, estas observaciones deben estar cerca de la línea de regresión $\mathrm{E}~y = \beta_0 + \beta_1 x$. Cada desviación de la línea es aleatoria. A menudo asumimos que la distribución de desviaciones puede representarse por una curva normal, como en la Figura \@ref(fig:NormalCurve).
+La Figura \@ref(fig:Fig24) ilustra algunos de los supuestos del modelo básico de regresión lineal. Los datos ($x_1,y_1$), ($x_2,y_2$) y ($x_3,y_3$) son observados y se representan con los símbolos de trazado circulares opacos. Según el modelo, estas observaciones deben estar cerca de la línea de regresión $\mathrm{E}~y = \beta_0 + \beta_1 x$. Cada desviación de la línea es aleatoria. A menudo asumimos que la distribución de desviaciones puede representarse por una curva normal, como en la Figura \@ref(fig:Fig24).
 
-(ref:NormalCurve) **La distribución de la respuesta varía según el nivel de la variable explicativa.**
+(ref:Fig24) **La distribución de la respuesta varía según el nivel de la variable explicativa.**
     
-```{r NormalCurve, fig.cap='(ref:NormalCurve)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig24, fig.cap='(ref:Fig24)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 #  FIGURA 2.4
 par(mar=c(2.1,.2,.2,.2),cex=1.2)
@@ -408,13 +407,13 @@ text(1.5, -2.3, "Cada Respuesta Tiende \n A Caer Cerca De La Altura De \n La Lí
 text(2.6, -.2, "El Centro De Cada Curva \n Normal Está En La Altura De \n La Línea de Regresión", cex=.9)
 ```
 
-Los supuestos del modelo básico de regresión lineal describen la población subyacente. [Tabla 2.2](#Table22) destaca la idea de que las características de esta población pueden resumirse mediante los parámetros $\beta_0$, $\beta_1$ y $\sigma ^{2}$. En la Sección 2.1, resumimos datos de una muestra, introduciendo las estadísticas $b_0$ y $b_1$. La Sección \@ref(S2:SummStats) introducirá $s^{2}$, la estadística correspondiente al parámetro $\sigma ^{2}$.
+Los supuestos del modelo básico de regresión lineal describen la población subyacente. [Tabla 2.2](#Table22) destaca la idea de que las características de esta población pueden resumirse mediante los parámetros $\beta_0$, $\beta_1$ y $\sigma ^{2}$. En la Sección 2.1, resumimos datos de una muestra, introduciendo las estadísticas $b_0$ y $b_1$. La Sección \@ref(Sec23) introducirá $s^{2}$, la estadística correspondiente al parámetro $\sigma ^{2}$.
 
 <a id=Table22></a> 
 
-[Table 2.2]: ./C2BasicLR#Table22
+[Tabla 2.2]: ./C2BasicLR#Table22
 
-[Table 2.2]{#Table22}. **Medidas Resumen de la Población y la Muestra** 
+[Tabla 2.2]{#Table22}. **Medidas Resumen de la Población y la Muestra** 
 
 $$
 {\small
@@ -429,12 +428,12 @@ $$
 $$
 
 
-## ¿Es Útil el Modelo? Algunas Medidas de Resumen Básicas {#S2:SummStats}
+## ¿Es Útil el Modelo? Algunas Medidas de Resumen Básicas {#Sec23}
 
 Aunque la estadística es la ciencia de resumir datos, también es el arte de argumentar con datos. Esta sección desarrolla algunas de las herramientas básicas usadas para justificar el modelo de regresión lineal básica. Un diagrama de dispersión puede proporcionar una fuerte evidencia *visual* de que $x$ influye en $y$; desarrollar evidencia *numérica* nos permitirá cuantificar la fuerza de la relación. Además, la evidencia numérica será útil cuando consideremos otros conjuntos de datos donde la evidencia gráfica no sea convincente.
 
 
-### Particionando la Variabilidad
+### Particionando la Variabilidad   {#Sec231}
 
 Las desviaciones cuadradas, $\left( y_i-\overline{y}\right) ^2$, proporcionan una base para medir la dispersión de los datos. Si deseamos estimar la $i$-ésima variable dependiente *sin* conocimiento de $x$, entonces $\overline{y}$ es una estimación adecuada y $y_i- \overline{y}$ representa la desviación de la estimación. Usamos $Total~SS=\sum_{i=1}^{n}\left( y_i-\overline{y}\right) ^2$, la suma total de cuadrados, para representar la variación en todas las respuestas.
 
@@ -449,14 +448,14 @@ Supongamos ahora que también tenemos conocimiento de $x$, una variable explicat
 \text{desviación} & = & \text{desviación} & + & \text{desviación} \\
 \text{total} &  & \text{no explicada} &  & \text{explicada} \\
 \end{array}
-(\#eq:deviationdecomp) 
+(\#eq:eq21) 
 }
 \end{equation}
-Interpreta esta ecuación como "la desviación sin conocimiento de $x$ es igual a la desviación con conocimiento de $x$ más la desviación explicada por $x$." La Figura \@ref(fig:ANOVADecomp) es una representación geométrica de esta descomposición. En la figura, se eligió una observación por encima de la línea, lo que da una desviación positiva de la línea de regresión ajustada, para hacer que el gráfico sea más fácil de leer. Un buen ejercicio es hacer un boceto aproximado correspondiente a la Figura \@ref(fig:ANOVADecomp) con una observación por debajo de la línea de regresión ajustada.
+Interpreta esta ecuación como "la desviación sin conocimiento de $x$ es igual a la desviación con conocimiento de $x$ más la desviación explicada por $x$." La Figura \@ref(fig:Fig25) es una representación geométrica de esta descomposición. En la figura, se eligió una observación por encima de la línea, lo que da una desviación positiva de la línea de regresión ajustada, para hacer que el gráfico sea más fácil de leer. Un buen ejercicio es hacer un boceto aproximado correspondiente a la Figura \@ref(fig:Fig25) con una observación por debajo de la línea de regresión ajustada.
 
-(ref:ANOVADecomp) **Representación geométrica de la descomposición de la desviación.** 
+(ref:Fig25) **Representación geométrica de la descomposición de la desviación.** 
 
-```{r ANOVADecomp, fig.cap='(ref:ANOVADecomp)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig25, fig.cap='(ref:Fig25)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 # FIGURA 2.5
 par(mar=c(2.2,2.1,.2,.2),cex=1.2)
@@ -483,12 +482,12 @@ text(3.5, 2.7, expression( hat(y)== b[0]+ b[1]*x), cex=0.8  )
 
 ```
 
-Ahora, a partir de la descomposición algebraica en la ecuación \@ref(eq:deviationdecomp), eleva al cuadrado cada lado de la ecuación y suma sobre todas las observaciones. Después de un poco de manipulación algebraica, esto da como resultado
+Ahora, a partir de la descomposición algebraica en la ecuación \@ref(eq:eq21), eleva al cuadrado cada lado de la ecuación y suma sobre todas las observaciones. Después de un poco de manipulación algebraica, esto da como resultado
 \begin{equation}
 \sum_{i=1}^{n}\left( y_i-\overline{y}\right) ^2=\sum_{i=1}^{n}\left(
 y_i-\widehat{y}_i\right) ^2+\sum_{i=1}^{n}\left( \widehat{y}_i-
 \overline{y}\right) ^2.
-(\#eq:ANOVADecomposition) 
+(\#eq:eq22) 
 \end{equation}
 Reescribimos esto como $Total~SS=Error~SS+Regression~SS$ donde $SS$ significa suma de cuadrados. Interpretamos:
 
@@ -498,7 +497,7 @@ Reescribimos esto como $Total~SS=Error~SS+Regression~SS$ donde $SS$ significa su
 
 * $Regression~SS$ como la diferencia entre el $Total~SS$ y el $Error~SS$, o la variación total "explicada" mediante el conocimiento de $x$.
 
-Al elevar al cuadrado el lado derecho de la ecuación \@ref(eq:deviationdecomp), tenemos el término de producto cruzado $2\left(y_i-\widehat{y}_i\right) \left( \widehat{y}_i-\overline{y}\right)$. Con la "manipulación algebraica", se puede comprobar que la suma de los productos cruzados sobre todas las observaciones es cero. Este resultado no es cierto para todas las líneas ajustadas, pero es una propiedad especial de la línea ajustada por mínimos cuadrados.
+Al elevar al cuadrado el lado derecho de la ecuación \@ref(eq:eq21), tenemos el término de producto cruzado $2\left(y_i-\widehat{y}_i\right) \left( \widehat{y}_i-\overline{y}\right)$. Con la "manipulación algebraica", se puede comprobar que la suma de los productos cruzados sobre todas las observaciones es cero. Este resultado no es cierto para todas las líneas ajustadas, pero es una propiedad especial de la línea ajustada por mínimos cuadrados.
 
 En muchos casos, la descomposición de la variabilidad se reporta a través de un solo estadístico.
 
@@ -512,7 +511,7 @@ R^2=\frac{Regression~SS}{Total~SS}.
 Interpretamos $R^2$ como la proporción de variabilidad explicada por la línea de regresión. En un caso extremo donde la línea de regresión se ajusta perfectamente a los datos, tenemos $Error~SS=0$ y $R^2=1$. En el otro caso extremo donde la línea de regresión no proporciona ninguna información sobre la respuesta, tenemos $Regression~SS=0$ y $R^2=0$. El coeficiente de determinación está limitado por las desigualdades $0 \leq R^2 \leq 1$ con valores mayores que implican un mejor ajuste.
 
 
-### El Tamaño de una Desviación Típica: *s*
+### El Tamaño de una Desviación Típica: *s*  {#Sec232}
 
 En el modelo de regresión lineal básica, la desviación de la respuesta
 de la línea de regresión, $y_i-\left( \beta_0+\beta_1x_i\right) $,
@@ -525,7 +524,7 @@ e_i=y_i-\widehat{y}_i=y_i-\left( b_0+b_1x_i\right) ,
 conocido como el *residuo*.
 
 Los residuos serán cruciales para desarrollar estrategias para mejorar
-la especificación del modelo en la Sección \@ref(S2:ResidualAnalsis). Ahora mostramos
+la especificación del modelo en la Sección \@ref(Sec26). Ahora mostramos
 cómo usar los residuos para estimar $\sigma ^2$. De un primer
 curso en estadística, sabemos que si se pudieran observar las
 desviaciones $\varepsilon _i$, entonces una estimación deseable de $\sigma
@@ -538,7 +537,7 @@ no se observan, usamos lo siguiente.
 *Definición*. Un estimador de $\sigma ^2$, el *error cuadrático medio (MSE)*, se define como
 \begin{equation}
 s^2=\frac{1}{n-2}\sum_{i=1}^{n}e_i{}^2.
-(\#eq:BLRs2) 
+(\#eq:eq23)
 \end{equation}
 La raíz cuadrada positiva, $s=\sqrt{s^2},$ se llama la *desviación estándar residual*.
 
@@ -622,7 +621,7 @@ kable(ANOVATable1, align = 'r') %>%
 
 De esta tabla, puede verificar que $R^2=78.5\%$ y $s=3,792.$
 
-## Propiedades de los Estimadores del Coeficiente de Regresión
+## Propiedades de los Estimadores del Coeficiente de Regresión  {#Sec24}
 
 Las estimaciones de mínimos cuadrados se pueden expresar como una suma ponderada de las respuestas. Para ver esto, define los pesos
 \begin{equation*}
@@ -634,10 +633,10 @@ b_1=r\frac{s_y}{s_x}=\frac{1}{(n-1)s_x^2}\sum_{i=1}^{n}\left(
 x_i-\overline{x}\right) \left( y_i-\overline{y}\right)
 =\sum_{i=1}^{n}w_i\left( y_i-\overline{y}\right)
 =\sum_{i=1}^{n}w_iy_i. 
-(\#eq:weightb1) 
+(\#eq:eq24) 
 \end{equation}
 
-Los ejercicios piden al lector verificar que $b_0$ también puede expresarse como una suma ponderada de las respuestas, por lo que nuestra discusión se refiere a ambos coeficientes de regresión. Dado que los coeficientes de regresión son sumas ponderadas de respuestas, pueden verse afectados drásticamente por observaciones inusuales (ver Sección \@ref(S2:ResidualAnalsis)).
+Los ejercicios piden al lector verificar que $b_0$ también puede expresarse como una suma ponderada de las respuestas, por lo que nuestra discusión se refiere a ambos coeficientes de regresión. Dado que los coeficientes de regresión son sumas ponderadas de respuestas, pueden verse afectados drásticamente por observaciones inusuales (ver Sección \@ref(Sec26)).
 
 Como $b_1$ es una suma ponderada, es sencillo derivar la esperanza y la varianza de esta estadística. Por la linealidad de las esperanzas y la Suposición F1, tenemos
 \begin{equation*}
@@ -654,22 +653,22 @@ Sustituyendo $\sigma ^2$ por su estimador $s^2$ y tomando raíces cuadradas se o
 *Definición*. El *error estándar* de $b_1$, la desviación estándar estimada de $b_1$, se define como
 \begin{equation}
 se(b_1)=\frac{s}{s_x\sqrt{n-1}}. 
-(\#eq:seb1a) 
+(\#eq:eq25) 
 \end{equation}
 
 :::: 
 
-Esta es nuestra medida de la fiabilidad, o precisión, del estimador de la pendiente. Usando la ecuación \@ref(eq:seb1a), vemos que $se(b_1)$ está determinado por tres cantidades: $n$, $s$ y $s_x$, de la siguiente manera:
+Esta es nuestra medida de la fiabilidad, o precisión, del estimador de la pendiente. Usando la ecuación \@ref(eq:eq25), vemos que $se(b_1)$ está determinado por tres cantidades: $n$, $s$ y $s_x$, de la siguiente manera:
 
 * Si tenemos más observaciones, de manera que $n$ sea mayor, entonces $se(b_1)$ será menor, manteniendo todo lo demás constante.
 * Si las observaciones tienen una mayor tendencia a estar más cerca de la línea, de manera que $s$ sea menor, entonces $se(b_1)$ será menor, manteniendo todo lo demás constante.
 * Si los valores de la variable explicativa están más dispersos, de manera que $s_x$ aumenta, entonces $se(b_1)$ será menor, manteniendo todo lo demás constante.
 
-Valores menores de $se(b_1)$ ofrecen una mejor oportunidad para detectar relaciones entre $y$ y $x$. La Figura \@ref(fig:BasicLSRE) ilustra estas relaciones. Aquí, el diagrama de dispersión en el medio tiene el valor más pequeño de $se(b_1)$. Comparado con el gráfico del medio, el gráfico de la izquierda tiene un valor mayor de $s$ y por lo tanto $se(b_1)$. Comparado con el gráfico de la derecha, el gráfico del medio tiene un valor mayor de $s_x$, y por lo tanto un valor menor de $se(b_1)$.
+Valores menores de $se(b_1)$ ofrecen una mejor oportunidad para detectar relaciones entre $y$ y $x$. La Figura \@ref(fig:Fig26) ilustra estas relaciones. Aquí, el diagrama de dispersión en el medio tiene el valor más pequeño de $se(b_1)$. Comparado con el gráfico del medio, el gráfico de la izquierda tiene un valor mayor de $s$ y por lo tanto $se(b_1)$. Comparado con el gráfico de la derecha, el gráfico del medio tiene un valor mayor de $s_x$, y por lo tanto un valor menor de $se(b_1)$.
 
-(ref:BasicLSRE) **Estos tres diagramas de dispersión muestran la misma relación lineal entre $y$ y $x$.** El gráfico a la izquierda muestra una mayor variabilidad alrededor de la línea que el gráfico del medio. El gráfico a la derecha muestra una desviación estándar menor en $x$ que el gráfico del medio.
+(ref:Fig26) **Estos tres diagramas de dispersión muestran la misma relación lineal entre $y$ y $x$.** El gráfico a la izquierda muestra una mayor variabilidad alrededor de la línea que el gráfico del medio. El gráfico a la derecha muestra una desviación estándar menor en $x$ que el gráfico del medio.
 
-```{r BasicLSRE, fig.cap='(ref:BasicLSRE)', out.width = '100%', fig.align = 'center', echo = FALSE}
+```{r Fig26, fig.cap='(ref:Fig26)', out.width = '100%', fig.align = 'center', echo = FALSE}
 #  FIGURA 2.6 AQUÍ
 
 par(mfrow=c(1, 3),mar=c(3.8,2.8,1,1), cex=1.3)
@@ -703,19 +702,19 @@ lines(a,b)
 
 `r HideRCode('Fig26.Hide',"Código R para producir la Figura 2.6")`
 
-```{r ref.label = 'BasicLSRE', eval = FALSE}
+```{r ref.label = 'Fig26', eval = FALSE}
 ```
 
 </div>
 
-La ecuación \@ref(eq:weightb1) también implica que el coeficiente de regresión $b_1$ sigue una distribución normal. Es decir, recordemos de la estadística matemática que las combinaciones lineales de variables aleatorias normales también son normales. Así, si se cumple la Suposición F5, entonces $b_1$ sigue una distribución normal. Además, existen varias versiones de los teoremas del límite central para sumas ponderadas (ver, por ejemplo, Serfling, 1980). Así, como se discute en la Sección 1.4, si las respuestas $y_i$ están siquiera aproximadamente distribuidas normalmente, entonces será razonable usar una aproximación normal para la distribución muestral de $b_1$. Usando $se(b_1)$ como la desviación estándar estimada de $b_1$, para valores grandes de $n$ tenemos que $\left(
+La ecuación \@ref(eq:eq24) también implica que el coeficiente de regresión $b_1$ sigue una distribución normal. Es decir, recordemos de la estadística matemática que las combinaciones lineales de variables aleatorias normales también son normales. Así, si se cumple la Suposición F5, entonces $b_1$ sigue una distribución normal. Además, existen varias versiones de los teoremas del límite central para sumas ponderadas (ver, por ejemplo, Serfling, 1980). Así, como se discute en la Sección 1.4, si las respuestas $y_i$ están siquiera aproximadamente distribuidas normalmente, entonces será razonable usar una aproximación normal para la distribución muestral de $b_1$. Usando $se(b_1)$ como la desviación estándar estimada de $b_1$, para valores grandes de $n$ tenemos que $\left(
 b_1-\beta_1\right) /se(b_1)$ tiene una distribución normal estándar aproximada. Aunque no lo probaremos aquí, bajo la Suposición F5 $\left( b_1-\beta_1\right) /se(b_1)$ sigue una distribución $t$ con grados de libertad $df=n-2$.
 
-## Inferencia Estadística
+## Inferencia Estadística  {#Sec25}
 
 Una vez que hemos ajustado un modelo con un conjunto de datos, podemos hacer una serie de afirmaciones importantes. Generalmente, es útil pensar en estas afirmaciones en tres categorías: (i) pruebas de ideas hipotetizadas, (ii) estimaciones de parámetros del modelo y (iii) predicciones de nuevos resultados.
 
-### ¿Es Importante la Variable Explicativa?: La Prueba *t*
+### ¿Es Importante la Variable Explicativa?: La Prueba *t*   {#Sec251}
 
 Respondemos a la pregunta de si la variable explicativa es importante investigando si $\beta_1=0$. La lógica es que si $\beta_1=0$, entonces el modelo de regresión lineal básico ya no incluye una variable explicativa $x$. Por lo tanto, traducimos nuestra pregunta sobre la importancia de la variable explicativa en una pregunta más específica que puede ser respondida utilizando el marco de pruebas de hipótesis. Esta pregunta más específica es: ¿es válida la hipótesis nula $H_0:\beta_1=0$? Respondemos a esta pregunta observando la estadística de prueba:
 
@@ -732,7 +731,7 @@ En el caso de $H_0:\beta_1=0$, examinamos la razón *t* $t(b_1)=b_1/se(b_1)$ por
 
 ***
 
-**Ejemplo: Ventas de Lotería - Continuación.** Para el ejemplo de ventas de lotería, la desviación estándar residual es $s=3,792$. En la Tabla \@ref(tab:SummaryStats), tenemos $s_x = 11,098$. Por lo tanto, el error estándar de la pendiente es $se(b_1) = 3792/(11098\sqrt{50-1})=0.0488$. Según la Sección 2.1, la estimación de la pendiente es $b_1=0.647$. Por lo tanto, la estadística *t* es $t(b_1) = 0.647/0.0488 = 13.4$. Interpretamos esto diciendo que la pendiente está 13.4 errores estándar por encima de cero. Para el nivel de significancia, usamos el valor habitual de $\alpha$ = 5\%. El percentil 97.5 de una distribución *t* con $df=50-2=48$ grados de libertad es $t_{48,0.975}=2.011$. Dado que $|13.4|>2.011$, rechazamos la hipótesis nula de que la pendiente $\beta_1 = 0$ a favor de la alternativa de que $\beta_1 \neq 0$.
+**Ejemplo: Ventas de Lotería - Continuación.** Para el ejemplo de ventas de lotería, la desviación estándar residual es $s=3,792$. En la Tabla \@ref(tab:Tab21), tenemos $s_x = 11,098$. Por lo tanto, el error estándar de la pendiente es $se(b_1) = 3792/(11098\sqrt{50-1})=0.0488$. Según la Sección 2.1, la estimación de la pendiente es $b_1=0.647$. Por lo tanto, la estadística *t* es $t(b_1) = 0.647/0.0488 = 13.4$. Interpretamos esto diciendo que la pendiente está 13.4 errores estándar por encima de cero. Para el nivel de significancia, usamos el valor habitual de $\alpha$ = 5\%. El percentil 97.5 de una distribución *t* con $df=50-2=48$ grados de libertad es $t_{48,0.975}=2.011$. Dado que $|13.4|>2.011$, rechazamos la hipótesis nula de que la pendiente $\beta_1 = 0$ a favor de la alternativa de que $\beta_1 \neq 0$.
 
 ***
 
@@ -792,7 +791,7 @@ Otra forma interesante de abordar la cuestión de la importancia de una variable
 
 
 
-### Intervalos de Confianza
+### Intervalos de Confianza  {#Sec252}
 
 Los investigadores a menudo citan el mecanismo formal de pruebas de hipótesis para responder a la pregunta: "¿Tiene la variable explicativa una influencia real en la respuesta?" Una pregunta de seguimiento natural es: "¿En qué medida afecta $x$ a $y$?" Hasta cierto punto, se puede responder utilizando el tamaño del $t$-ratio o el valor de $p$. Sin embargo, en muchos casos, un *intervalo de confianza* para la pendiente es más útil.
 
@@ -803,7 +802,7 @@ Para introducir los intervalos de confianza para la pendiente, recordemos que $b
 *Definición*. Un intervalo de confianza del $100(1-\alpha)$\% para la pendiente $\beta_1$ es
 \begin{equation}
 b_1\pm t_{n-2,1-\alpha /2} ~se(b_1).
-(\#eq:ConfIntb1) 
+(\#eq:eq26)
 \end{equation}
 :::: 
 
@@ -815,7 +814,7 @@ En la Sección 2.1, establecimos que la estimación de la pendiente por mínimos
 \end{equation*}
 o (0.549, 0.745). De manera similar, si la población difiere en 1,000, un intervalo de confianza del 95\% para el cambio esperado en las ventas es (549, 745). Aquí, usamos el valor $t$ $t_{48,0.975}=2.011$ porque hay 48 (= $n$-2) grados de libertad y, para un intervalo de confianza del 95\%, necesitamos el percentil 97.5.
 
-### Intervalos de Predicción
+### Intervalos de Predicción  {#Sec253}
 
 En la Sección 2.1, mostramos cómo usar los estimadores de mínimos cuadrados para predecir las ventas de lotería para un código postal, fuera de nuestra muestra, con una población de 10,000. Dado que la predicción es una tarea tan importante para los actuarios, formalizamos el procedimiento para que pueda ser utilizado regularmente.
 
@@ -853,7 +852,7 @@ desviación de la respuesta adicional de su media se convierte en la
 *Definición*. Un intervalo de predicción del $100(1-\alpha)$\% en $x_{\ast}$ es
 \begin{equation}
 \widehat{y}_{\ast} \pm t_{n-2,1-\alpha /2} ~se(pred)
-(\#eq:predinteval) 
+(\#eq:eq27)
 \end{equation}
 donde el valor $t$ $t_{n-2,1-\alpha /2}$ es el mismo que se usa para la prueba de hipótesis y el intervalo de confianza.
 :::: 
@@ -893,7 +892,7 @@ qt(.975, 48)
 </div>
 
 
-## Construyendo un Mejor Modelo: Análisis de Residuos {#S2:ResidualAnalsis}
+## Construyendo un Mejor Modelo: Análisis de Residuos {#Sec26}
 
 Las disciplinas cuantitativas calibran modelos con datos. La estadística lleva esto un paso más allá, utilizando las discrepancias entre las suposiciones y los datos para mejorar la especificación del modelo. Examinaremos las suposiciones del modelo de la Sección 2.2 a la luz de los datos y utilizaremos cualquier desajuste para especificar un mejor modelo; este proceso se conoce como *verificación diagnóstica* (como cuando vas al médico y él o ella realiza pruebas diagnósticas para revisar tu salud).
 
@@ -917,14 +916,10 @@ Existen cinco tipos de discrepancias en el modelo que los analistas comúnmente 
 **Problemas de Especificación del Modelo**
 
 *  **Falta de Independencia**. Puede haber relaciones entre las desviaciones \{$\varepsilon _i$\} de modo que no sean independientes.
-
 *  **Heterocedasticidad**. La suposición E3 indica que todas las observaciones tienen una variabilidad común (aunque desconocida), conocida como *homocedasticidad*. *Heterocedasticidad* es el término usado cuando la variabilidad varía según la observación.
-
 *  **Relaciones entre Desviaciones del Modelo y Variables Explicativas**.
 Si una variable explicativa tiene la capacidad de ayudar a explicar la desviación $\varepsilon$, entonces deberíamos poder usar esta información para predecir mejor $y$.
-
 *  **Distribuciones No Normales**. Si la distribución de la desviación representa una desviación seria de la normalidad, entonces los procedimientos de inferencia usuales ya no son válidos.
-
 *  **Puntos Inusuales**. Las observaciones individuales pueden tener un gran efecto en el ajuste del modelo de regresión, lo que significa que los resultados pueden ser sensibles al impacto de una sola observación.
 
 ::::
@@ -940,7 +935,7 @@ Hay dos direcciones en las que un punto de datos puede ser inusual: la direcció
 
 ***
 
-**Ejemplo: Puntos Atípicos y Puntos de Alta Influencia.** Considera el conjunto de datos ficticio de 19 puntos más tres puntos, etiquetados como A, B y C, que se muestra en la Figura \@ref(fig:Outlier) y [Tabla 2.5](#Table25). Piensa en los primeros 19 puntos como observaciones "buenas" que representan algún tipo de fenómeno. Queremos investigar el efecto de agregar un solo punto aberrante.
+**Ejemplo: Puntos Atípicos y Puntos de Alta Influencia.** Considera el conjunto de datos ficticio de 19 puntos más tres puntos, etiquetados como A, B y C, que se muestra en la Figura \@ref(fig:Fig27) y [Tabla 2.5](#Table25). Piensa en los primeros 19 puntos como observaciones "buenas" que representan algún tipo de fenómeno. Queremos investigar el efecto de agregar un solo punto aberrante.
 
 ```{r eval = FALSE, echo = FALSE}
 OUTLR  <- read.csv("CSVData/OutlierExample.csv", header=TRUE)
@@ -959,8 +954,8 @@ TableGen1(TableData=OUTLR,
 ```{r Table25, echo=FALSE, results='asis'}
 cat("
 \\[
+\\small{
 \\begin{array}{c|cccccccccc|ccc}
-%\\hline Variables & \\multicolumn{10}{|c|}{19 Puntos Base} & A & B & C
 \\hline Variables & &&&&&&&&& & A & B & C
 \\\\ 
 \\hline x & 1.5 & 1.7 & 2.0 & 2.2 & 2.5 & 2.5 & 2.7 & 2.9 & 3.0
@@ -972,13 +967,14 @@ x & 3.8 & 4.2 & 4.3 & 4.6 & 4.0 & 5.1 & 5.1 & 5.2 & 5.5 &  &  &  &  \\\\
 y & 4.2 & 4.1 & 4.8 & 4.2 & 5.1 & 5.1 & 5.1 & 4.8 & 5.3 &  &  &  &  \\\\
 \\hline
 \\end{array}
+}
 \\]
 ")
 ```
 
-(ref:Outlier) **Gráfico de dispersión de 19 puntos base más tres puntos inusuales, etiquetados A, B, y C.**
+(ref:Fig27) **Gráfico de dispersión de 19 puntos base más tres puntos inusuales, etiquetados A, B, y C.**
 
-```{r Outlier, fig.cap='(ref:Outlier)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig27, fig.cap='(ref:Fig27)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 #  EJEMPLO 2.6 PUNTO ATÍPICO
 OUTLR  <- read.csv("CSVData/OutlierExample.csv", header=TRUE)
@@ -997,7 +993,7 @@ text(9.9, 2.5, "C", cex=1.3)
 
 `r HideRCode('Fig27.Hide',"Código R para Producir la Figura 2.7")`
 
-```{r ref.label = 'Outlier', eval = FALSE}
+```{r ref.label = 'Fig27', eval = FALSE}
 ```
 
 </div>
@@ -1044,7 +1040,7 @@ La mayoría de los usuarios de la regresión al principio no creen que un punto 
 Todas las disciplinas cuantitativas, como contabilidad, economía, programación lineal, etc., practican el arte del *análisis de sensibilidad*. El análisis de sensibilidad es una descripción de los cambios globales en un sistema debido a un pequeño cambio local en un elemento del sistema. Examinar los efectos de observaciones individuales en el ajuste de regresión es un tipo de análisis de sensibilidad.
 
 
-**Ejemplo: Ventas de Lotería -- Continuación.** La Figura \@ref(fig:PlotWithKenosha) muestra un valor atípico; el punto en la parte superior izquierda del gráfico representa un código postal que incluye a Kenosha, Wisconsin. Las ventas para este código postal son inusualmente altas dada su población. Kenosha está cerca de la frontera con Illinois; los residentes de Illinois probablemente participen en la lotería de Wisconsin, lo que aumenta efectivamente el potencial de ventas en Kenosha. [Tabla 2.7](#Table27) resume el ajuste de la regresión tanto con como sin este código postal.
+**Ejemplo: Ventas de Lotería -- Continuación.** La Figura \@ref(fig:Fig28) muestra un valor atípico; el punto en la parte superior izquierda del gráfico representa un código postal que incluye a Kenosha, Wisconsin. Las ventas para este código postal son inusualmente altas dada su población. Kenosha está cerca de la frontera con Illinois; los residentes de Illinois probablemente participen en la lotería de Wisconsin, lo que aumenta efectivamente el potencial de ventas en Kenosha. [Tabla 2.7](#Table27) resume el ajuste de la regresión tanto con como sin este código postal.
 
 <a id=Table27></a>
 
@@ -1063,9 +1059,9 @@ $$
 }
 $$
 
-(ref:PlotWithKenosha) **Gráfico de dispersión de SALES versus POP, con el valor atípico correspondiente a Kenosha marcado.**
+(ref:Fig28) **Gráfico de dispersión de SALES versus POP, con el valor atípico correspondiente a Kenosha marcado.**
 
-```{r PlotWithKenosha, fig.cap='(ref:PlotWithKenosha)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig28, fig.cap='(ref:Fig28)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 Lot <- read.csv("CSVData/WiscLottery.csv", header=TRUE)
 #  FIGURA 2.8
@@ -1078,7 +1074,7 @@ text(5000, 24000, "Kenosha")
 
 `r HideRCode('Fig28.Hide',"Código R para producir la Figura 2.8 y la Tabla 2.7")`
 
-```{r ref.label = 'PlotWithKenosha', eval = FALSE}
+```{r ref.label = 'Fig28', eval = FALSE}
 ```
 
 ```{r  eval = FALSE}
@@ -1093,11 +1089,11 @@ summary(model.Kenosha)
 
 Para los propósitos de inferencia sobre la pendiente, la presencia de Kenosha no altera los resultados de manera dramática. Ambas estimaciones de la pendiente son cualitativamente similares y los correspondientes valores $t$ son muy altos, muy por encima de los umbrales para la significancia estadística. Sin embargo, hay diferencias notables al evaluar la calidad del ajuste. El coeficiente de determinación, $R^2$, aumentó del 78.5\% al 88.3\% al eliminar Kenosha. Además, nuestro "desviación típica" $s$ disminuyó en más de $1,000. Esto es particularmente importante si queremos ajustar nuestros intervalos de predicción.
 
-Para verificar la exactitud de nuestras suposiciones, también es común revisar la suposición de normalidad. Una forma de hacerlo es mediante el gráfico $qq$, introducido en la Sección 1.2. Los dos paneles en las Figuras \@ref(fig:QQplotsKenosha) son gráficos $qq$ con y sin el código postal de Kenosha. Recuerda que los puntos "cercanos" a una línea indican normalidad aproximada. En el panel derecho de la Figura \@ref(fig:QQplotsKenosha), la secuencia parece ser lineal, por lo que los residuos están aproximadamente distribuidos de manera normal. Este no es el caso en el panel izquierdo, donde la secuencia de puntos parece aumentar dramáticamente para grandes cuantiles. Lo interesante es que la no-normalidad de la distribución se debe a un solo valor atípico, no a un patrón de sesgo común a todas las observaciones.
+Para verificar la exactitud de nuestras suposiciones, también es común revisar la suposición de normalidad. Una forma de hacerlo es mediante el gráfico $qq$, introducido en la Sección 1.2. Los dos paneles en las Figuras \@ref(fig:Fig29) son gráficos $qq$ con y sin el código postal de Kenosha. Recuerda que los puntos "cercanos" a una línea indican normalidad aproximada. En el panel derecho de la Figura \@ref(fig:Fig29), la secuencia parece ser lineal, por lo que los residuos están aproximadamente distribuidos de manera normal. Este no es el caso en el panel izquierdo, donde la secuencia de puntos parece aumentar dramáticamente para grandes cuantiles. Lo interesante es que la no-normalidad de la distribución se debe a un solo valor atípico, no a un patrón de sesgo común a todas las observaciones.
 
-(ref:QQplotsKenosha) **Gráficos $qq$ de los residuos de la Lotería de Wisconsin.** El panel izquierdo se basa en los 50 puntos. El panel derecho se basa en 49 puntos, residuos de una regresión después de eliminar Kenosha.
+(ref:Fig29) **Gráficos $qq$ de los residuos de la Lotería de Wisconsin.** El panel izquierdo se basa en los 50 puntos. El panel derecho se basa en 49 puntos, residuos de una regresión después de eliminar Kenosha.
 
-```{r QQplotsKenosha, fig.cap='(ref:QQplotsKenosha)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig29, fig.cap='(ref:Fig29)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 #Lot <- read.csv("CSVData/WiscLottery.csv", header=TRUE)
 #  FIGURA 2.9
@@ -1118,14 +1114,14 @@ mtext("Cuantiles Muestrales", side=2,at=9050,las=1,cex=1.1, adj=.5)
 
 `r HideRCode('Fig29.Hide',"Código R para producir la Figura 2.9")`
 
-```{r ref.label = 'QQplotsKenosha', eval = FALSE}
+```{r ref.label = 'Fig29', eval = FALSE}
 ```
 
 </div>
 
 
 
-## Aplicación: Modelo de Valoración de Activos Financieros {#S2:CAPM}
+## Aplicación: Modelo de Valoración de Activos Financieros {#Sec27}
 
 En esta sección, estudiamos una aplicación financiera, el Modelo de Valoración de Activos Financieros, a menudo conocido por el acrónimo CAPM. El nombre es algo engañoso, ya que el modelo realmente trata sobre *rendimientos* basados en activos de capital, no sobre los precios en sí mismos. Los tipos de activos que examinamos son valores de acciones que se negocian en un mercado activo, como la Bolsa de Valores de Nueva York (NYSE). Para una acción en la bolsa, podemos relacionar los rendimientos con los precios mediante la siguiente expresión:
 
@@ -1151,7 +1147,7 @@ Probar la teoría económica, o modelos que surgen de cualquier disciplina, impl
 
 Para ilustrar, considere los rendimientos mensuales durante el período de cinco años desde enero de 1986 hasta diciembre de 1990, inclusive. Específicamente, usamos los rendimientos de la acción de Lincoln National Insurance Corporation como la variable dependiente ($y$) y los rendimientos del mercado del índice Standard \& Poor's 500 como la variable explicativa ($x$). En ese momento, Lincoln era una gran compañía de seguros multirama, con sede en el medio oeste de EE. UU., específicamente en Fort Wayne, Indiana. Debido a que era bien conocida por su gestión prudente y estabilidad, es una buena compañía para comenzar nuestro análisis de la relación entre el mercado y una acción individual.
 
-Comenzamos interpretando algunas estadísticas básicas, en la Tabla \@ref(tab:SumStatsCAPM), en términos de teoría financiera. Primero, un inversionista en Lincoln estará preocupado de que el rendimiento promedio de cinco años, $\overline{y}=0.00510$, esté por debajo del rendimiento del mercado, $\overline{x}=0.00741$. Los estudiantes de teoría de intereses reconocen que los rendimientos mensuales se pueden convertir a una base anual usando la capitalización geométrica. Por ejemplo, el rendimiento anual de Lincoln es $(1.0051)^{12}-1=0.062946$, o aproximadamente 6.29 por ciento. Esto se compara con un rendimiento anual de 9.26\% (= (1$00((1.00741)^{12}-1$)) para el mercado. Una medida de riesgo, o volatilidad, que se usa en finanzas es la desviación estándar. Así, interprete $s_y$ = 0.0859 $>$ 0.05254 = $s_x$ para significar que una inversión en Lincoln es más riesgosa que la del mercado. Otro aspecto interesante de la Tabla \@ref(tab:SumStatsCAPM) es que el rendimiento más bajo del mercado, -0.22052, está 4.338 desviaciones estándar por debajo de su promedio ((-0.22052-0.00741)/0.05254 = -4.338). Esto es muy inusual con respecto a una distribución normal.
+Comenzamos interpretando algunas estadísticas básicas, en la Tabla \@ref(tab:Tab28), en términos de teoría financiera. Primero, un inversionista en Lincoln estará preocupado de que el rendimiento promedio de cinco años, $\overline{y}=0.00510$, esté por debajo del rendimiento del mercado, $\overline{x}=0.00741$. Los estudiantes de teoría de intereses reconocen que los rendimientos mensuales se pueden convertir a una base anual usando la capitalización geométrica. Por ejemplo, el rendimiento anual de Lincoln es $(1.0051)^{12}-1=0.062946$, o aproximadamente 6.29 por ciento. Esto se compara con un rendimiento anual de 9.26\% (= (1$00((1.00741)^{12}-1$)) para el mercado. Una medida de riesgo, o volatilidad, que se usa en finanzas es la desviación estándar. Así, interprete $s_y$ = 0.0859 $>$ 0.05254 = $s_x$ para significar que una inversión en Lincoln es más riesgosa que la del mercado. Otro aspecto interesante de la Tabla \@ref(tab:Tab28) es que el rendimiento más bajo del mercado, -0.22052, está 4.338 desviaciones estándar por debajo de su promedio ((-0.22052-0.00741)/0.05254 = -4.338). Esto es muy inusual con respecto a una distribución normal.
 
 `r HideRCode('Motivation.1Silly',"")`
 
@@ -1181,7 +1177,7 @@ knitr::kable(2, caption = "Silly.")
 
 </div>
 
-```{r SumStatsCAPM, echo = FALSE}
+```{r Tab28, echo = FALSE}
 CAPM <- read.csv("CSVData/CAPM.csv", header=TRUE)
 
 #  TABLA 2.8 ESTADÍSTICAS RESUMEN
@@ -1202,13 +1198,13 @@ TableGen1(TableData=tableMat,
            footnote_as_chunk = TRUE)
 ```
 
-A continuación, examinamos los datos a lo largo del tiempo, como se muestra gráficamente en la Figura \@ref(fig:TimeSeriesPlots). Estos son gráficos de dispersión de los rendimientos versus el tiempo, llamados *gráficos de series temporales*. En la Figura \@ref(fig:TimeSeriesPlots), se puede ver claramente
+A continuación, examinamos los datos a lo largo del tiempo, como se muestra gráficamente en la Figura \@ref(fig:Fig210). Estos son gráficos de dispersión de los rendimientos versus el tiempo, llamados *gráficos de series temporales*. En la Figura \@ref(fig:Fig210), se puede ver claramente
 
  el rendimiento más bajo del mercado y un vistazo rápido al eje horizontal revela que este punto inusual está en octubre de 1987, el momento del conocido colapso del mercado.
 
-(ref:TimeSeriesPlots) **Gráfico de series temporales de los rendimientos de la Lincoln National Corporation y del mercado.** Hay 60 rendimientos mensuales durante el período de enero de 1986 a diciembre de 1990.
+(ref:Fig210) **Gráfico de series temporales de los rendimientos de la Lincoln National Corporation y del mercado.** Hay 60 rendimientos mensuales durante el período de enero de 1986 a diciembre de 1990.
 
-```{r TimeSeriesPlots, fig.cap='(ref:TimeSeriesPlots)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig210, fig.cap='(ref:Fig210)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 #  FIGURA 2.10
 par(mar=c(4.1,3.1,2,1),cex=1.1, las=1)
@@ -1218,11 +1214,11 @@ mtext("Rendimiento Mensual", side=2, at=.38,las=1,cex=1.1, adj=.5)
 legend(1986, 0.3, c("LINCOLN", "MARKET"), lty=1:2, cex=0.5)
 ```
 
-El gráfico de dispersión en la Figura \@ref(fig:LincolnvsMarket) resume gráficamente la relación entre el rendimiento de Lincoln y el rendimiento del mercado. El colapso del mercado es claramente evidente en la Figura \@ref(fig:LincolnvsMarket) y representa un punto de alta influencia. Con la línea de regresión (descrita a continuación) superpuesta, los dos puntos atípicos que se pueden ver en la Figura \@ref(fig:TimeSeriesPlots) también son evidentes. A pesar de estas anomalías, el gráfico en la Figura \@ref(fig:LincolnvsMarket) sugiere que hay una relación lineal entre los rendimientos de Lincoln y del mercado.
+El gráfico de dispersión en la Figura \@ref(fig:Fig211) resume gráficamente la relación entre el rendimiento de Lincoln y el rendimiento del mercado. El colapso del mercado es claramente evidente en la Figura \@ref(fig:Fig211) y representa un punto de alta influencia. Con la línea de regresión (descrita a continuación) superpuesta, los dos puntos atípicos que se pueden ver en la Figura \@ref(fig:Fig210) también son evidentes. A pesar de estas anomalías, el gráfico en la Figura \@ref(fig:Fig211) sugiere que hay una relación lineal entre los rendimientos de Lincoln y del mercado.
 
-(ref:LincolnvsMarket) **Gráfico de dispersión del rendimiento de Lincoln versus el rendimiento del índice S\&P 500.** La línea de regresión está superpuesta, lo que nos permite identificar el colapso del mercado y dos puntos atípicos.
+(ref:Fig211) **Gráfico de dispersión del rendimiento de Lincoln versus el rendimiento del índice S\&P 500.** La línea de regresión está superpuesta, lo que nos permite identificar el colapso del mercado y dos puntos atípicos.
 
-```{r LincolnvsMarket, fig.cap='(ref:LincolnvsMarket)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig211, fig.cap='(ref:Fig211)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 #  FIGURA 2.11
 
@@ -1241,13 +1237,13 @@ text(0.16, 0.02, "PUNTOS ATÍPICOS DE 1990", cex=0.8)
 
 `r HideRCode('CAPMAnalysis.Hide',"Código R para producir la Tabla 2.8 y las Figuras 2.10 y 2.11")`
 
-```{r ref.label = 'SumStatsCAPM', eval = FALSE}
+```{r ref.label = 'Tab28', eval = FALSE}
 ```
 
-```{r ref.label = 'TimeSeriesPlots', eval = FALSE}
+```{r ref.label = 'Fig210', eval = FALSE}
 ```
 
-```{r ref.label = 'LincolnvsMarket', eval = FALSE}
+```{r ref.label = 'Fig211', eval = FALSE}
 ```
 
 </div>
@@ -1268,7 +1264,7 @@ En el contexto del modelo de mercado, podemos interpretar la desviación estánd
 
 \begin{equation}
 s_y^2 = b_1^2 s_x^2 + s^2 \frac{n-2}{n-1}.
-(\#eq:CAPMVar)
+(\#eq:eq28)
 \end{equation}
 
 El riesgo de un valor se debe al riesgo del mercado más el riesgo de un componente diversificable. Tenga en cuenta que el riesgo del componente del mercado, $s_x^2$, es mayor para los valores con pendientes más grandes. Por esta razón, los inversores consideran que los valores con pendientes $b_1$ mayores que uno son "agresivos" y las pendientes menores que uno como "defensivos".
@@ -1287,7 +1283,7 @@ La segunda pregunta planteada por el análisis de regresión es qué se puede de
 
 
 
-## Salida Computacional Ilustrativa de Regresión
+## Salida Computacional Ilustrativa de Regresión {#Sec28}
 
 Las computadoras y los paquetes de software estadístico que realizan cálculos especializados juegan un papel vital en los análisis estadísticos modernos. Las capacidades informáticas económicas han permitido a los analistas de datos centrarse en las relaciones de interés. Es mucho menos importante especificar modelos que sean atractivos únicamente por su simplicidad computacional en comparación con épocas anteriores a la disponibilidad generalizada de computación económica. Un tema importante de este texto es centrarse en las relaciones de interés y confiar en el software estadístico ampliamente disponible para estimar los modelos que especificamos.
 
@@ -1415,9 +1411,9 @@ F-statistic:  176[u] on 1[m] and 48[n] DF,  p-value: <2e-16[v]
 [I] El coeficiente de variación de la respuesta es $s_y/\overline{y}$. SAS imprime $100s_y/\overline{y}$. <br>
 
 
-## Lecturas Adicionales y Referencias
+## Lecturas Adicionales y Referencias {#Sec29}
 
-Relativamente pocas aplicaciones de la regresión son básicas en el sentido de que usan solo una variable explicativa; el propósito del análisis de regresión es reducir las relaciones complejas entre muchas variables. La Sección \@ref(S2:CAPM) describe una excepción importante a esta regla general, el modelo financiero CAPM; consulta a Panjer et al. (1998) para descripciones actuariales adicionales de este modelo. Campbell et al. (1997) ofrece una perspectiva desde la econometría financiera.
+Relativamente pocas aplicaciones de la regresión son básicas en el sentido de que usan solo una variable explicativa; el propósito del análisis de regresión es reducir las relaciones complejas entre muchas variables. La Sección \@ref(Sec27) describe una excepción importante a esta regla general, el modelo financiero CAPM; consulta a Panjer et al. (1998) para descripciones actuariales adicionales de este modelo. Campbell et al. (1997) ofrece una perspectiva desde la econometría financiera.
 
 **Referencias del Capítulo**
 
@@ -1435,7 +1431,7 @@ Relativamente pocas aplicaciones de la regresión son básicas en el sentido de 
 *  Sharpe, William F. (1964). Capital asset prices: A theory of market equilibrium under risk. *Journal of Finance*, 425-442.
 *  Stigler, Steven M. (1986). *The History of Statistics:  The Measurement of Uncertainty before 1900*. Harvard University Press, Cambridge, MA.
 
-## Ejercicios
+## Ejercicios {#Sec210}
 
 #### Secciones 2.1-2.2 {-}
 
@@ -1748,11 +1744,11 @@ e. El $R^2$ del modelo de regresión ajustado es un decepcionante 3.5%. Parte de
 ación como una observación de alto apalancamiento? Justifica tu respuesta.
 
 
-2.22 **Esperanzas de Vida Nacionales.** Continuamos el análisis iniciado en el Ejercicio 1.7 examinando la relación entre $y= LIFEEXP$ y $x=FERTILITY$, mostrado en la Figura \@ref(fig:UNLIFEPlot1). Ajusta un modelo de regresión lineal de $LIFEEXP$ usando la variable explicativa $x=FERTILITY$.
+2.22 **Esperanzas de Vida Nacionales.** Continuamos el análisis iniciado en el Ejercicio 1.7 examinando la relación entre $y= LIFEEXP$ y $x=FERTILITY$, mostrado en la Figura \@ref(fig:Fig212). Ajusta un modelo de regresión lineal de $LIFEEXP$ usando la variable explicativa $x=FERTILITY$.
 
-(ref:UNLIFEPlot1) **Gráfico de FERTILITY versus LIFEEXP.**
+(ref:Fig212) **Gráfico de FERTILITY versus LIFEEXP.**
 
-```{r UNLIFEPlot1, fig.cap='(ref:UNLIFEPlot1)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig212, fig.cap='(ref:Fig212)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 LifeExp <- read.csv("CSVData/UNLifeExpectancy.csv", header=TRUE)
 #  FIGURA 2.12
@@ -1773,11 +1769,11 @@ d. Supón que tu hipótesis previa es que la pendiente de FERTILITY es -6.0 y de
 
 
 
-## Suplemento Técnico - Elementos del Álgebra de Matrices
+## Suplemento Técnico - Elementos del Álgebra de Matrices  {#Sec211}
 
 Los ejemplos son una herramienta excelente para introducir temas técnicos como la regresión. Sin embargo, este capítulo también ha utilizado álgebra, así como probabilidad y estadística básica, para darte una comprensión más profunda del análisis de regresión. A partir de ahora, estudiaremos relaciones multivariantes. Con muchas cosas ocurriendo simultáneamente en varias dimensiones, el álgebra ya no es útil para proporcionar información. En cambio, necesitaremos el álgebra de *matrices*. Este suplemento ofrece una breve introducción al álgebra de matrices para que puedas estudiar los capítulos de regresión lineal de este texto. El Apéndice A3 define conceptos adicionales de matrices.
 
-### Definiciones Básicas
+### Definiciones Básicas {#Sec2111}
 
 Una *matriz* es una tabla rectangular de números organizados en filas y columnas (el plural de matriz es matrices). Por ejemplo, considera los ingresos y la edad de 3 personas.
 
@@ -1869,7 +1865,7 @@ Observa que el vector fila ocupa mucho menos espacio en una página impresa que 
 Así, si $\mathbf{A}$ tiene dimensión $n\times k$, entonces $\mathbf{A}^{\prime }$ tiene dimensiones $k\times n$.
 
 
-### Algunas Matrices Especiales
+### Algunas Matrices Especiales {#Sec2112}
 
 *  Una *matriz cuadrada* es una matriz donde el número de filas es igual al número de columnas, es decir, $n=k$.
 
@@ -1898,7 +1894,7 @@ Así, si $\mathbf{A}$ tiene dimensión $n\times k$, entonces $\mathbf{A}^{\prime
 \end{equation*}
 Observa que una matriz diagonal es una matriz simétrica.
 
-### Operaciones Básicas
+### Operaciones Básicas {#Sec2113}
 
 #### Multiplicación por un Escalar {-}
 
@@ -2307,7 +2303,7 @@ n^{-1}\sum\limits_{i=1}^{n}x_i^2 & -\overline{x} \\
 -\overline{x} & 1
 \end{array}
 \right) .
-(\#eq:XPXInv)
+(\#eq:eq29)
 \end{equation}
 
 La Sección 3.1 discutirá la relación $\mathbf{b}=\left( \mathbf{X}^{\prime}\mathbf{X}\right)^{-1}\mathbf{X}^{\prime}\mathbf{y}$. Para ilustrar el cálculo, tenemos
@@ -2350,7 +2346,7 @@ Estas son las expresiones usuales para la pendiente $b_1$ (Ejercicio 2A.8) y el 
 ***
 
 
-### Matrices Aleatorias
+### Matrices Aleatorias  {#Sec2114}
 
 **Esperanzas.** Consideremos una matriz de variables aleatorias
 \begin{equation*}
@@ -2395,7 +2391,7 @@ Por la linealidad de las esperanzas, para una matriz no aleatoria **A** y un vec
 **Varianzas.** También podemos trabajar con los segundos momentos de vectores aleatorios. La varianza de un vector de variables aleatorias se llama *matriz de varianza-covarianza*. Se define como
 \begin{equation}
 \mathrm{Var} ~ \mathbf{y}  =  \mathrm{E} ( (\mathbf{y} - \mathrm{E} \mathbf{y})(\mathbf{y} - \mathrm{E} \mathbf{y})^{\prime} ).
-(\#eq:E2MatrixVar) 
+(\#eq:eq210) 
 \end{equation}
 Es decir, podemos expresar
 \begin{equation*}
@@ -2429,14 +2425,14 @@ En el caso de que $y_1, \ldots, y_n$ sean mutuamente no correlacionados, tenemos
 \end{equation*}
 Además, si las varianzas son idénticas, de modo que $\mathrm{Var}~y_i=\sigma ^2$, entonces podemos escribir $\mathrm{Var} ~\mathbf{y} = \sigma ^2 \mathbf{I}$, donde **I** es la matriz identidad $n \times n$. Por ejemplo, si $y_1, \ldots, y_n$ son i.i.d., entonces $\mathrm{Var} ~\mathbf{y} = \sigma ^2 \mathbf{I}$.
 
-A partir de la ecuación \@ref(eq:E2MatrixVar), se puede demostrar que
+A partir de la ecuación \@ref(eq:eq210), se puede demostrar que
 \begin{equation}
 \mathrm{Var}\left( \mathbf{Ay +B} \right) = \mathrm{Var}\left(
 \mathbf{Ay} \right) = \mathbf{A} \left( \mathrm{Var}~\mathbf{y}
 \right) \mathbf{A}^{\prime}.
-(\#eq:E2MatrixVarCalc)
+(\#eq:eq211) 
 \end{equation}
-Por ejemplo, si $\mathbf{A} = (a_1, a_2, \ldots,a_n)= \mathbf{a}^{\prime}$ y **B = 0**, entonces la ecuación \@ref(eq:E2MatrixVarCalc) se reduce a
+Por ejemplo, si $\mathbf{A} = (a_1, a_2, \ldots,a_n)= \mathbf{a}^{\prime}$ y **B = 0**, entonces la ecuación \@ref(eq:eq211) se reduce a
 \begin{equation*}
 \mathrm{Var}\left( \sum_{i=1}^n a_i y_i \right) = \mathrm{Var}
 \left( \mathbf{a^{\prime} y}  \right) = \mathbf{a^{\prime}} \left(

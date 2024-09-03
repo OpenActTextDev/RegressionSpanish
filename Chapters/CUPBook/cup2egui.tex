@@ -1,0 +1,737 @@
+% cup2egui.tex (LaTeX 2e version)
+% v1.01 --- released 9th July 1997
+% v1.0  --- released 9th May 1997
+%           based on cupguide.tex v1.2 (for LaTeX2.09, 27.4.95)
+
+\NeedsTeXFormat{LaTeX2e}[1996/06/01]
+
+\documentclass[cup6a]{cupbook}
+
+\title[ \LaTeXe\ Style Guide for Authors]
+      {CUP Standard Designs}
+\author{Cambridge \TeX-to-type}
+\date{9th July 1997}
+
+\begin{document}
+
+\pagenumbering{roman}
+\maketitle
+\tableofcontents
+\cleardoublepage
+\pagenumbering{arabic}
+
+\chapter{\LaTeXe\ style guide for authors}
+
+This guide is for authors who are preparing a book for CUP using the
+\LaTeX\ document preparation system and the CUPBOOK class file.
+
+\section{Introduction}
+
+The \LaTeX\ document preparation system is a special version of the
+\TeX\ typesetting program.
+ \LaTeX\ adds to \TeX\ a collection of commands which simplify
+typesetting by allowing the author to concentrate on the
+logical structure of the document rather than its visual layout.
+
+\LaTeX\ provides a consistent and comprehensive document preparation
+interface.
+ There are simple-to-use commands for generating a table of contents,
+lists of figures and/or tables, and indexes.
+ \LaTeX\ can automatically number list entries, equations, figures,
+tables, and footnotes, as well as parts, chapters, sections and
+subsections.
+ Using this numbering system, bibliographic citations, page references
+and cross references to any other numbered entity (e.g. chapter,
+section, equation, figure, list entry) are quite straightforward.
+
+\LaTeX\ is a powerful tool for managing long and complex documents.
+In particular, partial processing enables long documents to be
+produced chapter by chapter without losing sequential information.
+The use of document classes allows a simple change of style (or style
+option) to transform the appearance of your document.
+
+\section{The CUPBOOK document class}
+
+The CUP standard designs have been implemented as a \LaTeXe\ class file.
+The CUPBOOK class file is based on the BOOK class as discussed in the
+\LaTeX\ manual.
+ Commands which differ from the standard \LaTeX\ interface, or which
+are provided in addition to the standard interface, are explained in
+this guide.
+ This guide is \emph{not} a substitute for the \LaTeX\ manual itself.
+
+\subsection{The BOOK class}
+
+The CUPBOOK class file preserves the standard \LaTeX\ interface such
+that any document which can be  produced using the standard \LaTeX\
+BOOK class can also be produced with the CUPBOOK class.
+ However, the measure (i.e. width of text) is different from that for
+BOOK, therefore line-breaks will change and long equations may
+need re-setting.
+
+\subsection{Using the CUPBOOK class}
+
+First, copy the file \verb"cupbook.cls" into the correct subdirectory
+on your system.
+The CUPBOOK document class is implemented as a complete docu\-ment
+class, \emph{not} a document class option.
+In order to use the CUPBOOK class, replace \verb"book" by
+\verb"cupbook" in the \verb"\documentclass" command at the beginning
+of your document:
+ \begin{verbatim}
+  \documentclass{book}
+\end{verbatim}
+ is replaced by
+ \begin{verbatim}
+  \documentclass{cupbook}
+\end{verbatim}
+ In general, the following standard document class options should \emph{not}
+ be used:
+ \begin{itemize}\listsize
+  \item \texttt{10pt}, \texttt{11pt}, \texttt{12pt} -- unavailable.
+  \item \texttt{oneside} (no associated file) -- \texttt{twoside} is the default.
+  \item \texttt{fleqn}, \texttt{leqno}, \texttt{titlepage}, \texttt{twocolumn} --
+        should not be used -- \texttt{fleqn} is incorporated into the indented
+        design options.
+  \item \texttt{proc}, \texttt{ifthen} -- these packages can be used if necessary.
+ \end{itemize}
+
+\subsection{Class options}
+
+The following class options correspond to the standard designs which
+are available with the CUPBOOK class:
+ \begin{itemize}\listsize
+  \item \texttt{cup5a} -- a single-author, indented design with a large format.
+  \item \texttt{cup5b} -- a multi-author, indented design with a large format.
+  \item \texttt{cup6a} -- a single-author, centred design with a large format.
+  \item \texttt{cup6b} -- a multi-author, centred design with a large format.
+  \item \texttt{cup7a} -- a single-author, centred design with a small
+        format (default).
+  \item \texttt{cup7b} -- a multi-author, centred design with a small format.
+  \item \texttt{cup8a} -- a single-author, indented design with a small format.
+  \item \texttt{cup8b} -- a multi-author, indented design with a small format.
+  \item \texttt{cup9a} -- a single-author, flush-left design with a small format.
+  \item \texttt{cup9b} -- a multi-author, flush-left design with a small format.
+  \item \texttt{caps}  -- Cambridge Astrophysics Series
+ \end{itemize}
+If no option is specified, the CUP7A class option is produced.
+
+\subsection{Landscape pages}
+\label{land}
+
+An additional class option is available with the CUPBOOK class:
+ \begin{itemize}\listsize
+  \item \texttt{landscape} -- for producing wide figures and tables which
+ need to be included in landscape format (i.e. sideways) rather
+ than portrait (i.e. upright).
+ \end{itemize}
+ If a table or illustration is too wide to fit the standard measure, it
+must be turned through 90 degrees anti-clockwise, with its caption, on
+a page by itself with no running head or page number.
+ Landscape illustrations and/or tables cannot be produced directly
+using the CUPBOOK class file because \TeX\ itself cannot turn the
+page, and not all device drivers provide such a facility.
+ The following procedure can be used to produce such pages:
+ \begin{enumerate}[(iii)]\listsize
+  \item Use the \verb"table*" or \verb"figure*" environments in your
+        document to create the space for your table or figure on the
+        appropriate page of your document.
+         Include the caption in this environment to ensure the correct
+        numbering of floats and the correct entry in the `List of
+        Illustrations' or `List of Tables'.
+  \item Create a separate document with the corresponding document class
+        but also with the \verb"landscape" document class option:
+\begin{verbatim}
+  \documentclass[landscape]{cupbook}
+\end{verbatim}
+  \item Include your complete tables and illustrations (or space for
+        these) with captions using the \verb"table*" and \verb"figure*"
+        environments.
+  \item Before each float environment, use the \verb"\setcounter"
+        command to ensure the correct numbering of the caption.
+         For example,
+\begin{verbatim}
+ \setcounter{chapter}{3}
+ \setcounter{table}{0}
+ \begin{table*}
+  \caption{The Largest Optical Telescopes}
+  \label{tab1}
+  \begin{tabular}{llllcll}
+   \hline\hline
+    :
+  \end{tabular}
+\end{table*}
+
+\clearpage
+\setcounter{figure}{12}
+\begin{figure*}
+ \vspace{20pc}
+ \caption{Chart for a cold plasma}
+ \label{fig13}
+\end{figure*}
+\end{verbatim}
+ \end{enumerate}
+
+\section{Additional facilities}
+
+In addition to all the standard \LaTeX\ design elements, the CUPBOOK
+class includes the following features:
+ \begin{itemize}\listsize
+  \item \verb"table*" and \verb"figure*" modified for wide tables and
+        long captions; see section \ref{land}.
+  \item \verb"proof" and \verb"proof*" environments.
+  \item Control of enumerated lists with an optional argument for the
+        widest label.
+  \item \verb"theauthorindex" and \verb"thesubjectindex" environments
+        (in addition to the standard \verb"theindex" environment) for
+        author and subject indexes respectively. Authors using the CAPS
+        option have an additional \verb"theobjectindex" environment.
+  \item An \verb"\endnote" command for specifying an endnote,
+        and \verb"\theendnotes" command for listing all the endnotes.
+  \item \verb"exercises" and \verb"exerciselist" environments.
+  \item \verb"thereferences" and \verb"thebibliography" (standard)
+        environments for both a list of references and a bibliography.
+  \item An extended \verb"\title" command which takes an optional argument
+        for use as a \emph{subtitle} on the title page.
+ \end{itemize}
+ Also for multi-author options only:
+ \begin{itemize}\listsize
+  \item An extended \verb"\author" command
+        which takes an optional argument for use in the running head
+        and in the table of contents entry.
+  \item An \verb"abstract" environment for use at the beginning of a chapter.
+  \item A \verb"listofcontributors" environment which generates an unnumbered
+        chapter, a table of contents entry and a list of contributors.
+ \end{itemize}
+ Once you have used these additional facilities in your document,
+do not process it with a standard \LaTeX\ class file.
+
+\subsection{Proofs}
+\newtheorem{lemma}{Lemma}[section]
+
+The \verb"proof" environment has been added to the standard \LaTeX\
+constructs to provide a consistent format for proofs.
+ For example,
+ \begin{verbatim}
+\begin{lemma}
+  If \textbf{PP}$_0 \vdash$ a:A, then there exists a closed
+  $\lambda$-term $a'$ s.t.
+  \[
+    \mathbf{PN}_0 \vdash a':A.
+  \]
+  Conversely, if \textbf{PN}$_0 \vdash$ a:A, then there exists
+  a closed SK-term a$^\circ$ s.t.
+  \[
+    \mathbf{PP}_0 \vdash a^\circ:A.
+  \]
+\end{lemma}
+\begin{proof}
+  Use $K_\lambda$ and $S_\lambda$ to translate combinators
+  into $\lambda$-terms. For the converse, translate
+  $\lambda x$ \ldots by [$x$] \ldots and use induction
+  and the lemma.
+\end{proof}
+\end{verbatim}
+produces the following text:
+ \begin{lemma}
+  If \textbf{PP}$_0 \vdash$ a:A, then there exists a closed $\lambda$-term
+  $a'$ s.t.
+  \[
+   \mathbf{PN}_0 \vdash a':A.
+  \]
+  Conversely, if \textbf{PN}$_0 \vdash$ a:A, then there exists a closed
+  SK-term a$^\circ$ s.t.
+  \[
+   \mathbf{PP}_0 \vdash a^\circ:A.
+  \]
+ \end{lemma}
+ \begin{proof}
+  Use $K_\lambda$ and $S_\lambda$ to translate combinators into
+  $\lambda$-terms. For the converse, translate $\lambda x$ \ldots by
+  [$x$] \ldots and use induction and the lemma.
+ \end{proof}
+ The final \proofbox\ will not be included if the \verb|proof*|
+environment is used.
+
+\subsection{Lists}
+
+The CUPBOOK class provides the three standard list environments:
+ \begin{itemize}\listsize
+  \item Numbered lists, created using the \verb"enumerate" environment.
+  \item Bulleted lists, created using the \verb"itemize" environment.
+  \item Labelled lists, created using the \verb"description" environment.
+ \end{itemize}
+ The \verb"enumerate" environment numbers each list item with an arabic
+numeral; alternative styles can be achieved by inserting a redefinition
+of the number labelling command after the \verb"\begin{enumerate}".
+ For example, a list numbered with lower-case letters inside parentheses
+can be produced by the following commands:
+ \begin{verbatim}
+    \begin{enumerate}\listsize
+     \renewcommand{\theenumi}{(\alph{enumi})}
+     \item first item
+           :
+    \end{enumerate}
+\end{verbatim}
+ This produces the following list:
+ \begin{enumerate}\listsize
+  \renewcommand{\theenumi}{(\alph{enumi})}
+  \item first item
+  \item second item
+  \item etc.
+ \end{enumerate}
+% In the last example, the labels were pushed out into the margin
+%because the standard list indention is designed to be sufficient for
+%arabic numerals rather than the longer roman numerals.
+ In the last example, the margin is larger than necessary
+because the standard list indention is designed to be sufficient for
+the longer roman numerals rather than the alphabetic labels used here.
+ In order to enable different types of label to be used more easily, the
+\verb"enumerate" environment in the CUPBOOK class can be given an
+optional argument which (like a standard \verb"thebibliography"
+environment) specifies the \emph{widest label}.
+ For example,
+ \begin{enumerate}[(iii)]\listsize
+  \item first item
+  \item second item
+  \item etc.
+ \end{enumerate}
+ was produced by the following input:
+ \begin{verbatim}
+    \begin{enumerate}[(iii)]\listsize
+     \item first item
+           :
+    \end{enumerate}
+\end{verbatim}
+
+\subsection{Indexes}
+
+The standard \verb"theindex" environment is provided in the CUPBOOK
+class file but two extra environments are also available and can be 
+used in a similar way to \verb"theindex" environment:
+\verb"theauthorindex" and \verb"thesubjectindex"
+generate an `Author Index' and a `Subject Index' respectively.
+Authors using the CAPS option have the additional \verb"\theobjectindex" environment which generates an `Object Index'. CAPS' authors
+also have the facility to put some text across the two columns, 
+by using the environment \verb"\begin{chaptertext} ... \end{chaptertext}", 
+as shown in the following example:
+\begin{verbatim}
+  \begin{chaptertext}
+    Chapter numbers given in \textbf{boldface} indicate that 
+    the chapter was written by the listed author.
+  \end{chaptertext}
+  \begin{theauthorindex}
+     :
+\end{verbatim}
+All these index environments generate an unnumbered chapter whose
+title appears in the running heads and the table of contents
+automatically.
+
+\subsection{Endnotes}
+
+In addition to footnotes, the CUPBOOK class provides a similar
+facility for endnotes.
+ A list of these endnotes can be produced in the form of an unnumbered
+chapter at the end of the book (or an unnumbered section at the end of
+each chapter with the multi-author options).
+
+Endnotes can be entered into the text, at the place of reference, in a
+similar way to footnotes but using the \verb"\endnote" command;
+for example,
+\begin{verbatim}
+ ...this is some text\endnote{This is
+             the text of the endnote.}
+ and some more text...
+\end{verbatim}
+ Endnotes are referenced in the text with a superior number.
+
+With the single-author options, the endnotes should be printed at the
+end of the book, after the appendices but before the bibliography
+and/or references.
+ \begin{verbatim}
+    :
+ \theendnotes
+ \begin{thebibliography}{xxx}
+    :
+\end{verbatim}
+The \verb"\theendnotes" command generates an unnumbered
+chapter which appears in the table of contents and enters section
+headings with chapter names or numbers as appropriate.
+
+With the multi-author option, the endnotes should be printed at the end
+of the chapter using the same \verb"\theendnotes" command.
+
+\subsection{Exercises}
+
+Two environments, \verb"exercises" and \verb"exerciselist", are provided to
+generate lists of exercises in the required format.
+ The \verb"exercise" environment starts a new unnumbered section, resets the
+equation numbering and starts an exercise list; this should be sufficient for
+most normal requirements. For example,
+ \begin{verbatim}
+\begin{exercises}
+ \item Let $M$ be the unit circle in the complex plane.
+       Explain how the map $\pi:\mathbf{R} \rightarrow S^1$
+       given by $x\mapsto\exp(\mathrm{i}x)$ can be used to
+       define a set of charts on the circle $S^1$.
+ \item ...
+\end{exercises} % end of enumeration of exercise
+\end{verbatim}
+ If more control is needed (e.g. if exercises occur throughout a chapter)
+the \verb"exerciselist" environment can be used to generate the list alone.
+
+\subsection{References and Bibliographies}
+
+Some books may need both a list of references and a bibliography. The CUPBOOK
+class includes an additional environment, \verb"thereferences", which can be
+used to generate a list of references. The standard \verb"thebibliography"
+environment can be used to produce a bibliography.
+ The following listing shows some references prepared in the
+appropriate style; this produces the reference list on page~\pageref{reflist}.
+ \begin{verbatim}
+\begin{thereferences}{99}
+ \bibitem{abbott}
+         Abbott, L.F. and Deser, S. (1982).
+         Stability of gravity with a cosmological constant,
+         \textit{Nucl. Phys.} \textbf{B195}, 76--96.
+ \bibitem{adams}
+         Adams, J.F. (1981).
+         Spin (8), triality, $F_4$ and all that, in
+         \textit{Superspace and Supergravity},
+         ed. S.W.~Hawking and M.~R\"ocek
+         (Cambridge University Press, Cambridge).
+ \bibitem{arnold}
+         Arnol'd, V.I. (1978).
+         \textit{Mathematical Methods of Classical Mechanics}
+         (Springer, New York).
+ \bibitem{buch}
+         Buchdahl, N.P. (1982).
+         Applications of Several Complex Variables to
+         Twistor Theory, Oxford University D. Phil. thesis.
+\end{thereferences}
+\end{verbatim}
+ Both environments generate an unnumbered chapter whose
+title appears in the running heads and the table of contents
+automatically.
+
+\subsection{Subtitles}
+
+The standard \verb"\title" command has been extended to take an optional
+argument which is then used as a subtitle on the main title page.
+For example, this document has the following title command:
+\begin{verbatim}
+\title[\LaTeXe\ Style Guide for Authors]
+      {CUP Standard Designs}
+\end{verbatim}
+
+\subsection{Author's name and affiliation}
+
+In the CUPBOOK multi-author class options (\verb"*B"), the title of the
+chapter and the author's name (or authors' names) are used both at the
+beginning of the chapter and throughout the chapter as running headlines at the
+top of every page. The chapter heading is used on odd-numbered pages (rectos)
+and the author's name appears on even-numbered pages (versos). Although the
+main chapter heading can run to several lines of text, the running head line
+must be a single line. Moreover, the chapter heading can incorporate new line
+commands (e.g.\ \verb"\\") but these are not acceptable in a running headline.
+
+The standard \verb"\chapter" command has an optional argument which is used to
+generate a table of contents entry and the running headline.
+To enable you to specify an alternative short form of the author's name, the
+standard \verb"\author" command has been extended to take an optional argument
+to be used as the running headline:
+\begin{verbatim}
+    \author[Author's name]{The full author's name with
+       affiliation if necessary
+      \and
+       additional authors' names and affiliations}
+\end{verbatim}
+
+\section{Some guidelines for using standard facilities}
+
+The following notes may help you achieve the best effects with the
+CUPBOOK class file.
+
+\subsection{Sections}
+
+\LaTeX\ provides five levels of section headings and they are all
+defined in the CUPBOOK class file:
+\begin{itemize}\listsize
+  \item Heading A -- \verb"\section".
+  \item Heading B -- \verb"\subsection".
+  \item Heading C -- \verb"\subsubsection".
+  \item Heading D -- \verb"\paragraph".
+  \item Heading E -- \verb"\subparagraph".
+\end{itemize}
+ Numbers are given for section, subsection and subsubsection headings,
+but only section and subsection headings appear in the table of contents.
+
+Authors using the CAPS option have an extra two headings:
+\begin{itemize}\listsize
+  \item Heading F -- \verb"\xhead".
+  \item Heading G -- \verb"\yhead".
+\end{itemize}
+
+\subsection{Page styles and running headlines}
+
+In CUPBOOK, as in BOOK class, chapter titles and section headings are
+used as running headlines at the top of every page.
+ The section heading is used on odd-numbered pages (rectos) and the
+chapter title appears on even-numbered pages (versos).
+
+The \verb"\pagestyle" and \verb"\thispagestyle" commands should
+\emph{not} be used.
+ Similarly, the commands \verb"\markright" and \verb"\markboth" should
+not be\break necessary.
+
+With the multi-author option, the title of the chapter and the author's
+name (or authors' names) are used both at the beginning of the chapter
+for the main heading and throughout the chapter as running headlines at
+the top of every page.
+ The title is used on odd-numbered pages (rectos) and the author's name
+appears on even-numbered pages (versos).
+
+With both single-author and multi-author options, the main heading can
+run to several lines in display but the running headline must be a
+single line.
+ Moreover, the main heading can also incorporate new line commands
+(e.g. \verb"\\") but these are not acceptable in a running headline.
+
+ An alternative short chapter title can be specified using the optional
+argument on the \verb"\chapter" command.
+ To enable you to specify an alternative short author's name, the
+standard \verb"\author" command has been extended to take an optional
+argument to be used as the running headline and added to the short
+chapter title as the table of contents entry:
+ \begin{verbatim}
+  \author[M.P. Seah]
+         {Michael P. Seah \\ \Department of Texology,
+          University of Cambridge.}
+ \chapter[Mixtures of distributions]
+         {Mixtures of exponential and other continuous
+          distributions}
+\end{verbatim}
+The \verb"\author" command should appear before the \verb"\chapter"
+command to which it refers, but after the \verb"maketitle" command.
+
+\subsection{Illustrations (or figures)}
+
+The CUPBOOK class will cope with most positioning of your
+illustrations and you should not normally use the optional positional
+qualifiers on the \verb"figure" environment which would override these
+decisions.
+ Figure captions should be below the figure itself, therefore the
+\verb"\caption" command should appear after the figure or space left
+for an illustration.
+ For example, Figure~\ref{sample-figure} is produced using the
+following commands:
+ \begin{verbatim}
+  \begin{figure}
+    \centering
+    \vspace{4cm}
+    \caption{An example figure with space for artwork.}
+    \label{sample-figure}
+  \end{figure}
+\end{verbatim}
+  \begin{figure}
+    \centering
+    \vspace{4cm}
+    \caption{An example figure with space for artwork.}
+    \label{sample-figure}
+  \end{figure}
+
+\subsection{Tables}
+
+The CUPBOOK class will cope with most positioning of your tables and
+you should not normally use the optional positional qualifiers on the
+\verb"table" environment which would override these decisions.
+ Table captions (titles) must be at the top, therefore the
+\verb"\caption" command should appear before the body of the table.
+ For example, Table~\ref{sample-table} is produced using the following
+commands:
+ \begin{verbatim}
+ \begin{table}
+  \caption{An example table.}
+    \begin{tabular}{c|ccc}
+     \hline \hline
+     {Figure} & {$hA$} & {$hB$} & {$hC$}\\
+     \hline
+     2 & $\exp\left(\pi i\frac58\right)$
+       & $\exp\left(\pi i\frac18\right)$ & $0$\\
+     3 & $-1$    & $\exp\left(\pi i\frac34\right)$ & $1$\\
+     4 & $-4+3i$ & $-4+3i$ & $\frac74$\\
+     5 & $-2$    & $-2$    & $\frac54 i$ \\
+     \hline \hline
+    \end{tabular}
+  \label{sample-table}
+\end{table}
+\end{verbatim}
+ \begin{table}
+  \caption{An example table.}
+    \begin{tabular}{c|ccc}
+     \hline \hline
+     {Figure} & {$hA$} & {$hB$} & {$hC$}\\
+     \hline
+     2 & $\exp\left(\pi i\frac58\right)$
+       & $\exp\left(\pi i\frac18\right)$ & $0$\\
+     3 & $-1$    & $\exp\left(\pi i\frac34\right)$ & $1$\\
+     4 & $-4+3i$ & $-4+3i$ & $\frac74$\\
+     5 & $-2$    & $-2$    & $\frac54 i$ \\
+     \hline \hline
+    \end{tabular}
+  \label{sample-table}
+ \end{table}
+ The \verb"tabular" environment should be used to produce ruled tables;
+it has been modified for the CUP styles in the following ways:
+ \begin{enumerate}[(ii)]\listsize
+  \item Additional vertical space is inserted on either side of a rule
+        (produced by \verb"\hline");
+  \item Vertical lines are not produced.
+ \end{enumerate}
+ Commands to redefine quantities such as \verb"\arraystretch" should be
+omitted.
+
+\begin{thereferences}{99}
+ \label{reflist}
+  \bibitem{abbott}
+  Abbott, L.F. and Deser, S. (1982). Stability of gravity with a
+  cosmological constant, \textit{Nucl. Phys.} \textbf{B195}, 76--96.
+
+  \bibitem{adams}
+  Adams, J.F. (1981). Spin (8), triality, $F_4$ and all that, in
+  \textit{Superspace and Supergravity}, ed. S.W.~Hawking and M.~R\"ocek
+  (Cambridge University Press, Cambridge).
+
+  \bibitem{arnold}
+  Arnol'd, V.I. (1978). \textit{Mathematical Methods of Classical
+  Mechanics} (Springer, New York).
+
+  \bibitem{buch}
+  Buchdahl, N.P. (1982). Applications of Several Complex Variables to
+  Twistor Theory, Oxford University D. Phil. thesis.
+\end{thereferences}
+
+\cleardoublepage
+\appendix
+\chapter{Notes for Editors}
+
+\section{Production of crc}
+
+This appendix contains additional information which may be useful to
+those who are involved with the final production stages of a book.
+
+\subsection{Prelims}
+ \begin{itemize}\listsize
+  \item Title pages in \textit{jobname\tt.TTL}
+  \item In the CAPS design, \verb"\author" and \verb"\title" must be 
+        letterspaced. See Lewin for pattern copy
+  \item \verb"\halftitle" command to use in \textit{jobname\tt.TTL}
+  \item \texttt{indented} environment for use in \textit{jobname\tt.TTL}
+  \item Problems with footnotes at the top of a page
+  \item NB. optional argument to \texttt{enumerate} environment to set the
+        left margin equal to the widest label
+%%%  \item Fonts -- \verb"\itbf"
+%%%  \item Large fonts -- substitute correct sizes for \verb"\LARGE" and
+%%%        \verb"\huge".
+\end{itemize}
+
+\subsection{Footnotes.}
+If a footnote falls at the bottom of a page, it is possible for
+the footnote to appear on the following page (a feature of \TeX ).
+Check for this.
+
+\subsection{Table footnotes and long captions.}
+Set the table in a minipage that has the same width as the table body.
+The caption will be set to the same width as the table and the footnotes
+will fall at the bottom of the minipage.
+
+\subsubsection{Wide tables -- more than 2/3 measure.}
+Set with \verb"table*", giving full-out rules. Centre the body with
+\verb"@{\hspace{"\textit{wd}\verb"}" in \textit{cols} argument of the
+\verb"\begin{tabular}" command; \textit{wd} is horizontal space required
+to centre the table. Only do in Times.
+
+
+\section{Font sizes}
+
+The CUPBOOK class file defines all the standard \LaTeX\ font sizes:
+\begin{itemize}\listsize
+  \item \verb"\tiny" -- {\tiny This is tiny text. }
+  \item \verb"\scriptsize" -- {\scriptsize This is scriptsize text.}
+  \item \verb"\footnotesize" -- {\footnotesize This is footnotesize text.}
+  \item \verb"\small" -- {\small This is small text.}
+  \item \verb"\normalsize" -- This is normalsize text (default).
+  \item \verb"\large" -- {\large This is large text.}
+  \item \verb"\Large" -- {\Large This is Large text.}
+  \item \verb"\LARGE" -- {\LARGE This is LARGE text.}
+  \item \verb"\huge" -- {\huge This is huge text.}
+  \item \verb"\Huge" -- {\Huge This is Huge text.}
+\end{itemize}
+The CUPBOOK class also defines some non-standard font sizes:
+\begin{itemize}\listsize
+  \item \verb"\smallish" -- {\smallish This is the text size used for
+        some displayed text environments.}
+  \item \verb"\enotesize" -- {\enotesize This is the text size used for
+        endnotes.}
+  \item \verb"\normalsmall" -- {\normalsmall Used in prelims;
+        e.g. list of illustrations.}
+  \item \verb"\listsize" -- {\listsize This is the text size used for
+        lists.}
+\end{itemize}
+The CAPS design defines further fonts;
+all the sizes are summarized in Table~\ref{tab:fontsizes}.
+\begin{table*}[hbt]
+\caption{Type sizes for \LaTeX\ size-changing commands.}
+\label{tab:fontsizes}
+ \begin{tabular}{l|r@{/}lr@{/}lr@{/}lp{4cm}}
+ \hline\hline
+  \multicolumn{1}{l|}{\it Size}&\multicolumn{6}{c|}{\it size/baseline} & \it Usage\\
+& \multicolumn{2}{c}{\it Large options} & \multicolumn{2}{c}{\it Small options} & \multicolumn{2}{c}{\it caps option} & \\
+ \hline
+ \verb"\tiny"         &  5pt &  6pt &  5pt &  6pt & 5pt & 6pt & -- \\
+ \verb"\scriptsize"   &  7pt &  8pt &  7pt &  8pt & 7pt &  8pt & -- \\
+ \verb"\footnotesize" &  8pt &  9pt &  8pt &  9pt & 8pt &  9pt & footnotes,
+                   indexes, author affiliation in title \\
+ \verb"\affilsize"    &  n   &  a   &  n   & a    & 8pt & 10pt &
+                   affiliations in prelims\\
+ \verb"\refsize"      &  n   &  a   &  n   & a    & 8.5pt & 10pt &
+                   references\\ 
+ \verb"\enotesize"    &  9pt & 10pt &  9pt & 10pt & 9pt & 10pt & endnotes,
+                   author affiliation in chapter opening \\
+ \verb"\small"        & 10pt & 11pt &  9pt & 10pt & 9pt & 10pt & tables,
+                   references\footnote{Except in CAPS design}, bibliography,
+                   appendices, figure captions\\
+ \verb"\smallish"     & 10pt & 12pt &  9pt & 11pt & 9pt & 11pt & verse,
+                   quote$^a$, quotation environments\\
+ \verb"\quotesize"    &  n   &  a   &  n   & a    & 9.5pt & 12pt &
+                   quote environment, lists\\ 
+ \verb"\normalsmall"  & 10pt & 12pt & 10pt & 12pt & 10pt & 12pt & preliminary
+                   material\\
+ \verb"\listsize"     & 10pt & 13pt & 10pt & 13pt & 10pt & 12.5pt & lists$^a$ \\
+ \verb"\normalsize"   & 11pt & 14pt & 10pt & 13pt & 10pt & 12.5pt & main text
+                   size, section headings$^a$, etc.\\
+ \verb"\sectionsize"  &  n   &  a   &  n   & a    & 11pt & 12.5pt &
+                   section headings\\ 
+ \verb"\large"        & 11pt & 14pt & 11pt & 14pt & 11pt & 14pt & half title,
+                   author's name on title page\\
+ \verb"\Large"        & 12pt & 17pt & 12pt & 17pt & 12pt & 17pt & sub title
+                   on title page\\
+ \verb"\chaptitlesize"  
+                      &  n   &  a   &  n   & a    & 20pt & 25pt &
+                   chapter titles\\ 
+ \verb"\LARGE"        & 17pt & 19pt & 17pt & 19pt & 20pt & 25pt & part and
+                   chapter titles, main headings (\emph{should be} 16/19pt)\\
+ \verb"\huge"         & 20pt & 24pt & 20pt & 24pt & 24pt & 25pt & title on
+                   title page, part and chapter numbers (\emph{should be}
+                   18/24pt)\\
+ \verb"\Huge"         & 17pt & 24pt & 17pt & 24pt & 24pt & 25pt & -- \\
+ \verb"\chapnumsize"  
+                      &  n   &  a   &  n   & a    & 24pt & 25pt &
+                   chapter number size\\ 
+ \hline\hline
+ \end{tabular}
+\end{table*}
+
+\end{document}
+%
+% end of cup2egui.tex

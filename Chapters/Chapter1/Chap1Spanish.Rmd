@@ -1,13 +1,11 @@
 
-\setcounter{chapter}{0}
-
 
 # Regresión y la Distribución Normal
 
 *Vista Previa del Capítulo*. El análisis de regresión es un método estadístico que se utiliza ampliamente en muchos campos de estudio, y la ciencia actuarial no es una excepción. Este capítulo proporciona una introducción al papel de la distribución normal en la regresión, el uso de transformaciones logarítmicas para especificar relaciones de regresión y la base de muestreo que es crítica para inferir resultados de regresión a poblaciones amplias de interés.
 
 
-## ¿Qué es el Análisis de Regresión? {#S1:Intro}
+## ¿Qué es el Análisis de Regresión? {#Sec11}
 
 La estadística trata sobre datos. Como disciplina, se ocupa de la recolección, resumen y análisis de datos para hacer afirmaciones sobre el mundo real. Cuando los analistas recolectan datos, realmente están recolectando información que se cuantifica, es decir, se transforma a una escala numérica. Existen reglas fáciles y bien entendidas para reducir los datos, utilizando medidas de resumen numéricas o gráficas. Estas medidas de resumen pueden luego vincularse a una representación teórica, o modelo, de los datos. Con un modelo que se calibra con datos, se pueden hacer afirmaciones sobre el mundo.
 
@@ -26,12 +24,10 @@ El análisis de regresión de datos es tan omnipresente en los negocios modernos
 
 *****
 
-Para ilustrar un conjunto de datos que se puede analizar utilizando métodos de regresión, la Tabla \@ref(tab:GaltonTable) muestra algunos datos incluidos en el artículo de Galton de 1885. Esta tabla muestra las alturas de 928 hijos adultos, clasificados por un índice de la altura de sus padres. Aquí, todas las alturas femeninas se multiplicaron por 1.08, y el índice se creó tomando el promedio de la altura del padre y la altura reescalada de la madre. Galton era consciente de que tanto la altura de los padres como la del hijo adulto podían ser adecuadamente aproximadas por una curva normal. Al desarrollar el análisis de regresión, proporcionó un único modelo para la distribución conjunta de alturas.
+Para ilustrar un conjunto de datos que se puede analizar utilizando métodos de regresión, la Tabla \@ref(tab:Tab11) muestra algunos datos incluidos en el artículo de Galton de 1885. Esta tabla muestra las alturas de 928 hijos adultos, clasificados por un índice de la altura de sus padres. Aquí, todas las alturas femeninas se multiplicaron por 1.08, y el índice se creó tomando el promedio de la altura del padre y la altura reescalada de la madre. Galton era consciente de que tanto la altura de los padres como la del hijo adulto podían ser adecuadamente aproximadas por una curva normal. Al desarrollar el análisis de regresión, proporcionó un único modelo para la distribución conjunta de alturas.
 
 
-
-
-```{r GaltonTable, echo = FALSE}
+```{r Tab11, echo = FALSE}
 
  row1 <- c( 0,0,0,0,0,0, 5 , 3 , 2 , 4 ,0, 14) 
  row2 <- c(0,0,0,0,0, 3 , 4 , 3 , 2 , 2 , 3 , 17) 
@@ -65,9 +61,9 @@ TableGen1(TableData=tableMat,
 ```
 *Fuente*: Stigler (1986)
 
-La Tabla \@ref(tab:GaltonTable) muestra que gran parte de la información sobre la altura de un hijo adulto puede atribuirse o 'explicarse' en términos de la altura de los padres. Por lo tanto, utilizamos el término *variable explicativa* para las mediciones que proporcionan información sobre una variable de interés. El análisis de regresión es un método para cuantificar la relación entre una variable de interés y las variables explicativas. La metodología utilizada para estudiar los datos en la Tabla \@ref(tab:GaltonTable) también se puede utilizar para estudiar problemas actuariales y de gestión de riesgos, la tesis de este libro.
+La Tabla \@ref(tab:Tab11) muestra que gran parte de la información sobre la altura de un hijo adulto puede atribuirse o 'explicarse' en términos de la altura de los padres. Por lo tanto, utilizamos el término *variable explicativa* para las mediciones que proporcionan información sobre una variable de interés. El análisis de regresión es un método para cuantificar la relación entre una variable de interés y las variables explicativas. La metodología utilizada para estudiar los datos en la Tabla \@ref(tab:Tab11) también se puede utilizar para estudiar problemas actuariales y de gestión de riesgos, la tesis de este libro.
 
-## Ajuste de Datos a una Distribución Normal
+## Ajuste de Datos a una Distribución Normal {#Sec12}
 
 Históricamente, la distribución normal tuvo un papel fundamental en el desarrollo del análisis de regresión. Continúa desempeñando un papel importante, aunque estaremos interesados en extender las ideas de regresión a datos altamente 'no normales'.
 
@@ -75,10 +71,10 @@ Formalmente, la curva normal se define por la función
 \begin{equation}
 \mathrm{f}(y)=\frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{1}{2\sigma ^{2}%
 }\left( y-\mu \right) ^{2}\right) .
-(\#eq:Normalpdf)
+(\#eq:eq11)
 \end{equation}
 
-Esta curva es una función de densidad de probabilidad con toda la línea real como su dominio. De la ecuación \@ref(eq:Normalpdf), vemos que la curva es simétrica respecto a $\mu$ (la media y la mediana). El grado de agudeza está controlado por el parámetro $\sigma ^{2}$. Estos dos parámetros, $\mu$ y $\sigma ^{2}$, son conocidos como los parámetros de *ubicación* y *escala*, respectivamente. El Apéndice A3.1 proporciona detalles adicionales sobre esta curva, incluyendo un gráfico y tablas de su distribución acumulada que utilizaremos a lo largo del texto.
+Esta curva es una función de densidad de probabilidad con toda la línea real como su dominio. De la ecuación \@ref(eq:eq11), vemos que la curva es simétrica respecto a $\mu$ (la media y la mediana). El grado de agudeza está controlado por el parámetro $\sigma ^{2}$. Estos dos parámetros, $\mu$ y $\sigma ^{2}$, son conocidos como los parámetros de *ubicación* y *escala*, respectivamente. El Apéndice A3.1 proporciona detalles adicionales sobre esta curva, incluyendo un gráfico y tablas de su distribución acumulada que utilizaremos a lo largo del texto.
 
 La curva normal también se muestra en la Figura \@ref(fig:Fig11), una imagen de un billete de moneda alemana ahora fuera de circulación, el diez Deutsche Mark. Este billete contiene la imagen del alemán Carl Gauss, un eminente matemático cuyo nombre a menudo se asocia con la curva normal (a veces se refiere a ella como la *curva Gaussiana*). Gauss desarrolló la curva normal en relación con la teoría de los mínimos cuadrados para ajustar curvas a los datos en 1809, aproximadamente al mismo tiempo que el trabajo relacionado del científico francés Pierre LaPlace. Según Stigler (1986), ¡hubo bastante acritud entre estos dos científicos sobre la prioridad del descubrimiento! La curva normal se utilizó por primera vez como una aproximación a los histogramas de datos alrededor de 1835 por Adolph Quetelet, un matemático y científico social belga. Como muchas cosas buenas, la curva normal ha existido durante algún tiempo, desde aproximadamente 1720 cuando Abraham de Moivre la derivó para su trabajo sobre modelado de juegos de azar. La curva normal es popular porque es fácil de usar y ha demostrado ser exitosa en muchas aplicaciones.
 
@@ -92,11 +88,11 @@ knitr::include_graphics("Chapters/Chapter1/GreyScale256TenDM.jpg")
 
 **Ejemplo: Reclamaciones por Lesiones Corporales en Massachusetts.** Para nuestra primera mirada al ajuste de la curva normal a un conjunto de datos, consideramos los datos de Rempala y Derrig (2005). Ellos consideraron las reclamaciones derivadas de coberturas de seguros de lesiones corporales por accidentes de automóvil. Estos son montos incurridos por tratamientos médicos ambulatorios que surgen de accidentes de automóvil, típicamente esguinces, fracturas de clavícula y similares. Los datos consisten en una muestra de 272 reclamaciones de Massachusetts que se cerraron en 2001 (por 'cerradas,' queremos decir que la reclamación está resuelta y no pueden surgir responsabilidades adicionales del mismo accidente). Rempala y Derrig estaban interesados en desarrollar procedimientos para manejar mezclas de reclamaciones 'típicas' y otras de proveedores que informaron reclamaciones fraudulentas. Para esta muestra, consideramos solo esas reclamaciones típicas, ignorando las potencialmente fraudulentas.
 
-La Tabla \@ref(tab:Table12) proporciona varias estadísticas que resumen diferentes aspectos de la distribución. Los montos de las reclamaciones están en unidades de logaritmos de miles de dólares. La reclamación logarítmica promedio es 0.481, lo que corresponde a \$1,617.77 (=1000 $\exp(0.481)$). Las reclamaciones más pequeñas y más grandes son -3.101 (45 dólares) y 3.912 (50,000 dólares), respectivamente.
+La Tabla \@ref(tab:Tab12) proporciona varias estadísticas que resumen diferentes aspectos de la distribución. Los montos de las reclamaciones están en unidades de logaritmos de miles de dólares. La reclamación logarítmica promedio es 0.481, lo que corresponde a \$1,617.77 (=1000 $\exp(0.481)$). Las reclamaciones más pequeñas y más grandes son -3.101 (45 dólares) y 3.912 (50,000 dólares), respectivamente.
 
 
 
-```{r Table12, echo = FALSE}
+```{r Tab12, echo = FALSE}
 injury <- read.csv("CSVData/MassBodilyInjury.csv", header=TRUE)
 injury2<-subset(injury, providerA != 0 )
 LOGCLAIMS<-log(injury2$claims)
@@ -146,9 +142,7 @@ $$
 
 Para ayudar a visualizar la distribución, la Figura \@ref(fig:Fig12) muestra un *histograma* de los datos. Aquí, la altura de cada rectángulo muestra la frecuencia relativa de observaciones que caen dentro del rango dado por su base. El histograma proporciona una impresión visual rápida de la distribución; muestra que el rango de los datos es aproximadamente (-4,4), la tendencia central es ligeramente mayor que cero y que la distribución es aproximadamente simétrica.
 
-#### Aproximación de la Curva Normal {-}
-
-La Figura \@ref(fig:Fig12) también muestra una curva normal superpuesta, utilizando $\overline{y}$ para $\mu$ y $s_y^{2}$ para $\sigma ^{2}$. Con la curva normal, solo se requieren dos cantidades ($\mu$ y $\sigma ^{2}$) para resumir toda la distribución. Por ejemplo, la Tabla \@ref(tab:Table12) muestra que 1.168 es el percentil 75, que es aproximadamente la observación número 204 ($=0.75\times 272$) más grande de toda la muestra. De la ecuación \@ref(eq:Normalpdf) de la distribución normal, tenemos que $z=(y-\mu )/\sigma$ es una normal estándar, de la cual 0.675 es el percentil 75. Así, $\overline{y}+0.675s_y=$ $0.481+0.675\times 1.101=1.224$ es el percentil 75 usando la aproximación de la curva normal.
+**Aproximación de la Curva Normal**. La Figura \@ref(fig:Fig12) también muestra una curva normal superpuesta, utilizando $\overline{y}$ para $\mu$ y $s_y^{2}$ para $\sigma ^{2}$. Con la curva normal, solo se requieren dos cantidades ($\mu$ y $\sigma ^{2}$) para resumir toda la distribución. Por ejemplo, la Tabla \@ref(tab:Tab12) muestra que 1.168 es el percentil 75, que es aproximadamente la observación número 204 ($=0.75\times 272$) más grande de toda la muestra. De la ecuación \@ref(eq:eq11) de la distribución normal, tenemos que $z=(y-\mu )/\sigma$ es una normal estándar, de la cual 0.675 es el percentil 75. Así, $\overline{y}+0.675s_y=$ $0.481+0.675\times 1.101=1.224$ es el percentil 75 usando la aproximación de la curva normal.
 
 (ref:Fig12) **Frecuencia Relativa de Lesiones Corporales con Curva Normal Superpuesta**.
 
@@ -173,9 +167,7 @@ lines(x,y)
 </div>
 
 
-#### Diagrama de Caja {-}
-
-Una inspección visual rápida de la distribución de una variable puede revelar algunas características sorprendentes que están ocultas por estadísticas, medidas de resumen numéricas. El *diagrama de caja*, también conocido como diagrama de 'caja y bigotes', es uno de estos dispositivos gráficos. La Figura \@ref(fig:Fig13) ilustra un diagrama de caja para las reclamaciones por lesiones corporales. Aquí, la caja captura el 50\% central de los datos, con las tres líneas horizontales que corresponden a los percentiles 75, 50 y 25, leyendo de arriba a abajo. Las líneas horizontales por encima y por debajo de la caja son los 'bigotes'. El bigote superior es 1.5 veces el *rango intercuartílico* (la diferencia entre los percentiles 75 y 25) por encima del percentil 75. De manera similar, el bigote inferior es 1.5 veces el rango intercuartílico por debajo del percentil 25. Las observaciones individuales fuera de los bigotes se denotan con pequeños símbolos de trazado circulares, y se denominan 'valores atípicos'.
+**Diagrama de Caja**. Una inspección visual rápida de la distribución de una variable puede revelar algunas características sorprendentes que están ocultas por estadísticas, medidas de resumen numéricas. El *diagrama de caja*, también conocido como diagrama de 'caja y bigotes', es uno de estos dispositivos gráficos. La Figura \@ref(fig:Fig13) ilustra un diagrama de caja para las reclamaciones por lesiones corporales. Aquí, la caja captura el 50\% central de los datos, con las tres líneas horizontales que corresponden a los percentiles 75, 50 y 25, leyendo de arriba a abajo. Las líneas horizontales por encima y por debajo de la caja son los 'bigotes'. El bigote superior es 1.5 veces el *rango intercuartílico* (la diferencia entre los percentiles 75 y 25) por encima del percentil 75. De manera similar, el bigote inferior es 1.5 veces el rango intercuartílico por debajo del percentil 25. Las observaciones individuales fuera de los bigotes se denotan con pequeños símbolos de trazado circulares, y se denominan 'valores atípicos'.
 
 (ref:Fig13) **Diagrama de Caja de Reclamaciones por Lesiones Corporales.**
 
@@ -213,9 +205,7 @@ lines(x,y)
 
 </div>
 
-#### Gráficos Cuantiles-Cuantiles {-}
-
-Aumentar el número de rectángulos puede descubrir características que no eran evidentes antes; sin embargo, en general hay menos observaciones por rectángulo, lo que significa que la incertidumbre de la estimación de la frecuencia relativa aumenta. Esto representa un compromiso. En lugar de forzar al analista a tomar una decisión arbitraria sobre el número de rectángulos, una alternativa es usar un dispositivo gráfico para comparar una distribución con otra conocida, llamado gráfico de *cuantiles-cuantiles*, o *qq*.
+**Gráficos Cuantiles-Cuantiles**. Aumentar el número de rectángulos puede descubrir características que no eran evidentes antes; sin embargo, en general hay menos observaciones por rectángulo, lo que significa que la incertidumbre de la estimación de la frecuencia relativa aumenta. Esto representa un compromiso. En lugar de forzar al analista a tomar una decisión arbitraria sobre el número de rectángulos, una alternativa es usar un dispositivo gráfico para comparar una distribución con otra conocida, llamado gráfico de *cuantiles-cuantiles*, o *qq*.
 
 La Figura \@ref(fig:Fig15) ilustra un gráfico $qq$ para los datos de lesiones corporales utilizando la curva normal como distribución de referencia. Para cada punto, el eje vertical da el cuantil usando la distribución de la muestra. El eje horizontal da la cantidad correspondiente usando la curva normal. Por ejemplo, anteriormente consideramos el punto del percentil 75. Este punto aparece como (1.168, 0.675) en el gráfico. Para interpretar un gráfico $qq$, si los puntos de los cuantiles se alinean a lo largo de la línea superpuesta, entonces la muestra y la distribución de referencia normal tienen la misma forma. (Esta línea se define conectando los percentiles 75 y 25).
 
@@ -237,9 +227,9 @@ qqline(LOGCLAIMS)
 </div>
 
 
-## Transformaciones de Potencia {#S1:PowerTransforms}
+## Transformaciones de Potencia {#Sec13}
 
-En el ejemplo de la Sección 1.2, consideramos las reclamaciones sin justificar el uso de la escala logarítmica. Al analizar variables como los activos de las empresas, los salarios de los individuos y los precios de las viviendas en aplicaciones empresariales y económicas, es común considerar logaritmos en lugar de las unidades originales. Una transformación logarítmica mantiene el orden original (por ejemplo, los salarios altos siguen siendo altos en la escala de logaritmos de los salarios) pero sirve para 'acercar' los valores extremos de la distribución.
+En el ejemplo de la Sección  \@ref(Sec12), consideramos las reclamaciones sin justificar el uso de la escala logarítmica. Al analizar variables como los activos de las empresas, los salarios de los individuos y los precios de las viviendas en aplicaciones empresariales y económicas, es común considerar logaritmos en lugar de las unidades originales. Una transformación logarítmica mantiene el orden original (por ejemplo, los salarios altos siguen siendo altos en la escala de logaritmos de los salarios) pero sirve para 'acercar' los valores extremos de la distribución.
 
 Para ilustrar, la Figura \@ref(fig:Fig16) muestra la distribución de las reclamaciones por lesiones corporales en (miles de) dólares. Para graficar los datos de manera significativa, se eliminó la observación más grande (\$50,000) antes de hacer este gráfico. Incluso con esta observación eliminada, la Figura \@ref(fig:Fig16) muestra que la distribución está muy inclinada hacia la derecha, con varios valores grandes de reclamaciones apareciendo.
 
@@ -317,7 +307,7 @@ mtext("Recíproco negativo de y", side=1, cex=.75, line=2)
 
 ***
 
-## Muestreo y el Papel de la Normalidad
+## Muestreo y el Papel de la Normalidad {#Sec14}
 
 Una *estadística* es una medida resumen de los datos, como una media, mediana o percentil. Las colecciones de estadísticas son muy útiles para analistas, tomadores de decisiones y consumidores cotidianos para comprender grandes cantidades de datos que representan situaciones complejas. Hasta este punto, nuestro enfoque ha sido introducir técnicas sensatas para resumir variables; técnicas que se usarán repetidamente a lo largo de este texto. Sin embargo, la verdadera utilidad de la *disciplina de la estadística* es su capacidad para decir algo sobre lo desconocido, no solo para resumir la información ya disponible. Con este fin, necesitamos hacer algunas suposiciones bastante formales sobre la manera en que se observan los datos. Como ciencia, una característica destacada de la estadística (como disciplina) es la capacidad de criticar estas suposiciones y ofrecer alternativas mejoradas en situaciones específicas.
 
@@ -335,15 +325,15 @@ $$
 
 En esta configuración básica, $\mu$ y $\sigma ^{2}$\ sirven como *parámetros* que describen la ubicación y escala de la población de origen. El objetivo es inferir algo sensato sobre ellos basándose en estadísticas como $\overline{y}$ y $s_y^{2}$. Para la tercera suposición, asumimos independencia entre las extracciones. En un esquema de muestreo, esto puede ser garantizado tomando una muestra aleatoria simple de una población. La cuarta suposición no es necesaria para muchos procedimientos de inferencia estadística porque los teoremas del límite central proporcionan una normalidad aproximada para muchas estadísticas de interés. Sin embargo, una justificación formal de algunas estadísticas, como las *t*-estadísticas, requiere esta suposición adicional.
 
-La Sección 1.9 proporciona una declaración explícita de una versión del teorema del límite central, dando condiciones bajo las cuales $\overline{y}$ está aproximadamente distribuido normalmente. Esta sección también discute un resultado relacionado, conocido como *aproximación de Edgeworth*, que muestra que la calidad de la aproximación normal es mejor para poblaciones de origen simétricas en comparación con distribuciones sesgadas.
+La Sección  \@ref(Sec19) proporciona una declaración explícita de una versión del teorema del límite central, dando condiciones bajo las cuales $\overline{y}$ está aproximadamente distribuido normalmente. Esta sección también discute un resultado relacionado, conocido como *aproximación de Edgeworth*, que muestra que la calidad de la aproximación normal es mejor para poblaciones de origen simétricas en comparación con distribuciones sesgadas.
 
 ¿Cómo se aplica esta discusión al estudio del análisis de regresión? Después de todo, hasta ahora nos hemos centrado solo en el promedio aritmético simple, $\overline{y}$. En capítulos posteriores, enfatizaremos que *la regresión lineal es el estudio de promedios ponderados*; específicamente, muchos coeficientes de regresión pueden expresarse como promedios ponderados con pesos apropiadamente elegidos. Los teoremas de límite central y aproximación de Edgeworth están disponibles para promedios ponderados; estos resultados asegurarán la normalidad aproximada de los coeficientes de regresión. Para usar aproximaciones de la curva normal en un contexto de regresión, a menudo transformaremos variables para lograr una simetría aproximada.
 
-## Regresión y Diseños de Muestreo
+## Regresión y Diseños de Muestreo {#Sec15}
 
 La aproximación a la normalidad será un tema importante en las aplicaciones prácticas de la regresión lineal. Las Partes I y II de este libro se centran en la regresión lineal, donde aprenderemos conceptos básicos de regresión y diseño de muestreo. La Parte III se centrará en la regresión *no lineal*, que involucra respuestas binarias, de conteo y de colas pesadas, donde la normalidad no es la distribución de referencia más útil. Las ideas sobre conceptos básicos y diseño también se usarán en el contexto no lineal.
 
-En el análisis de regresión, nos enfocamos en una medición de interés y la llamamos *variable dependiente*. Otras mediciones se usan como *variables explicativas*. Un objetivo es comparar las diferencias en la variable dependiente en términos de diferencias en las variables explicativas. Como se mencionó en la Sección \@ref(S1:Intro), la regresión se usa extensamente en muchos campos científicos. [Tabla 1.3] enumera términos alternativos que puedes encontrar al leer aplicaciones de regresión.
+En el análisis de regresión, nos enfocamos en una medición de interés y la llamamos *variable dependiente*. Otras mediciones se usan como *variables explicativas*. Un objetivo es comparar las diferencias en la variable dependiente en términos de diferencias en las variables explicativas. Como se mencionó en la Sección \@ref(Sec11), la regresión se usa extensamente en muchos campos científicos. [Tabla 1.3] enumera términos alternativos que puedes encontrar al leer aplicaciones de regresión.
 
 <a id=tab:1.3></a> 
 
@@ -380,7 +370,7 @@ Un estudio reportado por Manning et al. (1987) buscó responder a esta pregunta 
 
 ***
 
-Para la ciencia actuarial y otras ciencias sociales, los estudios diseñados son la excepción más que la regla. Por ejemplo, si queremos estudiar los efectos del tabaquismo en la mortalidad, es muy poco probable que podamos conseguir que los participantes en el estudio acepten ser asignados aleatoriamente a grupos de fumadores/no fumadores durante varios años solo para observar sus patrones de mortalidad. Al igual que en el estudio de Galton de la Sección \@ref(S1:Intro), los investigadores en ciencias sociales generalmente trabajan con *datos observacionales*. Los datos observacionales no están bajo el control del analista.
+Para la ciencia actuarial y otras ciencias sociales, los estudios diseñados son la excepción más que la regla. Por ejemplo, si queremos estudiar los efectos del tabaquismo en la mortalidad, es muy poco probable que podamos conseguir que los participantes en el estudio acepten ser asignados aleatoriamente a grupos de fumadores/no fumadores durante varios años solo para observar sus patrones de mortalidad. Al igual que en el estudio de Galton de la Sección \@ref(Sec11), los investigadores en ciencias sociales generalmente trabajan con *datos observacionales*. Los datos observacionales no están bajo el control del analista.
 
 Con datos observacionales, no podemos inferir relaciones causales, pero podemos introducir medidas de *asociación*. Para ilustrar, en los datos de Galton, es evidente que los padres 'altos' tienden a tener hijos 'altos' y, a la inversa, los padres 'bajos' tienden a tener hijos 'bajos'. El Capítulo 2 introducirá la correlación y otras medidas de asociación. Sin embargo, no podemos inferir causalidad a partir de los datos. Por ejemplo, puede haber otra variable, como la dieta familiar, que esté relacionada con ambas variables. Una buena dieta en la familia podría estar asociada con alturas altas de los padres y de los hijos adultos, mientras que una dieta pobre limita el crecimiento. Si ese fuera el caso, llamaríamos a la dieta familiar una *variable confusora*.
 
@@ -389,7 +379,7 @@ En experimentos diseñados como el Experimento de Seguro de Salud Rand, podemos 
 Por supuesto, para usar control estadístico y métodos de regresión, uno debe registrar la dieta familiar y cualquier otra medida de altura que pueda confundir los efectos de la altura de los padres en la altura de su hijo adulto. La dificultad en diseñar estudios es tratar de imaginar todas las variables que podrían afectar una variable de respuesta, una tarea imposible en la mayoría de los problemas de interés en ciencias sociales. Para dar algunas orientaciones sobre cuándo 'es suficiente', el Capítulo 6 discutirá medidas de la importancia de una variable explicativa y su impacto en la selección del modelo.
 
 
-## Aplicaciones Actuariales de la Regresión
+## Aplicaciones Actuariales de la Regresión  {#Sec16}
 
 Este libro introduce un método estadístico, el análisis de regresión. La introducción está organizada en torno a la tríada tradicional de la inferencia estadística:
 
@@ -403,24 +393,18 @@ Además, este libro muestra cómo esta metodología puede ser utilizada en aplic
 * reservas y
 * pruebas de solvencia.
 
-#### Tarificación y selección adversa {-}
-
-El análisis de regresión puede utilizarse para determinar los precios de seguros para muchas líneas de negocio. Por ejemplo, en el seguro de automóviles de pasajeros privados, las reclamaciones esperadas varían según el género del asegurado, la edad, la ubicación (ciudad versus rural), el propósito del vehículo (trabajo o placer) y una serie de otras variables explicativas. La regresión puede utilizarse para identificar las variables que son determinantes importantes de las reclamaciones esperadas.
+**Tarificación y selección adversa**. El análisis de regresión puede utilizarse para determinar los precios de seguros para muchas líneas de negocio. Por ejemplo, en el seguro de automóviles de pasajeros privados, las reclamaciones esperadas varían según el género del asegurado, la edad, la ubicación (ciudad versus rural), el propósito del vehículo (trabajo o placer) y una serie de otras variables explicativas. La regresión puede utilizarse para identificar las variables que son determinantes importantes de las reclamaciones esperadas.
 
 En mercados competitivos, las compañías de seguros no usan el mismo precio para todos los asegurados. Si lo hicieran, los 'buenos riesgos', aquellos con reclamaciones esperadas inferiores a la media, pagarían de más y abandonarían la compañía. En contraste, los 'malos riesgos', aquellos con reclamaciones esperadas superiores a la media, permanecerían con la compañía. Si la compañía continuara con esta política de precios plana, las primas aumentarían (para compensar las reclamaciones de la creciente proporción de malos riesgos) y la participación en el mercado disminuiría a medida que la compañía pierde buenos riesgos. Este problema se conoce como 'selección adversa'. Usando un conjunto apropiado de variables explicativas, se pueden desarrollar sistemas de clasificación para que cada asegurado pague su parte justa.
 
-#### Reservas y pruebas de solvencia {-}
+**Reservas y pruebas de solvencia**. Tanto la constitución de reservas como las pruebas de solvencia se preocupan por predecir si las obligaciones asociadas con un grupo de pólizas excederán el capital destinado a cumplir con las obligaciones derivadas de las pólizas. La constitución de reservas implica determinar la cantidad apropiada de capital para cumplir con estas obligaciones. Las pruebas de solvencia se centran en evaluar la adecuación del capital para financiar las obligaciones de un bloque de negocio. En algunas áreas de práctica, la regresión puede usarse para pronosticar futuras obligaciones y ayudar a determinar las reservas (ver, por ejemplo, el Capítulo 19). La regresión también puede utilizarse para comparar las características de empresas saludables y financieramente angustiadas para pruebas de solvencia (ver, por ejemplo, el Capítulo 14).
 
-Tanto la constitución de reservas como las pruebas de solvencia se preocupan por predecir si las obligaciones asociadas con un grupo de pólizas excederán el capital destinado a cumplir con las obligaciones derivadas de las pólizas. La constitución de reservas implica determinar la cantidad apropiada de capital para cumplir con estas obligaciones. Las pruebas de solvencia se centran en evaluar la adecuación del capital para financiar las obligaciones de un bloque de negocio. En algunas áreas de práctica, la regresión puede usarse para pronosticar futuras obligaciones y ayudar a determinar las reservas (ver, por ejemplo, el Capítulo 19). La regresión también puede utilizarse para comparar las características de empresas saludables y financieramente angustiadas para pruebas de solvencia (ver, por ejemplo, el Capítulo 14).
-
-#### Otras aplicaciones en gestión de riesgos{-}
-
-El análisis de regresión es una herramienta cuantitativa que puede aplicarse en una amplia variedad de problemas de negocio, no solo en las áreas tradicionales de tarificación, reservas y pruebas de solvencia. Al familiarizarse con el análisis de regresión, los actuarios tendrán otra habilidad cuantitativa que puede aplicarse a problemas generales relacionados con la seguridad financiera de personas, empresas y organizaciones gubernamentales. Para ayudarte a desarrollar ideas, este libro proporciona muchos ejemplos de aplicaciones potenciales 'no actuariales' a través de viñetas destacadas etiquetadas como 'ejemplos' y conjuntos de datos ilustrativos.
+**Otras aplicaciones en gestión de riesgos**. El análisis de regresión es una herramienta cuantitativa que puede aplicarse en una amplia variedad de problemas de negocio, no solo en las áreas tradicionales de tarificación, reservas y pruebas de solvencia. Al familiarizarse con el análisis de regresión, los actuarios tendrán otra habilidad cuantitativa que puede aplicarse a problemas generales relacionados con la seguridad financiera de personas, empresas y organizaciones gubernamentales. Para ayudarte a desarrollar ideas, este libro proporciona muchos ejemplos de aplicaciones potenciales 'no actuariales' a través de viñetas destacadas etiquetadas como 'ejemplos' y conjuntos de datos ilustrativos.
 
 Para entender las posibles aplicaciones de la regresión, comienza revisando los varios conjuntos de datos presentados en los Ejercicios del Capítulo 1. Incluso si no completas los ejercicios para fortalecer tus habilidades de resumen de datos (que requieren el uso de una computadora), una revisión de las descripciones de los problemas te ayudará a familiarizarte con los tipos de aplicaciones en las que un actuario podría usar técnicas de regresión.
 
 
-## Lecturas Adicionales y Referencias
+## Lecturas Adicionales y Referencias {#Sec17}
 
 Este libro introduce herramientas de regresión y series temporales que son más relevantes para los actuarios y otros analistas de riesgos financieros. Afortunadamente, existen otras fuentes que proporcionan excelentes introducciones a estos temas estadísticos (aunque no desde un punto de vista de gestión de riesgos). En particular, para los analistas que desean especializarse en estadística, es útil obtener otra perspectiva. Para regresión, recomiendo Weisburg (2005) y Faraway (2005). Para series temporales, Diebold (2004) es una buena fuente. Además, Klugman, Panjer y Willmot (2008) proporciona una buena introducción a las aplicaciones actuariales de la estadística; este libro está destinado a complementar el libro de Klugman et al. al centrarse en métodos de regresión y series temporales.
 
@@ -438,7 +422,7 @@ Este libro introduce herramientas de regresión y series temporales que son más
 *  Stigler, Steven M. (1986). *The History of Statistics:  The Measurement of Uncertainty before 1900*. The Belknap Press of Harvard University Press, Cambridge, MA.
 *  Weisberg, Sanford (2005). *Applied Linear Regression, Third Edition.* John Wiley \& Sons, New York.
 
-## Ejercicios
+## Ejercicios  {#Sec18}
 
 
 1.1 **Gastos de Salud de MEPS.** Este ejercicio considera datos de la Encuesta de Gastos Médicos (MEPS), realizada por la Agencia de Investigación y Calidad en Salud de EE.UU. (AHRQ). MEPS es una encuesta probabilística que proporciona estimaciones nacionalmente representativas del uso de atención médica, gastos, fuentes de pago y cobertura de seguros para la población civil de EE.UU. Esta encuesta recopila información detallada sobre episodios de atención médica de cada tipo de servicio, incluyendo visitas a consultorios médicos, visitas a salas de emergencia hospitalarias, visitas a hospitales ambulatorios, estancias hospitalarias, otras visitas a proveedores médicos y uso de medicamentos prescritos. Esta información detallada permite desarrollar modelos de utilización de atención médica para predecir futuros gastos. Puedes obtener más información sobre MEPS en http://www.meps.ahrq.gov/mepsweb/.
@@ -464,8 +448,7 @@ d. Repite la parte (a) y calcula histogramas para los gastos y los gastos logar�
 
 ***
 
-1.2 **Utilización de Hogares de Cuidado de Ancianos.** Este ejercicio considera datos de hogares de cuidado de ancianos proporcionados por el Departamento de Salud y Servicios Familiares de Wisconsin (DHFS). El programa Medicaid del Estado de Wisconsin financia el cuidado en hogares de cuidado de ancianos para individuos que califican en base a necesidades y estado financiero. Como parte de las condiciones de participación, los hogares de cuidado de ancianos certificados por Medicaid deben presentar un informe de costos anual al DHFS, resumiendo el volumen y costo del cuidado proporcionado a todos sus residentes, financiados por Medicaid y de otro tipo. Estos informes de costos son auditados por el personal del DHFS y forman la base para las tasas diarias de pago de Medicaid específicas para cada instalación para los períodos subsiguientes. Los datos están disponibles públicamente; consulta \texttt{http://dhfs.wisconsin.gov/provider}
-\texttt{/prev-yrs-reports-nh.htm} para más información.
+1.2 **Utilización de Hogares de Cuidado de Ancianos.** Este ejercicio considera datos de hogares de cuidado de ancianos proporcionados por el Departamento de Salud y Servicios Familiares de Wisconsin (DHFS). El programa Medicaid del Estado de Wisconsin financia el cuidado en hogares de cuidado de ancianos para individuos que califican en base a necesidades y estado financiero. Como parte de las condiciones de participación, los hogares de cuidado de ancianos certificados por Medicaid deben presentar un informe de costos anual al DHFS, resumiendo el volumen y costo del cuidado proporcionado a todos sus residentes, financiados por Medicaid y de otro tipo. Estos informes de costos son auditados por el personal del DHFS y forman la base para las tasas diarias de pago de Medicaid específicas para cada instalación para los períodos subsiguientes. Los datos están disponibles públicamente; consulta [http://dhs.wisconsin.gov] para más información.
 
 El DHFS está interesado en técnicas predictivas que proporcionen pronósticos de utilización confiables para actualizar su programa de tasas de financiamiento de Medicaid para instalaciones de cuidado de ancianos. En esta tarea, consideramos los datos en el archivo 'WiscNursingHome' en los años de informe de costos 2000 y 2001. Hay 362 instalaciones en 2000 y 355 instalaciones en 2001. Típicamente, la utilización del cuidado en hogares de cuidado de ancianos se mide en días de paciente ('días de paciente' es el número de días que cada paciente estuvo en la instalación, sumado sobre todos los pacientes). Para este ejercicio, definimos la variable de resultado como años totales de pacientes (TPY), el número total de días de pacientes en el período de informe de costos dividido por el número de días operativos de la instalación en el período de informe de costos (ver Rosenberg et al., 2007, Apéndice 1, para una discusión adicional sobre esta elección). El número de camas (NUMBED) y el metraje cuadrado (SQRFOOT) del hogar de cuidado de ancianos miden el tamaño de la instalación. No sorprende que estas variables sean importantes predictores de TPY.
 
@@ -574,7 +557,7 @@ RESEAR & \text{ Researchers in R & D,}  &         95 &   2,034.66 &     848.00 &
 $$
 
 
-## Suplemento Técnico - Teorema del Límite Central
+## Suplemento Técnico - Teorema del Límite Central {#Sec19}
 
 Los teoremas del límite central forman la base para gran parte de la inferencia estadística utilizada en el análisis de regresión. Por lo tanto, es útil proporcionar una declaración explícita de una versión del teorema del límite central.
 
@@ -598,7 +581,7 @@ $$
 para cada \(x\), donde \(h_n \rightarrow 0\) a medida que \(n \rightarrow \infty\).
 ::::
 
-Este resultado sugiere que la distribución de \(\bar{y}\) se acerca más a una distribución normal a medida que la asimetría, \(\mathrm{E}(\overline{y} - \mu)^3\), se acerca a cero. Esto es importante en aplicaciones de seguros porque muchas distribuciones tienden a ser asimétricas. Históricamente, los analistas utilizaban el segundo término en el lado derecho del resultado para proporcionar una 'corrección' para la aproximación de la curva normal. Véase, por ejemplo, Beard, Pentikäinen y Pesonen (1984) para una discusión adicional sobre las aproximaciones de Edgeworth en la ciencia actuarial. Una alternativa (utilizada en este libro) que vimos en la Sección 1.3 es transformar los datos, logrando así una aproximada simetría. Como sugiere el teorema de aproximación de Edgeworth, si nuestra población parental es cercana a simétrica, entonces la distribución de \(\overline{y}\) será aproximadamente normal.
+Este resultado sugiere que la distribución de \(\bar{y}\) se acerca más a una distribución normal a medida que la asimetría, \(\mathrm{E}(\overline{y} - \mu)^3\), se acerca a cero. Esto es importante en aplicaciones de seguros porque muchas distribuciones tienden a ser asimétricas. Históricamente, los analistas utilizaban el segundo término en el lado derecho del resultado para proporcionar una 'corrección' para la aproximación de la curva normal. Véase, por ejemplo, Beard, Pentikäinen y Pesonen (1984) para una discusión adicional sobre las aproximaciones de Edgeworth en la ciencia actuarial. Una alternativa (utilizada en este libro) que vimos en la Sección  \@ref(Sec13) es transformar los datos, logrando así una aproximada simetría. Como sugiere el teorema de aproximación de Edgeworth, si nuestra población parental es cercana a simétrica, entonces la distribución de \(\overline{y}\) será aproximadamente normal.
 
 
 
