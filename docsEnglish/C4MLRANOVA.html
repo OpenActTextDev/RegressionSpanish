@@ -471,7 +471,7 @@ Standard Deviation
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;width: 4cm; ">
 Other
 </td>
 <td style="text-align:center;width: 1.8cm; ">
@@ -488,7 +488,7 @@ Other
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;width: 4cm; ">
 Married
 </td>
 <td style="text-align:center;width: 1.8cm; ">
@@ -505,7 +505,7 @@ Married
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;width: 4cm; ">
 Living together
 </td>
 <td style="text-align:center;width: 1.8cm; ">
@@ -522,7 +522,7 @@ Living together
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;width: 4cm; ">
 Total
 </td>
 <td style="text-align:center;width: 1.8cm; ">
@@ -564,7 +564,8 @@ Figure 4.1: <strong>Box Plots of Logarithmic Face, by Level of Marital Status</s
 <span id="cb44-12"><a href="C4MLRANOVA.html#cb44-12" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableout , </span>
 <span id="cb44-13"><a href="C4MLRANOVA.html#cb44-13" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Summary Statistics of Logarithmic Face By Marital Status&#39;</span>, </span>
 <span id="cb44-14"><a href="C4MLRANOVA.html#cb44-14" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;crrr&#39;</span>, <span class="at">Digits=</span><span class="dv">3</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb44-15"><a href="C4MLRANOVA.html#cb44-15" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth4) </span></code></pre></div>
+<span id="cb44-15"><a href="C4MLRANOVA.html#cb44-15" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth4) <span class="sc">%&gt;%</span></span>
+<span id="cb44-16"><a href="C4MLRANOVA.html#cb44-16" tabindex="-1"></a>         kableExtra<span class="sc">::</span><span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">width =</span>  <span class="st">&quot;4cm&quot;</span>) </span></code></pre></div>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="C4MLRANOVA.html#cb45-1" tabindex="-1"></a><span class="fu">library</span>(HH)</span>
 <span id="cb45-2"><a href="C4MLRANOVA.html#cb45-2" tabindex="-1"></a>Term   <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/TermLife.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
 <span id="cb45-3"><a href="C4MLRANOVA.html#cb45-3" tabindex="-1"></a>Term2  <span class="ot">&lt;-</span> <span class="fu">subset</span>(Term, FACE <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
@@ -583,19 +584,19 @@ Figure 4.1: <strong>Box Plots of Logarithmic Face, by Level of Marital Status</s
 <p>A regression model was run using LNINCOME, EDUCATION, NUMHH, MAR0, and MAR2 as explanatory variables. The fitted regression equation turns out to be:</p>
 <p><span class="math display">\[
 \small{
-\widehat{y} = 3.395 + 0.452 \text{LNINCOME} + 0.205 \text{EDUCATION} + 0.248 \text{NUMHH} - 0.557 \text{MAR0} - 0.789 \text{MAR2}.
+\widehat{y} = 3.395 + 0.452 \text{ LNINCOME} + 0.205 \text{ EDUCATION} + 0.248 \text{ NUMHH} - 0.557 \text{ MAR0} - 0.789 \text{ MAR2}.
 }
 \]</span></p>
 <p>To interpret the regression coefficients associated with marital status, consider a respondent who is married. In this case, MAR0=0, MAR1=1, and MAR2=0, so that:</p>
 <p><span class="math display">\[
 \small{
-\widehat{y}_m = 3.395 + 0.452 \text{LNINCOME} + 0.205 \text{EDUCATION} + 0.248 \text{NUMHH}.
+\widehat{y}_m = 3.395 + 0.452 \text{ LNINCOME} + 0.205 \text{ EDUCATION} + 0.248 \text{ NUMHH}.
 }
 \]</span></p>
 <p>Similarly, if the respondent is coded as living together, then <code>MAR0=0</code>, MAR1=0, and MAR2=1, and:</p>
 <p><span class="math display">\[
 \small{
-\widehat{y}_{lt} = 3.395 + 0.452 \text{LNINCOME} + 0.205 \text{EDUCATION} + 0.248 \text{NUMHH} - 0.789.
+\widehat{y}_{lt} = 3.395 + 0.452 \text{ LNINCOME} + 0.205 \text{ EDUCATION} + 0.248 \text{ NUMHH} - 0.789.
 }
 \]</span></p>
 <p>The difference between <span class="math inline">\(\widehat{y}_m\)</span> and <span class="math inline">\(\widehat{y}_{lt}\)</span> is <span class="math inline">\(0.789.\)</span> Thus, we may interpret the regression coefficient associated with MAR2, <span class="math inline">\(-0.789\)</span>, to be the difference in fitted values for someone living together compared to a similar person who is married (the omitted category).</p>
@@ -676,7 +677,7 @@ binary that exceeds 2 in absolute value, suggesting statistical
 significance. Thus, you can influence the <em>appearance</em> of
 statistical significance by altering the choice of the reference
 level. To assess the overall importance of marital status (not just
-each binary variable), Section 4.2 will introduce
+each binary variable), Section <a href="C4MLRANOVA.html#Sec42">4.2</a> will introduce
 tests of sets of regression coefficients.</p>
 <table class=" lightable-classic table table-striped table-condensed" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
@@ -708,163 +709,157 @@ Model 3 <span class="math inline">\(t\)</span>-Ratio
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;border-right:1px solid;">
 LNINCOME
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 0.452
 </td>
-<td style="text-align:right;width: 1.8cm; ">
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 5.74
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 0.452
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 5.74
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 0.452
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 5.74
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;border-right:1px solid;">
 EDUCATION
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 0.205
 </td>
-<td style="text-align:right;width: 1.8cm; ">
-5.30
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
+5.3
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 0.205
 </td>
-<td style="text-align:right;">
-5.30
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
+5.3
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 0.205
 </td>
-<td style="text-align:right;">
-5.30
+<td style="text-align:right;width: 1.8cm; ">
+5.3
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;border-right:1px solid;">
 NUMHH
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 0.248
 </td>
-<td style="text-align:right;width: 1.8cm; ">
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 3.57
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 0.248
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 3.57
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 0.248
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 3.57
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;border-right:1px solid;">
 Intercept
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 3.395
 </td>
-<td style="text-align:right;width: 1.8cm; ">
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 3.77
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 3.395
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 2.74
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 2.838
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 3.34
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;border-right:1px solid;">
 MAR0
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 -0.557
 </td>
-<td style="text-align:right;width: 1.8cm; ">
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 -2.15
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 0.232
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 0.44
 </td>
-<td style="text-align:right;">
-NA
+<td style="text-align:right;width: 1.8cm; ">
 </td>
-<td style="text-align:right;">
-NA
+<td style="text-align:right;width: 1.8cm; ">
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;border-right:1px solid;">
 MAR1
 </td>
 <td style="text-align:right;width: 1.8cm; ">
-NA
 </td>
-<td style="text-align:right;width: 1.8cm; ">
-NA
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 0.789
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 1.59
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 0.557
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 2.15
 </td>
 </tr>
 <tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;border-right:1px solid;">
 MAR2
 </td>
 <td style="text-align:right;width: 1.8cm; ">
 -0.789
 </td>
-<td style="text-align:right;width: 1.8cm; ">
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 -1.59
 </td>
 <td style="text-align:right;width: 1.8cm; ">
-NA
 </td>
-<td style="text-align:right;">
-NA
+<td style="text-align:right;width: 1.8cm; border-right:1px solid;">
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 -0.232
 </td>
-<td style="text-align:right;">
+<td style="text-align:right;width: 1.8cm; ">
 -0.44
 </td>
 </tr>
@@ -1179,7 +1174,7 @@ F-\text{ratio}=\frac{(Error~SS)_{reduced}-(Error~SS)_{full}}{ps_{full}^2}.
 </ol>
 </div>
 <p>This procedure is commonly known as an <span class="math inline">\(F\)</span>-test.</p>
-<p>Section 4.7.2 provides the mathematical underpinnings. To understand the extra-sum-of-squares principle, recall that the error sum of squares for the full model is determined to be the minimum value of</p>
+<p>Section <a href="C4MLRANOVA.html#Sec472">4.7.2</a> provides the mathematical underpinnings. To understand the extra-sum-of-squares principle, recall that the error sum of squares for the full model is determined to be the minimum value of</p>
 <p><span class="math display">\[
 SS(b_0^{\ast}, \ldots, b_k^{\ast}) = \sum_{i=1}^{n} \left( y_i - \left( b_0^{\ast} + \ldots + b_k^{\ast} x_{i,k} \right) \right)^2.
 \]</span></p>
@@ -1361,7 +1356,7 @@ for <span class="math inline">\(y_{\ast}\)</span> is</p>
 </div>
 <div id="Sec43" class="section level2 hasAnchor" number="4.3">
 <h2><span class="header-section-number">4.3</span> One Factor ANOVA Model<a href="C4MLRANOVA.html#Sec43" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Section 4.1 showed how to incorporate unordered
+<p>Section <a href="C4MLRANOVA.html#Sec41">4.1</a> showed how to incorporate unordered
 categorical variables, or factors, into a linear regression model
 through the use of binary variables. Factors are important in social
 science research; they can be used to classify people by gender,
@@ -2182,7 +2177,7 @@ y_{ij} = \mu + \tau_j + \varepsilon_{ij}.
 there are <span class="math inline">\(c + 1\)</span> parameters, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\tau_1, \ldots, \tau_c\)</span>. The model in equation
 <a href="C4MLRANOVA.html#eq:eq410">(4.10)</a> is said to be <em>overparameterized</em>. It is possible to estimate
 this model directly, using the general theory of linear models,
-summarized in Section 4.7.3. In this theory, regression coefficients need not be identifiable. Alternatively, one
+summarized in Section <a href="C4MLRANOVA.html#Sec473">4.7.3</a>. In this theory, regression coefficients need not be identifiable. Alternatively, one
 can make these two expressions equivalent by <em>restricting</em> the
 movement of the parameters in
 equation <a href="C4MLRANOVA.html#eq:eq410">(4.10)</a>.
@@ -2236,7 +2231,7 @@ terminology <em>factor</em> for the categorical variable and
 <div id="combining-a-factor-and-covariate" class="section level4 unnumbered hasAnchor">
 <h4>Combining a Factor and Covariate<a href="C4MLRANOVA.html#combining-a-factor-and-covariate" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Let us begin with the simplest models that use a factor and a
-covariate. In Section 4.3, we introduced the one
+covariate. In Section <a href="C4MLRANOVA.html#Sec43">4.3</a>, we introduced the one
 factor model <span class="math inline">\(y_{ij} = \mu_j + \varepsilon_{ij}\)</span>. In Chapter 2, we
 introduced basic linear regression in terms of one continuous
 variable, or covariate, using <span class="math inline">\(y_{ij} = \beta_0 + \beta_1 x_{ij} + \varepsilon_{ij}\)</span>. Table <a href="C4MLRANOVA.html#tab:Tab48">4.8</a> summarizes
@@ -2545,8 +2540,8 @@ are <span class="math inline">\(n = 79\)</span> observations and <span class="ma
 model, the model degrees of freedom is the number of model
 parameters minus one. The error degrees of freedom is the number of
 observations minus the number of model parameters.</p>
-<p>Using binary variables, each of the models in Table <a href="C4MLRANOVA.html#tab:Tab48">4.8</a> can be written in a regression format. As we have seen in Section 4.2, when a model can be written as a subset of another, larger model, we have formal testing procedures available to decide which model is more appropriate. To illustrate this testing procedure with our DRG example, from Table <a href="C4MLRANOVA.html#tab:Tab49">4.9</a> and the associated plots, it seems clear that the DRG factor is important. Further, a <span class="math inline">\(t\)</span>-test, not presented here, shows that the covariate <span class="math inline">\(x\)</span> is important. Thus, let’s compare the full model <span class="math inline">\(E[y_{ij}] = \beta_{0,j} + \beta_{1,j}x\)</span> to the reduced model <span class="math inline">\(E[y_{ij}] = \beta_{0,j} + \beta_1x\)</span>. In other words, is there a different slope for each DRG?</p>
-<p>Using the notation from Section 4.2, we call the variable intercept and slope the full model. Under the null hypothesis, <span class="math inline">\(H_0: \beta_{1,1} = \beta_{1,2} = \beta_{1,3}\)</span>, we get the variable intercept, constant slope model. Thus, using the <span class="math inline">\(F\)</span>-ratio in equation <a href="C4MLRANOVA.html#eq:eq42">(4.2)</a>, we have</p>
+<p>Using binary variables, each of the models in Table <a href="C4MLRANOVA.html#tab:Tab48">4.8</a> can be written in a regression format. As we have seen in Section <a href="C4MLRANOVA.html#Sec42">4.2</a>, when a model can be written as a subset of another, larger model, we have formal testing procedures available to decide which model is more appropriate. To illustrate this testing procedure with our DRG example, from Table <a href="C4MLRANOVA.html#tab:Tab49">4.9</a> and the associated plots, it seems clear that the DRG factor is important. Further, a <span class="math inline">\(t\)</span>-test, not presented here, shows that the covariate <span class="math inline">\(x\)</span> is important. Thus, let’s compare the full model <span class="math inline">\(E[y_{ij}] = \beta_{0,j} + \beta_{1,j}x\)</span> to the reduced model <span class="math inline">\(E[y_{ij}] = \beta_{0,j} + \beta_1x\)</span>. In other words, is there a different slope for each DRG?</p>
+<p>Using the notation from Section <a href="C4MLRANOVA.html#Sec42">4.2</a>, we call the variable intercept and slope the full model. Under the null hypothesis, <span class="math inline">\(H_0: \beta_{1,1} = \beta_{1,2} = \beta_{1,3}\)</span>, we get the variable intercept, constant slope model. Thus, using the <span class="math inline">\(F\)</span>-ratio in equation <a href="C4MLRANOVA.html#eq:eq42">(4.2)</a>, we have</p>
 <p><span class="math display">\[
 F\text{-ratio} = \frac{(Error~SS)_{reduced} - (Error~SS)_{full}}{ps_{full}^2} = \frac{7.482 - 5.458}{2 \times 0.075} = 13.535.
 \]</span></p>
@@ -2665,10 +2660,10 @@ F\text{-ratio} = \frac{(Error~SS)_{reduced} - (Error~SS)_{full}}{ps_{full}^2} = 
 \]</span></p>
 <p>is a linear combination of coefficients. As we have seen, we can square continuous variables or take other nonlinear transforms (such as logarithms) as well as use binary variables to represent categorical variables, so this “restriction,” as the name suggests, allows for a broad class of general functions to represent data.</p>
 <p>The second extension is that the explanatory variables may be linear combinations of one another in the general linear model. Because of this, in the general linear model case, the parameter estimates need not be unique. However, an important feature of the general linear model is that the resulting fitted values turn out to be unique, using the method of least squares.</p>
-<p>For example, in Section 4.3 we saw that the one factor ANOVA model could be expressed as a regression model with <span class="math inline">\(c\)</span> indicator variables. However, if we had attempted to estimate the model in equation <a href="C4MLRANOVA.html#eq:eq410">(4.10)</a>, the method of least squares would not have arrived at a unique set of regression coefficient estimates. The reason is that, in equation <a href="C4MLRANOVA.html#eq:eq410">(4.10)</a>, each explanatory variable can be expressed as a linear combination of the others. For example, observe that <span class="math inline">\(x_c = 1 - (x_1 + x_2 + \ldots + x_{c-1})\)</span>.</p>
+<p>For example, in Section <a href="C4MLRANOVA.html#Sec43">4.3</a> we saw that the one factor ANOVA model could be expressed as a regression model with <span class="math inline">\(c\)</span> indicator variables. However, if we had attempted to estimate the model in equation <a href="C4MLRANOVA.html#eq:eq410">(4.10)</a>, the method of least squares would not have arrived at a unique set of regression coefficient estimates. The reason is that, in equation <a href="C4MLRANOVA.html#eq:eq410">(4.10)</a>, each explanatory variable can be expressed as a linear combination of the others. For example, observe that <span class="math inline">\(x_c = 1 - (x_1 + x_2 + \ldots + x_{c-1})\)</span>.</p>
 <p>The fact that parameter estimates are not unique is a drawback, but not an overwhelming one. The assumption that the explanatory variables are not linear combinations of one another means that we can compute unique estimates of the regression coefficients using the method of least squares. In terms of matrices, because the explanatory variables are not linear combinations of one another, the matrix <span class="math inline">\(\mathbf{X}^{\prime}\mathbf{X}\)</span> is not invertible.</p>
-<p>Specifically, suppose that we are considering the regression function in equation <a href="C4MLRANOVA.html#eq:eq413">(4.13)</a> and, using the method of least squares, our regression coefficient estimates are <span class="math inline">\(b_0^{o}, b_1^{o}, \ldots, b_k^{o}\)</span>. This set of regression coefficient estimates minimizes our error sum of squares, but there may be other sets of coefficients that also minimize the error sum of squares. The fitted values are computed as <span class="math inline">\(\hat{y}_i = b_0^{o} + b_1^{o} x_{i1} + \ldots + b_k^{o} x_{ik}\)</span>. It can be shown that the resulting fitted values are unique, in the sense that any set of coefficients that minimize the error sum of squares produce the same fitted values (see Section 4.7.3).</p>
-<p>Thus, for a set of data and a specified general linear model, fitted values are unique. Because residuals are computed as observed responses minus fitted values, we have that the residuals are unique. Because residuals are unique, we have the error sums of squares are unique. Thus, it seems reasonable, and is true, that we can use the general test of hypotheses described in Section 4.2 to decide whether collections of explanatory variables are important.</p>
+<p>Specifically, suppose that we are considering the regression function in equation <a href="C4MLRANOVA.html#eq:eq413">(4.13)</a> and, using the method of least squares, our regression coefficient estimates are <span class="math inline">\(b_0^{o}, b_1^{o}, \ldots, b_k^{o}\)</span>. This set of regression coefficient estimates minimizes our error sum of squares, but there may be other sets of coefficients that also minimize the error sum of squares. The fitted values are computed as <span class="math inline">\(\hat{y}_i = b_0^{o} + b_1^{o} x_{i1} + \ldots + b_k^{o} x_{ik}\)</span>. It can be shown that the resulting fitted values are unique, in the sense that any set of coefficients that minimize the error sum of squares produce the same fitted values (see Section <a href="C4MLRANOVA.html#Sec473">4.7.3</a>).</p>
+<p>Thus, for a set of data and a specified general linear model, fitted values are unique. Because residuals are computed as observed responses minus fitted values, we have that the residuals are unique. Because residuals are unique, we have the error sums of squares are unique. Thus, it seems reasonable, and is true, that we can use the general test of hypotheses described in Section <a href="C4MLRANOVA.html#Sec42">4.2</a> to decide whether collections of explanatory variables are important.</p>
 <p>To summarize, for general linear models, parameter estimates may not be unique and thus not meaningful. An important part of regression models is the interpretation of regression coefficients. This interpretation is not necessarily available in the general linear model context. However, for general linear models, we may still discuss the importance of an individual variable or collection of variables through partial <em>F</em>-tests. Further, fitted values, and the corresponding exercise of prediction, works in the general linear model context. The advantage of the general linear model context is that we need not worry about the type of restrictions to impose on the parameters. Although not the subject of this text, this advantage is particularly important in complicated experimental designs used in the life sciences. The reader will find that general linear model estimation routines are widely available in statistical software packages available on the market today.</p>
 </div>
 </div>
@@ -2858,7 +2853,7 @@ Figure 4.8: <strong>Boxplots of LIFEEXP by REGION</strong>
 <div id="Sec471" class="section level3 hasAnchor" number="4.7.1">
 <h3><span class="header-section-number">4.7.1</span> Expressing Models with Categorical Variables in Matrix Form<a href="C4MLRANOVA.html#Sec471" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Chapter 3 showed how to write the regression model equation in the form <span class="math inline">\(\mathbf{y = X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}\)</span> where <span class="math inline">\(\mathbf{X}\)</span> is a matrix of explanatory variables. This form permits straightforward calculation of regression coefficients, <span class="math inline">\(\mathbf{b} = \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{y}\)</span>. This section shows how the model and calculations reduce to simpler expressions when the explanatory variables are categorical.</p>
-<p><strong>One Categorical Variable Model.</strong> Consider the model with one categorical variable introduced in Section 4.3 with <span class="math inline">\(c\)</span> levels of the categorical variable. From equation <a href="C4MLRANOVA.html#eq:eq49">(4.9)</a>, this model can be written as</p>
+<p><strong>One Categorical Variable Model.</strong> Consider the model with one categorical variable introduced in Section <a href="C4MLRANOVA.html#Sec43">4.3</a> with <span class="math inline">\(c\)</span> levels of the categorical variable. From equation <a href="C4MLRANOVA.html#eq:eq49">(4.9)</a>, this model can be written as</p>
 <p><span class="math display">\[
 \mathbf{y} =
 \begin{bmatrix}
@@ -3251,17 +3246,16 @@ as explanatory variables, then the parameter estimates would be
 define the reparameterized regression model
 <span class="math display" id="eq:eq422">\[
 \begin{array}{ll}
-\mathbf{y} &amp; = \mathbf{X}_1 \boldsymbol \beta _1 + \mathbf{X}_2
-\boldsymbol \beta _2 + \boldsymbol \varepsilon = \mathbf{X}_1
-\boldsymbol \beta _1 + (\mathbf{E}_2 + \mathbf{X}_1
-\mathbf{A})\boldsymbol \beta _2 + \boldsymbol \varepsilon \\
-&amp; = \mathbf{X}_1 \boldsymbol \alpha _1 + \mathbf{E}_2 \boldsymbol
-\beta _2 + \boldsymbol \varepsilon,
+\mathbf{y} &amp; = \mathbf{X}_1 \boldsymbol \beta_1 + \mathbf{X}_2
+\boldsymbol \beta_2 + \boldsymbol \varepsilon = \mathbf{X}_1
+\boldsymbol \beta_1 + (\mathbf{E}_2 + \mathbf{X}_1
+\mathbf{A})\boldsymbol \beta_2 + \boldsymbol \varepsilon \\
+&amp; = \mathbf{X}_1 \boldsymbol \alpha_1 + \mathbf{E}_2 \boldsymbol
+\beta_2 + \boldsymbol \varepsilon,
 \end{array}
 \tag{4.22}
 \]</span>
-where $_1 = _1 +
-_2 $ is a new vector of parameters. The
+where <span class="math inline">\(\boldsymbol \alpha_1 = \boldsymbol \beta_1 + \mathbf{A}\boldsymbol \beta_2\)</span> is a new vector of parameters. The
 reason for introducing this new parameterization is that now the
 vector of explanatory variables is <em>orthogonal</em> to the other
 explanatory variables, that is, straightforward algebra shows that
@@ -3351,7 +3345,7 @@ Thus, the reduction in the error sum of squares by adding
 \mathbf{E}_2)^{-1} \mathbf{E}_2^{\prime} \mathbf{y}.
 \tag{4.26}
 \]</span>
-As noted in Section 4.3, the quantity <span class="math inline">\((Error ~SS)_{reduced} - (Error ~SS)_{full}\)</span> is called the <em>extra sum of squares</em>, or Type
+As noted in Section <a href="C4MLRANOVA.html#Sec43">4.3</a>, the quantity <span class="math inline">\((Error ~SS)_{reduced} - (Error ~SS)_{full}\)</span> is called the <em>extra sum of squares</em>, or Type
 III sum of squares. It is produced automatically by some statistical
 software packages, thus obviating the need to run separate
 regressions.</p>
@@ -3359,9 +3353,9 @@ regressions.</p>
 </div>
 <div id="Sec473" class="section level3 hasAnchor" number="4.7.3">
 <h3><span class="header-section-number">4.7.3</span> General Linear Model<a href="C4MLRANOVA.html#Sec473" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Recall the general linear model from Section 4.4. That is, we use
+<p>Recall the general linear model from Section <a href="C4MLRANOVA.html#Sec44">4.4</a>. That is, we use
 <span class="math display">\[
-y_i = \beta_0 x_{i0} + \beta_1 x_{i1} + \ldots + \beta _k x_{ik} +
+y_i = \beta_0 x_{i0} + \beta_1 x_{i1} + \ldots + \beta_k x_{ik} +
 \varepsilon_i,
 \]</span>
 or, in matrix notation, <span class="math inline">\(\mathbf{y} = \mathbf{X} \boldsymbol \beta + \boldsymbol \varepsilon\)</span>. As before, we use Assumptions F1-F4 (or E1-E4) so that
@@ -3431,11 +3425,11 @@ because <span class="math inline">\(\mathbf{X}^{\prime} \mathbf{X} (\mathbf{b}_1
 </div>
 <div id="testable-hypotheses" class="section level4 unnumbered hasAnchor">
 <h4>Testable Hypotheses<a href="C4MLRANOVA.html#testable-hypotheses" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>As described in Section 4.2, it is often of interest to test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mathbf{C \boldsymbol \beta} = \mathbf{d}\)</span>, where <span class="math inline">\(\mathbf{d}\)</span> is a specified vector. This hypothesis is said to be <em>testable</em> if <span class="math inline">\(\mathbf{C \boldsymbol \beta}\)</span> is an estimable function, <span class="math inline">\(\mathbf{C}\)</span> is of full row rank, and the rank of <span class="math inline">\(\mathbf{C}\)</span> is less than the rank of <span class="math inline">\(\mathbf{X}\)</span>. For consistency with the notation of Section 4.2, let <span class="math inline">\(p\)</span> be the rank of <span class="math inline">\(\mathbf{C}\)</span> and <span class="math inline">\(k + 1\)</span> be the rank of <span class="math inline">\(\mathbf{X}\)</span>. Recall that the rank of a matrix is the smaller of the number of linearly independent rows and linearly independent columns. When we say that <span class="math inline">\(\mathbf{C}\)</span> has full row rank, we mean that there are <span class="math inline">\(p\)</span> rows in <span class="math inline">\(\mathbf{C}\)</span>, so that the number of rows equals the rank.</p>
+<p>As described in Section <a href="C4MLRANOVA.html#Sec42">4.2</a>, it is often of interest to test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mathbf{C \boldsymbol \beta} = \mathbf{d}\)</span>, where <span class="math inline">\(\mathbf{d}\)</span> is a specified vector. This hypothesis is said to be <em>testable</em> if <span class="math inline">\(\mathbf{C \boldsymbol \beta}\)</span> is an estimable function, <span class="math inline">\(\mathbf{C}\)</span> is of full row rank, and the rank of <span class="math inline">\(\mathbf{C}\)</span> is less than the rank of <span class="math inline">\(\mathbf{X}\)</span>. For consistency with the notation of Section <a href="C4MLRANOVA.html#Sec42">4.2</a>, let <span class="math inline">\(p\)</span> be the rank of <span class="math inline">\(\mathbf{C}\)</span> and <span class="math inline">\(k + 1\)</span> be the rank of <span class="math inline">\(\mathbf{X}\)</span>. Recall that the rank of a matrix is the smaller of the number of linearly independent rows and linearly independent columns. When we say that <span class="math inline">\(\mathbf{C}\)</span> has full row rank, we mean that there are <span class="math inline">\(p\)</span> rows in <span class="math inline">\(\mathbf{C}\)</span>, so that the number of rows equals the rank.</p>
 </div>
 <div id="general-linear-hypothesis" class="section level4 unnumbered hasAnchor">
 <h4>General Linear Hypothesis<a href="C4MLRANOVA.html#general-linear-hypothesis" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>As in Section 4.2, the test statistic for examining <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mathbf{C \boldsymbol \beta} = \mathbf{d}\)</span> is
+<p>As in Section <a href="C4MLRANOVA.html#Sec42">4.2</a>, the test statistic for examining <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mathbf{C \boldsymbol \beta} = \mathbf{d}\)</span> is
 <span class="math display">\[
 F\text{-ratio} = \frac{\mathbf{(Cb}^{\circ} - \mathbf{d})^{\prime} \mathbf{(C(X}^{\prime} \mathbf{X})^{-} \mathbf{C}^{\prime})^{-1} \mathbf{(Cb}^{\circ} - \mathbf{d})}{ps_{full}^2}.
 \]</span>

@@ -81,7 +81,8 @@ rownames(tableout) <- c("Otro", "Casado", "Viviendo juntos", "Total")
 TableGen1(TableData=tableout , 
          TextTitle='Estadísticas Resumidas de Logaritmo del Monto de Cobertura por Estado Civil', 
          Align='crrr', Digits=3, ColumnSpec=1:3,
-         ColWidth = ColWidth4) 
+         ColWidth = ColWidth4) %>%
+         kableExtra::column_spec(1, width =  "4cm") 
 
 ```
 
@@ -122,7 +123,7 @@ Se realizó un modelo de regresión utilizando LNINCOME, EDUCATION, NUMHH, MAR0,
 
 $$
 \small{
-\widehat{y} = 3.395 + 0.452 \text{LNINCOME} + 0.205 \text{EDUCATION} + 0.248 \text{NUMHH} - 0.557 \text{MAR0} - 0.789 \text{MAR2}.
+\widehat{y} = 3.395 + 0.452 \text{ LNINCOME} + 0.205 \text{ EDUCATION} + 0.248 \text{ NUMHH} - 0.557 \text{ MAR0} - 0.789 \text{ MAR2}.
 }
 $$
 
@@ -132,7 +133,7 @@ Para interpretar los coeficientes de regresión asociados con el estado civil, c
 
 $$
 \small{
-\widehat{y}_m = 3.395 + 0.452 \text{LNINCOME} + 0.205 \text{EDUCATION} + 0.248 \text{NUMHH}.
+\widehat{y}_m = 3.395 + 0.452 \text{ LNINCOME} + 0.205 \text{ EDUCATION} + 0.248 \text{ NUMHH}.
 }
 $$
 
@@ -140,7 +141,7 @@ De manera similar, si el encuestado es codificado como viviendo juntos, entonces
 
 $$
 \small{
-\widehat{y}_{lt} = 3.395 + 0.452 \text{LNINCOME} + 0.205 \text{EDUCATION} + 0.248 \text{NUMHH} - 0.789.
+\widehat{y}_{lt} = 3.395 + 0.452 \text{ LNINCOME} + 0.205 \text{ EDUCATION} + 0.248 \text{ NUMHH} - 0.789.
 }
 $$
 
@@ -169,18 +170,17 @@ TableGen1(TableData=tableout ,
          ColWidth = ColWidth4) 
 ```
 
-Aunque los tres modelos en la Tabla \@ref(tab:Tab43) son iguales excepto por diferentes elecciones de parámetros, parecen diferentes. En particular, los $t$-ratios difieren y muestran diferentes apariencias de significancia estadística. Por ejemplo, ambos $t$-ratios asociados con el estado civil en el Modelo 2 son menores que 2 en valor absoluto, lo que sugiere que el estado civil es poco importante. En contraste, tanto el Modelo 1 como el Modelo 3 tienen al menos una variable binaria de estado civil que supera 2 en valor absoluto, lo que sugiere significancia estadística. Por lo tanto, se puede influir en la *apariencia* de significancia estadística al alterar la elección del nivel de referencia. Para evaluar la importancia general del estado civil (no solo cada variable binaria), la Sección 4.2 introducirá pruebas de conjuntos de coeficientes de regresión.
+Aunque los tres modelos en la Tabla \@ref(tab:Tab43) son iguales excepto por diferentes elecciones de parámetros, parecen diferentes. En particular, los $t$-ratios difieren y muestran diferentes apariencias de significancia estadística. Por ejemplo, ambos $t$-ratios asociados con el estado civil en el Modelo 2 son menores que 2 en valor absoluto, lo que sugiere que el estado civil es poco importante. En contraste, tanto el Modelo 1 como el Modelo 3 tienen al menos una variable binaria de estado civil que supera 2 en valor absoluto, lo que sugiere significancia estadística. Por lo tanto, se puede influir en la *apariencia* de significancia estadística al alterar la elección del nivel de referencia. Para evaluar la importancia general del estado civil (no solo cada variable binaria), la Sección \@ref(Sec42) introducirá pruebas de conjuntos de coeficientes de regresión.
 
 ```{r Tab43, echo=FALSE, results='asis'}
 tableout <- 
   data.frame(
-    # Explanatory_Variable = c("LNINCOME", "EDUCATION", "NUMHH", "Intercept", "MAR0", "MAR1", "MAR2"),
-    Coeficiente_Modelo_1 = c(0.452, 0.205, 0.248, 3.395, -0.557, NA, -0.789),
-    t_ratio_Modelo_1 = c(5.74, 5.30, 3.57, 3.77, -2.15, NA, -1.59),
-    Coeficiente_Modelo_2 = c(0.452, 0.205, 0.248, 3.395, 0.232, 0.789, NA),
-    t_ratio_Modelo_2 = c(5.74, 5.30, 3.57, 2.74, 0.44, 1.59, NA),
-    Coeficiente_Modelo_3 = c(0.452, 0.205, 0.248, 2.838, NA, 0.557, -0.232),
-    t_ratio_Modelo_3 = c(5.74, 5.30, 3.57, 3.34, NA, 2.15, -0.44)
+    Coeficiente_Modelo_1 = c(0.452, 0.205, 0.248, 3.395, -0.557, "", -0.789),
+    t_ratio_Modelo_1 = c(5.74, 5.30, 3.57, 3.77, -2.15, "", -1.59),
+    Coeficiente_Modelo_2 = c(0.452, 0.205, 0.248, 3.395, 0.232, 0.789, ""),
+    t_ratio_Modelo_2 = c(5.74, 5.30, 3.57, 2.74, 0.44, 1.59, ""),
+    Coeficiente_Modelo_3 = c(0.452, 0.205, 0.248, 2.838, "", 0.557, -0.232),
+    t_ratio_Modelo_3 = c(5.74, 5.30, 3.57, 3.34, "", 2.15, -0.44)
   )
 
 colnames(tableout) <- c("Coeficiente Modelo 1", "Modelo 1   $t$-Ratio",
@@ -190,8 +190,9 @@ rownames(tableout) <- c("LNINCOME", "EDUCATION", "NUMHH", "Intercepto", "MAR0", 
 
 TableGen1(TableData=tableout , 
          TextTitle='Coeficientes de Regresión del Seguro de Vida Temporal con Estado Civil', 
-         Align='r', Digits=3, ColumnSpec=1:3,
-         ColWidth = ColWidth4) 
+         Align='c', Digits=3, ColumnSpec=1:6,
+         ColWidth = ColWidth4) %>%
+     kableExtra::column_spec(c(1,3,5), border_right = TRUE)
 ```
 
 
@@ -395,7 +396,7 @@ $$
 
 Este procedimiento es comúnmente conocido como una prueba $F$.
 
-La Sección 4.7.2 proporciona las bases matemáticas. Para entender el principio de la suma de cuadrados adicional, recordemos que la suma de cuadrados del error para el modelo completo se determina como el valor mínimo de
+La Sección \@ref(Sec472) proporciona las bases matemáticas. Para entender el principio de la suma de cuadrados adicional, recordemos que la suma de cuadrados del error para el modelo completo se determina como el valor mínimo de
 
 $$
 SS(b_0^{\ast}, \ldots, b_k^{\ast}) = \sum_{i=1}^{n} \left( y_i - \left( b_0^{\ast} + \ldots + b_k^{\ast} x_{i,k} \right) \right)^2.
@@ -494,7 +495,7 @@ Para estimar $\beta_1 + \beta_2$, un estimador razonable es $b_1 + b_2$, el cual
 
 La estimación de $\beta_1 + \beta_2$ es un ejemplo de nuestro Caso Especial 3, que considera combinaciones lineales de coeficientes de regresión de la forma $\mathbf{c}^{\prime} \boldsymbol \beta = c_0 \beta_0 + c_1 \beta_1 + \ldots + c_k \beta_k$. Para nuestro ejemplo de contribuciones caritativas, elegiríamos $c_1 = c_2 = 1$ y los demás $c$'s igual a cero.
 
-Para estimar $\mathbf{c}^{\prime} \boldsymbol \beta$, reemplazamos el vector de parámetros por el vector de estimadores y usamos $\mathbf{c}^{\prime} \mathbf{b}$. Para evaluar la fiabilidad de este estimador, como en la Sección 4.2.2, tenemos que $\mathrm{Var}\left( \mathbf{c}^{\prime} \mathbf{b}\right) = \sigma^2 \mathbf{c}^{\prime}(\mathbf{X^{\prime} X})^{-1} \mathbf{c}$. Así, podemos definir la desviación estándar estimada, o error estándar, de $\mathbf{c}^{\prime} \mathbf{b}$ como
+Para estimar $\mathbf{c}^{\prime} \boldsymbol \beta$, reemplazamos el vector de parámetros por el vector de estimadores y usamos $\mathbf{c}^{\prime} \mathbf{b}$. Para evaluar la fiabilidad de este estimador, como en la Sección \@ref(Sec42).2, tenemos que $\mathrm{Var}\left( \mathbf{c}^{\prime} \mathbf{b}\right) = \sigma^2 \mathbf{c}^{\prime}(\mathbf{X^{\prime} X})^{-1} \mathbf{c}$. Así, podemos definir la desviación estándar estimada, o error estándar, de $\mathbf{c}^{\prime} \mathbf{b}$ como
 
 $$
 se\left( \mathbf{c}^{\prime} \mathbf{b} \right) = s \sqrt{\mathbf{c}^{\prime} (\mathbf{X}^{\prime} \mathbf{X})^{-1} \mathbf{c}}.
@@ -532,7 +533,7 @@ La ecuación \@ref(eq:eq46) generaliza el intervalo de predicción introducido e
 
 ## Modelo ANOVA de Un Factor {#Sec43}
 
-La Sección 4.1 mostró cómo incorporar variables categóricas no ordenadas, o factores, en un modelo de regresión lineal mediante el uso de variables binarias. Los factores son importantes en la investigación en ciencias sociales; pueden usarse para clasificar a las personas por género, etnia, estado civil, etc., o clasificar empresas por región geográfica, estructura organizativa, y así sucesivamente. En los estudios de seguros, las aseguradoras usan factores para categorizar a los asegurados según un "sistema de clasificación de riesgos." Aquí, la idea es crear grupos de asegurados con características de riesgo similares que tendrán experiencias de reclamaciones similares. Estos grupos forman la base del precio del seguro, de modo que a cada asegurado se le cobra un monto adecuado a su categoría de riesgo. Este proceso a veces se conoce como "segmentación."
+La Sección \@ref(Sec41) mostró cómo incorporar variables categóricas no ordenadas, o factores, en un modelo de regresión lineal mediante el uso de variables binarias. Los factores son importantes en la investigación en ciencias sociales; pueden usarse para clasificar a las personas por género, etnia, estado civil, etc., o clasificar empresas por región geográfica, estructura organizativa, y así sucesivamente. En los estudios de seguros, las aseguradoras usan factores para categorizar a los asegurados según un "sistema de clasificación de riesgos." Aquí, la idea es crear grupos de asegurados con características de riesgo similares que tendrán experiencias de reclamaciones similares. Estos grupos forman la base del precio del seguro, de modo que a cada asegurado se le cobra un monto adecuado a su categoría de riesgo. Este proceso a veces se conoce como "segmentación."
 
 Aunque los factores pueden representarse como variables binarias en un modelo de regresión lineal, estudiamos los modelos de un factor como una unidad separada porque:
 
@@ -748,7 +749,7 @@ y = \mu_1 x_1 + \mu_2 x_2 + \ldots + \mu_c x_c + \varepsilon.
 $$
 Así, hemos reescrito la respuesta esperada del ANOVA de un factor como una función de regresión, aunque utilizando una forma sin intercepto (como en la ecuación (3.5)).
 
-El ANOVA de un factor es un caso especial de nuestro modelo de regresión habitual, utilizando variables binarias del factor como variables explicativas en la función de regresión. Como hemos visto, no se necesitan cálculos matriciales para la estimación por mínimos cuadrados. Sin embargo, siempre se pueden utilizar los procedimientos matriciales desarrollados en el Capítulo 3. La Sección 4.7.1 muestra cómo nuestra expresión matricial habitual para los coeficientes de regresión ($\mathbf{b} =  \left(\mathbf{X}^{\prime}\mathbf{X}\right)^{-1}\mathbf{X}^{\prime}\mathbf{y}$) se reduce a las estimaciones simples $\bar{y}_j$ cuando se utiliza una sola variable categórica.
+El ANOVA de un factor es un caso especial de nuestro modelo de regresión habitual, utilizando variables binarias del factor como variables explicativas en la función de regresión. Como hemos visto, no se necesitan cálculos matriciales para la estimación por mínimos cuadrados. Sin embargo, siempre se pueden utilizar los procedimientos matriciales desarrollados en el Capítulo 3. La Sección \@ref(Sec471) muestra cómo nuestra expresión matricial habitual para los coeficientes de regresión ($\mathbf{b} =  \left(\mathbf{X}^{\prime}\mathbf{X}\right)^{-1}\mathbf{X}^{\prime}\mathbf{y}$) se reduce a las estimaciones simples $\bar{y}_j$ cuando se utiliza una sola variable categórica.
 
 
 #### Reparametrización {-}
@@ -767,7 +768,7 @@ $$
 y_{ij} = \mu + \tau_j + \varepsilon_{ij}.
 $$
 
-Al comparar las ecuaciones \@ref(eq:eq49) y \@ref(eq:eq410), vemos que el número de parámetros ha aumentado en uno. Es decir, en la ecuación \@ref(eq:eq49) hay $c$ parámetros, $\mu_1, \ldots, \mu_c$, mientras que en la ecuación \@ref(eq:eq410) hay $c + 1$ parámetros, $\mu$ y $\tau_1, \ldots, \tau_c$. Se dice que el modelo en la ecuación \@ref(eq:eq410) está *sobreparametrizado*. Es posible estimar este modelo directamente, utilizando la teoría general de modelos lineales, resumida en la Sección 4.7.3. En esta teoría, los coeficientes de regresión no necesitan ser identificables. Alternativamente, se pueden hacer equivalentes estas dos expresiones *restringiendo* el movimiento de los parámetros en la ecuación \@ref(eq:eq410). A continuación, presentamos dos formas de imponer restricciones.
+Al comparar las ecuaciones \@ref(eq:eq49) y \@ref(eq:eq410), vemos que el número de parámetros ha aumentado en uno. Es decir, en la ecuación \@ref(eq:eq49) hay $c$ parámetros, $\mu_1, \ldots, \mu_c$, mientras que en la ecuación \@ref(eq:eq410) hay $c + 1$ parámetros, $\mu$ y $\tau_1, \ldots, \tau_c$. Se dice que el modelo en la ecuación \@ref(eq:eq410) está *sobreparametrizado*. Es posible estimar este modelo directamente, utilizando la teoría general de modelos lineales, resumida en la Sección \@ref(Sec473). En esta teoría, los coeficientes de regresión no necesitan ser identificables. Alternativamente, se pueden hacer equivalentes estas dos expresiones *restringiendo* el movimiento de los parámetros en la ecuación \@ref(eq:eq410). A continuación, presentamos dos formas de imponer restricciones.
 
 El primer tipo de restricción, generalmente utilizado en el contexto de regresión, es requerir que uno de los $\tau$ sea cero. Esto equivale a *eliminar* una de las variables explicativas. Por ejemplo, podríamos usar
 $$
@@ -793,7 +794,7 @@ Existen varias formas de combinar variables explicativas categóricas y continua
 
 #### Combinando un Factor y una Covariable {-}
 
-Comencemos con los modelos más simples que utilizan un factor y una covariable. En la Sección 4.3, introdujimos el modelo de un solo factor $y_{ij} = \mu_j + \varepsilon_{ij}$. En el Capítulo 2, introdujimos la regresión lineal básica en términos de una variable continua, o covariable, usando $y_{ij} = \beta_0 + \beta_1 x_{ij} + \varepsilon_{ij}$. La Tabla \@ref(tab:Tab48) resume diferentes enfoques que podrían usarse para representar combinaciones de un factor y una covariable.
+Comencemos con los modelos más simples que utilizan un factor y una covariable. En la Sección \@ref(Sec43), introdujimos el modelo de un solo factor $y_{ij} = \mu_j + \varepsilon_{ij}$. En el Capítulo 2, introdujimos la regresión lineal básica en términos de una variable continua, o covariable, usando $y_{ij} = \beta_0 + \beta_1 x_{ij} + \varepsilon_{ij}$. La Tabla \@ref(tab:Tab48) resume diferentes enfoques que podrían usarse para representar combinaciones de un factor y una covariable.
 
 ```{r Tab48, echo = FALSE}
 # Crear un marco de datos para la tabla de un factor y una covariable
@@ -1057,9 +1058,9 @@ TableGen1(TableData=tableout ,
 
 Cada uno de los cinco modelos definidos en la Tabla \@ref(tab:Tab48) fue ajustado a este subconjunto del estudio de caso hospitalario. Las estadísticas resumen se encuentran en la Tabla \@ref(tab:Tab49). Para este conjunto de datos, hay $n = 79$ observaciones y $c = 3$ niveles del factor DRG. Para cada modelo, los grados de libertad del modelo son el número de parámetros del modelo menos uno. Los grados de libertad del error son el número de observaciones menos el número de parámetros del modelo.
 
-Usando variables binarias, cada uno de los modelos en la Tabla \@ref(tab:Tab48) puede escribirse en un formato de regresión. Como hemos visto en la Sección 4.2, cuando un modelo puede escribirse como un subconjunto de otro modelo más grande, tenemos procedimientos formales de prueba disponibles para decidir cuál modelo es más apropiado. Para ilustrar este procedimiento de prueba con nuestro ejemplo de DRG, a partir de la Tabla \@ref(tab:Tab49) y los gráficos asociados, parece claro que el factor DRG es importante. Además, una prueba $t$, que no se presenta aquí, muestra que la covariable $x$ es importante. Por lo tanto, comparemos el modelo completo $\mathrm{E}~y_{ij} = \beta_{0,j} + \beta_{1,j}x$ con el modelo reducido $\mathrm{E}~y_{ij} = \beta_{0,j} + \beta_1x$. En otras palabras, ¿hay una pendiente diferente para cada DRG?
+Usando variables binarias, cada uno de los modelos en la Tabla \@ref(tab:Tab48) puede escribirse en un formato de regresión. Como hemos visto en la Sección \@ref(Sec42), cuando un modelo puede escribirse como un subconjunto de otro modelo más grande, tenemos procedimientos formales de prueba disponibles para decidir cuál modelo es más apropiado. Para ilustrar este procedimiento de prueba con nuestro ejemplo de DRG, a partir de la Tabla \@ref(tab:Tab49) y los gráficos asociados, parece claro que el factor DRG es importante. Además, una prueba $t$, que no se presenta aquí, muestra que la covariable $x$ es importante. Por lo tanto, comparemos el modelo completo $\mathrm{E}~y_{ij} = \beta_{0,j} + \beta_{1,j}x$ con el modelo reducido $\mathrm{E}~y_{ij} = \beta_{0,j} + \beta_1x$. En otras palabras, ¿hay una pendiente diferente para cada DRG?
 
-Usando la notación de la Sección 4.2, llamamos al intercepto y la pendiente variables el modelo completo. Bajo la hipótesis nula, $H_0: \beta_{1,1} = \beta_{1,2} = \beta_{1,3}$, obtenemos el modelo con intercepto variable y pendiente constante. Así, usando el cociente $F$ en la ecuación \@ref(eq:eq42), tenemos:
+Usando la notación de la Sección \@ref(Sec42), llamamos al intercepto y la pendiente variables el modelo completo. Bajo la hipótesis nula, $H_0: \beta_{1,1} = \beta_{1,2} = \beta_{1,3}$, obtenemos el modelo con intercepto variable y pendiente constante. Así, usando el cociente $F$ en la ecuación \@ref(eq:eq42), tenemos:
 
 $$
 \small{
@@ -1133,13 +1134,13 @@ sea una combinación lineal de coeficientes. Como hemos visto, podemos elevar al
 
 La segunda extensión es que las variables explicativas pueden ser combinaciones lineales unas de otras en el modelo lineal general. Debido a esto, en el caso del modelo lineal general, las estimaciones de los parámetros no tienen por qué ser únicas. Sin embargo, una característica importante del modelo lineal general es que los valores ajustados resultantes resultan ser únicos, utilizando el método de mínimos cuadrados.
 
-Por ejemplo, en la Sección 4.3 vimos que el modelo ANOVA de un factor podía expresarse como un modelo de regresión con $c$ variables indicadoras. Sin embargo, si hubiéramos intentado estimar el modelo en la ecuación \@ref(eq:eq410), el método de mínimos cuadrados no habría llegado a un conjunto único de estimaciones de los coeficientes de regresión. La razón es que, en la ecuación \@ref(eq:eq410), cada variable explicativa puede expresarse como una combinación lineal de las otras. Por ejemplo, observe que $x_c = 1 - (x_1 + x_2 + \ldots + x_{c-1})$.
+Por ejemplo, en la Sección \@ref(Sec43) vimos que el modelo ANOVA de un factor podía expresarse como un modelo de regresión con $c$ variables indicadoras. Sin embargo, si hubiéramos intentado estimar el modelo en la ecuación \@ref(eq:eq410), el método de mínimos cuadrados no habría llegado a un conjunto único de estimaciones de los coeficientes de regresión. La razón es que, en la ecuación \@ref(eq:eq410), cada variable explicativa puede expresarse como una combinación lineal de las otras. Por ejemplo, observe que $x_c = 1 - (x_1 + x_2 + \ldots + x_{c-1})$.
 
 El hecho de que las estimaciones de los parámetros no sean únicas es una desventaja, pero no una insuperable. La suposición de que las variables explicativas no sean combinaciones lineales unas de otras significa que podemos calcular estimaciones únicas de los coeficientes de regresión utilizando el método de mínimos cuadrados. En términos de matrices, porque las variables explicativas no son combinaciones lineales unas de otras, la matriz $\mathbf{X}^{\prime}\mathbf{X}$ no es invertible.
 
-Específicamente, supongamos que estamos considerando la función de regresión en la ecuación \@ref(eq:eq413) y, utilizando el método de mínimos cuadrados, nuestras estimaciones de los coeficientes de regresión son $b_0^{o}, b_1^{o}, \ldots, b_k^{o}$. Este conjunto de estimaciones de los coeficientes de regresión minimiza nuestra suma de cuadrados de los errores, pero puede haber otros conjuntos de coeficientes que también minimicen la suma de cuadrados de los errores. Los valores ajustados se calculan como $\hat{y}_i = b_0^{o} + b_1^{o} x_{i1} + \ldots + b_k^{o} x_{ik}$. Se puede demostrar que los valores ajustados resultantes son únicos, en el sentido de que cualquier conjunto de coeficientes que minimice la suma de cuadrados de los errores produce los mismos valores ajustados (ver Sección 4.7.3).
+Específicamente, supongamos que estamos considerando la función de regresión en la ecuación \@ref(eq:eq413) y, utilizando el método de mínimos cuadrados, nuestras estimaciones de los coeficientes de regresión son $b_0^{o}, b_1^{o}, \ldots, b_k^{o}$. Este conjunto de estimaciones de los coeficientes de regresión minimiza nuestra suma de cuadrados de los errores, pero puede haber otros conjuntos de coeficientes que también minimicen la suma de cuadrados de los errores. Los valores ajustados se calculan como $\hat{y}_i = b_0^{o} + b_1^{o} x_{i1} + \ldots + b_k^{o} x_{ik}$. Se puede demostrar que los valores ajustados resultantes son únicos, en el sentido de que cualquier conjunto de coeficientes que minimice la suma de cuadrados de los errores produce los mismos valores ajustados (ver Sección \@ref(Sec473)).
 
-Por lo tanto, para un conjunto de datos y un modelo lineal general especificado, los valores ajustados son únicos. Debido a que los residuos se calculan como las respuestas observadas menos los valores ajustados, tenemos que los residuos son únicos. Debido a que los residuos son únicos, tenemos que las sumas de cuadrados de los errores son únicas. Por lo tanto, parece razonable, y es cierto, que podemos usar la prueba general de hipótesis descrita en la Sección 4.2 para decidir si las colecciones de variables explicativas son importantes.
+Por lo tanto, para un conjunto de datos y un modelo lineal general especificado, los valores ajustados son únicos. Debido a que los residuos se calculan como las respuestas observadas menos los valores ajustados, tenemos que los residuos son únicos. Debido a que los residuos son únicos, tenemos que las sumas de cuadrados de los errores son únicas. Por lo tanto, parece razonable, y es cierto, que podemos usar la prueba general de hipótesis descrita en la Sección \@ref(Sec42) para decidir si las colecciones de variables explicativas son importantes.
 
 En resumen, para los modelos lineales generales, las estimaciones de los parámetros pueden no ser únicas y, por lo tanto, no significativas. Una parte importante de los modelos de regresión es la interpretación de los coeficientes de regresión. Esta interpretación no está necesariamente disponible en el contexto del modelo lineal general. Sin embargo, para los modelos lineales generales, todavía podemos discutir la importancia de una variable individual o colección de
  variables a través de pruebas parciales *F*. Además, los valores ajustados, y el correspondiente ejercicio de predicción, funcionan en el contexto del modelo lineal general. La ventaja del contexto del modelo lineal general es que no necesitamos preocuparnos por el tipo de restricciones a imponer en los parámetros. Aunque no es el tema de este texto, esta ventaja es particularmente importante en los diseños experimentales complicados utilizados en las ciencias de la vida. El lector encontrará que las rutinas de estimación del modelo lineal general están ampliamente disponibles en los paquetes de software estadístico disponibles en el mercado hoy en día.
@@ -1306,7 +1307,7 @@ El Capítulo 3 mostró cómo escribir la ecuación del modelo de regresión en l
 
 
 
-**Modelo con una Variable Categórica.** Considera el modelo con una variable categórica introducido en la Sección 4.3 con $c$ niveles de la variable categórica. A partir de la ecuación \@ref(eq:eq49), este modelo se puede escribir como
+**Modelo con una Variable Categórica.** Considera el modelo con una variable categórica introducido en la Sección \@ref(Sec43) con $c$ niveles de la variable categórica. A partir de la ecuación \@ref(eq:eq49), este modelo se puede escribir como
 
 $$
 \mathbf{y} =
@@ -1729,17 +1730,16 @@ Con estas definiciones, use la ecuación \@ref(eq:eq418) para
 definir el modelo de regresión reparametrizado
 $$
 \begin{array}{ll}
-\mathbf{y} & = \mathbf{X}_1 \boldsymbol \beta _1 + \mathbf{X}_2
-\boldsymbol \beta _2 + \boldsymbol \varepsilon = \mathbf{X}_1
-\boldsymbol \beta _1 + (\mathbf{E}_2 + \mathbf{X}_1
-\mathbf{A})\boldsymbol \beta _2 + \boldsymbol \varepsilon \\
-& = \mathbf{X}_1 \boldsymbol \alpha _1 + \mathbf{E}_2 \boldsymbol
-\beta _2 + \boldsymbol \varepsilon,
+\mathbf{y} & = \mathbf{X}_1 \boldsymbol \beta_1 + \mathbf{X}_2
+\boldsymbol \beta_2 + \boldsymbol \varepsilon = \mathbf{X}_1
+\boldsymbol \beta_1 + (\mathbf{E}_2 + \mathbf{X}_1
+\mathbf{A})\boldsymbol \beta_2 + \boldsymbol \varepsilon \\
+& = \mathbf{X}_1 \boldsymbol \alpha_1 + \mathbf{E}_2 \boldsymbol
+\beta_2 + \boldsymbol \varepsilon,
 \end{array}
 (\#eq:eq422)
 $$
-donde $\boldsymbol \alpha _1 = \boldsymbol \beta _1 +
-\mathbf{A}\boldsymbol \beta _2 $ es un nuevo vector de parámetros. La razón para introducir esta nueva parametrización es que ahora el vector de variables explicativas es *ortogonal* a las otras
+donde $\boldsymbol \alpha_1 = \boldsymbol \beta_1 + \mathbf{A}\boldsymbol \beta_2$ es un nuevo vector de parámetros. La razón para introducir esta nueva parametrización es que ahora el vector de variables explicativas es *ortogonal* a las otras
 variables explicativas, es decir, el álgebra directa muestra que
 $\mathbf{X}_1^{\prime }\mathbf{E}_2=\mathbf{0}$.
 
@@ -1832,13 +1832,13 @@ $$
 \mathbf{E}_2)^{-1} \mathbf{E}_2^{\prime} \mathbf{y}.
 (\#eq:eq426)
 $$
-Como se mencionó en la Sección 4.3, la cantidad $(Error ~SS)_{reduced} - (Error ~SS)_{full}$ se llama *suma extra de cuadrados*, o suma de cuadrados Tipo III. Esto se produce automáticamente por algunos paquetes de software estadístico, evitando así la necesidad de ejecutar regresiones separadas.
+Como se mencionó en la Sección \@ref(Sec43), la cantidad $(Error ~SS)_{reduced} - (Error ~SS)_{full}$ se llama *suma extra de cuadrados*, o suma de cuadrados Tipo III. Esto se produce automáticamente por algunos paquetes de software estadístico, evitando así la necesidad de ejecutar regresiones separadas.
 
-### Modelo Lineal General {#Sec43}
+### Modelo Lineal General {#Sec473}
 
-Recuerda el modelo lineal general de la Sección 4.4. Es decir, usamos
+Recuerda el modelo lineal general de la Sección \@ref(Sec44). Es decir, usamos
 $$
-y_i = \beta_0 x_{i0} + \beta_1 x_{i1} + \ldots + \beta _k x_{ik} +
+y_i = \beta_0 x_{i0} + \beta_1 x_{i1} + \ldots + \beta_k x_{ik} +
 \varepsilon_i,
 $$
 o, en notación de matrices, $\mathbf{y} = \mathbf{X} \boldsymbol \beta + \boldsymbol \varepsilon$. Como antes, utilizamos las Suposiciones F1-F4 (o E1-E4) para que
@@ -1907,11 +1907,11 @@ Las funciones estimables son insesgadas y tienen una varianza que no depende de 
 
 #### Hipótesis Comprobables {-}
 
-Como se describe en la Sección 4.2, a menudo interesa probar $H_0$: $\mathbf{C \boldsymbol \beta} = \mathbf{d}$, donde $\mathbf{d}$ es un vector especificado. Esta hipótesis se dice que es *comprobable* si $\mathbf{C \boldsymbol \beta}$ es una función estimable, $\mathbf{C}$ es de rango completo en filas, y el rango de $\mathbf{C}$ es menor que el rango de $\mathbf{X}$. Para ser consistentes con la notación de la Sección 4.2, sea $p$ el rango de $\mathbf{C}$ y $k + 1$ el rango de $\mathbf{X}$. Recordemos que el rango de una matriz es el menor entre el número de filas linealmente independientes y el número de columnas linealmente independientes. Cuando decimos que $\mathbf{C}$ tiene rango completo en filas, nos referimos a que hay $p$ filas en $\mathbf{C}$, de modo que el número de filas es igual al rango.
+Como se describe en la Sección \@ref(Sec42), a menudo interesa probar $H_0$: $\mathbf{C \boldsymbol \beta} = \mathbf{d}$, donde $\mathbf{d}$ es un vector especificado. Esta hipótesis se dice que es *comprobable* si $\mathbf{C \boldsymbol \beta}$ es una función estimable, $\mathbf{C}$ es de rango completo en filas, y el rango de $\mathbf{C}$ es menor que el rango de $\mathbf{X}$. Para ser consistentes con la notación de la Sección \@ref(Sec42), sea $p$ el rango de $\mathbf{C}$ y $k + 1$ el rango de $\mathbf{X}$. Recordemos que el rango de una matriz es el menor entre el número de filas linealmente independientes y el número de columnas linealmente independientes. Cuando decimos que $\mathbf{C}$ tiene rango completo en filas, nos referimos a que hay $p$ filas en $\mathbf{C}$, de modo que el número de filas es igual al rango.
 
 #### Hipótesis Lineal General {-}
 
-Como en la Sección 4.2, la estadística de prueba para examinar $H_0$: $\mathbf{C \boldsymbol \beta} = \mathbf{d}$ es
+Como en la Sección \@ref(Sec42), la estadística de prueba para examinar $H_0$: $\mathbf{C \boldsymbol \beta} = \mathbf{d}$ es
 $$
 F\text{-ratio} = \frac{\mathbf{(Cb}^{\circ} - \mathbf{d})^{\prime} \mathbf{(C(X}^{\prime} \mathbf{X})^{-} \mathbf{C}^{\prime})^{-1} \mathbf{(Cb}^{\circ} - \mathbf{d})}{ps_{full}^2}.
 $$

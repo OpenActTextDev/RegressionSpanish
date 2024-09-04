@@ -88,7 +88,8 @@ rownames(tableout) <- c("Other", "Married", "Living together", "Total")
 TableGen1(TableData=tableout , 
          TextTitle='Summary Statistics of Logarithmic Face By Marital Status', 
          Align='crrr', Digits=3, ColumnSpec=1:3,
-         ColWidth = ColWidth4) 
+         ColWidth = ColWidth4) %>%
+         kableExtra::column_spec(1, width =  "4cm") 
 
 ```
 
@@ -129,7 +130,7 @@ A regression model was run using LNINCOME, EDUCATION, NUMHH, MAR0, and MAR2 as e
 
 $$
 \small{
-\widehat{y} = 3.395 + 0.452 \text{LNINCOME} + 0.205 \text{EDUCATION} + 0.248 \text{NUMHH} - 0.557 \text{MAR0} - 0.789 \text{MAR2}.
+\widehat{y} = 3.395 + 0.452 \text{ LNINCOME} + 0.205 \text{ EDUCATION} + 0.248 \text{ NUMHH} - 0.557 \text{ MAR0} - 0.789 \text{ MAR2}.
 }
 $$
 
@@ -137,7 +138,7 @@ To interpret the regression coefficients associated with marital status, conside
 
 $$
 \small{
-\widehat{y}_m = 3.395 + 0.452 \text{LNINCOME} + 0.205 \text{EDUCATION} + 0.248 \text{NUMHH}.
+\widehat{y}_m = 3.395 + 0.452 \text{ LNINCOME} + 0.205 \text{ EDUCATION} + 0.248 \text{ NUMHH}.
 }
 $$
 
@@ -145,7 +146,7 @@ Similarly, if the respondent is coded as living together, then `MAR0=0`, MAR1=0,
 
 $$
 \small{
-\widehat{y}_{lt} = 3.395 + 0.452 \text{LNINCOME} + 0.205 \text{EDUCATION} + 0.248 \text{NUMHH} - 0.789.
+\widehat{y}_{lt} = 3.395 + 0.452 \text{ LNINCOME} + 0.205 \text{ EDUCATION} + 0.248 \text{ NUMHH} - 0.789.
 }
 $$
 
@@ -185,19 +186,18 @@ binary that exceeds 2 in absolute value, suggesting statistical
 significance. Thus, you can influence the *appearance* of
 statistical significance by altering the choice of the reference
 level. To assess the overall importance of marital status (not just
-each binary variable), Section 4.2 will introduce
+each binary variable), Section \@ref(Sec42) will introduce
 tests of sets of regression coefficients.
 
 ```{r Tab43, echo=FALSE, results='asis'}
 tableout <- 
   data.frame(
-    # Explanatory_Variable = c("LNINCOME", "EDUCATION", "NUMHH", "Intercept", "MAR0", "MAR1", "MAR2"),
-    Model_1_Coefficient = c(0.452, 0.205, 0.248, 3.395, -0.557, NA, -0.789),
-    Model_1_t_ratio = c(5.74, 5.30, 3.57, 3.77, -2.15, NA, -1.59),
-    Model_2_Coefficient = c(0.452, 0.205, 0.248, 3.395, 0.232, 0.789, NA),
-    Model_2_t_ratio = c(5.74, 5.30, 3.57, 2.74, 0.44, 1.59, NA),
-    Model_3_Coefficient = c(0.452, 0.205, 0.248, 2.838, NA, 0.557, -0.232),
-    Model_3_t_ratio = c(5.74, 5.30, 3.57, 3.34, NA, 2.15, -0.44)
+    Model_1_Coefficient = c(0.452, 0.205, 0.248, 3.395, -0.557, "", -0.789),
+    Model_1_t_ratio = c(5.74, 5.30, 3.57, 3.77, -2.15, "", -1.59),
+    Model_2_Coefficient = c(0.452, 0.205, 0.248, 3.395, 0.232, 0.789, ""),
+    Model_2_t_ratio = c(5.74, 5.30, 3.57, 2.74, 0.44, 1.59, ""),
+    Model_3_Coefficient = c(0.452, 0.205, 0.248, 2.838, "", 0.557, -0.232),
+    Model_3_t_ratio = c(5.74, 5.30, 3.57, 3.34, "", 2.15, -0.44)
   )
 
 colnames(tableout) <- c("Model 1 Coefficient", "Model 1   $t$-Ratio",
@@ -207,8 +207,9 @@ rownames(tableout) <- c("LNINCOME", "EDUCATION", "NUMHH", "Intercept", "MAR0", "
 
 TableGen1(TableData=tableout , 
          TextTitle='Term Life Regression Coefficients with Marital Status', 
-         Align='r', Digits=3, ColumnSpec=1:3,
-         ColWidth = ColWidth4) 
+         Align='r', Digits=3, ColumnSpec=1:6,
+         ColWidth = ColWidth4) %>%
+     kableExtra::column_spec(c(1,3,5), border_right = TRUE)
 
 
 ```
@@ -414,7 +415,7 @@ $$
 
 This procedure is commonly known as an $F$-test.
 
-Section 4.7.2 provides the mathematical underpinnings. To understand the extra-sum-of-squares principle, recall that the error sum of squares for the full model is determined to be the minimum value of
+Section \@ref(Sec472) provides the mathematical underpinnings. To understand the extra-sum-of-squares principle, recall that the error sum of squares for the full model is determined to be the minimum value of
 
 $$
 SS(b_0^{\ast}, \ldots, b_k^{\ast}) = \sum_{i=1}^{n} \left( y_i - \left( b_0^{\ast} + \ldots + b_k^{\ast} x_{i,k} \right) \right)^2.
@@ -638,7 +639,7 @@ Equation \@ref(eq:eq46) generalizes the prediction interval introduced in Sectio
 
 ## One Factor ANOVA Model {#Sec43}
 
-Section 4.1 showed how to incorporate unordered
+Section \@ref(Sec41) showed how to incorporate unordered
 categorical variables, or factors, into a linear regression model
 through the use of binary variables. Factors are important in social
 science research; they can be used to classify people by gender,
@@ -999,7 +1000,7 @@ Comparing equations  \@ref(eq:eq49) and  \@ref(eq:eq410), we see that the number
 there are $c + 1$ parameters, $\mu$ and $\tau_1, \ldots, \tau_c$. The model in equation
  \@ref(eq:eq410) is said to be *overparameterized*. It is possible to estimate
 this model directly, using the general theory of linear models,
-summarized in Section 4.7.3. In this theory, regression coefficients need not be identifiable. Alternatively, one
+summarized in Section \@ref(Sec473). In this theory, regression coefficients need not be identifiable. Alternatively, one
 can make these two expressions equivalent by *restricting* the
 movement of the parameters in
 equation  \@ref(eq:eq410).
@@ -1056,7 +1057,7 @@ terminology *factor* for the categorical variable and
 #### Combining a Factor and Covariate {-}
 
 Let us begin with the simplest models that use a factor and a
-covariate. In Section 4.3, we introduced the one
+covariate. In Section \@ref(Sec43), we introduced the one
 factor model $y_{ij} = \mu_j + \varepsilon_{ij}$. In Chapter 2, we
 introduced basic linear regression in terms of one continuous
 variable, or covariate, using $y_{ij} = \beta_0 + \beta_1 x_{ij} + \varepsilon_{ij}$. Table \@ref(tab:Tab48) summarizes
@@ -1337,9 +1338,9 @@ parameters minus one. The error degrees of freedom is the number of
 observations minus the number of model parameters.
 
 
-Using binary variables, each of the models in Table \@ref(tab:Tab48) can be written in a regression format. As we have seen in Section 4.2, when a model can be written as a subset of another, larger model, we have formal testing procedures available to decide which model is more appropriate. To illustrate this testing procedure with our DRG example, from Table \@ref(tab:Tab49) and the associated plots, it seems clear that the DRG factor is important. Further, a $t$-test, not presented here, shows that the covariate $x$ is important. Thus, let's compare the full model $E[y_{ij}] = \beta_{0,j} + \beta_{1,j}x$ to the reduced model $E[y_{ij}] = \beta_{0,j} + \beta_1x$. In other words, is there a different slope for each DRG?
+Using binary variables, each of the models in Table \@ref(tab:Tab48) can be written in a regression format. As we have seen in Section \@ref(Sec42), when a model can be written as a subset of another, larger model, we have formal testing procedures available to decide which model is more appropriate. To illustrate this testing procedure with our DRG example, from Table \@ref(tab:Tab49) and the associated plots, it seems clear that the DRG factor is important. Further, a $t$-test, not presented here, shows that the covariate $x$ is important. Thus, let's compare the full model $E[y_{ij}] = \beta_{0,j} + \beta_{1,j}x$ to the reduced model $E[y_{ij}] = \beta_{0,j} + \beta_1x$. In other words, is there a different slope for each DRG?
 
-Using the notation from Section 4.2, we call the variable intercept and slope the full model. Under the null hypothesis, $H_0: \beta_{1,1} = \beta_{1,2} = \beta_{1,3}$, we get the variable intercept, constant slope model. Thus, using the $F$-ratio in equation \@ref(eq:eq42), we have
+Using the notation from Section \@ref(Sec42), we call the variable intercept and slope the full model. Under the null hypothesis, $H_0: \beta_{1,1} = \beta_{1,2} = \beta_{1,3}$, we get the variable intercept, constant slope model. Thus, using the $F$-ratio in equation \@ref(eq:eq42), we have
 
 $$
 F\text{-ratio} = \frac{(Error~SS)_{reduced} - (Error~SS)_{full}}{ps_{full}^2} = \frac{7.482 - 5.458}{2 \times 0.075} = 13.535.
@@ -1412,13 +1413,13 @@ is a linear combination of coefficients. As we have seen, we can square continuo
 
 The second extension is that the explanatory variables may be linear combinations of one another in the general linear model. Because of this, in the general linear model case, the parameter estimates need not be unique. However, an important feature of the general linear model is that the resulting fitted values turn out to be unique, using the method of least squares.
 
-For example, in Section 4.3 we saw that the one factor ANOVA model could be expressed as a regression model with $c$ indicator variables. However, if we had attempted to estimate the model in equation \@ref(eq:eq410), the method of least squares would not have arrived at a unique set of regression coefficient estimates. The reason is that, in equation \@ref(eq:eq410), each explanatory variable can be expressed as a linear combination of the others. For example, observe that $x_c = 1 - (x_1 + x_2 + \ldots + x_{c-1})$.
+For example, in Section \@ref(Sec43) we saw that the one factor ANOVA model could be expressed as a regression model with $c$ indicator variables. However, if we had attempted to estimate the model in equation \@ref(eq:eq410), the method of least squares would not have arrived at a unique set of regression coefficient estimates. The reason is that, in equation \@ref(eq:eq410), each explanatory variable can be expressed as a linear combination of the others. For example, observe that $x_c = 1 - (x_1 + x_2 + \ldots + x_{c-1})$.
 
 The fact that parameter estimates are not unique is a drawback, but not an overwhelming one. The assumption that the explanatory variables are not linear combinations of one another means that we can compute unique estimates of the regression coefficients using the method of least squares. In terms of matrices, because the explanatory variables are not linear combinations of one another, the matrix $\mathbf{X}^{\prime}\mathbf{X}$ is not invertible.
 
-Specifically, suppose that we are considering the regression function in equation \@ref(eq:eq413) and, using the method of least squares, our regression coefficient estimates are $b_0^{o}, b_1^{o}, \ldots, b_k^{o}$. This set of regression coefficient estimates minimizes our error sum of squares, but there may be other sets of coefficients that also minimize the error sum of squares. The fitted values are computed as $\hat{y}_i = b_0^{o} + b_1^{o} x_{i1} + \ldots + b_k^{o} x_{ik}$. It can be shown that the resulting fitted values are unique, in the sense that any set of coefficients that minimize the error sum of squares produce the same fitted values (see Section 4.7.3).
+Specifically, suppose that we are considering the regression function in equation \@ref(eq:eq413) and, using the method of least squares, our regression coefficient estimates are $b_0^{o}, b_1^{o}, \ldots, b_k^{o}$. This set of regression coefficient estimates minimizes our error sum of squares, but there may be other sets of coefficients that also minimize the error sum of squares. The fitted values are computed as $\hat{y}_i = b_0^{o} + b_1^{o} x_{i1} + \ldots + b_k^{o} x_{ik}$. It can be shown that the resulting fitted values are unique, in the sense that any set of coefficients that minimize the error sum of squares produce the same fitted values (see Section \@ref(Sec473)).
 
-Thus, for a set of data and a specified general linear model, fitted values are unique. Because residuals are computed as observed responses minus fitted values, we have that the residuals are unique. Because residuals are unique, we have the error sums of squares are unique. Thus, it seems reasonable, and is true, that we can use the general test of hypotheses described in Section 4.2 to decide whether collections of explanatory variables are important.
+Thus, for a set of data and a specified general linear model, fitted values are unique. Because residuals are computed as observed responses minus fitted values, we have that the residuals are unique. Because residuals are unique, we have the error sums of squares are unique. Thus, it seems reasonable, and is true, that we can use the general test of hypotheses described in Section \@ref(Sec42) to decide whether collections of explanatory variables are important.
 
 To summarize, for general linear models, parameter estimates may not be unique and thus not meaningful. An important part of regression models is the interpretation of regression coefficients. This interpretation is not necessarily available in the general linear model context. However, for general linear models, we may still discuss the importance of an individual variable or collection of variables through partial *F*-tests. Further, fitted values, and the corresponding exercise of prediction, works in the general linear model context. The advantage of the general linear model context is that we need not worry about the type of restrictions to impose on the parameters. Although not the subject of this text, this advantage is particularly important in complicated experimental designs used in the life sciences. The reader will find that general linear model estimation routines are widely available in statistical software packages available on the market today.
 
@@ -1581,7 +1582,7 @@ d. Fit a regression model using three explanatory variables, $FERTILITY$, $PUBLI
 
 Chapter 3 showed how to write the regression model equation in the form $\mathbf{y = X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}$ where $\mathbf{X}$ is a matrix of explanatory variables. This form permits straightforward calculation of regression coefficients, $\mathbf{b} = \left(\mathbf{X}^{\prime} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{y}$. This section shows how the model and calculations reduce to simpler expressions when the explanatory variables are categorical.
 
-**One Categorical Variable Model.** Consider the model with one categorical variable introduced in Section 4.3 with $c$ levels of the categorical variable. From equation \@ref(eq:eq49), this model can be written as
+**One Categorical Variable Model.** Consider the model with one categorical variable introduced in Section \@ref(Sec43) with $c$ levels of the categorical variable. From equation \@ref(eq:eq49), this model can be written as
 
 $$
 \mathbf{y} =
@@ -2015,17 +2016,16 @@ With these definitions, use equation \@ref(eq:eq418) to
 define the reparameterized regression model
 $$
 \begin{array}{ll}
-\mathbf{y} & = \mathbf{X}_1 \boldsymbol \beta _1 + \mathbf{X}_2
-\boldsymbol \beta _2 + \boldsymbol \varepsilon = \mathbf{X}_1
-\boldsymbol \beta _1 + (\mathbf{E}_2 + \mathbf{X}_1
-\mathbf{A})\boldsymbol \beta _2 + \boldsymbol \varepsilon \\
-& = \mathbf{X}_1 \boldsymbol \alpha _1 + \mathbf{E}_2 \boldsymbol
-\beta _2 + \boldsymbol \varepsilon,
+\mathbf{y} & = \mathbf{X}_1 \boldsymbol \beta_1 + \mathbf{X}_2
+\boldsymbol \beta_2 + \boldsymbol \varepsilon = \mathbf{X}_1
+\boldsymbol \beta_1 + (\mathbf{E}_2 + \mathbf{X}_1
+\mathbf{A})\boldsymbol \beta_2 + \boldsymbol \varepsilon \\
+& = \mathbf{X}_1 \boldsymbol \alpha_1 + \mathbf{E}_2 \boldsymbol
+\beta_2 + \boldsymbol \varepsilon,
 \end{array}
 (\#eq:eq422)
 $$
-where $\boldsymbol \alpha _1 = \boldsymbol \beta _1 +
-\mathbf{A}\boldsymbol \beta _2 $ is a new vector of parameters. The
+where $\boldsymbol \alpha_1 = \boldsymbol \beta_1 + \mathbf{A}\boldsymbol \beta_2$ is a new vector of parameters. The
 reason for introducing this new parameterization is that now the
 vector of explanatory variables is *orthogonal* to the other
 explanatory variables, that is, straightforward algebra shows that
@@ -2117,16 +2117,16 @@ $$
 \mathbf{E}_2)^{-1} \mathbf{E}_2^{\prime} \mathbf{y}.
 (\#eq:eq426)
 $$
-As noted in Section 4.3, the quantity $(Error ~SS)_{reduced} - (Error ~SS)_{full}$ is called the *extra sum of squares*, or Type
+As noted in Section \@ref(Sec43), the quantity $(Error ~SS)_{reduced} - (Error ~SS)_{full}$ is called the *extra sum of squares*, or Type
 III sum of squares. It is produced automatically by some statistical
 software packages, thus obviating the need to run separate
 regressions.
 
 ### General Linear Model {#Sec473}
 
-Recall the general linear model from Section 4.4. That is, we use
+Recall the general linear model from Section \@ref(Sec44). That is, we use
 $$
-y_i = \beta_0 x_{i0} + \beta_1 x_{i1} + \ldots + \beta _k x_{ik} +
+y_i = \beta_0 x_{i0} + \beta_1 x_{i1} + \ldots + \beta_k x_{ik} +
 \varepsilon_i,
 $$
 or, in matrix notation, $\mathbf{y} = \mathbf{X} \boldsymbol \beta + \boldsymbol \varepsilon$. As before, we use Assumptions F1-F4 (or E1-E4) so that
@@ -2203,11 +2203,11 @@ Estimable functions are unbiased and have a variance that does not depend on the
 
 #### Testable Hypotheses {-}
 
-As described in Section 4.2, it is often of interest to test $H_0$: $\mathbf{C \boldsymbol \beta} = \mathbf{d}$, where $\mathbf{d}$ is a specified vector. This hypothesis is said to be *testable* if $\mathbf{C \boldsymbol \beta}$ is an estimable function, $\mathbf{C}$ is of full row rank, and the rank of $\mathbf{C}$ is less than the rank of $\mathbf{X}$. For consistency with the notation of Section 4.2, let $p$ be the rank of $\mathbf{C}$ and $k + 1$ be the rank of $\mathbf{X}$. Recall that the rank of a matrix is the smaller of the number of linearly independent rows and linearly independent columns. When we say that $\mathbf{C}$ has full row rank, we mean that there are $p$ rows in $\mathbf{C}$, so that the number of rows equals the rank.
+As described in Section \@ref(Sec42), it is often of interest to test $H_0$: $\mathbf{C \boldsymbol \beta} = \mathbf{d}$, where $\mathbf{d}$ is a specified vector. This hypothesis is said to be *testable* if $\mathbf{C \boldsymbol \beta}$ is an estimable function, $\mathbf{C}$ is of full row rank, and the rank of $\mathbf{C}$ is less than the rank of $\mathbf{X}$. For consistency with the notation of Section \@ref(Sec42), let $p$ be the rank of $\mathbf{C}$ and $k + 1$ be the rank of $\mathbf{X}$. Recall that the rank of a matrix is the smaller of the number of linearly independent rows and linearly independent columns. When we say that $\mathbf{C}$ has full row rank, we mean that there are $p$ rows in $\mathbf{C}$, so that the number of rows equals the rank.
 
 #### General Linear Hypothesis {-}
  
-As in Section 4.2, the test statistic for examining $H_0$: $\mathbf{C \boldsymbol \beta} = \mathbf{d}$ is
+As in Section \@ref(Sec42), the test statistic for examining $H_0$: $\mathbf{C \boldsymbol \beta} = \mathbf{d}$ is
 $$
 F\text{-ratio} = \frac{\mathbf{(Cb}^{\circ} - \mathbf{d})^{\prime} \mathbf{(C(X}^{\prime} \mathbf{X})^{-} \mathbf{C}^{\prime})^{-1} \mathbf{(Cb}^{\circ} - \mathbf{d})}{ps_{full}^2}.
 $$

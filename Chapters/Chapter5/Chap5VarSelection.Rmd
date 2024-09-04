@@ -92,7 +92,7 @@ TableGen1(TableData=tableout ,
          TextTitle='Sixteen Possible Models', 
          Align='lcl',  ColumnSpec=1:2,
          ColWidth = "3cm") %>%
-     kableExtra::column_spec(1, width =  "6.25cm") %>%
+     kableExtra::column_spec(1, width =  "7cm") %>%
      kableExtra::column_spec(c(1,2), border_right = TRUE) %>%
      kableExtra::column_spec(3, width =  "7cm")
 
@@ -114,7 +114,7 @@ More generally, an algorithm that adds and deletes variables at each stage is so
 
 1. Consider all possible regressions using one explanatory variable. For each of the $k$ regressions, compute $t(b_1)$, the $t$-ratio for the slope. Choose that variable with the largest $t$-ratio. If the $t$-ratio does not exceed a pre-specified $t$-value (such as two), then do not choose any variables and halt the procedure.
 2. Add a variable to the model from the previous step. The variable to enter is the one that makes the largest significant contribution. To determine the size of contribution, use the absolute value of the variable's $t$-ratio. To enter, the $t$-ratio must exceed a specified $t$-value in absolute value.
-3. Delete a variable from the model from the previous step. The variable to be removed is the one that makes the smallest contribution. To determine the size of contribution, use the absolute value of the variable's $t$-ratio. To be removed, the $t$-ratio must be less than a specified $t$-value in absolute value.
+3. Delete a variable from the model in the previous step. The variable to be removed is the one that makes the smallest contribution. To determine the size of contribution, use the absolute value of the variable's $t$-ratio. To be removed, the $t$-ratio must be less than a specified $t$-value in absolute value.
 4. Repeat steps (ii) and (iii) until all possible additions and deletions are performed.
 
 ::::
@@ -171,10 +171,10 @@ When examining residuals, it is usually easier to work with a *standardized resi
 
 There are a number of ways of defining a standardized residual. Using $e_i = y_i - \hat{y}_i$ as the $i$th residual, here are three commonly used definitions:
 
-$$
+\begin{equation}
 \text{(a) }\frac{e_i}{s}, \quad \text{(b) }\frac{e_i}{s\sqrt{1 - h_{ii}}}, \quad \text{(c) }\frac{e_i}{s_{(i)}\sqrt{1 - h_{ii}}}.
 (\#eq:eq51)
-$$
+\end{equation}
 
 Here, $h_{ii}$ is the $i$th leverage. It is calculated based on values of the explanatory variables and will be defined in Section \@ref(Sec541). Recall that $s$ is the residual standard deviation (defined in equation 3.8). Similarly, define $s_{(i)}$ to be the residual standard deviation when running a regression after having deleted the $i$th observation.
 
@@ -186,7 +186,7 @@ $$
 \text{Var}(e_i) = \sigma^2(1 - h_{ii}).
 $$
 
-This result will be established in equation (5.15) of Section \@ref(Sec510). Note that this variance is smaller than the variance of the error term, Var$(\varepsilon_i) = \sigma^2$. Now, we can replace $\sigma$ by its estimate, $s$. Then, this result leads to using the quantity $s\sqrt{1 - h_{ii}}$ as an estimated standard deviation, or standard error, for $e_i$. Thus, we define the standard error of $e_i$ to be
+This result will be established in equation \@ref(eq:eq515) of Section \@ref(Sec510). Note that this variance is smaller than the variance of the error term, Var$(\varepsilon_i) = \sigma^2$. Now, we can replace $\sigma$ by its estimate, $s$. Then, this result leads to using the quantity $s\sqrt{1 - h_{ii}}$ as an estimated standard deviation, or standard error, for $e_i$. Thus, we define the standard error of $e_i$ to be
 
 $$
 \text{se}(e_i) = s \sqrt{1 - h_{ii}}.
@@ -332,10 +332,12 @@ pairs(liquidMat, upper.panel=NULL, cex=1.5, xaxt="n", yaxt="n", pch=".", gap=0, 
 To begin to understand the liquidity measure VOLUME, we first fit a regression model using NTRAN as an explanatory variable. The fitted regression model is:
 
 $$
+\small{
 \begin{array}{lcc}
 \text{VOLUME} &= 1.65 &+ 0.00183 \text{ NTRAN} \\
-\text{standard errors} & (0.0018) & (0.000074)
+\text{standard errors} & (0.6173) & (0.000074)
 \end{array}
+}
 $$
 
 with $R^2 = 83.4\%$ and $s = 4.35$. Note that the $t$-ratio for the slope associated with NTRAN is 
@@ -351,7 +353,7 @@ indicating strong statistical significance. Residuals were computed using this e
 
 resid_corr1 <- data.frame(
   Variable = c("AVGT", "PRICE", "SHARE", "VALUE", "DEB_EQ"),
-  RESID = c(-0.155, -0.017, 0.055, 0.007, 0.078)
+  RESID = c(-0.159, -0.014, 0.064, 0.018, 0.078)  
 )
 
 TableGen1(TableData=t(resid_corr1) , 
@@ -369,10 +371,12 @@ The correlation between the residual and AVGT and the scatter plot (not shown he
 We next fit a regression model using NTRAN and AVGT as explanatory variables. The fitted regression model is:
 
 $$
+\small{
 \begin{array}{lccc}
 \text{VOLUME} &= 4.41 &- 0.322 \text{ AVGT} &+ 0.00167 \text{ NTRAN} \\
 \text{standard errors} & (1.30)& (0.135)& (0.000098)
 \end{array}
+}
 $$
 
 with $R^2 = 84.2\%$ and $s = 4.26$. Based on the $t$-ratio for AVGT, $t(b_{AVGT}) = \frac{-0.322}{0.135} = -2.39$, it seems as if AVGT is a useful explanatory variable in the model. Note also that $s$ has decreased, indicating that $R_a^2$ has increased.
@@ -408,7 +412,7 @@ plot(liquidMat$DEB_EQ, model2$residuals, xaxt="n", yaxt="n", xlab="", ylab="")
 ```{r Tab55, echo=FALSE}
 resid_corr2 <- data.frame(
   Variable = c("PRICE", "SHARE", "VALUE", "DEB_EQ"),
-  RESID = c(-0.015, 0.096, 0.071, 0.089)
+  RESID = c(-0.015, 0.100, 0.074, 0.089)
 )
 
 TableGen1(TableData=t(resid_corr2) , 
@@ -422,13 +426,13 @@ TableGen1(TableData=t(resid_corr2) ,
 
 ## Influential Points {#Sec54}
 
-Not all points are created equal -- in this section we will see that specific observations can potentially have a disproportionate effect on the overall regression fit. We will call such points "influential." This is not too surprising; we have already seen that regression coefficients estimates are *weighted* sums of responses (see Section 3.2.4). Some observations have heavier weights than others and thus have a greater influence on the regression coefficient estimates. Of course, simply because an observation is influential does not mean that it is incorrect or that its impact on the model is misleading. As analysts, we would simply like to know whether our fitted model is sensitive to mild changes such as the removal of a single point so that we feel comfortable generalizing our results from the sample to a larger population.
+Not all points are created equal -- in this section we will see that specific observations can potentially have a disproportionate effect on the overall regression fit. We will call such points "influential." This is not too surprising; we have already seen that regression coefficient estimates are *weighted* sums of responses (see Section 3.2.4). Some observations have heavier weights than others and thus have a greater influence on the regression coefficient estimates. Of course, simply because an observation is influential does not mean that it is incorrect or that its impact on the model is misleading. As analysts, we would simply like to know whether our fitted model is sensitive to mild changes such as the removal of a single point so that we feel comfortable generalizing our results from the sample to a larger population.
 
-To assess influence, we think of observations as being unusual responses, given a set of explanatory variables, or having an unusual set of explanatory variables. We have already seen in Section \@ref(Sec53) how to assess unusual responses using residuals. This section focuses on unusual sets of explanatory variables.
+To assess influence, we think of observations as being unusual responses, given a set of explanatory variables, or having an unusual set of explanatory variables values. We have already seen in Section \@ref(Sec53) how to assess unusual responses using residuals. This section focuses on unusual sets of explanatory variables values.
 
 ### Leverage  {#Sec541}
 
-We introduced this topic in Section 2.6 where we called an observation having an unusual explanatory variable a "high leverage point." With more than one explanatory variable, determining whether an observation is a high leverage point is not as straightforward. For example, it is possible for an observation to be "not unusual" for any single variable and yet still be unusual in the space of explanatory variables. Consider the fictitious data set represented in Figure \@ref(fig:Fig54). Visually, it seems clear that the point marked in the upper right-hand corner is unusual. However, it is not unusual when examining the histogram of either $x_1$ or $x_2$. It is only unusual when the explanatory variables are considered jointly.
+We introduced this topic in Section 2.6 where we called an observation having an unusual explanatory variable value a "high leverage point." With more than one explanatory variable, determining whether an observation is a high leverage point is not as straightforward. For example, it is possible for an observation to be "not unusual" for any single variable and yet still be unusual in the space of explanatory variables. Consider the fictitious data set represented in Figure \@ref(fig:Fig54). Visually, it seems clear that the point marked in the upper right-hand corner is unusual. However, it is not unusual when examining the histogram of either $x_1$ or $x_2$. It is only unusual when the explanatory variables are considered jointly.
 
 (ref:Fig54) **The ellipsoid represents most of the data.** The arrow marks an unusual point.
 
@@ -453,10 +457,10 @@ To define the concept of leverage in multiple linear regression, we use some con
 $\mathbf{b} = (\mathbf{X}^{\prime} \mathbf{X})^{-1} \mathbf{X}^{\prime} \mathbf{y}$. 
 Thus, we can express the vector of fitted values $\hat{\mathbf{y}} = (\hat{y}_1, \ldots, \hat{y}_n)^{\prime}$ as
 
-$$
+\begin{equation}
 \mathbf{\hat{y}} = \mathbf{Xb} .
 (\#eq:eq52)
-$$
+\end{equation}
 
 Similarly, the vector of residuals is the vector of response minus the vector of fitted values, that is, $\mathbf{e} = \mathbf{y - \hat{y}}$. 
 
@@ -486,10 +490,10 @@ $$
 
 Here, $h_{ij}$ is the number in the $i$th row and $j$th column of $\mathbf{H}$. From this expression, we see that the larger $h_{ii}$ is, the larger the effect that the $i$th response $(y_i)$ has on the corresponding fitted value $(\hat{y}_i)$. Thus, we call $h_{ii}$ the *leverage* for the $i$th observation. Because $h_{ii}$ is the $i$th diagonal element of $\mathbf{H}$, a direct expression for $h_{ii}$ is
 
-$$
+\begin{equation}
 h_{ii} = \mathbf{x}_i^{\prime} (\mathbf{X}^{\prime} \mathbf{X})^{-1} \mathbf{x}_i
 (\#eq:eq53)
-$$
+\end{equation}
 
 where $\mathbf{x}_i = (x_{i0}, x_{i1}, \ldots, x_{ik})^{\prime}$. Because the values $h_{ii}$ are calculated based on the explanatory variables, the values of the response variable do not affect the calculation of leverages.
 
@@ -531,12 +535,12 @@ Some analysts use "robust" estimation methodologies as an alternative to least s
 
 To quantify the influence of a point, a measure that considers both the response and explanatory variables is *Cook's Distance*. This distance, $D_i$, is defined as
 
-$$
+\begin{equation}
 \begin{array}{ll}
 D_i &= \frac{\sum_{j=1}^{n} (\hat{y}_j - \hat{y}_{j(i)})^2}{(k+1) s^2} (\#eq:eq54) \\
 &= \left( \frac{e_i}{se(e_i)} \right)^2 \frac{h_{ii}}{(k+1)(1 - h_{ii})}.
 \end{array}
-$$
+\end{equation}
 
 The first expression provides a definition. Here, $\hat{y}_{j(i)}$ is the prediction of the $j$th observation, computed leaving the $i$th observation out of the regression fit. To measure the impact of the $i$th observation, we compare the fitted values with and without the $i$th observation. Each difference is then squared and summed over all observations to summarize the impact.
 
@@ -622,10 +626,10 @@ $$
 
 A larger $R_j^2$ results in a larger $VIF_j$; this means greater collinearity between $x_j$ and the other $x$'s. Now, $R_j^2$ alone is enough to capture the linear relationship of interest. However, we use $VIF_j$ in lieu of $R_j^2$ as our measure for collinearity because of the algebraic relationship
 
-$$
+\begin{equation}
 se(b_j) = s \frac{\sqrt{VIF_j}}{s_{x_j} \sqrt{n - 1}}.
 (\#eq:eq55)
-$$
+\end{equation}
 
 Here, $se(b_j)$ and $s$ are standard errors and residual standard deviation from a full regression fit of $y$ on $x_1, \ldots, x_{k}$. Further, $s_{x_j} = \sqrt{(n - 1)^{-1} \sum_{i=1}^{n} (x_{ij} - \bar{x}_j)^2 }$ is the sample standard deviation of the $j$th variable $x_j$. Section \@ref(Sec5103) provides a verification of equation \@ref(eq:eq55).
 
@@ -805,10 +809,10 @@ How well does the model fit the data? Criteria that measure the proximity of the
 
 For nonlinear models, we will need additional measures, and it is helpful to introduce these measures in this simpler linear case. One such measure is *Akaike's Information Criterion* that will be defined in terms of likelihood fits in Section 11.9.4. For linear regression, it reduces to
 
-$$
+\begin{equation}
 AIC = n \ln (s^2) + n \ln (2 \pi) + n + 3 + k.
 (\#eq:eq56)
-$$
+\end{equation}
 
 For model comparison, the smaller the $AIC$, the better is the fit. Comparing models with the same number of variables ($k$) means that selecting a model with small values of $AIC$ leads to the same choice as selecting a model with small values of the residual standard deviation $s$. Further, a small number of parameters means a small value of $AIC$, other things being equal. The idea is that this measure balances the fit ($n \ln (s^2)$) with a penalty for complexity (the number of parameters, $k+2$). Statistical packages often omit constants such as $n \ln (2 \pi)$ and $n+3$ when reporting $AIC$ because they do not matter when comparing models.
 
@@ -839,10 +843,10 @@ Unfortunately, rarely will two sets of data be available to the investigator. Ho
 2. Using the model development subsample, fit a candidate model to the data set $i=1,...,n_1$.
 3. Using the model created in Step (ii) and the explanatory variables from the validation subsample, "predict" the dependent variables in the validation subsample, $\hat{y}_i$, where $i=n_1+1,...,n_1+n_2$. (To get these predictions, you may need to transform the dependent variables back to the original scale.)
 4. Assess the proximity of the predictions to the held-out data. One measure is the *sum of squared prediction errors*
-$$
+\begin{equation}
 SSPE = \sum_{i=n_1+1}^{n_1+n_2} (y_i - \hat{y}_i)^2 .
 (\#eq:eq57)
-$$
+\end{equation}
 Repeat Steps (ii) through (iv) for each candidate model. Choose the model with the smallest *SSPE*.
 
 ::::
@@ -901,26 +905,26 @@ Especially for small sample sizes, an attractive leave-one-out cross-validation 
 1. From the full sample, omit the $i$th point and use the remaining $n-1$ observations to compute regression coefficients.
 2. Use the regression coefficients computed in step one and the explanatory variables for the $i$th observation to compute the predicted response, $\hat{y}_{(i)}$. This part of the procedure is similar to the calculation of the *SSPE* statistic with $n_1=n-1$ and $n_2=1$.
 3. Now, repeat (i) and (ii) for $i=1,...,n$. Summarizing, define
-$$
+\begin{equation}
 PRESS = \sum_{i=1}^{n} (y_i - \hat{y}_{(i)})^2 .
 (\#eq:eq58)
-$$
+\end{equation}
 As with *SSPE*, this statistic is calculated for each of several competing models. Under this criterion, we choose the model with the smallest *PRESS*.
 ::::
 
 Based on this definition, the statistic seems very computationally intensive in that it requires $n$ regression fits to evaluate it. To address this, interested readers will find that Section \@ref(Sec5102) establishes
 
-$$
+\begin{equation}
 y_i - \hat{y}_{(i)} = \frac{e_i}{1 - h_{ii}} .
 (\#eq:eq59)
-$$
+\end{equation}
 
 Here, $e_i$ and $h_{ii}$ represent the $i$th residual and leverage from the regression fit using the complete data set. This yields
 
-$$
+\begin{equation}
 PRESS = \sum_{i=1}^{n} \left( \frac{e_i}{1 - h_{ii}} \right)^2 ,
 (\#eq:eq510)
-$$
+\end{equation}
 
 which is a much easier computational formula. Thus, the *PRESS* statistic is less computationally intensive than *SSPE*.
 
@@ -944,7 +948,7 @@ To decide a strategy for handling potential heteroscedasticity, we must first as
 To detect heteroscedasticity graphically, a good idea is to perform a preliminary regression fit of the data and plot the residuals versus the fitted values. To illustrate, Figure \@ref(fig:Fig510) is a plot of a fictitious data set with one explanatory variable where the scatter increases as the explanatory variable increases. A least squares regression was performed - residuals and fitted values were computed. Figure \@ref(fig:Fig511) is an example of a plot of residuals versus fitted values. The preliminary regression fit removes many of the major patterns in the data and leaves the eye free to concentrate on other patterns that may influence the fit. We plot residuals versus fitted values because the fitted values are an approximation of the expected value of the response and, in many situations, the variability grows with the expected response.
 
 
-(ref:Fig510) **The shaded area represents the data. The line is the true regression line.**
+(ref:Fig510) **The shaded area represents the data.**
 
 ```{r Fig510, fig.cap='(ref:Fig510)', echo=FALSE, out.width="60%"}
 
@@ -1012,20 +1016,20 @@ For data sets with only mild heteroscedasticity, a sensible strategy is to emplo
 
 From the Section 3.2 on properties, we saw that least squares regression coefficients could be written as $\mathbf{b} = \sum_{i=1}^n \mathbf{w}_i y_i,$ 
 where $\mathbf{w}_i = \left( \mathbf{X}^{\prime}\mathbf{X} \right)^{-1} \mathbf{x}_i$. Thus, with $\sigma_i^2 = \mathrm{Var~} y_i$, we have
-$$
+\begin{equation}
 \mathrm{Var~}\mathbf{b} = \sum_{i=1}^n \mathbf{w}_i \mathbf{w}_i^{\prime} \sigma_i^2 
 = \left( \mathbf{X}^{\prime}\mathbf{X} \right)^{-1} \left( \sum_{i=1}^n \sigma_i^2 \mathbf{x}_i \mathbf{x}_i^{\prime} \right) \left( \mathbf{X}^{\prime}\mathbf{X} \right)^{-1}.
 (\#eq:eq511)
-$$
+\end{equation}
 This quantity is known except for $\sigma_i^2$. We can compute residuals using the least squares regression coefficients as $e_i = y_i - \mathbf{x}_i^{\prime} \mathbf{b}$. With these, we may define the *empirical*, or *robust*, estimate of the variance-covariance matrix as
 $$
 \widehat{\mathrm{Var~}\mathbf{b}} = \left( \mathbf{X}^{\prime}\mathbf{X} \right)^{-1} \left( \sum_{i=1}^n e_i^2 \mathbf{x}_i \mathbf{x}_i^{\prime} \right) \left( \mathbf{X}^{\prime}\mathbf{X} \right)^{-1}.
 $$
 The corresponding "heteroscedasticity-consistent" standard errors are
-$$
+\begin{equation}
 se_r(b_j) = \sqrt{(j+1)^{\text{st}}~ \text{diagonal element of }\widehat{\mathrm{Var~}\mathbf{b}}}.
 (\#eq:eq512)
-$$
+\end{equation}
 The logic behind this estimator is that each squared residual, $e_i^2$, may be a poor estimate of $\sigma_i^2$. However, our interest is estimating a (weighted) sum of variances in equation \@ref(eq:eq511); estimating the sum is a much easier task than estimating any individual variance estimate.
 
 Robust, or heteroscedasticity-consistent, standard errors are widely available in statistical software packages. Here, you will also see alternative definitions of residuals employed, as in Section \@ref(Sec531). If your statistical package offers options, the robust estimator using studentized residuals is generally preferred.
@@ -1039,16 +1043,18 @@ Specifically, we use Section 3.2.3 assumptions E1, E2, and E4, with E3 replaced 
 
 This model can be readily converted to the "ordinary" least squares problem by multiplying all regression variables by $\sqrt{w_i}$. That is, if we define $y_i^{\ast} = y_i \times \sqrt{w_i}$ and $x_{ij}^{\ast} = x_{ij} \times \sqrt{w_i}$, then from assumption E1 we have
 $$
-y_i^{\ast} = y_i \times \sqrt{w_i} = \left( \beta_0 x_{i0} + \beta_1 x_{i1} + \ldots + \beta_k x_{ik} + \varepsilon_i \right) \sqrt{w_i}
-= \beta_0 x_{i0}^{\ast} + \beta_1 x_{i1}^{\ast} + \ldots + \beta_k x_{ik}^{\ast} + \varepsilon_i^{\ast}
+\begin{array}{ll}
+y_i^{\ast} & = y_i \times \sqrt{w_i} = \left( \beta_0 x_{i0} + \beta_1 x_{i1} + \ldots + \beta_k x_{ik} + \varepsilon_i \right) \sqrt{w_i} \\
+&= \beta_0 x_{i0}^{\ast} + \beta_1 x_{i1}^{\ast} + \ldots + \beta_k x_{ik}^{\ast} + \varepsilon_i^{\ast}
+\end{array}
 $$
 where $\varepsilon_i^{\ast} = \varepsilon_i \times \sqrt{w_i}$ has homoscedastic variance $\sigma^2$. Thus, with the rescaled variables, all inference can proceed as before.
 
 This work has been automated in statistical packages where the user merely specifies the weights $w_i$ and the package does the rest. In terms of matrix algebra, this procedure can be accomplished by defining an $n \times n$ weight matrix $\mathbf{W} = \text{diag}(w_i)$ so that the $i$th diagonal element of $\mathbf{W}$ is $w_i$. Extending equation (3.14) for example, the weighted least squares estimates can be expressed as
-$$
+\begin{equation}
 \mathbf{b}_{WLS} = \left( \mathbf{X}^{\prime} \mathbf{W} \mathbf{X} \right)^{-1} \mathbf{X}^{\prime} \mathbf{W} \mathbf{y}.
 (\#eq:eq513)
-$$
+\end{equation}
 Additional discussions of weighted least squares estimation will be presented in Section 15.1.1.
 
 ### Transformations {#Sec574}
@@ -1174,10 +1180,10 @@ $$
 As discussed in Section \@ref(Sec541), we use our bounds and the average leverage, $\bar{h} = (k + 1)/n$, to help identify observations with unusually high leverage.
 
 **Variance of Residuals.** Using the model equation $\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}$, we can express the vector of residuals as
-$$
+\begin{equation}
 \mathbf{e} = \mathbf{y} - \mathbf{\hat{y}} = \mathbf{y - Hy} = \mathbf{(I-H)(X \boldsymbol{\beta} + \boldsymbol{\varepsilon})} = \mathbf{(I-H) \boldsymbol{\varepsilon}}.
 (\#eq:eq514)
-$$
+\end{equation}
 The last equality is due to the fact that $\mathbf{(I-H)X} = \mathbf{X - HX} = \mathbf{X - X} = \mathbf{0}$. Using $\text{Var~} \boldsymbol{\varepsilon} = \sigma^2 \mathbf{I}$, we have
 $$
 \begin{array}{ll}
@@ -1186,22 +1192,22 @@ $$
 \end{array}
 $$
 The last equality comes from the fact that $\mathbf{I-H}$ is idempotent. Thus, we have that
-$$
+\begin{equation}
 \text{Var } e_i = \sigma^2 (1 - h_{ii}) \text{   and   Cov } (e_i, e_j) = -\sigma^2 h_{ij}.
 (\#eq:eq515)
-$$
+\end{equation}
 Thus, although the true errors $\boldsymbol{\varepsilon}$ are uncorrelated, there is a small negative correlation among residuals $\mathbf{e}$.
 
 **Dominance of the Error in the Residual.** Examining the $i$th row of equation \@ref(eq:eq514), we have that the $i$th residual
-$$
+\begin{equation}
 e_i = \varepsilon_i - \sum_{j=1}^{n} h_{ij} \varepsilon_j
 (\#eq:eq516)
-$$
+\end{equation}
 can be expressed as a linear combination of independent errors. The relation $\mathbf{H} = \mathbf{HH}$ yields
-$$
+\begin{equation}
 h_{ii} = \sum_{j=1}^{n} h_{ij}^2.
 (\#eq:eq517)
-$$
+\end{equation}
 Because $h_{ii}$ is, on average, $(k + 1)/n$, this indicates that each $h_{ij}$ is small relative to 1. Thus, when interpreting equation \@ref(eq:eq516), we say that most of the information in $e_i$ is due to $\varepsilon_i$.
 
 **Correlations with Residuals.** First define $\mathbf{x}^j = (x_{1j}, x_{2j}, \dots, x_{nj})^{\prime}$ to be the column representing the $j$th variable. With this notation, we can partition the matrix of explanatory variables as $\mathbf{X} = \left( \mathbf{x}^{0}, \mathbf{x}^{1}, \dots, \mathbf{x}^{k} \right)$. Now, examining the $j$th column of the relation $\mathbf{(I-H)X} = \mathbf{0}$, we have $\mathbf{(I-H)x}^{j} = \mathbf{0}$. With $\mathbf{e} = \mathbf{(I-H) \boldsymbol{\varepsilon}}$, this yields
@@ -1217,19 +1223,19 @@ $$
 r(\mathbf{y, \hat{y}}) = \frac{\sum_{i=1}^{n} (y_i - \bar{y})(\hat{y}_i - \bar{y})}{(n-1) s_y s_{\hat{y}}}.
 $$
 
-Recall that $(n-1) s_y^2 = \sum_{i=1}^{n} (y_i - \bar{y})^2 = \text{Total SS}$ and $(n-1) s_{\hat{y}}^2 = \sum_{i=1}^{n} (\hat{y}_i - \bar{y})^2 = \text{Regress SS}$. Further, with $\mathbf{x}^0 = (1, 1, \ldots, 1)^{\prime}$,
+Recall that $(n-1) s_y^2 = \sum_{i=1}^{n} (y_i - \bar{y})^2 = Total ~SS$ and $(n-1) s_{\hat{y}}^2 = \sum_{i=1}^{n} (\hat{y}_i - \bar{y})^2 = Regress ~SS$. Further, with $\mathbf{x}^0 = (1, 1, \ldots, 1)^{\prime}$,
 $$
-\sum_{i=1}^{n} (y_i - \bar{y})(\hat{y}_i - \bar{y}) = (\mathbf{y} - \bar{y} \mathbf{x}^0)^{\prime} (\mathbf{\hat{y}} - \bar{y} \mathbf{x}^0) = \mathbf{y}^{\prime} \mathbf{\hat{y}} - \bar{y}^2 \mathbf{x}^{0 \prime} \mathbf{x}^0
-$$
-$$
-= \mathbf{y}^{\prime} \mathbf{Xb} - n \bar{y}^2 = \text{Regress SS}.
+\begin{array}{ll}
+\sum_{i=1}^{n} (y_i - \bar{y})(\hat{y}_i - \bar{y}) &= (\mathbf{y} - \bar{y} \mathbf{x}^0)^{\prime} (\mathbf{\hat{y}} - \bar{y} \mathbf{x}^0) = \mathbf{y}^{\prime} \mathbf{\hat{y}} - \bar{y}^2 \mathbf{x}^{0 \prime} \mathbf{x}^0 \\
+&= \mathbf{y}^{\prime} \mathbf{Xb} - n \bar{y}^2 = Regress ~SS.
+\end{array}
 $$
 
 This yields
-$$
-r(\mathbf{y, \hat{y}}) = \frac{\text{Regress SS}}{\sqrt{\left( \text{Total SS} \right) \left( \text{Regress SS} \right)}} = \sqrt{\frac{\text{Regress SS}}{\text{Total SS}}} = \sqrt{R^2}.
+\begin{equation}
+r(\mathbf{y, \hat{y}}) = \frac{Regress ~SS}{\sqrt{\left( Total ~SS \right) \left( Regress ~SS \right)}} = \sqrt{\frac{Regress ~SS}{Total ~SS}} = \sqrt{R^2}.
 (\#eq:eq518)
-$$
+\end{equation}
 That is, the coefficient of determination can be interpreted as the square root of the correlation between the observed and fitted responses.
 
 ### Leave One Out Statistics   {#Sec5102}
@@ -1237,17 +1243,17 @@ That is, the coefficient of determination can be interpreted as the square root 
 **Notation.** To test the sensitivity of regression quantities, there are a number of statistics of interest that are based on the notion of "leaving out," or omitting, an observation. To this end, the subscript notation $(i)$ means to *leave out* the $i$th observation. For example, omitting the row of explanatory variables $\mathbf{x}_i^{\prime} = (x_{i0}, x_{i1}, \dots, x_{ik})$ from $\mathbf{X}$ yields $\mathbf{X}_{(i)}$, a $(n-1) \times (k+1)$ matrix of explanatory variables. Similarly, $\mathbf{y}_{(i)}$ is a $(n-1) \times 1$ vector, based on removing the $i$th row from $\mathbf{y}$.
 
 **Basic Matrix Result.** Suppose that $\mathbf{A}$ is an invertible, $p \times p$ matrix and $\mathbf{z}$ is a $p \times 1$ vector. The following result from matrix algebra provides an important tool for understanding leave one out statistics in linear regression analysis.
-$$
+\begin{equation}
 \left( \mathbf{A - zz}^{\prime} \right)^{-1} = \mathbf{A}^{-1} + \frac{\mathbf{A}^{-1} \mathbf{zz}^{\prime} \mathbf{A}^{-1}}{1 - \mathbf{z}^{\prime} \mathbf{A}^{-1} \mathbf{z}}.
 (\#eq:eq519)
-$$
+\end{equation}
 To check this result, simply multiply $\mathbf{A - zz}^{\prime}$ by the right hand side of the equation to get $\mathbf{I}$, the identity matrix.
 
 **Vector of Regression Coefficients.** Omitting the $i$th observation, our new vector of regression coefficients is $\mathbf{b}_{(i)} = \left( \mathbf{X}_{(i)}^{\prime} \mathbf{X}_{(i)} \right)^{-1} \mathbf{X}_{(i)}^{\prime} \mathbf{y}_{(i)}.$ An alternative expression for $\mathbf{b}_{(i)}$ that is simpler to compute turns out to be
-$$
+\begin{equation}
 \mathbf{b}_{(i)} = \mathbf{b} - \frac{\left( \mathbf{X}^{\prime} \mathbf{X} \right)^{-1} \mathbf{x}_i e_i}{1 - h_{ii}}.S
 (\#eq:eq520)
-$$
+\end{equation}
 To verify this, first use the matrix inversion result with $\mathbf{A} = \mathbf{X}^{\prime} \mathbf{X}$ and $\mathbf{z} = \mathbf{x}_i$ to get
 $$
 \left( \mathbf{X}_{(i)}^{\prime} \mathbf{X}_{(i)} \right)^{-1} = (\mathbf{X}^{\prime} \mathbf{X} - \mathbf{x}_i \mathbf{x}_i^{\prime})^{-1} = (\mathbf{X}^{\prime} \mathbf{X})^{-1} + \frac{\left( \mathbf{X}^{\prime} \mathbf{X} \right)^{-1} \mathbf{x}_i \mathbf{x}_i^{\prime} \left( \mathbf{X}^{\prime} \mathbf{X} \right)^{-1}}{1 - h_{ii}},
@@ -1297,11 +1303,11 @@ $$
 $$
 s_{(i)}^2 = \frac{((n - 1) - (k + 1))^{-1} \sum_{j \ne i} \left( y_j - \mathbf{x}_j^{\prime} \mathbf{b}_{(i)} \right)^2}{(n - 1) - (k + 1)}.
 $$
-It is used in the definition of the *studentized residual*, defined in Section 5.3.1. A simple computational expression is given by
-$$
+It is used in the definition of the *studentized residual*, defined in Section \@ref(Sec531). A simple computational expression is given by
+\begin{equation}
 s_{(i)}^2 = \frac{(n - (k + 1)) s^2 - \frac{e_i^2}{1 - h_{ii}}}{(n - 1) - (k + 1)}.
 (\#eq:eq521)
-$$
+\end{equation}
 To see this, first note that from equation \@ref(eq:eq514), we have $\mathbf{He} = \mathbf{H(I - H) \boldsymbol{\varepsilon}} = \mathbf{0}$, because $\mathbf{H} = \mathbf{HH}$. In particular, from the $i$th row of $\mathbf{He} = \mathbf{0}$, we have $\sum_{j=1}^{n} h_{ij} e_j = 0$. Now, using equations \@ref(eq:eq517) and \@ref(eq:eq520), we have
 $$
 \begin{array}{ll}
@@ -1329,19 +1335,19 @@ $$
 se(b_j) = s \frac{\sqrt{VIF_j}}{s_{x_j}\sqrt{n-1}}.
 $$
 By symmetry of the independent variables, we only need to consider the case where $j=k$. Thus, we would like to establish
-$$
+\begin{equation}
 (k+1)\text{th diagonal element of }(\mathbf{X}^{\prime}\mathbf{X})^{-1} = \frac{VIF_{k}}{(n-1) s_{x_{k}}^2}.
 (\#eq:eq522)
-$$
+\end{equation}
 First consider the reparameterized model in equation (4.22). From equation (4.23), we can express the regression coefficient estimate
 $$
 b_{k} = \frac{\mathbf{e}_1^{\prime}\mathbf{y}}{\mathbf{e}_1^{\prime}\mathbf{e}_1}.
 $$
 From equation (4.23), we have that $\text{Var} \, b_{k} = \sigma^2 (\mathbf{E}_2^{\prime} \mathbf{E}_2)^{-1}$ and thus
-$$
+\begin{equation}
 se(b_{k}) = s (\mathbf{E}_2^{\prime} \mathbf{E}_2)^{-1/2}.
 (\#eq:eq523)
-$$
+\end{equation}
 Thus, $(\mathbf{E}_2^{\prime} \mathbf{E}_2)^{-1}$ is the $(k+1)$th diagonal element of 
 $$
 \left( 
@@ -1362,19 +1368,19 @@ $$
 $$
 and the coefficient of determination is $R_{k}^2$. Thus,
 $$
-\mathbf{E}_2^{\prime} \mathbf{E}_2 = \text{Error SS} = \text{Total SS} (1 - R_{k}^2) = \frac{(n-1) s_{x_{k}}^2}{VIF_{k}}.
+\mathbf{E}_2^{\prime} \mathbf{E}_2 = Error ~SS = Total ~SS (1 - R_{k}^2) = \frac{(n-1) s_{x_{k}}^2}{VIF_{k}}.
 $$
 This establishes the result.
 
 **Establishing** $t^2 = F$. For testing the null hypothesis $H_0$: $\beta_{k} = 0$, the material in Section 3.4.1 provides a description of a test based on the $t$-statistic, $t(b_{k}) = \frac{b_{k}}{se(b_{k})}$. An alternative test procedure, described in Sections 4.2.2, uses the test statistic
 $$
-F-\text{ratio} = \frac{(\text{Error SS})_{\text{reduced}} - (\text{Error SS})_{\text{full}}}{p \times (Error~MS)_{\text{full}}} = \frac{\left( \mathbf{E}_2^{\prime} \mathbf{y} \right)^2}{s^2 \mathbf{E}_2^{\prime} \mathbf{E}_2}
+F-\text{ratio} = \frac{(Error ~SS)_{reduced} - (Error ~SS)_{full}}{p \times (Error~MS)_{full}} = \frac{\left( \mathbf{E}_2^{\prime} \mathbf{y} \right)^2}{s^2 \mathbf{E}_2^{\prime} \mathbf{E}_2}
 $$
 from equation (4.26). Alternatively, from equations (4.23) and \@ref(eq:eq523), we have
-$$
+\begin{equation}
 t(b_{k}) = \frac{b_{k}}{se(b_{k})} = \frac{\left( \mathbf{E}_2^{\prime} \mathbf{y} \right) / \left( \mathbf{E}_2^{\prime} \mathbf{E}_2 \right)}{s / \sqrt{\mathbf{E}_2^{\prime} \mathbf{E}_2}} = \frac{\left( \mathbf{E}_2^{\prime} \mathbf{y} \right)}{s \sqrt{\mathbf{E}_2^{\prime} \mathbf{E}_2}}.
 (\#eq:eq524)
-$$
+\end{equation}
 
 Thus, $t(b_{k})^2 = F$-ratio.
 
@@ -1397,7 +1403,7 @@ $$
 $$
 From equations (4.24) and (4.25), we have that
 $$
-(n - (k+1)) s^2 = (\text{Error SS})_{\text{full}} = \mathbf{E}_1^{\prime} \mathbf{E}_1 - \frac{\left( \mathbf{E}_1^{\prime} \mathbf{y} \right)^2}{\mathbf{E}_2^{\prime} \mathbf{E}_2} = \mathbf{E}_1^{\prime} \mathbf{E}_1 - \frac{\left( \mathbf{E}_1^{\prime} \mathbf{E}_2 \right)^2}{\mathbf{E}_2^{\prime} \mathbf{E}_2}.
+(n - (k+1)) s^2 = (Error ~SS)_{full} = \mathbf{E}_1^{\prime} \mathbf{E}_1 - \frac{\left( \mathbf{E}_1^{\prime} \mathbf{y} \right)^2}{\mathbf{E}_2^{\prime} \mathbf{E}_2} = \mathbf{E}_1^{\prime} \mathbf{E}_1 - \frac{\left( \mathbf{E}_1^{\prime} \mathbf{E}_2 \right)^2}{\mathbf{E}_2^{\prime} \mathbf{E}_2}.
 $$
 Thus, from equation \@ref(eq:eq524)
 $$
