@@ -1,0 +1,125 @@
+#  FILENAME IS Chap2RCode.txt ;
+#  This file uses data "Wisconsin lottery Sales", 
+#    "Capital Asset Pricing Model", "Outlier Example"
+
+Lot = read.csv(choose.files(),header=TRUE)
+attach(Lot)
+names(Lot)
+
+#  FIGURE 2.1
+par(mfrow=c(1, 2))
+hist(POP, main="")
+hist(SALES, main="")
+dev.off()
+
+#  TABLE 2.1 SUMMARY STATISTICS
+options(digits=5)
+Xymat = data.frame(POP,SALES)  
+meanSummary = sapply(Xymat, mean,  na.rm=TRUE) 
+sdSummary   = sapply(Xymat, sd,    na.rm=TRUE) 
+minSummary  = sapply(Xymat, min,   na.rm=TRUE) 
+maxSummary  = sapply(Xymat, max,   na.rm=TRUE) 
+medSummary  = sapply(Xymat, median,na.rm=TRUE) 
+summvar = cbind(meanSummary, medSummary, sdSummary, minSummary, maxSummary)
+summvar
+
+#  FIGURE 2.2, WITH CORRELATIONS
+plot(POP, SALES)
+cor(POP, SALES)
+
+#  SECTION 2.1 OUTPUT
+modelBLR=lm(SALES ~ POP)
+#options(digits=10)
+anova(modelBLR)
+#options(digits=6)
+summary(modelBLR)
+
+#  SECTION 2.5.2 CONFIDENCE INTERVALS
+confint(modelBLR)
+confint(modelBLR, level=.90)
+
+#  SECTION 2.5.3 PREDICTION INTERVALS
+newdata = data.frame(POP = 10000)
+predict(modelBLR, newdata, interval="prediction")
+predict(modelBLR, newdata, interval="prediction", level=.90)
+#  PROVIDES THE 97.5TH PERCENTILE OF A T-DISTRIBUTION, JUST FOR CHECKING
+crit=qt(.975, 48)
+  
+
+#  SECTION 2.6 OUTLIER EXAMPLE
+OUTLR = read.csv(choose.files(),  quote = "",header=TRUE)
+str(OUTLR)
+
+#  FIGURE 2.7
+plot(OUTLR$X, OUTLR$Y, xlab="X", ylab="Y", xlim=c(0, 10), ylim=c(2, 9))
+points(4.3, 8.0)
+text(4.5, 8.0, "A")
+points(9.5, 8.0)
+text(9.7, 8.0, "B")
+points(9.5, 2.5)
+text(9.7, 2.5, "C")
+
+#  TABLE 2.6
+model.outlr0 = lm(OUTLR$Y ~ OUTLR$X, subset=-c(20,21,22))
+summary(model.outlr0)
+model.outlrA = lm(OUTLR$Y ~ OUTLR$X, subset=-c(21,22))
+summary(model.outlrA)
+model.outlrB = lm(OUTLR$Y ~ OUTLR$X, subset=-c(20,22))
+summary(model.outlrB)
+model.outlrC = lm(OUTLR$Y ~ OUTLR$X, subset=-c(20,21))
+summary(model.outlrC)
+
+#  TABLE 2.7
+model.basiclinearreg=lm(SALES ~ POP, Lot)
+summary(model.basiclinearreg)
+model.Kenosha=lm(SALES ~ POP, Lot, subset=-c(9))
+summary(model.Kenosha)
+
+#  FIGURE 2.8
+SALES=Lot$SALES
+POP=Lot$POP
+plot(POP, SALES)
+text(5000, 24000, "Kenosha")
+
+#  FIGURE 2.9
+model.basiclinearreg=modelBLR
+model.Kenosha=lm(SALES~POP, subset=-c(9))
+par(mfrow=c(1, 2))
+qqnorm(residuals(model.basiclinearreg), main="")
+qqnorm(residuals(model.Kenosha), main="")
+dev.off()
+
+#  SECTION 2.7 OUTPUT
+CAPM = read.csv(choose.files(),  quote = "",header=TRUE)
+str(CAPM)
+model.CAPM=lm(LINCOLN ~ MARKET,data=CAPM)
+summary(model.CAPM)
+aov(model.CAPM)
+
+#  DELETE OBSERVATION NUMBER 22, OCTOBER 1987 CRASH
+model.CAPM=lm(LINCOLN ~ MARKET, data = CAPM[-22,])
+summary(model.CAPM)
+
+#  FIGURE 2.10
+foo = ts(CAPM, freq = 12, start = c(1986, 1))
+ts.plot(foo[,2], foo[,3], xlab="YEAR", ylab="MONTHLY RETURN", 
+    type="o", lty=c(1, 2))
+legend(1986, 0.3, c("LINCOLN", "MARKET"), lty=1:2, cex=0.8)
+dev.off()
+
+#  FIGURE 2.11
+plot(CAPM$MARKET, CAPM$LINCOLN, xlab="MARKET", ylab="LINCOLN", 
+    xlim=c(-0.3, 0.2), ylim=c(-0.3, 0.4))
+reg = lm(LINCOLN ~ MARKET,data=CAPM)
+abline(reg)
+arrows(-0.22, -0.1, -0.22, -0.22,length=0.1, angle = 10)
+text(-0.22, -0.08, "OCTOBER, 1987 CRASH", cex=0.8)
+arrows(0.14, 0.02, 0, -0.27,length=0.1, angle = 10)
+arrows(0.14, 0.02, 0.06, 0.3,length=0.1, angle = 10)
+text(0.18, 0.02, "1990 OUTLIERS", cex=0.8)
+dev.off()
+
+
+
+
+

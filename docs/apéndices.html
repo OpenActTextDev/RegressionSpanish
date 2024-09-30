@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 14 Apéndices | Modelado de Regresión con Aplicaciones Actuariales y Financieras</title>
+  <meta name="description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 14 Apéndices | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 14 Apéndices | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  
+  <meta name="twitter:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="C13GLM.html"/>
+<link rel="next" href="bibliography.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Regression Modeling With Actuarial and Financial Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prólogo"><i class="fa fa-check"></i>Prólogo</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#para-quién-es-este-libro"><i class="fa fa-check"></i>¿Para Quién Es Este Libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#de-qué-trata-este-libro"><i class="fa fa-check"></i>¿De Qué Trata Este Libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cómo-transmite-este-libro-su-mensaje"><i class="fa fa-check"></i>¿Cómo Transmite Este Libro Su Mensaje?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#dedicación"><i class="fa fa-check"></i>Dedicación</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html"><i class="fa fa-check"></i>Translation</a></li>
+<li class="chapter" data-level="1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html"><i class="fa fa-check"></i><b>1</b> Regresión y la Distribución Normal</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec11"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es el Análisis de Regresión?</a></li>
+<li class="chapter" data-level="1.2" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec12"><i class="fa fa-check"></i><b>1.2</b> Ajuste de Datos a una Distribución Normal</a></li>
+<li class="chapter" data-level="1.3" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec13"><i class="fa fa-check"></i><b>1.3</b> Transformaciones de Potencia</a></li>
+<li class="chapter" data-level="1.4" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec14"><i class="fa fa-check"></i><b>1.4</b> Muestreo y el Papel de la Normalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec15"><i class="fa fa-check"></i><b>1.5</b> Regresión y Diseños de Muestreo</a></li>
+<li class="chapter" data-level="1.6" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec16"><i class="fa fa-check"></i><b>1.6</b> Aplicaciones Actuariales de la Regresión</a></li>
+<li class="chapter" data-level="1.7" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec17"><i class="fa fa-check"></i><b>1.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="1.8" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec18"><i class="fa fa-check"></i><b>1.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="1.9" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec19"><i class="fa fa-check"></i><b>1.9</b> Suplemento Técnico - Teorema del Límite Central</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="C2BasicLR.html"><a href="C2BasicLR.html"><i class="fa fa-check"></i><b>2</b> Regresión Lineal Básica</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec21"><i class="fa fa-check"></i><b>2.1</b> Correlaciones y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="2.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec22"><i class="fa fa-check"></i><b>2.2</b> Modelo Básico de Regresión Lineal</a></li>
+<li class="chapter" data-level="2.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec23"><i class="fa fa-check"></i><b>2.3</b> ¿Es Útil el Modelo? Algunas Medidas de Resumen Básicas</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec231"><i class="fa fa-check"></i><b>2.3.1</b> Particionando la Variabilidad</a></li>
+<li class="chapter" data-level="2.3.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec232"><i class="fa fa-check"></i><b>2.3.2</b> El Tamaño de una Desviación Típica: <em>s</em></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec24"><i class="fa fa-check"></i><b>2.4</b> Propiedades de los Estimadores del Coeficiente de Regresión</a></li>
+<li class="chapter" data-level="2.5" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec25"><i class="fa fa-check"></i><b>2.5</b> Inferencia Estadística</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec251"><i class="fa fa-check"></i><b>2.5.1</b> ¿Es Importante la Variable Explicativa?: La Prueba <em>t</em></a></li>
+<li class="chapter" data-level="2.5.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec252"><i class="fa fa-check"></i><b>2.5.2</b> Intervalos de Confianza</a></li>
+<li class="chapter" data-level="2.5.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec253"><i class="fa fa-check"></i><b>2.5.3</b> Intervalos de Predicción</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec26"><i class="fa fa-check"></i><b>2.6</b> Construyendo un Mejor Modelo: Análisis de Residuos</a></li>
+<li class="chapter" data-level="2.7" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec27"><i class="fa fa-check"></i><b>2.7</b> Aplicación: Modelo de Valoración de Activos Financieros</a></li>
+<li class="chapter" data-level="2.8" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec28"><i class="fa fa-check"></i><b>2.8</b> Salida Computacional Ilustrativa de Regresión</a></li>
+<li class="chapter" data-level="2.9" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec29"><i class="fa fa-check"></i><b>2.9</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="2.10" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec210"><i class="fa fa-check"></i><b>2.10</b> Ejercicios</a></li>
+<li class="chapter" data-level="2.11" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec211"><i class="fa fa-check"></i><b>2.11</b> Suplemento Técnico - Elementos del Álgebra de Matrices</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2111"><i class="fa fa-check"></i><b>2.11.1</b> Definiciones Básicas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2112"><i class="fa fa-check"></i><b>2.11.2</b> Algunas Matrices Especiales</a></li>
+<li class="chapter" data-level="2.11.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2113"><i class="fa fa-check"></i><b>2.11.3</b> Operaciones Básicas</a></li>
+<li class="chapter" data-level="2.11.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2114"><i class="fa fa-check"></i><b>2.11.4</b> Matrices Aleatorias</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html"><i class="fa fa-check"></i><b>3</b> Regresión Lineal Múltiple - I</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec31"><i class="fa fa-check"></i><b>3.1</b> Método de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="3.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec32"><i class="fa fa-check"></i><b>3.2</b> Modelo de Regresión Lineal y Propiedades de los Estimadores</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec321"><i class="fa fa-check"></i><b>3.2.1</b> Función de Regresión</a></li>
+<li class="chapter" data-level="3.2.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec322"><i class="fa fa-check"></i><b>3.2.2</b> Interpretación del Coeficiente de Regresión</a></li>
+<li class="chapter" data-level="3.2.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec323"><i class="fa fa-check"></i><b>3.2.3</b> Suposiciones del Modelo</a></li>
+<li class="chapter" data-level="3.2.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec324"><i class="fa fa-check"></i><b>3.2.4</b> Propiedades de los Estimadores de los Coeficientes de Regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec33"><i class="fa fa-check"></i><b>3.3</b> Estimación y Bondad de Ajuste</a></li>
+<li class="chapter" data-level="3.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec34"><i class="fa fa-check"></i><b>3.4</b> Inferencia Estadística para un Coeficiente Único</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec341"><i class="fa fa-check"></i><b>3.4.1</b> La Prueba <em>t</em></a></li>
+<li class="chapter" data-level="3.4.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec342"><i class="fa fa-check"></i><b>3.4.2</b> Intervalos de Confianza</a></li>
+<li class="chapter" data-level="3.4.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec343"><i class="fa fa-check"></i><b>3.4.3</b> Gráficos de Variables Añadidas</a></li>
+<li class="chapter" data-level="3.4.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec344"><i class="fa fa-check"></i><b>3.4.4</b> Coeficientes de Correlación Parcial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec35"><i class="fa fa-check"></i><b>3.5</b> Algunas Variables Explicativas Especiales</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec351"><i class="fa fa-check"></i><b>3.5.1</b> Variables Binarias</a></li>
+<li class="chapter" data-level="3.5.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec352"><i class="fa fa-check"></i><b>3.5.2</b> Transformación de Variables Explicativas</a></li>
+<li class="chapter" data-level="3.5.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec353"><i class="fa fa-check"></i><b>3.5.3</b> Términos de Interacción</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec36"><i class="fa fa-check"></i><b>3.6</b> Lectura Adicional y Referencias</a></li>
+<li class="chapter" data-level="3.7" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec37"><i class="fa fa-check"></i><b>3.7</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html"><i class="fa fa-check"></i><b>4</b> Regresión Lineal Múltiple - II</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec41"><i class="fa fa-check"></i><b>4.1</b> El Papel de las Variables Binarias</a></li>
+<li class="chapter" data-level="4.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec42"><i class="fa fa-check"></i><b>4.2</b> Inferencia Estadística para Varios Coeficientes</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec421"><i class="fa fa-check"></i><b>4.2.1</b> Conjuntos de Coeficientes de Regresión</a></li>
+<li class="chapter" data-level="4.2.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec422"><i class="fa fa-check"></i><b>4.2.2</b> La Hipótesis Lineal General</a></li>
+<li class="chapter" data-level="4.2.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec423"><i class="fa fa-check"></i><b>4.2.3</b> Estimando y Prediciendo Varios Coeficientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec43"><i class="fa fa-check"></i><b>4.3</b> Modelo ANOVA de Un Factor</a></li>
+<li class="chapter" data-level="4.4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec44"><i class="fa fa-check"></i><b>4.4</b> Combinando Variables Explicativas Categóricas y Continuas</a></li>
+<li class="chapter" data-level="4.5" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec45"><i class="fa fa-check"></i><b>4.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="4.6" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec46"><i class="fa fa-check"></i><b>4.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="4.7" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec47"><i class="fa fa-check"></i><b>4.7</b> Suplemento Técnico - Expresiones Matriciales</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec471"><i class="fa fa-check"></i><b>4.7.1</b> Expresión de Modelos con Variables Categóricas en Forma Matricial</a></li>
+<li class="chapter" data-level="4.7.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec472"><i class="fa fa-check"></i><b>4.7.2</b> Cálculo Recursivo de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="4.7.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec473"><i class="fa fa-check"></i><b>4.7.3</b> Modelo Lineal General</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="C5VarSelect.html"><a href="C5VarSelect.html"><i class="fa fa-check"></i><b>5</b> Selección de Variables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec51"><i class="fa fa-check"></i><b>5.1</b> Un Enfoque Iterativo para el Análisis de Datos y Modelado</a></li>
+<li class="chapter" data-level="5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec52"><i class="fa fa-check"></i><b>5.2</b> Procedimientos Automáticos de Selección de Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec53"><i class="fa fa-check"></i><b>5.3</b> Análisis de Residuales</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec531"><i class="fa fa-check"></i><b>5.3.1</b> Residuales</a></li>
+<li class="chapter" data-level="5.3.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec532"><i class="fa fa-check"></i><b>5.3.2</b> Uso de los Residuales para Identificar Valores Atípicos</a></li>
+<li class="chapter" data-level="5.3.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec533"><i class="fa fa-check"></i><b>5.3.3</b> Uso de los Residuales para Seleccionar Variables Explicativas</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec54"><i class="fa fa-check"></i><b>5.4</b> Puntos Influyentes</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec541"><i class="fa fa-check"></i><b>5.4.1</b> Apalancamiento</a></li>
+<li class="chapter" data-level="5.4.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec542"><i class="fa fa-check"></i><b>5.4.2</b> Distancia de Cook</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec55"><i class="fa fa-check"></i><b>5.5</b> Colinealidad</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec551"><i class="fa fa-check"></i><b>5.5.1</b> ¿Qué es la Colinealidad?</a></li>
+<li class="chapter" data-level="5.5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec552"><i class="fa fa-check"></i><b>5.5.2</b> Factores de Inflación de Varianza</a></li>
+<li class="chapter" data-level="5.5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec553"><i class="fa fa-check"></i><b>5.5.3</b> Colinealidad e Influencia</a></li>
+<li class="chapter" data-level="5.5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec554"><i class="fa fa-check"></i><b>5.5.4</b> Variables Suprensoras</a></li>
+<li class="chapter" data-level="5.5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec555"><i class="fa fa-check"></i><b>5.5.5</b> Variables Ortogonales</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec56"><i class="fa fa-check"></i><b>5.6</b> Criterios de Selección</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec561"><i class="fa fa-check"></i><b>5.6.1</b> Bondad de Ajuste</a></li>
+<li class="chapter" data-level="5.6.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec562"><i class="fa fa-check"></i><b>5.6.2</b> Validación del Modelo</a></li>
+<li class="chapter" data-level="5.6.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec563"><i class="fa fa-check"></i><b>5.6.3</b> Validación Cruzada</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec57"><i class="fa fa-check"></i><b>5.7</b> Heterocedasticidad</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec571"><i class="fa fa-check"></i><b>5.7.1</b> Detección de Heterocedasticidad</a></li>
+<li class="chapter" data-level="5.7.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec572"><i class="fa fa-check"></i><b>5.7.2</b> Errores Estándar Consistentes con Heterocedasticidad</a></li>
+<li class="chapter" data-level="5.7.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec573"><i class="fa fa-check"></i><b>5.7.3</b> Mínimos Cuadrados Ponderados</a></li>
+<li class="chapter" data-level="5.7.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec574"><i class="fa fa-check"></i><b>5.7.4</b> Transformaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec58"><i class="fa fa-check"></i><b>5.8</b> Lectura Adicional y Referencias</a></li>
+<li class="chapter" data-level="5.9" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec59"><i class="fa fa-check"></i><b>5.9</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.10" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec510"><i class="fa fa-check"></i><b>5.10</b> Suplementos Técnicos para el Capítulo 5</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5101"><i class="fa fa-check"></i><b>5.10.1</b> Matriz de Proyección</a></li>
+<li class="chapter" data-level="5.10.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5102"><i class="fa fa-check"></i><b>5.10.2</b> Estadísticas Leave-One-Out</a></li>
+<li class="chapter" data-level="5.10.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5103"><i class="fa fa-check"></i><b>5.10.3</b> Omisión de Variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html"><i class="fa fa-check"></i><b>6</b> Interpretación de Resultados de Regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec61"><i class="fa fa-check"></i><b>6.1</b> Lo que nos dice el proceso de modelado</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec611"><i class="fa fa-check"></i><b>6.1.1</b> Interpretación de efectos individuales</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec612"><i class="fa fa-check"></i><b>6.1.2</b> Otras Interpretaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec62"><i class="fa fa-check"></i><b>6.2</b> La Importancia de la Selección de Variables</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec621"><i class="fa fa-check"></i><b>6.2.1</b> Sobreajuste del Modelo</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec622"><i class="fa fa-check"></i><b>6.2.2</b> Subajuste del Modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec63"><i class="fa fa-check"></i><b>6.3</b> La Importancia de la Recolección de Datos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec631"><i class="fa fa-check"></i><b>6.3.1</b> Error en el Marco Muestral y Selección Adversa</a></li>
+<li class="chapter" data-level="6.3.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec632"><i class="fa fa-check"></i><b>6.3.2</b> Regiones de Muestreo Limitadas</a></li>
+<li class="chapter" data-level="6.3.3" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec633"><i class="fa fa-check"></i><b>6.3.3</b> Variables Dependientes Limitadas, Censura y Truncamiento</a></li>
+<li class="chapter" data-level="6.3.4" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec634"><i class="fa fa-check"></i><b>6.3.4</b> Variables Omitidas y Endógenas</a></li>
+<li class="chapter" data-level="6.3.5" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec635"><i class="fa fa-check"></i><b>6.3.5</b> Datos Faltantes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec64"><i class="fa fa-check"></i><b>6.4</b> Modelos de Datos Faltantes</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec641"><i class="fa fa-check"></i><b>6.4.1</b> Faltante al Azar</a></li>
+<li class="chapter" data-level="6.4.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec642"><i class="fa fa-check"></i><b>6.4.2</b> Datos Faltantes No Ignorables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec65"><i class="fa fa-check"></i><b>6.5</b> Aplicación: Eficiencia en el Costo de los Gestores de Riesgos</a></li>
+<li class="chapter" data-level="6.6" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec66"><i class="fa fa-check"></i><b>6.6</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="6.7" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec67"><i class="fa fa-check"></i><b>6.7</b> Ejercicios</a></li>
+<li class="chapter" data-level="6.8" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec68"><i class="fa fa-check"></i><b>6.8</b> Suplementos Técnicos para el Capítulo 6</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec681"><i class="fa fa-check"></i><b>6.8.1</b> Efectos de la Especificación Incorrecta del Modelo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="chap-7.html"><a href="chap-7.html"><i class="fa fa-check"></i><b>7</b> Chap 7</a></li>
+<li class="chapter" data-level="8" data-path="chap-8.html"><a href="chap-8.html"><i class="fa fa-check"></i><b>8</b> Chap 8</a></li>
+<li class="chapter" data-level="9" data-path="chap-9.html"><a href="chap-9.html"><i class="fa fa-check"></i><b>9</b> Chap 9</a></li>
+<li class="chapter" data-level="10" data-path="chap-10.html"><a href="chap-10.html"><i class="fa fa-check"></i><b>10</b> Chap 10</a></li>
+<li class="chapter" data-level="11" data-path="C11Binary.html"><a href="C11Binary.html"><i class="fa fa-check"></i><b>11</b> Variables Dependientes Categóricas</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec111"><i class="fa fa-check"></i><b>11.1</b> Variables Dependientes Binarias</a></li>
+<li class="chapter" data-level="11.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec112"><i class="fa fa-check"></i><b>11.2</b> Modelos de Regresión Logística y Probit</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1121"><i class="fa fa-check"></i><b>11.2.1</b> Uso de Funciones No Lineales de Variables Explicativas</a></li>
+<li class="chapter" data-level="11.2.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1122"><i class="fa fa-check"></i><b>11.2.2</b> Interpretación del Umbral</a></li>
+<li class="chapter" data-level="11.2.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1123"><i class="fa fa-check"></i><b>11.2.3</b> Interpretación de Utilidad Aleatoria</a></li>
+<li class="chapter" data-level="11.2.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1124"><i class="fa fa-check"></i><b>11.2.4</b> Regresión Logística</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec113"><i class="fa fa-check"></i><b>11.3</b> Inferencia para Modelos de Regresión Logística y Probit</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="C11Binary.html"><a href="C11Binary.html#estimación-de-parámetros"><i class="fa fa-check"></i><b>11.3.1</b> Estimación de Parámetros</a></li>
+<li class="chapter" data-level="11.3.2" data-path="C11Binary.html"><a href="C11Binary.html#inferencia-adicional"><i class="fa fa-check"></i><b>11.3.2</b> Inferencia Adicional</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec114"><i class="fa fa-check"></i><b>11.4</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="11.5" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec115"><i class="fa fa-check"></i><b>11.5</b> Variables Dependientes Nominales</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1151"><i class="fa fa-check"></i><b>11.5.1</b> Logit Generalizado</a></li>
+<li class="chapter" data-level="11.5.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1152"><i class="fa fa-check"></i><b>11.5.2</b> Logit Multinomial</a></li>
+<li class="chapter" data-level="11.5.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1153"><i class="fa fa-check"></i><b>11.5.3</b> Logit Anidado</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec116"><i class="fa fa-check"></i><b>11.6</b> Variables Dependientes Ordinales</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="C11Binary.html"><a href="C11Binary.html#logit-acumulativo"><i class="fa fa-check"></i><b>11.6.1</b> Logit Acumulativo</a></li>
+<li class="chapter" data-level="11.6.2" data-path="C11Binary.html"><a href="C11Binary.html#probit-acumulativo"><i class="fa fa-check"></i><b>11.6.2</b> Probit Acumulativo</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec117"><i class="fa fa-check"></i><b>11.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="11.8" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec118"><i class="fa fa-check"></i><b>11.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="11.9" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec119"><i class="fa fa-check"></i><b>11.9</b> Suplementos Técnicos - Inferencia Basada en Verosimilitud</a>
+<ul>
+<li class="chapter" data-level="11.9.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1191"><i class="fa fa-check"></i><b>11.9.1</b> Propiedades de las Funciones de Verosimilitud</a></li>
+<li class="chapter" data-level="11.9.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1192"><i class="fa fa-check"></i><b>11.9.2</b> Estimadores de Máxima Verosimilitud</a></li>
+<li class="chapter" data-level="11.9.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1193"><i class="fa fa-check"></i><b>11.9.3</b> Pruebas de Hipótesis</a></li>
+<li class="chapter" data-level="11.9.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1194"><i class="fa fa-check"></i><b>11.9.4</b> Criterios de Información</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="C12Count.html"><a href="C12Count.html"><i class="fa fa-check"></i><b>12</b> Variables Dependientes de Conteo</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec121"><i class="fa fa-check"></i><b>12.1</b> Regresión de Poisson</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec1211"><i class="fa fa-check"></i><b>12.1.1</b> Distribución de Poisson</a></li>
+<li class="chapter" data-level="12.1.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec1212"><i class="fa fa-check"></i><b>12.1.2</b> Modelo de Regresión</a></li>
+<li class="chapter" data-level="12.1.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec1213"><i class="fa fa-check"></i><b>12.1.3</b> Estimación</a></li>
+<li class="chapter" data-level="12.1.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec1214"><i class="fa fa-check"></i><b>12.1.4</b> Inferencia Adicional</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec122"><i class="fa fa-check"></i><b>12.2</b> Aplicación: Seguro de Automóviles en Singapur</a></li>
+<li class="chapter" data-level="12.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec123"><i class="fa fa-check"></i><b>12.3</b> Sobre dispersión y Modelos Binomiales Negativos</a></li>
+<li class="chapter" data-level="12.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec124"><i class="fa fa-check"></i><b>12.4</b> Otros Modelos de Conteo</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="C12Count.html"><a href="C12Count.html#modelos-inflados-en-ceros"><i class="fa fa-check"></i><b>12.4.1</b> Modelos Inflados en Ceros</a></li>
+<li class="chapter" data-level="12.4.2" data-path="C12Count.html"><a href="C12Count.html#modelos-hurdle"><i class="fa fa-check"></i><b>12.4.2</b> Modelos Hurdle</a></li>
+<li class="chapter" data-level="12.4.3" data-path="C12Count.html"><a href="C12Count.html#modelos-de-heterogeneidad"><i class="fa fa-check"></i><b>12.4.3</b> Modelos de Heterogeneidad</a></li>
+<li class="chapter" data-level="12.4.4" data-path="C12Count.html"><a href="C12Count.html#modelos-de-clases-latentes"><i class="fa fa-check"></i><b>12.4.4</b> Modelos de Clases Latentes</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="C12Count.html"><a href="C12Count.html#S:Sec125"><i class="fa fa-check"></i><b>12.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="12.6" data-path="C12Count.html"><a href="C12Count.html#S:Sec126"><i class="fa fa-check"></i><b>12.6</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="C13GLM.html"><a href="C13GLM.html"><i class="fa fa-check"></i><b>13</b> Modelos Lineales Generalizados</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec131"><i class="fa fa-check"></i><b>13.1</b> Introducción</a></li>
+<li class="chapter" data-level="13.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec132"><i class="fa fa-check"></i><b>13.2</b> Modelo GLM</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1321"><i class="fa fa-check"></i><b>13.2.1</b> Familia Exponencial Lineal de Distribuciones</a></li>
+<li class="chapter" data-level="13.2.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1322"><i class="fa fa-check"></i><b>13.2.2</b> Funciones de Enlace</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec133"><i class="fa fa-check"></i><b>13.3</b> Estimación</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1331"><i class="fa fa-check"></i><b>13.3.1</b> Estimación de Máxima Verosimilitud para Enlaces Canónicos</a></li>
+<li class="chapter" data-level="13.3.2" data-path="C13GLM.html"><a href="C13GLM.html#sobredispersión"><i class="fa fa-check"></i><b>13.3.2</b> Sobredispersión</a></li>
+<li class="chapter" data-level="13.3.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1333"><i class="fa fa-check"></i><b>13.3.3</b> Estadísticas de Bondad de Ajuste</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec134"><i class="fa fa-check"></i><b>13.4</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="13.5" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec135"><i class="fa fa-check"></i><b>13.5</b> Residuales</a></li>
+<li class="chapter" data-level="13.6" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec136"><i class="fa fa-check"></i><b>13.6</b> Distribución de Tweedie</a></li>
+<li class="chapter" data-level="13.7" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec137"><i class="fa fa-check"></i><b>13.7</b> Lecturas adicionales y referencias</a></li>
+<li class="chapter" data-level="13.8" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec138"><i class="fa fa-check"></i><b>13.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="13.9" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec139"><i class="fa fa-check"></i><b>13.9</b> Suplementos Técnicos - Familia Exponencial</a>
+<ul>
+<li class="chapter" data-level="13.9.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1391"><i class="fa fa-check"></i><b>13.9.1</b> Familia Exponencial Lineal de Distribuciones</a></li>
+<li class="chapter" data-level="13.9.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1392"><i class="fa fa-check"></i><b>13.9.2</b> Momentos</a></li>
+<li class="chapter" data-level="13.9.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1393"><i class="fa fa-check"></i><b>13.9.3</b> Estimación de Máxima Verosimilitud para Enlaces Generales</a></li>
+<li class="chapter" data-level="13.9.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1394"><i class="fa fa-check"></i><b>13.9.4</b> Mínimos Cuadrados Reponderados Iterativos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="apéndices.html"><a href="apéndices.html"><i class="fa fa-check"></i><b>14</b> Apéndices</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a1.-inferencia-estadística-básica"><i class="fa fa-check"></i>Apéndice A1. Inferencia Estadística Básica</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribuciones-de-funciones-de-variables-aleatorias"><i class="fa fa-check"></i>Distribuciones de Funciones de Variables Aleatorias</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#estimación-y-predicción"><i class="fa fa-check"></i>Estimación y Predicción</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#pruebas-de-hipótesis"><i class="fa fa-check"></i>Pruebas de Hipótesis</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a2.-álgebra-de-matrices"><i class="fa fa-check"></i>Apéndice A2. Álgebra de Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#definiciones-básicas"><i class="fa fa-check"></i>Definiciones Básicas</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#revisión-de-operaciones-básicas"><i class="fa fa-check"></i>Revisión de Operaciones Básicas</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#definiciones-adicionales"><i class="fa fa-check"></i>Definiciones Adicionales</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a3.-tablas-de-probabilidad"><i class="fa fa-check"></i>Apéndice A3. Tablas de Probabilidad</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-normal"><i class="fa fa-check"></i>Distribución Normal</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-chi-cuadrado"><i class="fa fa-check"></i>Distribución Chi-Cuadrado</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-t"><i class="fa fa-check"></i>Distribución <em>t</em></a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-f"><i class="fa fa-check"></i>Distribución <em>F</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Modelado de Regresión con Aplicaciones Actuariales y Financieras</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="apéndices" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">Chapter 14</span> Apéndices<a href="apéndices.html#apéndices" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="apéndice-a1.-inferencia-estadística-básica" class="section level2 unnumbered hasAnchor">
+<h2>Apéndice A1. Inferencia Estadística Básica<a href="apéndices.html#apéndice-a1.-inferencia-estadística-básica" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><em>Vista Previa del Apéndice.</em> Este apéndice proporciona
+definiciones y hechos de un curso de inferencia estadística básica
+que son necesarios para el estudio del análisis de regresión.</p>
+<div id="distribuciones-de-funciones-de-variables-aleatorias" class="section level3 unnumbered hasAnchor">
+<h3>Distribuciones de Funciones de Variables Aleatorias<a href="apéndices.html#distribuciones-de-funciones-de-variables-aleatorias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Estadísticas y Distribuciones Muestrales.</strong> Una <em>estadística</em> resume la información en una muestra y, por lo tanto, es una función de las observaciones <span class="math inline">\(y_1,\ldots,y_n\)</span>. Dado que las observaciones son realizaciones de variables aleatorias, el estudio de las distribuciones de funciones de variables aleatorias es realmente el estudio de las distribuciones de estadísticas, conocidas como <em>distribuciones muestrales</em>. Las combinaciones lineales de la forma <span class="math inline">\(\sum_{i=1}^n a_i y_i\)</span> representan un tipo importante de función. Aquí, <span class="math inline">\(a_1,\ldots,a_n\)</span> son constantes conocidas. Para comenzar, supongamos que <span class="math inline">\(y_1,\ldots,y_n\)</span> son variables aleatorias mutuamente independientes con <span class="math inline">\(\mathrm{E~}y_i = \mu_i\)</span> y <span class="math inline">\(\mathrm{Var~}y_i = \sigma_i^2\)</span>. Entonces, por la <em>linealidad de las esperanzas</em>, tenemos
+<span class="math display">\[
+\mathrm{E}\left( \sum_{i=1}^n a_i y_i \right) = \sum_{i=1}^n a_i \mu_i~~~\mathrm{y}~~~\mathrm{Var}\left( \sum_{i=1}^n a_i y_i \right) = \sum_{i=1}^n a_i^2 \sigma_i^2.
+\]</span>
+Un teorema importante en la estadística matemática es que, si cada variable aleatoria se distribuye normalmente, entonces las combinaciones lineales también se distribuyen normalmente. Es decir, tenemos:</p>
+<p><strong>Linealidad de Variables Aleatorias Normales.</strong> Supongamos que <span class="math inline">\(y_1,\ldots,y_n\)</span> son variables aleatorias mutuamente independientes con <span class="math inline">\(y_i \sim N(\mu_i,\sigma_i^2)\)</span>. (Lea “<span class="math inline">\(\sim\)</span>” como “se distribuye como”). Entonces,
+<span class="math display">\[
+\sum_{i=1}^n a_i y_i \sim N\left( \sum_{i=1}^n a_i \mu_i, \sum_{i=1}^n a_i^2 \sigma_i^2 \right) .
+\]</span>
+Hay varias aplicaciones de esta propiedad importante. Primero, se puede verificar que si <span class="math inline">\(y \sim N(\mu ,\sigma^2)\)</span>, entonces <span class="math inline">\((y - \mu)/\sigma \sim N(0,1)\)</span>. En segundo lugar, supongamos que <span class="math inline">\(y_1,\ldots,y_n\)</span> son idénticamente e independientemente distribuidos (<em>i.i.d.</em>) como <span class="math inline">\(N(\mu, \sigma^2)\)</span> y tomamos <span class="math inline">\(a_i = n^{-1}\)</span>. Entonces, tenemos
+<span class="math display">\[
+\overline{y} = \frac{1}{n}\sum_{i=1}^n y_i \sim N\left( \mu ,\frac{\sigma^2}{n}\right) .
+\]</span>
+Equivalente a esto, <span class="math inline">\(\sqrt{n}\left( \overline{y}-\mu \right) /\sigma\)</span> es normal estándar.</p>
+<p>Por lo tanto, la importante estadística muestral <span class="math inline">\(\overline{y}\)</span> tiene una distribución normal. Además, también se puede calcular la distribución de la varianza muestral <span class="math inline">\(s_y^2\)</span>. Para <span class="math inline">\(y_1,\ldots,y_n\)</span> que son i.i.d. <span class="math inline">\(N(\mu ,\sigma^2)\)</span>, tenemos que <span class="math inline">\(\left( n-1\right) s_y^2 /\sigma^2\sim \chi_{n-1}^2\)</span>, una distribución <span class="math inline">\(\chi^2\)</span> (chi-cuadrado) con <span class="math inline">\(n-1\)</span> grados de libertad. Además, <span class="math inline">\(\overline{y}\)</span> es independiente de <span class="math inline">\(s_y^2\)</span>. A partir de estos dos resultados, tenemos que
+<span class="math display">\[
+\frac{\sqrt{n}}{s_y}\left( \overline{y}-\mu \right) \sim t_{n-1},
+\]</span>
+una distribución <span class="math inline">\(t\)</span> con <span class="math inline">\(n-1\)</span> grados de libertad.</p>
+</div>
+<div id="estimación-y-predicción" class="section level3 unnumbered hasAnchor">
+<h3>Estimación y Predicción<a href="apéndices.html#estimación-y-predicción" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Supongamos que <span class="math inline">\(y_1,\ldots,y_n\)</span> son variables aleatorias i.i.d. de una distribución que se puede resumir mediante un parámetro desconocido <span class="math inline">\(\theta\)</span>. Nos interesa la calidad de una estimación de <span class="math inline">\(\theta\)</span> y denotamos <span class="math inline">\(\widehat{\theta}\)</span> como este estimador. Por ejemplo, consideramos <span class="math inline">\(\theta = \mu\)</span> con <span class="math inline">\(\widehat{\theta} = \overline{y}\)</span> y <span class="math inline">\(\theta = \sigma^2\)</span> con <span class="math inline">\(\widehat{\theta} = s_y^2\)</span> como nuestros principales ejemplos.</p>
+<p><strong>Estimación Puntual e Imparcialidad.</strong> Dado que <span class="math inline">\(\widehat{\theta}\)</span> proporciona una aproximación (única) de <span class="math inline">\(\theta\)</span>, se le conoce como una <em>estimación puntual</em> de <span class="math inline">\(\theta\)</span>. Como estadística, <span class="math inline">\(\widehat{\theta}\)</span> es una función de las observaciones <span class="math inline">\(y_1,\ldots,y_n\)</span> que varía de una muestra a otra. Por lo tanto, los valores de <span class="math inline">\(\widehat{\theta}\)</span> varían de una muestra a otra. Para examinar qué tan cerca tiende a estar <span class="math inline">\(\widehat{\theta}\)</span> de <span class="math inline">\(\theta\)</span>, examinamos varias propiedades de <span class="math inline">\(\widehat{\theta}\)</span>, en particular, el <em>sesgo</em> y la <em>consistencia</em>. Se dice que un estimador puntual <span class="math inline">\(\widehat{\theta}\)</span> es un <em>estimador imparcial</em> de <span class="math inline">\(\theta\)</span> si <span class="math inline">\(\mathrm{E~}\widehat{\theta} = \theta\)</span>. Por ejemplo, dado que <span class="math inline">\(\mathrm{E~}\overline{y} = \mu\)</span>, <span class="math inline">\(\overline{y}\)</span> es un estimador imparcial de <span class="math inline">\(\mu\)</span>.</p>
+<p><strong>Propiedades de Muestras Finitas versus Propiedades de Muestras Grandes de los Estimadores.</strong> Se dice que el sesgo es una propiedad de <em>muestra finita</em> ya que es válida para cada tamaño de muestra <span class="math inline">\(n\)</span>. Una propiedad <em>límite</em> o de <em>muestra grande</em> es la <em>consistencia</em>. La consistencia se expresa de dos maneras: <em>consistencia débil</em> y <em>consistencia fuerte</em>. Se dice que un estimador es <em>débilmente consistente</em> si
+<span class="math display">\[
+\lim_{n\rightarrow \infty }\Pr \left( |\widehat{\theta }-\theta |&lt;h\right) = 1,
+\]</span>
+para cada <span class="math inline">\(h\)</span> positivo. Se dice que un estimador es <em>fuertemente consistente</em> si <span class="math inline">\(\lim_{n\rightarrow \infty }~\widehat{\theta }=\theta\)</span>, con probabilidad uno.</p>
+<p><strong>Principio de Estimación de Mínimos Cuadrados.</strong> En este texto, se utilizan dos principios principales de estimación: la estimación por <em>mínimos cuadrados</em> y la estimación por <em>máxima verosimilitud</em>. Para el procedimiento de mínimos cuadrados, consideremos variables aleatorias independientes <span class="math inline">\(y_1,\ldots,y_n\)</span> con medias <span class="math inline">\(\mathrm{E~}y_i = \mathrm{g}_i(\theta )\)</span>. Aquí, <span class="math inline">\(\mathrm{g}_i(.)\)</span> es una función conocida excepto por <span class="math inline">\(\theta\)</span>, el parámetro desconocido. El estimador de mínimos cuadrados es el valor de <span class="math inline">\(\theta\)</span> que minimiza la suma de cuadrados
+<span class="math display">\[
+\mathrm{SS}(\theta )=\sum_{i=1}^n\left( y_i-\mathrm{g}_i(\theta )\right)^2.
+\]</span></p>
+<p><strong>Principio de Estimación de Máxima Verosimilitud.</strong> Las estimaciones por máxima verosimilitud son los valores del parámetro que son “más probables” de haber sido producidos por los datos. Consideremos las variables aleatorias independientes <span class="math inline">\(y_1,\ldots,y_n\)</span> con función de probabilidad <span class="math inline">\(\mathrm{f}_i(a_i,\theta )\)</span>. Aquí, <span class="math inline">\(\mathrm{f}_i(a_i,\theta )\)</span> se interpreta como una función de masa de probabilidad para <span class="math inline">\(y_i\)</span> discreto o una función de densidad de probabilidad para <span class="math inline">\(y_i\)</span> continuo, evaluada en <span class="math inline">\(a_i\)</span>, la realización de <span class="math inline">\(y_i\)</span>. Se asume que la función <span class="math inline">\(\mathrm{f}_i(a_i,\theta )\)</span> es conocida excepto por <span class="math inline">\(\theta\)</span>, el parámetro desconocido. La verosimilitud de las variables aleatorias <span class="math inline">\(y_1,\ldots,y_n\)</span> tomando valores <span class="math inline">\(a_1,\ldots,a_n\)</span> es
+<span class="math display">\[
+\mathrm{L}(\theta )=\prod\limits_{i=1}^n \mathrm{f}_i(a_i,\theta ).
+\]</span></p>
+<p>El valor de <span class="math inline">\(\theta\)</span> que maximiza <span class="math inline">\(\mathrm{L}(\theta )\)</span> se llama el <em>estimador de máxima verosimilitud</em>.</p>
+<p><strong>Intervalos de Confianza.</strong> Aunque las estimaciones puntuales proporcionan una aproximación única a los parámetros, las <em>estimaciones por intervalo</em> proporcionan un rango que incluye parámetros con un cierto nivel de probabilidad preespecificado, o <em>confianza</em>. Un par de estadísticas, <span class="math inline">\(\widehat{\theta }_1\)</span> y <span class="math inline">\(\widehat{\theta }_{2}\)</span>, proporcionan un intervalo de la forma <span class="math inline">\(\left[ \widehat{\theta }_1 &lt; \widehat{\theta }_{2}\right]\)</span>. Este intervalo es un intervalo de confianza de <span class="math inline">\(100(1-\alpha )\%\)</span> para <span class="math inline">\(\theta\)</span> si
+<span class="math display">\[
+\Pr \left( \widehat{\theta }_1 &lt; \theta &lt; \widehat{\theta }_{2}\right) \geq 1-\alpha .
+\]</span>
+Por ejemplo, supongamos que <span class="math inline">\(y_1,\ldots,y_n\)</span> son variables aleatorias i.i.d. <span class="math inline">\(N(\mu ,\sigma^2)\)</span>. Recuerde que <span class="math inline">\(\sqrt{n}\left( \overline{y}-\mu\right) /s_y\sim t_{n-1}\)</span>. Este hecho nos permite desarrollar un intervalo de confianza de <span class="math inline">\(100(1-\alpha )\%\)</span> para <span class="math inline">\(\mu\)</span> de la forma <span class="math inline">\(\overline{y}\pm (t-value)s_y/ \sqrt{n}\)</span>, donde <span class="math inline">\(t-value\)</span> es el percentil <span class="math inline">\((1-\alpha /2)^{th}\)</span> de una distribución <span class="math inline">\(t\)</span> con <span class="math inline">\(n-1\)</span> grados de libertad.</p>
+<p><strong>Intervalos de Predicción.</strong> Los intervalos de predicción tienen la misma forma que los intervalos de confianza. Sin embargo, un intervalo de confianza proporciona un rango para un parámetro, mientras que un intervalo de predicción proporciona un rango para valores externos de las observaciones. Basado en las observaciones <span class="math inline">\(y_1,\ldots,y_n\)</span>, buscamos construir estadísticas <span class="math inline">\(\widehat{\theta }_1\)</span> y <span class="math inline">\(\widehat{\theta }_{2}\)</span> tal que
+<span class="math display">\[
+\Pr \left( \widehat{\theta }_1 &lt; y^{\ast } &lt; \widehat{\theta }_{2}\right) \geq 1-\alpha .
+\]</span>
+Aquí, <span class="math inline">\(y^{\ast }\)</span> es una observación adicional que no forma parte de la muestra.</p>
+</div>
+<div id="pruebas-de-hipótesis" class="section level3 unnumbered hasAnchor">
+<h3>Pruebas de Hipótesis<a href="apéndices.html#pruebas-de-hipótesis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Hipótesis Nula y Alternativa y Estadísticos de Prueba.</strong> Un procedimiento estadístico importante implica verificar ideas sobre los parámetros. Es decir, antes de que se observen los datos, se formulan ciertas ideas sobre los parámetros. En este texto, consideramos una <em>hipótesis nula</em> de la forma <span class="math inline">\(H_0:\theta =\theta_0\)</span> frente a una <em>hipótesis alternativa</em>. Consideramos tanto una <em>alternativa de dos colas</em>, <span class="math inline">\(H_{a}:\theta \neq \theta_0\)</span>, como alternativas <em>de una cola</em>, ya sea <span class="math inline">\(H_{a}:\theta &gt;\theta_0\)</span> o <span class="math inline">\(H_{a}:\theta &lt;\theta_0\)</span>. Para elegir entre estas hipótesis competidoras, utilizamos un estadístico de prueba <span class="math inline">\(T_n\)</span> que típicamente es una estimación puntual de <span class="math inline">\(\theta\)</span> o una versión reescalada para ajustarse a una distribución de referencia bajo <span class="math inline">\(H_0\)</span>. Por ejemplo, para probar <span class="math inline">\(H_0:\mu =\mu_0\)</span>, a menudo usamos <span class="math inline">\(T_n= \overline{y}\)</span> o <span class="math inline">\(T_n=\sqrt{n}\left( \overline{y}-\mu_0\right) /s_y\)</span>. Nótese que esta última opción tiene una distribución <span class="math inline">\(t_{n-1}\)</span>, bajo los supuestos de datos normales i.i.d.</p>
+<p><strong>Regiones de Rechazo y Nivel de Significancia.</strong> Con un estadístico en mano, ahora establecemos un criterio para decidir entre las dos hipótesis competidoras. Esto se puede hacer estableciendo una <em>región de rechazo</em> o <em>región crítica</em>. La región crítica consiste en todos los posibles resultados de <span class="math inline">\(T_n\)</span> que nos llevan a rechazar <span class="math inline">\(H_0\)</span> a favor de <span class="math inline">\(H_{a}\)</span>. Para especificar la región crítica, primero cuantificamos los tipos de errores que se pueden cometer en el procedimiento de toma de decisiones. Un <em>error de Tipo I</em> consiste en rechazar <span class="math inline">\(H_0\)</span> falsamente y un <em>error de Tipo II</em> consiste en rechazar <span class="math inline">\(H_{a}\)</span> falsamente. La probabilidad de un error de Tipo I se llama <em>nivel de significancia</em>. Preespecificar el nivel de significancia es a menudo suficiente para determinar la región crítica. Por ejemplo, supongamos que <span class="math inline">\(y_1,\ldots,y_n\)</span> son i.i.d. <span class="math inline">\(N(\mu ,\sigma^2)\)</span> y estamos interesados en decidir entre <span class="math inline">\(H_0:\mu =\mu_0\)</span> y <span class="math inline">\(H_{a}:\mu &gt; \mu_0\)</span>. Pensando en nuestro estadístico de prueba <span class="math inline">\(T_n=\overline{y}\)</span>, sabemos que nos gustaría rechazar <span class="math inline">\(H_0\)</span> si <span class="math inline">\(\overline{y}\)</span> es mayor que <span class="math inline">\(\mu_0\)</span>. La pregunta es ¿cuánto mayor? Especificando un nivel de significancia <span class="math inline">\(\alpha\)</span>, deseamos encontrar una región crítica de la forma <span class="math inline">\(\{\overline{y}&gt;c\}\)</span> para alguna constante <span class="math inline">\(c\)</span>. Con este fin, tenemos
+<span class="math display">\[
+\begin{array}{ll}
+\alpha  &amp;= \Pr \mathrm{(Error~Tipo~I)} = \Pr (\mathrm{Rechazar~}H_0 \mathrm{~asumiendo~} H_0:\mu =\mu_0 \mathrm{~es~verdadera)} \\
+&amp; = \Pr (\overline{y}&gt;c) = \Pr \left(\sqrt{n}\left( \overline{y}-\mu_0\right)/s_y&gt;\sqrt{n}\left( c-\mu_0 \right)/s_y\right) \\
+&amp;= \Pr \left(t_{n-1}&gt;\sqrt{n}\left( c-\mu_0 \right)/s_y\right).
+\end{array}
+\]</span></p>
+<p>Con <span class="math inline">\(df=n-1\)</span> grados de libertad, tenemos que <span class="math inline">\(t-value = \sqrt{n}\left( c-\mu_0\right)/s_y\)</span> donde el <span class="math inline">\(t-value\)</span> es el percentil <span class="math inline">\((1-\alpha)^{th}\)</span> de una distribución <span class="math inline">\(t\)</span>. Así, resolviendo para <span class="math inline">\(c\)</span>, nuestra región crítica es de la forma <span class="math inline">\(\{\overline{y} &gt; \mu_0 + (t-value)/s_y/\sqrt{n}\}\)</span>.</p>
+<p><strong>Relación entre Intervalos de Confianza y Pruebas de Hipótesis.</strong> Cálculos similares muestran que, para probar <span class="math inline">\(H_0:\mu = \mu_0\)</span> frente a <span class="math inline">\(H_{a}:\theta \neq \theta_0\)</span>, la región crítica es de la forma
+<span class="math display">\[
+\{ \overline{y} &gt; \mu_0 + (t-value)/s_y/\sqrt{n} ~\mathrm{o~} \overline{y} &lt; \mu_0 - (t-value)/s_y/\sqrt{n}\} .
+\]</span>
+Aquí, el <span class="math inline">\(t\)</span>-value es el percentil <span class="math inline">\((1-\alpha /2)^{th}\)</span> de una distribución <span class="math inline">\(t\)</span> con <span class="math inline">\(df=n-1\)</span> grados de libertad. Es interesante notar que el evento de caer en esta región crítica de dos colas es equivalente al evento de que <span class="math inline">\(\mu_0\)</span> caiga fuera del intervalo de confianza <span class="math inline">\(\overline{y}\pm (t-value)s_y/\sqrt{n}\)</span>. Esto establece el hecho de que los intervalos de confianza y las pruebas de hipótesis realmente están reportando la misma evidencia con un énfasis diferente en la interpretación de la inferencia estadística.</p>
+<p><strong><span class="math inline">\(p\)</span>-valor.</strong> Otro concepto útil en las pruebas de hipótesis es el <span class="math inline">\(p\)</span>-valor, que es la abreviatura de <em>valor de probabilidad</em>. Para un conjunto de datos, un <span class="math inline">\(p\)</span>-valor se define como el nivel de significancia más pequeño para el cual se rechazaría la hipótesis nula. El <span class="math inline">\(p\)</span>-valor es un estadístico resumen útil para que el analista de datos lo informe, ya que permite al lector comprender la fuerza de la desviación de la hipótesis nula.</p>
+</div>
+</div>
+<div id="apéndice-a2.-álgebra-de-matrices" class="section level2 unnumbered hasAnchor">
+<h2>Apéndice A2. Álgebra de Matrices<a href="apéndices.html#apéndice-a2.-álgebra-de-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="definiciones-básicas" class="section level3 unnumbered hasAnchor">
+<h3>Definiciones Básicas<a href="apéndices.html#definiciones-básicas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><em>Matriz</em> - un arreglo rectangular de números organizados en filas y columnas (el plural de matriz es matrices).</p></li>
+<li><p><em>Dimensión</em> de la matriz - el número de filas y columnas de la matriz.</p></li>
+<li><p>Consideremos una matriz <span class="math inline">\(\mathbf{A}\)</span> que tiene dimensiones <span class="math inline">\(m \times k\)</span>. Sea <span class="math inline">\(a_{ij}\)</span> el símbolo para el número en la fila <span class="math inline">\(i\)</span> y la columna <span class="math inline">\(j\)</span> de <span class="math inline">\(\mathbf{A}\)</span>. En general, trabajamos con matrices de la forma
+<span class="math display">\[
+\mathbf{A} = \left(
+\begin{array}{cccc}
+a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1k} \\
+a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2k} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mk}
+\end{array}
+\right) .
+\]</span></p></li>
+<li><p><em>Vector</em> - un vector (columna) es una matriz que contiene solo una fila (<span class="math inline">\(m=1\)</span>).</p></li>
+<li><p><em>Vector fila</em> - una matriz que contiene solo una columna (<span class="math inline">\(k=1\)</span>).</p></li>
+<li><p><em>Transpuesta</em> - la transpuesta de una matriz <span class="math inline">\(\mathbf{A}\)</span> se define al intercambiar las filas y las columnas y se denota por <span class="math inline">\(\mathbf{A}^{\prime}\)</span> (o <span class="math inline">\(\mathbf{A}^{\mathrm{T}}\)</span>). Así, si <span class="math inline">\(\mathbf{A}\)</span> tiene dimensión <span class="math inline">\(m \times k\)</span>, entonces <span class="math inline">\(\mathbf{A}^{\prime}\)</span> tiene dimensión <span class="math inline">\(k \times m\)</span>.</p></li>
+<li><p><em>Matriz cuadrada</em> - una matriz donde el número de filas es igual al número de columnas, es decir, <span class="math inline">\(m=k\)</span>.</p></li>
+<li><p><em>Elemento diagonal</em> - el número en la fila <span class="math inline">\(r\)</span> y columna <span class="math inline">\(r\)</span> de una matriz cuadrada, <span class="math inline">\(r=1,2,\ldots\)</span></p></li>
+<li><p><em>Matriz diagonal</em> - una matriz cuadrada donde todos los números no diagonales son iguales a cero.</p></li>
+<li><p><em>Matriz identidad</em> - una matriz diagonal donde todos los elementos diagonales son iguales a uno y se denota por <span class="math inline">\(\mathbf{I}\)</span>.</p></li>
+<li><p><em>Matriz simétrica</em> - una matriz cuadrada <span class="math inline">\(\mathbf{A}\)</span> tal que la matriz permanece sin cambios si intercambiamos los roles de las filas y las columnas, es decir, si <span class="math inline">\(\mathbf{A} = \mathbf{A}^{\prime}\)</span>. Nótese que una matriz diagonal es una matriz simétrica.</p></li>
+</ul>
+</div>
+<div id="revisión-de-operaciones-básicas" class="section level3 unnumbered hasAnchor">
+<h3>Revisión de Operaciones Básicas<a href="apéndices.html#revisión-de-operaciones-básicas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><em>Multiplicación por un escalar</em>. Sea <span class="math inline">\(c\)</span> un número real, llamado <em>escalar</em> (una matriz de <span class="math inline">\(1 \times 1\)</span>). Multiplicar un escalar <span class="math inline">\(c\)</span> por una matriz <span class="math inline">\(\mathbf{A}\)</span> se denota por <span class="math inline">\(c \mathbf{A}\)</span> y se define por
+<span class="math display">\[
+c\mathbf{A} = \left(
+\begin{array}{cccc}
+ca_{11} &amp; ca_{12} &amp; \cdots &amp; ca_{1k} \\
+ca_{21} &amp; ca_{22} &amp; \cdots &amp; ca_{2k} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+ca_{m1} &amp; ca_{m2} &amp; \cdots &amp; ca_{mk}
+\end{array}
+\right) .
+\]</span></p></li>
+<li><p><em>Suma y resta de matrices</em>. Sean <span class="math inline">\(\mathbf{A}\)</span> y <span class="math inline">\(\mathbf{B}\)</span> matrices, cada una con dimensión <span class="math inline">\(m \times k\)</span>. Utilice <span class="math inline">\(a_{ij}\)</span> y <span class="math inline">\(b_{ij}\)</span> para denotar los números en la fila <span class="math inline">\(i\)</span> y columna <span class="math inline">\(j\)</span> de <span class="math inline">\(\mathbf{A}\)</span> y <span class="math inline">\(\mathbf{B}\)</span>, respectivamente. Entonces, la matriz <span class="math inline">\(\mathbf{C} = \mathbf{A} + \mathbf{B}\)</span> se define como la matriz con el número <span class="math inline">\((a_{ij} + b_{ij})\)</span> para denotar el número en la fila <span class="math inline">\(i\)</span> y la columna <span class="math inline">\(j\)</span>. De manera similar, la matriz <span class="math inline">\(\mathbf{C} = \mathbf{A} - \mathbf{B}\)</span> se define como la matriz con el número <span class="math inline">\((a_{ij} - b_{ij})\)</span> para denotar los números en la fila <span class="math inline">\(i\)</span> y la columna <span class="math inline">\(j\)</span>.</p></li>
+<li><p><em>Multiplicación de matrices</em>. Si <span class="math inline">\(\mathbf{A}\)</span> es una matriz de dimensión <span class="math inline">\(m \times c\)</span> y <span class="math inline">\(\mathbf{B}\)</span> es una matriz de dimensión <span class="math inline">\(c \times k\)</span>, entonces <span class="math inline">\(\mathbf{C} = \mathbf{A} \mathbf{B}\)</span> es una matriz de dimensión <span class="math inline">\(m \times k\)</span>. El número en la fila <span class="math inline">\(i\)</span> y columna <span class="math inline">\(j\)</span> de <span class="math inline">\(\mathbf{C}\)</span> es <span class="math inline">\(\sum_{s=1}^c a_{is} b_{sj}\)</span>.</p></li>
+<li><p><em>Determinante</em> - una función de una matriz cuadrada, denotada por <span class="math inline">\(\mathrm{det}(\mathbf{A})\)</span>, o <span class="math inline">\(|\mathbf{A}|\)</span>. Para una matriz de <span class="math inline">\(1 \times 1\)</span>, el determinante es <span class="math inline">\(\mathrm{det}(\mathbf{A}) = a_{11}\)</span>. Para definir determinantes de matrices más grandes, necesitamos dos conceptos adicionales. Sea <span class="math inline">\(\mathbf{A}_{rs}\)</span> la submatriz de dimensión <span class="math inline">\((m-1) \times (m-1)\)</span> de <span class="math inline">\(\mathbf{A}\)</span> definida al eliminar la fila <span class="math inline">\(r\)</span> y la columna <span class="math inline">\(s\)</span>. Recursivamente, definimos <span class="math inline">\(\mathrm{det}(\mathbf{A}) = \sum_{s=1}^m (-1)^{r+s} a_{rs} \mathrm{det}(\mathbf{A}_{rs})\)</span>, para cualquier <span class="math inline">\(r=1,\ldots,m\)</span>. Por ejemplo, para <span class="math inline">\(m=2\)</span>, tenemos <span class="math inline">\(\mathrm{det}(\mathbf{A}) = a_{11}a_{22} - a_{12}a_{21}\)</span>.</p></li>
+<li><p><em>Inversa de una matriz</em>. En álgebra de matrices, no existe el concepto de división. En su lugar, extendemos el concepto de recíprocos de números reales. Para comenzar, supongamos que <span class="math inline">\(\mathbf{A}\)</span> es una matriz cuadrada de dimensión <span class="math inline">\(m \times m\)</span> tal que <span class="math inline">\(\mathrm{det}(\mathbf{A}) \neq 0\)</span>. Además, sea <span class="math inline">\(\mathbf{I}\)</span> la matriz identidad de <span class="math inline">\(m \times m\)</span>. Si existe una matriz <span class="math inline">\(m \times m\)</span> <span class="math inline">\(\mathbf{B}\)</span> tal que <span class="math inline">\(\mathbf{AB = I = BA}\)</span>, entonces <span class="math inline">\(\mathbf{B}\)</span> se llama la <em>inversa</em> de <span class="math inline">\(\mathbf{A}\)</span> y se escribe como <span class="math inline">\(\mathbf{B} = \mathbf{A}^{-1}\)</span>.</p></li>
+</ul>
+</div>
+<div id="definiciones-adicionales" class="section level3 unnumbered hasAnchor">
+<h3>Definiciones Adicionales<a href="apéndices.html#definiciones-adicionales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p><em>Vectores linealmente dependientes</em> – un conjunto de vectores <span class="math inline">\(\mathbf{c}_{1},\ldots,\mathbf{c}_{k}\)</span> se dice que son linealmente dependientes si uno de los vectores en el conjunto puede ser escrito como una combinación lineal de los otros.</p></li>
+<li><p><em>Vectores linealmente independientes</em> – un conjunto de vectores <span class="math inline">\(\mathbf{c}_{1},\ldots,\mathbf{c}_{k}\)</span> se dice que son linealmente independientes si no son linealmente dependientes. Específicamente, un conjunto de vectores <span class="math inline">\(\mathbf{c}_{1},\ldots,\mathbf{c}_{k}\)</span> se dice que son linealmente independientes si y solo si la única solución de la ecuación <span class="math inline">\(x_{1}\mathbf{c}_{1} + \ldots + x_{k}\mathbf{c}_{k} = 0\)</span> es <span class="math inline">\(x_{1} = \ldots = x_{k} = 0\)</span>.</p></li>
+<li><p><em>Rango de una matriz</em> – el mayor número de columnas (o filas) linealmente independientes de una matriz.</p></li>
+<li><p><em>Matriz singular</em> – una matriz cuadrada <span class="math inline">\(\mathbf{A}\)</span> tal que <span class="math inline">\(\mathrm{det}(\mathbf{A}) = 0\)</span>.</p></li>
+<li><p><em>Matriz no singular</em> – una matriz cuadrada <span class="math inline">\(\mathbf{A}\)</span> tal que <span class="math inline">\(\mathrm{det}(\mathbf{A}) \neq 0\)</span>.</p></li>
+<li><p><em>Matriz definida positiva</em> – una matriz cuadrada simétrica <span class="math inline">\(\mathbf{A}\)</span> tal que <span class="math inline">\(\mathbf{x}^{\prime}\mathbf{Ax} &gt; 0\)</span> para <span class="math inline">\(\mathbf{x} \neq 0\)</span>.</p></li>
+<li><p><em>Matriz definida no negativa</em> – una matriz cuadrada simétrica <span class="math inline">\(\mathbf{A}\)</span> tal que <span class="math inline">\(\mathbf{x}^{\prime}\mathbf{Ax} \geq 0\)</span> para <span class="math inline">\(\mathbf{x} \neq 0\)</span>.</p></li>
+<li><p><em>Ortogonal</em> – dos matrices <span class="math inline">\(\mathbf{A}\)</span> y <span class="math inline">\(\mathbf{B}\)</span> son ortogonales si <span class="math inline">\(\mathbf{A}^{\prime}\mathbf{B} = 0\)</span>, una matriz cero.</p></li>
+<li><p><em>Idempotente</em> – una matriz cuadrada tal que <span class="math inline">\(\mathbf{AA = A}\)</span>.</p></li>
+<li><p><em>Traza</em> – la suma de todos los elementos diagonales de una matriz cuadrada.</p></li>
+<li><p><em>Valores propios</em> – las soluciones del polinomio de grado <span class="math inline">\(n\)</span> <span class="math inline">\(\mathrm{det}(\mathbf{A} - \lambda \mathbf{I}) = 0\)</span>. También conocidos como <em>raíces características</em> y <em>raíces latentes</em>.</p></li>
+<li><p><em>Vector propio</em> – un vector <span class="math inline">\(\mathbf{x}\)</span> tal que <span class="math inline">\(\mathbf{Ax} = \lambda \mathbf{x}\)</span>, donde <span class="math inline">\(\lambda\)</span> es un valor propio de <span class="math inline">\(\mathbf{A}\)</span>. También conocido como <em>vector característico</em> y <em>vector latente</em>.</p></li>
+<li><p><em>Inversa generalizada</em> - de una matriz <span class="math inline">\(\mathbf{A}\)</span> es una matriz <span class="math inline">\(\mathbf{B}\)</span> tal que <span class="math inline">\(\mathbf{ABA = A}\)</span>. Usamos la notación <span class="math inline">\(\mathbf{A}^{-}\)</span> para denotar la inversa generalizada de <span class="math inline">\(\mathbf{A}\)</span>. En el caso de que <span class="math inline">\(\mathbf{A}\)</span> sea invertible, entonces <span class="math inline">\(\mathbf{A}^{-}\)</span> es única y es igual a <span class="math inline">\(\mathbf{A}^{-1}\)</span>. Aunque existen varias definiciones de inversas generalizadas, la definición anterior es suficiente para nuestros propósitos. Ver Searle (1987) para una discusión adicional de definiciones alternativas de inversas generalizadas.</p></li>
+<li><p><em>Vector gradiente</em> – un vector de derivadas parciales. Si <span class="math inline">\(\mathrm{f}(.)\)</span> es una función del vector <span class="math inline">\(\mathbf{x} = (x_1,\ldots,x_m)^{\prime}\)</span>, entonces el vector gradiente es <span class="math inline">\(\partial \mathrm{f}(\mathbf{x})/\partial \mathbf{x}\)</span>. La fila <span class="math inline">\(i\)</span> del vector gradiente es <span class="math inline">\(\partial \mathrm{f}(\mathbf{x})/\partial x_i\)</span>.</p></li>
+<li><p><em>Matriz Hessiana</em> – una matriz de segundas derivadas. Si <span class="math inline">\(\mathrm{f}(.)\)</span> es una función del vector <span class="math inline">\(\mathbf{x} = (x_1,\ldots,x_m)^{\prime}\)</span>, entonces la matriz Hessiana es <span class="math inline">\(\partial^2 \mathrm{f}(\mathbf{x})/\partial \mathbf{x}\partial \mathbf{x}^{\prime}\)</span>. El elemento en la fila <span class="math inline">\(i\)</span> y la columna <span class="math inline">\(j\)</span> de la matriz Hessiana es <span class="math inline">\(\partial^{2}\mathrm{f}(\mathbf{x})/\partial x_i\partial x_j\)</span>.</p></li>
+</ul>
+</div>
+</div>
+<div id="apéndice-a3.-tablas-de-probabilidad" class="section level2 unnumbered hasAnchor">
+<h2>Apéndice A3. Tablas de Probabilidad<a href="apéndices.html#apéndice-a3.-tablas-de-probabilidad" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="distribución-normal" class="section level3 unnumbered hasAnchor">
+<h3>Distribución Normal<a href="apéndices.html#distribución-normal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Recuerde de la ecuación (1.1) que la función de densidad de probabilidad está definida por
+<span class="math display">\[
+\mathrm{f}(y) = \frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{1}{2\sigma^2 }\left( y-\mu \right)^2\right)
+\]</span>
+donde <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma^2\)</span> son parámetros que describen la curva. En este caso, escribimos <span class="math inline">\(y \sim N(\mu,\sigma^2)\)</span>. Cálculos sencillos muestran que
+<span class="math display">\[
+\mathrm{E}~y = \int_{-\infty}^{\infty} y \mathrm{f}(y) \, dy = \int_{-\infty}^{\infty}  y \frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{1}{2\sigma^2 }\left( y-\mu \right)^2 \right)  \, dy  = \mu
+\]</span>
+y
+<span class="math display">\[
+\mathrm{Var}~y = \int_{-\infty}^{\infty} (y-\mu)^2 \mathrm{f}(y) \, dy = \int_{-\infty}^{\infty} (y-\mu)^2 \frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{1}{2\sigma^2 }\left( y-\mu \right)^2 \right) \, dy = \sigma^2 .
+\]</span>
+Así, la notación <span class="math inline">\(y \sim N(\mu,\sigma^2)\)</span> se interpreta como que la variable aleatoria está distribuida normalmente con media <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma^2\)</span>. Si <span class="math inline">\(y \sim N(0,1)\)</span>, entonces se dice que <span class="math inline">\(y\)</span> es <em>normal estándar</em>.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:FigA1"></span>
+<img src="RegressionMarkdown_files/figure-html/FigA1-1.png" alt="Función de densidad de probabilidad normal estándar" width="60%" />
+<p class="caption">
+Figura 14.1: <strong>Función de densidad de probabilidad normal estándar</strong>
+</p>
+</div>
+<table style="width:100%;">
+<caption><span id="tab:unnamed-chunk-339">Tabla 14.1: </span><strong>Función de Distribución Normal Estándar</strong></caption>
+<colgroup>
+<col width="5%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right"><span class="math inline">\(y\)</span></th>
+<th align="right">0.0</th>
+<th align="right">0.1</th>
+<th align="right">0.2</th>
+<th align="right">0.3</th>
+<th align="right">0.4</th>
+<th align="right">0.5</th>
+<th align="right">0.6</th>
+<th align="right">0.7</th>
+<th align="right">0.8</th>
+<th align="right">0.9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">0.5000</td>
+<td align="right">0.5398</td>
+<td align="right">0.5793</td>
+<td align="right">0.6179</td>
+<td align="right">0.6554</td>
+<td align="right">0.6915</td>
+<td align="right">0.7257</td>
+<td align="right">0.7580</td>
+<td align="right">0.7881</td>
+<td align="right">0.8159</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">0.8413</td>
+<td align="right">0.8643</td>
+<td align="right">0.8849</td>
+<td align="right">0.9032</td>
+<td align="right">0.9192</td>
+<td align="right">0.9332</td>
+<td align="right">0.9452</td>
+<td align="right">0.9554</td>
+<td align="right">0.9641</td>
+<td align="right">0.9713</td>
+</tr>
+<tr class="odd">
+<td align="right">2</td>
+<td align="right">0.9772</td>
+<td align="right">0.9821</td>
+<td align="right">0.9861</td>
+<td align="right">0.9893</td>
+<td align="right">0.9918</td>
+<td align="right">0.9938</td>
+<td align="right">0.9953</td>
+<td align="right">0.9965</td>
+<td align="right">0.9974</td>
+<td align="right">0.9981</td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="right">0.9987</td>
+<td align="right">0.9990</td>
+<td align="right">0.9993</td>
+<td align="right">0.9995</td>
+<td align="right">0.9997</td>
+<td align="right">0.9998</td>
+<td align="right">0.9998</td>
+<td align="right">0.9999</td>
+<td align="right">0.9999</td>
+<td align="right">1.0000</td>
+</tr>
+</tbody>
+</table>
+<p><em>Notas</em>: Las probabilidades se pueden encontrar buscando en la fila adecuada para el dígito inicial y la columna para el decimal. Por ejemplo, <span class="math inline">\(\Pr ( y \le 0.1) = 0.5398\)</span>.</p>
+</div>
+<div id="distribución-chi-cuadrado" class="section level3 unnumbered hasAnchor">
+<h3>Distribución Chi-Cuadrado<a href="apéndices.html#distribución-chi-cuadrado" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Distribución Chi-Cuadrado</strong>. Varias distribuciones importantes pueden vincularse a la distribución normal. Si <span class="math inline">\(y_1, \ldots, y_n\)</span> son variables aleatorias i.i.d. tales que cada <span class="math inline">\(y_i \sim N(0,1)\)</span>, entonces se dice que <span class="math inline">\(\sum_{i=1}^n y_i^2\)</span> tiene una <em>distribución chi-cuadrado</em> con parámetro <span class="math inline">\(n\)</span>. Más generalmente, una variable aleatoria <span class="math inline">\(w\)</span> con función de densidad de probabilidad
+<span class="math display">\[
+\mathrm{f}(w) = \frac{2^{-k/2}}{\Gamma(k/2)} w^{k/2-1} \exp (-w/2), ~~~~~~w &gt; 0
+\]</span>
+se dice que tiene una distribución chi-cuadrado con <span class="math inline">\(df = k\)</span> grados de libertad, escrita como <span class="math inline">\(w \sim \chi_k^2\)</span>. Cálculos sencillos muestran que para <span class="math inline">\(w \sim \chi_k^2\)</span>, tenemos <span class="math inline">\(\mathrm{E}~w = k\)</span> y <span class="math inline">\(\mathrm{Var}~w = 2k\)</span>. En general, el parámetro de grados de libertad no necesita ser un número entero, aunque lo es para las aplicaciones de este texto.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:FigA2"></span>
+<img src="RegressionMarkdown_files/figure-html/FigA2-1.png" alt="Varias funciones de densidad de probabilidad chi-cuadrado. Se muestran curvas para \(df\) = 3, \(df\) = 5, y \(df\) = 10. Un mayor número de grados de libertad conduce a curvas que son menos asimétricas." width="60%" />
+<p class="caption">
+Figura 14.2: <strong>Varias funciones de densidad de probabilidad chi-cuadrado.</strong> Se muestran curvas para <span class="math inline">\(df\)</span> = 3, <span class="math inline">\(df\)</span> = 5, y <span class="math inline">\(df\)</span> = 10. Un mayor número de grados de libertad conduce a curvas que son menos asimétricas.
+</p>
+</div>
+<table style="width:100%;">
+<caption><span id="tab:unnamed-chunk-340">Tabla 14.2: </span><strong>Percentiles de Varias Distribuciones Chi-Cuadrado</strong></caption>
+<colgroup>
+<col width="6%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right"><span class="math inline">\(df\)</span></th>
+<th align="right">0.6</th>
+<th align="right">0.7</th>
+<th align="right">0.8</th>
+<th align="right">0.9</th>
+<th align="right">0.95</th>
+<th align="right">0.975</th>
+<th align="right">0.99</th>
+<th align="right">0.995</th>
+<th align="right">0.9975</th>
+<th align="right">0.999</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">0.71</td>
+<td align="right">1.07</td>
+<td align="right">1.64</td>
+<td align="right">2.71</td>
+<td align="right">3.84</td>
+<td align="right">5.02</td>
+<td align="right">6.63</td>
+<td align="right">7.88</td>
+<td align="right">9.14</td>
+<td align="right">10.83</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1.83</td>
+<td align="right">2.41</td>
+<td align="right">3.22</td>
+<td align="right">4.61</td>
+<td align="right">5.99</td>
+<td align="right">7.38</td>
+<td align="right">9.21</td>
+<td align="right">10.60</td>
+<td align="right">11.98</td>
+<td align="right">13.82</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">2.95</td>
+<td align="right">3.66</td>
+<td align="right">4.64</td>
+<td align="right">6.25</td>
+<td align="right">7.81</td>
+<td align="right">9.35</td>
+<td align="right">11.34</td>
+<td align="right">12.84</td>
+<td align="right">14.32</td>
+<td align="right">16.27</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">4.04</td>
+<td align="right">4.88</td>
+<td align="right">5.99</td>
+<td align="right">7.78</td>
+<td align="right">9.49</td>
+<td align="right">11.14</td>
+<td align="right">13.28</td>
+<td align="right">14.86</td>
+<td align="right">16.42</td>
+<td align="right">18.47</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">5.13</td>
+<td align="right">6.06</td>
+<td align="right">7.29</td>
+<td align="right">9.24</td>
+<td align="right">11.07</td>
+<td align="right">12.83</td>
+<td align="right">15.09</td>
+<td align="right">16.75</td>
+<td align="right">18.39</td>
+<td align="right">20.52</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">10.47</td>
+<td align="right">11.78</td>
+<td align="right">13.44</td>
+<td align="right">15.99</td>
+<td align="right">18.31</td>
+<td align="right">20.48</td>
+<td align="right">23.21</td>
+<td align="right">25.19</td>
+<td align="right">27.11</td>
+<td align="right">29.59</td>
+</tr>
+<tr class="odd">
+<td align="right">15</td>
+<td align="right">15.73</td>
+<td align="right">17.32</td>
+<td align="right">19.31</td>
+<td align="right">22.31</td>
+<td align="right">25.00</td>
+<td align="right">27.49</td>
+<td align="right">30.58</td>
+<td align="right">32.80</td>
+<td align="right">34.95</td>
+<td align="right">37.70</td>
+</tr>
+<tr class="even">
+<td align="right">20</td>
+<td align="right">20.95</td>
+<td align="right">22.77</td>
+<td align="right">25.04</td>
+<td align="right">28.41</td>
+<td align="right">31.41</td>
+<td align="right">34.17</td>
+<td align="right">37.57</td>
+<td align="right">40.00</td>
+<td align="right">42.34</td>
+<td align="right">45.31</td>
+</tr>
+<tr class="odd">
+<td align="right">25</td>
+<td align="right">26.14</td>
+<td align="right">28.17</td>
+<td align="right">30.68</td>
+<td align="right">34.38</td>
+<td align="right">37.65</td>
+<td align="right">40.65</td>
+<td align="right">44.31</td>
+<td align="right">46.93</td>
+<td align="right">49.44</td>
+<td align="right">52.62</td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right">31.32</td>
+<td align="right">33.53</td>
+<td align="right">36.25</td>
+<td align="right">40.26</td>
+<td align="right">43.77</td>
+<td align="right">46.98</td>
+<td align="right">50.89</td>
+<td align="right">53.67</td>
+<td align="right">56.33</td>
+<td align="right">59.70</td>
+</tr>
+<tr class="odd">
+<td align="right">35</td>
+<td align="right">36.47</td>
+<td align="right">38.86</td>
+<td align="right">41.78</td>
+<td align="right">46.06</td>
+<td align="right">49.80</td>
+<td align="right">53.20</td>
+<td align="right">57.34</td>
+<td align="right">60.27</td>
+<td align="right">63.08</td>
+<td align="right">66.62</td>
+</tr>
+<tr class="even">
+<td align="right">40</td>
+<td align="right">41.62</td>
+<td align="right">44.16</td>
+<td align="right">47.27</td>
+<td align="right">51.81</td>
+<td align="right">55.76</td>
+<td align="right">59.34</td>
+<td align="right">63.69</td>
+<td align="right">66.77</td>
+<td align="right">69.70</td>
+<td align="right">73.40</td>
+</tr>
+<tr class="odd">
+<td align="right">60</td>
+<td align="right">62.13</td>
+<td align="right">65.23</td>
+<td align="right">68.97</td>
+<td align="right">74.40</td>
+<td align="right">79.08</td>
+<td align="right">83.30</td>
+<td align="right">88.38</td>
+<td align="right">91.95</td>
+<td align="right">95.34</td>
+<td align="right">99.61</td>
+</tr>
+<tr class="even">
+<td align="right">120</td>
+<td align="right">123.29</td>
+<td align="right">127.62</td>
+<td align="right">132.81</td>
+<td align="right">140.23</td>
+<td align="right">146.57</td>
+<td align="right">152.21</td>
+<td align="right">158.95</td>
+<td align="right">163.65</td>
+<td align="right">168.08</td>
+<td align="right">173.62</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="distribución-t" class="section level3 unnumbered hasAnchor">
+<h3>Distribución <em>t</em><a href="apéndices.html#distribución-t" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Supongamos que <span class="math inline">\(y\)</span> y <span class="math inline">\(w\)</span> son independientes con <span class="math inline">\(y \sim N(0,1)\)</span> y <span class="math inline">\(w \sim \chi_k^2\)</span>. Entonces, se dice que la variable aleatoria <span class="math inline">\(t = y / \sqrt{w/k}\)</span> tiene una distribución <em>t</em> con <span class="math inline">\(df = k\)</span> grados de libertad. La función de densidad de probabilidad es
+<span class="math display">\[
+\mathrm{f}(t) = \frac{\Gamma \left( k+ \frac{1}{2} \right)}{\Gamma(k/2)} \left( k \pi \right)^{-1/2} \left( 1 + \frac{t^2}{k} \right)^{-(k+1/2)}, ~~~~~~-\infty &lt; t &lt; \infty
+\]</span>
+Esto tiene media 0, para <span class="math inline">\(k &gt; 1\)</span>, y varianza <span class="math inline">\(k/(k-2)\)</span> para <span class="math inline">\(k &gt; 2\)</span>.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:FigA3"></span>
+<img src="RegressionMarkdown_files/figure-html/FigA3-1.png" alt="Varias funciones de densidad de probabilidad de la distribución t. La distribución t con \(df = \infty\) es la distribución normal estándar. Se muestran curvas para \(df = 1\), \(df = 5\) (no etiquetado) y \(df = ∞\). Un menor \(df\) significa colas más gruesas." width="60%" />
+<p class="caption">
+Figura 14.3: <strong>Varias funciones de densidad de probabilidad de la distribución <em>t</em>.</strong> La distribución <em>t</em> con <span class="math inline">\(df = \infty\)</span> es la distribución normal estándar. Se muestran curvas para <span class="math inline">\(df = 1\)</span>, <span class="math inline">\(df = 5\)</span> (no etiquetado) y <span class="math inline">\(df = ∞\)</span>. Un menor <span class="math inline">\(df\)</span> significa colas más gruesas.
+</p>
+</div>
+<table>
+<caption><span id="tab:unnamed-chunk-341">Tabla 14.3: </span><strong>Percentiles de varias distribuciones <span class="math inline">\(t\)</span></strong></caption>
+<colgroup>
+<col width="6%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"><span class="math inline">\(df\)</span></th>
+<th align="right">0.6</th>
+<th align="right">0.7</th>
+<th align="right">0.8</th>
+<th align="right">0.9</th>
+<th align="right">0.95</th>
+<th align="right">0.975</th>
+<th align="right">0.99</th>
+<th align="right">0.995</th>
+<th align="right">0.9975</th>
+<th align="right">0.999</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="right">0.325</td>
+<td align="right">0.727</td>
+<td align="right">1.376</td>
+<td align="right">3.078</td>
+<td align="right">6.314</td>
+<td align="right">12.706</td>
+<td align="right">31.821</td>
+<td align="right">63.657</td>
+<td align="right">127.321</td>
+<td align="right">318.309</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="right">0.289</td>
+<td align="right">0.617</td>
+<td align="right">1.061</td>
+<td align="right">1.886</td>
+<td align="right">2.920</td>
+<td align="right">4.303</td>
+<td align="right">6.965</td>
+<td align="right">9.925</td>
+<td align="right">14.089</td>
+<td align="right">22.327</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="right">0.277</td>
+<td align="right">0.584</td>
+<td align="right">0.978</td>
+<td align="right">1.638</td>
+<td align="right">2.353</td>
+<td align="right">3.182</td>
+<td align="right">4.541</td>
+<td align="right">5.841</td>
+<td align="right">7.453</td>
+<td align="right">10.215</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="right">0.271</td>
+<td align="right">0.569</td>
+<td align="right">0.941</td>
+<td align="right">1.533</td>
+<td align="right">2.132</td>
+<td align="right">2.776</td>
+<td align="right">3.747</td>
+<td align="right">4.604</td>
+<td align="right">5.598</td>
+<td align="right">7.173</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="right">0.267</td>
+<td align="right">0.559</td>
+<td align="right">0.920</td>
+<td align="right">1.476</td>
+<td align="right">2.015</td>
+<td align="right">2.571</td>
+<td align="right">3.365</td>
+<td align="right">4.032</td>
+<td align="right">4.773</td>
+<td align="right">5.893</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="right">0.260</td>
+<td align="right">0.542</td>
+<td align="right">0.879</td>
+<td align="right">1.372</td>
+<td align="right">1.812</td>
+<td align="right">2.228</td>
+<td align="right">2.764</td>
+<td align="right">3.169</td>
+<td align="right">3.581</td>
+<td align="right">4.144</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="right">0.258</td>
+<td align="right">0.536</td>
+<td align="right">0.866</td>
+<td align="right">1.341</td>
+<td align="right">1.753</td>
+<td align="right">2.131</td>
+<td align="right">2.602</td>
+<td align="right">2.947</td>
+<td align="right">3.286</td>
+<td align="right">3.733</td>
+</tr>
+<tr class="even">
+<td align="left">20</td>
+<td align="right">0.257</td>
+<td align="right">0.533</td>
+<td align="right">0.860</td>
+<td align="right">1.325</td>
+<td align="right">1.725</td>
+<td align="right">2.086</td>
+<td align="right">2.528</td>
+<td align="right">2.845</td>
+<td align="right">3.153</td>
+<td align="right">3.552</td>
+</tr>
+<tr class="odd">
+<td align="left">25</td>
+<td align="right">0.256</td>
+<td align="right">0.531</td>
+<td align="right">0.856</td>
+<td align="right">1.316</td>
+<td align="right">1.708</td>
+<td align="right">2.060</td>
+<td align="right">2.485</td>
+<td align="right">2.787</td>
+<td align="right">3.078</td>
+<td align="right">3.450</td>
+</tr>
+<tr class="even">
+<td align="left">30</td>
+<td align="right">0.256</td>
+<td align="right">0.530</td>
+<td align="right">0.854</td>
+<td align="right">1.310</td>
+<td align="right">1.697</td>
+<td align="right">2.042</td>
+<td align="right">2.457</td>
+<td align="right">2.750</td>
+<td align="right">3.030</td>
+<td align="right">3.385</td>
+</tr>
+<tr class="odd">
+<td align="left">35</td>
+<td align="right">0.255</td>
+<td align="right">0.529</td>
+<td align="right">0.852</td>
+<td align="right">1.306</td>
+<td align="right">1.690</td>
+<td align="right">2.030</td>
+<td align="right">2.438</td>
+<td align="right">2.724</td>
+<td align="right">2.996</td>
+<td align="right">3.340</td>
+</tr>
+<tr class="even">
+<td align="left">40</td>
+<td align="right">0.255</td>
+<td align="right">0.529</td>
+<td align="right">0.851</td>
+<td align="right">1.303</td>
+<td align="right">1.684</td>
+<td align="right">2.021</td>
+<td align="right">2.423</td>
+<td align="right">2.704</td>
+<td align="right">2.971</td>
+<td align="right">3.307</td>
+</tr>
+<tr class="odd">
+<td align="left">60</td>
+<td align="right">0.254</td>
+<td align="right">0.527</td>
+<td align="right">0.848</td>
+<td align="right">1.296</td>
+<td align="right">1.671</td>
+<td align="right">2.000</td>
+<td align="right">2.390</td>
+<td align="right">2.660</td>
+<td align="right">2.915</td>
+<td align="right">3.232</td>
+</tr>
+<tr class="even">
+<td align="left">120</td>
+<td align="right">0.254</td>
+<td align="right">0.526</td>
+<td align="right">0.845</td>
+<td align="right">1.289</td>
+<td align="right">1.658</td>
+<td align="right">1.980</td>
+<td align="right">2.358</td>
+<td align="right">2.617</td>
+<td align="right">2.860</td>
+<td align="right">3.160</td>
+</tr>
+<tr class="odd">
+<td align="left">∞</td>
+<td align="right">0.253</td>
+<td align="right">0.524</td>
+<td align="right">0.842</td>
+<td align="right">1.282</td>
+<td align="right">1.645</td>
+<td align="right">1.960</td>
+<td align="right">2.326</td>
+<td align="right">2.576</td>
+<td align="right">2.807</td>
+<td align="right">3.090</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="distribución-f" class="section level3 unnumbered hasAnchor">
+<h3>Distribución <em>F</em><a href="apéndices.html#distribución-f" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Supongamos que <span class="math inline">\(w_1\)</span> y <span class="math inline">\(w_2\)</span> son independientes con distribuciones <span class="math inline">\(w_1 \sim \chi_m^2\)</span> y <span class="math inline">\(w_2 \sim \chi_n^2\)</span>. Entonces, la variable aleatoria <span class="math inline">\(F = (w_1/m) / (w_2/n)\)</span> tiene una distribución <em>F</em> con parámetros <span class="math inline">\(df_1 = m\)</span> y <span class="math inline">\(df_2 = n\)</span>, respectivamente. La función de densidad de probabilidad es
+<span class="math display">\[
+\mathrm{f}(y) = \frac{\Gamma \left(\frac{m+n}{2} \right)}{\Gamma(m/2)\Gamma(n/2)} \left( \frac{m}{n} \right)^{m/2} \frac{y^{(m-2)/2}} {\left( 1 + \frac{m}{n}y \right)^{m+n+2}} , ~~~~~~y &gt; 0
+\]</span>
+Esto tiene media <span class="math inline">\(n/(n-2)\)</span>, para <span class="math inline">\(n &gt; 2\)</span>, y varianza <span class="math inline">\(2n^2(m+n-2)/[m(n-2)^2(n-4)]\)</span> para <span class="math inline">\(n &gt; 4\)</span>.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:FigA4"></span>
+<img src="RegressionMarkdown_files/figure-html/FigA4-1.png" alt="Varias funciones de densidad de probabilidad de la distribución \(F\). Se muestran curvas para (i) \(df_1\) = 1, \(df_2\) = 5, (ii) \(df_1\) = 5, \(df_2\) = 1 (no etiquetado), y (iii) \(df_1\) = 60, \(df_2\) = 60. A medida que \(df_2\) tiende a \(\infty\), la distribución \(F\) tiende a una distribución chi-cuadrado." width="60%" />
+<p class="caption">
+Figura 14.4: <strong>Varias funciones de densidad de probabilidad de la distribución <span class="math inline">\(F\)</span></strong>. Se muestran curvas para (i) <span class="math inline">\(df_1\)</span> = 1, <span class="math inline">\(df_2\)</span> = 5, (ii) <span class="math inline">\(df_1\)</span> = 5, <span class="math inline">\(df_2\)</span> = 1 (no etiquetado), y (iii) <span class="math inline">\(df_1\)</span> = 60, <span class="math inline">\(df_2\)</span> = 60. A medida que <span class="math inline">\(df_2\)</span> tiende a <span class="math inline">\(\infty\)</span>, la distribución <span class="math inline">\(F\)</span> tiende a una distribución chi-cuadrado.
+</p>
+</div>
+<table>
+<caption><span id="tab:unnamed-chunk-342">Tabla 14.4: </span><strong>Percentiles de varias distribuciones <span class="math inline">\(F\)</span></strong></caption>
+<thead>
+<tr class="header">
+<th align="right"><span class="math inline">\(df_1\)</span></th>
+<th align="right">1</th>
+<th align="right">3</th>
+<th align="right">5</th>
+<th align="right">10</th>
+<th align="right">20</th>
+<th align="right">30</th>
+<th align="right">40</th>
+<th align="right">60</th>
+<th align="right">120</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">161.45</td>
+<td align="right">10.13</td>
+<td align="right">6.61</td>
+<td align="right">4.96</td>
+<td align="right">4.35</td>
+<td align="right">4.17</td>
+<td align="right">4.08</td>
+<td align="right">4.00</td>
+<td align="right">3.92</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">199.50</td>
+<td align="right">9.55</td>
+<td align="right">5.79</td>
+<td align="right">4.10</td>
+<td align="right">3.49</td>
+<td align="right">3.32</td>
+<td align="right">3.23</td>
+<td align="right">3.15</td>
+<td align="right">3.07</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">215.71</td>
+<td align="right">9.28</td>
+<td align="right">5.41</td>
+<td align="right">3.71</td>
+<td align="right">3.10</td>
+<td align="right">2.92</td>
+<td align="right">2.84</td>
+<td align="right">2.76</td>
+<td align="right">2.68</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">224.58</td>
+<td align="right">9.12</td>
+<td align="right">5.19</td>
+<td align="right">3.48</td>
+<td align="right">2.87</td>
+<td align="right">2.69</td>
+<td align="right">2.61</td>
+<td align="right">2.53</td>
+<td align="right">2.45</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">230.16</td>
+<td align="right">9.01</td>
+<td align="right">5.05</td>
+<td align="right">3.33</td>
+<td align="right">2.71</td>
+<td align="right">2.53</td>
+<td align="right">2.45</td>
+<td align="right">2.37</td>
+<td align="right">2.29</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">241.88</td>
+<td align="right">8.79</td>
+<td align="right">4.74</td>
+<td align="right">2.98</td>
+<td align="right">2.35</td>
+<td align="right">2.16</td>
+<td align="right">2.08</td>
+<td align="right">1.99</td>
+<td align="right">1.91</td>
+</tr>
+<tr class="odd">
+<td align="right">15</td>
+<td align="right">245.95</td>
+<td align="right">8.70</td>
+<td align="right">4.62</td>
+<td align="right">2.85</td>
+<td align="right">2.20</td>
+<td align="right">2.01</td>
+<td align="right">1.92</td>
+<td align="right">1.84</td>
+<td align="right">1.75</td>
+</tr>
+<tr class="even">
+<td align="right">20</td>
+<td align="right">248.01</td>
+<td align="right">8.66</td>
+<td align="right">4.56</td>
+<td align="right">2.77</td>
+<td align="right">2.12</td>
+<td align="right">1.93</td>
+<td align="right">1.84</td>
+<td align="right">1.75</td>
+<td align="right">1.66</td>
+</tr>
+<tr class="odd">
+<td align="right">25</td>
+<td align="right">249.26</td>
+<td align="right">8.63</td>
+<td align="right">4.52</td>
+<td align="right">2.73</td>
+<td align="right">2.07</td>
+<td align="right">1.88</td>
+<td align="right">1.78</td>
+<td align="right">1.69</td>
+<td align="right">1.60</td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right">250.10</td>
+<td align="right">8.62</td>
+<td align="right">4.50</td>
+<td align="right">2.70</td>
+<td align="right">2.04</td>
+<td align="right">1.84</td>
+<td align="right">1.74</td>
+<td align="right">1.65</td>
+<td align="right">1.55</td>
+</tr>
+<tr class="odd">
+<td align="right">35</td>
+<td align="right">250.69</td>
+<td align="right">8.60</td>
+<td align="right">4.48</td>
+<td align="right">2.68</td>
+<td align="right">2.01</td>
+<td align="right">1.81</td>
+<td align="right">1.72</td>
+<td align="right">1.62</td>
+<td align="right">1.52</td>
+</tr>
+<tr class="even">
+<td align="right">40</td>
+<td align="right">251.14</td>
+<td align="right">8.59</td>
+<td align="right">4.46</td>
+<td align="right">2.66</td>
+<td align="right">1.99</td>
+<td align="right">1.79</td>
+<td align="right">1.69</td>
+<td align="right">1.59</td>
+<td align="right">1.50</td>
+</tr>
+<tr class="odd">
+<td align="right">60</td>
+<td align="right">252.20</td>
+<td align="right">8.57</td>
+<td align="right">4.43</td>
+<td align="right">2.62</td>
+<td align="right">1.95</td>
+<td align="right">1.74</td>
+<td align="right">1.64</td>
+<td align="right">1.53</td>
+<td align="right">1.43</td>
+</tr>
+<tr class="even">
+<td align="right">120</td>
+<td align="right">253.25</td>
+<td align="right">8.55</td>
+<td align="right">4.40</td>
+<td align="right">2.58</td>
+<td align="right">1.90</td>
+<td align="right">1.68</td>
+<td align="right">1.58</td>
+<td align="right">1.47</td>
+<td align="right">1.35</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="C13GLM.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bibliography.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 16 Frequency-Severity Models | Regression Modeling with Actuarial and Financial Applications</title>
+  <meta name="description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 16 Frequency-Severity Models | Regression Modeling with Actuarial and Financial Applications" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 16 Frequency-Severity Models | Regression Modeling with Actuarial and Financial Applications" />
+  
+  <meta name="twitter:description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="chap-15.html"/>
+<link rel="next" href="appendices.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Regression Modeling With Actuarial and Financial Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#dedication"><i class="fa fa-check"></i>Dedication</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#forward"><i class="fa fa-check"></i>Forward</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#who-is-this-book-for"><i class="fa fa-check"></i>Who Is This Book For?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#what-is-this-book-about"><i class="fa fa-check"></i>What Is This Book About?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-does-this-book-deliver-its-message"><i class="fa fa-check"></i>How Does This Book Deliver Its Message?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html"><i class="fa fa-check"></i><b>1</b> Regression and the Normal Distribution</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec11"><i class="fa fa-check"></i><b>1.1</b> What is Regression Analysis?</a></li>
+<li class="chapter" data-level="1.2" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec12"><i class="fa fa-check"></i><b>1.2</b> Fitting Data to a Normal Distribution</a></li>
+<li class="chapter" data-level="1.3" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec13"><i class="fa fa-check"></i><b>1.3</b> Power Transforms</a></li>
+<li class="chapter" data-level="1.4" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec14"><i class="fa fa-check"></i><b>1.4</b> Sampling and the Role of Normality</a></li>
+<li class="chapter" data-level="1.5" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec15"><i class="fa fa-check"></i><b>1.5</b> Regression and Sampling Designs</a></li>
+<li class="chapter" data-level="1.6" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec16"><i class="fa fa-check"></i><b>1.6</b> Actuarial Applications of Regression</a></li>
+<li class="chapter" data-level="1.7" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec17"><i class="fa fa-check"></i><b>1.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="1.8" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec18"><i class="fa fa-check"></i><b>1.8</b> Exercises</a></li>
+<li class="chapter" data-level="1.9" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec19"><i class="fa fa-check"></i><b>1.9</b> Technical Supplement - Central Limit Theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="C2BasicLR.html"><a href="C2BasicLR.html"><i class="fa fa-check"></i><b>2</b> Basic Linear Regression</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec21"><i class="fa fa-check"></i><b>2.1</b> Correlations and Least Squares</a></li>
+<li class="chapter" data-level="2.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec22"><i class="fa fa-check"></i><b>2.2</b> Basic Linear Regression Model</a></li>
+<li class="chapter" data-level="2.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec23"><i class="fa fa-check"></i><b>2.3</b> Is the Model Useful? Some Basic Summary Measures</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec231"><i class="fa fa-check"></i><b>2.3.1</b> Partitioning the Variability</a></li>
+<li class="chapter" data-level="2.3.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec232"><i class="fa fa-check"></i><b>2.3.2</b> The Size of a Typical Deviation: <em>s</em></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec24"><i class="fa fa-check"></i><b>2.4</b> Properties of Regression Coefficient Estimators</a></li>
+<li class="chapter" data-level="2.5" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec25"><i class="fa fa-check"></i><b>2.5</b> Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec251"><i class="fa fa-check"></i><b>2.5.1</b> Is the Explanatory Variable Important?: The <em>t</em>-Test</a></li>
+<li class="chapter" data-level="2.5.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec252"><i class="fa fa-check"></i><b>2.5.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="2.5.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec253"><i class="fa fa-check"></i><b>2.5.3</b> Prediction Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec26"><i class="fa fa-check"></i><b>2.6</b> Building a Better Model: Residual Analysis</a></li>
+<li class="chapter" data-level="2.7" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec27"><i class="fa fa-check"></i><b>2.7</b> Application: Capital Asset Pricing Model</a></li>
+<li class="chapter" data-level="2.8" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec28"><i class="fa fa-check"></i><b>2.8</b> Illustrative Regression Computer Output</a></li>
+<li class="chapter" data-level="2.9" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec29"><i class="fa fa-check"></i><b>2.9</b> Further Reading and References</a></li>
+<li class="chapter" data-level="2.10" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec210"><i class="fa fa-check"></i><b>2.10</b> Exercises</a></li>
+<li class="chapter" data-level="2.11" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec211"><i class="fa fa-check"></i><b>2.11</b> Technical Supplement - Elements of Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2111"><i class="fa fa-check"></i><b>2.11.1</b> Basic Definitions</a></li>
+<li class="chapter" data-level="2.11.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2112"><i class="fa fa-check"></i><b>2.11.2</b> Some Special Matrices</a></li>
+<li class="chapter" data-level="2.11.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2113"><i class="fa fa-check"></i><b>2.11.3</b> Basic Operations</a></li>
+<li class="chapter" data-level="2.11.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2114"><i class="fa fa-check"></i><b>2.11.4</b> Random Matrices</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html"><i class="fa fa-check"></i><b>3</b> Multiple Linear Regression - I</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec31"><i class="fa fa-check"></i><b>3.1</b> Method of Least Squares</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec311"><i class="fa fa-check"></i><b>3.1.1</b> Least Squares Method</a></li>
+<li class="chapter" data-level="3.1.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec312"><i class="fa fa-check"></i><b>3.1.2</b> General Case with <em>k</em> Explanatory Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec32"><i class="fa fa-check"></i><b>3.2</b> Linear Regression Model and Properties of Estimators</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec321"><i class="fa fa-check"></i><b>3.2.1</b> Regression Function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec322"><i class="fa fa-check"></i><b>3.2.2</b> Regression Coefficient Interpretation</a></li>
+<li class="chapter" data-level="3.2.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec323"><i class="fa fa-check"></i><b>3.2.3</b> Model Assumptions</a></li>
+<li class="chapter" data-level="3.2.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec324"><i class="fa fa-check"></i><b>3.2.4</b> Properties of Regression Coefficient Estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec33"><i class="fa fa-check"></i><b>3.3</b> Estimation and Goodness of Fit</a></li>
+<li class="chapter" data-level="3.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec34"><i class="fa fa-check"></i><b>3.4</b> Statistical Inference for a Single Coefficient</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec341"><i class="fa fa-check"></i><b>3.4.1</b> The <em>t</em>-Test</a></li>
+<li class="chapter" data-level="3.4.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec342"><i class="fa fa-check"></i><b>3.4.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="3.4.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec343"><i class="fa fa-check"></i><b>3.4.3</b> Added Variable Plots</a></li>
+<li class="chapter" data-level="3.4.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec344"><i class="fa fa-check"></i><b>3.4.4</b> Partial Correlation Coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec35"><i class="fa fa-check"></i><b>3.5</b> Some Special Explanatory Variables</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec351"><i class="fa fa-check"></i><b>3.5.1</b> Binary Variables</a></li>
+<li class="chapter" data-level="3.5.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec352"><i class="fa fa-check"></i><b>3.5.2</b> Transforming Explanatory Variables</a></li>
+<li class="chapter" data-level="3.5.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec353"><i class="fa fa-check"></i><b>3.5.3</b> Interaction Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec36"><i class="fa fa-check"></i><b>3.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="3.7" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec37"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html"><i class="fa fa-check"></i><b>4</b> Multiple Linear Regression - II</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec41"><i class="fa fa-check"></i><b>4.1</b> The Role of Binary Variables</a></li>
+<li class="chapter" data-level="4.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec42"><i class="fa fa-check"></i><b>4.2</b> Statistical Inference for Several Coefficients</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec421"><i class="fa fa-check"></i><b>4.2.1</b> Sets of Regression Coefficients</a></li>
+<li class="chapter" data-level="4.2.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec422"><i class="fa fa-check"></i><b>4.2.2</b> The General Linear Hypothesis</a></li>
+<li class="chapter" data-level="4.2.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec423"><i class="fa fa-check"></i><b>4.2.3</b> Estimating and Predicting Several Coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec43"><i class="fa fa-check"></i><b>4.3</b> One Factor ANOVA Model</a></li>
+<li class="chapter" data-level="4.4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec44"><i class="fa fa-check"></i><b>4.4</b> Combining Categorical and Continuous Explanatory Variables</a></li>
+<li class="chapter" data-level="4.5" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec45"><i class="fa fa-check"></i><b>4.5</b> Further Reading and References</a></li>
+<li class="chapter" data-level="4.6" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec46"><i class="fa fa-check"></i><b>4.6</b> Exercises</a></li>
+<li class="chapter" data-level="4.7" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec47"><i class="fa fa-check"></i><b>4.7</b> Technical Supplement - Matrix Expressions</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec471"><i class="fa fa-check"></i><b>4.7.1</b> Expressing Models with Categorical Variables in Matrix Form</a></li>
+<li class="chapter" data-level="4.7.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec472"><i class="fa fa-check"></i><b>4.7.2</b> Calculating Least Squares Recursively</a></li>
+<li class="chapter" data-level="4.7.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec473"><i class="fa fa-check"></i><b>4.7.3</b> General Linear Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="C5VarSelect.html"><a href="C5VarSelect.html"><i class="fa fa-check"></i><b>5</b> Variable Selection</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec51"><i class="fa fa-check"></i><b>5.1</b> An Iterative Approach to Data Analysis and Modeling</a></li>
+<li class="chapter" data-level="5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec52"><i class="fa fa-check"></i><b>5.2</b> Automatic Variable Selection Procedures</a></li>
+<li class="chapter" data-level="5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec53"><i class="fa fa-check"></i><b>5.3</b> Residual Analysis</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec531"><i class="fa fa-check"></i><b>5.3.1</b> Residuals</a></li>
+<li class="chapter" data-level="5.3.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec532"><i class="fa fa-check"></i><b>5.3.2</b> Using Residuals to Identify Outliers</a></li>
+<li class="chapter" data-level="5.3.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec533"><i class="fa fa-check"></i><b>5.3.3</b> Using Residuals to Select Explanatory Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec54"><i class="fa fa-check"></i><b>5.4</b> Influential Points</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec541"><i class="fa fa-check"></i><b>5.4.1</b> Leverage</a></li>
+<li class="chapter" data-level="5.4.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec542"><i class="fa fa-check"></i><b>5.4.2</b> Cook’s Distance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec55"><i class="fa fa-check"></i><b>5.5</b> Collinearity</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec551"><i class="fa fa-check"></i><b>5.5.1</b> What is Collinearity?</a></li>
+<li class="chapter" data-level="5.5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec552"><i class="fa fa-check"></i><b>5.5.2</b> Variance Inflation Factors</a></li>
+<li class="chapter" data-level="5.5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec553"><i class="fa fa-check"></i><b>5.5.3</b> Collinearity and Leverage</a></li>
+<li class="chapter" data-level="5.5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec554"><i class="fa fa-check"></i><b>5.5.4</b> Suppressor Variables</a></li>
+<li class="chapter" data-level="5.5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec555"><i class="fa fa-check"></i><b>5.5.5</b> Orthogonal Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec56"><i class="fa fa-check"></i><b>5.6</b> Selection Criteria</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec561"><i class="fa fa-check"></i><b>5.6.1</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="5.6.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec562"><i class="fa fa-check"></i><b>5.6.2</b> Model Validation</a></li>
+<li class="chapter" data-level="5.6.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec563"><i class="fa fa-check"></i><b>5.6.3</b> Cross-Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec57"><i class="fa fa-check"></i><b>5.7</b> Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec571"><i class="fa fa-check"></i><b>5.7.1</b> Detecting Heteroscedasticity</a></li>
+<li class="chapter" data-level="5.7.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec572"><i class="fa fa-check"></i><b>5.7.2</b> Heteroscedasticity-Consistent Standard Errors</a></li>
+<li class="chapter" data-level="5.7.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec573"><i class="fa fa-check"></i><b>5.7.3</b> Weighted Least Squares</a></li>
+<li class="chapter" data-level="5.7.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec574"><i class="fa fa-check"></i><b>5.7.4</b> Transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec58"><i class="fa fa-check"></i><b>5.8</b> Further Reading and References</a></li>
+<li class="chapter" data-level="5.9" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec59"><i class="fa fa-check"></i><b>5.9</b> Exercises</a></li>
+<li class="chapter" data-level="5.10" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec510"><i class="fa fa-check"></i><b>5.10</b> Technical Supplements for Chapter 5</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5101"><i class="fa fa-check"></i><b>5.10.1</b> Projection Matrix</a></li>
+<li class="chapter" data-level="5.10.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5102"><i class="fa fa-check"></i><b>5.10.2</b> Leave One Out Statistics</a></li>
+<li class="chapter" data-level="5.10.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5103"><i class="fa fa-check"></i><b>5.10.3</b> Omitting Variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html"><i class="fa fa-check"></i><b>6</b> Interpreting Regression Results</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec61"><i class="fa fa-check"></i><b>6.1</b> What the Modeling Process Tells Us</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec611"><i class="fa fa-check"></i><b>6.1.1</b> Interpreting Individual Effects</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec612"><i class="fa fa-check"></i><b>6.1.2</b> Other Interpretations</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec62"><i class="fa fa-check"></i><b>6.2</b> The Importance of Variable Selection</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec621"><i class="fa fa-check"></i><b>6.2.1</b> Overfitting the Model</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec622"><i class="fa fa-check"></i><b>6.2.2</b> Underfitting the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec63"><i class="fa fa-check"></i><b>6.3</b> The Importance of Data Collection</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec631"><i class="fa fa-check"></i><b>6.3.1</b> Sampling Frame Error and Adverse Selection</a></li>
+<li class="chapter" data-level="6.3.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec632"><i class="fa fa-check"></i><b>6.3.2</b> Limited Sampling Regions</a></li>
+<li class="chapter" data-level="6.3.3" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec633"><i class="fa fa-check"></i><b>6.3.3</b> Limited Dependent Variables, Censoring and Truncation</a></li>
+<li class="chapter" data-level="6.3.4" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec634"><i class="fa fa-check"></i><b>6.3.4</b> Omitted and Endogenous Variables</a></li>
+<li class="chapter" data-level="6.3.5" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec635"><i class="fa fa-check"></i><b>6.3.5</b> Missing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec64"><i class="fa fa-check"></i><b>6.4</b> Missing Data Models</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec641"><i class="fa fa-check"></i><b>6.4.1</b> Missing at Random</a></li>
+<li class="chapter" data-level="6.4.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec642"><i class="fa fa-check"></i><b>6.4.2</b> Non-Ignorable Missing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec65"><i class="fa fa-check"></i><b>6.5</b> Application: Risk Managers’ Cost Effectiveness</a></li>
+<li class="chapter" data-level="6.6" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec66"><i class="fa fa-check"></i><b>6.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="6.7" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec67"><i class="fa fa-check"></i><b>6.7</b> Exercises</a></li>
+<li class="chapter" data-level="6.8" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec68"><i class="fa fa-check"></i><b>6.8</b> Technical Supplements for Chapter 6</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec681"><i class="fa fa-check"></i><b>6.8.1</b> Effects of Model Misspecification</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="chap-7.html"><a href="chap-7.html"><i class="fa fa-check"></i><b>7</b> Chap 7</a></li>
+<li class="chapter" data-level="8" data-path="chap-8.html"><a href="chap-8.html"><i class="fa fa-check"></i><b>8</b> Chap 8</a></li>
+<li class="chapter" data-level="9" data-path="chap-9.html"><a href="chap-9.html"><i class="fa fa-check"></i><b>9</b> Chap 9</a></li>
+<li class="chapter" data-level="10" data-path="chap-10.html"><a href="chap-10.html"><i class="fa fa-check"></i><b>10</b> Chap 10</a></li>
+<li class="chapter" data-level="11" data-path="C11Binary.html"><a href="C11Binary.html"><i class="fa fa-check"></i><b>11</b> Categorical Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec111"><i class="fa fa-check"></i><b>11.1</b> Binary Dependent Variables</a></li>
+<li class="chapter" data-level="11.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec112"><i class="fa fa-check"></i><b>11.2</b> Logistic and Probit Regression Models</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1121"><i class="fa fa-check"></i><b>11.2.1</b> Using Nonlinear Functions of Explanatory Variables</a></li>
+<li class="chapter" data-level="11.2.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1122"><i class="fa fa-check"></i><b>11.2.2</b> Threshold Interpretation</a></li>
+<li class="chapter" data-level="11.2.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1123"><i class="fa fa-check"></i><b>11.2.3</b> Random Utility Interpretation</a></li>
+<li class="chapter" data-level="11.2.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1124"><i class="fa fa-check"></i><b>11.2.4</b> Logistic Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec113"><i class="fa fa-check"></i><b>11.3</b> Inference for Logistic and Probit Regression Models</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="C11Binary.html"><a href="C11Binary.html#parameter-estimation"><i class="fa fa-check"></i><b>11.3.1</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="11.3.2" data-path="C11Binary.html"><a href="C11Binary.html#additional-inference"><i class="fa fa-check"></i><b>11.3.2</b> Additional Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec114"><i class="fa fa-check"></i><b>11.4</b> Application: Medical Expenditures</a></li>
+<li class="chapter" data-level="11.5" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec115"><i class="fa fa-check"></i><b>11.5</b> Nominal Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1151"><i class="fa fa-check"></i><b>11.5.1</b> Generalized Logit</a></li>
+<li class="chapter" data-level="11.5.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1152"><i class="fa fa-check"></i><b>11.5.2</b> Multinomial Logit</a></li>
+<li class="chapter" data-level="11.5.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1153"><i class="fa fa-check"></i><b>11.5.3</b> Nested Logit</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec116"><i class="fa fa-check"></i><b>11.6</b> Ordinal Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="C11Binary.html"><a href="C11Binary.html#cumulative-logit"><i class="fa fa-check"></i><b>11.6.1</b> Cumulative Logit</a></li>
+<li class="chapter" data-level="11.6.2" data-path="C11Binary.html"><a href="C11Binary.html#cumulative-probit"><i class="fa fa-check"></i><b>11.6.2</b> Cumulative Probit</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec117"><i class="fa fa-check"></i><b>11.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="11.8" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec118"><i class="fa fa-check"></i><b>11.8</b> Exercises</a></li>
+<li class="chapter" data-level="11.9" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec119"><i class="fa fa-check"></i><b>11.9</b> Technical Supplements - Likelihood-Based Inference</a>
+<ul>
+<li class="chapter" data-level="11.9.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1191"><i class="fa fa-check"></i><b>11.9.1</b> Properties of Likelihood Functions</a></li>
+<li class="chapter" data-level="11.9.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1192"><i class="fa fa-check"></i><b>11.9.2</b> Maximum Likelihood Estimators</a></li>
+<li class="chapter" data-level="11.9.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1193"><i class="fa fa-check"></i><b>11.9.3</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="11.9.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1194"><i class="fa fa-check"></i><b>11.9.4</b> Information Criteria</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="C12Count.html"><a href="C12Count.html"><i class="fa fa-check"></i><b>12</b> Count Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec121"><i class="fa fa-check"></i><b>12.1</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec1211"><i class="fa fa-check"></i><b>12.1.1</b> Poisson Distribution</a></li>
+<li class="chapter" data-level="12.1.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec1212"><i class="fa fa-check"></i><b>12.1.2</b> Regression Model</a></li>
+<li class="chapter" data-level="12.1.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec1213"><i class="fa fa-check"></i><b>12.1.3</b> Estimation</a></li>
+<li class="chapter" data-level="12.1.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec1214"><i class="fa fa-check"></i><b>12.1.4</b> Additional Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec122"><i class="fa fa-check"></i><b>12.2</b> Application: Singapore Automobile Insurance</a></li>
+<li class="chapter" data-level="12.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec123"><i class="fa fa-check"></i><b>12.3</b> Overdispersion and Negative Binomial Models</a></li>
+<li class="chapter" data-level="12.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec124"><i class="fa fa-check"></i><b>12.4</b> Other Count Models</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="C12Count.html"><a href="C12Count.html#zero-inflated-models"><i class="fa fa-check"></i><b>12.4.1</b> Zero-Inflated Models</a></li>
+<li class="chapter" data-level="12.4.2" data-path="C12Count.html"><a href="C12Count.html#hurdle-models"><i class="fa fa-check"></i><b>12.4.2</b> Hurdle Models</a></li>
+<li class="chapter" data-level="12.4.3" data-path="C12Count.html"><a href="C12Count.html#heterogeneity-models"><i class="fa fa-check"></i><b>12.4.3</b> Heterogeneity Models</a></li>
+<li class="chapter" data-level="12.4.4" data-path="C12Count.html"><a href="C12Count.html#latent-class-models"><i class="fa fa-check"></i><b>12.4.4</b> Latent Class Models</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="C12Count.html"><a href="C12Count.html#S:Sec125"><i class="fa fa-check"></i><b>12.5</b> Further Reading and References</a></li>
+<li class="chapter" data-level="12.6" data-path="C12Count.html"><a href="C12Count.html#S:Sec126"><i class="fa fa-check"></i><b>12.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="C13GLM.html"><a href="C13GLM.html"><i class="fa fa-check"></i><b>13</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec131"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec132"><i class="fa fa-check"></i><b>13.2</b> GLM Model</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1321"><i class="fa fa-check"></i><b>13.2.1</b> Linear Exponential Family of Distributions</a></li>
+<li class="chapter" data-level="13.2.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1322"><i class="fa fa-check"></i><b>13.2.2</b> Link Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec133"><i class="fa fa-check"></i><b>13.3</b> Estimation</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1331"><i class="fa fa-check"></i><b>13.3.1</b> Maximum Likelihood Estimation for Canonical Links</a></li>
+<li class="chapter" data-level="13.3.2" data-path="C13GLM.html"><a href="C13GLM.html#overdispersion"><i class="fa fa-check"></i><b>13.3.2</b> Overdispersion</a></li>
+<li class="chapter" data-level="13.3.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1333"><i class="fa fa-check"></i><b>13.3.3</b> Goodness of Fit Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec134"><i class="fa fa-check"></i><b>13.4</b> Application: Medical Expenditures</a></li>
+<li class="chapter" data-level="13.5" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec135"><i class="fa fa-check"></i><b>13.5</b> Residuals</a></li>
+<li class="chapter" data-level="13.6" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec136"><i class="fa fa-check"></i><b>13.6</b> Tweedie Distribution</a></li>
+<li class="chapter" data-level="13.7" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec137"><i class="fa fa-check"></i><b>13.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="13.8" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec138"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec139"><i class="fa fa-check"></i><b>13.9</b> Technical Supplements - Exponential Family</a>
+<ul>
+<li class="chapter" data-level="13.9.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1391"><i class="fa fa-check"></i><b>13.9.1</b> Linear Exponential Family of Distributions</a></li>
+<li class="chapter" data-level="13.9.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1392"><i class="fa fa-check"></i><b>13.9.2</b> Moments</a></li>
+<li class="chapter" data-level="13.9.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1393"><i class="fa fa-check"></i><b>13.9.3</b> Maximum Likelihood Estimation for General Links</a></li>
+<li class="chapter" data-level="13.9.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1394"><i class="fa fa-check"></i><b>13.9.4</b> Iterated Reweighted Least Squares</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="chap-14.html"><a href="chap-14.html"><i class="fa fa-check"></i><b>14</b> Chap 14</a></li>
+<li class="chapter" data-level="15" data-path="chap-15.html"><a href="chap-15.html"><i class="fa fa-check"></i><b>15</b> Chap 15</a></li>
+<li class="chapter" data-level="16" data-path="C16FreqSev.html"><a href="C16FreqSev.html"><i class="fa fa-check"></i><b>16</b> Frequency-Severity Models</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec161"><i class="fa fa-check"></i><b>16.1</b> Introduction</a></li>
+<li class="chapter" data-level="16.2" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec162"><i class="fa fa-check"></i><b>16.2</b> Tobit Model</a></li>
+<li class="chapter" data-level="16.3" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec163"><i class="fa fa-check"></i><b>16.3</b> Application: Medical Expenditures</a></li>
+<li class="chapter" data-level="16.4" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec164"><i class="fa fa-check"></i><b>16.4</b> Two-Part Model</a></li>
+<li class="chapter" data-level="16.5" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec165"><i class="fa fa-check"></i><b>16.5</b> Aggregate Loss Model</a></li>
+<li class="chapter" data-level="16.6" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec166"><i class="fa fa-check"></i><b>16.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="16.7" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec167"><i class="fa fa-check"></i><b>16.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="appendices.html"><a href="appendices.html"><i class="fa fa-check"></i><b>17</b> Appendices</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#appendix-a1.-basic-statistical-inference"><i class="fa fa-check"></i>Appendix A1. Basic Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#distributions-of-functions-of-random-variables"><i class="fa fa-check"></i>Distributions of Functions of Random Variables</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#estimation-and-prediction"><i class="fa fa-check"></i>Estimation and Prediction</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#testing-hypotheses"><i class="fa fa-check"></i>Testing Hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#appendix-a2.-matrix-algebra"><i class="fa fa-check"></i>Appendix A2. Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#basic-definitions"><i class="fa fa-check"></i>Basic Definitions</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#review-of-basic-operations"><i class="fa fa-check"></i>Review of Basic Operations</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#further-definitions"><i class="fa fa-check"></i>Further Definitions</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#appendix-a3.-probability-tables"><i class="fa fa-check"></i>Appendix A3. Probability Tables</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#normal-distribution"><i class="fa fa-check"></i>Normal Distribution</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#chi-square-distribution"><i class="fa fa-check"></i>Chi-Square Distribution</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#t-distribution"><i class="fa fa-check"></i><em>t</em>-Distribution</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#f-distribution"><i class="fa fa-check"></i><em>F</em>-Distribution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Regression Modeling with Actuarial and Financial Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="C16FreqSev" class="section level1 hasAnchor" number="16">
+<h1><span class="header-section-number">Chapter 16</span> Frequency-Severity Models<a href="C16FreqSev.html#C16FreqSev" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Chapter Preview</em>. Many data sets feature dependent variables that have a large proportion of zeros. This chapter introduces a standard econometric tool, known as a <em>tobit model</em>, for handling such data. The tobit model is based on observing a left-censored dependent variable, such as sales of a product or claim on a healthcare policy, where it is known that the dependent variable cannot be below zero. Although this standard tool can be useful, many actuarial data sets that feature a large proportion of zeros are better modeled in “two parts,” one part for the frequency and one part for the severity. This chapter introduces two-part models and provides extensions to an <em>aggregate loss model</em>, where a unit under study, such as an insurance policy, can result in more than one claim.</p>
+<div id="S:Sec161" class="section level2 hasAnchor" number="16.1">
+<h2><span class="header-section-number">16.1</span> Introduction<a href="C16FreqSev.html#S:Sec161" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Many actuarial data sets come in “two parts:”</p>
+<ul>
+<li>One part for the frequency, indicating whether or not a claim has occurred or, more generally, the number of claims, and</li>
+<li>One part for the severity, indicating the amount of a claim.</li>
+</ul>
+<p>In predicting or estimating claims distributions, we often associate the cost of claims with two components: the event of the claim and its amount, if the claim occurs. Actuaries term these the claims <em>frequency</em> and <em>severity components</em>, respectively. This is the traditional way of decomposing “two-part” data, where one can think of a zero as arising from a policy without a claim (Bowers et al., 1997, Chapter 2). Because of this decomposition, two-part models are also known as <em>frequency-severity models</em>. However, this formulation has been traditionally used without covariates to explain either the frequency or severity components. In the econometrics literature, Cragg (1971) introduced covariates into these two components, citing an example from fire insurance.</p>
+<p>Healthcare data also often feature a large proportion of zeros that must be accounted for in the modeling. Zero values can represent an individual’s lack of healthcare utilization, no expenditure, or non-participation in a program. In healthcare, Mullahy (1998) cites some prominent areas of potential applicability:</p>
+<ul>
+<li>Outcomes research - amount of health care utilization or expenditures</li>
+<li>Demand for health care - amount of health care sought, such as the number of physician visits</li>
+<li>Substance abuse - amount consumed of tobacco, alcohol, and illicit drugs.</li>
+</ul>
+<p>The two-part aspect can be obscured by a natural way of recording data; enter the amount of the claim when the claim occurs (a positive number) and a zero for no claim. It is easy to overlook a large proportion of zeros, particularly when the analyst is also concerned with many covariates that may help explain a dependent variable. As we will see in this chapter, ignoring the two-part nature can lead to serious bias. To illustrate, recall from Chapter 6 a plot of an individual’s income (<span class="math inline">\(x\)</span>) versus the amount of insurance purchased (<span class="math inline">\(y\)</span>) (Figure 6.3). Fitting a single line to these data would misinform users about the effects of <span class="math inline">\(x\)</span> on <span class="math inline">\(y\)</span>.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig161"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig161-1.png" alt="When individuals do not purchase insurance, they are recorded as \(y=0\) sales. The sample in this plot represents two subsamples, those who purchased insurance, corresponding to \(y&gt;0\), and those who did not, corresponding to \(y=0\)." width="60%" />
+<p class="caption">
+Figure 16.1: <strong>When individuals do not purchase insurance, they are recorded as <span class="math inline">\(y=0\)</span> sales.</strong> The sample in this plot represents two subsamples, those who purchased insurance, corresponding to <span class="math inline">\(y&gt;0\)</span>, and those who did not, corresponding to <span class="math inline">\(y=0\)</span>.
+</p>
+</div>
+<p>In contrast, many insurers keep separate data files for frequency and severity. For example, insurers maintain a “policyholder” file that is established when a policy is underwritten. This file records much underwriting information about the insured(s), such as age, gender, and prior claims experience, policy information such as coverage, deductibles, and limitations, as well as the insurance claims event. A separate file, often known as the “claims” file, records details of the claim against the insurer, including the amount. (There may also be a “payments” file that records the timing of the payments although we shall not deal with that here.) This recording process makes it natural for insurers to model the frequency and severity as separate processes.</p>
+</div>
+<div id="S:Sec162" class="section level2 hasAnchor" number="16.2">
+<h2><span class="header-section-number">16.2</span> Tobit Model<a href="C16FreqSev.html#S:Sec162" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>One way of modeling a large proportion of zeros is to assume that the dependent variable is (left) censored at zero. This chapter introduces left-censored regression, beginning with the well-known <em>tobit model</em> that is based on the pioneering work of James Tobin (1958). Subsequently, Goldberger (1964) coined the phrase “tobit model,” acknowledging the work of Tobin and its similarity to the probit model.</p>
+<p>As with probit (and other binary response) models, we use an unobserved, or latent, variable <span class="math inline">\(y^{\ast}\)</span> that is assumed to follow a linear regression model of the form
+<span class="math display" id="eq:eq161">\[
+y_i^{\ast} = \mathbf{x}_i^{\prime} \boldsymbol{\beta} + \varepsilon_i.
+\tag{16.1}
+\]</span>
+The responses are censored or “limited” in the sense that we observe <span class="math inline">\(y_i = \max \left( y_i^{\ast},d_i\right)\)</span>. The limiting value, <span class="math inline">\(d_i\)</span>, is a known amount. Many applications use <span class="math inline">\(d_i=0\)</span>, corresponding to zero sales or expenses, depending on the application. However, we also might use <span class="math inline">\(d_i\)</span> for the daily expenses claimed for travel reimbursement and allow the reimbursement (such as $50 or $100) to vary by employee <span class="math inline">\(i\)</span>. Some readers may wish to review Section 14.2 for an introduction to censoring.</p>
+<p>The model parameters consist of the regression coefficients, <span class="math inline">\(\boldsymbol{\beta}\)</span>, and the variability term, <span class="math inline">\(\sigma^2 = \mathrm{Var}~\varepsilon_i\)</span>. With equation <a href="C16FreqSev.html#eq:eq161">(16.1)</a>, we interpret the regression coefficients as the marginal change of <span class="math inline">\(\mathrm{E~}y^{\ast}\)</span> per unit change in each explanatory variable. This may be satisfactory in some applications, such as when <span class="math inline">\(y^{\ast}\)</span> represents an insurance loss. However, for most applications, users are typically interested in marginal changes in <span class="math inline">\(\mathrm{E~}y\)</span>, that is, the expected value of the <em>observed</em> response.</p>
+<p>To interpret these marginal changes, it is customary to adopt the assumption of normality for the latent variable <span class="math inline">\(y_i^{\ast}\)</span> (or equivalently for the disturbance <span class="math inline">\(\varepsilon_i\)</span>). With this assumption, standard calculations (see Exercise 16.1) show that
+<span class="math display" id="eq:eq162">\[
+\mathrm{E~}y_i = d_i + \Phi \left( \frac{\mathbf{x}_i^{\prime} \boldsymbol{\beta} - d_i}{\sigma}\right) \left( \mathbf{x}_i^{\prime} \boldsymbol{\beta} - d_i + \sigma \lambda_i\right),
+\tag{16.2}
+\]</span>
+where
+<span class="math display">\[
+\lambda_i = \frac{\mathrm{\phi}\left( \left(\mathbf{x}_i^{\prime} \boldsymbol{\beta} - d_i\right)/\sigma \right)}{\Phi\left( \left(\mathbf{x}_i^{\prime} \boldsymbol{\beta} - d_i\right)/\sigma \right)}.
+\]</span>
+Here, <span class="math inline">\(\mathrm{\phi}(.)\)</span> and <span class="math inline">\(\Phi(.)\)</span> are the standard normal density and distribution functions, respectively. The ratio of a probability density function to a cumulative distribution function is sometimes called an <em>inverse Mills ratio</em>. Although complex in appearance, equation <a href="C16FreqSev.html#eq:eq162">(16.2)</a> allows one to readily compute <span class="math inline">\(\mathrm{E~} y\)</span>. For large values of <span class="math inline">\(\left(\mathbf{x}_i^{\prime}\boldsymbol{\beta} - d_i\right)/\sigma\)</span>, we see that <span class="math inline">\(\lambda_i\)</span> is close to 0 and <span class="math inline">\(\Phi\left( \left(\mathbf{x}_i^{\prime}\boldsymbol{\beta} - d_i\right)/\sigma \right)\)</span> is close to 1. We interpret this to mean, for large values of the systematic component <span class="math inline">\(\mathbf{x}_i^{\prime}\boldsymbol{\beta}\)</span>, that the regression function <span class="math inline">\(\mathrm{E~}y_i\)</span> tends to be linear and the usual interpretations apply. The tobit model specification has the greatest impact on observations close to the limiting value <span class="math inline">\(d_i\)</span>.</p>
+<p>Equation <a href="C16FreqSev.html#eq:eq162">(16.2)</a> shows that if an analyst ignores the effects of censoring, then the regression function can be quite different than the typical linear regression function, <span class="math inline">\(\mathrm{E~}y=\mathbf{x}^{\prime}\boldsymbol{\beta}\)</span>, resulting in biased estimates of coefficients. The other tempting path is to exclude limited observations (<span class="math inline">\(y_i=d_i\)</span>) from the dataset and again run ordinary regression. However, standard calculations also show that</p>
+<p><span class="math display" id="eq:eq163">\[
+\mathrm{E~}\left( y_i|\ y_i&gt;d_i\right) =\mathbf{x}_i^{\prime}\boldsymbol{\beta} + \sigma \frac{\mathrm{\phi}\left( (\mathbf{x}_i^{\prime} \boldsymbol{\beta} - d_i)/\sigma \right)}{1-\Phi \left( (\mathbf{x}_i^{\prime} \boldsymbol{\beta} - d_i)/\sigma \right)}
+\tag{16.3}
+\]</span></p>
+<p>Thus, this procedure also results in biased regression coefficients.</p>
+<p>A commonly used method of estimating the tobit model is maximum likelihood. Employing the normality assumption, standard calculations show that the log-likelihood can be expressed as</p>
+<p><span class="math display" id="eq:eq164">\[
+\begin{array}{ll}
+\ln L &amp;= \sum\limits_{i:y_i=d_i} \ln \left\{ 1-\Phi \left( \frac{\mathbf{x}_i^{\prime}\boldsymbol{\beta} - d_i}{\sigma}\right) \right\} \\
+&amp; - \frac{1}{2} \sum\limits_{i:y_i&gt;d_i} \left\{ \ln 2\pi \sigma^2 + \frac{(y_i-(\mathbf{x}_i^{\prime}\boldsymbol{\beta}-d_i))^2}{\sigma^2}\right\},
+\tag{16.4}
+\end{array}
+\]</span></p>
+<p>where <span class="math inline">\(\{i:y_i=d_i\}\)</span> and <span class="math inline">\(\{i:y_i&gt;d_i\}\)</span> means the sum over the censored and noncensored observations, respectively. Many statistical software packages can readily compute the maximum likelihood estimators, <span class="math inline">\(\mathbf{b}_{MLE}\)</span> and <span class="math inline">\(s_{MLE}\)</span>, as well as corresponding standard errors. Section 11.9 introduces likelihood inference.</p>
+<p>For some users, it is convenient to have an algorithm that does not rely on specialized software. A two-stage algorithm due to Heckman (1976) fulfills this need. For this algorithm, first subtract <span class="math inline">\(d_i\)</span> from each <span class="math inline">\(y_i\)</span>, so that one may take <span class="math inline">\(d_i\)</span> to be zero without loss of generality. Even for those who wish to use the more efficient maximum likelihood estimators, Heckman’s algorithm can be useful in the model exploration stage as one uses linear regression to help select the appropriate form of the regression equation.</p>
+<div class="blackbox">
+<p><em>Heckman’s Algorithm for Estimating Tobit Model Parameters</em></p>
+<ol style="list-style-type: decimal">
+<li><p>For the first stage, define the binary variable
+<span class="math display">\[
+r_i=\left\{
+\begin{array}{ll}
+1 &amp; \text{if } y_i&gt;0 \\
+0 &amp; \text{if } y_i=0
+\end{array}
+\right. ,
+\]</span>
+indicating whether or not the observation is censored. Run a probit regression using <span class="math inline">\(r_i\)</span> as the dependent variable and <span class="math inline">\(\mathbf{x}_i\)</span> as explanatory variables. Call the resulting regression coefficients <span class="math inline">\(\mathbf{g}_{PROBIT}\)</span>.</p></li>
+<li><p>For each uncensored observation, compute the estimated variable
+<span class="math display">\[
+\widehat{\lambda}_i=\frac{\mathrm{\phi }\left( \mathbf{x}_i^{\prime} \mathbf{g}_{PROBIT}\right) }{\Phi \left( \mathbf{x}_i^{\prime} \mathbf{g}_{PROBIT}\right) },
+\]</span>
+an inverse Mill’s ratio. With this, run a regression of <span class="math inline">\(y_i\)</span> on <span class="math inline">\(\mathbf{x}_i\)</span> and <span class="math inline">\(\widehat{\lambda}_i\)</span>. Call the resulting regression coefficients <span class="math inline">\(\mathbf{b}_{2SLS}\)</span>.</p></li>
+</ol>
+</div>
+<p>The idea behind this algorithm is that equation <a href="C16FreqSev.html#eq:eq161">(16.1)</a> has the same form as the probit model; thus, consistent estimates of the regression coefficients (up to scale) can be computed. The regression coefficients <span class="math inline">\(\mathbf{b}_{2SLS}\)</span> provide consistent and asymptotically normal estimates of <span class="math inline">\(\boldsymbol{\beta}\)</span>. They are, however, inefficient compared to the maximum likelihood estimators, <span class="math inline">\(\mathbf{b}_{MLE}\)</span>. Standard calculations (see Exercise 16.1) show that <span class="math inline">\(\mathrm{Var~}\left( y_i|\ y_i&gt;d_i\right)\)</span> depends on <span class="math inline">\(i\)</span> (even when <span class="math inline">\(d_i\)</span> is constant). Thus, it is customary to use heteroscedasticity-consistent standard errors for <span class="math inline">\(\mathbf{b}_{2SLS}\)</span>.</p>
+</div>
+<div id="S:Sec163" class="section level2 hasAnchor" number="16.3">
+<h2><span class="header-section-number">16.3</span> Application: Medical Expenditures<a href="C16FreqSev.html#S:Sec163" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This section considers data from the Medical Expenditure Panel Survey (MEPS) that were introduced in Section 11.4. Recall that MEPS is a probability survey that provides nationally representative estimates of health care use, expenditures, sources of payment, and insurance coverage for the U.S. civilian population. We consider MEPS data from the first panel of 2003 and take a random sample of <span class="math inline">\(n=2,000\)</span> individuals between ages 18 and 65. Section 11.4 analyzed the frequency component, trying to understand the determinants that influenced whether or not people were hospitalized. Section 13.4 analyzed the severity component; given that a person was hospitalized, what are the determinants of medical expenditures? This chapter seeks to unify these two components into a single model of healthcare utilization.</p>
+<div id="summary-statistics-1" class="section level4 hasAnchor" number="16.3.0.1">
+<h4><span class="header-section-number">16.3.0.1</span> Summary Statistics<a href="C16FreqSev.html#summary-statistics-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><a href="C16FreqSev.html#Tab161">Table 16.1</a> reviews these explanatory variables and provides summary statistics that suggest their effects on expenditures of inpatient visits. The second column, “Average Expend,” displays the average logarithmic expenditure by explanatory variable, treating no expenditures as a zero (logarithmic) expenditure. This would be the primary variable of interest if one did not decompose the total expenditure into a discrete zero and continuous amount.</p>
+<p>Examining this overall average (logarithmic) expenditure, we see that females had higher expenditures than males. In terms of ethnicity, Native Americans and Asians had the lowest average expenditures. However, these two ethnic groups accounted for only 5.4% of the total sample size. Regarding regions, it appears that individuals from the West had the lowest average expenditures. In terms of education, more educated persons had lower expenditures. This observation supports the theory that more educated persons take more active roles in keeping their health. When it comes to self-rated health status, poorer physical, mental health, and activity-related limitations led to greater expenditures. Lower-income individuals had greater expenditures, and those with insurance coverage had greater average expenditures.</p>
+<p><a href="C16FreqSev.html#Tab161">Table 16.1</a> also describes the effects of explanatory variables on the frequency of utilization and average expenditures for those that used inpatient services. As in Table 11.4, the column “Percent Positive Expend” gives the percentage of individuals that had some positive expenditure, by explanatory variable. The column “Average of Pos Expend” gives the average (logarithmic) expenditure in cases where there was an expenditure, ignoring the zeros. This is comparable to the median expenditure in Table 13.5 (given in dollars, not log dollars).</p>
+<p>To illustrate, consider that females had higher average expenditures than males by looking at the “Average Expend” column. Breaking this down into frequency and amount of utilization, we see that females had a higher frequency of utilization but, when they had a positive utilization, the average (logarithmic) expenditure was <em>lower</em> than males. An examination of <a href="C16FreqSev.html#Tab161">Table 16.1</a> shows this observation holds true for other explanatory variables. A variable’s effect on overall expenditures may be positive, negative, or non-significant; this effect can be quite different when we decompose expenditures into frequency and amount components.</p>
+<p><a href="C16FreqSev.html#Tab162">Table 16.2</a> compares the ordinary least squares (OLS) regression to maximum likelihood estimates for the tobit model. From this table, we can see that there is a substantial agreement among the <span class="math inline">\(t\)</span>-ratios for these fitted models. This agreement comes from examining the sign (positive or negative) and the magnitude (such as exceeding two for statistical significance) of each variable’s <span class="math inline">\(t\)</span>-ratio. The regression coefficients also largely agree in sign. However, it is not surprising that the magnitudes of the regression coefficients differ substantially. This is because, from equation <a href="C16FreqSev.html#eq:eq162">(16.2)</a>, we can see that the tobit coefficients measure the marginal change of the expected latent variable <span class="math inline">\(y^{\ast}\)</span>, not the marginal change of the expected observed variable <span class="math inline">\(y\)</span>, as does OLS.</p>
+<p><a id=Tab161></a></p>
+<p><span id="Tab161">Table 16.1</span>. <strong>Percent of Positive Expenditures and Average Logarithmic Expenditure, by Explanatory Variable</strong></p>
+<p><span class="math display">\[
+\scriptsize{
+\begin{array}{lllrrrr}
+\text{Category} &amp; \text{Variable} &amp; \text{Description} &amp; \text{Percent} &amp; \text{Average} &amp; \text{Percent} &amp; \text{Average} \\
+&amp;  &amp;  &amp; \text{of data} &amp; \text{Expend} &amp; \text{Positive}
+&amp; \text{of Pos} \\
+&amp;  &amp;  &amp;  &amp;  &amp; \text{Expend} &amp; \text{Expend} \\
+\hline \text{Demography} &amp;        AGE &amp;  \text{Age in years }          \\
+&amp;         &amp;  \ \ \ \text{18  to 65 (mean: 39.0)}          \\
+           &amp;     GENDER &amp; \text{1 if female} &amp;       52.7 &amp;       0.91 &amp;       10.7 &amp;       8.53 \\
+           &amp;     GENDER &amp;  \text{1 if male} &amp;       47.3 &amp;       0.40 &amp;       4.7 &amp;       8.66 \\
+\text{Ethnicity} &amp;      ASIAN &amp; \text{1 if Asian} &amp;        4.3 &amp;       0.37 &amp;        4.7 &amp;       7.98 \\
+           &amp;      BLACK &amp; \text{1 if Black} &amp;       14.8 &amp;       0.90 &amp;       10.5 &amp;       8.60 \\
+           &amp;     NATIVE &amp; \text{1 if Native} &amp;        1.1 &amp;       1.06 &amp;       13.6 &amp;       7.79 \\
+           &amp;      WHITE &amp; \text{Reference level} &amp;       79.9 &amp;       0.64 &amp;        7.5 &amp;       8.59 \\
+    \text{Region} &amp;  NORTHEAST &amp; \text{1 if Northeast} &amp;       14.3 &amp;       0.83 &amp;       10.1 &amp;       8.17 \\
+           &amp;    MIDWEST &amp; \text{1 if Midwest} &amp;       19.7 &amp;       0.76 &amp;        8.7 &amp;       8.79 \\
+           &amp;      SOUTH &amp; \text{1 if South} &amp;       38.2 &amp;       0.72 &amp;        8.4 &amp;       8.65 \\
+           &amp;       WEST &amp; \text{Reference level} &amp;       27.9 &amp;       0.46 &amp;        5.4 &amp;       8.51 \\
+           \hline
+\text{Education} &amp;    COLLEGE &amp; \text{1 if college or higher degree} &amp;       27.2 &amp;       0.58 &amp;        6.8 &amp;       8.50 \\
+           &amp; HIGHSCHOOL &amp; \text{1 if high school degree} &amp;       43.3 &amp;       0.67 &amp;        7.9 &amp;       8.54 \\
+           &amp;    &amp;  \text{Reference level is } &amp;       29.5 &amp;       0.76 &amp;        8.8 &amp;       8.64 \\
+           &amp;    &amp;  \ \ \ \text{lower than high school degree} &amp;        &amp;        &amp;   &amp;        \\           
+           \hline
+\text{Self-rated} &amp;       POOR &amp;  \text{1 if poor} &amp;        3.8 &amp;       3.26 &amp;       36.0 &amp;       9.07 \\
+~~\text{physical health} &amp;       FAIR &amp;   \text{1 if fair} &amp;        9.9 &amp;       0.66 &amp;        8.1 &amp;       8.12 \\
+           &amp;       GOOD &amp;  \text{1 if good} &amp;       29.9 &amp;       0.70 &amp;        8.2 &amp;       8.56 \\
+           &amp;      VGOOD &amp; 1 \text{if very good} &amp;       31.1 &amp;       0.54 &amp;        6.3 &amp;       8.64 \\
+           &amp; &amp;   \text{Reference level is excellent health}  &amp;     25.4 &amp;       0.42 &amp;        5.1 &amp;       8.22 \\
+\text{Self-rated} &amp;    MNHPOOR &amp; \text{1 if poor or fair} &amp;        7.5 &amp;       1.45 &amp;       16.8 &amp;       8.67 \\
+~~\text{mental health} &amp;            &amp; \text{0 if good to excellent mental health} &amp;       92.5 &amp;       0.61 &amp;        7.1 &amp;       8.55 \\
+\text{Any activit}y &amp;   ANYLIMIT &amp; \text{1 if any functional or activity limitation} &amp;       22.3 &amp;       1.29 &amp;       14.6 &amp;       8.85 \\
+~~\text{limitation} &amp;            &amp; \text{0 if otherwise} &amp;       77.7 &amp;       0.50 &amp;        5.9 &amp;       8.36 \\
+\hline
+\text{Income compared} &amp;    HINCOME &amp; \text{1 if high income} &amp;       31.6 &amp;       0.47 &amp;        5.4 &amp;       8.73 \\
+\text{to poverty line} &amp;    MINCOME &amp; \text{1 if middle income }&amp;       29.9 &amp;       0.61 &amp;        7.0 &amp;       8.75 \\
+           &amp;    LINCOME &amp; \text{1 if low income} &amp;       15.8 &amp;       0.73 &amp;        8.3 &amp;       8.87 \\
+           &amp;      NPOOR &amp; \text{1 if near poor} &amp;        5.8 &amp;       0.78 &amp;        9.5 &amp;       8.19 \\
+           &amp;  &amp;  \text{Reference level is poor/negative }&amp;       17.0 &amp;       1.06 &amp;       13.0 &amp;       8.18 \\
+           \hline
+\text{Insurance}           &amp;     INSURE &amp; 1 \text{if covered by public or private health} &amp;       77.8 &amp;       0.80 &amp;        9.2 &amp;       8.68 \\
+~~\text{coverage}&amp; &amp; ~~\text{insurance in any month of 2003} \\
+           &amp;      &amp; \text{0 if have not health insurance in 2003} &amp;       22.3 &amp;       0.23 &amp;        3.1 &amp;       7.43 \\
+           \hline
+     \text{Total} &amp;            &amp;            &amp;      100.0 &amp;       0.67 &amp;        7.9 &amp;       8.32
+     \\\hline
+\end{array}
+}
+\]</span></p>
+<p><a id=Tab162></a></p>
+<p><span id="Tab162">Table 16.2</span>. <strong>Comparison of OLS, Tobit MLE and Two-Stage Estimates</strong></p>
+<p><span class="math display">\[
+\scriptsize{
+\begin{array}{l|rr|rr|rr}
+\hline &amp; \text{OLS} &amp; &amp;\text{Tobit MLE} &amp; &amp; \text{Two-Stage} \\
+&amp; \text{Parameter} &amp;  &amp; \text{Parameter} &amp;  &amp; \text{Parameter} &amp;  \\
+\text{Effect} &amp; \text{Estimate} &amp; t\text{-ratio} &amp; \text{Estimate}
+&amp; t\text{-ratio} &amp; \text{Estimate} &amp; t\text{-ratio}^{\ast}  \\ \hline
+Intercept &amp;     -0.123 &amp;     -0.525 &amp;    -33.016 &amp;     -8.233 &amp;      2.760 &amp;      0.617 \\
+       AGE &amp;      0.001 &amp;      0.091 &amp;     -0.006 &amp;     -0.118 &amp;      0.001 &amp;      0.129 \\
+    GENDER &amp;      0.379 &amp;      3.711 &amp;      5.727 &amp;      4.107 &amp;      0.271 &amp;      1.617 \\
+     ASIAN &amp;     -0.115 &amp;     -0.459 &amp;     -1.732 &amp;     -0.480 &amp;     -0.091 &amp;     -0.480 \\
+     BLACK &amp;      0.054 &amp;      0.365 &amp;      0.025 &amp;      0.015 &amp;      0.043 &amp;      0.262 \\
+    NATIVE &amp;      0.350 &amp;      0.726 &amp;      3.745 &amp;      0.723 &amp;      0.250 &amp;      0.445 \\
+NORTHEAST &amp;      0.283 &amp;      1.702 &amp;      3.828 &amp;      1.849 &amp;      0.203 &amp;      1.065 \\
+   MIDWEST &amp;      0.255 &amp;      1.693 &amp;      3.459 &amp;      1.790 &amp;      0.196 &amp;      1.143 \\
+     SOUTH &amp;      0.146 &amp;      1.133 &amp;      1.805 &amp;      1.056 &amp;      0.117 &amp;      0.937 \\
+     \hline
+   COLLEGE &amp;     -0.014 &amp;     -0.089 &amp;      0.628 &amp;      0.329 &amp;     -0.024 &amp;     -0.149 \\
+HIGHSCHOOL &amp;     -0.027 &amp;     -0.209 &amp;     -0.030 &amp;     -0.019 &amp;     -0.026 &amp;     -0.202 \\
+     \hline
+      POOR &amp;      2.297 &amp;      7.313 &amp;     13.352 &amp;      4.436 &amp;      1.780 &amp;      1.810 \\
+      FAIR &amp;     -0.001 &amp;     -0.004 &amp;      1.354 &amp;      0.528 &amp;     -0.014 &amp;     -0.068 \\
+      GOOD &amp;      0.188 &amp;      1.346 &amp;      2.740 &amp;      1.480 &amp;      0.143 &amp;      1.018 \\
+     VGOOD &amp;      0.084 &amp;      0.622 &amp;      1.506 &amp;      0.815 &amp;      0.063 &amp;      0.533 \\
+   MNHPOOR &amp;      0.000 &amp;     -0.001 &amp;     -0.482 &amp;     -0.211 &amp;     -0.011 &amp;     -0.041 \\
+  ANYLIMIT &amp;      0.415 &amp;      3.103 &amp;      4.695 &amp;      3.000 &amp;      0.306 &amp;      1.448 \\
+    \hline
+   HINCOME &amp;     -0.482 &amp;     -2.716 &amp;     -6.575 &amp;     -3.035 &amp;     -0.338 &amp;     -1.290 \\
+   MINCOME &amp;     -0.309 &amp;     -1.868 &amp;     -4.359 &amp;     -2.241 &amp;     -0.210 &amp;     -0.952 \\
+   LINCOME &amp;     -0.175 &amp;     -0.976 &amp;     -3.414 &amp;     -1.619 &amp;     -0.099 &amp;     -0.438 \\
+     NPOOR &amp;     -0.116 &amp;     -0.478 &amp;     -2.274 &amp;     -0.790 &amp;     -0.065 &amp;     -0.243 \\
+    INSURE &amp;      0.594 &amp;      4.486 &amp;      8.534 &amp;      4.130 &amp;      0.455 &amp;      2.094 \\
+      \hline
+\text{Inverse Mill&#39;s Ratio} \widehat{\lambda}  &amp;  &amp; &amp; -3.616 &amp;     -0.642 \\
+\text{Scale } \sigma^2&amp;  4.999 &amp;            &amp;     14.738 &amp;            &amp;      4.997 &amp;            \\
+\hline
+\end{array}
+}
+\]</span></p>
+<p><em>Note:</em> <span class="math inline">\(^{\ast}\)</span> Two-stage <span class="math inline">\(t\)</span>-ratios are calculated using heteroscedasticity-consistent standard errors.</p>
+<p><a href="C16FreqSev.html#Tab162">Table 16.2</a> also reports the fit using the two-stage Heckman algorithm. The coefficient associated with the inverse Mill’s ratio selection correction is statistically insignificant. Thus, there is general agreement between the OLS coefficients and those estimated using the two-stage algorithm. The two-stage <span class="math inline">\(t\)</span>-ratios were calculated using heteroscedasticity-consistent standard errors, described in Section 5.7.2. Here, we see some disagreement between the <span class="math inline">\(t\)</span>-ratios calculated using Heckman’s algorithm and the maximum likelihood values calculated using the tobit model. For example, GENDER, POOR, HINCOME, and MINCOME are statistically significant in the tobit model but are not in the two-stage algorithm. This is troubling because both techniques yield consistent estimators providing the assumptions of the tobit model are valid. Thus, we suspect the validity of the model assumptions for these data; the next section provides an alternative model that turns out to be more suitable for this dataset.</p>
+</div>
+</div>
+<div id="S:Sec164" class="section level2 hasAnchor" number="16.4">
+<h2><span class="header-section-number">16.4</span> Two-Part Model<a href="C16FreqSev.html#S:Sec164" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>One drawback of the tobit model is its reliance on the normality assumption of the latent response. A second, and more important, drawback is that a single latent variable dictates both the magnitude of the response as well as the censoring. As pointed out by Cragg (1971), there are many instances where the limiting amount represents a choice or activity that is separate from the magnitude. For example, in a population of smokers, zero cigarettes consumed during a week may simply represent a lower bound (or limit) and may be influenced by available time and money. However, in a general population, zero cigarettes consumed during a week can indicate that a person is a non-smoker, a choice that could be influenced by other lifestyle decisions (where time and money may or may not be relevant). As another example, when studying healthcare expenditures, a zero represents a person’s choice or decision not to utilize healthcare during a period. For many studies, the <em>amount</em> of healthcare expenditure is strongly influenced by a healthcare provider (such as a physician); the decision to utilize and the amount of healthcare can involve very different considerations.</p>
+<p>In the traditional actuarial literature (see for example Bowers et al. 1997, Chapter 2), the <em>individual risk model</em> decomposes a response, typically an insurance claim, into frequency (number) and severity (amount) components. Specifically, let <span class="math inline">\(r_i\)</span> be a binary variable indicating whether or not the <span class="math inline">\(i\)</span>th subject has an insurance claim and <span class="math inline">\(y_i\)</span> describe the amount of the claim. Then, the claim is modeled as
+<span class="math display">\[
+\left( \text{claim recorded}\right)_i = r_i \times y_i.
+\]</span>
+This is the basis for the two-part model, where we also use explanatory variables to understand the influence of each component.</p>
+<div class="blackbox">
+<p><em>Definition. <strong>Two-Part Model</strong></em></p>
+<ul>
+<li><p>Use a binary regression model with <span class="math inline">\(r_i\)</span> as the dependent variable and <span class="math inline">\(\mathbf{x}_{1i}\)</span> as the set of explanatory variables. Denote the corresponding set of regression coefficients as <span class="math inline">\(\boldsymbol{\beta_{1}}\)</span>. Typical models include the linear probability, logit, and probit models.</p></li>
+<li><p>Conditional on <span class="math inline">\(r_i=1\)</span>, specify a regression model with <span class="math inline">\(y_i\)</span> as the dependent variable and <span class="math inline">\(\mathbf{x}_{2i}\)</span> as the set of explanatory variables. Denote the corresponding set of regression coefficients as <span class="math inline">\(\boldsymbol{\beta_{2}}\)</span>. Typical models include the linear and gamma regression models.
+\end{enumerate}</p></li>
+</ul>
+</div>
+<p>Unlike the tobit, in the two-part model one need not have the same set of explanatory variables influencing the frequency and amount of response. However, there is usually overlap in the sets of explanatory variables, where variables are members of both <span class="math inline">\(\mathbf{x}_{1}\)</span> and <span class="math inline">\(\mathbf{x}_{2}\)</span>. Typically, one assumes that <span class="math inline">\(\boldsymbol{\beta_{1}}\)</span> and <span class="math inline">\(\boldsymbol{\beta_{2}}\)</span> are not related so that the joint likelihood of the data can be separated into two components and run separately, as described above.</p>
+<hr />
+<p><strong>Example: MEPS Expenditure Data - Continued.</strong> Consider the Section 16.3 MEPS expenditure data using a probit model for the frequency and a linear regression model for the severity. <a href="C16FreqSev.html#Tab163">Table 16.3</a> shows the results from using all explanatory variables to understand their influence on (i) the decision to seek healthcare (frequency) and (ii) the amount of healthcare utilized (severity). Unlike the <a href="C16FreqSev.html#Tab162">Table 16.2</a> tobit model, the two-part models allow each variable to have a separate influence on frequency and severity. To illustrate, the full model results in <a href="C16FreqSev.html#Tab163">Table 16.3</a> show that COLLEGE has no significant impact on frequency but a strong positive impact on severity.</p>
+<p>Because of the flexibility of the two-part model, one can also reduce the model complexity for each component by removing extraneous variables. <a href="C16FreqSev.html#Tab163">Table 16.3</a> shows a reduced model, where age and mental health status variables have been removed from the frequency component; regional, educational, physical status, and income variables have been removed from the severity component.</p>
+<p><a id=Tab163></a></p>
+<p><span id="Tab163">Table 16.3</span>. <strong>Comparison of Full and Reduced Two-Part Models</strong></p>
+<p><span class="math display">\[
+\scriptsize{
+\begin{array}{l|rr|rr|rr|rr}
+\hline
+&amp; \text{Full Model} &amp; &amp; \text{Full Model}&amp; &amp; \text{Reduced Model}&amp; &amp;\text{Reduced Model} \\
+&amp; \text{Frequency}  &amp; &amp; \text{Severity} &amp; &amp;
+\text{Frequency} &amp; &amp;\text{Severity} \\
+&amp; \text{Parameter} &amp;  &amp; Parameter &amp;  &amp;
+Parameter &amp;  &amp; Parameter
+  \\
+\text{Effect} &amp; \text{Estimate} &amp;
+t\text{-ratio} &amp; \text{Estimate} &amp; t\text{-ratio} &amp; \text{Estimate} &amp;
+t\text{-ratio} &amp; \text{Estimate} &amp; t\text{-ratio} \\ \hline
+Intercept &amp;     -2.263 &amp;    -10.015 &amp;      6.828 &amp;     13.336 &amp;     -2.281 &amp;    -11.432 &amp;      6.879 &amp;     14.403 \\
+       AGE &amp;     -0.001 &amp;     -0.154 &amp;      0.012 &amp;      1.368 &amp;            &amp;            &amp;      0.020 &amp;      2.437 \\
+    GENDER &amp;      0.395 &amp;      4.176 &amp;     -0.104 &amp;     -0.469 &amp;      0.395 &amp;      4.178 &amp;     -0.102 &amp;     -0.461 \\
+     ASIAN &amp;     -0.108 &amp;     -0.429 &amp;     -0.397 &amp;     -0.641 &amp;     -0.108 &amp;     -0.427 &amp;     -0.159 &amp;     -0.259 \\
+     BLACK &amp;      0.008 &amp;      0.062 &amp;      0.088 &amp;      0.362 &amp;      0.009 &amp;      0.073 &amp;      0.017 &amp;      0.072 \\
+    NATIVE &amp;      0.284 &amp;      0.778 &amp;     -0.639 &amp;     -0.905 &amp;      0.285 &amp;      0.780 &amp;     -1.042 &amp;     -1.501 \\
+NORTHEAST &amp;      0.283 &amp;      1.958 &amp;     -0.649 &amp;     -2.035 &amp;      0.281 &amp;      1.950 &amp;     -0.778 &amp;     -2.422 \\
+   MIDWEST &amp;      0.239 &amp;      1.765 &amp;      0.016 &amp;      0.052 &amp;      0.237 &amp;      1.754 &amp;     -0.005 &amp;     -0.016 \\
+     SOUTH &amp;      0.132 &amp;      1.099 &amp;     -0.078 &amp;     -0.294 &amp;      0.130 &amp;      1.085 &amp;     -0.022 &amp;     -0.081 \\
+     \hline
+   COLLEGE &amp;      0.048 &amp;      0.356 &amp;     -0.597 &amp;     -2.066 &amp;      0.049 &amp;      0.362 &amp;     -0.470 &amp;     -1.743 \\
+HIGHSCHOOL &amp;      0.002 &amp;      0.017 &amp;     -0.415 &amp;     -1.745 &amp;      0.003 &amp;      0.030 &amp;     -0.256 &amp;     -1.134 \\
+\hline
+      POOR &amp;      0.955 &amp;      4.576 &amp;      0.597 &amp;      1.594 &amp;      0.939 &amp;      4.805 &amp;            &amp;            \\
+      FAIR &amp;      0.087 &amp;      0.486 &amp;     -0.211 &amp;     -0.527 &amp;      0.079 &amp;      0.450 &amp;            &amp;            \\
+      GOOD &amp;      0.184 &amp;      1.422 &amp;      0.145 &amp;      0.502 &amp;      0.182 &amp;      1.412 &amp;            &amp;            \\
+     VGOOD &amp;      0.095 &amp;      0.736 &amp;      0.373 &amp;      1.233 &amp;      0.094 &amp;      0.728 &amp;            &amp;            \\
+   MNHPOOR &amp;     -0.027 &amp;     -0.164 &amp;     -0.176 &amp;     -0.579 &amp;            &amp;            &amp;     -0.177 &amp;     -0.640 \\
+  ANYLIMIT &amp;      0.318 &amp;      2.941 &amp;      0.235 &amp;      0.981 &amp;      0.311 &amp;      3.022 &amp;      0.245 &amp;      1.052 \\
+  \hline
+   HINCOME &amp;     -0.468 &amp;     -3.131 &amp;      0.490 &amp;      1.531 &amp;     -0.470 &amp;     -3.224 &amp;            &amp;            \\
+   MINCOME &amp;     -0.314 &amp;     -2.318 &amp;      0.472 &amp;      1.654 &amp;     -0.314 &amp;     -2.345 &amp;            &amp;            \\
+   LINCOME &amp;     -0.241 &amp;     -1.626 &amp;      0.550 &amp;      1.812 &amp;     -0.241 &amp;     -1.633 &amp;            &amp;            \\
+     NPOOR &amp;     -0.145 &amp;     -0.716 &amp;      0.067 &amp;      0.161 &amp;     -0.146 &amp;     -0.721 &amp;            &amp;            \\
+    INSURE &amp;      0.580 &amp;      4.154 &amp;      1.293 &amp;      3.944 &amp;      0.579 &amp;      4.147 &amp;      1.397 &amp;      4.195 \\
+    \hline
+     \text{Scale } \sigma^2&amp;            &amp;            &amp;      1.249 &amp;            &amp;            &amp;            &amp;      1.333 &amp;  \\
+       \hline
+\end{array}
+}
+\]</span></p>
+<div id="tobit-type-ii-model" class="section level4 unnumbered hasAnchor">
+<h4>Tobit Type II Model<a href="C16FreqSev.html#tobit-type-ii-model" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>To connect the tobit and two-part models, let us assume that the
+frequency is represented by a probit model and use
+<span class="math display">\[
+r_i^{\ast}=\mathbf{x}_{1i}^{\prime}\boldsymbol \beta_{1}+\eta_{1i}
+\]</span>
+to be the latent tendency to be observed. Define
+<span class="math inline">\(r_i=\mathrm{I}\left( r_i^{\ast}&gt;0\right)\)</span> to be the binary
+variable indicating that an amount has been observed. For the
+severity component, define
+<span class="math display">\[
+y_i^{\ast}=\mathbf{x}_{2i}^{\prime}\boldsymbol \beta_{1}+\eta_{2i}
+\]</span>
+to be the latent amount variable. The “observed” amount is
+<span class="math display">\[
+y_i=\left\{
+\begin{array}{ll}
+y_i^{\ast} &amp; \mathrm{if~}r_i=1 \\
+0 &amp; \mathrm{if~}r_i=0
+\end{array}
+\right. .
+\]</span>
+Because responses are censored, the analyst is aware of the subject
+<span class="math inline">\(i\)</span> and has covariate information even when <span class="math inline">\(r_i = 0\)</span>.</p>
+<p>If <span class="math inline">\(\mathbf{x}_{1i}=\mathbf{x}_{2i}\)</span>, <span class="math inline">\(\boldsymbol \beta_{1}=\boldsymbol \beta _{2}\)</span> and <span class="math inline">\(\eta_{1i}=\eta_{2i}\)</span>, then this is the tobit framework with <span class="math inline">\(d_i=0\)</span>. If <span class="math inline">\(\boldsymbol\beta_{1}\)</span> and <span class="math inline">\(\boldsymbol \beta_{2}\)</span> are not related and if <span class="math inline">\(\eta_{1i}\)</span> and <span class="math inline">\(\eta_{2i}\)</span> are independent, then this is the two-part framework. For the two-part framework, the likelihood of the observed responses <span class="math inline">\(\left\{ r_i,y_i\right\}\)</span> is given by
+<span class="math display" id="eq:eq165">\[\begin{equation}
+L=\prod\limits_{i=1}^{n}\left\{ \left( p_i\right) ^{r_i}\left(
+1-p_i\right) ^{1-r_i}\right\} \prod\limits_{r_i=1}\mathrm{\phi }
+\left( \frac{y_i-\mathbf{x}_{2i}^{\prime} \boldsymbol \beta_{2}}{
+\sigma_{\eta 2}}\right) ,
+\tag{16.5}
+\end{equation}\]</span>
+where <span class="math inline">\(p_i=\Pr \left( r_i=1\right)\)</span>
+<span class="math inline">\(=\Pr \left( \mathbf{x}_{1i}^{\mathbf{ \prime }}\boldsymbol \beta_{1}+\eta_{1i}&gt;0\right)\)</span> <span class="math inline">\(=1-\Phi \left( -\mathbf{x}_{1i}^{\prime}\boldsymbol \beta_{1}\right)\)</span>
+<span class="math inline">\(=\Phi \left( \mathbf{x} _{1i}^{\prime}\boldsymbol \beta_{1}\right)\)</span>.
+Assuming that <span class="math inline">\(\boldsymbol \beta_1\)</span> and <span class="math inline">\(\boldsymbol \beta_2\)</span> are not related, one
+can separately maximize these two pieces of the likelihood function.</p>
+<p>In some instances, it is sensible to assume that the frequency and
+severity components are related. The tobit model considers a perfect
+relationship (with <span class="math inline">\(\eta_{1i}=\eta_{2i}\)</span>) whereas the two-part
+models assumes independence. For an intermediate model, the tobit
+type II model allows for a non-zero correlation between <span class="math inline">\(\eta_{1i}\)</span> and <span class="math inline">\(\eta_{2i}\)</span>. See Amemiya (1985) for additional details. Hsiao et al. (1990) provide an application of the tobit type II model to Canadian collision coverage of private passenger automobile
+experience.</p>
+</div>
+</div>
+<div id="S:Sec165" class="section level2 hasAnchor" number="16.5">
+<h2><span class="header-section-number">16.5</span> Aggregate Loss Model<a href="C16FreqSev.html#S:Sec165" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We now consider two-part models where the frequency may exceed one. For
+example, if we are tracking automobile accidents, a policyholder may have
+more than one accident within a year. As another example, we may be
+interested in the claims for a city or a state and expect many claims per
+government unit.</p>
+<p>To establish notation, for each {<span class="math inline">\(i\)</span>}, the observable responses consist of:</p>
+<ul>
+<li><span class="math inline">\(N_i~-\)</span> the number of claims (events), and</li>
+<li><span class="math inline">\(y_{ij},~j=1,...,N_i~-\)</span> the amount of each claim (loss).</li>
+</ul>
+<p>By convention, the set <span class="math inline">\(\{y_{ij}\}\)</span> is empty when <span class="math inline">\(N_i=0\)</span>.
+If one uses <span class="math inline">\(N_i\)</span> as a binary variable, then this framework reduces
+to the two-part set-up.</p>
+<p>Although we have detailed information on losses per event, the
+interest often is in ,
+<span class="math inline">\(S_i=y_{i1}+...+y_{i,N_i}\)</span>. In traditional actuarial modeling, one
+assumes that the distribution of losses are, conditional on the
+frequency <span class="math inline">\(N_i\)</span>, identical and independent over replicates <span class="math inline">\(~j\)</span>.
+This representation is known as the ,
+see, for example, Klugman et al. (2008). We also maintain this
+assumption.</p>
+<p>Data are typically available in two forms:</p>
+<ul>
+<li><p><span class="math inline">\(\{N_i,y_{i1},...,y_{i,N_i}\}\)</span>, so that detailed information about
+each claim is available. For example, when examining personal
+automobile claims, losses for each claim are available. Let
+<span class="math inline">\(\mathbf{y}_i=\left( y_{i1},...,y_{i,N_i}\right) ^{\prime}\)</span>  be
+the vector of individual losses.</p></li>
+<li><p><span class="math inline">\(\{N_i,S_i\}\)</span>, so that only aggregate losses are available. For
+example, when examining losses at the city level, only aggregate losses are
+available.</p></li>
+</ul>
+<p>We are interested in both forms. Because there are
+multiple responses (events) per subject {<span class="math inline">\(i\)</span>}, one might approach
+the analysis using multilevel models as described in, for example,
+Raudenbush and Bryk (2002). Unlike a multilevel structure, we
+consider data where the number of events are random that we wish to
+model stochastically and thus use an alternative framework. When
+only <span class="math inline">\(\{S_i\}\)</span> is available, the Tweedie GLM introduced in Section
+13.6 may be used.</p>
+<p>To see how to model these data, consider the first data form.
+Suppressing the <span class="math inline">\(\{i\}\)</span> subscript, we decompose the joint
+distribution of the dependent variables as:
+<span class="math display">\[\begin{eqnarray*}
+\mathrm{f}\left( N,\mathbf{y}\right) &amp;=&amp;\mathrm{f}\left( N\right) ~\times ~
+\mathrm{f}\left( \mathbf{y|}N\right) \\
+\text{joint} &amp;=&amp;\text{frequency~}\times ~\text{conditional severity,}
+\end{eqnarray*}\]</span>
+where <span class="math inline">\(\mathrm{f}\left( N,\mathbf{y}\right)\)</span> denotes the joint distribution
+of $( N,) $. This joint distribution equals the product
+of the two components:</p>
+<ul>
+<li>claims frequency: <span class="math inline">\(\mathrm{f}\left( N\right)\)</span> denotes the probability of having <span class="math inline">\(N\)</span> claims; and</li>
+<li>conditional severity: <span class="math inline">\(\mathrm{f}\left( \mathbf{y|}N\right)\)</span> denotes the conditional density of the claim vector <span class="math inline">\(\mathbf{y}\)</span> given <span class="math inline">\(N\)</span>.</li>
+</ul>
+<p>We represent the frequency and severity components of the
+aggregate loss model as follows.</p>
+<div class="blackbox">
+<p></p>
+<ul>
+<li><p>Use a count regression model with <span class="math inline">\(N_i\)</span> as the dependent variable
+and <span class="math inline">\(\mathbf{x}_{1i}\)</span> as the set of explanatory variables. Denote
+the corresponding set of regression coefficients as <span class="math inline">\(\boldsymbol \beta_{1}\)</span>. Typical models include the Poisson and negative binomial
+models.</p></li>
+<li><p>Conditional on <span class="math inline">\(N_i&gt;0\)</span>, use a regression model with <span class="math inline">\(y_{ij}\)</span> as the
+dependent variable and <span class="math inline">\(\mathbf{x}_{2i}\)</span> as the set of explanatory
+variables. Denote the corresponding set of regression coefficients as $
+_{2}$. Typical models include the linear
+regression, gamma regression and mixed linear models. For the mixed
+linear models, one uses a subject-specific intercept to account for
+the heterogeneity among subjects.</p></li>
+</ul>
+</div>
+<p>To model the second data form, the set-up is similar. The count data model
+in step 1 will not change. However, the regression model in step 2 will use $
+S_i$ as the dependent variable. Because the dependent variable is
+the sum over <span class="math inline">\(N_i\)</span> independent replicates, it may be that you will
+need to allow the variability to depend on <span class="math inline">\(N_i\)</span>.</p>
+<hr />
+<p> To get a sense
+of the empirical observations for claim frequency, we present the
+overall claim frequency. According to this table, there were a total
+of 2,000 observations of which 92.15% did not have any claims.
+There are a total of 203 (<span class="math inline">\(=1\times 130+2\times 19+3\times 2+4\times 3+5\times 2+6\times 0+7\times 1)\)</span> claims.</p>
+<p><strong>Frequency of Claims</strong>
+<span class="math display">\[
+\small{
+\begin{array}{l|ccccccccc}
+\hline
+\text{Count} &amp; 0 &amp; 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 &amp; 7 &amp; \text{Total }\\ \hline
+\text{Number} &amp; 1,843 &amp; 130 &amp; 19 &amp; 2 &amp; 3 &amp; 2 &amp; 0 &amp; 1 &amp; 2,000 \\
+\text{Percentage} &amp; 92.15 &amp; 6.50 &amp; 0.95 &amp; 0.10 &amp; 0.15 &amp; 0.10 &amp; 0.00 &amp; 0.10
+&amp; 100.00 \\ \hline
+\end{array}
+}
+\]</span></p>
+<p><a href="C16FreqSev.html#Tab164">Table 16.4</a> summarizes the regression coefficient parameter
+fits using the negative binomial model. The results are comparable
+to the fitted probit models in <a href="C16FreqSev.html#Tab163">Table 16.3</a>, where many of
+the covariates are statistically significant predictors of claim
+frequency.</p>
+<p>This fitted frequency model is based on <span class="math inline">\(n=2,000\)</span> persons. The <a href="C16FreqSev.html#Tab164">Table 16.4</a> fitted severity models are based on <span class="math inline">\(n_{1}+...+n_{2000}=203\)</span> claims. The gamma regression model is based on a logarithmic link
+<span class="math display">\[
+\mu_i=\exp \left(\mathbf{x}_i^{\prime}\boldsymbol \beta_2 \right).
+\]</span></p>
+<p><a href="C16FreqSev.html#Tab164">Table 16.4</a> shows that the results from fitting an ordinary
+regression model are similar to those from fitting the gamma
+regression model. They are similar in the sense that the sign and
+statistical significance of coefficients for each variable are
+comparable. As discussed in Chapter 13, the advantage of the
+ordinary regression model is its relatively simplicity involving
+ease of implementation and interpretation. In contrast, the gamma
+regression model can be a better model for fitting long-tail
+distributions such as medical expenditures.</p>
+<p><a id=Tab164></a></p>
+<p><span id="Tab164">Table 16.4</span>. <strong>Aggregate Loss Models</strong></p>
+<p><span class="math display">\[
+\scriptsize{
+\begin{array}{l|rr|rr|rr}
+\hline &amp; \text{Negative} &amp;\text{Binomial} &amp; \text{Ordinary} &amp;\text{Regression} &amp; \text{Gamma }&amp; \text{Regression} \\
+&amp; \text{Frequency} &amp; &amp; \text{Severity} &amp; &amp;\text{Severity} \\
+&amp; \text{Parameter} &amp;  &amp; Parameter &amp;  &amp;
+Parameter &amp;  \\
+\text{Effect} &amp; \text{Estimate} &amp;
+t\text{-ratio} &amp; \text{Estimate} &amp; t\text{-ratio} &amp; \text{Estimate} &amp;  t\text{-ratio} \\
+\hline  Intercept &amp;     -4.214 &amp;     -9.169 &amp;      7.424 &amp;     15.514 &amp;      8.557 &amp;     20.521 \\
+       AGE &amp;     -0.005 &amp;     -0.756 &amp;     -0.006 &amp;     -0.747 &amp;     -0.011 &amp;     -1.971 \\
+    GENDER &amp;      0.617 &amp;      3.351 &amp;     -0.385 &amp;     -1.952 &amp;     -0.826 &amp;     -4.780 \\
+     ASIAN &amp;     -0.153 &amp;     -0.306 &amp;     -0.340 &amp;     -0.588 &amp;     -0.711 &amp;     -1.396 \\
+     BLACK &amp;      0.144 &amp;      0.639 &amp;      0.146 &amp;      0.686 &amp;     -0.058 &amp;     -0.297 \\
+    NATIVE &amp;      0.445 &amp;      0.634 &amp;     -0.331 &amp;     -0.465 &amp;     -0.512 &amp;     -0.841 \\
+NORTHEAST &amp;      0.492 &amp;      1.683 &amp;     -0.547 &amp;     -1.792 &amp;     -0.418 &amp;     -1.602 \\
+   MIDWEST &amp;      0.619 &amp;      2.314 &amp;      0.303 &amp;      1.070 &amp;      0.589 &amp;      2.234 \\
+     SOUTH &amp;      0.391 &amp;      1.603 &amp;      0.108 &amp;      0.424 &amp;      0.302 &amp;      1.318 \\
+     \hline
+   COLLEGE &amp;      0.023 &amp;      0.089 &amp;     -0.789 &amp;     -2.964 &amp;     -0.826 &amp;     -3.335 \\
+HIGHSCHOOL &amp;     -0.085 &amp;     -0.399 &amp;     -0.722 &amp;     -3.396 &amp;     -0.742 &amp;     -4.112 \\
+\hline
+      POOR &amp;      1.927 &amp;      5.211 &amp;      0.664 &amp;      1.964 &amp;      0.299 &amp;      0.989 \\
+      FAIR &amp;      0.226 &amp;      0.627 &amp;     -0.188 &amp;     -0.486 &amp;      0.080 &amp;      0.240 \\
+      GOOD &amp;      0.385 &amp;      1.483 &amp;      0.223 &amp;      0.802 &amp;      0.185 &amp;      0.735 \\
+     VGOOD &amp;      0.348 &amp;      1.349 &amp;      0.429 &amp;      1.511 &amp;      0.184 &amp;      0.792 \\
+   MNHPOOR &amp;     -0.177 &amp;     -0.583 &amp;     -0.221 &amp;     -0.816 &amp;     -0.470 &amp;     -1.877 \\
+  ANYLIMIT &amp;      0.714 &amp;      3.499 &amp;      0.579 &amp;      2.720 &amp;      0.792 &amp;      4.171 \\
+  \hline
+   HINCOME &amp;     -0.622 &amp;     -2.139 &amp;      0.723 &amp;      2.517 &amp;      0.557 &amp;      2.290 \\
+   MINCOME &amp;     -0.482 &amp;     -1.831 &amp;      0.720 &amp;      2.768 &amp;      0.694 &amp;      3.148 \\
+   LINCOME &amp;     -0.460 &amp;     -1.611 &amp;      0.631 &amp;      2.241 &amp;      0.889 &amp;      3.693 \\
+     NPOOR &amp;     -0.465 &amp;     -1.131 &amp;     -0.056 &amp;     -0.135 &amp;      0.217 &amp;      0.619 \\
+    INSURE &amp;      1.312 &amp;      4.207 &amp;      1.500 &amp;      4.551 &amp;      1.380 &amp;      4.912 \\
+    \hline
+Dispersion &amp;      2.177 &amp;            &amp;      1.314 &amp;            &amp;
+1.131 &amp;            \\ \hline
+\end{array}
+}
+\]</span></p>
+</div>
+<div id="S:Sec166" class="section level2 hasAnchor" number="16.6">
+<h2><span class="header-section-number">16.6</span> Further Reading and References<a href="C16FreqSev.html#S:Sec166" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="property-and-casualty" class="section level4 unnumbered hasAnchor">
+<h4>Property and Casualty<a href="C16FreqSev.html#property-and-casualty" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>There is a rich literature on modeling the joint frequency and
+severity distribution of automobile insurance claims. To distinguish
+this modeling from classical risk theory applications (see, for
+example, Klugman et al., 2008), we focus on cases where explanatory
+variables, such as policyholder characteristics, are available.
+There has been substantial interest in statistical modeling of
+claims frequency yet the literature on modeling claims severity,
+especially in conjunction with claims frequency, is less extensive.
+One possible explanation, noted by Coutts (1984), is that most of
+the variation in overall claims experience may be attributed to
+claim frequency (at least when inflation was small). Coutts (1984)
+also remarks that the first paper to analyze claim frequency and
+severity separately seems to be Kahane and Levy (1975).</p>
+<p>Brockman and Wright (1992) provide an early overview of how
+statistical modeling of claims and severity can be helpful for
+pricing automobile coverage. For computational convenience, they
+focused on categorical pricing variables to form cells that could be
+used with traditional insurance underwriting forms. Renshaw (1994)
+shows how generalized linear models can be used to analyze both the
+frequency and severity portions based on individual policyholder
+level data. Hsiao et al. (1990) note the “excess” number of zeros
+in policyholder claims data (due to no claims) and compare and
+contrast Tobit, two-part and simultaneous equation models, building
+on the work of Weisberg and Tomberlin (1982) and Weisberg et al.
+(1984). All of these papers use grouped data, not individual level
+data in this chapter.</p>
+<p>At the individual policyholder level, Frangos and Vrontos (2001)
+examined a claim frequency and severity model, using negative
+binomial and Pareto distributions, respectively. They used their
+statistical model to develop experience rated (bonus-malus)
+premiums. Pinquet (1997, 1998) provides a more modern statistical
+approach, fitting not only cross-sectional data but also following
+policyholders over time. Pinquet was interested in two lines of
+business, claims at fault and not at fault with respect to a third
+party. For each line, Pinquet hypothesized a frequency and severity
+component that were allowed to be correlated to one another. In
+particular, the claims frequency distribution was assumed to be
+bivariate Poisson. Severities were modeled using lognormal and gamma
+distributions.</p>
+</div>
+<div id="healthcare" class="section level4 unnumbered hasAnchor">
+<h4>Healthcare<a href="C16FreqSev.html#healthcare" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The two-part model became prominent in the healthcare literature
+upon adoption by Rand Health Insurance Experiment researchers (Duan
+et al, 1983, Manning et al, 1987). They used the two-part model to
+analyze health insurance cost sharing’s effect on healthcare
+utilization and expenditures because of the close resemblance of the
+demand for medical care to the two decision-making processes. That
+is, the amount of healthcare expenditures is largely unaffected by
+an individual’s decision to seek treatment. This is because
+physicians, as the patients’ (principal) agents, would tend to
+decide the intensity of treatments as suggested by the
+principal-agent model of Zweifel (1981).</p>
+<p>The two-part model has become widely used in the healthcare
+literature despite some criticisms. For example, Maddala (1985)
+argued that two-part modeling is not appropriate for
+non-experimental data because individuals’ self-selection into
+different health insurance plans is an issue. (In the Rand Health
+Insurance Experiment, the self-selection aspect was not an issue
+because participants were randomly assigned to health insurance
+plans.) See Jones (2000) and Mullahy (1998) for overviews.</p>
+<p>Two-part models remain attractive in modeling healthcare usage
+because they provide insights into the determinants of initiation
+and level of healthcare usage. The decision to utilize healthcare by
+individuals is related primarily to personal characteristics whereas
+the cost per user may be more related to characteristics of the
+healthcare provider.</p>
+<p><strong>Chapter References</strong></p>
+<ul>
+<li>Amemiya, T. (1985). <em>Advanced Econometrics</em>. Harvard University Press, Cambridge, MA.</li>
+<li>Boucher, Jean-Philippe, Michel Denuit, and Montserratt Guillén (2006). Risk classification for claim counts: A comparative analysis of various zero-inflated mixed Poisson and hurdle models. Working paper.</li>
+<li>Bowers, Newton L., Hans U. Gerber, James C. Hickman, Donald A. Jones, and Cecil J. Nesbitt (1997). <em>Actuarial Mathematics</em>. Society of Actuaries, Schaumburg, IL.</li>
+<li>Brockman, M.J. and T.S. Wright. (1992). Statistical motor rating: making effective use of your data. <em>Journal of the Institute of Actuaries</em> 119, 457-543.</li>
+<li>Cameron, A. Colin and Pravin K. Trivedi. (1998) <em>Regression Analysis of Count Data</em>. Cambridge University Press, Cambridge.</li>
+<li>Coutts, S.M. (1984). Motor insurance rating, an actuarial approach. <em>Journal of the Institute of Actuaries</em> 111, 87-148.</li>
+<li>Cragg, John G. (1971). Some statistical models for limited dependent variables with application to the demand for durable goods. <em>Econometrica</em> 39(5), 829-844.</li>
+<li>Duan, Naihua, Willard G. Manning, Carl N. Morris, and Joseph P. Newhouse (1983). A comparison of alternative models for the demand for medical care. <em>Journal of Business and Economics</em> 1(2), 115-126.</li>
+<li>Frangos, Nicholas E. and Spyridon D. Vrontos (2001). Design of optimal bonus-malus systems with a frequency and a severity component on an individual basis in automobile insurance. <em>ASTIN Bulletin</em> 31(1), 1-22.</li>
+<li>Goldberger, Arthur S. (1964). <em>Econometric Theory</em>. John Wiley and Sons, New York.</li>
+<li>Heckman, James J. (1976). The common structure of statistical models of truncation, sample selection and limited dependent variables, and a simple estimator for such models. <em>Ann. Econ. Soc. Meas</em>. 5, 475-492.</li>
+<li>Hsiao, Cheng, Changseob Kim, and Grant Taylor (1990). A statistical perspective on insurance rate-making. <em>Journal of Econometrics</em> 44, 5-24.</li>
+<li>Jones, Andrew M. (2000). Health econometrics. Chapter 6 of the <em>Handbook of Health Economics, Volume 1</em>. Edited by Antonio J. Culyer, and Joseph P. Newhouse, Elsevier, Amsterdam. 265-344.</li>
+<li>Kahane, Yehuda and Haim Levy (1975). Regulation in the insurance industry: determination of premiums in automobile insurance. <em>Journal of Risk and Insurance</em> 42, 117-132.</li>
+<li>Klugman, Stuart A, Harry H. Panjer, and Gordon E. Willmot (2008). <em>Loss Models: From Data to Decisions</em>. John Wiley &amp; Sons, Hoboken, New Jersey.</li>
+<li>Maddala, G. S. (1985). A survey of the literature on selectivity as it pertains to health care markets. <em>Advances in Health Economics and Health Services Research</em> 6, 3-18.</li>
+<li>Mullahy, John (1998). Much ado about two: Reconsidering retransformation and the two-part model in health econometrics. <em>Journal of Health Economics</em> 17, 247-281.</li>
+<li>Manning, Willard G., Joseph P. Newhouse, Naihua Duan, Emmett B. Keeler, Arleen Leibowitz, and M. Susan Marquis (1987). Health insurance and the demand for medical care: Evidence from a randomized experiment. <em>American Economic Review</em> 77(3), 251-277.</li>
+<li>Pinquet, Jean (1997). Allowance for cost of claims in bonus-malus systems. <em>ASTIN Bulletin</em> 27(1), 33-57.</li>
+<li>Pinquet, Jean (1998). Designing optimal bonus-malus systems from different types of claims. <em>ASTIN Bulletin</em> 28(2), 205-229.</li>
+<li>Raudenbush, Steven W. and Anthony S. Bryk (2002). <em>Hierarchical Linear Models: Applications and Data Analysis Methods</em>. (Second Edition). London: Sage.</li>
+<li>Tobin, James (1958). Estimation of relationships for limited dependent variables. <em>Econometrica</em> 26, 24-36.</li>
+<li>Weisberg, Herbert I. and Thomas J. Tomberlin (1982). A statistical perspective on actuarial methods for estimating pure premiums from cross-classified data. <em>Journal of Risk and Insurance</em> 49, 539-563.</li>
+<li>Weisberg, Herbert I., Thomas J. Tomberlin, and Sangit Chatterjee (1984). Predicting insurance losses under cross-classification: A comparison of alternative approaches. <em>Journal of Business &amp; Economic Statistics</em> 2(2), 170-178.</li>
+<li>Zweifel, P. (1981). Supplier-induced demand in a model of physician behavior. In <em>Health, Economics and Health Economics</em>, pages 245-267. Edited by J. van der Gaag and M. Perlman, North-Holland, Amsterdam.</li>
+</ul>
+</div>
+</div>
+<div id="S:Sec167" class="section level2 hasAnchor" number="16.7">
+<h2><span class="header-section-number">16.7</span> Exercises<a href="C16FreqSev.html#S:Sec167" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>16.1 Assume that <span class="math inline">\(y\)</span> is normally distributed with mean <span class="math inline">\(\mu\)</span>
+and variance <span class="math inline">\(\sigma^2\)</span>. Let <span class="math inline">\(\mathrm{\phi (.)}\)</span> and <span class="math inline">\(\Phi (.)\)</span> be
+the standard normal density and distribution functions,
+respectively. Define $ (d) = (d) 
+( 1-(d)) $, a hazard rate. Let <span class="math inline">\(d\)</span> be a known
+constant and $d_s=(d-)/$ be the standardized version.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Determine the density of <span class="math inline">\(y\)</span>, conditional on <span class="math inline">\(\{y&gt;d\}\)</span></p></li>
+<li><p>Show that <span class="math inline">\(\mathrm{E\ }\left( y|y&gt;d\right) = \mu + \sigma \mathrm{h}( d_s).\)</span></p></li>
+<li><p>Show that <span class="math inline">\(\mathrm{E\ }\left( y|y\leq d\right) =\mu -\sigma \mathrm{\phi}(d)\ \mathrm{/} \Phi (d).\)</span></p></li>
+<li><p>Show that $( y|y&gt;d) =(
+1-( d_s) ) $, where <span class="math inline">\(\delta \left( d\right) =\mathrm{h} \left( d\right) \left( \mathrm{h} \left( d\right) -d\right) .\)</span></p></li>
+<li><p>Show that <span class="math inline">\(\mathrm{E\ }\max \left( y,d\right) =\left( \mu +\sigma \mathrm{h} \left( d_s\right) \right) \left( 1-\Phi (d_s)\right) +d\Phi (d_s).\)</span></p></li>
+<li><p>Show that <span class="math inline">\(\mathrm{E~\min }\left( y,d\right) =\mu +d-\left( \left( \mu +\sigma \mathrm{h} \left( d_s\right) \right) \left( 1-\Phi (d_s)\right) +d\Phi (d_s)\right) .\)</span></p></li>
+</ol>
+<p>16.2 Verify the log-likelihood in equation <a href="C16FreqSev.html#eq:eq164">(16.4)</a> for the tobit model.</p>
+<p>16.3 Verify the log-likelihood in equation <a href="C16FreqSev.html#eq:eq165">(16.5)</a> for the two-part model.</p>
+<p>16.4 Derive the log-likelihood for the tobit type two model. Show that your log-likelihood reduces to equation <a href="C16FreqSev.html#eq:eq165">(16.5)</a> in the case of uncorrelated disturbance terms.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chap-15.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendices.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+## FILENAME IS Chap6RCode.txt
+
+
+## Risk Manager's Analysis
+survey = read.csv(choose.files(), header=TRUE)
+names(survey)
+attach(survey)
+survey1<-data.frame(FIRMCOST,ASSUME,CAP,SIZELOG,INDCOST,CENTRAL,SOPH)
+
+lmsurvey<-lm(FIRMCOST~ASSUME+CAP+SIZELOG+INDCOST+CENTRAL+SOPH,data=survey1)
+summary(lmsurvey)
+#hist(lmsurvey$residuals)
+ri <- rstandard(lmsurvey)
+hii <- hatvalues(lmsurvey)
+
+#  FIGURE  6.5
+par(mfrow=c(1, 2))
+hist(ri, nclass=16, main="", xlab="Standardized Residuals")
+hist(hii, nclass=16, main="", xlab="Leverages")
+dev.off()
+
+#  TABLE 6.1 SUMMARY STATS
+options(digits=3)
+meanSummary <- sapply(survey1, mean,  na.rm=TRUE) 
+sdSummary   <- sapply(survey1, sd,    na.rm=TRUE) 
+minSummary  <- sapply(survey1, min,   na.rm=TRUE) 
+maxSummary  <- sapply(survey1, max,   na.rm=TRUE) 
+medSummary  <- sapply(survey1, median,na.rm=TRUE) 
+summvar <- cbind(meanSummary, medSummary, sdSummary, minSummary, maxSummary)
+summvar
+
+#  TABLE 6.2 MEANS BY LEVEL OF CAP
+COSTLOG <- log(FIRMCOST)
+survey2<-data.frame(survey1,COSTLOG)
+options(digits=4)
+surveyC0 <- subset(survey2, CAP==0)
+meanSummaryC0 <- sapply(surveyC0, mean) 
+surveyC1 <- subset(survey2, CAP==1)
+meanSummaryC1 <- sapply(surveyC1, mean)
+meanSummary <- sapply(survey2, mean,  na.rm=TRUE)  
+summvarCAP <- cbind(meanSummaryC0, meanSummaryC1,meanSummary)
+summvarCAP <- t(summvarCAP);summvarCAP
+
+#  TABLE 6.3 CORRELATIONS
+round(cor(survey1),digits=3)
+
+
+#  FIGURE  6.6
+layout(matrix(c(1,2,3,4,5,6,7,8,9,10,11,12),byrow=TRUE,ncol=6))
+par("oma"=c(3,3,3,3),"mai"=c(0,0,0.1,0))
+
+plot.new()
+hist(ASSUME,breaks=18,main="ASSUME",xaxt="n",yaxt="n",xlab="",ylab="")
+hist(SIZELOG,breaks=18,main="SIZELOG",xaxt="n",yaxt="n",xlab="",ylab="")
+hist(INDCOST,breaks=18,main="INDCOST",xaxt="n",yaxt="n",xlab="",ylab="")
+hist(CENTRAL,breaks=18,main="CENTRAL",xaxt="n",yaxt="n",xlab="",ylab="")
+hist(SOPH,breaks=18,main="SOPH",xaxt="n",yaxt="n",xlab="",ylab="")
+hist(FIRMCOST,breaks=18,main="FIRMCOST",xaxt="n",yaxt="n",xlab="",ylab="")
+
+plot(ASSUME,FIRMCOST,xaxt="n",yaxt="n",xlab="",ylab="")
+plot(SIZELOG,FIRMCOST,xaxt="n",yaxt="n",xlab="",ylab="")
+plot(INDCOST,FIRMCOST,xaxt="n",yaxt="n",xlab="",ylab="")
+plot(CENTRAL,FIRMCOST,xaxt="n",yaxt="n",xlab="",ylab="")
+plot(SOPH,FIRMCOST,xaxt="n",yaxt="n",xlab="",ylab="")
+dev.off()
+
+#  FIGURE  6.7
+hist(COSTLOG, nclass=16, main="", xlab="COSTLOG")
+dev.off()
+
+#  FIGURE  6.8
+layout(matrix(c(1,2,3,4,5),byrow=TRUE,ncol=5))
+par("oma"=c(3,5,3,3),"mai"=c(0,0,0.2,0))
+plot(ASSUME,COSTLOG,main="ASSUME",xaxt="n",xlab="",ylab="COSTLOG")
+plot(SIZELOG,COSTLOG,main="SIZELOG",xaxt="n",yaxt="n",xlab="",ylab="")
+plot(INDCOST,COSTLOG,main="INDCOST",xaxt="n",yaxt="n",xlab="",ylab="")
+plot(CENTRAL,COSTLOG,main="CENTRAL",xaxt="n",yaxt="n",xlab="",ylab="")
+plot(SOPH,COSTLOG,main="SOPH",xaxt="n",yaxt="n",xlab="",ylab="")
+dev.off()
+
+lm2survey<-lm(COSTLOG~ASSUME+CAP+SIZELOG+INDCOST+CENTRAL+SOPH,data=survey1)
+summary(lm2survey)
+#hist(lm2survey$residuals)
+ri2 <- rstandard(lm2survey)
+hii2 <- hatvalues(lm2survey)
+
+#  FIGURE  6.9
+par(mfrow=c(1, 2))
+hist(ri2, nclass=16, main="", xlab="Standardized Residuals")
+hist(hii2, nclass=16, main="", xlab="Leverages")
+dev.off()
+
+# VARIANCE INFLATION FACTORS NOT A PROBLEM
+library(faraway)
+vif(survey1)
+
+# STEPWISE REGRESSION SUGGESTS SIZELOG AND INDCOST
+step(lm2survey)
+
+lm3survey<-lm(COSTLOG~SIZELOG+INDCOST,data=survey1)
+summary(lm3survey)
+#hist(lm3survey$residuals)
+ri3 <- rstandard(lm3survey)
+hii3 <- hatvalues(lm3survey)
+
+#  FIGURE  6.10
+par(mfrow=c(1, 2))
+hist(ri3, nclass=16, main="", xlab="Standardized Residuals")
+hist(hii3, nclass=16, main="", xlab="Leverages")
+dev.off()
+
+#  FIGURE  6.11 
+plot(INDCOST,lm3survey$residuals,xlab="INDCOST",ylab="RESIDUAL")
+INDCOST2 <- INDCOST*INDCOST
+
+lm4survey<-lm(lm3survey$residuals~INDCOST+INDCOST2,data=survey1)
+summary(lm4survey)
+
+lm5survey<-lm(COSTLOG~SIZELOG+INDCOST+INDCOST2,data=survey1)
+summary(lm5survey)
+
+#quadfit <- lm4survey$coefficients[1] + lm4survey$coefficients[2]*INDCOST #+lm4survey$coefficients[3]*INDCOST2
+plot(INDCOST,lm4survey$residuals,xlab="INDCOST",ylab="RESIDUAL")
+lines(lowess(INDCOST,lm3survey$residuals, f=.8))
+ 

@@ -149,19 +149,13 @@ mtext("SALES",side=2, at=36000, las=1, cex=1.1)
 
 One way to summarize the strength of the relationship between two variables is through a *correlation* statistic.
 
-\bigskip
-
-\index{correlation coefficients!Pearson}
-\index{correlation coefficients!ordinary}
-\index{symbols!$s_x$, sample standard deviation of \{$x_1, \ldots, x_n$\}}
-\index{symbols!$s_y$, sample standard deviation}
 
 :::: {.blackbox }
 *Definition*. The *ordinary, or Pearson, correlation* coefficient is defined as
-\begin{equation*}
+$$
 r=\frac{1}{(n-1)s_xs_y}\sum_{i=1}^{n}\left(
 x_{i}-\overline{x}\right) \left( y_{i}-\overline{y}\right) .
-\end{equation*}
+$$
 
 \bigskip
 
@@ -262,62 +256,52 @@ data set.
 
 The method\ begins with the line $y=b_0^{\ast}+b_1^{\ast}x$, where
 the intercept and slope, $b_0^{\ast}$ and $b_1^{\ast}$, are merely
-generic values. For the $i$th observation, $y_i-\left(
-b_0^{\ast}+b_1^{\ast}x_i\right) $ represents the deviation of the
+generic values. For the $i$th observation, $y_i-\left( b_0^{\ast}+b_1^{\ast}x_i\right)$ represents the deviation of the
 observed value $y_i$ from the line at $x_i$. The quantity
-\begin{equation*}
+$$
 SS(b_0^{\ast},b_1^{\ast})=\sum_{i=1}^{n}\left( y_i-\left(
 b_0^{\ast}+b_1^{\ast}x_i\right) \right) ^{2}
-\end{equation*}
+$$
 represents the sum of squared deviations for this candidate line.
 The least squares method consists of determining the values of
 $b_0^{\ast}$ and $b_1^{\ast}$\ that minimize
 $SS(b_0^{\ast},b_1^{\ast})$. This is an easy problem that can be
 solved by calculus, as follows. Taking partial derivatives with
 respect to each argument yields
-\begin{equation*}
+$$
 \frac{\partial }{\partial
 b_0^{\ast}}SS(b_0^{\ast},b_1^{\ast})=\sum_{i=1}^{n}(-2)\left(
 y_i-\left( b_0^{\ast}+b_1^{\ast}x_i\right) \right)
-\end{equation*}
+$$
 and
-\begin{equation*}
+$$
 \frac{\partial }{\partial
 b_1^{\ast}}SS(b_0^{\ast},b_1^{\ast})=\sum_{i=1}^{n}(-2x_i)\left(
 y_i-\left( b_0^{\ast}+b_1^{\ast}x_i\right) \right) .
-\end{equation*}
+$$
 The reader is invited to take second partial derivatives to ensure
 that we are minimizing, not maximizing, this function. Setting these
 quantities equal to zero \ and canceling constant terms yields
-\begin{equation*}
+$$
 \sum_{i=1}^{n}\left( y_i-\left( b_0^{\ast}+b_1^{\ast}x_i\right)
 \right) =0
-\end{equation*}
+$$
 and
-\begin{equation*}
+$$
 \sum_{i=1}^{n}x_i\left( y_i-\left( b_0^{\ast}+b_1^{\ast}x_i\right)
 \right) =0,
-\end{equation*}
+$$
 which are known as the *normal equations*. Solving these
 equations yields the values of $b_0^{\ast}$ and $b_1^{\ast}$ that
 minimize the sum of squares, as follows.
-\index{normal equations}
-
-\bigskip
-
-\index{least squares!intercept}
-\index{least squares!slope}
-\index{symbols!$b_0$, least squares intercept}
-\index{symbols!$b_1$, least squares slope}
-\index{symbols!$\widehat{y}$, fitted value of $y$}
 
 :::: {.blackbox }
 *Definition.* The *least squares intercept and slope estimates* are
 
-\begin{equation*}
+$$
 b_1=r\frac{s_y}{s_x}~~~~~\mathrm{and}~~~~~b_0=\overline{y}-b_1
 \overline{x}.
-\end{equation*}
+$$
 The line that they determine, $\widehat{y}=b_0+b_1x$, is called the *fitted regression line*.
 
 ::::
@@ -325,9 +309,9 @@ The line that they determine, $\widehat{y}=b_0+b_1x$, is called the *fitted regr
 We have dropped the asterisk, or star, notation because $b_0$ and $b_1$ are no longer "candidate" values.
 
 Does this procedure yield a sensible line for our Wisconsin lottery sales? Earlier, we computed $r=0.886$. From this and the basic summary statistics in Table \@ref(tab:Tab21), we have $b_1 = 0.886 \left( 8,103\right) /11,098=0.647$ and $b_0 = 6,495-(0.647)9,311 = 469.7.$ This yields the fitted regression line 
-\begin{equation*}
+$$
 \widehat{y} = 469.7 + (0.647)x.
-\end{equation*}
+$$
 The carat, or "hat," on top of the $y$ reminds us that this $\widehat{y}$, or $\widehat{SALES}$, is a fitted value. One application of the regression line is to estimate sales for a specific population say, $x=10,000$. The estimate is the height of the regression line, which is $469.7 + (0.647)(10,000) = 6,939.7$.
 
 ***
@@ -346,17 +330,17 @@ relationship between two actuarial risk measures, the value-at-risk
 these authors examined lognormally distributed stock returns with an
 initial stock price of \$100, so that in 10 years the price of the
 stock would be distributed as
-\begin{equation*}
+$$
 S(Z)=100 \exp \left( (.08) 10 + .15 \sqrt{10} Z \right),
-\end{equation*}
+$$
 based on an annual mean return of 8\%, standard deviation 15\% and
 the outcome from a standard normal random variable $Z$. The put
 option pays the difference between the strike price, that will be
 taken to be 110 for this example, and $S(Z)$. The present value of
 this option is
-\begin{equation*}
+$$
 C(Z)= \mathrm{e}^{-0.06(10)} \mathrm{max} \left(0, 110-S(Z) \right),
-\end{equation*}
+$$
 based on a 6\% discount rate.
 
 To estimate the VaR and CTE, for each $i$, 1000 i.i.d. standard
@@ -421,11 +405,7 @@ The scatter plot, correlation coefficient and the fitted regression line are use
 
 This chapter focuses on a "basic linear regression" model. The "linear regression" part comes from the fact that we fit a line to the data. The "basic" part is because we use only one explanatory variable, $x$. This model is also known as a "simple" linear regression. This text avoids this language because it gives the false impression that regression ideas and interpretations with one explanatory variable are always straightforward.
 
-We now introduce two sets of assumptions of the basic model, the "observables" and the "error" representations. They are equivalent but each will help us as we later extend regression
-models beyond the basics.
-\index{model assumptions!observables representation}
-\index{symbols!$\beta_0$, (population) regression intercept}
-\index{symbols!$\beta_1$, (population) regression coefficient associated with $x_1$}
+We now introduce two sets of assumptions of the basic model, the "observables" and the "error" representations. They are equivalent but each will help us as we later extend regression models beyond the basics.
 
 $$
 {\small
@@ -445,7 +425,7 @@ The "observables representation" focuses on variables that we can see (or observ
 *Digression*: You will often see reports that summarize results for the "top 50 managers" or the "best 100 universities," measured by some outcome variable. In regression applications, make sure that you do not select observations based on a dependent variable, such as the highest stock return, because this is stratifying based on the $y$, not the $x$. Chapter 6 will discuss sampling procedures in greater detail.
 
 Stratified sampling also provides motivation for assumption F4, the independence among responses. One can motivate assumption F1 by thinking of $(x_i,y_i)$ as a draw from a population, where the mean of the conditional distribution of $y_i$ given \{$x_i$\} is linear in the explanatory variable. Assumption F3 is known as *homoscedasticity* that we will discuss extensively in Section 5.7. See Goldberger (1991) for additional background on this representation.
-\index{homoscedasticity}
+
 
 A fifth assumption that is often implicitly used is:
 
@@ -457,8 +437,6 @@ This assumption is not required for many statistical inference procedures becaus
 
 In contrast to the observables representation, an alternative set of assumptions focuses on the deviations, or "errors," in the regression, defined as $\varepsilon_i=y_i-\left( \beta_0 + \beta_1
 x_i \right)$.
-\index{model assumptions!error representation}
-\index{symbols!$\varepsilon_i$, "error," or disturbance term}
 
 
 $$
@@ -648,23 +626,15 @@ sum of squares. We interpret:
 , or the total variation "explained" through knowledge of $x$.
 
 
-\index{symbols!$Error~SS$, error sum of
-squares}\index{symbols!$Regression~SS$, regression sum of squares}
-
-
-
 When squaring the right-hand side of equation \@ref(eq:eq21), we have the cross-product term $2\left( y_i-\widehat{y}_i\right) \left( \widehat{y}_i-\overline{y}\right)$. With the "algebraic manipulation," one can check that the sum of the cross-products over all observations is zero. This result is not true for all fitted lines but is a special property of the least squares fitted line.
 
 In many instances, the variability decomposition is reported through only a single statistic.
 
-\index{goodness of fit statistics!coefficient of determination, $R^2$}
-\index{symbols!$R^2$, coefficient of determination}
-
 :::: {.blackbox }
 *Definition*. The *coefficient of determination* is denoted by the symbol $R^2$, called "$R$-square, and defined as
-\begin{equation*}
+$$
 R^2=\frac{Regression~SS}{Total~SS}.
-\end{equation*}
+$$
 
 ::::
 
@@ -684,9 +654,9 @@ from the regression line, $y_i-\left( \beta_0+\beta_1x_i\right) $,
 is not an observable quantity because the parameters $\beta_0$ and
 $\beta_1$ \ are not observed. However, by using estimators $b_0$ and
 $b_1$, we can approximate this deviation using
-\begin{equation*}
+$$
 e_i=y_i-\widehat{y}_i=y_i-\left( b_0+b_1x_i\right) ,
-\end{equation*}
+$$
 known as the *residual*.
 
 
@@ -721,12 +691,11 @@ dividing by $n-2$, it can be shown that $s^2$ is an unbiased estimator of $\sigm
 
 We can also express $s^2$ in terms of the sum of squares quantities. That is,
 
-\begin{equation*}
+$$
 s^2=\frac{1}{n-2}\sum_{i=1}^{n}\left( y_i-\widehat{y}_i\right) ^2=
 \frac{Error~SS}{n-2}=MSE.
-\end{equation*}
+$$
 
-\index{analysis of variance, ANOVA, table}
 
 This leads us to the *analysis of variance*, or *ANOVA*, table:
 
@@ -800,9 +769,9 @@ From this table, you can check that $R^2=78.5\%$ and $s=3,792.$
 ## Properties of Regression Coefficient Estimators  {#Sec24}
 
 The least squares estimates can be expressed as weighted sum of the responses. To see this, define the weights
-\begin{equation*}
+$$
 w_i=\frac{x_i-\overline{x}}{s_x^2(n-1)}.
-\end{equation*}
+$$
 Because the sum of $x$-deviations ($x_i-\overline{x}$) is zero, we see that $\sum_{i=1}^{n}w_i=0$. Thus, we can express the slope estimate
 \begin{equation}
 b_1=r\frac{s_y}{s_x}=\frac{1}{(n-1)s_x^2}\sum_{i=1}^{n}\left(
@@ -818,17 +787,17 @@ The exercises ask the reader to verify that $b_0$ can also be expressed as a wei
 
 
 Because $b_1$ is a weighted sum, it is straightforward to derive the expectation and variance of this statistic. By the linearity of expectations and Assumption F1, we have
-\begin{equation*}
+$$
 \mathrm{E}~b_1=\sum_{i=1}^{n}w_i~\mathrm{E}~y_i=\beta_0\sum_{i=1}^{n}w_i+\beta_1\sum_{i=1}^{n}w_ix_i=\beta_1.
-\end{equation*}
-That is, $b_1$ is an unbiased estimator of $\beta_1$. Here, the sum $ \sum_{i=1}^{n}w_ix_i$ $=$ \linebreak $\left[ s_x^2(n-1)\right] ^{-1}\sum_{i=1}^{n}\left( x_i-\overline{x}\right) x_i$ $=\left[s_x^2(n-1)\right] ^{-1}\sum_{i=1}^{n}\left( x_i-\overline{x}\right) ^2=1.$ From the definition of the weights, some easy algebra also shows that $\sum_{i=1}^{n}w_i^2=1/\left( s_x^2(n-1)\right)$. Further, the independence of the responses implies that the variance of the sum is the sum of the variances, and thus we have
-\begin{equation*}
+$$
+That is, $b_1$ is an unbiased estimator of $\beta_1$. Here, the sum $\sum_{i=1}^{n}w_ix_i$ $=$  $\left[ s_x^2(n-1)\right] ^{-1}\sum_{i=1}^{n}\left( x_i-\overline{x}\right) x_i$ $=\left[s_x^2(n-1)\right] ^{-1}\sum_{i=1}^{n}\left( x_i-\overline{x}\right) ^2=1.$ From the definition of the weights, some easy algebra also shows that $\sum_{i=1}^{n}w_i^2=1/\left( s_x^2(n-1)\right)$. Further, the independence of the responses implies that the variance of the sum is the sum of the variances, and thus we have
+$$
 \mathrm{Var}~b_1
 =\sum_{i=1}^{n}w_i^2\mathrm{Var}~y_i=\frac{\sigma^2}{s_x^2(n-1)}.
-\end{equation*}
+$$
 Replacing $\sigma ^2$ by its estimator $s^2$ and taking square roots leads to the following.
 
-\index{symbols!$se(b)$, standard error of $b$}
+
 
 :::: {.blackbox }
 *Definition*. The *standard error* of $b_1$, the estimated standard deviation of $b_1$, is defined as
@@ -918,7 +887,7 @@ deviation of $b_1$, for large values of $n$ we have that $\left(
 b_1-\beta_1\right) /se(b_1)$ has an approximate standard normal
 distribution. Although we will not prove it here, under Assumption
 F5 $\left( b_1-\beta_1\right) /se(b_1)$\ follows a $t $-distribution
-with degrees of freedom $df=n-2$.\index{theorems!central limit}
+with degrees of freedom $df=n-2$.
 
 ## Statistical Inference  {#Sec25}
 
@@ -939,17 +908,17 @@ framework. This narrower question is, is $ H_0:\beta_1=0$ valid? We
 respond to this question by looking at the test statistic:
 
 :::: {.blackbox }
-\begin{equation*}
+$$
 t-\mathrm{ratio}=\frac{\mathrm{estimator-hypothesized~value~of~parameter}}
 {\mathrm{standard~error~of~the~estimator}}.
-\end{equation*}
+$$
 
 ::::
 
 
 For the case of $H_0:\beta_1=0$ , we examine $t$-ratio $t(b_1)=b_1/se(b_1)$ because the hypothesized value of $\beta_1$\ is 0. This is the appropriate standardization because, under the null hypothesis and the model assumptions described in Section 2.4, the sampling distribution of $t(b_1)$ can be shown to be the $t$-distribution with $ df=n-2$ degrees of freedom. Thus, to test the null hypothesis $H_0$ against the alternative $H_{a}:\beta_1\neq 0$, we reject $H_0$ if favor of $H_{a}$ if $|t(b_1)|$ exceeds a $t$-value. Here, this $t$-value is a percentile from the
 $t$-distribution using $df=n-2$ degrees of freedom. \ We denote the significance level as $\alpha $ \ and this $t$-value as $t_{n-2,1-\alpha /2}$.
-\index{distributions!t-@{$t-$}}
+
 
 ***
 
@@ -967,10 +936,6 @@ $\beta_1 = 0$ in favor of the alternative that $\beta_1 \neq 0$.
 
 ***
 
-\bigskip
-
-\index{symbols!$H_0$, null hypothesis}
-\index{symbols!$H_a$, alternative hypothesis}
 
 Making decisions by comparing a $t$-ratio to a $t$-value is called a
 $t$*-test*. Testing $H_0:\beta_1=0$ versus $H_{a}:\beta_1\neq
@@ -1012,9 +977,6 @@ summary statistic for the data analyst to report since it allows the
 report reader to understand the strength of the deviation from the
 null hypothesis. [Table 2.4](#Table24) summarizes the procedure
 for calculating $p$-values.
-
-\index{symbols!$p$-value, probability value}
-
 
 
 <a id=Table24></a> 
@@ -1068,9 +1030,9 @@ b_1\pm t_{n-2,1-\alpha /2} ~se(b_1).
 As with hypothesis testing, $t_{n-2,1-\alpha /2}$ is the (1-$ \alpha $/2)th percentile from the $t$-distribution with $df=n-2$ degrees of freedom. Because of the two-sided nature of confidence intervals, the percentile is 1 - (1 - confidence level) / 2. In this text, for notational simplicity we generally use a 95\% confidence interval, so the percentile is 1-(1-0.95)/2 = 0.975. The confidence interval provides a range of reliability that measures the usefulness of the estimate.
 
 In Section 2.1, we established that the least squares slope estimate for the lottery sales example is $b_1=0.647$. The interpretation is that if a zip code's population differs by 1,000, then we expect mean lottery sales to differ by \$647. How reliable is this estimate? It turns out that $se(b_1)=0.0488$ and thus an approximate 95\% confidence interval for the slope is
-\begin{equation*}
+$$
 0.647\pm (2.011)(.0488),
-\end{equation*}
+$$
 or (0.549, 0.745). Similarly, if population differs by 1,000, a 95\% confidence interval for the expected change in sales is (549, 745). Here, we use the $t$-value $t_{48,0.975}=2.011$ because there are 48 (= $ n$-2) degrees of freedom and, for a 95\% confidence interval, we need the 97.5th percentile.
 
 ### Prediction Intervals  {#Sec253}
@@ -1106,10 +1068,10 @@ response from its mean}
 \end{center}
 
 It can be shown that the standard error of the prediction is
-\begin{equation*}
+$$
 se(pred) = s \sqrt{1+\frac{1}{n}+\frac{\left(
 x_{\ast}-\overline{x}\right) ^2}{(n-1)s_x^2}}.
-\end{equation*}
+$$
 As with $se(b_1)$, the terms $n^{-1}$ and $\left(
 x_{\ast}-\overline{x} \right) ^2/\left[ (n-1)s_x^2\right] $\ become
 close to zero as the sample size $n$ becomes large. Thus, for large
@@ -1117,7 +1079,7 @@ $n$, we have that $se(pred)\approx s$, reflecting that the error in
 estimating the regression line at a point becomes negligible and
 deviation of the additional response from its mean becomes the
 entire source of uncertainty.
-\index{symbols!$se(pred)$, standard error of a prediction}
+
 
 :::: {.blackbox }
 
@@ -1130,15 +1092,15 @@ where the $t$-value $t_{n-2,1-\alpha /2}$ is the same as used for hypothesis tes
 :::: 
 
 For example, the point prediction at $x_{\ast} = 10,000$ is $\widehat{y}_{\ast}$= 469.7 + 0.647 (10000) = 6,939.7. The standard error of this prediction is
-\begin{equation*}
+$$
 se(pred) = 3,792 \sqrt{1+\frac{1}{50} + \frac{\left(
 10,000-9,311\right)^2}{(50-1)(11,098)^2}} = 3,829.6.
-\end{equation*}
+$$
 With a $t$-value equal to 2.011, this yields an approximate 95\% prediction interval
-\begin{equation*}
+$$
 6,939.7 \pm (2.011)(3,829.6) = 6,939.7 \pm 7,701.3 = (-761.6,
 ~14,641.0).
-\end{equation*}
+$$
 We interpret these results by first pointing out that our best estimate of lottery sales for a zip code with a population of 10,000 is 6,939.70. Our 95\% prediction interval represents a range of reliability for this prediction. If we could see many zip codes, each with a population of 10,000, on average we expect about 19 out of 20, or 95\%, would have lottery sales between 0 and 14,641. It is customary to truncate the lower bound of the prediction interval to zero if negative values of the response are deemed to be inappropriate.
 
 `r HideRCode('Section25.Hide',"R Code to Produce Section 2.5 Analyses")`
@@ -1193,7 +1155,7 @@ There are five types of model discrepancies that analysts commonly look for. If 
 *  **Lack of Independence**. There may exist relationships among the deviations \{$\varepsilon _i$\} so that they are not independent.
 
 *  **Heteroscedasticity**. Assumption E3 that indicates that all observations have a common (although unknown) variability, known as *homoscedasticity*. *Heteroscedascity* is the term used when the variability varies by observation.
-\index{heteroscedasticity}\index{homoscedasticity}
+
 
 *  **Relationships between Model Deviations and Explanatory Variables**.
 If an explanatory variable has the ability to help explain the deviation $\varepsilon $, then one should be able to use this information to better predict $y$.
@@ -1488,11 +1450,11 @@ If we can estimate the returns that a stock generates, then knowledge of the pri
 
 An intuitively appealing idea, and one of the basic characteristics of the CAPM, is that there should be a relationship between the performance of a security and the market. One rationale is simply that if economic forces are such that the market improves, then those same forces should act upon an individual stock, suggesting that it also improve. As noted above, we measure performance of a security through the return. To measure performance of the market, several market indices exist that summarize the performance of each exchange. We will use the "equally-weighted" index of the Standard \& Poor's 500. The Standard \& Poor's 500 is the collection of the 500 largest companies traded on the NYSE, where "large" is identified by Standard \& Poor's, a financial services rating organization. The equally-weighted index is defined by assuming a portfolio is created by investing one dollar in each of the 500 companies.
 
-\index{actuarial \& financial terms and concepts!securities market line}
+
 Another rationale for a relationship between security and market returns comes from financial economics theory. This is the CAPM theory, attributed to Sharpe (1964) and Lintner (1965) and based on the portfolio diversification ideas of Harry Markowitz (1959). Other things equal, investors would like to select a return with a high expected value and low standard deviation, the latter being a measure of risk. One of the desirable properties about using standard deviations as a measure of riskiness is that it is straight-forward to calculate the standard deviation of a portfolio. One only needs to know the standard deviation of each security and the correlations among securities. A notable security is a risk-free one, that is, a security that theoretically has a zero standard deviation. Investors often use a 30-day U.S. Treasury bill as an approximation of a risk-free security, arguing that the probability of default of the U.S. government within 30 days is negligible. Positing the existence of a risk-free asset and some other mild conditions, under the CAPM theory there exists an efficient frontier called the *securities market line*. This frontier specifies the minimum expected return that investors should demand for a specified level of risk. To estimate this line, we can use the equation 
-\begin{equation*}
+$$
 \mathrm{E}~r = \beta_0 + \beta_1 r_m
-\end{equation*}
+$$
 where $r$ is the security return and $r_m$ is the market return. We
 interpret $\beta_1 r_m$ as a measure of the amount of security
 return that is attributed to the behavior of the market.
@@ -1664,9 +1626,9 @@ text(0.16, 0.02, "1990 OUTLIERS", cex=0.8)
 #### Unusual Points {-}
 
 To summarize the relationship between the market and Lincoln's return, a regression model was fit. The fitted regression is
-\begin{equation*}
+$$
 \widehat{LINCOLN}=-0.00214+0.973 MARKET.
-\end{equation*}
+$$
 The resulting estimated standard error, $s$ = 0.0696 is lower than the standard deviation of Lincoln's returns, $s_y=0.0859$. Thus, the regression model explains some of the variability of Lincoln's returns. Further, the $t$-statistic associated with the slope $b_1$ turns out to be $t(b_1)=5.64$, which is significantly large. One disappointing aspect is that the statistic $R^2=35.4\%$ can be interpreted as saying that the market explains only a little over a third of the variability. Thus, even though the market is clearly an
 important determinant, as evidenced by the high $t$-statistic, it provides only a partial explanation of the performance of the Lincoln's returns.
 
@@ -1692,9 +1654,9 @@ of several automated trading programs operated by the large stock
 brokerage houses) that we do not wish to represent using the same
 model as our other observations. Deleting this observation, the
 fitted regression is
-\begin{equation*}
+$$
 \widehat{LINCOLN} = -0.00181 + 0.956 MARKET,
-\end{equation*}
+$$
 with $R^2=26.4\%$, $t(b_1)=4.52$, $s=0.0702$ and $s_y=0.0811$. We
 interpret these statistics in the same fashion as the fitted model
 including the October 1987 crash. It is interesting to note,
@@ -1958,9 +1920,9 @@ $b_0=\sum_{i=1}^{n}w_{i,0}y_i.$ Further, express the weights in terms of the slo
 2.5 **Another expression for the slope as a weighted sum**
 
 a.  Using algebra, establish an alternative expression
-\begin{equation*}
+$$
 b_1=\frac{\sum_{i=1}^{n}weight_i~slope_i}{ \sum_{i=1}^{n}weight_i}.
-\end{equation*}
+$$
 Here, $slope_i$ is the slope between $(x_i,y_i)$ and
 $(\bar{x},\bar{y})$. Give a precise form for the weight $weight_i$
 as a function of the explanatory variable $x$.
@@ -1985,19 +1947,19 @@ $\mathrm{SS}(b_1^{\ast} )=\sum_{i=1}^{n}\left( y_i -
 b_1^{\ast}x_i\right) ^2.$
 
 a. Verify that
-\begin{equation*}
+$$
 b_1 = \frac{\sum_{i=1}^{n} x_i y_i}{\sum_{i=1}^{n}x_i^2}.
-\end{equation*}
+$$
 
 b. Consider the model $y_i=\beta_1 z_i^2 + \varepsilon _i$, a
 quadratic model passing through the origin. Use the result of part
 (a) to determine the least squares estimate of $\beta_1$.
 
 2.8  a. Show that
-\begin{equation*}
+$$
 s_y^2=\frac{1}{n-1}\sum_{i=1}^{n}\left( y_i-\overline{y}\right) ^2=
 \frac{1}{n-1}\left( \sum_{i=1}^{n}y_i^2-n\overline{y}^2\right) .
-\end{equation*}
+$$
 
 b. Follow the same steps to show $\sum_{i=1}^{n}\left( y_i -
 \overline{y} \right) \left( x_i-\overline{x}\right) =\sum_{i=1}^{n}
@@ -2099,18 +2061,18 @@ establish a relationship between the correlation coefficient and the
 $t$-statistic for the slope.
 
 a Use algebra to check that
-\begin{equation*}
+$$
 R^2=1-\frac{n-2}{n-1}\frac{s^2}{s_y^2}.
-\end{equation*}
+$$
 
 b. Use part (a) to establish the following quick computational
 formula for $s,$
-\begin{equation*}s = s_y \sqrt{(1-r^2)\frac{n-1}{n-2}}.\end{equation*}
+$$s = s_y \sqrt{(1-r^2)\frac{n-1}{n-2}}.$$
 
 c. Use part (b) to show that
-\begin{equation*}
+$$
 t(b_1) = \sqrt{n-2}\frac{r}{\sqrt{1-r^2}}.
-\end{equation*}
+$$
 
 #### Sections 2.6-2.7 {-}
 
@@ -2390,7 +2352,7 @@ Examples are an excellent tool for introducing technical topics such as regressi
 ### Basic Definitions  {#Sec2111}
 
 A *matrix* is a rectangular array of numbers arranged in rows and columns (the plural of matrix is matrices). For example, consider the income and age of 3 people.
-\begin{equation*}
+$$
 \mathbf{A}=
 \begin{array}{c}
 Row~1 \\
@@ -2408,7 +2370,7 @@ Row~3
 11,000 & 35
 \end{array}
 \right) }
-\end{equation*}
+$$
 
 Here, column 1 represents income and column 2 represents
 age. Each row corresponds to an individual. For example, the first
@@ -2421,7 +2383,7 @@ columns. If we were to represent the income and age of 100 people,
 then the dimension of the matrix would be $100\times 2$.
 
 It is convenient to represent a matrix using the notation
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc}
 a_{11} & a_{12} \\
@@ -2429,11 +2391,11 @@ a_{21} & a_{22} \\
 a_{31} & a_{32}
 \end{array}
 \right) .
-\end{equation*}
+$$
 Here, $a_{ij}$ is the symbol for the number in the $i$th row and
 $j$th column of $\mathbf{A}$. In general, we work with matrices of
 the form
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cccc}
 a_{11} & a_{12} & \cdots & a_{1k} \\
@@ -2441,11 +2403,11 @@ a_{11} & a_{12} & \cdots & a_{1k} \\
 a_{n1} & a_{n2} & \cdots & a_{nk}
 \end{array}
 \right) .
-\end{equation*}
+$$
 In this case, the matrix $\mathbf{A}$ has dimension $n\times k$.
 
 A *vector* is a special matrix. A *row vector* is a matrix containing only 1 row ($k=1$). A *column vector* is a matrix containing only 1 column ($n=1$). For example,
-\begin{equation*}
+$$
 \text{column vector}\rightarrow \left(
 \begin{array}{c}
 2 \\
@@ -2459,10 +2421,10 @@ A *vector* is a special matrix. A *row vector* is a matrix containing only 1 row
 2 & 3 & 4 & 5 & 6
 \end{array}
 \right) .
-\end{equation*}
+$$
 Notice above that the row vector takes much less room on a printed page than the corresponding column vector. A basic operation that relates these two quantities is the *transpose*. The transpose of a matrix $\mathbf{A}$ is defined by interchanging the rows and columns and is denoted by $\mathbf{A }^{\prime }$ (or $\mathbf{A}^{T}$). For example,
 
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc}
 6,000 & 23 \\
@@ -2475,7 +2437,7 @@ Notice above that the row vector takes much less room on a printed page than the
 23 & 47 & 35
 \end{array}
 \right) .
-\end{equation*}
+$$
 Thus, if $\mathbf{A}$ has dimension $n\times k$, then
 $\mathbf{A}^{\prime }$ has dimensions $k\times n$.
 
@@ -2485,7 +2447,7 @@ $\mathbf{A}^{\prime }$ has dimensions $k\times n$.
 \item A *square matrix* is a matrix where the number of rows equals the number of columns, that is, $n=k$.
 
 \item The *diagonal numbers* of a square matrix are the numbers of a matrix where the row number equals the column number, for example, $a_{11}$, $a_{22}$, and so on. A *diagonal matrix* is a square matrix where all non-diagonal numbers are equal to 0. For example,
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{ccc}
 -1 & 0 & 0 \\
@@ -2493,12 +2455,12 @@ $\mathbf{A}^{\prime }$ has dimensions $k\times n$.
 0 & 0 & 3
 \end{array}
 \right) .
-\end{equation*}
+$$
 
 \item An *identity matrix* is a diagonal matrix where all the diagonal numbers are equal to 1. This special matrix is often denoted by $\mathbf{I}$.
 
 \item A *symmetric matrix* is a square matrix $\mathbf{A}$ such that the matrix remains unchanged if we interchange the roles of the rows and columns. More formally, a matrix $\mathbf{A}$ is symmetric if $\mathbf{A=A} ^{\prime }$. For example,
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{ccc}
 1 & 2 & 3 \\
@@ -2506,7 +2468,7 @@ $\mathbf{A}^{\prime }$ has dimensions $k\times n$.
 3 & 5 & 10
 \end{array}
 \right) \mathbf{=A}^{\prime }.
-\end{equation*}
+$$
 Note that a diagonal matrix is a symmetric matrix.
 \end{enumerate}
 
@@ -2516,7 +2478,7 @@ Note that a diagonal matrix is a symmetric matrix.
 
 Let $\mathbf{A}$ by a $n\times k$ matrix and let $c$ be a real number. That is, a real number is a $1\times 1$ matrix and is also called a *scalar*. Multiplying a scalar $c$ by a matrix
 $\mathbf{A}$ is denoted by $c\mathbf{A}$ and defined by
-\begin{equation*}
+$$
 c\mathbf{A}=\left(
 \begin{array}{cccc}
 ca_{11} & ca_{12} & \cdots & ca_{1k} \\
@@ -2524,9 +2486,9 @@ ca_{11} & ca_{12} & \cdots & ca_{1k} \\
 ca_{n1} & ca_{n2} & \cdots & ca_{nk}
 \end{array}
 \right) .
-\end{equation*}
+$$
 For example, suppose that $c=10$ and
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc}
 1 & 2 \\
@@ -2538,7 +2500,7 @@ For example, suppose that $c=10$ and
 60 & 80
 \end{array}
 \right) .
-\end{equation*}
+$$
 Note that $c\mathbf{A}=\mathbf{A}c$.
 
 #### Addition and Subtraction of Matrices {-}
@@ -2550,45 +2512,45 @@ respectively. Then, the matrix $ \mathbf{C}=\mathbf{A}+\mathbf{B}$
 is defined to be the matrix with $ (a_{ij}+b_{ij})$ in the $i$th row
 and $j$th column. Similarly, the matrix $\mathbf{C}=\mathbf{A}-\mathbf{B}$ is defined to be the matrix with $(a_{ij}-b_{ij})$ in the $i$th row and $j$th column. Symbolically, we
 write this as the following.
-\begin{equation*}
+$$
 \text{If   }\mathbf{A=}\left( a_{ij}\right) _{ij}\text{    and
    } \mathbf{B=}\left( b_{ij}\right) _{ij}\text{, then}
-\end{equation*}
-\begin{equation*}
+$$
+$$
 \mathbf{C}=\mathbf{A}+\mathbf{B=}\left( a_{ij}+b_{ij}\right)
 _{ij}\text{    and    }\mathbf{C}=\mathbf{A}-\mathbf{B=}\left(
 a_{ij}-b_{ij}\right) _{ij}.
-\end{equation*}
+$$
 For example, consider
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc} 2 & 5 \\ 4 & 1 \end{array}
 \right) ~~~\mathbf{B}=\left(
 \begin{array}{cc} 4 & 6 \\ 8 & 1 \end{array}
 \right).
-\end{equation*}
+$$
 Then
-\begin{equation*}
+$$
 \mathbf{A}+\mathbf{B}=\left(
 \begin{array}{cc} 6 & 11 \\ 12 & 2 \end{array}
 \right) ~~~\mathbf{A}-\mathbf{B}=\left(
 \begin{array}{cc} -2 & -1 \\ -4 & 0 \end{array}
 \right) .
-\end{equation*}
+$$
 
 ***
 
 **Basic Linear Regression Example of Addition and Subtraction**. Now, recall that the basic linear regression model can
 be written as $n$ equations:
-\begin{equation*}
+$$
 \begin{array}{c}
 y_1=\beta_0+\beta_1x_1+\varepsilon _1 \\
 \vdots \\
 y_n=\beta_0+\beta_1x_n+\varepsilon _n.
 \end{array}
-\end{equation*}
+$$
 We can define
-\begin{equation*}
+$$
 \mathbf{y}=\left(
 \begin{array}{c} y_1 \\ \vdots \\ y_n \end{array}
 \right)
@@ -2600,7 +2562,7 @@ We can define
 \mathrm{E~}\mathbf{y} =\left(
 \begin{array}{c} \beta_0+\beta_1 x_1 \\ \vdots \\ \beta_0 + \beta_1 x_n \end{array}
 \right) .
-\end{equation*}
+$$
 With this notation, we can express the $n$ equations more compactly
 as $\mathbf{y} = \mathrm{E~}\mathbf{y}+\boldsymbol \varepsilon$.
 
@@ -2612,12 +2574,12 @@ In general, if $\mathbf{A}$ is a matrix of dimension $n\times c$ and
 $ \mathbf{B}$ is a matrix of dimension $c\times k$, then
 $\mathbf{C}=\mathbf{AB }$ is a matrix of dimension $n\times k$ and
 is defined by
-\begin{equation*}
+$$
 \mathbf{C}=\mathbf{AB=}\left( \sum_{s=1}^{c}a_{is}b_{sj}\right)
 _{ij}.
-\end{equation*}
+$$
 For example consider the $2\times 2$ matrices
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc}
 2 & 5 \\
@@ -2629,13 +2591,13 @@ For example consider the $2\times 2$ matrices
 8 & 1
 \end{array}
 \right) .
-\end{equation*}
+$$
 The matrix $\mathbf{AB}$ has dimension $2\times 2$. To illustrate
 the calculation, consider the number in the first row and second
 column of $ \mathbf{AB}$. By the rule presented above, with $i=1$
 and $j=2$, the corresponding element of $\mathbf{AB}$ is $\sum_{s=1}^2a_{1s}b_{s2}=$ $a_{11}b_{12}+a_{12}b_{22}=2(6)+5(1)=17$.
 The other calculations are summarized as
-\begin{equation*}
+$$
 \mathbf{AB}=\left(
 \begin{array}{cc}
 2(4)+5(8) & 2(6)+5(1) \\
@@ -2647,9 +2609,9 @@ The other calculations are summarized as
 24 & 25
 \end{array}
 \right) .
-\end{equation*}
+$$
 As another example, suppose
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{ccc}
 1 & 2 & 4 \\
@@ -2662,11 +2624,11 @@ As another example, suppose
 2
 \end{array}
 \right) .
-\end{equation*}
+$$
 Because $\mathbf{A}$ has dimension $2\times 3$ and $\mathbf{B}$ has
 dimension $3\times 1$, this means that the product $\mathbf{AB}$ has
 dimension $2\times 1$.. The calculations are summarized as
-\begin{equation*}
+$$
 \mathbf{AB}=\left(
 \begin{array}{c}
 1(3)+2(5)+4(2) \\
@@ -2678,9 +2640,9 @@ dimension $2\times 1$.. The calculations are summarized as
 41
 \end{array}
 \right) .
-\end{equation*}
+$$
 For some additional examples, we have
-\begin{equation*}
+$$
 \left(
 \begin{array}{cc}
 4 & 2 \\
@@ -2697,8 +2659,8 @@ a_2
 5a_1+8a_2
 \end{array}
 \right) .
-\end{equation*}
-\begin{equation*}
+$$
+$$
 \left(
 \begin{array}{ccc}
 2 & 3 & 5
@@ -2726,7 +2688,7 @@ a_2
 10 & 15 & 25
 \end{array}
 \right) .
-\end{equation*}
+$$
 In general, you see that $\mathbf{AB\neq BA}$ in matrix
 multiplication, unlike multiplication of scalars (real numbers).
 Further, we remark that the identity matrix serves the role of
@@ -2734,12 +2696,9 @@ Further, we remark that the identity matrix serves the role of
 $\mathbf{IA=A}$ for any matrix $\mathbf{A}$, providing that the
 dimensions are compatible to allow matrix multiplication.
 
-\bigskip
-
-\index{symbols!$\mathbf{X}$, matrix of explanatory variables}
 
 **Basic Linear Regression Example of Matrix Multiplication**. Define
-\begin{equation*}
+$$
 \mathbf{X}=\left(
 \begin{array}{cc}
 1 & x_1 \\
@@ -2759,11 +2718,11 @@ dimensions are compatible to allow matrix multiplication.
 \beta_0+\beta_1x_n
 \end{array}
 \right) =\mathbf{\mathrm{E~}\mathbf{y.}}
-\end{equation*}
+$$
 Thus, this yields the familiar matrix expression of the regression
 model, $ \mathbf{y=X } \boldsymbol \beta + \boldsymbol \varepsilon
 .$ Other useful quantities include
-\begin{equation*}
+$$
 \mathbf{y}^{\prime }\mathbf{y=}\left(
 \begin{array}{ccc}
 y_1 & \cdots & y_n
@@ -2775,8 +2734,8 @@ y_1 \\
 y_n
 \end{array}
 \right) =y_1^2+\cdots +y_n^2=\sum_{i=1}^{n}y_i^2,
-\end{equation*}
-\begin{equation*}
+$$
+$$
 \mathbf{X}^{\prime }\mathbf{y=}\left(
 \begin{array}{ccc}
 1 & \cdots & 1 \\
@@ -2794,9 +2753,9 @@ y_n
 \sum_{i=1}^{n}x_iy_i
 \end{array}
 \right)
-\end{equation*}
+$$
 and
-\begin{equation*}
+$$
 \mathbf{X}^{\prime }\mathbf{X=}\left(
 \begin{array}{ccc}
 1 & \cdots & 1 \\
@@ -2814,7 +2773,7 @@ n & \sum_{i=1}^{n}x_i \\
 \sum_{i=1}^{n}x_i & \sum_{i=1}^{n} x_i^2
 \end{array}
 \right) .
-\end{equation*}
+$$
 Note that $\mathbf{X}^{\prime }\mathbf{X}$ is a symmetric matrix.
 
 ***
@@ -2824,14 +2783,14 @@ Note that $\mathbf{X}^{\prime }\mathbf{X}$ is a symmetric matrix.
 
 In matrix algebra, there is no concept of "division." Instead, we extend the concept of "reciprocals" of real numbers. To begin, suppose that $\mathbf{A}$ is a square matrix of dimension $k \times k$ and let $\mathbf{I}$ be the $k\times k$ identity matrix. If there
 exists a $k \times k$ matrix $\mathbf{B}$ such that $\mathbf{AB}=\mathbf{I=BA}$, then $\mathbf{B}$ is called the *inverse*of $\mathbf{A}$ and is written
-\begin{equation*}
+$$
 \mathbf{B}=\mathbf{A}^{-1}.
-\end{equation*}
+$$
 Now, not all square matrices have inverses. Further, even when an
 inverse exists, it may not be easy to compute by hand. One exception
 to this rule are diagonal matrices. Suppose that $\mathbf{A}$ is
 diagonal matrix of the form
-\begin{equation*}
+$$
 \mathbf{A=}\left(
 \begin{array}{ccc}
 a_{11} & \cdots & 0 \\
@@ -2845,9 +2804,9 @@ a_{11} & \cdots & 0 \\
 0 & \cdots & \frac{1}{a_{kk}}
 \end{array}
 \right).
-\end{equation*}
+$$
 For example,
-\begin{equation*}
+$$
 \begin{array}{cccc}
 \left(
 \begin{array}{cc}
@@ -2868,11 +2827,11 @@ For example,
 \mathbf{A} & \mathbf{A}^{-1} & = & \mathbf{I}
 \end{array}
 .
-\end{equation*}
+$$
 In the case of a matrix of dimension $2\times 2$, the inversion
 procedure can be accomplished by hand easily even when the matrix is
 not diagonal. In the $2\times 2$ case, we suppose that if
-\begin{equation*}
+$$
 \mathbf{A=}\left(
 \begin{array}{cc}
 a & b \\
@@ -2884,9 +2843,9 @@ d & -b \\
 -c & a
 \end{array}
 \right) \text{.}
-\end{equation*}
+$$
 Thus, for example, if
-\begin{equation*}
+$$
 \mathbf{A=}\left(
 \begin{array}{cc}
 2 & 2 \\
@@ -2903,9 +2862,9 @@ Thus, for example, if
 -3/2 & 1
 \end{array}
 \right) \text{.}
-\end{equation*}
+$$
 As a check, we have
-\begin{equation*}
+$$
 \mathbf{A\mathbf{A}^{-1}=}\left(
 \begin{array}{cc}
 2 & 2 \\
@@ -2927,23 +2886,23 @@ As a check, we have
 0 & 1
 \end{array}
 \right) =\mathbf{I}\text{.}
-\end{equation*}
+$$
 
 \bigskip
 
 ***
 
 **Basic Linear Regression Example of Matrix Inverses.** With
-\begin{equation*}
+$$
 \mathbf{X}^{\prime }\mathbf{X=}\left(
 \begin{array}{cc}
 n & \sum\limits_{i=1}^{n}x_i \\
 \sum\limits_{i=1}^{n}x_i & \sum\limits_{i=1}^{n}x_i^2
 \end{array}
 \right),
-\end{equation*}
+$$
 we have
-\begin{equation*}
+$$
 \left( \mathbf{X}^{\prime }\mathbf{X}\right)
 ^{-1}\mathbf{=}\frac{1}{n\sum_{i=1}^{n}x_i^2-\left(
 \sum_{i=1}^{n}x_i\right) ^2}\left(
@@ -2952,7 +2911,7 @@ we have
 -\sum\limits_{i=1}^{n}x_i & n
 \end{array}
 \right).
-\end{equation*}
+$$
 To simplify this expression, recall that $\overline{x}=n^{-1}
 \sum_{i=1}^{n}x_i$. Thus,
 \begin{equation}
@@ -2998,12 +2957,12 @@ b_1
 \right) .
 \end{eqnarray*}
 From this expression, we may see
-\begin{equation*}
+$$
 b_1=\frac{\sum\limits_{i=1}^{n}x_iy_i-n\overline{x}\overline{y}}{
 \sum\limits_{i=1}^{n}x_i^2-n\overline{x}^2}
-\end{equation*}
+$$
 and
-\begin{equation*}
+$$
 b_0=\frac{\overline{y}\sum\limits_{i=1}^{n}x_i^2-\overline{x}
 \sum\limits_{i=1}^{n}x_iy_i}{\sum\limits_{i=1}^{n}x_i^2-n\overline{x}
 ^2}=\frac{\overline{y}\left(
@@ -3011,7 +2970,7 @@ b_0=\frac{\overline{y}\sum\limits_{i=1}^{n}x_i^2-\overline{x}
 -\overline{x}\left( \sum\limits_{i=1}^{n}x_i y_i - n\overline{x}
 \overline{y}\right) }{\sum\limits_{i=1}^{n}x_i^2-n\overline{x}^2}=
 \overline{y}-b_1\overline{x}.
-\end{equation*}
+$$
 These are the usual expressions for the slope $b_1$ (Exercise 2A.8)
 and intercept $b_0$.
 
@@ -3020,7 +2979,7 @@ and intercept $b_0$.
 ### Random Matrices   {#Sec2114}
 
 **Expectations.** Consider a matrix of random variables
-\begin{equation*}
+$$
 \mathbf{U=}\left(
 \begin{array}{cccc}
 u_{11} &  u_{12}  & \cdots & u_{1c}  \\
@@ -3029,13 +2988,13 @@ u_{21} &  u_{22}  & \cdots & u_{2c}  \\
 u_{n1} &  u_{n2}  & \cdots & u_{nc}
 \end{array}
 \right).
-\end{equation*}
+$$
 When we write the expectation of a matrix, this is short-hand for
 the matrix of expectations. Specifically, suppose that the joint
 probability function of ${u_{11}, u_{12}, ..., u_{1c}, ..., u_{n1},
  ..., u_{nc}}$ is available to define the expectation operator.
 Then we define
-\begin{equation*}
+$$
 \mathrm{E} ~ \mathbf{U} = \left(
 \begin{array}{cccc}
 \mathrm{E }u_{11} &  \mathrm{E }u_{12}  & \cdots & \mathrm{E }u_{1c}  \\
@@ -3044,11 +3003,11 @@ Then we define
 \mathrm{E }u_{n1} &  \mathrm{E }u_{n2}  & \cdots & \mathrm{E }u_{nc}
 \end{array}
 \right).
-\end{equation*}
+$$
 As an important special case, consider the joint probability
 function for the random variables $y_1, \ldots, y_n$ and the
 corresponding expectations operator. Then
-\begin{equation*}
+$$
 \mathrm{E}~ \mathbf{y=} \mathrm{E } \left(
 \begin{array}{cccc}
 y_1   \\
@@ -3062,7 +3021,7 @@ y_n
 \mathrm{E }y_n
 \end{array}
 \right).
-\end{equation*}
+$$
 By the linearity of expectations, for a non-random matrix **A**
 and vector \textbf{B}, we have E (\textbf{A y} + \textbf{B})  =
 \textbf{A} E \textbf{y + B}.
@@ -3076,7 +3035,7 @@ vectors. The variance of a vector of random variables is called the
 (\#eq:eq210) 
 \end{equation} That is, we can
 express
-\begin{equation*}
+$$
 \mathrm{Var}~\mathbf{y=} \mathrm{E } \left( \left( \begin{array}{c}
 y_1 -\mathrm{E } y_1    \\
 \vdots \\
@@ -3085,29 +3044,28 @@ y_n -\mathrm{E } y_n
 \left(\begin{array}{ccc} y_1 - \mathrm{E } y_1   & \cdots & y_n -
 \mathrm{E } y_n
 \end{array}\right) \right)
-\end{equation*}
-\begin{equation*} = \left( \begin{array}{cccc}
+$$
+$$ = \left( \begin{array}{cccc}
 \mathrm{Var}~y_1 & \mathrm{Cov}(y_1, y_2) & \cdots &\mathrm{Cov}(y_1, y_n)   \\
 \mathrm{Cov}(y_2, y_1) & \mathrm{Var}~y_2 & \cdots & \mathrm{Cov}(y_2, y_n)   \\
 \vdots  & \vdots & \ddots & \vdots\\
 \mathrm{Cov}(y_n, y_1) & \mathrm{Cov}(y_n, y_2) & \cdots & \mathrm{Var}~y_n   \\
 \end{array}\right),
-\end{equation*}
+$$
 because $\mathrm{E} ( (y_i - \mathrm{E} y_i)(y_j - \mathrm{E} y_j) )
 = \mathrm{Cov}(y_i, y_j)$ for $i \neq j$ and $\mathrm{Cov}(y_i, y_i)
-= \mathrm{Var}~y_i$.\index{matrix algebra!variance-covariance
-matrix}
+= \mathrm{Var}~y_i$.
 
 In the case that $y_1, \ldots, y_n$ are mutually uncorrelated, we
 have that $\mathrm{Cov}(y_i, y_j)=0$  for $i \neq j$ and thus
-\begin{equation*}
+$$
 \mathrm{Var}~\mathbf{y=} \left( \begin{array}{cccc}
 \mathrm{Var}~y_1 & 0 & \cdots & 0   \\
 0 & \mathrm{Var}~y_2 & \cdots & 0   \\
 \vdots  & \vdots & \ddots & \vdots\\
 0 & 0 & \cdots & \mathrm{Var}~y_n   \\
 \end{array}\right).
-\end{equation*}
+$$
 Further, if the variances are identical so that $\mathrm{Var}~y_i=\sigma ^2$, then we can write $\mathrm{Var} ~\mathbf{y} = \sigma ^2 \mathbf{I}$, where **I** is the $n \times n$ identity matrix. For example, if $y_1, \ldots, y_n$ are i.i.d., then $\mathrm{Var} ~\mathbf{y} = \sigma ^2 \mathbf{I}$.
 
 From equation \@ref(eq:eq210), it can be shown that
@@ -3118,17 +3076,17 @@ From equation \@ref(eq:eq210), it can be shown that
 (\#eq:eq211) 
 \end{equation}
 For example, if $\mathbf{A} = (a_1, a_2, \ldots,a_n)= \mathbf{a}^{\prime}$ and **B = 0**, then equation \@ref(eq:eq211) reduces to
-\begin{equation*}
+$$
 \mathrm{Var}\left( \sum_{i=1}^n a_i y_i \right) = \mathrm{Var}
 \left( \mathbf{a^{\prime} y}  \right) = \mathbf{a^{\prime}} \left(
 \mathrm{Var} ~\mathbf{y} \right) \mathbf{a} = (a_1, a_2, \ldots,a_n)
 \left( \mathrm{Var} ~\mathbf{y} \right) \left(\begin{array}{c} a_1 \\
 \vdots \\ a_n \end{array}\right)
-\end{equation*}
-\begin{equation*}
+$$
+$$
 = \sum_{i=1}^n a_i^2 \mathrm{Var} ~y_i ~+~2 \sum_{i=2}^n
 \sum_{j=1}^{i-1} a_i a_j \mathrm{Cov}(y_i, y_j).
-\end{equation*}
+$$
 
 
 **Definition - Multivariate Normal Distribution.** A vector of random variables $\mathbf{y} = \left(y_1, \ldots, y_n \right)^{\prime}$ is said to be *multivariate normal* if all linear combinations of the form $\sum_{i=1}^n a_i y_i$ are normally distributed. In this case, we write $\mathbf{y} \sim N (\mathbf{\boldsymbol \mu}, \mathbf{\Sigma} )$, where $\mathbf{\boldsymbol \mu} = \mathrm{E}~ \mathbf{y}$ is the expected value of **y** and $\mathbf{\Sigma}= \mathrm{Var}~\mathbf{y}$ is the variance-covariance matrix of **y**. From the definition, we have that $\mathbf{y}\sim N (\mathbf{\boldsymbol \mu}, \mathbf{\Sigma} )$ implies that $\mathbf{a^{\prime}y}\sim N (\mathbf{a^{\prime} \boldsymbol \mu}, \mathbf{a^{\prime}\Sigma a})$. Thus, if $y_i$ are i.i.d., then  $\sum_{i=1}^n a_i y_i$ is distributed normally with mean $\mu \sum_{i=1}^n a_i$ and variance $\sigma ^2 \sum_{i=1}^n a_i ^2$.

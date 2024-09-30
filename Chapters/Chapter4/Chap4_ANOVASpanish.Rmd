@@ -151,7 +151,6 @@ De manera similar, podemos interpretar $-0.557$ como la diferencia entre la cate
 
 Aunque la regresión se realizó utilizando MAR0 y MAR2, cualquier dos de las tres producirían la misma Tabla ANOVA (Tabla \@ref(tab:Tab42)). Sin embargo, la elección de las variables binarias sí afecta los coeficientes de regresión. La Tabla \@ref(tab:Tab43) muestra tres modelos, omitiendo MAR1, MAR2, y MAR0, respectivamente. Para cada ajuste, los coeficientes asociados con las variables continuas permanecen iguales. Como hemos visto, las interpretaciones de las variables binarias son con respecto a la categoría omitida, conocida como el *nivel de referencia*. Aunque cambian de un modelo a otro, su interpretación general sigue siendo la misma. Es decir, si queremos estimar la diferencia en la cobertura entre la categoría "otro" y la categoría "viviendo juntos", la estimación sería $0.232$, sin importar el modelo.
 
-\index{variable categórica!nivel de referencia}
 
 ```{r Tab42, echo = FALSE}
 # Ejemplo de Tabla ANOVA
@@ -1168,8 +1167,6 @@ $$
 d. Supongamos que $n = 40$, $k = 5$, y $R^2 = 0.20$. Calcula la razón $F$. Realiza la prueba habitual de adecuación del modelo para determinar si las cinco variables explicativas afectan significativamente de manera conjunta a la variable de respuesta.
 e. Supongamos que $n = 400$ (no 40), $k = 5$, y $R^2 = 0.20$. Calcula la razón $F$. Realiza la prueba habitual de adecuación del modelo para determinar si las cinco variables explicativas afectan significativamente de manera conjunta a la variable de respuesta.
 
-\index{datasets!hospital costs}
-
 4.2. **Costos Hospitalarios**. Este ejercicio considera los datos de gastos hospitalarios proporcionados por la Agencia de Investigación y Calidad de la Atención Médica de EE. UU. (AHRQ) y descritos en el Ejercicio 1.4.
 
 a. Produce un diagrama de dispersión, una correlación, y una regresión lineal de LNTOTCHG en función de AGE. ¿Es AGE un predictor significativo de LNTOTCHG?
@@ -1179,8 +1176,6 @@ d. Ahora considera el tipo de admisión, APRDRG, un acrónimo de "grupo de diagn
    **d(i)**. Ejecuta un modelo ANOVA de un factor, utilizando APRDRG para predecir LNTOTCHG. Examina el $R^2$ de este modelo y compáralo con el coeficiente de determinación del modelo de regresión lineal de LNTOTCHG en función de AGE. Basándote en esta comparación, ¿qué modelo crees que es preferido?<br>
    **d(ii)**. Para el modelo de un factor en la parte d(i), proporciona un intervalo de confianza del 95% para la media de LNTOTCHG para el nivel 225 correspondiente a una apendicectomía. Convierte tu respuesta final de dólares logarítmicos a dólares mediante exponenciación.<br>
    **d(iii)**. Ejecuta un modelo de regresión de APRDRG, FEMALE, y AGE en LNTOTCHG. Indica si AGE es un predictor estadísticamente significativo de LNTOTCHG. Indica si FEMALE es un predictor estadísticamente significativo de LNTOTCHG.
-
-\index{datasets!nursing home utilization}
 
 
 
@@ -1213,8 +1208,6 @@ c. Ejecuta una regresión de LNPAID en AGE, GENDER, y las variables categóricas
    **c(iii)**. Usa el modelo para proporcionar una estimación puntual de las reclamaciones en dólares (no en dólares logarítmicos) para un hombre de 60 años en el STATE 2 en la CLASS C7.<br>
    **c(iv)**. Escribe el coeficiente asociado con la CLASS C7 e interpreta este coeficiente.
 
-\index{datasets!Wisconsin lottery sales}
-
 4.5. **Ventas de la Lotería de Wisconsin**. Este ejercicio considera los datos de ventas de lotería del Estado de Wisconsin que se describieron en la Sección 2.1 y se examinaron en el Ejercicio 3.4.
 
    **Parte 1:** Decides examinar la relación entre SALES ($y$) y las ocho variables explicativas (PERPERHH, MEDSCHYR, MEDHVL, PRCRENT, PRC55P, HHMEDAGE, MEDINC, y POP).
@@ -1232,8 +1225,6 @@ a. Ajusta un modelo de regresión de SALES en estas tres variables explicativas.
 b. ¿Ha disminuido el coeficiente de determinación del modelo de regresión de ocho variables al modelo de tres variables? ¿Significa esto que el modelo no ha mejorado o proporciona poca información? Explica tu respuesta.
 
 c. Para determinar formalmente si se debe usar el modelo de tres o de ocho variables, utiliza una prueba parcial $F$. Establece tu hipótesis nula y alternativa, el criterio de toma de decisiones y tus reglas de toma de decisiones.
-
-\index{datasets!insurance company expenses}
 
 
 4.6. **Gastos de Compañías de Seguros**. Este ejercicio considera los datos de compañías de seguros del NAIC y descritos en los Ejercicios 1.6 y 3.5.
@@ -1976,7 +1967,7 @@ $$
 \end{bmatrix}
 = (\mathbf{X}^{\prime} \mathbf{X})^{-} \mathbf{X}^{\prime} \mathbf{y}.
 $$
-Las funciones estimables son combinaciones lineales de los valores ajustados. Dado que los valores ajustados son $\hat{y}_{ij} = \bar{y}_j$, las funciones estimables pueden expresarse como $L = \sum_{j=1}^{c} a_j \bar{y}_j $ donde $a_1, \ldots, a_{c}$ son constantes. Esta combinación lineal de los valores ajustados es un estimador insesgado de $\text{E } L = \sum_{i=1}^{c} a_i (\mu + \tau_i)$.
+Las funciones estimables son combinaciones lineales de los valores ajustados. Dado que los valores ajustados son $\hat{y}_{ij} = \bar{y}_j$, las funciones estimables pueden expresarse como $L = \sum_{j=1}^{c} a_j \bar{y}_j$ donde $a_1, \ldots, a_{c}$ son constantes. Esta combinación lineal de los valores ajustados es un estimador insesgado de $\text{E } L = \sum_{i=1}^{c} a_i (\mu + \tau_i)$.
 
 Por lo tanto, por ejemplo, eligiendo $a_1 = 1$ y los otros $a_i = 0$, vemos que $\mu + \tau_1$ es estimable. Como otro ejemplo, eligiendo $a_1 = 1$, $a_2 = -1$, y los otros $a_i = 0$, vemos que $\tau_1 - \tau_2$ es estimable. Se puede demostrar que $\mu$ no es un parámetro estimable sin restricciones adicionales sobre $\tau_1, \ldots, \tau_c$.
 

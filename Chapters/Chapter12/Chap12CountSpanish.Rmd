@@ -1,0 +1,958 @@
+<!-- # Chap 1 -->
+
+<!-- # Chap 2 -->
+
+<!-- # Chap 3 -->
+
+<!-- # Chap 4 -->
+
+<!-- # Chap 5 -->
+
+<!-- # Chap 6 -->
+
+<!-- # Chap 7 -->
+
+<!-- # Chap 8 -->
+
+<!-- # Chap 9 -->
+
+<!-- # Chap 10 -->
+
+<!-- # Chap 11 -->
+
+
+# Variables Dependientes de Conteo {#C12Count}
+
+*Vista Previa del Capítulo*. En este capítulo, la variable dependiente $y$ es un conteo, tomando valores 0, 1, 2 y así sucesivamente, que describe el número de eventos. Las variables dependientes de conteo forman la base de los modelos actuariales de *frecuencia* de reclamaciones. En otras aplicaciones, una variable dependiente de conteo puede ser el número de accidentes, el número de personas que se jubilan o el número de empresas que se vuelven insolventes.
+
+El capítulo introduce la regresión de Poisson, un modelo que incluye variables explicativas con una distribución de Poisson para conteos. Este modelo fundamental maneja muchos conjuntos de datos de interés para los actuarios. Sin embargo, con la distribución de Poisson, la media es igual a la varianza, una limitación que sugiere la necesidad de distribuciones más generales como la binomial negativa. Incluso la binomial negativa de dos parámetros puede no capturar algunas características importantes, lo que motiva la necesidad de modelos más complejos como los modelos "inflados de ceros" y los modelos de variables latentes introducidos en este capítulo.
+
+## Regresión de Poisson {#S:Sec121}
+
+### Distribución de Poisson {#S:Sec1211}
+
+Una variable aleatoria de conteo $y$ es aquella que tiene resultados en los enteros no negativos, $j=0,1,2,...$ La Poisson es una distribución fundamental utilizada para conteos que tiene una función de masa de probabilidad
+
+\begin{equation}
+\Pr \left( y=j\right) =\frac{\mu^j}{j!}e^{-\mu },~~~j=0,1,2,...
+(\#eq:eq121)
+\end{equation}
+Se puede demostrar que $\mathrm{E~} y =\sum\nolimits_{j=0}^{\infty}j\Pr \left( y=j\right) =\mu$, por lo que podemos interpretar el parámetro $\mu$ como la media de la distribución. De manera similar, se puede demostrar que $\mathrm{Var~}y =\mu$, por lo que la media es igual a la varianza en esta distribución.
+
+Una de las primeras aplicaciones (Bortkiewicz, 1898) se basó en usar la distribución de Poisson para representar el número anual de muertes en el ejército prusiano debido a "patadas de mulas". La distribución todavía se usa ampliamente como un modelo del número de accidentes, como lesiones en un entorno industrial (para cobertura de compensación de trabajadores) y daños a la propiedad en seguros de automóviles.
+
+***
+
+**Ejemplo: Datos de Automóviles de Singapur.** Estos datos provienen de una cartera de 1993 de $n=7,483$ pólizas de seguro de automóviles de una importante compañía de seguros en Singapur. Los datos se describirán más a fondo en la Sección \@ref(S:Sec122). La Tabla \@ref(tab:Tab121) proporciona la distribución del número de accidentes. La variable dependiente es el número de accidentes automovilísticos por asegurado. Para este conjunto de datos, resulta que el número máximo de accidentes en un año fue tres. En promedio, hubo $\overline{y}=0.06989$ accidentes por persona.
+
+```{r Tab121, echo = FALSE}
+#  Tabla 12.1
+#  ESTE CÓDIGO USA EL CONJUNTO DE DATOS SingaporeAuto.csv
+
+#Singapore <- read.csv("../../CSVData/SingaporeAuto.csv", header=TRUE)
+Singapore <- read.csv("CSVData/SingaporeAuto.csv", header=TRUE)
+
+#  TABLA DE CONTEOS OBSERVADOS Y AJUSTADOS POISSON
+muhat <- mean(Singapore$Clm_Count) 
+col2 <- c(table(Singapore$Clm_Count),0)
+col1 <- ynum <- c(0,1,2,3,4)
+col3 <- length(Singapore$Clm_Count)*dpois(ynum, muhat)
+tableoutA <- cbind(col1, col2, col3)
+tableoutA[,3] <- round(tableoutA[,3],digits = 2)
+row5 <- c("Total", sum(col2), round(sum(col3),digits = 2))
+tableout <- rbind(tableoutA, row5)
+
+row.names(tableout) <- NULL
+colnames(tableout) <- c("Conteo ($j$)", "Observado ($n_j$)", "Conteos Ajustados usando la Distribución de Poisson $(n\\widehat{p}_j)$")
+TableGen1(TableData=tableout, 
+         TextTitle='Comparación de Conteos Observados y Ajustados Basados en Datos de Automóviles de Singapur', 
+         Align='c', Digits = 2, ColumnSpec=1:2, BorderRight=1,
+         ColWidth = "3cm") 
+
+#  OTRA MANERA
+#CountPoisson1 <- glm(Clm_Count ~ 1,poisson(link=log), data = Singapore)
+#summary(CountPoisson1)
+#exp(CountPoisson1$coefficients)
+
+```
+
+`r HideRCode('Tab121.Hide',"Código R para Producir la Tabla 12.1")`
+
+```{r ref.label = 'Tab121', eval = FALSE}
+```
+
+</div>
+
+
+La Tabla \@ref(tab:Tab121) también proporciona los conteos ajustados que se calcularon utilizando el estimador de máxima verosimilitud de $\mu$. Específicamente, a partir de la ecuación \@ref(eq:eq121) podemos escribir la función de masa como $\mathrm{f}(y,\mu) = \mu^y e^{-\mu} /y!,$ y así la log-verosimilitud es
+\begin{equation}
+L(\mu) = \sum_{i=1}^{n} \ln \mathrm{f}(y_i,\mu) = \sum_{i=1}^{n}\left( -\mu +y_i\ln \mu -\ln y_i!\right) .
+(\#eq:eq122)
+\end{equation}
+Es sencillo demostrar que la log-verosimilitud tiene un máximo en $\widehat{\mu }=\overline{y}$, el número promedio de reclamaciones. Las probabilidades estimadas, utilizando la ecuación \@ref(eq:eq121)\ y $\widehat{\mu }= \overline{y}$, se denotan como $\widehat{p}_j$. Usamos estas probabilidades estimadas en la Tabla \@ref(tab:Tab121) al calcular los conteos ajustados con $n=7,483$.
+
+Para comparar los conteos observados y ajustados, una estadística de bondad de ajuste ampliamente utilizada es la *estadística chi-cuadrado de Pearson*, dada por
+\begin{equation}
+\sum_j\frac{\left( n_j-n\widehat{p}_j\right)^2}{n\widehat{p}_j}.
+(\#eq:eq123)
+\end{equation}
+Bajo la hipótesis nula de que la distribución de Poisson es un modelo correcto, esta estadística tiene una distribución chi-cuadrado en muestras grandes, donde los grados de libertad son el número de celdas menos uno menos el número de parámetros estimados. Para los datos de Singapur en la Tabla \@ref(tab:Tab121), esto es $df=5-1-1=3$. Resulta que la estadística es 41.98, lo que indica que este modelo básico de Poisson es inadecuado.
+
+`r HideRCode('Pearson.Hide',"Código R para producir la estadística de bondad de ajuste de Pearson")`
+
+```{r eval = FALSE}
+CountPoisson1 <- glm(Clm_Count ~ 1,poisson(link=log), data = Singapore)
+temp <- summary(CountPoisson1)
+str(temp)
+(temp$aic - 2*(1+1))/2
+#  COMPARACIÓN DE MODELOS DE FRECUENCIA AJUSTADOS
+options(digits=8)
+table1p = cbind(sum(dpois(0,CountPoisson1$fitted.values)),
+                sum(dpois(1,CountPoisson1$fitted.values)),
+                sum(dpois(2,CountPoisson1$fitted.values)),
+                sum(dpois(3,CountPoisson1$fitted.values)),
+                sum(dpois(4,CountPoisson1$fitted.values)))
+
+#  ESTADÍSTICA CHI-CUADRADO DE PEARSON
+actual = data.frame(table(Singapore$Clm_Count))[,2];
+actual[5] = 0
+diff = actual-table1p
+(PearsonG = sum(diff*diff/table1p))
+```
+
+</div>
+
+### Modelo de Regresión  {#S:Sec1212}
+
+Para extender el modelo básico de Poisson, primero permitimos que la media varíe por una cantidad conocida llamada *exposición* $E_i$ , de modo que
+$$
+\mathrm{E~}y_i=E_i\times \mu .
+$$
+Para motivar esta especificación, recordemos que las sumas de variables aleatorias de Poisson independientes también tienen una distribución de Poisson, por lo que es razonable pensar en las exposiciones como grandes números positivos. Así, es común modelar el número de accidentes por mil vehículos o el número de homicidios por millón de habitantes. Además, consideramos también los casos en los que las unidades de exposición pueden ser fracciones. Para ilustrar, en nuestros datos de Singapur, $E_i$ representará la fracción del año en la que un asegurado tuvo cobertura de seguro. La lógica detrás de esto es que el número esperado de accidentes es directamente proporcional a la duración de la cobertura. (Esto también puede motivarse desde un marco probabilístico basado en colecciones de variables aleatorias distribuidas según Poisson, conocidas como *procesos de Poisson*, véase, por ejemplo, Klugman et al., 2008).
+
+Más generalmente, deseamos permitir que la media varíe de acuerdo con la información contenida en otras variables explicativas. Para el Poisson, es común especificar
+$$
+\mathrm{E~}y_i = \mu_i = \exp \left( \mathbf{x}_i^{\prime}\boldsymbol \beta \right) .
+$$
+Usar la función exponencial para mapear el componente sistemático $\mathbf{x}_i^{\prime }\boldsymbol \beta$ en la media asegura que $\mathrm{E~}y_i$ permanecerá positiva. Suponiendo la linealidad de los coeficientes de regresión, se permite una fácil interpretación. Específicamente, dado que
+$$
+\frac{\partial \mathrm{E~}y_i}{\partial x_{ij}} \times \frac{1}{\mathrm{E~}y_i} =\beta_j,
+$$
+
+podemos interpretar $\beta_j$ como el cambio proporcional en la media por unidad de cambio en $x_{ij}$. La función que conecta la media con el componente sistemático se conoce como la *función de enlace logarítmico*, es decir, $\ln \mu_i=\mathbf{x}_i^{\prime }\boldsymbol \beta$.
+
+Para incorporar las exposiciones, siempre se puede especificar que una de las variables explicativas sea $\ln E_i$ y restringir el coeficiente de regresión correspondiente a ser 1. Este término se conoce como un *desplazamiento*. Con esta convención, la función de enlace es
+\begin{equation}
+\ln \mu_i=\ln E_i+\mathbf{x}_i^{\prime }\boldsymbol \beta.
+(\#eq:eq124)
+\end{equation}
+
+**Ejemplo: Accidentes de Automóviles en California**. Weber (1971) proporcionó la primera aplicación de la regresión de Poisson a frecuencias de accidentes automovilísticos en su estudio de los registros de conducción en California. En uno de sus modelos, Weber examinó el número de accidentes automovilísticos durante 1963 de casi 87,000 conductores hombres. Sus variables explicativas consistían en:
+
+*  $x_1$ = el logaritmo natural del índice de densidad de tráfico del condado donde reside el conductor,
+*  $x_2 =5/(edad-13)$
+*  $x_3$ = el número de condenas contables incurridas durante los años 1961-62
+*  $x_4$ = el número de involucramientos en accidentes durante los años 1961-62
+*  $x_5$ = el número de condenas no contables incurridas durante los años 1961-62.
+
+Curiosamente, en esta aplicación temprana, Weber logró un ajuste satisfactorio representando la media como una combinación lineal de variables explicativas ($\mathrm{E }~y_i=\mathbf{x}_i^{\prime }\boldsymbol \beta$), no en la versión exponenciada como en la ecuación \@ref(eq:eq124) que ahora es comúnmente utilizada.
+
+
+
+### Estimación  {#S:Sec1213}
+
+La estimación de máxima verosimilitud es la técnica usual para los modelos de regresión de Poisson. Utilizando la función de enlace logarítmico en la ecuación \@ref(eq:eq124), la log-verosimilitud se expresa como:
+\begin{eqnarray*}
+L(\boldsymbol \beta) &=&\sum_{i=1}^{n}\left( -\mu_i+y_i\ln \mu
+_i-\ln y_i!\right) \\
+&=&\sum_{i=1}^{n}\left( -E_i\exp \left( \mathbf{x}_i^{\prime
+}\boldsymbol \beta \right) +y_i\left( \ln E_i+\mathbf{x}_i^{\prime
+}\boldsymbol \beta \right) -\ln y_i!\right) .
+\end{eqnarray*}
+Al igualar la *función de puntuación* a cero se obtiene
+\begin{equation}
+\left. \frac{\partial }{\partial \boldsymbol
+\beta}\mathrm{L}(\boldsymbol \beta )\right\vert_{\mathbf{\beta
+=b}}=\sum_{i=1}^{n}\left( y_i-E_i\exp \left( \mathbf{x}_i^{\prime
+}\mathbf{b}\right) \right) \mathbf{x} _i=\sum_{i=1}^{n}\left(
+y_i-\widehat{\mu }_i\right) \mathbf{x}_i= \mathbf{0},
+(\#eq:eq125)
+\end{equation}
+donde $\widehat{\mu }_i = E_i\exp \left( \mathbf{x}_i^{\prime
+}\mathbf{b} \right)$. Resolver esta ecuación (numéricamente) nos da
+$\mathbf{b}$, el estimador de máxima verosimilitud de $\boldsymbol \beta$. A partir de la ecuación \@ref(eq:eq125), vemos que si una fila de
+$\mathbf{x}_i$ es constante (correspondiendo a un término de intercepto constante en la regresión), entonces la suma de los residuos $y_i - \widehat{\mu}_i$ es cero.
+
+Tomar las segundas derivadas nos da la *matriz de información*,
+$$
+\mathbf{I}(\boldsymbol \beta) = - \mathrm{E} \frac{\partial
+^2}{\partial \boldsymbol \beta\partial \boldsymbol \beta^{\prime
+}}\mathrm{L}(\boldsymbol \beta)=\sum_{i=1}^{n}E_i\exp \left(
+\mathbf{x}_i^{\prime }\boldsymbol \beta\right)
+\mathbf{x}_i\mathbf{x}_i^{\prime
+}=\sum_{i=1}^{n}\mu_i\mathbf{x}_i\mathbf{x}_i^{\prime }.
+$$
+La teoría estándar de estimación por máxima verosimilitud (Sección 11.9.2) muestra que la matriz de varianza-covarianza asintótica de $\mathbf{b}$ es
+$$
+\widehat{\mathrm{Var~}\mathbf{b}}=\left(
+\sum\limits_{i=1}^{n}\widehat{\mu }
+_i\mathbf{x}_i\mathbf{x}_i^{\prime }\right)^{-1}.
+$$
+La raíz cuadrada del $j$-ésimo elemento diagonal de
+$\widehat{\mathrm{Var~} \mathbf{b}}$ nos da el error estándar para
+$b_j$, que denotamos como $se(b_j)$.
+
+**Ejemplo: Seguro de Mala Praxis Médica.** Los médicos cometen errores y pueden ser demandados por las partes perjudicadas por estos errores. Al igual que muchos profesionales, es común que los médicos contraten cobertura de seguro para mitigar las consecuencias financieras de las demandas por "mala praxis".
+
+Dado que las aseguradoras desean fijar precios precisos para este tipo de cobertura, parece natural preguntar qué tipo de médicos es más probable que presenten reclamaciones de mala praxis. Fournier y McInnes (2001) examinaron una muestra de $n=9,059$ médicos de Florida utilizando datos del archivo de reclamaciones de seguros de responsabilidad profesional médica de Florida. Los autores examinaron reclamaciones cerradas entre 1985 y 1989 para médicos que obtuvieron su licencia antes de 1981, omitiendo así las reclamaciones de médicos recién licenciados. Las reclamaciones por mala praxis médica pueden tardar mucho en resolverse ("liquidarse"); en su estudio, Fournier y McInnes encontraron que el 2 por ciento de las reclamaciones aún no se habían resuelto después de 5 años del evento de mala praxis. Por lo tanto, eligieron un período temprano (1985-1989) para permitir que la experiencia madurara. Los autores también ignoraron las reclamaciones menores al considerar solo aquellas que excedieron los \$100.
+
+[Tabla 12.2](#Tab122) proporciona los coeficientes de la regresión de Poisson ajustada, junto con los errores estándar que aparecen en Fournier y McInnes (2001). La tabla muestra que el área de especialización del médico, la región, el tamaño de la práctica y las características personales del médico (experiencia y género) son determinantes importantes del número de demandas por mala praxis médica. Por ejemplo, podemos interpretar el coeficiente asociado al género como que se espera que los hombres tengan $\exp (0.432)= 1.540$ veces más reclamaciones que las mujeres.
+
+<a id=Tab122></a> 
+
+[Tabla 12.2]: ./C12Count.html#Tab122
+
+[Tabla 12.2]{#Tab122}. **Coeficientes de Regresión del Modelo de Regresión Poisson para Mala Praxis Médica** 
+
+$$
+\small{
+\begin{array}{lcc|lcc}
+\hline 
+&  & \text{Error}  &  &  & \text{Error} \\ 
+\text{Variables Explicativas} & \text{Coeficiente} & \text{Estándar} & \text{Variables Explicativas} & \text{Coeficiente} & \text{Estándar} \\ 
+\hline 
+\text{Intercepto} & -1.634 & 0.254 & \text{MSA: Miami Dade-Broward} & 0.377 & 0.094 \\ 
+\text{Log Años con Licencia} & -0.392 & 0.054 & \text{MSA: Otros} & 0.012 & 0.084 \\ 
+\text{Femenino} & -0.432 & 0.082 & \ \ \ \ \textit{Especialidad} \\ 
+\text{Volumen de Pacientes} & 0.643 & 0.045 & \text{Anestesiología} & 0.944 & 0.099 \\ 
+\text{(Volumen de Pacientes)}^2 & -0.066 & 0.008 & \text{Medicina de Emergencia} & 0.583 & 0.105 \\ 
+\text{Educación Per Cápita} & -0.015 & 0.006 & \text{Medicina Interna} & 0.428 & 0.066 \\ 
+\text{Ingreso Per Cápita} & 0.047 & 0.011 & \text{Obstetricia-Ginecología} & 1.226 & 0.070 \\ 
+ \ \ \ \ \textit{Variables Regionales} & & & \text{Otorrinolaringología} & 1.063 & 0.109 \\ 
+\text{Segundo Circuito} & 0.066 & 0.072 & \text{Pediatría} & 0.385 & 0.089 \\ 
+\text{Tercer Circuito} & 0.103 & 0.088 & \text{Radiología} & 0.478 & 0.099 \\ 
+\text{Cuarto Circuito} & 0.214 & 0.098 & \text{Cirugía} & 1.410 & 0.061 \\ 
+\text{Quinto Circuito} & 0.287 & 0.069 & \text{Otras Especialidades} & 0.011 & 0.076 \\ 
+\hline 
+\end{array}
+}
+$$
+
+
+### Inferencia Adicional {#S:Sec1214}
+
+En los modelos de regresión de Poisson, anticipamos que las variables dependientes sean *heterocedásticas* debido a la relación $\mathrm{Var~}y_i=\mu_i$. Esta característica significa que los residuales ordinarios $y_i-\widehat{\mu}_i$ son menos útiles, por lo que es más común examinar los *residuales de Pearson* definidos como
+$$
+r_i=\frac{y_i-\widehat{\mu}_i}{\sqrt{\widehat{\mu}_i}}.
+$$
+Por construcción, los residuales de Pearson son aproximadamente homocedásticos. Gráficos de los residuales de Pearson pueden usarse para identificar observaciones inusuales o para detectar si variables adicionales de interés pueden mejorar la especificación del modelo.
+
+Los residuales de Pearson también pueden usarse para calcular una estadística de bondad de ajuste de Pearson,
+\begin{equation}
+\sum\limits_{i=1}^{n}r_i^2=\sum\limits_{i=1}^{n}\frac{\left( y_i-\widehat{\mu}_i\right)^2}{\widehat{\mu}_i}.
+(\#eq:eq126)
+\end{equation}
+Esta estadística es una medida general de qué tan bien se ajusta el modelo a los datos. Si el modelo está correctamente especificado, esta estadística debería ser aproximadamente $n-(k+1)$. En general, las estadísticas de bondad de ajuste de Pearson toman la forma $\sum \left( O-E\right)^2/E$, donde $O$ es una cantidad observada y $E$ es el valor estimado (esperado) correspondiente basado en un modelo. La estadística en la ecuación \@ref(eq:eq126) se calcula a nivel de observación, mientras que la estadística en la ecuación \@ref(eq:eq123) se calculó resumiendo información sobre celdas.
+
+En la regresión lineal, el coeficiente de determinación $R^2$ es una medida de bondad de ajuste ampliamente aceptada. En la regresión no lineal, como para variables dependientes binarias y de conteo, esto no es así. Las estadísticas de información, como el *Criterio de Información de Akaike*,
+$$
+AIC=-2 L(\mathbf{b}) +2(k+1),
+$$
+representan un tipo de estadística útil para la bondad de ajuste, que se define de manera amplia en un rango amplio de modelos. Los modelos con valores más pequeños de $AIC$ ajustan mejor y son preferidos.
+
+Como se mencionó en la Sección \@ref(S:Sec1213), los estadísticos $t$ se utilizan regularmente para probar la significancia de los coeficientes de regresión individuales. Para probar colecciones de coeficientes de regresión, es común utilizar la *prueba de razón de verosimilitud*. La prueba de razón de verosimilitud es un procedimiento bien conocido para probar la hipótesis nula $H_0:\mathrm{h}(\boldsymbol \beta) = \mathbf{d}$, donde $\mathbf{d}$ es un vector conocido de dimensión $r\times 1$ y $\mathrm{h}(\mathbf{.})$ es una función conocida y diferenciable. Este enfoque utiliza $\mathbf{b}$ y $\mathbf{b}_{\mathrm{Reducido}}$, donde $\mathbf{b}_{\mathrm{Reducido}}$ es el valor de $\boldsymbol \beta$ que maximiza $L(\boldsymbol \beta)$ bajo la restricción de que $\mathrm{h}(\boldsymbol \beta)=\mathbf{d}$. Se calcula la estadística de prueba
+\begin{equation}
+LRT = 2 \left( L(\mathbf{b}) - L(\mathbf{b}_{\mathrm{Reducido}}) \right) .
+(\#eq:eq127)
+\end{equation}
+Bajo la hipótesis nula $H_0$, la estadística de prueba $LRT$ tiene una distribución asintótica chi-cuadrado con $r$ grados de libertad. Por lo tanto, valores grandes de $LRT$ sugieren que la hipótesis nula no es válida.
+
+## Aplicación: Seguro de Automóviles en Singapur {#S:Sec122}
+
+Frees y Valdez (2008) investigan modelos jerárquicos de la experiencia de conducción en Singapur. Aquí examinamos en detalle un subconjunto de sus datos, centrándonos en los conteos de accidentes automovilísticos de 1993. El propósito del análisis es comprender el impacto de las características del vehículo y del conductor en la experiencia de accidentes. Estas relaciones proporcionan una base para un actuario que trabaja en *la tarificación*, es decir, establecer el precio de las coberturas de seguros.
+
+Los datos provienen de la Asociación de Seguros Generales de Singapur, una organización que agrupa a aseguradoras generales (propiedad y accidentes) en Singapur (ver el sitio web de la organización: www.gia.org.sg). A partir de esta base de datos, se disponía de varias características para explicar la frecuencia de accidentes automovilísticos. Estas características incluyen variables del vehículo, como el tipo y la edad, así como variables a nivel de persona, como la edad, el género y la experiencia previa de conducción. La [Tabla 12.3](#Tab123) resume estas características.
+
+`r HideRCode('Table123.1Silly',"")`
+
+```{r  eval = TRUE, echo = TRUE}
+knitr::kable(2, caption = "Silly. Create a table just to update the counter...")
+```
+
+</div>
+
+```{r Tab123, echo = FALSE}
+#  Tabla 12.3
+row0 <- c("Tipo de Vehículo" , "El tipo de vehículo asegurado, ya sea automóvil (A) u otro (O).") 
+row1 <- c("Edad del Vehículo" , "La edad del vehículo, en años, agrupada en seis categorías.") 
+row2 <- c("Género" , "El género del titular de la póliza, ya sea masculino o femenino") 
+row3 <- c("Edad" , "La edad del titular de la póliza, en años, agrupada en siete categorías.") 
+row4 <- c("NCD" , "Descuento por No Reclamos. Esto se basa en el historial de accidentes previo del titular de la póliza. Cuanto mayor sea el descuento, mejor será el historial de accidentes anterior.") 
+tableout <- rbind(row0, row1, row2, row3, row4)
+row.names(tableout) <- NULL
+colnames(tableout) <- c("Covariable", "Descripción")
+TableGen1(TableData=tableout, 
+         TextTitle='Descripción de las Covariables', 
+         Align='l', ColumnSpec=1,
+         ColWidth = "3cm")  %>% 
+     kableExtra::column_spec(2, width =  "10cm")
+```
+
+
+[Tabla 12.4](#Tab124) muestra los efectos de las características del vehículo sobre el número de reclamaciones. La categoría "Automóvil" tiene una experiencia de reclamaciones general más baja. La categoría "Otro" consiste principalmente en vehículos de mercancías (comerciales), así como coches de fin de semana y de alquiler. La edad del vehículo muestra efectos no lineales sobre la frecuencia de accidentes. Aquí, observamos pocas reclamaciones para autos nuevos, con un aumento inicial en la frecuencia de accidentes con el tiempo. Sin embargo, para vehículos en funcionamiento durante largos periodos, las frecuencias de accidentes son relativamente bajas. También hay algunos efectos de interacción importantes entre el tipo de vehículo y la edad que no se muestran aquí. No obstante, [Tabla 12.4](#Tab124) sugiere claramente la importancia de estas dos variables en las frecuencias de reclamaciones.
+
+
+```{r Tab124, eval = FALSE, echo = FALSE}
+#  Tabla 12.4
+#  EFECTO DE LAS CARACTERÍSTICAS DEL VEHÍCULO
+Auto   <- 1*(Singapore$VehicleType=="A")
+TAuto  <- table(Auto, Singapore$Clm_Count)
+TAuto1 <- cbind(TAuto, rowSums(TAuto)) 
+TVehA  <- table(Singapore$VAgecat1, Singapore$Clm_Count)
+TVehA1 <- cbind(TVehA, rowSums(TVehA)) 
+TComb  <- rbind(TAuto1, TVehA1)
+
+AddRow <- function(row){
+   rowper <- 100*row/row[5]
+   rowper[5] <- 100*row[5]/length(Singapore$Clm_Count)
+   return(rbind(row, rowper))
+}
+TCombBig <- rbind(
+AddRow(TComb[1,]),
+AddRow(TComb[2,]),
+AddRow(TComb[3,]),
+AddRow(TComb[4,]),
+AddRow(TComb[5,]),
+AddRow(TComb[6,]),
+AddRow(TComb[7,]) 
+)
+
+TCombBig[c(1,3,5,7,9, 11, 13),] <- 
+  round(TCombBig[c(1,3,5,7,9, 11, 13),],digits=0)
+TCombBig <- round(TCombBig,digits=1)
+row.names(TCombBig) <- c("Otro", "", 
+                         "Automóvil", "", 
+                         "0-2", "", "3-5", "", "6-10", "", "11-15","",  "16 años y más", "")
+colnames(TCombBig) <- c("Conteo=0","Conteo=1",
+                        "Conteo=2","Conteo=3","Totales")
+TableGen1(TableData=TCombBig, 
+         TextTitle='Efecto de las Características del Vehículo sobre las Reclamaciones', 
+         Align='r', ColumnSpec=1:4, Digits = 1, BorderRight = c(1,5),
+         ColWidth = ColWidth5)
+
+```
+
+
+
+<a id=Tab124></a> 
+
+[Tabla 12.4]: ./C12Count.html#Tab124
+
+[Tabla 12.4]{#Tab124}. **Efecto de las Características del Vehículo sobre las Reclamaciones** 
+
+$$
+\small{
+\begin{array}{crrrr|r}
+\hline
+& \text{Conteo=0} & \text{Conteo=1} & \text{Conteo=2} & \text{Conteo=3} & \text{Totales} \\ 
+\hline
+\text{Tipo de Vehículo} \\ 
+\text{Otro} & 3,441 & 184 & 13 & 3 & 3,641 \\ 
+& (94.5) & (5.1) & (0.4) & (0.1) & (48.7) \\ 
+\text{Automóvil} & 3,555 & 271 & 15 & 1 & 3,842 \\ 
+& (92.5) & (7.1) & (0.4) & (0.0) & (51.3) \\ \hline
+\text{Edad del Vehículo (en años)} \\ 
+0-2 & 4,069 & 313 & 20 & 4 & 4,406 \\ 
+& (92.4) & (7.1) & (0.5) & (0.1) & (50.8) \\ 
+3 a 5 & 708 & 59 & 4 &  & 771 \\ 
+& (91.8) & (7.7) & (0.5) &  & (10.3) \\ 
+6 a 10 & 872 & 49 & 3 &  & 924 \\ 
+& (94.4) & (5.3) & (0.3) &  & (12.3) \\ 
+11 a 15 & 1,133 & 30 & 1 &  & 1,164 \\ 
+& (97.3) & (2.6)& (0.1) &  & (15.6) \\ 
+\text{16 años y más} & 214 & 4 &  &  & 218 \\ 
+& (98.2) & (1.8) &  &  & (2.9) \\ 
+\hline 
+\text{Totales} & 6,996 & 455 & 28 & 4 & 7,483 \\ \hline
+\end{array}
+}
+$$
+*Nota: Los números entre paréntesis son porcentajes.*
+
+
+`r HideRCode('Tab124.Hide',"Código R para generar la Tabla 12.4")`
+
+```{r ref.label = 'Tab124'}
+```
+
+
+</div>
+
+La [Tabla 12.5](#Tab125) muestra los efectos de las características a nivel personal, como género, edad y descuento por no reclamación (NCD), sobre la distribución de frecuencia. Las características a nivel personal no estaban disponibles en su mayoría para los vehículos de uso comercial, por lo que la [Tabla 12.5](#Tab125) presenta estadísticas resumidas solo para aquellas observaciones que tenían cobertura de automóviles con la información de género y edad necesaria. Cuando restringimos la consideración a automóviles de uso privado, relativamente pocas pólizas no contenían información de género y edad.
+
+La [Tabla 12.5](#Tab125) sugiere que la experiencia de conducción era bastante similar entre hombres y mujeres. Esta compañía aseguraba muy pocos conductores jóvenes, por lo que la categoría de conductores jóvenes masculinos, que normalmente tiene tasas de accidentes extremadamente altas en la mayoría de los estudios sobre automóviles, es menos relevante para estos datos. No obstante, la [Tabla 12.5](#Tab125) sugiere fuertes efectos de la edad, con conductores mayores mostrando una mejor experiencia de conducción. La [Tabla 12.5](#Tab125) también demuestra la importancia de los descuentos por no reclamación (NCD). Como se anticipaba, los conductores con mejores historiales de conducción, que disfrutan de un mayor NCD, tienen menos accidentes.
+
+```{r Tab125, echo = FALSE}
+#  Tabla 12.5
+Auto   <- 1*(Singapore$VehicleType=="A")
+#  EFECTO DE LAS CARACTERÍSTICAS PERSONALES
+SingaporeA <- subset(Singapore, (Auto==1))
+Count0 <- 1*(SingaporeA$Clm_Count==0)
+rowGender <- table(Count0,SingaporeA$SexInsured)
+rowAge<- table(Count0,SingaporeA$AgeCat)
+rowNCD <- table(Count0,SingaporeA$NCD)
+TabPersonal <- t(cbind(rowGender, rowAge, rowNCD))
+TabPersonal[,1] <- TabPersonal[,1]+TabPersonal[,2]
+TabPersonalA <- cbind(TabPersonal[,2],100*TabPersonal[,2]/TabPersonal[,1], TabPersonal[,1])
+TabPersonalA[,2] <- round(TabPersonalA[,2], digits = 1)
+row.names(TabPersonalA) <- c("Femenino", "Masculino",
+                         "22-25", "26-35", "36-45",
+                         "46-55", "56-65", "66 y más",
+                         0, 10, 20, 30, 40, 50)
+`*Género*` <- c("", "", "") -> `*Categoría de Edad*` -> `*Descuento por No Reclamaciones*`
+TabPersonalB <- rbind(`*Género*`, TabPersonalA[1:2,], `*Categoría de Edad*`,
+                      TabPersonalA[3:8,], `*Descuento por No Reclamaciones*`,
+                      TabPersonalA[9:14,])
+
+colnames(TabPersonalB) <- c("Número", "Porcentaje", "Total")
+TableGen1(TableData=TabPersonalB, 
+         TextTitle='Efecto de las Características Personales sobre las Reclamaciones. Basado en la muestra con Auto = 1.', 
+         Align='ccc', ColumnSpec=1:2, Digits = 1, BorderRight = c(1,3), 
+         ColWidth = ColWidth4)  %>% 
+  add_header_above(c(" "=1, "Conteo = 0" = 2, " "=1)) %>%
+     kableExtra::column_spec(1, width =  "4cm")
+
+```
+
+`r HideRCode('Tab125.Hide',"Código R para generar la Tabla 12.5")`
+
+```{r ref.label = 'Tab125', eval = FALSE}
+```
+
+</div>
+
+
+Como parte del proceso de examen, investigamos términos de interacción entre las covariables y especificaciones no lineales. Sin embargo, [Tabla 12.6](#Tab126) resume un modelo Poisson ajustado más simple con solo efectos aditivos. [Tabla 12.6](#Tab126) muestra que tanto la edad del vehículo como el descuento por no reclamaciones son categorías importantes, ya que los $t$-ratios de muchos de los coeficientes son estadísticamente significativos. La verosimilitud logarítmica total para este modelo es $L( \mathbf{b}) =-1,776.730$.
+
+Los niveles de referencia omitidos se indican en la nota al pie de [Tabla 12.6](#Tab126) para ayudar a interpretar los parámetros. Por ejemplo, para $NCD=0$, esperamos que un conductor con mal historial con $NCD=0$ tenga $\exp (0.729)=2.07$ veces más accidentes que un conductor excelente comparable con $NCD=50$. Del mismo modo, esperamos que un conductor con mal historial con $NCD=0$ tenga $\exp (0.729-0.293)=1.55$ veces más accidentes que un conductor promedio comparable con $NCD=20$.
+
+<a id=Tab126></a> 
+
+[Tabla 12.6]: ./C12Count.html#Tab126
+
+[Tabla 12.6]{#Tab126}. **Estimaciones de Parámetros de un Modelo Poisson Ajustado** 
+
+$$
+\small{
+\begin{array}{rrr|rrr}
+\hline
+& \text{Parámetro} &  &  & \text{Parámetro} &  \\ 
+\text{Variable} & \text{Estimación} & t\text{-ratio} & \text{Variable} & \text{Estimación} & t\text{-ratio} \\ \hline
+ &  &  & (Auto=1)\times \text{Descuento por No} \\ 
+ &  &  & \text{Reclamaciones*} \\ 
+\text{Intercepto} & -3.306 & -6.602 & 0  & 0.729 & 4.704 \\ 
+\text{Auto} & -0.667 & -1.869 & 10 & 0.528 & 2.732 \\ 
+\text{Femenino} & -0.173 & -1.115 & 20 & 0.293 & 1.326 \\ 
+ &  &  & 30 & 0.260 & 1.152 \\ 
+ (Auto=1)\times  & & &40 & -0.095 & -0.342 \\ 
+\text{Categoría de Edad*} &  &  &\text{Edad del Vehículo}  \\ 
+22-25 & 0.747 & 0.961 &\ \ \ \text{en años)*} \\ 
+26-35 & 0.489 & 1.251 & 0-2 & 1.674 & 3.276 \\ 
+36-45 & -0.057 & -0.161 & 3-5 &1.504 & 2.917 \\ 
+46-55 & 0.124 & 0.385 & 6-10 & 1.081& 2.084 \\ 
+56-65 & 0.165 & 0.523 &
+11-15 & 0.362 & 0.682 \\ \hline
+\end{array}
+}
+$$
+*Los niveles de referencia omitidos son: "66 y más" para la Categoría de Edad, "50" para el Descuento por No Reclamaciones y "16 años y más" para la Edad del Vehículo.
+
+`r HideRCode('Tab126.Hide',"Código R para generar la Tabla 12.6")`
+
+```{r Tab126, echo = FALSE}
+#  Tabla 12.6
+#  AJUSTAR UN MODELO DE REGRESIÓN POISSON;
+#  NOTA LA FORMA DE CAMBIAR LAS CATEGORÍAS DE REFERENCIA
+Singapore$Female    <- 1*(Singapore$SexInsured == "F" )
+Singapore$Auto      <- 1*(Singapore$VehicleType=="A")
+Singapore$NCD1F     <- relevel(factor(Singapore$NCD), ref="50")
+Singapore$AgeCatF   <- relevel(factor(Singapore$AgeCat), ref="7")
+Singapore$VAgecat1F <-relevel(factor(Singapore$VAgecat1), ref="6")
+CountPoisson3       <- glm(Clm_Count~Female + Auto +
+                Auto:AgeCatF + Auto:NCD1F + VAgecat1F, 
+                offset=LNWEIGHT, poisson(link=log), data = Singapore)
+
+# temp<-summary(CountPoisson3)
+# (temp$aic - 2*(16+1))/2
+# logLik(CountPoisson3) 
+
+Table1    <- summary(CountPoisson3)
+Table1Red <- round(Table1$coefficients[,c(1,3)], digits=3)
+
+row.names(Table1Red) <- c("Intercepto",  "Femenino","Auto",
+                          "0-2", "3-5", "6-10","11-15",
+                          "22-25", "26-35", "36-45",
+                          "46-55", "56-65", 
+                          0, 10, 20, 30, 40)
+
+`*(Auto = 1) × Categoría de Edad* *` <- c("", "", "") -> 
+`*(Auto = 1) × Descuento por No Reclamaciones* *` -> 
+`*Edad del Vehículo (en años)* *`
+Table126Red <- rbind(Table1Red[1:3,],
+                     `*(Auto = 1) × Categoría de Edad* *`, Table1Red[8:12,],
+                     `*(Auto = 1) × Descuento por No Reclamaciones* *`,Table1Red[13:17,],
+                     `*Edad del Vehículo (en años)* *`,Table1Red[4:7,])
+
+colnames(Table126Red) <- c("Estimación del Parámetro", "$t$-Ratio")
+TableGen1(TableData=Table126Red, 
+         TextTitle='Estimaciones de Parámetros de un Modelo Poisson Ajustado', 
+         Align='ccc', ColumnSpec=1, Digits = 3,
+         ColWidth = ColWidth4)  %>%
+     kableExtra::column_spec(1, width =  "6cm")  %>%
+  footnote(general = "Los niveles de referencia omitidos son “66 y más” para la edad, \n “50” para el descuento por no reclamaciones, \n y “16 y más” para la edad del vehículo
+
+.", 
+           general_title = "Nota:", 
+           footnote_as_chunk = TRUE)
+
+```
+
+</div>
+
+Para un modelo más parsimonioso, se podría considerar eliminar las variables de automóvil, género y edad. Al eliminar estas siete variables, el modelo resultante tiene una verosimilitud logarítmica de $L \left( \mathbf{b}_{\mathrm{Reduced}}\right) =-1,779.420$. Para entender si esto representa una reducción significativa, podemos calcular el estadístico de razón de verosimilitud usando la ecuación \@ref(eq:eq127),
+$$
+LRT=2\times \left( -1,776.730 - (-1,779.420) \right) =5.379.
+$$
+Comparando este valor con una distribución chi-cuadrado con $df=7$ grados de libertad, el valor $p$ del estadístico $=\Pr \left( \chi _{7}^2>5.379\right) =0.618$ indica que estas variables no son estadísticamente significativas. No obstante, para propósitos de desarrollo adicional del modelo, hemos retenido las variables de automóvil, género y edad, ya que es común incluir estas variables en los modelos de tarificación.
+
+Como se describió en la Sección \@ref(S:Sec1214), existen varias formas de evaluar el ajuste general de un modelo. 
+[Tabla 12.7](#Tab127) compara varios modelos ajustados, proporcionando valores ajustados para cada nivel de respuesta y resumiendo el ajuste general con estadísticas de bondad de ajuste chi-cuadrado de Pearson. La parte izquierda de la tabla repite la información básica que apareció en la Tabla \@ref(tab:Tab121), para mayor comodidad. Para empezar, primero note que incluso sin covariables, la inclusión del término de ajuste, exposiciones, mejora dramáticamente el ajuste del modelo. Esto es intuitivamente atractivo; a medida que un conductor tiene más cobertura de seguro durante un año, es más probable que esté involucrado en un accidente cubierto por el contrato de seguro. [Tabla 12.7](#Tab127) también muestra la mejora en el ajuste general al incluir el modelo ajustado resumido en [Tabla 12.6](#Tab126). Al compararlo con una distribución chi-cuadrado, el valor $p$ del estadístico $=\Pr \left( \chi_{4}^2>8.77\right) =0.067$ sugiere una concordancia entre los datos y el valor ajustado. Sin embargo, esta especificación del modelo puede mejorarse: la siguiente sección introduce un modelo binomial negativo que resulta ser un mejor ajuste para este conjunto de datos.
+
+<a id=Tab127></a> 
+
+[Tabla 12.7]: ./C12Count.html#Tab127
+
+[Tabla 12.7]{#Tab127}. **Comparación de Modelos de Frecuencia Ajustados** 
+
+$$
+\small{
+\begin{array}{cr|rrrr}
+\hline &  & \text{Sin} & \text{Con} & \text{Exposiciones}\\
+\text{Conteo} & \text{Observado} & \text{Exposiciones/} & \text{Sin} & \text{Poisson} & \text{Binomial} \\ 
+&  & \text{Sin Covariables} & \text{Covariables} &  & \text{Negativo} \\ \hline
+0 & 6,996 & 6,977.86 & 6,983.05 & 6,986.94 & 6,996.04 \\ 
+1 & 455 & 487.70 & 477.67 & 470.30 & 453.40 \\ 
+2 & 28 & 17.04 & 21.52 & 24.63 & 31.09 \\ 
+3 & 4 & 0.40 & 0.73 & 1.09 & 2.28 \\ 
+4 & 0 & 0.01 & 0.02 & 0.04 & 0.18 \\ \hline 
+\text{Bondad de ajuste de Pearson} && 41.98 & 17.62 & 8.77 & 1.79\\ 
+\hline
+\end{array}
+}
+$$
+
+`r HideRCode('Tab127.Hide',"Código en R para generar la Tabla 12.7")`
+
+```{r Tab127, echo = FALSE}
+# ESTE CÓDIGO UTILIZA EL CONJUNTO DE DATOS SingaporeAuto.csv
+
+#Singapore <- read.csv("../../CSVData/SingaporeAuto.csv", header=TRUE)
+#Singapore <- read.csv("CSVData/SingaporeAuto.csv", header=TRUE)
+Singapore$Female    <- 1*(Singapore$SexInsured == "F" )
+Singapore$Auto   <- 1*(Singapore$VehicleType=="A")
+NCD1F     <- relevel(factor(Singapore$NCD), ref="50")
+AgeCatF   <- relevel(factor(Singapore$AgeCat), ref="7")
+VAgecat1F <-relevel(factor(Singapore$VAgecat1), ref="6")
+CountPoisson1 <- glm(Clm_Count ~ 1,poisson(link=log), data = Singapore)
+CountPoisson2 <- glm(Clm_Count ~ 1,offset=LNWEIGHT,poisson(link=log), data = Singapore)
+CountPoisson3 <- glm(Clm_Count~Female + Auto
+   + Auto:AgeCatF + Auto:NCD1F + VAgecat1F, 
+   offset=LNWEIGHT, poisson(link=log), data = Singapore)
+#summary(CountPoisson3)
+
+# GENERAR ESTA TABLA DE FORMA AUTOMÁTICA PARA AHORRAR TRABAJO 
+Table1 <- function(y){
+   options(digits=8)
+   table1p <- cbind(sum(dpois(0,y)),
+                    sum(dpois(1,y)),
+                    sum(dpois(2,y)),
+                    sum(dpois(3,y)),
+                    sum(dpois(4,y)));
+   actual   <- data.frame(table(Singapore$Clm_Count))[,2];actual[5] = 0
+   diff     <- actual-table1p
+   PearsonG <- sum(diff*diff/table1p);
+   cbind(table1p,PearsonG)
+   }
+
+# COMPARACIÓN DE MODELOS DE FRECUENCIA AJUSTADOS
+col3 <- Table1(CountPoisson1$fitted.values)
+col4 <- Table1(CountPoisson2$fitted.values)
+col5 <- Table1(CountPoisson3$fitted.values)
+col1 <- 0:4
+col2 <- table(Singapore$Clm_Count)
+
+
+# COMPARACIÓN DE MODELOS DE FRECUENCIA AJUSTADOS
+Table1.nb = function(y){
+   options(digits=8)
+   table1p = cbind(sum(dnbinom(0,size=2.33,mu=y)),
+                   sum(dnbinom(1,size=2.33,mu=y)),
+                   sum(dnbinom(2,size=2.33,mu=y)),
+                   sum(dnbinom(3,size=2.33,mu=y)),
+                   sum(dnbinom(4,size=2.33,mu=y))                
+                   );
+   actual = data.frame(table(Singapore$Clm_Count))[,2];actual[5] = 0
+   diff = actual-table1p
+   PearsonG = sum(diff*diff/table1p);
+   cbind(table1p,PearsonG)
+   }
+
+# AJUSTE DE UN MODELO BINOMIAL NEGATIVO;
+CountNB1 <- MASS::glm.nb(Clm_Count~Female+Auto +
+   Auto:AgeCatF + Auto:NCD1F +
+   VAgecat1F+offset(LNWEIGHT),link=log, data = Singapore)
+# Table1.nb(CountNB1$fitted.values)
+
+
+CountNB2 <- MASS::glm.nb(Clm_Count~Female+Auto
+   + Auto:NCD1F + VAgecat1F+offset(LNWEIGHT),link=log, data = Singapore)
+#Table1.nb(CountNB2$fitted.values)
+
+
+col6 <- Table1.nb(CountNB1$fitted.values)
+Tab127 <- t(rbind(col1, col2, col3, col4, col5, col6) )
+Tab127[5,2] <- 0
+Tab127 <- round(Tab127, digits = 2)
+Tab127[6, 1] <- 'Pearson'
+Tab127[6, 2] <- "Bondad de Ajuste"
+#round(Tab127, digits = 2)
+
+row.names(Tab127) <- NULL
+colnames(Tab127) <- c("Conteo", "Observado", "Sin Exposiciones/Sin Covariables","Sin Covariables", "Poisson", "Binomial Negativa")
+TableGen1(TableData=Tab127, 
+         TextTitle='Comparación de Modelos de Frecuencia Ajustados', 
+         Align='c', Digits = 2, ColumnSpec=1:5, BorderRight=2,
+         ColWidth = ColWidth5)  %>% 
+  add_header_above(c(" "=3, "Con Exposiciones" = 3))
+
+```
+
+
+</div>
+
+
+## Sobre dispersión y Modelos Binomiales Negativos {#S:Sec123}
+
+Aunque la simplicidad es una virtud del modelo de regresión Poisson, su forma también puede ser demasiado restrictiva. En particular, la exigencia de que la media sea igual a la varianza, conocida como *equidispersión*, no se cumple para muchos conjuntos de datos de interés. Si la varianza excede la media, se dice que los datos están *sobredispersos*. Un caso menos común ocurre cuando la varianza es menor que la media, lo que se conoce como *subdispersión*.
+
+
+#### Ajustando los Errores Estándar para Datos no Equidispersos {-}
+
+Para mitigar esta preocupación, una especificación común es asumir que
+\begin{equation}
+\mathrm{Var~}y_i=\phi \mu_i,
+(\#eq:eq128)
+\end{equation}
+donde $\phi >0$ es un parámetro que acomoda la posible sobre- o sub-dispersión. Como se sugiere en la ecuación \@ref(eq:eq125), la estimación consistente de $\boldsymbol \beta$ requiere únicamente que la función de la media esté correctamente especificada, sin necesidad de que se cumplan las suposiciones de equidispersión o de la distribución de Poisson. Esta característica también se aplica a la regresión lineal. Debido a esto, el estimador $\mathbf{b}$ a veces se denomina *estimador de cuasi-verosimilitud*. Con este estimador, podemos calcular las medias estimadas $\widehat{\mu}_i$ y luego estimar $\phi$ como
+\begin{equation}
+\widehat{\phi }=\frac{1}{n-(k+1)}\sum\limits_{i=1}^{n}\frac{\left( y_i-\widehat{\mu }_i\right)^2}{\widehat{\mu }_i}.
+(\#eq:eq129)
+\end{equation}
+Los errores estándar se basan entonces en
+$$
+\widehat{\mathrm{Var~}\mathbf{b}}=\left( \widehat{\phi }\sum\limits_{i=1}^{n}\widehat{\mu }_i\mathbf{x}_i\mathbf{x}_i^{\prime }\right)^{-1}.
+$$
+
+Un inconveniente de la ecuación \@ref(eq:eq128) es que se asume que la varianza de cada observación es un múltiplo constante de su media. Para conjuntos de datos donde esta suposición es dudosa, es común utilizar un *error estándar robusto*, que se calcula como la raíz cuadrada del elemento diagonal de
+$$
+\mathrm{Var~}\mathbf{b}=\left( \sum\limits_{i=1}^{n}\mu_i\mathbf{x}_i \mathbf{x}_i^{\prime }\right)^{-1}\left( \sum\limits_{i=1}^{n}\left( y_i-\mu_i\right)^2\mathbf{x}_i\mathbf{x}_i^{\prime }\right) \left( \sum\limits_{i=1}^{n}\mu_i\mathbf{x}_i\mathbf{x}_i^{\prime }\right)^{-1},
+$$
+evaluado en $\widehat{\mu }_i$. Aquí, la idea es que $\left( y_i-\mu_i\right)^2$ es un estimador insesgado de $\mathrm{Var~}y_i$, independientemente de la forma. Aunque $\left( y_i-\mu_i\right)^2$ es un estimador deficiente de $\mathrm{Var~}y_i$ para cada observación $i$, la suma ponderada $\sum\nolimits_i\left( y_i-\mu_i\right)^2\mathbf{x}_i\mathbf{x}_i^{\prime }$ es un estimador fiable de $\sum\nolimits_i\left( \mathrm{Var~}y_i\right) \mathbf{x}_i\mathbf{x}_i^{\prime }$.
+
+Para el estimador de cuasi-verosimilitud, la estrategia de estimación asume solo una especificación correcta de la media y utiliza una especificación más robusta de la varianza que la implicada por la distribución de Poisson. La ventaja y desventaja de este estimador es que no está vinculado a una distribución completa. Esta suposición lo hace difícil, por ejemplo, si el interés está en estimar la probabilidad de conteos de ceros. Un enfoque alternativo es suponer un modelo paramétrico más flexible que permita una mayor dispersión.
+
+#### Binomial Negativa {-}
+
+Un modelo ampliamente utilizado para conteos es la *binomial negativa*, con función de masa de probabilidad
+\begin{equation}
+\mathrm{Pr}(y=j)=\left(
+\begin{array}{c}
+j+r-1 \\
+r-1
+\end{array}
+\right) p^{r}\left( 1-p\right)^j,
+(\#eq:eq1210)
+\end{equation}
+donde $r$ y $p$ son parámetros del modelo. Para ayudar a interpretar los parámetros del modelo, cálculos sencillos muestran que $\mathrm{E~}y=r(1-p)/p$ y $\mathrm{Var~}y = r(1-p)/p^2$.
+
+La binomial negativa tiene varias ventajas importantes en comparación con la distribución de Poisson. Primero, debido a que hay dos parámetros que describen la distribución binomial negativa, tiene mayor flexibilidad para ajustar los datos. Segundo, se puede demostrar que la distribución de Poisson es un caso límite de la binomial negativa (permitiendo que $p\rightarrow 1$ y $r \rightarrow 0$ de modo que $rp \rightarrow \lambda$). En este sentido, la distribución de Poisson está anidada dentro de la binomial negativa. Tercero, se puede demostrar que la distribución binomial negativa surge de una mezcla de variables de Poisson. Por ejemplo, piense en el conjunto de datos de Singapur con cada conductor teniendo su propio valor de $\lambda$. Condicional en $\lambda$, suponga que la distribución de accidentes del conductor sigue una distribución de Poisson con parámetro $\lambda$. Además, suponga que la distribución de $\lambda$ puede describirse como una distribución gamma. Entonces, se puede demostrar que los conteos totales de accidentes tienen una distribución binomial negativa. Véase, por ejemplo, Klugman et al. (2008). Estas interpretaciones de "mezcla" son útiles para explicar resultados a los consumidores de análisis actuariales.
+
+Para la modelización de regresión, el parámetro "$p$" varía según el sujeto $i$. Es habitual reparametrizar el modelo y usar una función de enlace logarítmico de modo que $\sigma =1/r$ y que $p_i$ esté relacionado con la media a través de $\mu_i =r(1-p_i)/p_i = \exp (\mathbf{x}_i^{\prime} \boldsymbol \beta)$. Dado que la binomial negativa es una distribución de frecuencias de probabilidad, no hay dificultad en estimar características de esta distribución, como la probabilidad de conteos de ceros, después de un ajuste de regresión. Esto contrasta con la estimación de cuasi-verosimilitud de un modelo de Poisson con una especificación ad hoc de la varianza, resumida en la ecuación \@ref(eq:eq129).
+
+
+***
+
+**Ejemplo: Datos de Automóviles en Singapur - Continuación.** La distribución binomial negativa se ajustó a los datos de Singapur en la Sección \@ref(S:Sec122) utilizando el conjunto de covariables resumido en [Tabla 12.6](#Tab126). La verosimilitud resultante fue $\mathrm{L}_{NegBin}(\mathbf{b})=-1,774.494;$
+esto es mayor que la verosimilitud del ajuste Poisson $\mathrm{L}_{Poisson}\left( \mathbf{b} \right) =-1,776.730$ debido a un parámetro adicional. La prueba de razón de verosimilitud habitual no es formalmente apropiada porque los modelos solo están anidados en un sentido límite. Es más útil comparar las estadísticas de bondad de ajuste presentadas en [Tabla 12.7](#Tab127). Aquí, vemos que la binomial negativa es un mejor ajuste que el modelo de Poisson (con los mismos componentes sistemáticos). Una prueba chi-cuadrado sobre si la binomial negativa con covariables es adecuada arroja un valor $p$ \textrm{\ }$=\Pr \left( \chi_{4}^2>1.79\right) =0.774$, lo que sugiere un fuerte acuerdo entre los datos observados y los valores ajustados. Interpretamos los resultados de la [Tabla 12.7](#Tab127) como que la distribución binomial negativa captura bien la heterogeneidad en la distribución de frecuencia de accidentes.
+
+`r HideRCode('Tab12Sing.Hide',"Código R para la Distribución Binomial Negativa con Datos de Singapur")`
+
+```{r eval = FALSE}
+library(MASS)
+
+#Singapore <- read.csv("CSVData/SingaporeAuto.csv", header=TRUE)
+Singapore$Female    <- 1*(Singapore$SexInsured == "F" )
+Singapore$Auto   <- 1*(Singapore$VehicleType=="A")
+NCD1F     <- relevel(factor(Singapore$NCD), ref="50")
+AgeCatF   <- relevel(factor(Singapore$AgeCat), ref="7")
+VAgecat1F <-relevel(factor(Singapore$VAgecat1), ref="6")
+
+# AJUSTAR UN MODELO BINOMIAL NEGATIVO;
+CountNB1 <- MASS::glm.nb(Clm_Count ~ Female + Auto +
+                   Auto:AgeCatF + Auto:NCD1F +
+                   VAgecat1F + offset(LNWEIGHT),
+                   link=log, data = Singapore)
+temp <- summary(CountNB1)
+summary(temp)
+temp$twologlik/2
+# ELIMINAR UN FACTOR DEL MODELO BINOMIAL NEGATIVO;
+CountNB2 <- MASS::glm.nb(Clm_Count ~ Female + Auto +
+                         Auto:NCD1F + VAgecat1F + offset(LNWEIGHT),
+                         link=log, data = Singapore)
+summary(CountNB2)
+
+```
+
+</div>
+
+## Otros Modelos de Conteo  {#S:Sec124}
+
+Los actuarios están familiarizados con una variedad de modelos de frecuencia; ver, por ejemplo, Klugman et al. (2008). En principio, cada modelo de frecuencia podría usarse en un contexto de regresión simplemente incorporando un componente sistemático, $\mathbf{x}^{\prime}\boldsymbol \beta$, en uno o más parámetros del modelo. Sin embargo, los analistas han encontrado que cuatro variaciones de los modelos básicos funcionan bien para ajustar modelos a datos y proporcionan una plataforma intuitiva para interpretar los resultados del modelo.
+
+### Modelos Inflados en Ceros
+
+Para muchos conjuntos de datos, un aspecto problemático es el número "excesivo" de ceros, en comparación con un modelo especificado. Por ejemplo, esto podría ocurrir en los datos de reclamos de automóviles porque los asegurados son reacios a reportar reclamos, temiendo que un reclamo reportado resulte en primas de seguro más altas en el futuro. Por lo tanto, tenemos un número mayor al anticipado de ceros debido a la no presentación de reclamos.
+
+Un modelo inflado en ceros representa el número de reclamos $y_i$ como una mezcla de una masa puntual en cero y otra distribución de frecuencia de reclamos, digamos $g_i(j)$ (que típicamente es Poisson o binomial negativa). (Podríamos interpretar la masa puntual como la tendencia a no reportar.) La probabilidad de obtener la masa puntual se modelaría mediante un modelo de conteo binario como, por ejemplo, el modelo logit
+$$
+\pi_i=\frac{\exp \left( \mathbf{x}_i^{\prime}\boldsymbol \beta _{1}\right) }{1+\exp \left( \mathbf{x}_i^{\prime}\boldsymbol \beta _{1}\right) }.
+$$
+Como consecuencia de la suposición de mezcla, la distribución de conteo inflada en ceros puede escribirse como
+\begin{equation}
+\Pr \left( y_i=j\right) =\left\{
+\begin{array}{ll}
+\pi_i+(1-\pi_i)g_i(0) & j=0 \\
+(1-\pi_i)g_i(j) & j=1,2,...
+\end{array}
+\right. .
+(\#eq:eq1211)
+\end{equation}
+A partir de la ecuación \@ref(eq:eq1211), vemos que los ceros podrían surgir tanto de la masa puntual como de la otra distribución de frecuencia de reclamos.
+
+Para ver los efectos de un modelo inflado en ceros, supongamos que $g_i$ sigue una distribución Poisson con media $\mu_i$. Entonces, cálculos simples muestran que
+$$
+\mathrm{E~} y_i = (1 - \pi_i) \mu_i
+$$
+y
+$$
+\mathrm{Var~} y_i = \pi_i \mu_i + \pi_i\mu_i^2(1-\pi_i).
+$$
+Así, para el modelo Poisson inflado en ceros, la varianza siempre excede a la media, lo que acomoda la sobredispersión en comparación con el modelo Poisson.
+
+***
+
+**Ejemplo: Seguro de Automóviles**. Yip y Yau (2005) examinan una cartera de $n=2,812$ pólizas de automóviles disponibles en SAS Institute, Inc. Las variables explicativas incluyen edad, género, estado civil, ingreso anual, categoría laboral y nivel educativo del asegurado. Para este conjunto de datos, encontraron que varios modelos de conteo inflados en ceros se adaptaban bien a la presencia de ceros adicionales.
+
+### Modelos Hurdle
+
+Un "modelo hurdle" proporciona otro mecanismo para modificar distribuciones básicas de conteo para representar situaciones con un exceso de ceros. Los modelos hurdle pueden ser motivados por procesos de toma de decisiones secuenciales enfrentados por los individuos. Por ejemplo, en la elección de atención médica, podemos pensar en la decisión de un individuo de buscar atención médica como un proceso inicial. Condicional a haber buscado atención $\{y \geq 1\}$, la cantidad de atención médica es una decisión tomada por un proveedor de atención médica (como un médico u hospital), lo que representa un proceso diferente. Uno necesita superar el primer "hurdle" (la decisión de buscar atención médica) para abordar el segundo (la cantidad de atención médica). Un atractivo del modelo hurdle es su conexión con el modelo "principal-agente", donde el proveedor (agente) decide la cantidad después de que el asegurado (principal) haya establecido contacto. Como otro ejemplo, en el seguro de propiedad y accidentes, el proceso de decisión que utiliza el asegurado para reportar el primer reclamo puede diferir del que utiliza para reportar reclamos subsiguientes.
+
+Para representar los modelos hurdle, sea $\pi_i$ la probabilidad de que $\{y_i=0\}$ utilizada para la primera decisión, y supongamos que $g_i$ representa la distribución de conteo que se utilizará para la segunda decisión. Definimos la función de masa de probabilidad como
+\begin{equation}
+\Pr \left( y_i=j\right) =\left\{
+\begin{array}{ll}
+\pi_i & j=0 \\
+k_i g_i(j) & j=1,2,...
+\end{array}
+\right. .
+(\#eq:eq1212)
+\end{equation}
+donde $k_i = (1-\pi_i)/(1-g_i(0))$. Al igual que con los modelos inflados en ceros, un modelo logit podría ser adecuado para representar $\pi_i$.
+
+Para ver los efectos de un modelo hurdle, supongamos que $g_i$ sigue una distribución Poisson con media $\mu_i$. Entonces, cálculos simples muestran que
+$$
+\mathrm{E~} y_i = k_i \mu_i
+$$
+y
+$$
+\mathrm{Var~} y_i = k_i \mu_i + k_i \mu_i^2(1-k_i).
+$$
+Dado que $k_i$ puede ser mayor o menor que 1, este modelo permite tanto subdispersión como sobredispersión en comparación con el modelo Poisson.
+
+El modelo hurdle es un caso especial del "modelo de dos partes" descrito en el Capítulo 16. Allí, veremos que para los modelos de dos partes, la cantidad de atención médica utilizada puede ser una variable continua, además de una variable de conteo. Un atractivo de los modelos de dos partes es que los parámetros de cada hurdle/parte pueden analizarse por separado. Específicamente, la log-verosimilitud para el $i$-ésimo sujeto puede escribirse como
+$$
+\ln \left[ \Pr \left( y_i=j\right) \right] =\left[
+\mathrm{I}(j=0)\ln \pi_i+\mathrm{I}(j\geq 1)\ln (1-\pi_i)\right]
++\mathrm{I}(j\geq 1)\ln \frac{g_i(j)}{(1-g_i(0))}.
+$$
+Los términos en los corchetes en el lado derecho corresponden a la verosimilitud para un modelo binario de conteo. Los términos posteriores corresponden a un modelo de conteo con los ceros eliminados (conocido como un modelo truncado). Si los parámetros para las dos piezas son diferentes ("separables"), entonces la maximización puede hacerse por separado para cada parte.
+
+
+### Modelos de Heterogeneidad
+
+En un modelo de heterogeneidad, se permite que uno o más parámetros del modelo varíen de manera aleatoria. La motivación es que estos parámetros aleatorios capturan características no observadas de un sujeto. Por ejemplo, supongamos que $\alpha_i$ representa un parámetro aleatorio y que $y_i$, dado $\alpha_i$, tiene una media condicional $\exp \left( \alpha_i + \mathbf{x}_i^{\prime} \boldsymbol \beta \right)$. Interpretamos $\alpha_i$, llamado *componente de heterogeneidad*, como una representación de características no observadas del sujeto que contribuyen de manera lineal al componente sistemático $\mathbf{x}_i^{\prime} \boldsymbol \beta$.
+
+Para ver los efectos del componente de heterogeneidad en la distribución de conteo, cálculos básicos muestran que
+$$
+\mathrm{E~} y_i = \exp \left( \mathbf{x}_i^{\prime} \boldsymbol \beta \right) = \mu_i
+$$
+y
+$$
+\mathrm{Var~} y_i = \mu_i + \mu_i^2 \mathrm{Var}\left( e^{\alpha_i} \right),
+$$
+donde típicamente asumimos que $\mathrm{E}\left( e^{\alpha_i} \right) = 1$ para la identificación de parámetros. Así, los modelos de heterogeneidad acomodan fácilmente la sobredispersión en los conjuntos de datos.
+
+Es común suponer que la distribución de conteo es Poisson, condicional a $\alpha_i$. Hay varias opciones para la distribución de $\alpha_i$, siendo las dos más comunes la log-gamma y la log-normal. Para la primera, se asume que $\exp \left( \alpha_i \right)$ sigue una distribución gamma, lo que implica que $\exp \left( \alpha_i + \mathbf{x}_i^{\prime} \boldsymbol \beta \right)$ también sigue una distribución gamma. Recordemos que ya hemos señalado en la Sección \@ref(S:Sec123) que usar una distribución de mezcla gamma para conteos Poisson da como resultado una distribución binomial negativa. Por lo tanto, esta elección proporciona otra motivación para la popularidad de la binomial negativa como la distribución de conteo preferida. Para la segunda, es bastante común en análisis de datos aplicados asumir que una cantidad observada como $\exp \left( \alpha_i \right)$ tiene una distribución normal. Aunque no hay expresiones analíticas en forma cerrada para la distribución marginal de conteo resultante, hay varios paquetes de software que facilitan las dificultades computacionales.
+
+El componente de heterogeneidad es particularmente útil en muestras repetidas, donde puede usarse para modelar la agrupación de observaciones. Las observaciones de diferentes grupos tienden a ser disímiles en comparación con las observaciones dentro de un grupo, una característica conocida como *heterogeneidad*. La similitud de las observaciones dentro de un grupo puede capturarse mediante un término común $\alpha_i$. Diferentes términos de heterogeneidad para observaciones de diferentes grupos pueden capturar la heterogeneidad. Para una introducción a la modelización en muestreo repetido, véase el Capítulo 10.
+
+***
+
+**Ejemplo: Seguro de Responsabilidad Civil de Automóviles en España.** Boucher et al. (2006) analizaron una cartera de $n=548,830$ contratos de automóviles de una importante compañía de seguros que opera en España. Los reclamos eran por responsabilidad civil de automóviles, por lo que, en caso de un accidente automovilístico, el monto que el asegurado debe pagar por daños no materiales a otras partes está cubierto bajo el contrato de seguro. Para estos datos, la frecuencia media de reclamos fue aproximadamente del 6.9\%. Las variables explicativas incluyen edad, género, ubicación de conducción, experiencia de conducción, tamaño del motor y tipo de póliza. El artículo considera una amplia variedad de modelos inflados en ceros, hurdle y de heterogeneidad, mostrando que cada uno de ellos mejoró sustancialmente el modelo Poisson básico.
+
+### Modelos de Clases Latentes
+
+En la mayoría de los conjuntos de datos, es fácil pensar en clasificaciones de sujetos que el analista quisiera hacer para promover la homogeneidad entre las observaciones. Algunos ejemplos incluyen:
+
+* "personas saludables" y "personas enfermas" al examinar los gastos en atención médica,
+* conductores de automóviles que tienen más probabilidades de presentar un reclamo en caso de accidente en comparación con aquellos que son reacios a hacerlo, y
+* médicos que son "bajos" riesgos en comparación con "altos" riesgos al examinar la cobertura de seguros por negligencia médica.
+
+Para muchos conjuntos de datos de interés, dicha información de clasificación obvia no está disponible y se dice que es no observada o *latente*. Un modelo de "clases latentes" todavía emplea esta idea de clasificación, pero la trata como una variable aleatoria discreta desconocida. Así, al igual que en las Secciones 12.4.1-12.4.3, utilizamos modelos de mezcla para modificar las distribuciones básicas de conteo, pero ahora asumimos que la mezcla es una variable aleatoria discreta que interpretamos como la clase latente.
+
+Para ser específicos, supongamos que tenemos dos clases, "bajo riesgo" y "alto riesgo", con probabilidad $\pi_L$ de que un sujeto pertenezca a la clase de bajo riesgo. Entonces, podemos escribir la función de masa de probabilidad como
+\begin{equation}
+\Pr \left( y_i=j\right) =\pi_L \Pr \left( y_i=j;L\right) + \left( 1-\pi_L \right) \Pr \left( y_i=j;H \right),
+(\#eq:eq1213)
+\end{equation}
+donde $\Pr \left( y_i=j;L \right)$ y $\Pr \left( y_i=j;H \right)$ son las funciones de masa de probabilidad para los riesgos bajos y altos, respectivamente.
+
+Este modelo es intuitivamente agradable, ya que corresponde a la percepción de un analista sobre el comportamiento del mundo. Es flexible en el sentido de que el modelo acomoda fácilmente la subdispersión y sobredispersión, distribuciones con colas largas y distribuciones bimodales. Sin embargo, esta flexibilidad también conlleva dificultades con respecto a los problemas computacionales. Existe la posibilidad de múltiples máximos locales al estimar mediante máxima verosimilitud. La convergencia puede ser más lenta en comparación con otros métodos descritos en las Secciones 12.4.1-12.4.3.
+
+No obstante, los modelos de clases latentes han demostrado ser fructíferos en aplicaciones de interés para los actuarios.
+
+
+***
+
+**Ejemplo: Experimento de Seguro de Salud Rand.** Deb y Trivedi (2002) encontraron una fuerte evidencia de que un modelo de clases latentes funciona bien en comparación con el modelo hurdle. Ellos examinaron conteos de utilización de gastos en atención médica para el Experimento de Seguro de Salud Rand, un conjunto de datos que ha sido ampliamente analizado en la literatura de economía de la salud. Interpretaron $\Pr \left( y_i=j;L\right)$ como una distribución de usuarios de atención médica poco frecuentes y $\Pr \left( y_i=j;H\right)$ como una distribución de usuarios frecuentes de atención médica. Cada distribución se basó en una distribución binomial negativa, con diferentes parámetros para cada clase. Encontraron diferencias estadísticamente significativas para sus cuatro variables de seguro, dos variables de coseguro, una variable que indicaba si había un deducible individual y una variable que describía el límite máximo reembolsado. Debido a que los sujetos fueron asignados aleatoriamente a planes de seguro (algo muy inusual), los efectos de las variables de seguro sobre la utilización de atención médica son particularmente interesantes desde un punto de vista político, al igual que las diferencias entre sujetos de bajo y alto uso. Para sus datos, estimaron que aproximadamente el 20\% estaban en la clase de alto uso.
+
+## Lecturas Adicionales y Referencias  {#S:Sec125}
+
+La distribución de Poisson fue derivada por Poisson (1837) como un caso límite de la distribución binomial. Greenwood y Yule (1920) derivaron la distribución binomial negativa como una mezcla de una Poisson con una distribución gamma. Curiosamente, un ejemplo del artículo de 1920 fue utilizar la distribución de Poisson como un modelo de accidentes, con la media como una variable aleatoria gamma, reflejando la variación de los trabajadores en una población. Greenwood y Yule se refirieron a esto como individuos sujetos a "accidentes repetidos", lo que otros autores han denominado "propensión a los accidentes."
+
+La primera aplicación de la regresión Poisson se debe a Cochran (1940) en el contexto del modelado ANOVA y a Jorgensen (1961) en el contexto de la regresión lineal múltiple. Como se describe en la Sección 12.2, Weber (1971) presenta la primera aplicación a los accidentes de automóviles.
+
+Este capítulo se centra en las aplicaciones de modelos de conteo en seguros y gestión de riesgos. Para aquellos interesados en automóviles, existe una literatura relacionada sobre estudios del proceso de accidentes de vehículos de motor, véase, por ejemplo, Lord et al. (2005). Para aplicaciones en otras áreas de las ciencias sociales y desarrollo adicional de modelos, nos remitimos a Cameron y Trivedi (1998).
+
+**Referencias**
+
+*  Bortkiewicz, L. von (1898). *Das Gesetz de Kleinen Zahlen*.
+Leipzig, Teubner.
+*  Boucher, Jean-Philippe, Michel Denuit and Montserratt Guill\'{e}n
+(2006). Risk classification for claim counts: A comparative analysis
+of various zero-inflated mixed Poisson and hurdle models. Working
+paper.
+*  Cameron, A. Colin and Pravin K. Trivedi. (1998) *Regression Analysis of Count Data*. Cambridge University Press, Cambridge.
+*  Cochran, W. G. (1940). The analysis of variance when experimental
+errors follow the Poisson or binomial law. *Annals of Mathematical Statistics* 11, 335-347.
+*  Deb, Partha and Pravin K. Trivedi (2002). The structure of demand for health
+care: latent class versus two-part models. *Journal of Health Economics* 21, 601-625.
+*  Fournier, Gary M. and Melayne Morgan McInnes (2001). The case of
+experience rating in medical malpractice insurance: An empirical
+evaluation. *The Journal of Risk and Insurance* 68, 255-276.
+*  Frees, Edward W. and Emiliano Valdez (2008). Hierarchical insurance
+claims modeling. *Journal of the American Statistical Association* 103, 1457-1469.
+*  Greenwood, M. and G. U. Yule (1920). An inquiry into the nature of
+frequency distributions representative of multiple happenings with
+particular reference to the occurrence of multiple attacks of
+disease or of repeated accidents. *Journal of the Royal Statistical Society* 83, 255-279.
+*  Jones, Andrew M. (2000). Health econometrics. Chapter 6 of the *Handbook of Health Economics, Volume 1*. Edited by Antonio.J. Culyer, and
+Joseph.P. Newhouse, Elsevier, Amersterdam. 265-344.
+*  Jorgensen, Dale W. (1961). Multiple regression analysis of a Poisson
+process.  *Journal of the American Statistical Association*
+56, 235-245.
+*  Lord, Dominique, Simon P. Washington and John N. Ivan (2005).
+Poisson, Poisson-gamma and zero-inflated regression models of motor
+vehicle crashes: Balancing statistical theory and fit.
+*Accident Analysis and Prevention* 37, 35-46.
+*  Klugman, Stuart A, Harry H. Panjer and Gordon E. Willmot (2008).
+*Loss Models: From Data to Decisions*. John Wiley \& Sons,
+Hoboken, New Jersey.
+*  Purcaru, Oana and Michel Denuit (2003). Dependence in dynamic claim
+frequency credibility models. *ASTIN Bulletin* 33(1), 23-40.
+*  Weber, Donald C. (1971). Accident rate potential: An application of
+multiple regression analysis of a Poisson process. *Journal of the American Statistical Association* 66, 285-288.
+*  Yip, Karen C. H. and Kelvin K.W. Yau (2005). On modeling claim frequency
+data in general insurance with extra zeros. *Insurance: Mathematics and Economics* 36(2) 153-163.
+
+## Ejercicios  {#S:Sec126}
+
+12.1 Muestra que la log-verosimilitud en la ecuación \@ref(eq:eq122) tiene un máximo en $\widehat{\mu }=\overline{y}$.
+
+12.2 Para los datos de la Tabla \@ref(tab:Tab121), confirma que el estadístico de Pearson en la ecuación \@ref(eq:eq123) es 41.98.
+
+12.3 **Residuos de Poisson**. Considera una regresión de Poisson. Sea $e_i = y_i - \widehat{\mu}_i$ el residuo ordinario $i$-ésimo. Supón que se utiliza una intersección en el modelo de modo que una de las variables explicativas $x$ es una constante igual a uno.
+
+a. Demuestra que el promedio de los residuos ordinarios es 0.
+
+b. Demuestra que la correlación entre los residuos ordinarios y cada variable explicativa es cero.
+
+12.4 **Distribución Binomial Negativa**.
+
+a. Supón que $y_1, \ldots, y_n$ son i.i.d. con una distribución binomial negativa con parámetros $r$ y $p$. Determina los estimadores de máxima verosimilitud.
+
+b. Utiliza el mecanismo de muestreo en la parte (a) pero con los parámetros $\sigma =1/r$ y $\mu$ donde $\mu =r(1-p)/p$. Determina los estimadores de máxima verosimilitud de $\sigma$ y $\mu$.
+
+c. Supón que $y_1, \ldots, y_n$ son independientes con $y_i$ teniendo una distribución binomial negativa con parámetros $r$ y $p_i$, donde $\sigma =1/r$ y $p_i$ satisface $r(1-p_i)/p_i=\exp (\mathbf{x}_i^{\prime }\boldsymbol \beta) (= \mu_i)$. Determina la función de puntaje en términos de $\sigma$ y $\boldsymbol \beta$.
+
+12.5 **Datos de Gastos Médicos**. Este ejercicio considera datos de la Encuesta del Panel de Gastos Médicos (MEPS) descritos en el Ejercicio 1.1 y la Sección 11.4. Nuestra variable dependiente consiste en el número de visitas ambulatorias (COUNTOP). Para MEPS, los eventos ambulatorios incluyen visitas a departamentos ambulatorios de hospitales, consultas con proveedores en consultorios y visitas a salas de emergencia, excluyendo los servicios dentales. (Los servicios dentales, en comparación con otros tipos de servicios de salud, son más predecibles y ocurren de manera más regular). Las estancias hospitalarias con la misma fecha de admisión y alta, conocidas como "estancias de cero noches", también se incluyeron en los conteos y gastos ambulatorios. (Los pagos asociados con visitas a la sala de emergencias que preceden inmediatamente a una estancia hospitalaria se incluyeron en los gastos de hospitalización. Los medicamentos recetados que pueden vincularse con hospitalizaciones se incluyeron en los gastos de hospitalización, no en la utilización ambulatoria).
+
+Considera las variables explicativas descritas en la Sección 11.4.
+
+a. Proporciona una tabla de conteos, un histograma y estadísticas resumidas de COUNTOP. Nota la forma de la distribución y la relación entre la media muestral y la varianza muestral.
+
+b. Crea tablas de medias de COUNTOP por nivel de GÉNERO, etnicidad, región, educación, salud física autoevaluada, salud mental autoevaluada, limitación de actividad, ingresos y seguro. ¿Sugerirían estas tablas que estas variables explicativas tienen un impacto en COUNTOP?
+
+c. Como línea base, estima un modelo de Poisson sin ninguna variable explicativa y calcula un estadístico chi-cuadrado de Pearson para bondad de ajuste (a nivel individual).
+
+d. Estima un modelo de Poisson utilizando las variables explicativas en la parte (b).
+
+   d(i). Comenta brevemente sobre la significancia estadística de cada variable.
+
+   d(ii). Proporciona una interpretación del coeficiente de GÉNERO.
+
+   d(iii). Calcula un estadístico chi-cuadrado de Pearson (a nivel individual) para la bondad de ajuste. Compáralo con el de la parte (b). Basado en este estadístico y en la significancia estadística de los coeficientes discutidos en la parte d(i), ¿qué modelo prefieres?
+
+   d(iv). Reestima el modelo utilizando el estimador de cuasi-verosimilitud del parámetro de dispersión. ¿Cómo han cambiado tus comentarios en la parte d(i)?
+
+e. Estima un modelo binomial negativo utilizando las variables explicativas de la parte (d).
+
+   e(i). Comenta brevemente sobre la significancia estadística de cada variable.
+
+   e(ii). Calcula un estadístico chi-cuadrado de Pearson (a nivel individual) para la bondad de ajuste. Compáralo con los de las partes (b) y (d). ¿Qué modelo prefieres? Cita también el estadístico $AIC$ en tu comparación.
+
+   e(iii). Reestima el modelo, eliminando el factor ingreso. Utiliza la prueba de razón de verosimilitud para determinar si el ingreso es un factor estadísticamente significativo.
+
+f. Como verificación de robustez, estima un modelo de regresión logística utilizando las variables explicativas de la parte (d). ¿Los signos y la significancia de los coeficientes de este ajuste de modelo proporcionan la misma interpretación que en el modelo binomial negativo en la parte (e)?
+
+12.6 **Dos Poisson de Poblaciones**. Podemos expresar el problema de dos poblaciones en un contexto de regresión utilizando una variable explicativa. Específicamente, supón que $x_i$ solo toma los valores 0 y 1. De las $n$ observaciones, $n_0$ toman el valor $x=0$. Estas $n_0$ observaciones tienen un valor promedio de $y$ de $\overline{y}_0$. Las $n_1 =n-n_0$ observaciones restantes tienen valor $x=1$ y un valor promedio de $y$ de $\overline{y}_1$.
+
+Utiliza el modelo de Poisson con la función de enlace logarítmica y el componente sistemático $\mathbf{x}_i^{\prime} \boldsymbol \beta = \beta_0 +\beta_1 x_i$.
+
+i. Determina los estimadores de máxima verosimilitud de $\beta_0$ y $\beta_1$, respectivamente.
+
+ii. Supón que $n_0 = 10$, $n_1= 90$, $\overline{y}_0 = 0.20$ y $\overline{y}_1= 0.05$. Utilizando tus resultados en la parte a(i), calcula los estimadores de máxima verosimilitud de $\beta_0$ y $\beta_1$, respectivamente.
+
+iii. Determina la matriz de información.
+
+

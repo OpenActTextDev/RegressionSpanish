@@ -517,29 +517,29 @@ Existen muchos modelos de mecanismos de datos faltantes. Una visión general apa
 #### Procedimiento de Dos Etapas de Heckman {-}
 
 Heckman (1976) asume que el mecanismo de respuesta de muestreo está gobernado por la variable latente (no observada) $r_i^{\ast}$ donde
-\begin{equation*}
+$$
 r_i^{\ast} = \mathbf{z}_i^{\prime} \boldsymbol \gamma + \eta_i.
-\end{equation*}
+$$
 Las variables en $\mathbf{z}_i$ pueden o no incluir las variables en $\mathbf{x}_i$. Observamos $y_i$ si $r_i^{\ast}>0$, es decir, si $r_i^{\ast}$ cruza el umbral 0. Así, observamos
-\begin{equation*}
+$$
 r_i = \left\{
               \begin{array}{ll}
                 1 & r_i^{\ast}>0 \\
                 0 & \mathrm{de lo contrario} \\
               \end{array}
             \right. .
-\end{equation*}
+$$
 Para completar la especificación, asumimos que {($\varepsilon_i,\eta_i$)} son distribuidos idénticamente e independientemente, y que la distribución conjunta de {($\varepsilon_i,\eta_i$)} es bivariada normal con medias cero, varianzas $\sigma^2$ y $\sigma_{\eta}^2$, y correlación $\rho$. Note que si el parámetro de correlación $\rho$ es igual a cero, entonces los modelos de respuesta y selección son independientes. En este caso, los datos son MCAR y los procedimientos de estimación habituales son no sesgados y asintóticamente eficientes.
 
 Bajo estas suposiciones, cálculos básicos de la normal multivariada muestran que
-\begin{equation*}
+$$
 \mathrm{E~}(y_i | r_i^{\ast}>0) = \mathbf{x}_i^{\prime} \boldsymbol
 \beta + \beta_{\lambda} \lambda(\mathbf{z}_i^{\prime} \boldsymbol
 \gamma),
-\end{equation*}
+$$
 donde $\beta_{\lambda} = \rho \sigma$ y $\lambda(a)=\phi(a)/\Phi(a)$. Aquí, $\lambda(.)$ es la inversa de la llamada "razón de Mills." Este cálculo sugiere el siguiente procedimiento en dos etapas para estimar los parámetros de interés.
 
-\bigskip
+
 
 :::: {.blackbox}
 
@@ -547,7 +547,7 @@ donde $\beta_{\lambda} = \rho \sigma$ y $\lambda(a)=\phi(a)/\Phi(a)$. Aquí, $\l
 *Procedimiento de Dos Etapas de Heckman*
 
 1. Utilice los datos {($r_i, \mathbf{z}_i$)} y un modelo de regresión probit para estimar $\boldsymbol \gamma$. Llame a este estimador $\mathbf{g}_H$.
-2. Utilice el estimador de la etapa (1) para crear una nueva variable explicativa, $x_{i,K+1} = \lambda(\mathbf{z}_i^{\prime}\mathbf{g}_H)$. Realice un modelo de regresión utilizando las $K$ variables explicativas $\mathbf{x}_i$, así como la variable explicativa adicional $x_{i,K+1}$. Use $\mathbf{b}_H$ y $b_{\lambda,H}$ para denotar los estimadores de $ \boldsymbol \beta$ y $\beta_{\lambda}$, respectivamente.
+2. Utilice el estimador de la etapa (1) para crear una nueva variable explicativa, $x_{i,K+1} = \lambda(\mathbf{z}_i^{\prime}\mathbf{g}_H)$. Realice un modelo de regresión utilizando las $K$ variables explicativas $\mathbf{x}_i$, así como la variable explicativa adicional $x_{i,K+1}$. Use $\mathbf{b}_H$ y $b_{\lambda,H}$ para denotar los estimadores de $\boldsymbol \beta$ y $\beta_{\lambda}$, respectivamente.
 
 ::::
 

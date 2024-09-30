@@ -1,0 +1,92 @@
+
+
+## Apéndice A1. Inferencia Estadística Básica {-}
+
+*Vista Previa del Apéndice.* Este apéndice proporciona
+definiciones y hechos de un curso de inferencia estadística básica
+que son necesarios para el estudio del análisis de regresión.
+
+### Distribuciones de Funciones de Variables Aleatorias {-}
+
+**Estadísticas y Distribuciones Muestrales.** Una *estadística* resume la información en una muestra y, por lo tanto, es una función de las observaciones $y_1,\ldots,y_n$. Dado que las observaciones son realizaciones de variables aleatorias, el estudio de las distribuciones de funciones de variables aleatorias es realmente el estudio de las distribuciones de estadísticas, conocidas como *distribuciones muestrales*. Las combinaciones lineales de la forma $\sum_{i=1}^n a_i y_i$ representan un tipo importante de función. Aquí, $a_1,\ldots,a_n$ son constantes conocidas. Para comenzar, supongamos que $y_1,\ldots,y_n$ son variables aleatorias mutuamente independientes con $\mathrm{E~}y_i = \mu_i$ y $\mathrm{Var~}y_i = \sigma_i^2$. Entonces, por la *linealidad de las esperanzas*, tenemos
+$$
+\mathrm{E}\left( \sum_{i=1}^n a_i y_i \right) = \sum_{i=1}^n a_i \mu_i~~~\mathrm{y}~~~\mathrm{Var}\left( \sum_{i=1}^n a_i y_i \right) = \sum_{i=1}^n a_i^2 \sigma_i^2.
+$$
+Un teorema importante en la estadística matemática es que, si cada variable aleatoria se distribuye normalmente, entonces las combinaciones lineales también se distribuyen normalmente. Es decir, tenemos:
+
+**Linealidad de Variables Aleatorias Normales.** Supongamos que $y_1,\ldots,y_n$ son variables aleatorias mutuamente independientes con $y_i \sim N(\mu_i,\sigma_i^2)$. (Lea "$\sim$" como "se distribuye como"). Entonces,
+$$
+\sum_{i=1}^n a_i y_i \sim N\left( \sum_{i=1}^n a_i \mu_i, \sum_{i=1}^n a_i^2 \sigma_i^2 \right) .
+$$
+Hay varias aplicaciones de esta propiedad importante. Primero, se puede verificar que si $y \sim N(\mu ,\sigma^2)$, entonces $(y - \mu)/\sigma \sim N(0,1)$. En segundo lugar, supongamos que $y_1,\ldots,y_n$ son idénticamente e independientemente distribuidos (*i.i.d.*) como $N(\mu, \sigma^2)$ y tomamos $a_i = n^{-1}$. Entonces, tenemos
+$$
+\overline{y} = \frac{1}{n}\sum_{i=1}^n y_i \sim N\left( \mu ,\frac{\sigma^2}{n}\right) .
+$$
+Equivalente a esto, $\sqrt{n}\left( \overline{y}-\mu \right) /\sigma$ es normal estándar.
+
+Por lo tanto, la importante estadística muestral $\overline{y}$ tiene una distribución normal. Además, también se puede calcular la distribución de la varianza muestral $s_y^2$. Para $y_1,\ldots,y_n$ que son i.i.d. $N(\mu ,\sigma^2)$, tenemos que $\left( n-1\right) s_y^2 /\sigma^2\sim \chi_{n-1}^2$, una distribución $\chi^2$ (chi-cuadrado) con $n-1$ grados de libertad. Además, $\overline{y}$ es independiente de $s_y^2$. A partir de estos dos resultados, tenemos que
+$$
+\frac{\sqrt{n}}{s_y}\left( \overline{y}-\mu \right) \sim t_{n-1},
+$$
+una distribución $t$ con $n-1$ grados de libertad.
+
+### Estimación y Predicción {-}
+
+Supongamos que $y_1,\ldots,y_n$ son variables aleatorias i.i.d. de una distribución que se puede resumir mediante un parámetro desconocido $\theta$. Nos interesa la calidad de una estimación de $\theta$ y denotamos $\widehat{\theta}$ como este estimador. Por ejemplo, consideramos $\theta = \mu$ con $\widehat{\theta} = \overline{y}$ y $\theta = \sigma^2$ con $\widehat{\theta} = s_y^2$ como nuestros principales ejemplos.
+
+**Estimación Puntual e Imparcialidad.** Dado que $\widehat{\theta}$ proporciona una aproximación (única) de $\theta$, se le conoce como una *estimación puntual* de $\theta$. Como estadística, $\widehat{\theta}$ es una función de las observaciones $y_1,\ldots,y_n$ que varía de una muestra a otra. Por lo tanto, los valores de $\widehat{\theta}$ varían de una muestra a otra. Para examinar qué tan cerca tiende a estar $\widehat{\theta}$ de $\theta$, examinamos varias propiedades de $\widehat{\theta}$, en particular, el *sesgo* y la *consistencia*. Se dice que un estimador puntual $\widehat{\theta}$ es un *estimador imparcial* de $\theta$ si $\mathrm{E~}\widehat{\theta} = \theta$. Por ejemplo, dado que $\mathrm{E~}\overline{y} = \mu$, $\overline{y}$ es un estimador imparcial de $\mu$.
+
+**Propiedades de Muestras Finitas versus Propiedades de Muestras Grandes de los Estimadores.** Se dice que el sesgo es una propiedad de *muestra finita* ya que es válida para cada tamaño de muestra $n$. Una propiedad *límite* o de *muestra grande* es la *consistencia*. La consistencia se expresa de dos maneras: *consistencia débil* y *consistencia fuerte*. Se dice que un estimador es *débilmente consistente* si
+$$
+\lim_{n\rightarrow \infty }\Pr \left( |\widehat{\theta }-\theta |<h\right) = 1,
+$$
+para cada $h$ positivo. Se dice que un estimador es *fuertemente consistente* si $\lim_{n\rightarrow \infty }~\widehat{\theta }=\theta$, con probabilidad uno.
+
+**Principio de Estimación de Mínimos Cuadrados.** En este texto, se utilizan dos principios principales de estimación: la estimación por *mínimos cuadrados* y la estimación por *máxima verosimilitud*. Para el procedimiento de mínimos cuadrados, consideremos variables aleatorias independientes $y_1,\ldots,y_n$ con medias $\mathrm{E~}y_i = \mathrm{g}_i(\theta )$. Aquí, $\mathrm{g}_i(.)$ es una función conocida excepto por $\theta$, el parámetro desconocido. El estimador de mínimos cuadrados es el valor de $\theta$ que minimiza la suma de cuadrados
+$$
+\mathrm{SS}(\theta )=\sum_{i=1}^n\left( y_i-\mathrm{g}_i(\theta )\right)^2.
+$$
+
+**Principio de Estimación de Máxima Verosimilitud.** Las estimaciones por máxima verosimilitud son los valores del parámetro que son "más probables" de haber sido producidos por los datos. Consideremos las variables aleatorias independientes $y_1,\ldots,y_n$ con función de probabilidad $\mathrm{f}_i(a_i,\theta )$. Aquí, $\mathrm{f}_i(a_i,\theta )$ se interpreta como una función de masa de probabilidad para $y_i$ discreto o una función de densidad de probabilidad para $y_i$ continuo, evaluada en $a_i$, la realización de $y_i$. Se asume que la función $\mathrm{f}_i(a_i,\theta )$ es conocida excepto por $\theta$, el parámetro desconocido. La verosimilitud de las variables aleatorias $y_1,\ldots,y_n$ tomando valores $a_1,\ldots,a_n$ es
+$$
+\mathrm{L}(\theta )=\prod\limits_{i=1}^n \mathrm{f}_i(a_i,\theta ).
+$$
+
+El valor de $\theta$ que maximiza $\mathrm{L}(\theta )$ se llama el *estimador de máxima verosimilitud*.
+
+**Intervalos de Confianza.** Aunque las estimaciones puntuales proporcionan una aproximación única a los parámetros, las *estimaciones por intervalo* proporcionan un rango que incluye parámetros con un cierto nivel de probabilidad preespecificado, o *confianza*. Un par de estadísticas, $\widehat{\theta }_1$ y $\widehat{\theta }_{2}$, proporcionan un intervalo de la forma $\left[ \widehat{\theta }_1 < \widehat{\theta }_{2}\right]$. Este intervalo es un intervalo de confianza de $100(1-\alpha )\%$ para $\theta$ si
+$$
+\Pr \left( \widehat{\theta }_1 < \theta < \widehat{\theta }_{2}\right) \geq 1-\alpha .
+$$
+Por ejemplo, supongamos que $y_1,\ldots,y_n$ son variables aleatorias i.i.d. $N(\mu ,\sigma^2)$. Recuerde que $\sqrt{n}\left( \overline{y}-\mu\right) /s_y\sim t_{n-1}$. Este hecho nos permite desarrollar un intervalo de confianza de $100(1-\alpha )\%$ para $\mu$ de la forma $\overline{y}\pm (t-value)s_y/ \sqrt{n}$, donde $t-value$ es el percentil $(1-\alpha /2)^{th}$ de una distribución $t$ con $n-1$ grados de libertad.
+
+**Intervalos de Predicción.** Los intervalos de predicción tienen la misma forma que los intervalos de confianza. Sin embargo, un intervalo de confianza proporciona un rango para un parámetro, mientras que un intervalo de predicción proporciona un rango para valores externos de las observaciones. Basado en las observaciones $y_1,\ldots,y_n$, buscamos construir estadísticas $\widehat{\theta }_1$ y $\widehat{\theta }_{2}$ tal que 
+$$
+\Pr \left( \widehat{\theta }_1 < y^{\ast } < \widehat{\theta }_{2}\right) \geq 1-\alpha .
+$$
+Aquí, $y^{\ast }$ es una observación adicional que no forma parte de la muestra.
+
+
+### Pruebas de Hipótesis {-}
+
+**Hipótesis Nula y Alternativa y Estadísticos de Prueba.** Un procedimiento estadístico importante implica verificar ideas sobre los parámetros. Es decir, antes de que se observen los datos, se formulan ciertas ideas sobre los parámetros. En este texto, consideramos una *hipótesis nula* de la forma $H_0:\theta =\theta_0$ frente a una *hipótesis alternativa*. Consideramos tanto una *alternativa de dos colas*, $H_{a}:\theta \neq \theta_0$, como alternativas *de una cola*, ya sea $H_{a}:\theta >\theta_0$ o $H_{a}:\theta <\theta_0$. Para elegir entre estas hipótesis competidoras, utilizamos un estadístico de prueba $T_n$ que típicamente es una estimación puntual de $\theta$ o una versión reescalada para ajustarse a una distribución de referencia bajo $H_0$. Por ejemplo, para probar $H_0:\mu =\mu_0$, a menudo usamos $T_n= \overline{y}$ o $T_n=\sqrt{n}\left( \overline{y}-\mu_0\right) /s_y$. Nótese que esta última opción tiene una distribución $t_{n-1}$, bajo los supuestos de datos normales i.i.d.
+
+**Regiones de Rechazo y Nivel de Significancia.** Con un estadístico en mano, ahora establecemos un criterio para decidir entre las dos hipótesis competidoras. Esto se puede hacer estableciendo una *región de rechazo* o *región crítica*. La región crítica consiste en todos los posibles resultados de $T_n$ que nos llevan a rechazar $H_0$ a favor de $H_{a}$. Para especificar la región crítica, primero cuantificamos los tipos de errores que se pueden cometer en el procedimiento de toma de decisiones. Un *error de Tipo I* consiste en rechazar $H_0$ falsamente y un *error de Tipo II* consiste en rechazar $H_{a}$ falsamente. La probabilidad de un error de Tipo I se llama *nivel de significancia*. Preespecificar el nivel de significancia es a menudo suficiente para determinar la región crítica. Por ejemplo, supongamos que $y_1,\ldots,y_n$ son i.i.d. $N(\mu ,\sigma^2)$ y estamos interesados en decidir entre $H_0:\mu =\mu_0$ y $H_{a}:\mu > \mu_0$. Pensando en nuestro estadístico de prueba $T_n=\overline{y}$, sabemos que nos gustaría rechazar $H_0$ si $\overline{y}$ es mayor que $\mu_0$. La pregunta es ¿cuánto mayor? Especificando un nivel de significancia $\alpha$, deseamos encontrar una región crítica de la forma $\{\overline{y}>c\}$ para alguna constante $c$. Con este fin, tenemos
+$$
+\begin{array}{ll}
+\alpha  &= \Pr \mathrm{(Error~Tipo~I)} = \Pr (\mathrm{Rechazar~}H_0 \mathrm{~asumiendo~} H_0:\mu =\mu_0 \mathrm{~es~verdadera)} \\ 
+& = \Pr (\overline{y}>c) = \Pr \left(\sqrt{n}\left( \overline{y}-\mu_0\right)/s_y>\sqrt{n}\left( c-\mu_0 \right)/s_y\right) \\ 
+&= \Pr \left(t_{n-1}>\sqrt{n}\left( c-\mu_0 \right)/s_y\right).
+\end{array}
+$$
+
+Con $df=n-1$ grados de libertad, tenemos que $t-value = \sqrt{n}\left( c-\mu_0\right)/s_y$ donde el $t-value$ es el percentil $(1-\alpha)^{th}$ de una distribución $t$. Así, resolviendo para $c$, nuestra región crítica es de la forma $\{\overline{y} > \mu_0 + (t-value)/s_y/\sqrt{n}\}$.
+
+**Relación entre Intervalos de Confianza y Pruebas de Hipótesis.** Cálculos similares muestran que, para probar $H_0:\mu = \mu_0$ frente a $H_{a}:\theta \neq \theta_0$, la región crítica es de la forma
+$$
+\{ \overline{y} > \mu_0 + (t-value)/s_y/\sqrt{n} ~\mathrm{o~} \overline{y} < \mu_0 - (t-value)/s_y/\sqrt{n}\} .
+$$
+Aquí, el $t$-value es el percentil $(1-\alpha /2)^{th}$ de una distribución $t$ con $df=n-1$ grados de libertad. Es interesante notar que el evento de caer en esta región crítica de dos colas es equivalente al evento de que $\mu_0$ caiga fuera del intervalo de confianza $\overline{y}\pm (t-value)s_y/\sqrt{n}$. Esto establece el hecho de que los intervalos de confianza y las pruebas de hipótesis realmente están reportando la misma evidencia con un énfasis diferente en la interpretación de la inferencia estadística.
+
+**$p$-valor.** Otro concepto útil en las pruebas de hipótesis es el $p$-valor, que es la abreviatura de *valor de probabilidad*. Para un conjunto de datos, un $p$-valor se define como el nivel de significancia más pequeño para el cual se rechazaría la hipótesis nula. El $p$-valor es un estadístico resumen útil para que el analista de datos lo informe, ya que permite al lector comprender la fuerza de la desviación de la hipótesis nula.
+

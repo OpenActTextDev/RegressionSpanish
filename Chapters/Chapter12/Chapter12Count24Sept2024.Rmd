@@ -1,0 +1,1294 @@
+# Chap 1
+
+# Chap 2
+
+# Chap 3
+
+# Chap 4
+
+# Chap 5
+
+# Chap 6
+
+# Chap 7
+
+# Chap 8
+
+# Chap 9
+
+# Chap 10
+
+# Chap 11
+
+
+# Count Dependent Variables {#C11Count}
+
+
+*Chapter Preview*.  In this chapter, the dependent
+variable $y$ is a count, taking on values 0, 1, 2 and so on, that
+describes a number of events. Count dependent variables form the
+basis of actuarial models of claims *frequency*. In other
+applications, a count dependent variable may be the number of
+accidents, the number of people retiring or the number of firms
+becoming insolvent.
+
+The chapter introduces Poisson regression, a model that
+includes explanatory variables with a Poisson distribution for
+counts. This fundamental model handles many datasets of interest to
+actuaries. However, with the Poisson distribution, the mean equals
+the variance, a limitation suggesting the need for more general
+distributions such as the negative binomial. Even the two parameter
+negative binomial can fail to capture some important features,
+motivating the need for even more complex models such as the
+"zero-inflated" and latent variable models introduced in this
+chapter.
+
+
+## Poisson Regression {#S:Sec121}
+
+### Poisson Distribution {#S:Sec1211}
+
+A count random variable $y$ is one that has outcomes on the
+non-negative integers, $j=0,1,2,...$ The Poisson is a fundamental
+distribution used for counts that has probability mass function
+
+\begin{equation}\label{E12:PoissonDist}
+\Pr \left( y=j\right) =\frac{\mu^j}{j!}e^{-\mu },~~~j=0,1,2,...
+\end{equation}
+It can be shown that $\mathrm{E~} y =\sum\nolimits_{j=0}^{\infty
+}j\Pr \left( y=j\right) =\mu $, so we may interpret the parameter
+$\mu $ to be the mean of the distribution. Similarly, one can show
+that $\mathrm{Var~}y =\mu $, so that the mean equals the variance
+for this distribution.
+
+An early application (Bortkiewicz, 1898) was based on using the
+Poisson distribution to represent the annual number of deaths in the
+Prussian army due to "mule kicks." The distribution is still
+widely used as a model of the number of accidents, such as injuries
+in an industrial environment (for workers' compensation coverage)
+and property damages in automobile insurance.
+
+\textbf{Example: Singapore Automobile Data.} These data are from a
+1993 portfolio of $n=7,483$ automobile insurance policies from a
+major insurance company in Singapore. The data will be described
+further in Section \ref{S12:SingaporeData}. Table \ref{T12:Table121}
+provides the distribution of the number of accidents. The dependent
+variable is the number of automobile accidents per policyholder. For
+this dataset, it turns out that the maximum number of accidents in a
+year was three. There were on average $\overline{y}=0.06989$
+accidents per person.
+
+\begin{table}[h]
+\caption{\label{T12:Table121} Comparison of Observed to Fitted
+Counts Based on Singapore Automobile Data}
+\begin{center}
+\begin{tabular}{crr}
+\hline
+Count & Observed & Fitted Counts using the \\
+$(j)$ & $(n_j)$ & Poisson Distribution $(n\widehat{p}_j)$ \\
+\hline
+0 & 6,996 & 6,977.86 \\
+1 & 455 & 487.70 \\
+2 & 28 & 17.04 \\
+3 & 4 & 0.40 \\
+4 & 0 & 0.01 \\ \hline
+Total & 7,483 & 7,483.00 \\ \hline
+\end{tabular}\end{center}
+\end{table}
+
+
+Table \ref{T12:Table121}\ also provides fitted counts that were
+computed using the maximum likelihood estimator of $\mu$.
+Specifically, from equation (\ref{E12:PoissonDist}) we can write the
+mass function as $\mathrm{f}(y,\mu) = \mu^y e^{-\mu} /y!,$ and so
+the log-likelihood is
+\begin{equation}\label{E12:BasicLogLike}
+L(\mu) = \sum_{i=1}^{n} \ln \mathrm{f}(y_i,\mu) =
+\sum_{i=1}^{n}\left( -\mu +y_i\ln \mu -\ln y_i!\right) .
+\end{equation}
+It is straight-forward to show that the log-likelihood has a maximum
+at $\widehat{\mu }=\overline{y}$, the average claims count.
+Estimated probabilities, using equation (\ref{E12:PoissonDist})\ and
+$\widehat{\mu }= \overline{y}$, are denoted as $\widehat{p}_j$. We
+used these estimated probabilities in Table \ref{T12:Table121} when
+computing the fitted counts with $n=7,483$.
+
+\index{goodness of fit statistics!Pearson chi-square}
+
+To compare observed and fitted counts, a widely used goodness of fit
+statistic is \emph{Pearson's chi-square statistic}, given by
+\begin{equation}\label{E12:Pearson}
+\sum_j\frac{\left( n_j-n\widehat{p}_j\right)^2}{n\widehat{p}_j}.
+\end{equation}
+Under the null hypothesis that the Poisson distribution is a correct
+model, this statistic has a large sample chi-square distribution
+where the degrees of freedom is the number of cells minus one minus
+the number of estimated parameters. For the Singapore data in Table
+\ref{T12:Table121} , this is $df=5-1-1=3$. It turns out the
+statistic is 41.98, indicating that this basic Poisson model is
+inadequate.\index{distributions!chi-square}
+
+### Regression Model
+
+
+
+To extend the basic Poisson model, we first allow the mean to vary
+by a known amount called an \emph{exposure} $E_i$ , so that
+\begin{equation*}
+\mathrm{E~}y_i=E_i\times \mu .
+\end{equation*}
+To motivate this specification, recall that sums of independent
+Poisson random variables also have a Poisson distribution so that it
+is sensible to think of exposures as large positive numbers. Thus,
+it is common to model the number of accidents per thousand vehicles
+or the number of homicides per million population. Further, we also
+consider instances where the units of exposure may be fractions. To
+illustrate, for our Singapore data, $E_i$ will represent the
+fraction of the year that a policyholder had insurance coverage. The
+logic behind this is that the expected number of accidents is
+directly proportional to the length of coverage. (This can also be
+motivated by a probabilistic framework based on collections of
+Poisson distributed random variables known as \emph{Poisson
+processes,} see, for example, Klugman et al., 2008).
+
+More generally, we wish to allow the mean to vary according to
+information contained in other explanatory variables. For the
+Poisson, it is customary to specify
+\begin{equation*}
+\mathrm{E~}y_i = \mu_i = \exp \left(
+\mathbf{x}_i^{\prime}\boldsymbol \beta \right) .
+\end{equation*}
+Using the exponential function to map the systematic component
+$\mathbf{x}_i^{\prime }\boldsymbol \beta$ into the mean ensures that
+$\mathrm{E~}y_i$ will remain positive. Assuming the linearity of the
+regression coefficients allows for easy interpretation.
+Specifically, because
+\begin{equation*}
+\frac{\partial \mathrm{E~}y_i}{\partial x_{ij}} \times
+\frac{1}{\mathrm{E~}y_i} =\beta_j,
+\end{equation*}
+
+
+we may interpret $\beta_j$\ to be the proportional change
+in the mean per unit change in $x_{ij}$. The function that connects
+the mean to the systematic component is known as the
+\emph{logarithmic link function}, that is, $\ln
+\mu_i=\mathbf{x}_i^{\prime }\boldsymbol \beta$.
+
+To incorporate exposures, one can always specify one of the
+explanatory variables to be $\ln E_i$ and restrict the corresponding
+regression coefficient to be 1. This term is known as an
+\emph{offset}. With this convention, the link function is
+\begin{equation}\label{E12:logLink}
+\ln \mu_i=\ln E_i+\mathbf{x}_i^{\prime }\boldsymbol \beta.
+\end{equation}
+
+
+
+**Example: California Automobile Accidents**. Weber
+(1971) provided the first application of Poisson regression to
+automobile accident frequencies in his study of California driving
+records. In one model, Weber examined the number of automobile
+accidents during 1963 of nearly 87,000 male drivers. His explanatory
+variables consisted of:
+\begin{itemize}
+\item $x_1$ = the natural logarithm of the traffic
+            density index of the county in which the driver resides,
+\item $x_2 =5/(age-13)$
+\item $x_3$ = the number of countable convictions incurred during
+years 1961-62
+\item $x_4$ = the number of accident involvements incurred during
+years 1961-62
+\item $x_5$ = the number of noncountable convictions incurred during
+years 1961-62.
+            \end{itemize}
+Interestingly, in this early application, Weber achieved a
+satisfactory fit representing the mean as a linear combination of
+explanatory variables (E $y_i=\mathbf{x}_i^{\prime }\boldsymbol
+\beta$), not the exponentiated version as in equation
+(\ref{E12:logLink}) that is now commonly fit.
+
+
+### Estimation  {#S:Sec1213}
+
+Maximum likelihood is the usual estimation technique for Poisson
+regression models. Using the logarithmic link function in equation
+(\ref{E12:logLink}), the log-likelihood is given by
+\begin{eqnarray*}
+L(\boldsymbol \beta) &=&\sum_{i=1}^{n}\left( -\mu_i+y_i\ln \mu
+_i-\ln y_i!\right) \\
+&=&\sum_{i=1}^{n}\left( -E_i\exp \left( \mathbf{x}_i^{\prime
+}\boldsymbol \beta \right) +y_i\left( \ln E_i+\mathbf{x}_i^{\prime
+}\boldsymbol \beta \right) -\ln y_i!\right) .
+\end{eqnarray*}
+Setting the \emph{score function} equal to zero yields
+\begin{equation}\label{E12:Score}
+\left. \frac{\partial }{\partial \boldsymbol
+\beta}\mathrm{L}(\boldsymbol \beta )\right\vert_{\mathbf{\beta
+=b}}=\sum_{i=1}^{n}\left( y_i-E_i\exp \left( \mathbf{x}_i^{\prime
+}\mathbf{b}\right) \right) \mathbf{x} _i=\sum_{i=1}^{n}\left(
+y_i-\widehat{\mu }_i\right) \mathbf{x}_i= \mathbf{0},
+\end{equation}
+where $\widehat{\mu }_i = E_i\exp \left( \mathbf{x}_i^{\prime
+}\mathbf{b} \right)$. Solving this equation (numerically) yields
+$\mathbf{b}$, the maximum likelihood estimator of $\boldsymbol
+\beta$. From equation (\ref{E12:Score}), we see that if a row of
+$\mathbf{x}_i$ is constant (corresponding to a constant intercept
+regression term), then the sum of residuals $y_i - \widehat{\mu}_i$\
+is zero.
+
+
+Taking second derivatives yields the \emph{information matrix},
+\begin{equation*}
+\mathbf{I}(\boldsymbol \beta) = - \mathrm{E} \frac{\partial
+^2}{\partial \boldsymbol \beta\partial \boldsymbol \beta^{\prime
+}}\mathrm{L}(\boldsymbol \beta)=\sum_{i=1}^{n}E_i\exp \left(
+\mathbf{x}_i^{\prime }\boldsymbol \beta\right)
+\mathbf{x}_i\mathbf{x}_i^{\prime
+}=\sum_{i=1}^{n}\mu_i\mathbf{x}_i\mathbf{x}_i^{\prime }.
+\end{equation*}
+Standard maximum likelihood estimation theory (Section 11.9.2) shows
+that the asymptotic variance-covariance matrix of $\mathbf{b}$
+is\index{matrix algebra!variance-covariance matrix}
+\begin{equation*}
+\widehat{\mathrm{Var~}\mathbf{b}}=\left(
+\sum\limits_{i=1}^{n}\widehat{\mu }
+_i\mathbf{x}_i\mathbf{x}_i^{\prime }\right)^{-1}.
+\end{equation*}
+The square root of the $j$th diagonal element of
+$\widehat{\mathrm{Var~} \mathbf{b}}$ yields the standard error for
+$b_j$, which we denote as $se(b_j)$.
+
+**Example: Medical Malpractice Insurance.** Physicians make errors and may be sued by
+parties harmed by these errors. Like many professionals, it is
+common for physicians to carry insurance coverage that mitigates the
+financial consequences of "malpractice" lawsuits.\index{actuarial
+\& financial terms and concepts!malpractice
+insurance}\index{actuarial \& financial terms and concepts!closed
+claim}
+
+Because insurers wish to accurately price this type of coverage, it
+seems natural to ask what type of physicians are likely to submit
+medical malpractice claims. Fournier and McInnes (2001) examined a
+sample of $n=9,059$ Florida physicians using data from the Florida
+Medical Professional Liability Insurance Claims File. The authors
+examined closed claims in years 1985-1989 for physicians who were
+licensed before 1981, thus omitting claims for newly licensed
+physicians. Medical malpractice claims can take a long time to be
+resolved ("settled"); in their study, Fournier and McInnes found
+that 2 percent of claims were still not settled after 5 years of the
+malpractice event. Thus, they chose an early period (1985-1989) to
+allow the experience to mature. The authors also ignored minor
+claims by only considering claims that exceeded \$100.
+
+Table \ref{T12:MedMalPoisson} provides fitted Poisson regression
+coefficients along with standard errors that appear in Fournier and
+McInnes (2001). The table shows that physicians' practice area,
+region, practice size and physician personal characteristics
+(experience and gender) to be important determinants of the number
+of medical malpractice suits. For example, we may interpret the
+coefficient associated with gender to say that males are expected to
+have $\exp (0.432)= 1.540$ times as many claims as females.
+
+\begin{table}[h]
+\scalefont{0.8}  \begin{center} \caption{\label{T12:MedMalPoisson}
+Regression Coefficients of Medical Malpractice Poisson Regression
+Model}
+\begin{tabular}{lcc|lcc}
+\hline &  & Standard  &
+ & & Standard \\
+Explanatory Variables & Coefficient & Error & Explanatory
+Variables & Coefficient & Error \\
+\hline Intercept & -1.634 & 0.254 & MSA: Miami Dade-Broward & 0.377
+& 0.094
+\\
+
+Log Years Licensed & -0.392 & 0.054 & MSA: Other & 0.012 &
+0.084 \\
+\cline{4-6}
+Female & -0.432 & 0.082 & \multicolumn{3}{c}{Speciality} \\
+
+Patient Volume & 0.643 & 0.045 & Anesthesiology & 0.944 & 0.099 \\
+
+(Patient Volume$)^2$& -0.066 & 0.008 & Emergency Medicine & 0.583
+& 0.105 \\
+
+Per Capita Education & -0.015 & 0.006 & Internal Medicine & 0.428 &
+0.066 \\
+
+Per Capita Income & 0.047 & 0.011 & Obstetrics-Gynecology & 1.226 &
+0.070 \\
+\cline{1-3} \multicolumn{3}{c}{Regional Variables} &
+Otorhinolaryngology & 1.063 &
+0.109 \\
+
+Second Circuit & 0.066 & 0.072 & Pediatrics & 0.385 & 0.089 \\
+
+Third Circuit & 0.103 & 0.088 & Radiology & 0.478 & 0.099 \\
+
+Fourth Circuit & 0.214 & 0.098 & Surgery & 1.410 & 0.061 \\
+
+Fifth Circuit & 0.287 & 0.069 & Other Specialties & 0.011 & 0.076
+\\
+
+ \hline
+\end{tabular}
+
+\end{center}  \scalefont{1.25}
+\end{table}
+
+### Additional Inference
+
+In Poisson regression models, we anticipate \emph{heteroscedastic}
+dependent variables because of the relation $\mathrm{Var~}y_i=\mu
+_i$. This characteristic means that ordinary residuals
+$y_i-\widehat{\mu }_i$\ are of less use, so that it is more common
+to examine \emph{Pearson residuals}, defined as
+\begin{equation*}
+r_i=\frac{y_i-\widehat{\mu }_i}{\sqrt{\widehat{\mu }_i}}.
+\end{equation*}
+By construction, Pearson residuals are approximately homoscedastic.
+Plots of Pearson residuals can be used to identify unusual
+observations or to detect whether additional variables of interest
+can be used to improve the model specification.
+
+\index{goodness of fit statistics!Pearson chi-square}
+
+Pearson residuals can also be used to calculate a Pearson goodness of fit
+statistic,
+\begin{equation}\label{E12:Pearson2}
+\sum\limits_{i=1}^{n}r_i^2=\sum\limits_{i=1}^{n}\frac{\left( y_i-%
+\widehat{\mu }_i\right)^2}{\widehat{\mu }_i}.
+\end{equation}
+This statistic is an overall measure of how well the model fits the
+data. If the model is specified correctly, then this statistic
+should be approximately $n-(k+1)$. In general, Pearson goodness of
+fit statistics take the form $\sum \left( O-E\right)^2/E$, where $O$
+is some observed quantity and $E$ is the corresponding estimated
+(expected) value based on a model. The statistic in equation
+(\ref{E12:Pearson2}) is computed at the observation level whereas
+the statistic in equation (\ref{E12:Pearson}) was computed
+summarizing information over cells.
+
+In linear regression, the coefficient of determination $R^2$ is a
+widely accepted goodness of fit measure. In nonlinear regression
+such as for binary and count dependent variables, this is not true.
+Information statistics, such as \emph{Akaike's Information
+Criterion,}
+\begin{equation*}
+AIC=-2 L(\mathbf{b}) +2(k+1),
+\end{equation*}
+represents a type of statistic useful for goodness of fit that is
+broadly defined over a large range of models. Models with smaller
+values of \textit{AIC} fit better, and are preferred.
+
+\index{goodness of fit statistics!Akaike's information criterion,
+$AIC$}\index{hypothesis test!test statistics!likelihood ratio}
+
+As noted in Section \@ref(S:Sec1213), \textit{t}-statistics are
+regularly used for testing the significance of individual regression
+coefficients. For testing collections of regression coefficients, it
+is customary to use the \emph{likelihood ratio test}. The likelihood
+ratio test is a well-known procedure for testing the null hypothesis
+$H_0:\mathrm{h}(\boldsymbol \beta) = \mathbf{d}$, where $\mathbf{d}$
+is a known vector of dimension $r\times 1$ and
+$\mathrm{h}(\mathbf{.})$ is known and differentiable function. This
+approach uses $\mathbf{b}$ and $\mathbf{b}_{\mathrm{Reduced}}$,
+where $\mathbf{b}_{\mathrm{Reduced}}$ is the value of $\boldsymbol
+\beta$ that maximizes $L(\boldsymbol \beta)$ under the restriction
+that $\mathrm{h}(\boldsymbol \beta)=\mathbf{d}$. One computes the
+test statistic
+\begin{equation}\label{E12:LRT}
+LRT = 2 \left( L(\mathbf{b}) - L(\mathbf{b}_{\mathrm{Reduced}})
+\right) .
+\end{equation}
+Under the null hypothesis $H_0$, the test statistic $LRT$ has an
+asymptotic chi-square distribution with $r$ degrees of freedom.
+Thus, large values of $LRT$ suggest that the null hypothesis is not
+valid.
+
+## Application: Singapore Automobile Insurance  {#S:Sec122}
+
+Frees and Valdez (2008) investigate hierarchical models of Singapore
+driving experience. Here we examine in detail a subset of their
+data, focussing on 1993 counts of automobile accidents. The purpose
+of the analysis is to understand the impact of vehicle and driver
+characteristics on accident experience. These relationships provide
+a foundation for an actuary working in \emph{ratemaking}, that is,
+setting the price of insurance coverages.
+
+\index{actuarial \& financial terms and
+concepts!ratemaking}\index{actuarial \& financial terms and
+concepts!general insurers}
+
+The data are from the General Insurance Association of Singapore, an
+organization consisting of general (property and casualty) insurers
+in Singapore (see the organization's website: www.gia.org.sg). From
+this database, several characteristics were available to explain
+automobile accident frequency. These characteristics include vehicle
+variables, such as type and age, as well as person level variables,
+such as age, gender and prior driving experience. Table
+\ref{T12:Table122} summarizes these characteristics.
+
+\scalefont{0.9}  \begin{center}  \begin{table}[h]
+\caption{\label{T12:Table122} Description of Covariates}
+\begin{tabular}{lp{4in}}
+\hline \textbf{Covariate} & \multicolumn{1}{c}{\textbf{Description}}
+\\ \hline Vehicle Type & \multicolumn{1}{|p{4in}}{The type of
+vehicle being insured,
+either automobile (A) or other (O).} \\
+Vehicle Age & \multicolumn{1}{|p{4in}}{The age of the vehicle, in years,
+grouped into six categories.} \\
+Gender & \multicolumn{1}{|p{4in}}{The policyholder's gender, either male or
+female} \\
+Age & \multicolumn{1}{|p{4in}}{The age of the policyholder, in years,
+grouped into seven categories.} \\
+NCD & \multicolumn{1}{|p{4in}}{No Claims Discount. This is based on the
+previous accident record of the policyholder.} \\
+& \multicolumn{1}{|p{4in}}{The higher the discount, the better is the prior
+accident record.} \\ \hline
+\end{tabular}
+\end{table}  \end{center}  \scalefont{1.1111}
+
+
+Table \ref{T12:SingIntroStats} shows the effects of vehicle
+characteristics on claim count. The "Automobile" category has
+lower overall claims experience. The \textquotedblleft
+Other\textquotedblright\ category consists primarily of (commercial)
+goods vehicles, as well as weekend and hire cars. The vehicle age
+shows nonlinear effects of the age of the vehicle. Here, we see low
+claims for new cars with initially increasing accident frequency
+over time. However, for vehicles in operation for long periods of
+time, the accident frequencies are relatively low. There are also
+some important interaction effects between vehicle type and age not
+shown here. Nonetheless, Table \ref{T12:SingIntroStats} clearly
+suggests the importance of these two variables on claim frequencies.
+
+  \begin{center}  \begin{table}[h]
+\caption{\label{T12:SingIntroStats}  Effect of Vehicle
+Characteristics on Claims} \scalefont{0.9}
+\begin{tabular}{crrrr|r}
+\hline & Count=0 & Count=1 & Count=2 & Count=3 & Totals \\ \hline
+\multicolumn{6}{l}{Vehicle Type} \\
+Other & 3,441 & 184 & 13 & 3 & 3,641 \\
+& (94.5) & (95.1) & (0.4) & (0.1) & (48.7) \\
+Automobile & 3,555 & 271 & 15 & 1 & 3,842 \\
+& (92.5) & (7.1) & (0.4) & (0.0) & (51.3) \\ \hline
+\multicolumn{6}{l}{Vehicle Age (in years)} \\
+0-2 & 4,069 & 313 & 20 & 4 & 4,406 \\
+& (92.4) & (7.1) & (0.5) & (0.1) & (50.8) \\
+3 to 5 & 708 & 59 & 4 &  & 771 \\
+& (91.8) & (7.7) & (0.5) &  & (10.3) \\
+6 to 10 & 872 & 49 & 3 &  & 924 \\
+& (94.4) & (5.3) & (0.3) &  & (12.3) \\
+11 to 15 & 1,133 & 30 & 1 &  & 1,164 \\
+& (97.3) & (2.6)& (0.1) &  & (15.6) \\
+16 and older & 214 & 4 &  &  & 218 \\
+& (98.2) & (1.8)&  &  & (2.9) \\ \hline Totals & 6,996 & 455 & 28 &
+4 & 7,483 \\ \hline \multicolumn{6}{l}{{\emph{Note:}} Number in
+parens are
+percentages.} \\
+\end{tabular}\scalefont{1.1111}
+\end{table}  \end{center}
+
+Table \ref{T12:SingClaimsStats} shows the effects of person level
+characteristics, gender, age and no claims discount, on the
+frequency distribution. Person level characteristics were largely
+unavailable for commercial use vehicles and so Table
+\ref{T12:SingClaimsStats} present summary statistics for only those
+observations having automobile coverage with the requisite gender
+and age information. When we restricted consideration to (private
+use) automobiles, relatively few policies did not contain gender and
+age information.
+
+Table \ref{T12:SingClaimsStats} suggests that driving experience was
+roughly similar between males and females. This company insured very
+few young drivers, so the young male driver category that typically
+has extremely high accident rates in most automobiles studies is
+less important for these data. Nonetheless, Table
+\ref{T12:SingClaimsStats} suggests strong age effects, with older
+drivers having better driver experience. Table
+\ref{T12:SingClaimsStats} also demonstrates the importance of the no
+claims discounts (NCD). As anticipated, drivers with better previous
+driving records who enjoy a higher NCD have fewer accidents.
+
+\begin{table}[h]\begin{center}
+\caption{\label{T12:SingClaimsStats} Effect of Personal
+Characteristics on Claims.\newline  Based on Sample with Auto=1.}
+\scalefont{0.9}
+\begin{tabular}{crr|r}
+\hline
+& \multicolumn{2}{c|}{Count=0} & Total \\
+& Number & Percent &  \\ \hline
+\multicolumn{4}{l}{Gender} \\
+Female & \multicolumn{1}{|r}{654} & 93.4 & 700 \\
+Male & \multicolumn{1}{|r}{2,901} & 92.3 & 3,142 \\ \hline
+\multicolumn{4}{l}{Age Category} \\
+22-25 & \multicolumn{1}{|r}{131} & 92.9 & 141 \\
+26-35 & \multicolumn{1}{|r}{1,354} & 91.7 & 1,476 \\
+36-45 & \multicolumn{1}{|r}{1,412} & 93.2 & 1,515 \\
+46-55 & \multicolumn{1}{|r}{503} & 93.8 & 536 \\
+56-65 & \multicolumn{1}{|r}{140} & 89.2 & 157 \\
+\ \ \ \ \ \ \ \ \ \ \ 66 and over \ \ \ \ \ \ \ \  & \multicolumn{1}{|r}{15}
+& 88.2 & 17 \\ \hline
+\multicolumn{4}{l}{No Claims Discount} \\
+0 & \multicolumn{1}{|r}{889} & 89.6 & 992 \\
+10 & \multicolumn{1}{|r}{433} & 91.2 & 475 \\
+20 & \multicolumn{1}{|r}{361} & 92.8 & 389 \\
+30 & \multicolumn{1}{|r}{344} & 93.5 & 368 \\
+40 & \multicolumn{1}{|r}{291} & 94.8 & 307 \\
+50 & \multicolumn{1}{|r}{1,237} & 94.4 & 1,311 \\ \hline
+Total & \multicolumn{1}{|r}{3,555} & 92.5 & 3,842 \\ \hline
+\end{tabular}  \scalefont{1.1111} \end{center}
+\end{table}
+
+As part of the examination process, we investigated interaction
+terms among the covariates and nonlinear specifications. However,
+Table \ref{T12:SingPoissonEst} summarizes a simpler fitted Poisson
+model with only additive effects. Table \ref{T12:SingPoissonEst}
+shows that both vehicle age and no claims discount are important
+categories in that the \textit{t}-ratios for many of the
+coefficients are statistically significant. The overall
+log-likelihood for this model is $L( \mathbf{b}) =-1,776.730$.
+
+Omitted reference levels are given in the footnote of Table
+\ref{T12:SingPoissonEst} to help interpret the parameters. For
+example, for $NCD=0$, we expect that a poor driver with $NCD=0$ will
+have $\exp (0.729)=2.07$ times as many accidents as a comparable
+excellent driver with $NCD=50$. In the same vein, we expect that a
+poor driver with $NCD=0$ will have $\exp (0.729-0.293)=1.55$ times
+as many accidents as a comparable average driver with $NCD=30$.
+
+ \begin{table}[h]\begin{center}
+\caption{\label{T12:SingPoissonEst} Parameter Estimates from a
+Fitted Poisson Model} \scalefont{0.9}
+\begin{tabular}{rrr|rrr}
+\hline
+& Parameter &  &  & Parameter &  \\
+Variable & Estimate & \textit{t}-ratio & Variable & Estimate & \textit{t}%
+-ratio \\ \hline
+\multicolumn{1}{c}{} &  &  & \multicolumn{3}{|c}{(Auto=1)$\times $No Claims
+Discount*} \\
+\multicolumn{1}{c}{Intercept} & -3.306 & -6.602 & \multicolumn{1}{|c}{0} &
+0.729 & 4.704 \\
+\multicolumn{1}{c}{Auto} & -0.667 & -1.869 & \multicolumn{1}{|c}{10} & 0.528
+& 2.732 \\
+\multicolumn{1}{c}{Female} & -0.173 & -1.115 & \multicolumn{1}{|c}{20} &
+0.293 & 1.326 \\
+\multicolumn{1}{c}{} &  &  & \multicolumn{1}{|c}{30} & 0.260 & 1.152 \\
+\cline{1-3}
+\multicolumn{3}{c|}{(Auto=1)$\times $Age Category*} & \multicolumn{1}{|c}{40}
+& -0.095 & -0.342 \\ \cline{4-6}
+\multicolumn{1}{c}{22-25} & 0.747 & 0.961 & \multicolumn{3}{|c}{Vehicle Age
+(in years)*} \\
+\multicolumn{1}{c}{26-35} & 0.489 & 1.251 & \multicolumn{1}{|c}{0-2} & 1.674
+& 3.276 \\
+\multicolumn{1}{c}{36-45} & -0.057 & -0.161 & \multicolumn{1}{|c}{3-5} &
+1.504 & 2.917 \\
+\multicolumn{1}{c}{46-55} & 0.124 & 0.385 & \multicolumn{1}{|c}{6-10} & 1.081
+& 2.084 \\
+\multicolumn{1}{c}{56-65} & 0.165 & 0.523 &
+\multicolumn{1}{|c}{11-15} & 0.362 & 0.682 \\ \hline
+\multicolumn{6}{l}{\small *The omitted reference levels are: \ "66
+and over" for Age Category, "50" for} \\
+\multicolumn{6}{c}{\small No Claims Discount and "16 and over" for
+Vehicle Age.}
+\end{tabular} \end{center} \scalefont{1.1111}
+\end{table}
+
+For a more parsimonious model, one might consider removing the
+automobile, gender and age variables. Removing these seven variables
+results in a model with a log-likelihood of $L \left(
+\mathbf{b}_{\mathrm{Reduced}}\right) =-1,779.420$. To understand
+whether this is a significant reduction, we can compute a likelihood
+ratio statistic (equation \ref{E12:LRT}),
+\begin{equation*}
+LRT=2\times \left( -1,776.730 - (-1,779.420) \right) =5.379.
+\end{equation*}
+Comparing this to a chi-square distribution with $df=7$ degrees of
+freedom, the statistic $p$-value $=\Pr \left( \chi
+_{7}^2>5.379\right) =0.618$ indicates that these variables are not
+statistically significant. Nonetheless, for purposes of further
+model development, we retained automobile, gender and age as it is
+customary to include these variables in ratemaking models.
+\index{symbols!$\chi_k^2$, chi-square random variable with $k$
+degrees of freedom}
+
+As described in Section \ref{S12:PoissonInference}, there are
+several ways of assessing a model's overall goodness of fit. Table
+\ref{T12:SingGoodFit} compares several fitted models, providing
+fitted values for each response level and summarizing the overall
+fit with Pearson chi-square goodness of fit statistics. The left
+portion of the table repeats the baseline information that appeared
+in Table \ref{T12:Table121}, for convenience. \ To begin, first note
+that even without covariates, the inclusion of the offset,
+exposures, dramatically improves the fit of the model. This is
+intuitively appealing; as a driver has more insurance coverage
+during a year, he or she is more likely to be in an accident covered
+under the insurance contract. Table \ref{T12:SingGoodFit} also shows
+the improvement in the overall fit when including the fitted model
+summarized in Table \ref{T12:SingPoissonEst}. When compared to a
+chi-square distribution, the statistic $p$-value $=\Pr \left( \chi
+_{4}^2>8.77\right) =0.067$ suggests agreement between the data and
+the fitted value. However, this model specification can be improved
+- the following section introduces a negative binomial model that
+proves to be a yet better fit for this data set.
+
+\begin{table}[h]\begin{center}
+\caption{\label{T12:SingGoodFit} Comparison of Fitted Frequency
+Models}\scalefont{0.9}
+\begin{tabular}{crr|rrr}
+\hline &  & Without & \multicolumn{3}{|c}{With Exposures} \\
+\cline{4-6}
+Count & Observed & Exposures/ & No & Poisson & Negative \\
+&  & No Covariates & Covariates &  & Binomial \\ \hline
+0 & 6,996 & 6,977.86 & 6,983.05 & 6,986.94 & 6,996.04 \\
+1 & 455 & 487.70 & 477.67 & 470.30 & 453.40 \\
+2 & 28 & 17.04 & 21.52 & 24.63 & 31.09 \\
+3 & 4 & 0.40 & 0.73 & 1.09 & 2.28 \\
+4 & 0 & 0.01 & 0.02 & 0.04 & 0.18 \\ \hline
+\multicolumn{2}{c}{Pearson Goodness of Fit} & 41.98 & 17.62 & 8.77 &
+1.79
+\\ \hline
+\end{tabular}\end{center}  \scalefont{1.1111}
+\end{table}
+
+#  Overdispersion and Negative Binomial Models  {#S:Sec123}
+
+Although simplicity is a virtue of the Poisson regression model, its form
+can also be too restrictive. In particular, the requirement that the mean
+equal the variance, known as \emph{equidispersion}, is not satisfied for
+many datasets of interest. If the variance exceeds the mean, then the data
+are said to be \emph{overdispersed}. A less common case occurs when the
+variance is less than the mean, known as \emph{underdispersion}.
+
+\subsubsection*{Adjusting Standard Errors for Data not Equidispersed}
+
+To mitigate this concern, a common specification is to assume that
+\begin{equation}\label{E12:Pscale}
+\mathrm{Var~}y_i=\phi \mu_i,
+\end{equation}
+where $\phi >0$\ is a parameter to accommodate the potential over-
+or under-dispersion. As suggested by equation (\ref{E12:Score}),
+consistent estimation of $\boldsymbol \beta$ requires only that the
+mean function be specified correctly, not that the equidispersion or
+Poisson distribution assumptions hold. This feature also holds for
+linear regression. Because of this, the estimator $\mathbf{b}$ is
+sometimes referred to as a \emph{quasi-likelihood estimator}. With
+this estimator, we may compute estimated means $\widehat{\mu}_i$\
+and then estimate $\phi $\ as\
+\begin{equation}\label{E12:QuasiEstimator}
+\widehat{\phi }=\frac{1}{n-(k+1)}\sum\limits_{i=1}^{n}\frac{\left( y_i-%
+\widehat{\mu }_i\right)^2}{\widehat{\mu }_i}.
+\end{equation}
+Standard errors are then based on
+\begin{equation*}
+\widehat{\mathrm{Var~}\mathbf{b}}=\left( \widehat{\phi }\sum%
+\limits_{i=1}^{n}\widehat{\mu }_i\mathbf{x}_i\mathbf{x}_i^{\prime
+}\right)^{-1}.
+\end{equation*}\index{likelihood inference!quasi-likelihood estimator}
+\index{likelihood inference!robust standard error}
+
+A drawback of equation (\ref{E12:Pscale}) is that one assumes the
+variance of each observation is a constant multiple of its mean. For
+datasets where this assumption is in doubt, it is common to use a
+\emph{robust standard error}, computed as the square root of the
+diagonal element of
+\begin{equation*}
+\mathrm{Var~}\mathbf{b}=\left( \sum\limits_{i=1}^{n}\mu_i\mathbf{x}_i%
+\mathbf{x}_i^{\prime }\right)^{-1}\left( \sum\limits_{i=1}^{n}\left(
+y_i-\mu_i\right)^2\mathbf{x}_i\mathbf{x}_i^{\prime }\right) \left(
+\sum\limits_{i=1}^{n}\mu_i\mathbf{x}_i\mathbf{x}_i^{\prime
+}\right)^{-1},
+\end{equation*}
+evaluated at $\widehat{\mu }_i.$ Here, the idea is that $\left(
+y_i-\mu_i\right)^2$\ is an unbiased estimator of Var $y_i$,
+regardless of the form. Although $\left( y_i-\mu_i\right)^2$\ is a
+poor estimator of Var $y_i$ for each observation $i$, the weighted
+sum $ \sum\nolimits_i\left( y_i-\mu_i\right)^2\mathbf{x}_i\mathbf{x}
+_i^{\prime }$\ is a reliable estimator of $\sum\nolimits_i\left(
+\mathrm{Var~}y_i\right) \mathbf{x}_i\mathbf{x}_i^{\prime }$.
+
+For the quasi-likelihood estimator, the estimation strategy assumes only a
+correct specification of the mean and uses a more robust specification of
+the variance than implied by the Poisson distribution. The advantage and
+disadvantage of this estimator is that it is not linked to a full
+distribution. This assumption makes it difficult, for example, if the
+interest is in estimating the probability of zero counts. An alternative
+approach is to assume a more flexible parametric model that permits a wider
+range of dispersion.
+
+\subsubsection*{Negative Binomial}\index{distributions!negative binomial}
+
+A widely used model for counts is the \emph{negative binomial}, with
+probability mass function
+\begin{equation}
+\mathrm{Pr}(y=j)=\left(
+\begin{array}{c}
+j+r-1 \\
+r-1
+\end{array}
+\right) p^{r}\left( 1-p\right)^j,
+\end{equation}
+where $r$ and $p$ are parameters of the model. To help interpret the
+parameters of the model, straightforward calculations show that
+$\mathrm{E~}y=r(1-p)/p$ and $\mathrm{Var~}y = r(1-p)/p^2.$
+
+The negative binomial has several important advantages when compared
+to the Poisson distribution. First, because there are two parameters
+describing the negative binomial distribution, it has greater
+flexibility for fitting data. Second, it can be shown that the
+Poisson is a limiting case of the negative binomial (by allowing
+$p\rightarrow 1$ and $r \rightarrow 0$ such that $rp \rightarrow
+\lambda $). In this sense, the Poisson is nested within the negative
+binomial distribution. Third, one can show that negative binomial
+distribution arises from a mixture of the Poisson variables. For
+example, think about the Singapore data set with each driver having
+their own value of $\lambda $. Conditional on $\lambda $, assume
+that the driver's accident distribution has a Poisson distribution
+with parameter $\lambda $. Further assume that the distribution of
+$\lambda $'s can be described as a gamma distribution. Then, it can
+be shown that the overall accident counts have a negative binomial
+distribution. See, for example, Klugman et al. (2008). Such
+"mixture" interpretations are helpful in explaining results to
+consumers of actuarial analyses.
+
+For regression modeling, the "$p$" parameter varies by subject
+$i$. It is customary to reparameterize the model and use a log-link
+function such that $\sigma =1/r$ and that $p_i$ related to the mean
+through $\mu_i =r(1-p_i)/p_i = \exp (\mathbf{x}_i^{\prime}
+\boldsymbol \beta)$. Because the negative binomial is a probability
+frequency distribution, there is no difficulty in estimating
+features of this distribution, such as the probability of zero
+counts, after a regression fit. This is in contrast to the
+quasi-likelihood estimation of a Poisson model with an ad hoc
+specification of the variance summarized in equation
+(\ref{E12:QuasiEstimator}).
+
+***
+
+**Example: Singapore Automobile Data - Continued.** The
+negative binomial distribution was fit to the Section
+\ref{S12:SingaporeData} Singapore data using the set of covariates
+summarized in Table \ref{T12:SingPoissonEst}. The resulting
+log-likelihood was $\mathrm{L}_{NegBin}(\mathbf{b})=-1,774.494;$
+this is
+larger than the Poisson likelihood fit $\mathrm{L}_{Poisson}\left( \mathbf{b} \right) =-1,776.730$ because of an additional parameter. The usual
+likelihood ratio test is not formally appropriate because the models
+are only nested in a limiting sense. It is more useful to compare
+the goodness of fit statistics given in Table \ref{T12:SingGoodFit}.
+Here, we see that the negative binomial is a better fit than the
+Poisson (with the same systematic components). A chi-square test of
+whether the negative binomial with covariates is suitable yields
+$p$-value\textrm{\ }$=\Pr \left( \chi_{4}^2>1.79\right) =0.774$,
+suggesting strong agreement between the observed data and fitted
+values. We interpret the findings of Table \ref{T12:SingGoodFit} to
+mean that the negative binomial distribution well captures the
+heterogeneity in the accident frequency distribution.
+
+## Other Count Models  {#S:Sec124}
+
+Actuaries are familiar with a host of frequency models; see, for
+example, Klugman et al. (2008). In principle, each frequency model
+could be used in a regression context by simply incorporating a
+systematic component, $\mathbf{x}^{\prime}\boldsymbol \beta$, into
+one or more model parameters. However, analysts have found that four
+variations of the basic models perform well in fitting models to
+data and provide an intuitive platform for interpreting model
+results.
+
+### Zero-Inflated Models
+
+For many datasets, a troublesome aspect is the "excess" number of
+zeros, relative to a specified model. For example, this could occur
+in automobile claims data because insureds are reluctant to report
+claims, fearing that a reported claim will result in higher future
+insurance premiums. Thus, we have a higher than anticipated number
+of zeros due to the non-reporting of claims.
+
+A zero-inflated model represents the claims number $y_i$ as a
+mixture of a point mass at zero and another claims frequency
+distribution, say $g_i(j)$ (which is typically Poisson or negative
+binomial). (We might interpret the point mass as the tendency of
+non-reporting.) The probability of getting the point mass would be
+modeled by a binary count model such as, for example, the logit
+model
+\begin{equation*}
+\pi_i=\frac{\exp \left( \mathbf{x}_i^{\prime}\boldsymbol \beta%
+_{1}\right) }{1+\exp \left( \mathbf{x}_i^{\prime}\boldsymbol \beta%
+_{1}\right) }.
+\end{equation*}
+As a consequence of the mixture assumption, the zero-inflated count
+distribution can be written as
+\begin{equation}\label{E12:ZICount}
+\Pr \left( y_i=j\right) =\left\{
+\begin{array}{ll}
+\pi_i+(1-\pi_i)g_i(0) & j=0 \\
+(1-\pi_i)g_i(j) & j=1,2,...
+\end{array}
+\right. .
+\end{equation}
+From equation (\ref{E12:ZICount}), we see that zeros could arise
+from either the point mass or the other claims frequency
+distribution.
+
+To see the effects of a zero-inflated model, suppose that $g_i$
+follows a Poisson distribution with mean $\mu_i$. Then, easy
+calculations show that
+\begin{equation*}
+\mathrm{E~} y_i = (1 - \pi_i) \mu_i
+\end{equation*}
+and%
+\begin{equation*}
+\mathrm{Var~} y_i = \pi_i \mu_i+\pi_i\mu_i^2(1-\pi_i).
+\end{equation*}%
+Thus, for the zero-inflated Poisson, the variance always exceeds the
+mean, thus accommodating overdispersion relative to the Poisson
+model.
+
+***
+
+**Example: Automobile Insurance**. Yip and Yau (2005) examine a portfolio of $n=2,812$
+automobile policies available from SAS Institute, Inc. \ Explanatory
+variables include age, gender, marital status, annual income, job
+category and education level of the policyholder. For this dataset,
+they found that several zero-inflated count models accommodated well
+the presence of extra zeros.
+
+### Hurdle Models
+
+A "hurdle model" provides another mechanism to modify basic count
+distributions in order to represent situations with an excess number
+of zeros. Hurdle models can be motivated by sequential decision
+making processes confronted by individuals. For example, in
+healthcare choice, we can think about an individual's decision to
+seek healthcare care as an initial process. Conditional on having
+sought healthcare $\{y\geq 1\}$, the amount of healthcare is a
+decision made by a healthcare provider (such as a physician or
+hospital), thus representing a different process. One needs to pass
+the first "hurdle" (the decision to seek healthcare) in order to
+address the second (the amount of healthcare). An appeal of the
+hurdle model is its connection to the "principal-agent" model
+where the provider (agent) decides on the amount after initial
+contact by the insured (principal) is made. As another example, in
+property and casualty insurance, the decision process an insured
+uses for reporting the initial claim may differ from that used for
+reporting subsequent claims.
+
+To represent hurdle models, let $\pi_i$\ represent the probability that $%
+\{y_i=0\}$ used for the first decision and suppose that $g_i$
+represents the count distribution that will be used for the second
+decision. We define the probability mass function as
+\begin{equation} \label{E12:Hurdle}
+\Pr \left( y_i=j\right) =\left\{
+\begin{array}{ll}
+\pi_i & j=0 \\
+k_ig_i(j) & j=1,2,...%
+\end{array}%
+\right. .
+\end{equation}%
+where $k_i=(1-\pi_i)/(1-g_i(0))$. As with zero-inflated models, a
+logit model might be suitable for representing $\pi_i$.
+
+To see the effects of a hurdle model, suppose that $g_i$ follows a
+Poisson distribution with mean $\mu_i$. Then, easy calculations show
+that
+\begin{equation*}
+\mathrm{E~} y_i =k_i \mu_i
+\end{equation*}
+and%
+\begin{equation*}
+\mathrm{Var~} y_i = k_i \mu_i + k_i \mu_i^2(1-k_i).
+\end{equation*}
+Because $k_i$\ may be larger or smaller than 1, this model allows
+for both under- and overdispersion relative to the Poisson model.
+
+The hurdle model is a special case of the "two-part" model
+described in Chapter 16. There, we will see that for two-part
+models, the amount of healthcare utilized may be a continuous as
+well as a count variable. An appeal of two-part models is that
+parameters for each hurdle/part can be analyzed separately.
+Specifically, the log-likelihood for the i$th$ subject can be
+written as
+\begin{equation*}
+\ln \left[ \Pr \left( y_i=j\right) \right] =\left[
+\mathrm{I}(j=0)\ln \pi_i+\mathrm{I}(j\geq 1)\ln (1-\pi_i)\right]
++\mathrm{I}(j\geq 1)\ln \frac{g_i(j)}{(1-g_i(0))}.
+\end{equation*}%
+The terms in the square brackets on the right-hand side correspond
+to the likelihood for a binary count model. The latter terms
+correspond to a count model with zeros removed (known as a truncated
+model). If the parameters for the two pieces are different
+("separable"), then the maximization may be done separately for
+each part.
+
+### Heterogeneity Models
+
+In a heterogeneity model, one allows one or more model parameters to
+vary randomly. The motivation is that these random parameters
+capture unobserved features of a subject. For example, suppose that
+$\alpha_i$ represents a random parameter and that $y_i$\ given
+$\alpha_i$ has conditional mean $ \exp \left(
+\alpha_i+\mathbf{x}_i^{\prime}\boldsymbol \beta \right) .$ We
+interpret $\alpha_i,$ called a \emph{heterogeneity component, }to
+represent unobserved subject characteristics that contribute
+linearly to the systematic component
+$\mathbf{x}_i^{\prime}\boldsymbol \beta$.
+
+To see the effects of the heterogeneity component on the count distribution,
+basic calculations show that
+\begin{equation*}
+\mathrm{E~} y_i = \exp \left( \mathbf{x}_i^{\prime} \boldsymbol
+\beta \right) =\mu_i
+\end{equation*}
+and%
+\begin{equation*}
+\mathrm{Var~} y_i = \mu_i + \mu_i^2 \mathrm{Var}\left(
+e^{\alpha_i}\right) .
+\end{equation*}
+where we typically assume that $\mathrm{E}\left( e^{\alpha
+_i}\right) =1$\ for parameter identification. Thus, heterogeneity
+models readily accommodate overdispersion in datasets.
+
+It is common to assume that the count distribution is Poisson
+conditional on $\alpha_i$. There are several choices for the
+distribution of $\alpha_i$, the two most common being the log-gamma
+and the log-normal. For the former, one first assumes that $\exp
+\left( \alpha_i\right) $\ has a gamma distribution, implying that
+$\exp \left( \alpha_i + \mathbf{x}_i^{\prime} \boldsymbol
+\beta\right) $\ also has a gamma distribution. Recall that we have
+already noted in Section \ref{S12:NBSection} that using a gamma
+mixing distribution for Poisson counts results in a negative
+binomial distribution. Thus, this choice provides another motivation
+for the popularity of the negative binomial as the choice of the
+count distribution. For the latter, assuming that an observed
+quantity such as $\exp \left( \alpha_i\right) $\ has a normal
+distribution is quite common in applied data analysis. Although
+there are no closed-form analytic expressions for the resulting
+marginal count distribution, there are several software packages
+that readily lend itself to ease computational difficulties.
+
+The heterogeneity component is particularly useful in repeated
+samples where it can be used to model clustering of observations.
+Observations from different clusters tend to be dissimilar compared
+to observations within a cluster, a feature known as
+\textquotedblleft heterogeneity.\textquotedblright\ \ The similarity
+of observations within a cluster can be captured by a common term
+$\alpha_i$. Different heterogeneity terms from observations from
+different clusters can capture the heterogeneity. For an
+introduction to modeling from repeated sampling, see Chapter 10.
+
+***
+
+**Example: Spanish Third Party Automobile Liability Insurance.** Boucher et al. (2006) analyzed a portfolio of $n=548,830$
+automobile contracts from a major insurance company operating in
+Spain. Claims were for third party automobile liability, so that in
+the event of an automobile accident, the amount that the insured is
+liable for non-property damages to other parties is covered under
+the insurance contract. For these data, the average claims frequency
+was approximately 6.9\%. Explanatory variables include age, gender,
+driving location, driving experience, engine size and policy type.
+The paper considers a wide variety of zero-inflated, hurdle and
+heterogeneity models, showing that each was a substantial
+improvement over the basic Poisson model.
+
+### Latent Class Models
+
+In most data sets, it is easy to think about classifications of subjects
+that the analyst would like to make in order to promote homogeneity among
+observations. Some examples include:
+
+\begin{itemize}
+\item "healthy" and "ill" people when examining healthcare expenditures,
+
+\item automobile drivers who are likely to file a claim in the event of an
+accident compared to those who are reluctant to do so and
+
+\item physicians who are "low" risks
+compared to "high" risks when examining medical malpractice
+insurance coverage.
+\end{itemize}
+
+For many datasets of interests, such obvious classification
+information is not available and are said to be unobserved, or
+\emph{latent}. A "latent class" model still employs this
+classification idea but treats it as an unknown discrete random
+variable. Thus, like Sections 12.4.1-12.4.3, we use mixture models
+to modify basic count distributions but now assume that the mixture
+is a discrete random variable that we interpret to be the latent
+class.
+
+To be specific, assume that we have two classes, "low-risk" and
+"high-risks," with probability $\pi_{L}$ that a subject belongs to
+the low-risk class. Then, we can write the probability mass
+function as%
+\begin{equation}\label{E12:Latent}
+\Pr \left( y_i=j\right) =\pi_{L}\Pr \left( y_i=j;L\right) +\left(
+1-\pi_{L}\right) \Pr \left( y_i=j;H\right) ,
+\end{equation}%
+where $\Pr \left( y_i=j;L\right) $\ and $\Pr \left( y_i=j;H\right)
+$\ are the probability mass functions for the low and high risks,
+respectively.
+
+This model is intuitively pleasing in that corresponds to an
+analyst's perception of the behavior of the world. It is flexible in
+the sense that the model readily accommodates under- and
+over-dispersion, long-tails and bi-modal distributions. However,
+this flexibility also leads to difficulty regarding computational
+issues. There is a possibility of multiple local maxima when
+estimating via maximum likelihood. Convergence can be slow compared
+to other methods described in 12.4.1-12.4.3.
+
+Nonetheless, latent class models have proven fruitful in
+applications of interest to actuaries.
+
+***
+
+**Example: Rand Health Insurance Experiment.** Deb and Trivedi (2002) find strong
+evidence that a latent class model performs well when compared to
+the hurdle model. They examined counts of utilization of healthcare
+expenditures for the Rand Health Insurance Experiment, a dataset
+that has extensively analyzed in the health economics literature.
+They interpreted $\Pr \left( y_i=j;L\right) $\ to be a distribution
+of infrequent healthcare users and $\Pr \left( y_i=j;H\right) $\ to
+be a distribution of \ frequent healthcare users. Each distribution
+was based on a negative binomial distribution, with different
+parameters for each class. They found statistically significant
+differences for their four insurance variables, two coinsurance
+variables, a variable indicating whether there was an individual
+deductible and a variable describing the maximum limit reimbursed.
+Because subjects were randomly assigned to insurance plans (very
+unusual), the effects of insurance variables on healthcare
+utilization are particularly interesting from a policy standpoint,
+as are differences among low and high use subjects. For their data,
+they estimated that approximately 20\% were in the high use class.
+
+## Further Reading and References  {#S:Sec125}
+
+The Poisson distribution was derived by Poisson (1837) as a limiting
+case of the binomial distribution. Greenwood and Yule (1920) derived
+the negative binomial distribution as a mixture of a Poisson with a
+gamma distribution. Interestingly, one example of the 1920 paper was
+to use the Poisson distribution as a model of accidents, with the
+mean as a gamma random variable, reflecting the variation of workers
+in a population. Greenwood and Yule referred to this as individuals
+subject to "repeated accidents" that other authors have dubbed as
+"accident-proneness."
+
+The first application of Poisson regression is due to Cochran (1940)
+in the context of ANOVA modeling and to Jorgensen (1961) in the
+context of multiple linear regression. As described in Section 12.2,
+Weber (1971) gives the first application to automobile accidents.
+
+This chapter focuses on insurance and risk management applications
+of count models. For those interested in automobiles, there is a
+related literature on studies of motor vehicle crash process, see
+for example, Lord et al. (2005). For applications in other areas of
+social science and additional model development, we refer to Cameron
+and Trivedi (1998).
+
+\bigskip
+
+\textbf{References}
+
+
+\scalefont{0.9}
+
+\begin{multicols}{2}
+
+Bortkiewicz, L. von (1898). \textit{Das Gesetz de Kleinen Zahlen}.
+Leipzig, Teubner.
+
+Boucher, Jean-Philippe, Michel Denuit and Montserratt Guill\'{e}n
+(2006). Risk classification for claim counts: A comparative analysis
+of various zero-inflated mixed Poisson and hurdle models. Working
+paper.
+
+Cameron, A. Colin and Pravin K. Trivedi. (1998) \textit{Regression Analysis
+of Count Data}. Cambridge University Press, Cambridge.
+
+Cochran, W. G. (1940). The analysis of variance when experimental
+errors follow the Poisson or binomial law. \textit{Annals of
+Mathematical Statistics} 11, 335-347.
+
+Deb, Partha and Pravin K. Trivedi (2002). The structure of demand for health
+care: latent class versus two-part models. \textit{Journal of Health
+Economics} 21, 601-625.
+
+Fournier, Gary M. and Melayne Morgan McInnes (2001). The case of
+experience rating in medical malpractice insurance: An empirical
+evaluation. \textit{The Journal of Risk and Insurance} 68, 255-276.
+
+Frees, Edward W. and Emiliano Valdez (2008). Hierarchical insurance
+claims modeling. \textit{Journal of the American Statistical
+Association} 103, 1457-1469.
+
+Greenwood, M. and G. U. Yule (1920). An inquiry into the nature of
+frequency distributions representative of multiple happenings with
+particular reference to the occurrence of multiple attacks of
+disease or of repeated accidents. \textit{Journal of the Royal
+Statistical Society} 83, 255-279.
+
+Jones, Andrew M. (2000). Health econometrics. Chapter 6 of the\ \textit{%
+Handbook of Health Economics, Volume 1}. Edited by Antonio.J. Culyer, and
+Joseph.P. Newhouse, Elsevier, Amersterdam. 265-344.
+
+Jorgensen, Dale W. (1961). Multiple regression analysis of a Poisson
+process.  \textit{Journal of the American Statistical Association}
+56, 235-245.
+
+Lord, Dominique, Simon P. Washington and John N. Ivan (2005).
+Poisson, Poisson-gamma and zero-inflated regression models of motor
+vehicle crashes: Balancing statistical theory and fit.
+\textit{Accident Analysis and Prevention} 37, 35-46.
+
+Klugman, Stuart A, Harry H. Panjer and Gordon E. Willmot (2008).
+\emph{Loss Models: From Data to Decisions}. John Wiley \& Sons,
+Hoboken, New Jersey.
+
+Purcaru, Oana and Michel Denuit (2003). Dependence in dynamic claim
+frequency credibility models. \textit{ASTIN Bulletin} 33(1), 23-40.
+
+Weber, Donald C. (1971). Accident rate potential: An application of
+multiple regression analysis of a Poisson process. \textit{Journal
+of the American Statistical Association} 66, 285-288.
+
+Yip, Karen C. H. and Kelvin K.W. Yau (2005). On modeling claim frequency
+data in general insurance with extra zeros. \textit{Insurance: Mathematics
+and Economics }36(2) 153-163.
+
+
+## Exercises  {#S:Sec126}
+
+
+12.1 Show that the log-likelihood in equation (\ref{E12:BasicLogLike})
+has a maximum at $ \widehat{\mu }=\overline{y}$.
+
+\item  For the data in Table \ref{T12:Table121}, confirm that the
+Pearson statistic in equation (\ref{E12:Pearson}) is 41.98.
+
+\item \textbf{Poisson Residuals}. Consider a Poisson regression. Let $e_i
+= y_i - \widehat{\mu}_i$ denote the $i$th ordinary residual. Assume
+that an intercept is used in the model so that one of the
+explanatory variables $x$ is a constant equal to one.
+
+a. Show that the average ordinary residual is 0.
+
+b. Show that the correlation between the ordinary residuals and each
+explanatory variable is zero.
+
+
+
+\item  \textbf{Negative Binomial Distribution}.
+
+a. Assume that $y_1, \ldots, y_n$ are i.i.d. with a negative
+binomial distribution with parameters $r$ and $p$. Determine the
+maximum likelihood estimators.
+
+b. Use the sampling mechanism in part (a) but with parameters
+$\sigma =1/r$ and $\mu$ where $\mu =r(1-p)/p.$ Determine the maximum
+likelihood estimators of $\sigma$ and $\mu.$
+
+c. Assume that $y_1, \ldots, y_n$ are independent with $y_i$ having
+a negative binomial distribution with parameters $r$ and $p_i$,
+where $\sigma =1/r$ and $p_i$ satisfies $r(1-p_i)/p_i=\exp
+(\mathbf{x}_i^{\prime }\boldsymbol \beta) (= \mu_i).$ Determine the
+score function in terms of $\sigma$ and $\boldsymbol \beta$.
+
+
+
+\item   \textbf{Medical Expenditures Data.} This exercise considers data
+from the Medical Expenditure Panel Survey (MEPS) described in
+Exercise 1.\ref{Ex:MedExpend} and Section 11.4. Our dependent
+variable consists of the number of outpatient (COUNTOP) visits. For
+MEPS, outpatient events include hospital outpatient department
+visits, office-based provider visits and emergency room visits
+excluding dental services. (Dental services, compared to other types
+of health care services, are more predictable and occur in a more
+regular basis.) Hospital stays with the same date of admission and
+discharge, known as "zero-night stays," were also included in
+outpatient counts and expenditures. (Payments associated with
+emergency room visits that immediately preceded an inpatient stay
+were included in the inpatient expenditures. Prescribed medicines
+that can be linked to hospital admissions were included in inpatient
+expenditures, not in outpatient utilization.)
+
+Consider the explanatory variables described in Section 11.4.
+
+a. Provide a table of counts, a histogram and summary statistics of
+COUNTOP. Note the shape of the distribution and the relationship
+between the sample mean and sample variance.
+
+b. Create tables of means of COUNTOP by level of GENDER, ethnicity,
+region, education, self-rated physical health, self-rated mental
+health, activity limitation, income and insurance. Do these tables
+suggest that these explanatory variables have an impact on COUNTOP?
+
+c. As a baseline, estimate a Poisson model without any explanatory
+variables and calculate a Pearson's chi-square statistic for
+goodness of fit (at the individual level).
+
+d. Estimate a Poisson model using the explanatory variables in part
+(b).
+
+d(i). Comment briefly on the statistical significance of each
+variable.
+
+d(ii). Provide an interpretation for the GENDER coefficient.
+
+d(iii). Calculate a (individual-level) Pearson's chi-square
+statistic for goodness of fit. Compare this to the one in part (b).
+Based on this statistic and the statistical significance of
+coefficients discussed in part d(i), which model do you prefer?
+
+d(iv). Re-estimate the model using the quasi-likelihood estimator of
+the dispersion parameter. How have your comments in part d(i)
+changed?
+
+e. Estimate a negative binomial model using the explanatory
+variables in part (d).
+
+e(i). Comment briefly on the statistical significance of each
+variable.
+
+e(ii). Calculate a (individual-level) Pearson's chi-square statistic
+for goodness of fit. Compare this to the ones in parts (b) and (d).
+Which model do you prefer? Also cite the $AIC$ statistic in your
+comparison.
+
+e(iii). Re-estimate the model, dropping the factor income. Use the
+likelihood ratio test to say whether income is a statistically
+significant factor.
+
+f. As a robustness check, estimate a logistic regression model using
+the explanatory variables in part (d). Do the signs and significance
+of the coefficients of this model fit give the same interpretation
+as with the negative binomial model in part (e)?
+
+
+\item \textbf{Two Population Poissons.} We can express the two
+population problem in a regression context using one explanatory
+variable. Specifically, suppose that $x_i$ only takes on the values
+0 and 1. Out of the $n$ observations, $n_0$ take on the value $x=0$.
+These $n_0 $ observations have an average $y$ value of
+$\overline{y}_0$. The remaining $n_1 =n-n_0$ observations have value
+$x=1$ and an average $y$ value of $\overline{y}_1$.
+
+Use the Poisson model with the logarithmic link function and
+systematic component $\mathbf{x}_i^{\prime} \boldsymbol \beta =
+\beta_0 +\beta_1 x_i$.
+
+i. Determine the maximum likelihood estimators of $\beta_0$ and
+$\beta_1$, respectively.
+
+ii. Suppose that $n_0 = 10$, $n_1= 90$, $\overline{y}_0 = 0.20$ and
+$\overline{y}_1= 0.05$. Using your results in part a(i), compute the
+maximum likelihood estimators of $\beta_0$ and $\beta_1$,
+respectively.
+
+iii. Determine the information matrix.
+
+
+\scalefont{1.1111}
+
+\end{exercises}

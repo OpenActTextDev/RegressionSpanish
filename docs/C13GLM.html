@@ -1,0 +1,2482 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 Modelos Lineales Generalizados | Modelado de Regresión con Aplicaciones Actuariales y Financieras</title>
+  <meta name="description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 Modelos Lineales Generalizados | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 Modelos Lineales Generalizados | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  
+  <meta name="twitter:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="C12Count.html"/>
+<link rel="next" href="apéndices.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Regression Modeling With Actuarial and Financial Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prólogo"><i class="fa fa-check"></i>Prólogo</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#para-quién-es-este-libro"><i class="fa fa-check"></i>¿Para Quién Es Este Libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#de-qué-trata-este-libro"><i class="fa fa-check"></i>¿De Qué Trata Este Libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cómo-transmite-este-libro-su-mensaje"><i class="fa fa-check"></i>¿Cómo Transmite Este Libro Su Mensaje?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#dedicación"><i class="fa fa-check"></i>Dedicación</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html"><i class="fa fa-check"></i>Translation</a></li>
+<li class="chapter" data-level="1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html"><i class="fa fa-check"></i><b>1</b> Regresión y la Distribución Normal</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec11"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es el Análisis de Regresión?</a></li>
+<li class="chapter" data-level="1.2" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec12"><i class="fa fa-check"></i><b>1.2</b> Ajuste de Datos a una Distribución Normal</a></li>
+<li class="chapter" data-level="1.3" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec13"><i class="fa fa-check"></i><b>1.3</b> Transformaciones de Potencia</a></li>
+<li class="chapter" data-level="1.4" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec14"><i class="fa fa-check"></i><b>1.4</b> Muestreo y el Papel de la Normalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec15"><i class="fa fa-check"></i><b>1.5</b> Regresión y Diseños de Muestreo</a></li>
+<li class="chapter" data-level="1.6" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec16"><i class="fa fa-check"></i><b>1.6</b> Aplicaciones Actuariales de la Regresión</a></li>
+<li class="chapter" data-level="1.7" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec17"><i class="fa fa-check"></i><b>1.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="1.8" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec18"><i class="fa fa-check"></i><b>1.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="1.9" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec19"><i class="fa fa-check"></i><b>1.9</b> Suplemento Técnico - Teorema del Límite Central</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="C2BasicLR.html"><a href="C2BasicLR.html"><i class="fa fa-check"></i><b>2</b> Regresión Lineal Básica</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec21"><i class="fa fa-check"></i><b>2.1</b> Correlaciones y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="2.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec22"><i class="fa fa-check"></i><b>2.2</b> Modelo Básico de Regresión Lineal</a></li>
+<li class="chapter" data-level="2.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec23"><i class="fa fa-check"></i><b>2.3</b> ¿Es Útil el Modelo? Algunas Medidas de Resumen Básicas</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec231"><i class="fa fa-check"></i><b>2.3.1</b> Particionando la Variabilidad</a></li>
+<li class="chapter" data-level="2.3.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec232"><i class="fa fa-check"></i><b>2.3.2</b> El Tamaño de una Desviación Típica: <em>s</em></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec24"><i class="fa fa-check"></i><b>2.4</b> Propiedades de los Estimadores del Coeficiente de Regresión</a></li>
+<li class="chapter" data-level="2.5" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec25"><i class="fa fa-check"></i><b>2.5</b> Inferencia Estadística</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec251"><i class="fa fa-check"></i><b>2.5.1</b> ¿Es Importante la Variable Explicativa?: La Prueba <em>t</em></a></li>
+<li class="chapter" data-level="2.5.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec252"><i class="fa fa-check"></i><b>2.5.2</b> Intervalos de Confianza</a></li>
+<li class="chapter" data-level="2.5.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec253"><i class="fa fa-check"></i><b>2.5.3</b> Intervalos de Predicción</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec26"><i class="fa fa-check"></i><b>2.6</b> Construyendo un Mejor Modelo: Análisis de Residuos</a></li>
+<li class="chapter" data-level="2.7" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec27"><i class="fa fa-check"></i><b>2.7</b> Aplicación: Modelo de Valoración de Activos Financieros</a></li>
+<li class="chapter" data-level="2.8" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec28"><i class="fa fa-check"></i><b>2.8</b> Salida Computacional Ilustrativa de Regresión</a></li>
+<li class="chapter" data-level="2.9" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec29"><i class="fa fa-check"></i><b>2.9</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="2.10" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec210"><i class="fa fa-check"></i><b>2.10</b> Ejercicios</a></li>
+<li class="chapter" data-level="2.11" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec211"><i class="fa fa-check"></i><b>2.11</b> Suplemento Técnico - Elementos del Álgebra de Matrices</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2111"><i class="fa fa-check"></i><b>2.11.1</b> Definiciones Básicas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2112"><i class="fa fa-check"></i><b>2.11.2</b> Algunas Matrices Especiales</a></li>
+<li class="chapter" data-level="2.11.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2113"><i class="fa fa-check"></i><b>2.11.3</b> Operaciones Básicas</a></li>
+<li class="chapter" data-level="2.11.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2114"><i class="fa fa-check"></i><b>2.11.4</b> Matrices Aleatorias</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html"><i class="fa fa-check"></i><b>3</b> Regresión Lineal Múltiple - I</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec31"><i class="fa fa-check"></i><b>3.1</b> Método de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="3.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec32"><i class="fa fa-check"></i><b>3.2</b> Modelo de Regresión Lineal y Propiedades de los Estimadores</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec321"><i class="fa fa-check"></i><b>3.2.1</b> Función de Regresión</a></li>
+<li class="chapter" data-level="3.2.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec322"><i class="fa fa-check"></i><b>3.2.2</b> Interpretación del Coeficiente de Regresión</a></li>
+<li class="chapter" data-level="3.2.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec323"><i class="fa fa-check"></i><b>3.2.3</b> Suposiciones del Modelo</a></li>
+<li class="chapter" data-level="3.2.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec324"><i class="fa fa-check"></i><b>3.2.4</b> Propiedades de los Estimadores de los Coeficientes de Regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec33"><i class="fa fa-check"></i><b>3.3</b> Estimación y Bondad de Ajuste</a></li>
+<li class="chapter" data-level="3.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec34"><i class="fa fa-check"></i><b>3.4</b> Inferencia Estadística para un Coeficiente Único</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec341"><i class="fa fa-check"></i><b>3.4.1</b> La Prueba <em>t</em></a></li>
+<li class="chapter" data-level="3.4.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec342"><i class="fa fa-check"></i><b>3.4.2</b> Intervalos de Confianza</a></li>
+<li class="chapter" data-level="3.4.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec343"><i class="fa fa-check"></i><b>3.4.3</b> Gráficos de Variables Añadidas</a></li>
+<li class="chapter" data-level="3.4.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec344"><i class="fa fa-check"></i><b>3.4.4</b> Coeficientes de Correlación Parcial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec35"><i class="fa fa-check"></i><b>3.5</b> Algunas Variables Explicativas Especiales</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec351"><i class="fa fa-check"></i><b>3.5.1</b> Variables Binarias</a></li>
+<li class="chapter" data-level="3.5.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec352"><i class="fa fa-check"></i><b>3.5.2</b> Transformación de Variables Explicativas</a></li>
+<li class="chapter" data-level="3.5.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec353"><i class="fa fa-check"></i><b>3.5.3</b> Términos de Interacción</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec36"><i class="fa fa-check"></i><b>3.6</b> Lectura Adicional y Referencias</a></li>
+<li class="chapter" data-level="3.7" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec37"><i class="fa fa-check"></i><b>3.7</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html"><i class="fa fa-check"></i><b>4</b> Regresión Lineal Múltiple - II</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec41"><i class="fa fa-check"></i><b>4.1</b> El Papel de las Variables Binarias</a></li>
+<li class="chapter" data-level="4.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec42"><i class="fa fa-check"></i><b>4.2</b> Inferencia Estadística para Varios Coeficientes</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec421"><i class="fa fa-check"></i><b>4.2.1</b> Conjuntos de Coeficientes de Regresión</a></li>
+<li class="chapter" data-level="4.2.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec422"><i class="fa fa-check"></i><b>4.2.2</b> La Hipótesis Lineal General</a></li>
+<li class="chapter" data-level="4.2.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec423"><i class="fa fa-check"></i><b>4.2.3</b> Estimando y Prediciendo Varios Coeficientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec43"><i class="fa fa-check"></i><b>4.3</b> Modelo ANOVA de Un Factor</a></li>
+<li class="chapter" data-level="4.4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec44"><i class="fa fa-check"></i><b>4.4</b> Combinando Variables Explicativas Categóricas y Continuas</a></li>
+<li class="chapter" data-level="4.5" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec45"><i class="fa fa-check"></i><b>4.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="4.6" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec46"><i class="fa fa-check"></i><b>4.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="4.7" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec47"><i class="fa fa-check"></i><b>4.7</b> Suplemento Técnico - Expresiones Matriciales</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec471"><i class="fa fa-check"></i><b>4.7.1</b> Expresión de Modelos con Variables Categóricas en Forma Matricial</a></li>
+<li class="chapter" data-level="4.7.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec472"><i class="fa fa-check"></i><b>4.7.2</b> Cálculo Recursivo de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="4.7.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec473"><i class="fa fa-check"></i><b>4.7.3</b> Modelo Lineal General</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="C5VarSelect.html"><a href="C5VarSelect.html"><i class="fa fa-check"></i><b>5</b> Selección de Variables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec51"><i class="fa fa-check"></i><b>5.1</b> Un Enfoque Iterativo para el Análisis de Datos y Modelado</a></li>
+<li class="chapter" data-level="5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec52"><i class="fa fa-check"></i><b>5.2</b> Procedimientos Automáticos de Selección de Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec53"><i class="fa fa-check"></i><b>5.3</b> Análisis de Residuales</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec531"><i class="fa fa-check"></i><b>5.3.1</b> Residuales</a></li>
+<li class="chapter" data-level="5.3.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec532"><i class="fa fa-check"></i><b>5.3.2</b> Uso de los Residuales para Identificar Valores Atípicos</a></li>
+<li class="chapter" data-level="5.3.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec533"><i class="fa fa-check"></i><b>5.3.3</b> Uso de los Residuales para Seleccionar Variables Explicativas</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec54"><i class="fa fa-check"></i><b>5.4</b> Puntos Influyentes</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec541"><i class="fa fa-check"></i><b>5.4.1</b> Apalancamiento</a></li>
+<li class="chapter" data-level="5.4.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec542"><i class="fa fa-check"></i><b>5.4.2</b> Distancia de Cook</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec55"><i class="fa fa-check"></i><b>5.5</b> Colinealidad</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec551"><i class="fa fa-check"></i><b>5.5.1</b> ¿Qué es la Colinealidad?</a></li>
+<li class="chapter" data-level="5.5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec552"><i class="fa fa-check"></i><b>5.5.2</b> Factores de Inflación de Varianza</a></li>
+<li class="chapter" data-level="5.5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec553"><i class="fa fa-check"></i><b>5.5.3</b> Colinealidad e Influencia</a></li>
+<li class="chapter" data-level="5.5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec554"><i class="fa fa-check"></i><b>5.5.4</b> Variables Suprensoras</a></li>
+<li class="chapter" data-level="5.5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec555"><i class="fa fa-check"></i><b>5.5.5</b> Variables Ortogonales</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec56"><i class="fa fa-check"></i><b>5.6</b> Criterios de Selección</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec561"><i class="fa fa-check"></i><b>5.6.1</b> Bondad de Ajuste</a></li>
+<li class="chapter" data-level="5.6.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec562"><i class="fa fa-check"></i><b>5.6.2</b> Validación del Modelo</a></li>
+<li class="chapter" data-level="5.6.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec563"><i class="fa fa-check"></i><b>5.6.3</b> Validación Cruzada</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec57"><i class="fa fa-check"></i><b>5.7</b> Heterocedasticidad</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec571"><i class="fa fa-check"></i><b>5.7.1</b> Detección de Heterocedasticidad</a></li>
+<li class="chapter" data-level="5.7.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec572"><i class="fa fa-check"></i><b>5.7.2</b> Errores Estándar Consistentes con Heterocedasticidad</a></li>
+<li class="chapter" data-level="5.7.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec573"><i class="fa fa-check"></i><b>5.7.3</b> Mínimos Cuadrados Ponderados</a></li>
+<li class="chapter" data-level="5.7.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec574"><i class="fa fa-check"></i><b>5.7.4</b> Transformaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec58"><i class="fa fa-check"></i><b>5.8</b> Lectura Adicional y Referencias</a></li>
+<li class="chapter" data-level="5.9" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec59"><i class="fa fa-check"></i><b>5.9</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.10" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec510"><i class="fa fa-check"></i><b>5.10</b> Suplementos Técnicos para el Capítulo 5</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5101"><i class="fa fa-check"></i><b>5.10.1</b> Matriz de Proyección</a></li>
+<li class="chapter" data-level="5.10.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5102"><i class="fa fa-check"></i><b>5.10.2</b> Estadísticas Leave-One-Out</a></li>
+<li class="chapter" data-level="5.10.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5103"><i class="fa fa-check"></i><b>5.10.3</b> Omisión de Variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html"><i class="fa fa-check"></i><b>6</b> Interpretación de Resultados de Regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec61"><i class="fa fa-check"></i><b>6.1</b> Lo que nos dice el proceso de modelado</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec611"><i class="fa fa-check"></i><b>6.1.1</b> Interpretación de efectos individuales</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec612"><i class="fa fa-check"></i><b>6.1.2</b> Otras Interpretaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec62"><i class="fa fa-check"></i><b>6.2</b> La Importancia de la Selección de Variables</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec621"><i class="fa fa-check"></i><b>6.2.1</b> Sobreajuste del Modelo</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec622"><i class="fa fa-check"></i><b>6.2.2</b> Subajuste del Modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec63"><i class="fa fa-check"></i><b>6.3</b> La Importancia de la Recolección de Datos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec631"><i class="fa fa-check"></i><b>6.3.1</b> Error en el Marco Muestral y Selección Adversa</a></li>
+<li class="chapter" data-level="6.3.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec632"><i class="fa fa-check"></i><b>6.3.2</b> Regiones de Muestreo Limitadas</a></li>
+<li class="chapter" data-level="6.3.3" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec633"><i class="fa fa-check"></i><b>6.3.3</b> Variables Dependientes Limitadas, Censura y Truncamiento</a></li>
+<li class="chapter" data-level="6.3.4" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec634"><i class="fa fa-check"></i><b>6.3.4</b> Variables Omitidas y Endógenas</a></li>
+<li class="chapter" data-level="6.3.5" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec635"><i class="fa fa-check"></i><b>6.3.5</b> Datos Faltantes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec64"><i class="fa fa-check"></i><b>6.4</b> Modelos de Datos Faltantes</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec641"><i class="fa fa-check"></i><b>6.4.1</b> Faltante al Azar</a></li>
+<li class="chapter" data-level="6.4.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec642"><i class="fa fa-check"></i><b>6.4.2</b> Datos Faltantes No Ignorables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec65"><i class="fa fa-check"></i><b>6.5</b> Aplicación: Eficiencia en el Costo de los Gestores de Riesgos</a></li>
+<li class="chapter" data-level="6.6" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec66"><i class="fa fa-check"></i><b>6.6</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="6.7" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec67"><i class="fa fa-check"></i><b>6.7</b> Ejercicios</a></li>
+<li class="chapter" data-level="6.8" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec68"><i class="fa fa-check"></i><b>6.8</b> Suplementos Técnicos para el Capítulo 6</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec681"><i class="fa fa-check"></i><b>6.8.1</b> Efectos de la Especificación Incorrecta del Modelo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="chap-7.html"><a href="chap-7.html"><i class="fa fa-check"></i><b>7</b> Chap 7</a></li>
+<li class="chapter" data-level="8" data-path="chap-8.html"><a href="chap-8.html"><i class="fa fa-check"></i><b>8</b> Chap 8</a></li>
+<li class="chapter" data-level="9" data-path="chap-9.html"><a href="chap-9.html"><i class="fa fa-check"></i><b>9</b> Chap 9</a></li>
+<li class="chapter" data-level="10" data-path="chap-10.html"><a href="chap-10.html"><i class="fa fa-check"></i><b>10</b> Chap 10</a></li>
+<li class="chapter" data-level="11" data-path="C11Binary.html"><a href="C11Binary.html"><i class="fa fa-check"></i><b>11</b> Variables Dependientes Categóricas</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec111"><i class="fa fa-check"></i><b>11.1</b> Variables Dependientes Binarias</a></li>
+<li class="chapter" data-level="11.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec112"><i class="fa fa-check"></i><b>11.2</b> Modelos de Regresión Logística y Probit</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1121"><i class="fa fa-check"></i><b>11.2.1</b> Uso de Funciones No Lineales de Variables Explicativas</a></li>
+<li class="chapter" data-level="11.2.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1122"><i class="fa fa-check"></i><b>11.2.2</b> Interpretación del Umbral</a></li>
+<li class="chapter" data-level="11.2.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1123"><i class="fa fa-check"></i><b>11.2.3</b> Interpretación de Utilidad Aleatoria</a></li>
+<li class="chapter" data-level="11.2.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1124"><i class="fa fa-check"></i><b>11.2.4</b> Regresión Logística</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec113"><i class="fa fa-check"></i><b>11.3</b> Inferencia para Modelos de Regresión Logística y Probit</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="C11Binary.html"><a href="C11Binary.html#estimación-de-parámetros"><i class="fa fa-check"></i><b>11.3.1</b> Estimación de Parámetros</a></li>
+<li class="chapter" data-level="11.3.2" data-path="C11Binary.html"><a href="C11Binary.html#inferencia-adicional"><i class="fa fa-check"></i><b>11.3.2</b> Inferencia Adicional</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec114"><i class="fa fa-check"></i><b>11.4</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="11.5" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec115"><i class="fa fa-check"></i><b>11.5</b> Variables Dependientes Nominales</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1151"><i class="fa fa-check"></i><b>11.5.1</b> Logit Generalizado</a></li>
+<li class="chapter" data-level="11.5.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1152"><i class="fa fa-check"></i><b>11.5.2</b> Logit Multinomial</a></li>
+<li class="chapter" data-level="11.5.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1153"><i class="fa fa-check"></i><b>11.5.3</b> Logit Anidado</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec116"><i class="fa fa-check"></i><b>11.6</b> Variables Dependientes Ordinales</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="C11Binary.html"><a href="C11Binary.html#logit-acumulativo"><i class="fa fa-check"></i><b>11.6.1</b> Logit Acumulativo</a></li>
+<li class="chapter" data-level="11.6.2" data-path="C11Binary.html"><a href="C11Binary.html#probit-acumulativo"><i class="fa fa-check"></i><b>11.6.2</b> Probit Acumulativo</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec117"><i class="fa fa-check"></i><b>11.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="11.8" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec118"><i class="fa fa-check"></i><b>11.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="11.9" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec119"><i class="fa fa-check"></i><b>11.9</b> Suplementos Técnicos - Inferencia Basada en Verosimilitud</a>
+<ul>
+<li class="chapter" data-level="11.9.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1191"><i class="fa fa-check"></i><b>11.9.1</b> Propiedades de las Funciones de Verosimilitud</a></li>
+<li class="chapter" data-level="11.9.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1192"><i class="fa fa-check"></i><b>11.9.2</b> Estimadores de Máxima Verosimilitud</a></li>
+<li class="chapter" data-level="11.9.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1193"><i class="fa fa-check"></i><b>11.9.3</b> Pruebas de Hipótesis</a></li>
+<li class="chapter" data-level="11.9.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1194"><i class="fa fa-check"></i><b>11.9.4</b> Criterios de Información</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="C12Count.html"><a href="C12Count.html"><i class="fa fa-check"></i><b>12</b> Variables Dependientes de Conteo</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec121"><i class="fa fa-check"></i><b>12.1</b> Regresión de Poisson</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec1211"><i class="fa fa-check"></i><b>12.1.1</b> Distribución de Poisson</a></li>
+<li class="chapter" data-level="12.1.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec1212"><i class="fa fa-check"></i><b>12.1.2</b> Modelo de Regresión</a></li>
+<li class="chapter" data-level="12.1.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec1213"><i class="fa fa-check"></i><b>12.1.3</b> Estimación</a></li>
+<li class="chapter" data-level="12.1.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec1214"><i class="fa fa-check"></i><b>12.1.4</b> Inferencia Adicional</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec122"><i class="fa fa-check"></i><b>12.2</b> Aplicación: Seguro de Automóviles en Singapur</a></li>
+<li class="chapter" data-level="12.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec123"><i class="fa fa-check"></i><b>12.3</b> Sobre dispersión y Modelos Binomiales Negativos</a></li>
+<li class="chapter" data-level="12.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec124"><i class="fa fa-check"></i><b>12.4</b> Otros Modelos de Conteo</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="C12Count.html"><a href="C12Count.html#modelos-inflados-en-ceros"><i class="fa fa-check"></i><b>12.4.1</b> Modelos Inflados en Ceros</a></li>
+<li class="chapter" data-level="12.4.2" data-path="C12Count.html"><a href="C12Count.html#modelos-hurdle"><i class="fa fa-check"></i><b>12.4.2</b> Modelos Hurdle</a></li>
+<li class="chapter" data-level="12.4.3" data-path="C12Count.html"><a href="C12Count.html#modelos-de-heterogeneidad"><i class="fa fa-check"></i><b>12.4.3</b> Modelos de Heterogeneidad</a></li>
+<li class="chapter" data-level="12.4.4" data-path="C12Count.html"><a href="C12Count.html#modelos-de-clases-latentes"><i class="fa fa-check"></i><b>12.4.4</b> Modelos de Clases Latentes</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="C12Count.html"><a href="C12Count.html#S:Sec125"><i class="fa fa-check"></i><b>12.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="12.6" data-path="C12Count.html"><a href="C12Count.html#S:Sec126"><i class="fa fa-check"></i><b>12.6</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="C13GLM.html"><a href="C13GLM.html"><i class="fa fa-check"></i><b>13</b> Modelos Lineales Generalizados</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec131"><i class="fa fa-check"></i><b>13.1</b> Introducción</a></li>
+<li class="chapter" data-level="13.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec132"><i class="fa fa-check"></i><b>13.2</b> Modelo GLM</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1321"><i class="fa fa-check"></i><b>13.2.1</b> Familia Exponencial Lineal de Distribuciones</a></li>
+<li class="chapter" data-level="13.2.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1322"><i class="fa fa-check"></i><b>13.2.2</b> Funciones de Enlace</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec133"><i class="fa fa-check"></i><b>13.3</b> Estimación</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1331"><i class="fa fa-check"></i><b>13.3.1</b> Estimación de Máxima Verosimilitud para Enlaces Canónicos</a></li>
+<li class="chapter" data-level="13.3.2" data-path="C13GLM.html"><a href="C13GLM.html#sobredispersión"><i class="fa fa-check"></i><b>13.3.2</b> Sobredispersión</a></li>
+<li class="chapter" data-level="13.3.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1333"><i class="fa fa-check"></i><b>13.3.3</b> Estadísticas de Bondad de Ajuste</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec134"><i class="fa fa-check"></i><b>13.4</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="13.5" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec135"><i class="fa fa-check"></i><b>13.5</b> Residuales</a></li>
+<li class="chapter" data-level="13.6" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec136"><i class="fa fa-check"></i><b>13.6</b> Distribución de Tweedie</a></li>
+<li class="chapter" data-level="13.7" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec137"><i class="fa fa-check"></i><b>13.7</b> Lecturas adicionales y referencias</a></li>
+<li class="chapter" data-level="13.8" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec138"><i class="fa fa-check"></i><b>13.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="13.9" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec139"><i class="fa fa-check"></i><b>13.9</b> Suplementos Técnicos - Familia Exponencial</a>
+<ul>
+<li class="chapter" data-level="13.9.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1391"><i class="fa fa-check"></i><b>13.9.1</b> Familia Exponencial Lineal de Distribuciones</a></li>
+<li class="chapter" data-level="13.9.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1392"><i class="fa fa-check"></i><b>13.9.2</b> Momentos</a></li>
+<li class="chapter" data-level="13.9.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1393"><i class="fa fa-check"></i><b>13.9.3</b> Estimación de Máxima Verosimilitud para Enlaces Generales</a></li>
+<li class="chapter" data-level="13.9.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1394"><i class="fa fa-check"></i><b>13.9.4</b> Mínimos Cuadrados Reponderados Iterativos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="apéndices.html"><a href="apéndices.html"><i class="fa fa-check"></i><b>14</b> Apéndices</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a1.-inferencia-estadística-básica"><i class="fa fa-check"></i>Apéndice A1. Inferencia Estadística Básica</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribuciones-de-funciones-de-variables-aleatorias"><i class="fa fa-check"></i>Distribuciones de Funciones de Variables Aleatorias</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#estimación-y-predicción"><i class="fa fa-check"></i>Estimación y Predicción</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#pruebas-de-hipótesis"><i class="fa fa-check"></i>Pruebas de Hipótesis</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a2.-álgebra-de-matrices"><i class="fa fa-check"></i>Apéndice A2. Álgebra de Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#definiciones-básicas"><i class="fa fa-check"></i>Definiciones Básicas</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#revisión-de-operaciones-básicas"><i class="fa fa-check"></i>Revisión de Operaciones Básicas</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#definiciones-adicionales"><i class="fa fa-check"></i>Definiciones Adicionales</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a3.-tablas-de-probabilidad"><i class="fa fa-check"></i>Apéndice A3. Tablas de Probabilidad</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-normal"><i class="fa fa-check"></i>Distribución Normal</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-chi-cuadrado"><i class="fa fa-check"></i>Distribución Chi-Cuadrado</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-t"><i class="fa fa-check"></i>Distribución <em>t</em></a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-f"><i class="fa fa-check"></i>Distribución <em>F</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Modelado de Regresión con Aplicaciones Actuariales y Financieras</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="C13GLM" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Modelos Lineales Generalizados<a href="C13GLM.html#C13GLM" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Vista Previa del Capítulo</em>. Este capítulo describe un marco unificador para el modelo lineal de la Parte I y los modelos binarios y de conteo en los Capítulos 11 y 12. Los modelos lineales generalizados, conocidos comúnmente por el acrónimo GLM, representan una clase importante de modelos de regresión no lineal que han encontrado un uso extensivo en la práctica actuarial. Este marco unificador no solo abarca muchos de los modelos que hemos visto, sino que también proporciona una plataforma para nuevos modelos, incluyendo las regresiones gamma para datos con colas gruesas y las distribuciones de “Tweedie” para datos de dos partes.</p>
+<div id="S:Sec131" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> Introducción<a href="C13GLM.html#S:Sec131" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Existen muchas maneras de extender o generalizar el modelo de regresión lineal. Este capítulo introduce una extensión que es tan utilizada que se conoce como <em>el</em> “modelo lineal generalizado”, o por el acrónimo GLM.</p>
+<p>Los modelos lineales generalizados incluyen regresiones lineales, logísticas y de Poisson, todas como casos especiales. Una característica común de estos modelos es que en cada caso podemos expresar la media de la respuesta como una función de combinaciones lineales de variables explicativas. En el contexto de los GLM, es habitual usar <span class="math inline">\(\mu_i = \mathrm{E}~y_i\)</span> para la media de la respuesta y llamar <span class="math inline">\(\eta_i = \mathbf{x}_i^{\mathbf{\prime}} \boldsymbol \beta\)</span> el <em>componente sistemático</em> del modelo. Hemos visto que podemos expresar el componente sistemático como:</p>
+<ul>
+<li><span class="math inline">\(\mathbf{x}_i^{\mathbf{\prime}}\boldsymbol \beta = \mu_i\)</span>, para la regresión lineal (normal),</li>
+<li><span class="math inline">\(\mathbf{x}_i^{\mathbf{\prime}} \boldsymbol \beta = \exp(\mu_i)/(1+\exp(\mu_i))\)</span>, para la regresión logística y</li>
+<li><span class="math inline">\(\mathbf{x}_i^{\mathbf{\prime}} \boldsymbol \beta = \ln (\mu_i)\)</span>, para la regresión de Poisson.</li>
+</ul>
+<p>Para los GLM, el componente sistemático está relacionado con la media a través de la expresión
+<span class="math display" id="eq:eq131">\[\begin{equation}
+\eta _i = \mathbf{x}_i^{\mathbf{\prime}} \boldsymbol \beta =
+\mathrm{g}\left( \mu _i\right).
+\tag{13.1}
+\end{equation}\]</span>
+Aquí, g(.) es conocida y se llama <em>función de enlace</em>. La inversa de la función de enlace, <span class="math inline">\(\mu _i = \mathrm{g}^{-1}( \mathbf{x}_i^{\mathbf{\prime}} \boldsymbol \beta)\)</span>, es la función de la media.</p>
+<p>La segunda característica común implica la distribución de las variables dependientes. En la Sección <a href="C13GLM.html#S:Sec132">13.2</a>, introduciremos la <em>familia exponencial lineal de distribuciones</em>, una extensión de la distribución exponencial. Esta familia incluye la normal, Bernoulli y Poisson como casos especiales.</p>
+<p>La tercera característica común de los modelos GLM es la robustez de la inferencia con respecto a la elección de distribuciones. Aunque la regresión lineal está motivada por la teoría de la distribución normal, hemos visto que las respuestas no necesitan estar distribuidas normalmente para que los procedimientos de inferencia estadística sean efectivos. Las suposiciones de muestreo de la Sección 3.2 se centran en:</p>
+<ul>
+<li>la forma de la función de la media (suposición F1),</li>
+<li>variables explicativas no estocásticas o exógenas (F2),</li>
+<li>varianza constante (F3) y</li>
+<li>independencia entre observaciones (F4).</li>
+</ul>
+<p>Los modelos GLM mantienen las suposiciones F2 y F4 y generalizan F1 a través de la función de enlace. La elección de diferentes distribuciones nos permite relajar F3 especificando la varianza como una función de la media, escrita como <span class="math inline">\(\mathrm{Var~}y_i = \phi v(\mu_i)\)</span>. <a href="C13GLM.html#Tab131">Tabla 13.1</a> muestra cómo la varianza depende de la media para diferentes distribuciones. Como veremos al considerar la estimación (Sección <a href="C13GLM.html#S:Sec133">13.3</a>), es la elección de la función de varianza la que impulsa las propiedades más importantes de la inferencia, no la elección de la distribución.</p>
+<p><a id=Tab131></a></p>
+<p><span id="Tab131">Tabla 13.1</span>. <strong>Funciones de Varianza para Distribuciones Seleccionadas</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{lc}
+\hline
+\text{Distribución} &amp; \text{Función de Varianza }v(\mu) \\
+\hline
+\text{Normal} &amp; 1 \\
+\text{Bernoulli} &amp; \mu ( 1- \mu ) \\
+\text{Poisson} &amp; \mu  \\
+\text{Gamma} &amp; \mu ^2  \\
+\text{Gaussiana Inversa} &amp; \mu ^3  \\
+\hline
+\end{array}
+}
+\]</span></p>
+<p>Al considerar la regresión en el contexto de los GLM, podremos manejar variables dependientes que sean aproximadamente normales, binarias o que representen conteos, todo dentro de un único marco. Esto facilitará nuestra comprensión de la regresión al permitirnos ver el “panorama general” y no preocuparnos tanto por los detalles. Además, la generalidad de los GLM nos permitirá introducir nuevas aplicaciones, como las regresiones gamma, que son útiles para distribuciones con colas gruesas, y las llamadas distribuciones “Tweedie” para datos de dos partes. Los datos de dos partes son un tema que se aborda en el Capítulo 16, donde hay una masa en cero y un componente continuo. En el caso de los datos de reclamaciones de seguros, el cero representa la ausencia de una reclamación y el componente continuo representa el monto de una reclamación.</p>
+<p>Este capítulo describe los procedimientos de estimación para calibrar los modelos GLM, pruebas de significancia y estadísticas de bondad de ajuste para documentar la utilidad del modelo, y residuos para evaluar la robustez del ajuste del modelo. Veremos que el trabajo que realizamos anteriormente en modelos de regresión lineal, binaria y de conteo proporciona las bases para las herramientas necesarias para el modelo GLM. De hecho, muchas de estas herramientas y conceptos son ligeras variaciones de lo que ya hemos desarrollado y podremos construir sobre estas bases.</p>
+</div>
+<div id="S:Sec132" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> Modelo GLM<a href="C13GLM.html#S:Sec132" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para especificar un GLM, el analista elige una distribución subyacente de la respuesta, tema de la Sección <a href="C13GLM.html#S:Sec1321">13.2.1</a>, y una función que vincula la media de la respuesta con las covariables, tema de la Sección <a href="C13GLM.html#S:Sec1322">13.2.2</a>.</p>
+<div id="S:Sec1321" class="section level3 hasAnchor" number="13.2.1">
+<h3><span class="header-section-number">13.2.1</span> Familia Exponencial Lineal de Distribuciones<a href="C13GLM.html#S:Sec1321" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="blackbox">
+<p><em>Definición</em>. La distribución de la <em>familia exponencial lineal</em> es
+<span class="math display" id="eq:eq132">\[\begin{equation}
+\mathrm{f}(y; \theta, \phi) = \exp \left( \frac{y\theta - b(\theta)}{\phi} + S(y, \phi) \right).
+\tag{13.2}
+\end{equation}\]</span>
+Aquí, <span class="math inline">\(y\)</span> es una variable dependiente y <span class="math inline">\(\theta\)</span> es el parámetro de interés. La cantidad <span class="math inline">\(\phi\)</span> es un parámetro de escala. El término <span class="math inline">\(b(\theta)\)</span> depende solo del parámetro <span class="math inline">\(\theta\)</span>, no de la variable dependiente. El estadístico <span class="math inline">\(S(y, \phi)\)</span> es una función de la variable dependiente y el parámetro de escala, pero no del parámetro <span class="math inline">\(\theta\)</span>.</p>
+</div>
+<p>La variable dependiente <span class="math inline">\(y\)</span> puede ser discreta, continua o una mezcla. Así, <span class="math inline">\(\mathrm{f}(.)\)</span> puede interpretarse como una función de densidad o de masa, dependiendo de la aplicación. <a href="C13GLM.html#Tab138">Tabla 13.8</a> proporciona varios ejemplos, incluyendo las distribuciones normal, binomial y de Poisson. Para ilustrar, consideremos una distribución normal con una función de densidad de probabilidad de la forma:
+<span class="math display">\[\begin{eqnarray*}
+\mathrm{f}(y; \mu, \sigma^2) &amp;=&amp; \frac{1}{\sigma \sqrt{2\pi}} \exp\left(- \frac{(y-\mu)^2}{2\sigma^2}\right) \\
+&amp;=&amp; \exp\left(\frac{(y\mu - \mu^2/2)}{\sigma^2} - \frac{y^2}{2\sigma^2} - \frac{1}{2} \ln(2\pi \sigma^2)\right).
+\end{eqnarray*}\]</span>
+Con las elecciones <span class="math inline">\(\theta = \mu\)</span>, <span class="math inline">\(\phi = \sigma^2\)</span>, <span class="math inline">\(b(\theta) = \theta^2/2\)</span> y <span class="math inline">\(S(y, \phi) = -y^2/(2\phi) - \ln(2\pi\phi)/2\)</span>, vemos que la función de densidad normal puede expresarse como en la ecuación <a href="C13GLM.html#eq:eq132">(13.2)</a>.</p>
+<p>Para la distribución en la ecuación <a href="C13GLM.html#eq:eq132">(13.2)</a>, algunos cálculos sencillos muestran que:</p>
+<ul>
+<li><span class="math inline">\(\mathrm{E~}y = b^{\prime}(\theta)\)</span> y</li>
+<li><span class="math inline">\(\mathrm{Var~}y = \phi b^{\prime\prime}(\theta)\)</span>.</li>
+</ul>
+<p>Para referencia, estos cálculos aparecen en la Sección <a href="C13GLM.html#S:Sec1392">13.9.2</a>. Para ilustrar, en el contexto del ejemplo de la distribución normal mencionado arriba, es fácil verificar que <span class="math inline">\(\mathrm{E~}y = b^{\prime}(\theta) = \theta = \mu\)</span> y <span class="math inline">\(\mathrm{Var~} y = \sigma^2 b^{\prime\prime}(\theta) = \sigma^2\)</span>, como se esperaba.</p>
+<p>En situaciones de modelado de regresión, la distribución de <span class="math inline">\(y_i\)</span> varía por observación a través del subíndice “<span class="math inline">\(i\)</span>”. Es habitual dejar que la familia de distribuciones permanezca constante, pero permitir que los parámetros varíen por observación utilizando la notación <span class="math inline">\(\theta_i\)</span> y <span class="math inline">\(\phi_i\)</span>. Para nuestras aplicaciones, la variación del parámetro de escala se debe a factores de peso conocidos. Específicamente, cuando el parámetro de escala varía por observación, se sigue <span class="math inline">\(\phi_i = \phi / w_i\)</span>, es decir, una constante dividida por un peso conocido <span class="math inline">\(w_i\)</span>. Con la relación <span class="math inline">\(\mathrm{Var~}y_i = \phi_i b^{\prime\prime}(\theta_i) = \phi b^{\prime\prime}(\theta_i) / w_i\)</span>, tenemos que un peso mayor implica una varianza menor, todo lo demás constante.</p>
+</div>
+<div id="S:Sec1322" class="section level3 hasAnchor" number="13.2.2">
+<h3><span class="header-section-number">13.2.2</span> Funciones de Enlace<a href="C13GLM.html#S:Sec1322" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En situaciones de regresión, deseamos entender el impacto de <span class="math inline">\(\eta_i = \mathbf{x}_i^{\mathbf{\prime}} \boldsymbol \beta\)</span>, el componente sistemático. Como vimos en la subsección anterior, podemos expresar la media de <span class="math inline">\(y_i\)</span> como <span class="math inline">\(\mathrm{E~}y_i = \mu_i = b^{\prime}(\theta_i)\)</span>. La ecuación <a href="C13GLM.html#eq:eq131">(13.1)</a> sirve para “enlazar” el componente sistemático con <span class="math inline">\(\mu_i\)</span> y, por lo tanto, con el parámetro <span class="math inline">\(\theta_i\)</span>. Es posible usar la función identidad para g(.) de modo que <span class="math inline">\(\mu_i = b^{\prime}(\theta_i)\)</span>. De hecho, este es el caso habitual en la regresión lineal. Sin embargo, las combinaciones lineales de variables explicativas, <span class="math inline">\(\mathbf{x}_i^{\mathbf{\prime}} \boldsymbol \beta\)</span>, pueden variar entre negativo e infinito positivo, mientras que las medias a menudo están restringidas a un rango más pequeño. Por ejemplo, las medias de Poisson varían entre cero e infinito. La función de enlace sirve para mapear el dominio de la función de la media en toda la recta real.</p>
+<hr />
+<p><strong>Caso Especial: Enlaces para la distribución Bernoulli</strong>.
+Las medias de Bernoulli son probabilidades y, por lo tanto, varían entre cero y uno. Para este caso, es útil elegir una función de enlace que mapee el intervalo unitario (0,1) en toda la recta real. A continuación se presentan tres ejemplos importantes de funciones de enlace para la distribución Bernoulli:</p>
+<ul>
+<li>Logit: <span class="math inline">\(g(\mu )=\mathrm{logit}(\mu )=\ln (\mu /(1-\mu ))\)</span> .</li>
+<li>Probit: <span class="math inline">\(g(\mu )=\Phi ^{-1}(\mu )\)</span>, donde <span class="math inline">\(\Phi ^{-1}\)</span> es la inversa de la función de distribución normal estándar.</li>
+<li>Complementario log-log: $g()=( -(1-)) $.</li>
+</ul>
+<hr />
+<p>Esta ilustración demuestra que puede haber varias funciones de enlace que sean adecuadas para una distribución particular. Para ayudar en la selección, un caso intuitivamente atractivo ocurre cuando el componente sistemático es igual al parámetro de interés ($=$). Para ver esto, recordemos primero que <span class="math inline">\(\eta =g(\mu )\)</span> y <span class="math inline">\(\mu =b^{\prime }(\theta )\)</span>, omitiendo los subíndices “<span class="math inline">\(i\)</span>” por el momento. Entonces, es fácil ver que si <span class="math inline">\(g^{-1}=b^{\prime }\)</span>, entonces $=g(b^{}())=$. La elección de <span class="math inline">\(g\)</span> que es la inversa de <span class="math inline">\(b^{\prime }(\theta )\)</span> se llama el <em>enlace canónico</em>.</p>
+<p><a href="C13GLM.html#Tab132">Tabla 13.2</a> muestra la función de la media y el enlace canónico correspondiente para varias distribuciones importantes.</p>
+<p><a id=Tab132></a></p>
+<p><span id="Tab132">Tabla 13.2</span>. <strong>Funciones de Media y Enlaces Canónicos para Distribuciones Seleccionadas</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{lcc}
+\hline
+\text{Distribución} &amp; \text{Función de media } b^{\prime }(\theta )  &amp;
+\text{Enlace canónico }g(\mu )  \\ \hline
+\text{Normal} &amp; \theta &amp;  \mu  \\
+\text{Bernoulli} &amp;  e^{\theta}/(1+e^{\theta} )
+&amp; \mathrm{logit}(\mu ) \\
+\text{Poisson} &amp;  e^{\theta } &amp; \ln  \mu  \\
+\text{Gamma} &amp; -1/\theta &amp; -1/\mu  \\
+\text{Gaussiana Inversa} &amp; (-2 \theta )^{-1/2}  &amp; -1 /(2 \mu^2)  \\
+\hline
+\end{array}
+}
+\]</span></p>
+<p>Las funciones de enlace relacionan la media con el componente sistemático y con los parámetros de la regresión. Dado que los parámetros de la regresión son desconocidos, es común especificar los enlaces solo hasta la escala. Por ejemplo, es común especificar el enlace canónico para la gaussiana inversa como <span class="math inline">\(1 /\mu^2\)</span> (en lugar de $-1 /(2 ^2) $). Si es necesario, siempre se puede recuperar la escala al estimar los coeficientes de regresión desconocidos.</p>
+<hr />
+<p><strong>Ejemplo: Clasificación para la Fijación de Tarifas</strong>. El proceso de agrupar riesgos con características similares se conoce como <em>clasificación de riesgos</em>. <em>La fijación de tarifas</em> es el arte de establecer primas, o tarifas, basadas en la experiencia de pérdidas y las exposiciones de las clases de riesgo. Por ejemplo, Mildenhall (1999) consideró 8,942 pérdidas por colisión de pólizas de seguros de automóviles de uso privado en el Reino Unido (UK). Los datos fueron obtenidos de Nelder y McCullagh (1989, Sección 8.4.1) pero se originaron en Baxter et al. (1980). Un plan de tarifas típico para automóviles personales se basa en las características del conductor y del vehículo. Las características del conductor pueden incluir la edad, género, estado civil, historial (accidentes e infracciones) y descuento por buen estudiante. Las características del vehículo pueden incluir el tipo y año del modelo del vehículo, propósito (negocios/escuela o placer), área de estacionamiento, entre otras. Podemos representar el componente sistemático como:</p>
+<p><span class="math display">\[
+\eta_{ij} = \beta_0 + \alpha_i + \tau_j,
+\]</span></p>
+<p>donde <span class="math inline">\(\alpha_i\)</span> representa el efecto de la <span class="math inline">\(i\)</span>-ésima categoría de clasificación del conductor y <span class="math inline">\(\tau_j\)</span> el efecto del <span class="math inline">\(j\)</span>-ésimo tipo de vehículo. <a href="C13GLM.html#Tab133">Tabla 13.3</a> muestra los datos de Mildenhall para ocho tipos de conductores (grupos de edad) y cuatro clases de vehículos (uso del vehículo). La severidad promedio está en libras esterlinas ajustadas por inflación.</p>
+<p>En la terminología de GLM, un <em>plan tarifario aditivo</em> se basa en la función de enlace identidad, mientras que un <em>plan multiplicativo</em> se basa en una función de enlace logarítmica. Específicamente, si usamos <span class="math inline">\(\eta_{ij} = \ln (\mu_{ij})\)</span>, entonces podemos escribir la media como:</p>
+<p><span class="math display" id="eq:eq133">\[\begin{equation}
+\mu_{ij} = \exp(\beta_0 + \alpha_i + \tau_j) = B \times A_i \times T_j,
+\tag{13.3}
+\end{equation}\]</span></p>
+<p>donde <span class="math inline">\(B=\exp(\beta_0)\)</span> es una constante de escala, <span class="math inline">\(A_i=\exp(\alpha_i)\)</span> representa los efectos del conductor y <span class="math inline">\(T_j=\exp(\tau_j)\)</span> representa los efectos del vehículo.</p>
+<p><a id=Tab133></a></p>
+<p><span id="Tab133">Tabla 13.3</span>. <strong>Datos de Colisiones en Automóviles Privados en el Reino Unido</strong></p>
+<p><span class="math display">\[
+\scriptsize{
+\begin{array}{lcrr|llcrr}
+\hline
+\text{Edad} &amp; \text{Uso del} &amp; \text{Severidad} &amp; \text{Número de} &amp;~~~ &amp; \text{Edad} &amp; \text{Uso del} &amp; \text{Severidad} &amp; \text{Número de } \\
+&amp; \text{ Vehículo} &amp; \text{Promedio} &amp; \text{Reclamaciones} &amp;~~~ &amp; \text{Edad} &amp; \text{Vehículo} &amp; \text{Promedio} &amp; \text{Reclamaciones} \\
+\hline
+17-20 &amp; \text{Recreativo} &amp; 250.48 &amp; 21 &amp; &amp; 35-39 &amp; \text{Recreativo} &amp; 153.62 &amp; 151 \\
+17-20 &amp; \text{ConducirCorto} &amp; 274.78 &amp; 40 &amp; &amp; 35-39 &amp; \text{ConducirCorto} &amp; 201.67 &amp; 479 \\
+17-20 &amp; \text{ConducirLargo} &amp; 244.52 &amp; 23 &amp; &amp; 35-39 &amp; \text{ConducirLargo} &amp; 238.21 &amp; 381 \\
+17-20 &amp; \text{Negocios} &amp; 797.80 &amp; 5 &amp; &amp; 35-39 &amp; \text{Negocios} &amp; 256.21 &amp; 166 \\
+\hline
+21-24 &amp; \text{Recreativo} &amp; 213.71 &amp; 63 &amp; &amp; 40-49 &amp; \text{Recreativo} &amp; 208.59 &amp; 245 \\
+21-24 &amp; \text{ConducirCorto} &amp; 298.60 &amp; 171 &amp; &amp; 40-49 &amp; \text{ConducirCorto} &amp; 202.80 &amp; 970 \\
+21-24 &amp; \text{ConducirLargo} &amp; 298.13 &amp; 92 &amp; &amp; 40-49 &amp; \text{ConducirLargo} &amp; 236.06 &amp; 719 \\
+21-24 &amp; \text{Negocios} &amp; 362.23 &amp; 44 &amp; &amp; 40-49 &amp; \text{Negocios} &amp; 352.49 &amp; 304 \\
+\hline
+25-29 &amp; \text{Recreativo} &amp; 250.57 &amp; 140 &amp; &amp; 50-59 &amp; \text{Recreativo} &amp; 207.57 &amp; 266 \\
+25-29 &amp; \text{ConducirCorto} &amp; 248.56 &amp; 343 &amp; &amp; 50-59 &amp; \text{ConducirCorto} &amp; 202.67 &amp; 859 \\
+25-29 &amp; \text{ConducirLargo} &amp; 297.90 &amp; 318 &amp; &amp; 50-59 &amp; \text{ConducirLargo} &amp; 253.63 &amp; 504 \\
+25-29 &amp; \text{Negocios} &amp; 342.31 &amp; 129 &amp; &amp; 50-59 &amp; \text{Negocios} &amp; 340.56 &amp; 162 \\
+\hline
+30-34 &amp; \text{Recreativo} &amp; 229.09 &amp; 123 &amp; &amp; 60+ &amp; \text{Recreativo} &amp; 192.00 &amp; 260 \\
+30-34 &amp; \text{ConducirCorto} &amp; 228.48 &amp; 448 &amp; &amp; 60+ &amp; \text{ConducirCorto} &amp; 196.33 &amp; 578 \\
+30-34 &amp; \text{ConducirLargo} &amp; 293.87 &amp; 361 &amp; &amp; 60+ &amp; \text{ConducirLargo} &amp; 259.79 &amp; 312 \\
+30-34 &amp; \text{Negocios} &amp; 367.46 &amp; 169 &amp; &amp; 60+ &amp; \text{Negocios} &amp; 342.58 &amp; 96 \\
+\hline
+\end{array}
+}
+\]</span></p>
+<p><em>Fuente: Mildenhall (1999). “ConducirCorto” significa conducir al trabajo menos de 10 millas. “ConducirLargo” significa conducir al trabajo más de 10 millas.</em></p>
+<h5 style="text-align: center;">
+<a id="displayCode.Tab133.Hide" href="javascript:togglecode('toggleCode.Tab133.Hide','displayCode.Tab133.Hide');"><i><strong>Código en R para Generar la Tabla 13.3</strong></i></a>
+</h5>
+<div id="toggleCode.Tab133.Hide" style="display: none">
+
+
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="C13GLM.html#cb83-1" tabindex="-1"></a>AutoDat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;../../CSVData/AutoCollision1.csv&quot;</span>, <span class="at">quote=</span><span class="st">&quot;&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb83-2"><a href="C13GLM.html#cb83-2" tabindex="-1"></a>AutoDat1 <span class="ot">&lt;-</span> AutoDat</span>
+<span id="cb83-3"><a href="C13GLM.html#cb83-3" tabindex="-1"></a>AutoDat1[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;\226&quot;</span>, <span class="st">&quot;-&quot;</span>, AutoDat1[,<span class="dv">1</span>] , <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb83-4"><a href="C13GLM.html#cb83-4" tabindex="-1"></a>tableout <span class="ot">&lt;-</span> <span class="fu">cbind</span>(AutoDat1[<span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>,],AutoDat1[<span class="dv">17</span><span class="sc">:</span><span class="dv">32</span>,]) </span>
+<span id="cb83-5"><a href="C13GLM.html#cb83-5" tabindex="-1"></a></span>
+<span id="cb83-6"><a href="C13GLM.html#cb83-6" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableout, </span>
+<span id="cb83-7"><a href="C13GLM.html#cb83-7" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Datos de Colisiones en Automóviles Privados en el Reino Unido&#39;</span>, </span>
+<span id="cb83-8"><a href="C13GLM.html#cb83-8" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;c&#39;</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">BorderRight =</span> <span class="dv">4</span>,</span>
+<span id="cb83-9"><a href="C13GLM.html#cb83-9" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth8 )  </span></code></pre></div>
+</div>
+</div>
+<div id="S:Sec133" class="section level2 hasAnchor" number="13.3">
+<h2><span class="header-section-number">13.3</span> Estimación<a href="C13GLM.html#S:Sec133" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Esta sección presenta la estimación por máxima verosimilitud, la forma habitual de estimación. Para proporcionar una intuición, nos enfocamos en el caso más simple de enlaces canónicos. Los resultados para enlaces más generales aparecen en la Sección <a href="C13GLM.html#S:Sec1393">13.9.3</a>.</p>
+<div id="S:Sec1331" class="section level3 hasAnchor" number="13.3.1">
+<h3><span class="header-section-number">13.3.1</span> Estimación de Máxima Verosimilitud para Enlaces Canónicos<a href="C13GLM.html#S:Sec1331" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A partir de la ecuación <a href="C13GLM.html#eq:eq132">(13.2)</a> y la independencia entre las observaciones, la función de log-verosimilitud es:</p>
+<p><span class="math display" id="eq:eq134">\[\begin{equation}
+\ln \mathrm{f}( \mathbf{y}) =\sum_{i=1}^n \left\{
+\frac{y_i\theta_i-b(\theta_i)}{\phi _i}+S( y_i,\phi _i ) \right\} .
+\tag{13.4}
+\end{equation}\]</span></p>
+<p>Recuerda que para enlaces canónicos, tenemos la igualdad entre el parámetro de la distribución y el componente sistemático, de modo que <span class="math inline">\(\theta_i=\eta _i=\mathbf{x}_i^{\mathbf{\prime }}\boldsymbol \beta\)</span>. Así, con <span class="math inline">\(\phi _i=\phi /w_i\)</span>, la función de log-verosimilitud es:</p>
+<p><span class="math display" id="eq:eq135">\[\begin{equation}
+L (\boldsymbol \beta, \phi ) = \ln \mathrm{f}( \mathbf{y}) =\sum_{i=1}^n \left\{ \frac{y_i\mathbf{x}_i^{\mathbf{\prime }}\boldsymbol \beta-b(\mathbf{x}_i^{\mathbf{\prime }} \boldsymbol \beta)}{\phi / w_i}+S( y_i,\phi / w_i) \right\} .
+\tag{13.5}
+\end{equation}\]</span></p>
+<p>Al tomar la derivada parcial con respecto a <span class="math inline">\(\boldsymbol \beta\)</span>, obtenemos la función de puntuación:</p>
+<p><span class="math display" id="eq:eq136">\[\begin{equation}
+\frac{\partial }{\partial \boldsymbol \beta} L( \boldsymbol \beta, \phi ) = \frac{1}{\phi} \sum_{i=1}^n \left( y_i-b^{\prime }(\mathbf{x}_i^{\mathbf{\prime }}\boldsymbol \beta) \right) w_i \mathbf{x}_i .
+\tag{13.6}
+\end{equation}\]</span></p>
+<p>Dado que <span class="math inline">\(\mu _i=b^{\prime }(\theta_i)=b^{\prime }(\mathbf{x}_i^{\mathbf{\prime }}\boldsymbol \beta)\)</span>, podemos resolver para los estimadores de máxima verosimilitud de <span class="math inline">\(\boldsymbol \beta\)</span>, $_{MLE} $, a través de las “ecuaciones normales”:</p>
+<p><span class="math display" id="eq:eq137">\[\begin{equation}
+\mathbf{0}=\sum_{i=1}^n w_i \left( y_i-\mu _i\right) \mathbf{x}_i.
+\tag{13.7}
+\end{equation}\]</span></p>
+<p>Estas ecuaciones representan un sistema con <span class="math inline">\(k+1\)</span> ecuaciones y <span class="math inline">\(k+1\)</span> incógnitas. Normalmente, la solución es única y usamos la notación <span class="math inline">\(\mathbf{b}_{MLE}\)</span> para denotar la solución. Una de las razones del uso generalizado de los métodos GLM es que los estimadores de máxima verosimilitud pueden calcularse rápidamente mediante una técnica conocida como <em>mínimos cuadrados iterados ponderados</em>, descrita en la Sección <a href="C13GLM.html#S:Sec1394">13.9.4</a>.</p>
+<p>Ten en cuenta que, al igual que en las ecuaciones normales de la regresión lineal ordinaria, no necesitamos considerar la estimación del parámetro de escala de la varianza <span class="math inline">\(\phi\)</span> en esta etapa. Es decir, primero podemos calcular <span class="math inline">\(\mathbf{b}_{MLE}\)</span> y, cuando sea necesario, estimar <span class="math inline">\(\phi\)</span>. (Para ciertas distribuciones como la binomial y la de Poisson, <span class="math inline">\(\phi\)</span> es conocido y no requiere estimación).</p>
+<p>Como se describe en la Sección 11.9, los estimadores de máxima verosimilitud son consistentes y tienen distribuciones normales para muestras grandes bajo condiciones generales. La inferencia de máxima verosimilitud proporciona un mecanismo para calcular esta distribución. A partir de las ecuaciones <a href="C13GLM.html#eq:eq136">(13.6)</a> y del suplemento técnico sobre la verosimilitud (Sección 11.9, ecuación 11.14), la matriz de información correspondiente es:</p>
+<p><span class="math display" id="eq:eq138">\[\begin{equation}
+\mathbf{I} \left( \mathbf{b}_{MLE} \right) = \frac{1}{\phi}\sum_{i=1}^n w_i ~b^{\prime \prime }(\mathbf{x}_i^{\mathbf{\prime }} \mathbf{b}_{MLE} ) ~ \mathbf{x}_i \mathbf{x}_i^{\mathbf{\prime }} .
+\tag{13.8}
+\end{equation}\]</span></p>
+<p>La inversa de la matriz de información es la matriz de varianza-covarianza para muestras grandes de <span class="math inline">\(\mathbf{b}_{MLE}\)</span>. Específicamente, la raíz cuadrada del <span class="math inline">\((j+1)\)</span>-ésimo elemento diagonal de la inversa de esta matriz proporciona el error estándar para <span class="math inline">\(b_{j,MLE}\)</span>, el cual denotamos como <span class="math inline">\(se(b_{j,MLE})\)</span>. Las extensiones a enlaces generales son similares.</p>
+<p>La inferencia para <span class="math inline">\(\mathbf{b}_{MLE}\)</span> es robusta en cuanto a la elección de distribuciones en el siguiente sentido: la solución de los estimadores de máxima verosimilitud en la ecuación <a href="C13GLM.html#eq:eq137">(13.7)</a> depende solo de la función de media; se puede demostrar que la consistencia de los estimadores depende únicamente de la correcta elección de esta función. Además, el comportamiento de muestra grande de <span class="math inline">\(\mathbf{b}_{MLE}\)</span> esencialmente solo requiere que la media y la varianza sean especificadas correctamente, no la elección de la distribución. (Se requieren algunas condiciones adicionales de regularidad, pero estas son requisitos técnicos leves). Por ejemplo, supongamos que un analista elige una distribución de Poisson con un enlace logarítmico. Si el enlace logarítmico es apropiado, solo se necesita la igualdad entre la media y la varianza, ver <a href="C13GLM.html#Tab131">Tabla 13.1</a>. A diferencia del dominio usual de la distribución de Poisson, las variables dependientes podrían ser no enteras o incluso negativas. La inferencia para <span class="math inline">\(\mathbf{b}_{MLE}\)</span> en muestras grandes solo requiere que se elijan correctamente las funciones de media y varianza.</p>
+<hr />
+<p><strong>Ejemplo: Clasificación de Tarifas - Continuación</strong>. Utilizando los datos en la <a href="C13GLM.html#Tab133">Tabla 13.3</a>, se ajustó una función de enlace logarítmico con una distribución gamma utilizando el número de reclamaciones como pesos (<span class="math inline">\(w_i\)</span>). La <a href="C13GLM.html#Tab134">Tabla 13.4</a> muestra las estimaciones de la severidad esperada utilizando la ecuación <a href="C13GLM.html#eq:eq133">(13.3)</a>. Los promedios sugieren que los conductores jóvenes (edades 17-20 y 21-24) tienen las reclamaciones más altas. En cuanto al uso del vehículo, aquellos que conducen por placer tuvieron las reclamaciones más bajas, mientras que aquellos que conducen por negocios tuvieron las reclamaciones más altas.</p>
+<p><a id=Tab134></a></p>
+<p><span id="Tab134">Tabla 13.4</span>. <strong>Estimación de la Severidad Esperada para un Plan Tarifario Multiplicativo</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{l|rrrr|r}
+\hline
+\text{Grupo de Edad } &amp; \text{ConducirCorto }&amp;  \text{ConducirLargo} &amp;   \text{Placer} &amp;   \text{Negocios} &amp;    \text{Promedio} \\
+\hline
+     17-20 &amp;     322.17 &amp;     265.56 &amp;     254.90 &amp;     419.07 &amp;     315.42 \\
+     21-24 &amp;     320.66 &amp;     264.31 &amp;     253.70 &amp;     417.10 &amp;     313.94 \\
+     25-29 &amp;     297.26 &amp;     245.02 &amp;     235.19 &amp;     386.66 &amp;     291.03 \\
+     30-34 &amp;     284.85 &amp;     234.80 &amp;     225.37 &amp;     370.53 &amp;     278.89 \\
+     35-39 &amp;     229.37 &amp;     189.06 &amp;     181.47 &amp;     298.35 &amp;     224.56 \\
+     40-49 &amp;     248.15 &amp;     204.54 &amp;     196.33 &amp;     322.78 &amp;     242.95 \\
+     50-59 &amp;     251.95 &amp;     207.67 &amp;     199.34 &amp;     327.72 &amp;     246.67 \\
+       60+ &amp;     246.47 &amp;     203.16 &amp;     195.00 &amp;     320.60 &amp;     241.31 \\
+\hline
+   Promedio &amp;     275.11 &amp;     226.77 &amp;     217.66 &amp;     357.85 &amp;     269.35 \\
+\hline
+\end{array}
+}
+\]</span></p>
+<h5 style="text-align: center;">
+<a id="displayCode.Tab134.Hide" href="javascript:togglecode('toggleCode.Tab134.Hide','displayCode.Tab134.Hide');"><i><strong>Código en R para Generar la Tabla 13.4</strong></i></a>
+</h5>
+<div id="toggleCode.Tab134.Hide" style="display: none">
+
+
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="C13GLM.html#cb84-1" tabindex="-1"></a><span class="co"># AutoDat &lt;- read.csv(&quot;CSVData/AutoCollision.csv&quot;, quote=&quot;&quot;, header=TRUE)</span></span>
+<span id="cb84-2"><a href="C13GLM.html#cb84-2" tabindex="-1"></a>AutoDat <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;CSVData/AutoCollision1.txt&quot;</span>,  <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb84-3"><a href="C13GLM.html#cb84-3" tabindex="-1"></a></span>
+<span id="cb84-4"><a href="C13GLM.html#cb84-4" tabindex="-1"></a><span class="co">#  MODELO CON DOS FACTORES</span></span>
+<span id="cb84-5"><a href="C13GLM.html#cb84-5" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Severity<span class="sc">~</span><span class="fu">factor</span>(Age)<span class="sc">+</span><span class="fu">factor</span>(Vehicle_Use), </span>
+<span id="cb84-6"><a href="C13GLM.html#cb84-6" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">glm.control</span>(<span class="at">maxit =</span> <span class="dv">50</span>), <span class="at">weights=</span>Claim_Count,</span>
+<span id="cb84-7"><a href="C13GLM.html#cb84-7" tabindex="-1"></a>    <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>), <span class="at">data =</span> AutoDat)</span>
+<span id="cb84-8"><a href="C13GLM.html#cb84-8" tabindex="-1"></a><span class="co">#summary(model1)</span></span>
+<span id="cb84-9"><a href="C13GLM.html#cb84-9" tabindex="-1"></a><span class="co">#model1$coefficients</span></span>
+<span id="cb84-10"><a href="C13GLM.html#cb84-10" tabindex="-1"></a></span>
+<span id="cb84-11"><a href="C13GLM.html#cb84-11" tabindex="-1"></a>Agecoeff <span class="ot">&lt;-</span>  model1<span class="sc">$</span>coefficients[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb84-12"><a href="C13GLM.html#cb84-12" tabindex="-1"></a>Agecoeff[<span class="dv">1</span>]<span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb84-13"><a href="C13GLM.html#cb84-13" tabindex="-1"></a>EAgecoeff <span class="ot">&lt;-</span>  <span class="fu">exp</span>(Agecoeff)</span>
+<span id="cb84-14"><a href="C13GLM.html#cb84-14" tabindex="-1"></a><span class="co">#EAgecoeff</span></span>
+<span id="cb84-15"><a href="C13GLM.html#cb84-15" tabindex="-1"></a>Vehcoeff <span class="ot">&lt;-</span>  model1<span class="sc">$</span>coefficients[<span class="dv">9</span><span class="sc">:</span><span class="dv">11</span>];</span>
+<span id="cb84-16"><a href="C13GLM.html#cb84-16" tabindex="-1"></a>Vehcoeff <span class="ot">&lt;-</span>  <span class="fu">c</span>(Vehcoeff,<span class="dv">0</span>)</span>
+<span id="cb84-17"><a href="C13GLM.html#cb84-17" tabindex="-1"></a>EVehcoeff <span class="ot">&lt;-</span>  <span class="fu">exp</span>(Vehcoeff)</span>
+<span id="cb84-18"><a href="C13GLM.html#cb84-18" tabindex="-1"></a><span class="co">#EVehcoeff</span></span>
+<span id="cb84-19"><a href="C13GLM.html#cb84-19" tabindex="-1"></a></span>
+<span id="cb84-20"><a href="C13GLM.html#cb84-20" tabindex="-1"></a>Premiums <span class="ot">&lt;-</span>  <span class="fu">exp</span>(model1<span class="sc">$</span>coefficients[<span class="dv">1</span>])<span class="sc">*</span>EAgecoeff <span class="sc">%*%</span><span class="fu">t</span>(EVehcoeff)</span>
+<span id="cb84-21"><a href="C13GLM.html#cb84-21" tabindex="-1"></a>Premiums1 <span class="ot">&lt;-</span> <span class="fu">round</span>(Premiums, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb84-22"><a href="C13GLM.html#cb84-22" tabindex="-1"></a></span>
+<span id="cb84-23"><a href="C13GLM.html#cb84-23" tabindex="-1"></a>AgeGroup <span class="ot">&lt;-</span> <span class="fu">dimnames</span>( <span class="fu">table</span>(AutoDat<span class="sc">$</span>Age) )</span>
+<span id="cb84-24"><a href="C13GLM.html#cb84-24" tabindex="-1"></a>AgeGroup1 <span class="ot">&lt;-</span> AgeGroup </span>
+<span id="cb84-25"><a href="C13GLM.html#cb84-25" tabindex="-1"></a><span class="co"># AgeGroup1 &lt;- gsub(&quot;\226&quot;, &quot;-&quot;, AgeGroup1[[1]] , fixed = TRUE)</span></span>
+<span id="cb84-26"><a href="C13GLM.html#cb84-26" tabindex="-1"></a></span>
+<span id="cb84-27"><a href="C13GLM.html#cb84-27" tabindex="-1"></a>tableout <span class="ot">&lt;-</span> <span class="fu">cbind</span>(AgeGroup1, Premiums1)</span>
+<span id="cb84-28"><a href="C13GLM.html#cb84-28" tabindex="-1"></a><span class="fu">colnames</span>(tableout) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Grupo de Edad&quot;</span>, <span class="st">&quot;ConducirCorto&quot;</span>, <span class="st">&quot;ConducirLargo&quot;</span>, <span class="st">&quot;Placer&quot;</span>, <span class="st">&quot;Negocios&quot;</span>)</span>
+<span id="cb84-29"><a href="C13GLM.html#cb84-29" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableout, </span>
+<span id="cb84-30"><a href="C13GLM.html#cb84-30" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Estimación de la Severidad Esperada para un Plan Tarifario Multiplicativo&#39;</span>, </span>
+<span id="cb84-31"><a href="C13GLM.html#cb84-31" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;c&#39;</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">Digits =</span> <span class="dv">2</span>, <span class="at">BorderRight =</span> <span class="dv">1</span>,</span>
+<span id="cb84-32"><a href="C13GLM.html#cb84-32" tabindex="-1"></a>         <span class="at">ColWidth =</span> ColWidth4 )  </span></code></pre></div>
+<table class=" lightable-classic table table-striped table-condensed" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:Tab134">Tabla 13.1: </span><strong>Estimación de la Severidad Esperada para un Plan Tarifario Multiplicativo</strong>
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Grupo de Edad
+</th>
+<th style="text-align:center;">
+ConducirCorto
+</th>
+<th style="text-align:center;">
+ConducirLargo
+</th>
+<th style="text-align:center;">
+Placer
+</th>
+<th style="text-align:center;">
+Negocios
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;width: 2.5cm; border-right:1px solid;">
+c(“17?20”, “21?24”, “25?29”, “30?34”, “35?39”, “40?49”, “50?59”, “60+”)
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+322.17
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+265.56
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+254.9
+</td>
+<td style="text-align:center;">
+419.07
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 2.5cm; border-right:1px solid;">
+c(“17?20”, “21?24”, “25?29”, “30?34”, “35?39”, “40?49”, “50?59”, “60+”)
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+320.66
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+264.31
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+253.7
+</td>
+<td style="text-align:center;">
+417.1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 2.5cm; border-right:1px solid;">
+c(“17?20”, “21?24”, “25?29”, “30?34”, “35?39”, “40?49”, “50?59”, “60+”)
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+297.26
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+245.02
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+235.19
+</td>
+<td style="text-align:center;">
+386.66
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 2.5cm; border-right:1px solid;">
+c(“17?20”, “21?24”, “25?29”, “30?34”, “35?39”, “40?49”, “50?59”, “60+”)
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+284.85
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+234.8
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+225.37
+</td>
+<td style="text-align:center;">
+370.53
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 2.5cm; border-right:1px solid;">
+c(“17?20”, “21?24”, “25?29”, “30?34”, “35?39”, “40?49”, “50?59”, “60+”)
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+229.37
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+189.06
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+181.47
+</td>
+<td style="text-align:center;">
+298.35
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 2.5cm; border-right:1px solid;">
+c(“17?20”, “21?24”, “25?29”, “30?34”, “35?39”, “40?49”, “50?59”, “60+”)
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+248.15
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+204.54
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+196.33
+</td>
+<td style="text-align:center;">
+322.78
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 2.5cm; border-right:1px solid;">
+c(“17?20”, “21?24”, “25?29”, “30?34”, “35?39”, “40?49”, “50?59”, “60+”)
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+251.95
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+207.67
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+199.34
+</td>
+<td style="text-align:center;">
+327.72
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 2.5cm; border-right:1px solid;">
+c(“17?20”, “21?24”, “25?29”, “30?34”, “35?39”, “40?49”, “50?59”, “60+”)
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+246.47
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+203.16
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+195
+</td>
+<td style="text-align:center;">
+320.6
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="sobredispersión" class="section level3 hasAnchor" number="13.3.2">
+<h3><span class="header-section-number">13.3.2</span> Sobredispersión<a href="C13GLM.html#sobredispersión" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para algunos miembros de la familia exponencial lineal, como las distribuciones Bernoulli y Poisson, la varianza está determinada por la media. En contraste, la distribución normal tiene un parámetro de escala separado. Al ajustar modelos a datos con variables dependientes binarias o de conteo, es común observar que la varianza excede la anticipada por el ajuste de los parámetros de la media. Este fenómeno se conoce como <em>sobredispersión</em>. Existen varios modelos probabilísticos alternativos disponibles para explicar este fenómeno, dependiendo de la aplicación en cuestión. Ver la Sección 12.3 para un ejemplo y McCullagh y Nelder (1989) para un inventario más detallado.</p>
+<p>Aunque llegar a un modelo probabilístico satisfactorio es el camino más deseable, en muchas situaciones los analistas se conforman con postular un modelo aproximado mediante la relación:
+<span class="math display">\[
+\mathrm{Var~}y_i=\sigma ^{2}\phi ~b^{\prime \prime }(\theta_i)/w_i.
+\]</span>
+El parámetro <span class="math inline">\(\phi\)</span> se especifica a través de la elección de la distribución, mientras que el parámetro de escala <span class="math inline">\(\sigma ^{2}\)</span> permite una variabilidad extra. Por ejemplo, la <a href="C13GLM.html#Tab138">Tabla 13.8</a> muestra que al especificar ya sea la distribución Bernoulli o Poisson, tenemos <span class="math inline">\(\phi =1\)</span>. Aunque el parámetro de escala <span class="math inline">\(\sigma ^{2}\)</span> permite una variabilidad adicional, también puede acomodar situaciones en las que la variabilidad es menor de la especificada por la forma de la distribución (aunque esta situación es menos común). Finalmente, cabe destacar que para algunas distribuciones, como la normal, el término adicional ya está incorporado en el parámetro <span class="math inline">\(\phi\)</span>, por lo que no tiene un propósito útil.</p>
+<p>Cuando se incluye el parámetro de escala adicional <span class="math inline">\(\sigma ^{2}\)</span>, es común estimarlo mediante el estadístico chi-cuadrado de Pearson dividido por los grados de libertad del error. Es decir,
+<span class="math display">\[
+\widehat{\sigma }^{2}=\frac{1}{N-k} \sum_{i=1}^n w_i\frac{\left( y_i-b^{\prime }(\mathbf{x}_i^{\mathbf{\prime }}\mathbf{b}_{MLE})\right) ^{2}}{\phi b^{\prime \prime }(\mathbf{x}_i^{\mathbf{\prime }}\mathbf{b}_{MLE})}.
+\]</span>
+Al igual que con la distribución Poisson en la Sección 12.3, otra forma de manejar patrones inusuales de varianza es a través de errores estándar robustos o empíricos. La Sección <a href="C13GLM.html#S:Sec1393">13.9.3</a> proporciona más detalles.</p>
+</div>
+<div id="S:Sec1333" class="section level3 hasAnchor" number="13.3.3">
+<h3><span class="header-section-number">13.3.3</span> Estadísticas de Bondad de Ajuste<a href="C13GLM.html#S:Sec1333" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En los modelos de regresión lineal, la estadística de bondad de ajuste más ampliamente citada es la medida <span class="math inline">\(R^2\)</span>, que se basa en la descomposición
+<span class="math display">\[
+\sum_i \left(y_i - \overline{y} \right)^2 = \sum_i \left(y_i - \widehat{y}_i \right)^2 + \sum_i \left(\widehat{y}_i - \overline{y}\right)^2 + 2 \times \sum_i \left(y_i - \widehat{y}_i \right)\left(\widehat{y}_i - \overline{y}\right).
+\]</span>
+En el lenguaje de la Sección 2.3, esta descomposición es:</p>
+<p><span class="math display">\[
+\textit{Total SS = Error SS + Regresión SS + 2} \times \textit{Suma de Productos Cruzados}.
+\]</span></p>
+<p>La dificultad con los modelos no lineales es que el término de <em>Suma de Productos Cruzados</em> rara vez es igual a cero. Por lo tanto, se obtienen estadísticas diferentes al definir <span class="math inline">\(R^2\)</span> como (<em>Regresión SS/Total SS</em>) en comparación con (1-<em>Error SS/Total SS</em>). La Sección 11.3.2 describió algunas medidas alternativas de <span class="math inline">\(R^2\)</span> que a veces se citan en configuraciones GLM.</p>
+<p>Una medida de bondad de ajuste ampliamente citada es el estadístico chi-cuadrado de Pearson, que fue introducido en la Sección 12.1.4. En el contexto GLM, suponemos que <span class="math inline">\(\mathrm{E~}y_i = \mu_i\)</span>, <span class="math inline">\(\mathrm{Var~}y_i = \phi v(\mu_i)\)</span> es la función de varianza (como en los ejemplos de la <a href="C13GLM.html#Tab131">Tabla 13.1</a>) y que <span class="math inline">\(\widehat{\mu}_i\)</span> es un estimador de <span class="math inline">\(\mu_i\)</span>. Luego, el estadístico chi-cuadrado de Pearson se define como <span class="math inline">\(\sum_i \left( y_i - \widehat{\mu}_i \right)^2/\ ( \phi v(\widehat{\mu}_i))\)</span>. Como hemos visto en los modelos de Poisson para datos de conteo, esta formulación se reduce a la forma <span class="math inline">\(\sum_i \left( y_i - \widehat{\mu}_i \right)^2/\widehat{\mu}_i\)</span>.</p>
+<p>Los criterios de información generales, incluyendo <span class="math inline">\(AIC\)</span> y <span class="math inline">\(BIC\)</span>, que fueron definidos en la Sección 11.9 también se citan regularmente en estudios de GLM.</p>
+<p>Una medida de bondad de ajuste específica para los modelos GLM es la <em>estadística de devianza</em>. Para definir esta estadística, trabajamos con la noción de un <em>modelo saturado</em> donde hay tantos parámetros como observaciones, <span class="math inline">\(\theta_i, i=1, \ldots, n\)</span>. Un modelo saturado proporciona el mejor ajuste posible. Con un parámetro para cada observación, maximizamos la verosimilitud en una base de observación por observación. Por lo tanto, al derivar la verosimilitud logarítmica de la ecuación <a href="C13GLM.html#eq:eq132">(13.2)</a> se obtiene
+<span class="math display">\[
+\frac{\partial}{\partial \theta_i} \ln \mathrm{f}( y_i; \theta_i ,\phi ) = \frac{y_i-b^{\prime}(\theta_i)}{\phi}.
+\]</span>
+Al igualar esto a cero, se obtiene la estimación del parámetro, digamos <span class="math inline">\(\theta_{i,SAT}\)</span>, como la solución de <span class="math inline">\(y_i=b^{\prime}(\theta_{i,Sat})\)</span>. Denotando <span class="math inline">\(\boldsymbol \theta _{SAT}\)</span> como el vector de parámetros, la verosimilitud <span class="math inline">\(L(\boldsymbol \theta _{SAT})\)</span> es el valor máximo posible de la verosimilitud logarítmica. Luego, para un estimador genérico <span class="math inline">\(\widehat{\boldsymbol \theta}\)</span>, la estadística de devianza <em>escalada</em> se define como
+<span class="math display">\[
+\mathbf{\mathrm{D}}^{\ast}(\widehat{\boldsymbol \theta}) = 2 \times \left( L(\boldsymbol \theta _{SAT}) - L(\widehat{\boldsymbol \theta}) \right).
+\]</span>
+En las familias exponenciales lineales, se multiplica por el factor de escala <span class="math inline">\(\phi\)</span> para definir la <em>estadística de devianza</em>, <span class="math inline">\(\mathbf{\mathrm{D}}(\widehat{\boldsymbol \theta}) = \phi \mathbf{\mathrm{D}}^{\ast}(\widehat{\boldsymbol \theta})\)</span>. Esta multiplicación realmente elimina el factor de escala de la varianza de la definición de la estadística.</p>
+<p>Es fácil verificar que la estadística de devianza se reduce a las siguientes formas para tres casos especiales:</p>
+<ul>
+<li>Normal: <span class="math inline">\(\mathbf{\mathrm{D}}(\widehat{\boldsymbol \mu})= \sum_i \left( y_i - \widehat \mu _i \right) ^2\)</span>,</li>
+<li>Bernoulli: <span class="math inline">\(\mathbf{\mathrm{D}}(\widehat{\boldsymbol \pi})= \sum_i \left\{ y_i \ln \frac {y_i}{\widehat \pi_i} + (1-y_i) \ln \frac {1-y_i}{1-\widehat \pi_i} \right\}\)</span>, y</li>
+<li>Poisson: <span class="math inline">\(\mathbf{\mathrm{D}}(\widehat{\boldsymbol \mu})= \sum_i \left\{ y_i \ln \frac {y_i}{\widehat \mu_i} + (y_i - \widehat \mu _i) \right\}\)</span>.</li>
+</ul>
+<p>Aquí usamos la convención de que <span class="math inline">\(y \ln y = 0\)</span> cuando <span class="math inline">\(y = 0\)</span>.</p>
+</div>
+</div>
+<div id="S:Sec134" class="section level2 hasAnchor" number="13.4">
+<h2><span class="header-section-number">13.4</span> Aplicación: Gastos Médicos<a href="C13GLM.html#S:Sec134" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ahora volvemos a los datos de la Encuesta del Panel de Gastos Médicos (MEPS) introducidos en la Sección 11.4. En esa sección, buscamos desarrollar un modelo para entender el evento de una admisión hospitalaria como paciente interno. En esta sección, ahora deseamos modelar la cantidad del gasto. En terminología actuarial, la Sección 11.4 consideraba la “frecuencia”, mientras que esta sección involucra la “severidad”.</p>
+<p>De las 2,000 observaciones seleccionadas aleatoriamente del año 2003 consideradas en la Sección 11.4, solo <span class="math inline">\(n=157\)</span> fueron admitidos al hospital durante el año. La <a href="C13GLM.html#Tab135">Tabla 13.5</a> resume los datos utilizando las mismas variables explicativas que en la Tabla 11.4. Por ejemplo, la <a href="C13GLM.html#Tab135">Tabla 13.5</a> muestra que la muestra es 72% femenina, casi 76% blanca y más del 91% tiene seguro. La tabla también muestra relativamente pocos gastos por parte de asiáticos, nativos americanos y personas sin seguro en nuestra muestra.</p>
+<p>La <a href="C13GLM.html#Tab135">Tabla 13.5</a> también proporciona los gastos medianos por variable categórica. Esta tabla sugiere que el género, una mala autoevaluación de la salud física y los ingresos bajos o negativos pueden ser determinantes importantes de la cantidad de los gastos médicos.</p>
+<p><a id=Tab135></a></p>
+<p><span id="Tab135">Tabla 13.5</span>. <strong>Gastos Medianos por Variable Explicativa Basado en una Muestra de <span class="math inline">\(n=157\)</span> con Gastos Positivos</strong></p>
+<p><span class="math display">\[
+\scriptsize{
+\begin{array}{lllrr}
+\hline
+\text{Categoría} &amp; \text{Variable} &amp; \text{Descripción} &amp; \text{Porcentaje} &amp; \text{Mediana de } \\
+&amp;  &amp;  &amp; \text{de datos} &amp; \text{Gastos}\\ \hline
+&amp; COUNTIP&amp; \text{Número de gastos (mediana: 1.0)} \\
+\text{Demografía} &amp; EDAD &amp; \text{Edad en años entre}\\
+&amp; &amp; \ \ \ \text{ 18 a 65 (mediana: 41.0) }\\
+&amp; GENERO &amp;\text{1 si es mujer} &amp; 72.0 &amp; 5,546 \\
+&amp;  &amp; \text{0 si es hombre} &amp; 28.0 &amp; 7,313 \\
+\text{Etnicidad} &amp; ASIATICO &amp; \text{1 si es asiático} &amp; 2.6 &amp; 4,003 \\
+&amp; NEGRO &amp; \text{1 si es negro} &amp; 19.8 &amp; 6,100\\
+&amp; NATIVO &amp; \text{1 si es nativo} &amp; 1.9 &amp; 2,310\\
+&amp; BLANCO &amp; \textit{Nivel de referencia} &amp; 75.6 &amp; 5,695\\
+\text{Región} &amp; NORDESTE &amp; \text{1 si es del noreste} &amp; 18.5 &amp; 5,833 \\
+&amp; MEDIOESTE &amp; \text{1 si es del medio oeste} &amp; 21.7  &amp;  7,999 \\
+&amp; SUR &amp; \text{1 si es del sur} &amp; 40.8  &amp;  5,595 \\
+&amp; OESTE &amp; \textit{Nivel de referencia} &amp; 19.1  &amp;  4,297\\
+\hline \text{Educación} &amp; UNIVERSIDAD
+&amp; \text{1 si tiene título universitario o superior} &amp; 23.6 &amp;  5,611\\
+&amp; \text{SECUNDARIA} &amp; \text{1 si tiene título de secundaria} &amp; 43.3 &amp; 5,907  \\
+&amp;&amp; \text{Nivel de referencia es menor} &amp; 33.1  &amp;  5,338 \\
+&amp;&amp; \ \ \ \text{   que título de secundaria}    &amp; \\ \hline
+\text{Autoevaluación} &amp; MALA &amp; \text{1 si es mala} &amp; 17.2 &amp; 10,447\\
+\ \ \text{salud física} &amp; REGULAR &amp; \text{1 si es regular} &amp; 10.2 &amp; 5,228 \\
+\ \ \text{ } &amp; BUENA &amp; \text{1 si es buena }&amp; 31.2 &amp; 5,032\\
+&amp; VMUYBUENA &amp; \text{1 si es muy buena} &amp; 24.8 &amp;  5,546 \\
+&amp;&amp;   \text{Nivel de referencia es excelente salud} &amp;16.6 &amp; 5,277 \\
+\text{Autoevaluación} &amp; MMALA &amp; \text{1 si es mala o regular} &amp; 15.9  &amp; 6,583  \\
+\ \ \text{salud mental} &amp;  &amp; \text{0 si buena a excelente salud mental} &amp; 84.1 &amp; 5,599 \\
+\text{Alguna limitación} &amp; ALGLIMITE &amp; \text{1 si tiene alguna limitación funcional/de actividad}&amp;
+41.4 &amp; 7,826  \\
+\ \ \text{de actividad} &amp;  &amp; \text{0 si no tiene limitación}&amp; 58.6 &amp; 4,746 \\
+\hline \text{Ingresos} &amp;&amp;  \text{Nivel de referencia son ingresos altos} &amp; 21.7 &amp;  7,271 \\
+\text{comparado con} &amp; MINGRESO &amp; \text{1 si es ingreso medio} &amp; 26.8 &amp;  5,851 \\
+\text{la línea de pobreza} &amp; LINGRESO &amp; \text{1 si es ingreso bajo} &amp; 16.6 &amp; 6,909  \\
+&amp; NPPOBRE &amp; \text{1 si es casi pobre} &amp; 7.0 &amp; 5,546 \\
+&amp; POBRONEG &amp; \text{si es pobre/ingreso negativo} &amp; 28.0 &amp; 4,097 \\
+\hline \text{Seguro} &amp; SEGURO &amp; \text{1 si está cubierto por seguro público/privado}
+&amp;91.1 &amp;  5,943 \\
+\ \ \text{médico} &amp;  &amp; \ \ \text{seguro en cualquier mes de 2003} &amp;  &amp;  \\
+&amp;  &amp; \text{0 si no tiene seguro médico en 2003} &amp; 8.9 &amp; 2,668  \\
+\hline Total &amp;  &amp;  &amp; 100.0 &amp; 5,695 \\ \hline
+\end{array}
+}
+\]</span></p>
+<h5 style="text-align: center;">
+<a id="displayCode.Table13.1Silly" href="javascript:togglecode('toggleCode.Table13.1Silly','displayCode.Table13.1Silly');"><i><strong></strong></i></a>
+</h5>
+<div id="toggleCode.Table13.1Silly" style="display: none">
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="C13GLM.html#cb85-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly. Create a table just to update the counter...&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-92">Tabla 13.2: </span>Silly. Create a table just to update the counter…</caption>
+<thead>
+<tr class="header">
+<th align="right">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="C13GLM.html#cb86-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly.&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-93">Tabla 13.3: </span>Silly.</caption>
+<thead>
+<tr class="header">
+<th align="right">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="C13GLM.html#cb87-1" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="dv">2</span>, <span class="at">caption =</span> <span class="st">&quot;Silly. &quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-94">Tabla 13.4: </span>Silly.</caption>
+<thead>
+<tr class="header">
+<th align="right">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 style="text-align: center;">
+<a id="displayCode.Tab135.Hide" href="javascript:togglecode('toggleCode.Tab135.Hide','displayCode.Tab135.Hide');"><i><strong>Código R para generar la Tabla 13.5</strong></i></a>
+</h5>
+<div id="toggleCode.Tab135.Hide" style="display: none">
+<p>Como se señaló en el prefacio, la mayor parte del código para el libro, escrito alrededor de 2008, estaba en SAS. El código ilustrativo proporcionado aquí, en <code>R</code>, presenta algunas ligeras discrepancias con el original.</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="C13GLM.html#cb88-1" tabindex="-1"></a>Hexpend <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/HealthExpend.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb88-2"><a href="C13GLM.html#cb88-2" tabindex="-1"></a><span class="co">#  Tabla 13.5</span></span>
+<span id="cb88-3"><a href="C13GLM.html#cb88-3" tabindex="-1"></a><span class="co">#Hexpend$POSEXP &lt;- 1*(Hexpend$EXPENDIP&gt;0)</span></span>
+<span id="cb88-4"><a href="C13GLM.html#cb88-4" tabindex="-1"></a>HexpendPos  <span class="ot">&lt;-</span> <span class="fu">subset</span>(Hexpend, EXPENDIP <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb88-5"><a href="C13GLM.html#cb88-5" tabindex="-1"></a></span>
+<span id="cb88-6"><a href="C13GLM.html#cb88-6" tabindex="-1"></a><span class="co">#  CREAR UNA FUNCIÓN CORTA PARA AHORRAR TRABAJO</span></span>
+<span id="cb88-7"><a href="C13GLM.html#cb88-7" tabindex="-1"></a>fun2 <span class="ot">&lt;-</span> <span class="cf">function</span>(group_var, summary_vars){</span>
+<span id="cb88-8"><a href="C13GLM.html#cb88-8" tabindex="-1"></a>    <span class="co"># Convertir group_var y summary_vars a caracteres si no lo son</span></span>
+<span id="cb88-9"><a href="C13GLM.html#cb88-9" tabindex="-1"></a>  group_var <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="fu">substitute</span>(group_var))</span>
+<span id="cb88-10"><a href="C13GLM.html#cb88-10" tabindex="-1"></a>  summary_vars <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="fu">substitute</span>(summary_vars))</span>
+<span id="cb88-11"><a href="C13GLM.html#cb88-11" tabindex="-1"></a>temp <span class="ot">&lt;-</span> doBy<span class="sc">::</span><span class="fu">summaryBy</span>(</span>
+<span id="cb88-12"><a href="C13GLM.html#cb88-12" tabindex="-1"></a>  <span class="at">formula =</span> <span class="fu">as.formula</span>(<span class="fu">paste</span>(summary_vars, <span class="st">&quot;~&quot;</span>, group_var)),</span>
+<span id="cb88-13"><a href="C13GLM.html#cb88-13" tabindex="-1"></a>        <span class="at">data =</span> HexpendPos, </span>
+<span id="cb88-14"><a href="C13GLM.html#cb88-14" tabindex="-1"></a>           <span class="at">FUN =</span> <span class="cf">function</span>(x) { <span class="fu">c</span>(<span class="at">m =</span> <span class="fu">median</span>(x), <span class="at">num =</span> <span class="fu">length</span>(x)) } )</span>
+<span id="cb88-15"><a href="C13GLM.html#cb88-15" tabindex="-1"></a>temp1 <span class="ot">&lt;-</span> temp[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>)]</span>
+<span id="cb88-16"><a href="C13GLM.html#cb88-16" tabindex="-1"></a>temp1[,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>temp1[,<span class="dv">2</span>]<span class="sc">/</span><span class="fu">length</span>(HexpendPos<span class="sc">$</span>EXPENDIP), <span class="at">digits=</span><span class="dv">1</span>)</span>
+<span id="cb88-17"><a href="C13GLM.html#cb88-17" tabindex="-1"></a><span class="fu">colnames</span>(temp1) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb88-18"><a href="C13GLM.html#cb88-18" tabindex="-1"></a>temp1[,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">as.character</span>(temp1[,<span class="dv">1</span>])</span>
+<span id="cb88-19"><a href="C13GLM.html#cb88-19" tabindex="-1"></a><span class="fu">return</span>(<span class="fu">as.matrix</span>(temp1) )</span>
+<span id="cb88-20"><a href="C13GLM.html#cb88-20" tabindex="-1"></a>}</span>
+<span id="cb88-21"><a href="C13GLM.html#cb88-21" tabindex="-1"></a></span>
+<span id="cb88-22"><a href="C13GLM.html#cb88-22" tabindex="-1"></a>var1 <span class="ot">&lt;-</span> <span class="fu">fun2</span>(GENDER,EXPENDIP)</span>
+<span id="cb88-23"><a href="C13GLM.html#cb88-23" tabindex="-1"></a>var2 <span class="ot">&lt;-</span> <span class="fu">fun2</span>(RACE,EXPENDIP)</span>
+<span id="cb88-24"><a href="C13GLM.html#cb88-24" tabindex="-1"></a>var3 <span class="ot">&lt;-</span> <span class="fu">fun2</span>(REGION,EXPENDIP)</span>
+<span id="cb88-25"><a href="C13GLM.html#cb88-25" tabindex="-1"></a>var4 <span class="ot">&lt;-</span> <span class="fu">fun2</span>(EDUC,EXPENDIP)</span>
+<span id="cb88-26"><a href="C13GLM.html#cb88-26" tabindex="-1"></a>var5 <span class="ot">&lt;-</span> <span class="fu">fun2</span>(PHSTAT,EXPENDIP)</span>
+<span id="cb88-27"><a href="C13GLM.html#cb88-27" tabindex="-1"></a><span class="co">#var6 &lt;- fun2(MPOOR,EXPENDIP)</span></span>
+<span id="cb88-28"><a href="C13GLM.html#cb88-28" tabindex="-1"></a>var7 <span class="ot">&lt;-</span> <span class="fu">fun2</span>(ANYLIMIT,EXPENDIP)</span>
+<span id="cb88-29"><a href="C13GLM.html#cb88-29" tabindex="-1"></a>var8 <span class="ot">&lt;-</span> <span class="fu">fun2</span>(INCOME,EXPENDIP)</span>
+<span id="cb88-30"><a href="C13GLM.html#cb88-30" tabindex="-1"></a>var9 <span class="ot">&lt;-</span> <span class="fu">fun2</span>(insure,EXPENDIP)</span>
+<span id="cb88-31"><a href="C13GLM.html#cb88-31" tabindex="-1"></a></span>
+<span id="cb88-32"><a href="C13GLM.html#cb88-32" tabindex="-1"></a>tableout <span class="ot">&lt;-</span> <span class="fu">rbind</span>(var1, var2, var3, var4,</span>
+<span id="cb88-33"><a href="C13GLM.html#cb88-33" tabindex="-1"></a>                  var5, var7, var8, var9)</span>
+<span id="cb88-34"><a href="C13GLM.html#cb88-34" tabindex="-1"></a></span>
+<span id="cb88-35"><a href="C13GLM.html#cb88-35" tabindex="-1"></a><span class="fu">TableGen1</span>(<span class="at">TableData=</span>tableout, </span>
+<span id="cb88-36"><a href="C13GLM.html#cb88-36" tabindex="-1"></a>         <span class="at">TextTitle=</span><span class="st">&#39;Gastos Medianos por Variable Explicativa Basado en una Muestra de $n=157$ con Gastos Positivos&#39;</span>, </span>
+<span id="cb88-37"><a href="C13GLM.html#cb88-37" tabindex="-1"></a>         <span class="at">Align=</span><span class="st">&#39;crr&#39;</span>, <span class="at">ColumnSpec=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">ColWidth =</span> ColWidth4 )</span></code></pre></div>
+<table class=" lightable-classic table table-striped table-condensed" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:Tab1135">Tabla 13.5: </span><strong>Gastos Medianos por Variable Explicativa Basado en una Muestra de <span class="math inline">\(n=157\)</span> con Gastos Positivos</strong>
+</caption>
+<tbody>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+1
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+0
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+28
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+7312.695
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+2
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+1
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+72
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5546.470
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+1
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+ASIAN
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+2.5
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+4002.735
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+2
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+BLACK
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+19.7
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+6100.200
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+3
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+NATIV
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+1.9
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+2310.320
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+4
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+OTHER
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+1.9
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+4050.650
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+5
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+WHITE
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+73.9
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5725.325
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+1
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+MIDWEST
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+21.7
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+7998.660
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+2
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+NORTHEAST
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+18.5
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5832.860
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+3
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+SOUTH
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+40.8
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5595.295
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+4
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+WEST
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+19.1
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+4296.540
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+1
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+COLLEGE
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+23.6
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5610.76
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+2
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+HIGHSCH
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+43.3
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5907.33
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+3
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+LHIGHSC
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+33.1
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5338.04
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+1
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+EXCE
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+16.6
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5277.160
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+2
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+FAIR
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+10.2
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5228.465
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+3
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+GOOD
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+31.2
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5031.960
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+4
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+POOR
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+17.2
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+10447.130
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+5
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+VGOO
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+24.8
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5546.470
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+1
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+0
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+58.6
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+4745.89
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+2
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+1
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+41.4
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+7825.50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+1
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+HINCOME
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+21.7
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+7270.780
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+2
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+LINCOME
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+16.6
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+6908.720
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+3
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+MINCOME
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+26.8
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5851.160
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+4
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+NPOOR
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+7.0
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5546.470
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+5
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+POOR
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+28.0
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+4096.545
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+1
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+0
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+8.9
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+2668.37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+2
+</td>
+<td style="text-align:center;width: 1.8cm; ">
+1
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+91.1
+</td>
+<td style="text-align:right;width: 1.8cm; ">
+5943.25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><a href="C13GLM.html#Tab135">Tabla 13.5</a> utiliza medianas en lugar de medias debido a que la distribución de los gastos está sesgada hacia la derecha. Esto es evidente en la Figura <a href="C13GLM.html#fig:Fig131">13.1</a>, que proporciona un histograma suave (conocido como “estimación de densidad por kernel”, ver Sección 15.2) para los gastos hospitalarios. Para distribuciones sesgadas, la mediana a menudo brinda una mejor idea del centro de la distribución que la media. La distribución está aún más sesgada de lo que sugiere esta figura, ya que el gasto más grande (que es $607,800) se omite en la representación gráfica.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig131"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig131-1.png" alt="Histograma Empírico Suave de Gastos Hospitalarios Positivos. Se omite el gasto más grande." width="60%" />
+<p class="caption">
+Figura 13.1: <strong>Histograma Empírico Suave de Gastos Hospitalarios Positivos.</strong> Se omite el gasto más grande.
+</p>
+</div>
+<h5 style="text-align: center;">
+<a id="displayCode.Fig131.Hide" href="javascript:togglecode('toggleCode.Fig131.Hide','displayCode.Fig131.Hide');"><i><strong>Código R para generar la Figura 13.1</strong></i></a>
+</h5>
+<div id="toggleCode.Fig131.Hide" style="display: none">
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="C13GLM.html#cb89-1" tabindex="-1"></a><span class="co"># ELIMINAR TEMPORALMENTE EL OBS # 58</span></span>
+<span id="cb89-2"><a href="C13GLM.html#cb89-2" tabindex="-1"></a>Hexpend <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/HealthExpend.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb89-3"><a href="C13GLM.html#cb89-3" tabindex="-1"></a>Hexpend58 <span class="ot">&lt;-</span> <span class="fu">subset</span>(Hexpend, <span class="sc">!</span>(EXPENDIP<span class="sc">&gt;</span><span class="dv">600000</span>))</span>
+<span id="cb89-4"><a href="C13GLM.html#cb89-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(Hexpend58<span class="sc">$</span>EXPENDIP), <span class="at">main=</span><span class="st">&quot;&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Gastos&quot;</span>)</span>
+<span id="cb89-5"><a href="C13GLM.html#cb89-5" tabindex="-1"></a></span>
+<span id="cb89-6"><a href="C13GLM.html#cb89-6" tabindex="-1"></a><span class="co">#hist(Hexpend58$EXPENDIP, main=&quot;&quot;, xlab=&quot;Gastos&quot;)</span></span></code></pre></div>
+</div>
+<p>Un modelo de regresión gamma con un enlace logarítmico se ajustó a los gastos hospitalarios utilizando todas las variables explicativas. Los resultados de este ajuste de modelo aparecen en la <a href="C13GLM.html#Tab136">Tabla 13.6</a>. Aquí vemos que muchos de los posibles determinantes importantes de los gastos médicos no son estadísticamente significativos. Esto es común en el análisis de gastos, donde las variables ayudan a predecir la frecuencia, aunque no son tan útiles para explicar la severidad.</p>
+<p>Debido a la colinealidad, hemos visto en modelos lineales que tener demasiadas variables en un modelo ajustado puede llevar a la insignificancia estadística de variables importantes e incluso causar que los signos se inviertan. Para un modelo más simple, eliminamos las variables de Asian, Native American y uninsured, ya que representan un pequeño subconjunto de nuestra muestra. También utilizamos solo la variable POOR para el estado de salud autoinformado y solo POORNEG para los ingresos, esencialmente reduciendo estas variables categóricas a variables binarias. La <a href="C13GLM.html#Tab136">Tabla 13.6</a>, bajo el encabezado “Modelo Reducido”, muestra los resultados de este ajuste del modelo. Este modelo tiene casi el mismo estadístico de bondad de ajuste, <em>AIC</em>, lo que sugiere que es una alternativa razonable. Bajo el ajuste del modelo reducido, las variables COUNTIP (conteo de pacientes hospitalizados), AGE, COLLEGE y POORNEG son variables estadísticamente significativas. Para estas variables significativas, los signos son intuitivamente razonables. Por ejemplo, el coeficiente positivo asociado con COUNTIP significa que a medida que aumenta el número de visitas hospitalarias, los gastos totales aumentan, como era de esperar.</p>
+<p>Para otra especificación alternativa del modelo, la <a href="C13GLM.html#Tab136">Tabla 13.6</a> también muestra un ajuste de un modelo inverso gaussiano con un enlace logarítmico. A partir del estadístico <strong>AIC</strong>, vemos que este modelo no se ajusta tan bien como el modelo de regresión gamma. Todas las variables son estadísticamente insignificantes, lo que dificulta la interpretación de este modelo.</p>
+<p><a id=Tab136></a></p>
+<p><span id="Tab136">Tabla 13.6</span>. <strong>Comparación de Modelos de Regresión Gamma e Inversa Gaussiana</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{l|rr|rr|rr}
+\hline &amp; \text{Gamma} &amp; &amp;\text{Gamma}&amp;&amp;\text{Inversa}&amp;\text{Gaussiana} \\
+\hline &amp; \text{Modelo} &amp;\text{Modelo}&amp;
+\text{Modelo} &amp; \text{Modelo}&amp;\text{Modelo}&amp;\text{Modelo} \\
+&amp; \text{Completo} &amp;\text{Reducido}&amp;
+\text{Completo} &amp; \text{Reducido}&amp;\text{Reducido}&amp;\text{Reducido} \\ \hline
+&amp; \scriptsize{Parámetro} &amp;  &amp; \scriptsize{Parámetro} &amp;  &amp; \scriptsize{Parámetro} &amp;  \\
+\text{Efecto} &amp; \scriptsize{Estimación} &amp; t\text{-valor} &amp; \scriptsize{Estimación} &amp; t\text{-valor} &amp;
+\scriptsize{Estimación} &amp; t\text{-valor} \\ \hline
+Intercepto &amp;      6.891 &amp;     13.080 &amp;      7.859 &amp;     17.951 &amp;      6.544 &amp;      3.024 \\
+COUNTIP &amp;      0.681 &amp;      6.155 &amp;      0.672 &amp;      5.965 &amp;      1.263 &amp;      0.989 \\
+AGE &amp;      0.021 &amp;      3.024 &amp;      0.015 &amp;      2.439 &amp;      0.018 &amp;      0.727 \\
+GENDER &amp;     -0.228 &amp;     -1.263 &amp;     -0.118 &amp;     -0.648 &amp;      0.363 &amp;      0.482 \\
+ASIAN &amp;     -0.506 &amp;     -1.029 &amp;            &amp;            &amp;            &amp;            \\
+BLACK &amp;     -0.331 &amp;     -1.656 &amp;     -0.258 &amp;     -1.287 &amp;     -0.321 &amp;     -0.577 \\
+NATIVE &amp;     -1.220 &amp;     -2.217 &amp;            &amp;            &amp;            &amp;            \\
+NORTHEAST &amp;     -0.372 &amp;     -1.548 &amp;     -0.214 &amp;     -0.890 &amp;      0.109 &amp;      0.165 \\
+MIDWEST &amp;      0.255 &amp;      1.062 &amp;      0.448 &amp;      1.888 &amp;      0.399 &amp;      0.654 \\
+SOUTH &amp;      0.010 &amp;      0.047 &amp;      0.108 &amp;      0.516 &amp;      0.164 &amp;      0.319 \\
+\hline
+COLLEGE &amp;     -0.413 &amp;     -1.723 &amp;     -0.469 &amp;     -2.108 &amp;     -0.367 &amp;     -0.606 \\
+HIGHSCHOOL &amp;     -0.155 &amp;     -0.827 &amp;     -0.210 &amp;     -1.138 &amp;     -0.039 &amp;     -0.078 \\
+\hline
+POOR &amp;     -0.003 &amp;     -0.010 &amp;      0.167 &amp;      0.706 &amp;      0.167 &amp;      0.258 \\
+FAIR &amp;     -0.194 &amp;     -0.641 &amp;            &amp;            &amp;            &amp;            \\
+GOOD &amp;      0.041 &amp;      0.183 &amp;            &amp;            &amp;            &amp;            \\
+VGOOD &amp;      0.000 &amp;      0.000 &amp;            &amp;            &amp;            &amp;            \\
+MNHPOOR &amp;     -0.396 &amp;     -1.634 &amp;     -0.314 &amp;     -1.337 &amp;     -0.378 &amp;     -0.642 \\
+ANYLIMIT &amp;      0.010 &amp;      0.053 &amp;      0.052 &amp;      0.266 &amp;      0.218 &amp;      0.287 \\
+\hline
+MINCOME &amp;      0.114 &amp;      0.522 &amp;            &amp;            &amp;            &amp;            \\
+LINCOME &amp;      0.536 &amp;      2.148 &amp;            &amp;            &amp;            &amp;            \\
+NPOOR &amp;      0.453 &amp;      1.243 &amp;            &amp;            &amp;            &amp;            \\
+POORNEG &amp;     -0.078 &amp;     -0.308 &amp;     -0.406 &amp;     -2.129 &amp;     -0.356 &amp;     -0.595 \\
+INSURE &amp;      0.794 &amp;      3.068 &amp;            &amp;            &amp;            &amp;            \\
+\hline
+Escala &amp;      1.409 &amp;      9.779 &amp;      1.280 &amp;      9.854 &amp;      0.026 &amp;     17.720 \\
+\hline
+\scriptsize{Log-Verosimilitud} &amp; -1,558.67  &amp;&amp;  -1,567.93   &amp;&amp; -1,669.02  \\
+AIC &amp;   3,163.34 &amp;&amp;  3,163.86 &amp;&amp;  3,366.04 \\
+\hline
+\end{array}
+}
+\]</span></p>
+<h5 style="text-align: center;">
+<a id="displayCode.Tab136.Hide" href="javascript:togglecode('toggleCode.Tab136.Hide','displayCode.Tab136.Hide');"><i><strong>Código R para generar la Tabla 13.6</strong></i></a>
+</h5>
+<div id="toggleCode.Tab136.Hide" style="display: none">
+<p>Como se señaló en el prefacio, la mayor parte del código para el libro, escrito alrededor de 2008, estaba en SAS. El código ilustrativo proporcionado aquí, en <code>R</code>, presenta algunas ligeras discrepancias con el original.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="C13GLM.html#cb90-1" tabindex="-1"></a>Hexpend <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/HealthExpend.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb90-2"><a href="C13GLM.html#cb90-2" tabindex="-1"></a><span class="co">#  Tabla 13.6</span></span>
+<span id="cb90-3"><a href="C13GLM.html#cb90-3" tabindex="-1"></a><span class="co">#POSEXP = 1*(Hexpend$EXPENDIP&gt;0)</span></span>
+<span id="cb90-4"><a href="C13GLM.html#cb90-4" tabindex="-1"></a>HexpendPos  <span class="ot">&lt;-</span> <span class="fu">subset</span>(Hexpend, EXPENDIP <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb90-5"><a href="C13GLM.html#cb90-5" tabindex="-1"></a></span>
+<span id="cb90-6"><a href="C13GLM.html#cb90-6" tabindex="-1"></a><span class="co">#  MODELO CON TODAS LAS VARIABLES</span></span>
+<span id="cb90-7"><a href="C13GLM.html#cb90-7" tabindex="-1"></a><span class="co">#  SE TUVO QUE AUMENTAR EL NÚMERO POR DEFECTO DE ITERACIONES PARA LA CONVERGENCIA</span></span>
+<span id="cb90-8"><a href="C13GLM.html#cb90-8" tabindex="-1"></a>model1 <span class="ot">=</span> <span class="fu">glm</span>(EXPENDIP<span class="sc">~</span>COUNTIP<span class="sc">+</span>AGE<span class="sc">+</span>GENDER</span>
+<span id="cb90-9"><a href="C13GLM.html#cb90-9" tabindex="-1"></a>    <span class="sc">+</span><span class="fu">factor</span>(RACE)<span class="sc">+</span><span class="fu">factor</span>(REGION)<span class="sc">+</span><span class="fu">factor</span>(EDUC)<span class="sc">+</span><span class="fu">factor</span>(PHSTAT)</span>
+<span id="cb90-10"><a href="C13GLM.html#cb90-10" tabindex="-1"></a>    <span class="sc">+</span>MNHPOOR<span class="sc">+</span>ANYLIMIT<span class="sc">+</span><span class="fu">factor</span>(INCOME)<span class="sc">+</span>insure, </span>
+<span id="cb90-11"><a href="C13GLM.html#cb90-11" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">glm.control</span>(<span class="at">maxit =</span> <span class="dv">50</span>), </span>
+<span id="cb90-12"><a href="C13GLM.html#cb90-12" tabindex="-1"></a>    <span class="at">data=</span>HexpendPos,<span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>))</span>
+<span id="cb90-13"><a href="C13GLM.html#cb90-13" tabindex="-1"></a>output1 <span class="ot">&lt;-</span> <span class="fu">summary</span>(model1 )</span>
+<span id="cb90-14"><a href="C13GLM.html#cb90-14" tabindex="-1"></a>tidy_model <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(model1)</span>
+<span id="cb90-15"><a href="C13GLM.html#cb90-15" tabindex="-1"></a><span class="fu">kable</span>(tidy_model, <span class="at">format =</span> <span class="st">&quot;html&quot;</span>, <span class="at">digits =</span> <span class="dv">3</span>, </span>
+<span id="cb90-16"><a href="C13GLM.html#cb90-16" tabindex="-1"></a>      <span class="at">table.attr =</span> <span class="st">&quot;class=&#39;table table-striped&#39;&quot;</span>, </span>
+<span id="cb90-17"><a href="C13GLM.html#cb90-17" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">&quot;Resumen del Modelo de Regresión Gamma&quot;</span>)</span></code></pre></div>
+<table class="table table-striped">
+<caption>
+<span id="tab:Tab1136">Tabla 13.6: </span>Resumen del Modelo de Regresión Gamma
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+6.211
+</td>
+<td style="text-align:right;">
+0.664
+</td>
+<td style="text-align:right;">
+9.352
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+COUNTIP
+</td>
+<td style="text-align:right;">
+0.682
+</td>
+<td style="text-align:right;">
+0.094
+</td>
+<td style="text-align:right;">
+7.287
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AGE
+</td>
+<td style="text-align:right;">
+0.021
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+2.989
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GENDER
+</td>
+<td style="text-align:right;">
+-0.238
+</td>
+<td style="text-align:right;">
+0.172
+</td>
+<td style="text-align:right;">
+-1.382
+</td>
+<td style="text-align:right;">
+0.169
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(RACE)BLACK
+</td>
+<td style="text-align:right;">
+0.182
+</td>
+<td style="text-align:right;">
+0.512
+</td>
+<td style="text-align:right;">
+0.356
+</td>
+<td style="text-align:right;">
+0.722
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(RACE)NATIV
+</td>
+<td style="text-align:right;">
+-0.697
+</td>
+<td style="text-align:right;">
+0.732
+</td>
+<td style="text-align:right;">
+-0.953
+</td>
+<td style="text-align:right;">
+0.343
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(RACE)OTHER
+</td>
+<td style="text-align:right;">
+0.726
+</td>
+<td style="text-align:right;">
+0.707
+</td>
+<td style="text-align:right;">
+1.027
+</td>
+<td style="text-align:right;">
+0.306
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(RACE)WHITE
+</td>
+<td style="text-align:right;">
+0.513
+</td>
+<td style="text-align:right;">
+0.481
+</td>
+<td style="text-align:right;">
+1.066
+</td>
+<td style="text-align:right;">
+0.289
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(REGION)NORTHEAST
+</td>
+<td style="text-align:right;">
+-0.628
+</td>
+<td style="text-align:right;">
+0.238
+</td>
+<td style="text-align:right;">
+-2.642
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(REGION)SOUTH
+</td>
+<td style="text-align:right;">
+-0.256
+</td>
+<td style="text-align:right;">
+0.199
+</td>
+<td style="text-align:right;">
+-1.288
+</td>
+<td style="text-align:right;">
+0.200
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(REGION)WEST
+</td>
+<td style="text-align:right;">
+-0.261
+</td>
+<td style="text-align:right;">
+0.233
+</td>
+<td style="text-align:right;">
+-1.118
+</td>
+<td style="text-align:right;">
+0.266
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(EDUC)HIGHSCH
+</td>
+<td style="text-align:right;">
+0.261
+</td>
+<td style="text-align:right;">
+0.193
+</td>
+<td style="text-align:right;">
+1.356
+</td>
+<td style="text-align:right;">
+0.177
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(EDUC)LHIGHSC
+</td>
+<td style="text-align:right;">
+0.411
+</td>
+<td style="text-align:right;">
+0.225
+</td>
+<td style="text-align:right;">
+1.828
+</td>
+<td style="text-align:right;">
+0.070
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(PHSTAT)FAIR
+</td>
+<td style="text-align:right;">
+-0.165
+</td>
+<td style="text-align:right;">
+0.314
+</td>
+<td style="text-align:right;">
+-0.524
+</td>
+<td style="text-align:right;">
+0.601
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(PHSTAT)GOOD
+</td>
+<td style="text-align:right;">
+0.063
+</td>
+<td style="text-align:right;">
+0.227
+</td>
+<td style="text-align:right;">
+0.276
+</td>
+<td style="text-align:right;">
+0.783
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(PHSTAT)POOR
+</td>
+<td style="text-align:right;">
+0.026
+</td>
+<td style="text-align:right;">
+0.298
+</td>
+<td style="text-align:right;">
+0.088
+</td>
+<td style="text-align:right;">
+0.930
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(PHSTAT)VGOO
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+0.237
+</td>
+<td style="text-align:right;">
+0.076
+</td>
+<td style="text-align:right;">
+0.939
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MNHPOOR
+</td>
+<td style="text-align:right;">
+-0.397
+</td>
+<td style="text-align:right;">
+0.238
+</td>
+<td style="text-align:right;">
+-1.664
+</td>
+<td style="text-align:right;">
+0.098
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ANYLIMIT
+</td>
+<td style="text-align:right;">
+-0.006
+</td>
+<td style="text-align:right;">
+0.189
+</td>
+<td style="text-align:right;">
+-0.031
+</td>
+<td style="text-align:right;">
+0.976
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(INCOME)LINCOME
+</td>
+<td style="text-align:right;">
+0.551
+</td>
+<td style="text-align:right;">
+0.257
+</td>
+<td style="text-align:right;">
+2.147
+</td>
+<td style="text-align:right;">
+0.034
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(INCOME)MINCOME
+</td>
+<td style="text-align:right;">
+0.123
+</td>
+<td style="text-align:right;">
+0.211
+</td>
+<td style="text-align:right;">
+0.583
+</td>
+<td style="text-align:right;">
+0.561
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(INCOME)NPOOR
+</td>
+<td style="text-align:right;">
+0.463
+</td>
+<td style="text-align:right;">
+0.354
+</td>
+<td style="text-align:right;">
+1.308
+</td>
+<td style="text-align:right;">
+0.193
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor(INCOME)POOR
+</td>
+<td style="text-align:right;">
+-0.068
+</td>
+<td style="text-align:right;">
+0.251
+</td>
+<td style="text-align:right;">
+-0.273
+</td>
+<td style="text-align:right;">
+0.785
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+insure
+</td>
+<td style="text-align:right;">
+0.789
+</td>
+<td style="text-align:right;">
+0.257
+</td>
+<td style="text-align:right;">
+3.068
+</td>
+<td style="text-align:right;">
+0.003
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="C13GLM.html#cb91-1" tabindex="-1"></a><span class="co">#  MODELO REDUCIDO</span></span>
+<span id="cb91-2"><a href="C13GLM.html#cb91-2" tabindex="-1"></a>HexpendPos<span class="sc">$</span>BLACK <span class="ot">=</span> (HexpendPos<span class="sc">$</span>RACE <span class="sc">==</span> <span class="st">&quot;BLACK&quot;</span>)</span>
+<span id="cb91-3"><a href="C13GLM.html#cb91-3" tabindex="-1"></a>HexpendPos<span class="sc">$</span>POOR <span class="ot">=</span> (HexpendPos<span class="sc">$</span>PHSTAT <span class="sc">==</span> <span class="st">&quot;POOR&quot;</span>)</span>
+<span id="cb91-4"><a href="C13GLM.html#cb91-4" tabindex="-1"></a>HexpendPos<span class="sc">$</span>POORNEG <span class="ot">=</span> (HexpendPos<span class="sc">$</span>INCOME <span class="sc">==</span> <span class="st">&quot;POOR&quot;</span>)</span>
+<span id="cb91-5"><a href="C13GLM.html#cb91-5" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(EXPENDIP <span class="sc">~</span> COUNTIP <span class="sc">+</span> AGE <span class="sc">+</span> GENDER <span class="sc">+</span></span>
+<span id="cb91-6"><a href="C13GLM.html#cb91-6" tabindex="-1"></a>    <span class="fu">factor</span>(BLACK) <span class="sc">+</span> <span class="fu">factor</span>(REGION) <span class="sc">+</span> <span class="fu">factor</span>(EDUC) <span class="sc">+</span> <span class="fu">factor</span>(POOR) <span class="sc">+</span></span>
+<span id="cb91-7"><a href="C13GLM.html#cb91-7" tabindex="-1"></a>    MNHPOOR <span class="sc">+</span> ANYLIMIT <span class="sc">+</span> <span class="fu">factor</span>(POORNEG), </span>
+<span id="cb91-8"><a href="C13GLM.html#cb91-8" tabindex="-1"></a>    <span class="at">data=</span>HexpendPos, <span class="at">family=</span><span class="fu">Gamma</span>(<span class="at">link=</span><span class="st">&quot;log&quot;</span>) )</span>
+<span id="cb91-9"><a href="C13GLM.html#cb91-9" tabindex="-1"></a><span class="co">#summary(model2) </span></span>
+<span id="cb91-10"><a href="C13GLM.html#cb91-10" tabindex="-1"></a><span class="fu">anova</span>(model1, model2)</span></code></pre></div>
+<p>Analysis of Deviance Table</p>
+<p>Model 1: EXPENDIP ~ COUNTIP + AGE + GENDER + factor(RACE) + factor(REGION) +
+factor(EDUC) + factor(PHSTAT) + MNHPOOR + ANYLIMIT + factor(INCOME) +
+insure
+Model 2: EXPENDIP ~ COUNTIP + AGE + GENDER + factor(BLACK) + factor(REGION) +
+factor(EDUC) + factor(POOR) + MNHPOOR + ANYLIMIT + factor(POORNEG)
+Resid. Df Resid. Dev Df Deviance
+1 133 123.954<br />
+2 143 137.876 -10 -13.9218</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="C13GLM.html#cb92-1" tabindex="-1"></a>Hexpend58 <span class="ot">&lt;-</span> <span class="fu">subset</span>(HexpendPos, <span class="sc">!</span>(EXPENDIP<span class="sc">&gt;</span><span class="dv">600000</span>))</span>
+<span id="cb92-2"><a href="C13GLM.html#cb92-2" tabindex="-1"></a><span class="co">#  MODELO REDUCIDO - INVERSA GAUSSIANA</span></span>
+<span id="cb92-3"><a href="C13GLM.html#cb92-3" tabindex="-1"></a><span class="co">#  ¡NO QUIERE CONVERGER!</span></span>
+<span id="cb92-4"><a href="C13GLM.html#cb92-4" tabindex="-1"></a><span class="co"># model3 &lt;- glm(EXPENDIP ~ COUNTIP + AGE + GENDER +</span></span>
+<span id="cb92-5"><a href="C13GLM.html#cb92-5" tabindex="-1"></a><span class="co">#     factor(BLACK) + factor(REGION) + factor(EDUC) + factor(POOR) +</span></span>
+<span id="cb92-6"><a href="C13GLM.html#cb92-6" tabindex="-1"></a><span class="co">#     MNHPOOR + ANYLIMIT + factor(POORNEG), </span></span>
+<span id="cb92-7"><a href="C13GLM.html#cb92-7" tabindex="-1"></a><span class="co">#     data=Hexpend58, family=inverse.gaussian(link = &quot;log&quot;) )</span></span>
+<span id="cb92-8"><a href="C13GLM.html#cb92-8" tabindex="-1"></a><span class="co"># summary(model3)</span></span>
+<span id="cb92-9"><a href="C13GLM.html#cb92-9" tabindex="-1"></a><span class="co">#   TAMBIÉN PROBLEMAS CON family=inverse.gaussian(link = &quot;1/mu^2&quot;)</span></span></code></pre></div>
+</div>
+</div>
+<div id="S:Sec135" class="section level2 hasAnchor" number="13.5">
+<h2><span class="header-section-number">13.5</span> Residuales<a href="C13GLM.html#S:Sec135" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una forma de seleccionar un modelo adecuado es ajustar una especificación tentativa y analizar formas de mejorarlo. Este método diagnóstico se basa en los residuales. En el modelo lineal, definimos los residuales como la respuesta menos los valores ajustados correspondientes. En un contexto de GLM, nos referimos a estos como “residuales crudos”, denotados como <span class="math inline">\(y_i - \widehat{\mu}_i\)</span>. Como hemos visto, los residuales son útiles para:</p>
+<ul>
+<li>descubrir nuevas covariables o los efectos de patrones no lineales en covariables existentes,</li>
+<li>identificar observaciones con mal ajuste,</li>
+<li>cuantificar los efectos de las observaciones individuales en los parámetros del modelo, y</li>
+<li>revelar otros patrones del modelo, como heterocedasticidad o tendencias temporales.</li>
+</ul>
+<p>Como se enfatiza en esta sección, los residuales también son los componentes básicos de muchas estadísticas de bondad de ajuste.</p>
+<p>Como vimos en la Sección 11.1 sobre variables dependientes binarias, el análisis de los residuales crudos puede ser irrelevante en algunos contextos no lineales. Cox y Snell (1968, 1971) introdujeron una noción general de residuales que es más útil en modelos no lineales que los simples residuales crudos. Para nuestras aplicaciones, asumimos que <span class="math inline">\(y_i\)</span> tiene una función de distribución F(<span class="math inline">\(\cdot\)</span>) que está indexada por las variables explicativas <span class="math inline">\(\mathbf{x}_i\)</span> y un vector de parámetros <span class="math inline">\(\boldsymbol \theta\)</span> denotado como F(<span class="math inline">\(\mathbf{x}_i,\boldsymbol \theta\)</span>). Aquí, la función de distribución es común a todas las observaciones, pero la distribución varía a través de las variables explicativas. El vector de parámetros <span class="math inline">\(\boldsymbol \theta\)</span> incluye los parámetros de regresión <span class="math inline">\(\boldsymbol \beta\)</span> así como los parámetros de escala. Con conocimiento de F(<span class="math inline">\(\cdot\)</span>), ahora asumimos que se puede calcular una nueva función R(<span class="math inline">\(\cdot\)</span>) tal que <span class="math inline">\(\varepsilon_i = \mathrm{R}(y_i; \mathbf{x}_i,\boldsymbol \theta)\)</span>, donde <span class="math inline">\(\varepsilon_i\)</span> son distribuidos idénticamente e independientemente. Aquí, la función R(<span class="math inline">\(\cdot\)</span>) depende de las variables explicativas <span class="math inline">\(\mathbf{x}_i\)</span> y los parámetros <span class="math inline">\(\boldsymbol \theta\)</span>. Los residuales de Cox-Snell son entonces <span class="math inline">\(e_i = \mathrm{R}(y_i; \mathbf{x}_i,\widehat{\boldsymbol \theta})\)</span>. Si el modelo está bien especificado y las estimaciones de los parámetros <span class="math inline">\(\widehat{\boldsymbol \theta}\)</span> están cerca de los parámetros del modelo <span class="math inline">\(\boldsymbol \theta\)</span>, entonces los residuales <span class="math inline">\(e_i\)</span> deberían estar cerca de ser i.i.d.</p>
+<p>Para ilustrar, en el modelo lineal utilizamos la función de residuales
+<span class="math inline">\(\mathrm{R}(y_i; \mathbf{x}_i,\boldsymbol \theta) = y_i - \mathbf{x}_i^{\prime} \boldsymbol \beta = y_i - \mu_i = \varepsilon_i\)</span>, resultando en residuales crudos (ordinarios). Otra opción es reescalar mediante la desviación estándar
+<span class="math display">\[
+\mathrm{R}(y_i; \mathbf{x}_i,\boldsymbol \theta) = \frac{y_i -
+\mu_i}{\sqrt{\mathrm{Var~} y_i}} ,
+\]</span>
+que produce <em>residuales de Pearson</em>.</p>
+<p>Otro tipo de residual se basa en transformar primero la respuesta con una función conocida h(<span class="math inline">\(\cdot\)</span>),
+<span class="math display">\[
+\mathrm{R}(y_i; \mathbf{x}_i,\boldsymbol \theta) =
+\frac{\mathrm{h}(y_i) - \mathrm{E~}
+\mathrm{h}(y_i)}{\sqrt{\mathrm{Var~}\mathrm{h}(y_i)}}.
+\]</span>
+Elegir la función de modo que h(<span class="math inline">\(y_i\)</span>) sea aproximadamente distribuida normalmente produce <em>residuales de Anscombe</em>. Otra elección popular es seleccionar la transformación de modo que la varianza sea estabilizada. <a href="C13GLM.html#Tab137">Tabla 13.7</a> presenta transformaciones para las distribuciones binomial, Poisson y gamma.</p>
+<p><a id=Tab137></a></p>
+<p><span id="Tab137">Tabla 13.7</span>. <strong>Transformaciones Aproximadas a la Normalidad y de Estabilización de Varianza</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{lcc}
+\hline
+\text{Distribución} &amp; \text{Transformación Aproximada a la Normalidad} &amp; \text{Transformación de Estabilización de Varianza} \\
+&amp; \text{Transformación} &amp; \text{Transformación} \\
+\hline \text{Binomial}(m,p) &amp;
+\frac{\mathrm{h}_B(y/m)-[\mathrm{h}_B(p)+(p(1-p))^{-1/3}(2p-1)/(6m)]}{(p(1-p)^{1/6}/\sqrt{m})}
+&amp;
+\frac{\sin^{-1}(\sqrt{y/m})-\sin^{-1}(\sqrt{p})}{a/(2\sqrt{m})} \\
+\text{Poisson}(\lambda) &amp; 1.5 \lambda^{-1/6} \left[
+y^{2/3}-(\lambda^{2/3}-\lambda^{-1/3}/9) \right]  &amp;
+2(\sqrt{y}-\sqrt{\lambda})\\
+\text{Gamma}(\alpha, \gamma) &amp;  3 \alpha^{1/6} \left[
+(y/\gamma)^{1/3}-(\alpha^{1/3}-\alpha^{-2/3}/9) \right]
+&amp; \text{No considerado}\\
+\hline \\
+\end{array}
+}
+\]</span>
+<em>Nota</em>: <span class="math inline">\(\mathrm{h}_B(u) = \int_0^u s^{-1/3} (1-s)^{-1/3}ds\)</span> es la función beta incompleta evaluada en <span class="math inline">\((2/3, 2/3)\)</span>, hasta una constante escalar. <em>Fuente: Pierce y Schafer (1986)</em>.</p>
+<p>Otra opción ampliamente utilizada en estudios de GLM son los <em>residuales de devianza</em>, definidos como
+<span class="math display">\[
+\mathrm{sign} \left(y_i -
+\widehat{\mu}_i \right)
+\sqrt{2  \left( \ln \mathrm{f}(y_i;\theta_{i,SAT}) - \ln
+\mathrm{f}(y_i;\widehat{\theta}_{i})
+\right)}.
+\]</span>
+La Sección <a href="C13GLM.html#S:Sec1333">13.3.3</a> introdujo las estimaciones de los parámetros del modelo saturado, <span class="math inline">\(\theta_{i,SAT}\)</span>. Como mencionan Pierce y Schafer (1986), los residuales de devianza son muy cercanos a los residuales de Anscombe en muchos casos; podemos verificar los residuales de devianza para la normalidad aproximada. Además, los residuales de devianza pueden definirse fácilmente para cualquier modelo GLM y son fáciles de calcular.</p>
+</div>
+<div id="S:Sec136" class="section level2 hasAnchor" number="13.6">
+<h2><span class="header-section-number">13.6</span> Distribución de Tweedie<a href="C13GLM.html#S:Sec136" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Hemos visto que la familia exponencial natural incluye distribuciones continuas, como la normal y gamma, así como distribuciones discretas, como la binomial y Poisson. También incluye distribuciones que son mezclas de componentes discretos y continuos. En la modelización de reclamaciones de seguros, la mezcla más utilizada es la distribución de Tweedie (1984). Esta tiene una masa positiva en cero, representando la ausencia de reclamaciones, y un componente continuo para valores positivos que representan el monto de una reclamación.</p>
+<p>La distribución de Tweedie se define como una suma de Poisson de variables aleatorias gamma, conocida como una <em>pérdida agregada</em> en ciencias actuariales. Específicamente, supongamos que <span class="math inline">\(N\)</span> tiene una distribución de Poisson con media <span class="math inline">\(\lambda\)</span>, representando el número de reclamaciones. Sea {<span class="math inline">\(y_j\)</span>} una secuencia i.i.d., independiente de <span class="math inline">\(N\)</span>, con cada <span class="math inline">\(y_j\)</span> siguiendo una distribución gamma con parámetros <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\gamma\)</span>, representando el monto de una reclamación. Entonces, <span class="math inline">\(S_N = y_1 + \ldots + y_N\)</span> es una suma de Poisson de gammas. La Sección 16.5 discutirá con más detalle los modelos de pérdidas agregadas. Esta sección se enfoca en el caso especial importante de la distribución de Tweedie.</p>
+<p>Para entender el aspecto de mezcla de la distribución de Tweedie, primero observa que es sencillo calcular la probabilidad de tener cero reclamaciones como
+<span class="math display">\[
+\Pr ( S_N=0) = \Pr (N=0) = e^{-\lambda}.
+\]</span>
+La función de distribución puede calcularse usando expectativas condicionales,
+<span class="math display">\[
+\Pr ( S_N \le y) = e^{-\lambda}+\sum_{n=1}^{\infty} \Pr(N=n) \Pr(S_n \le y), ~~~~~y \geq 0.
+\]</span>
+Dado que la suma de gammas i.i.d. es una gamma, <span class="math inline">\(S_n\)</span> (no <span class="math inline">\(S_N\)</span>) tiene una distribución gamma con parámetros <span class="math inline">\(n\alpha\)</span> y <span class="math inline">\(\gamma\)</span>. Así, para <span class="math inline">\(y&gt;0\)</span>, la densidad de la distribución de Tweedie es
+<span class="math display" id="eq:eq139">\[\begin{equation}
+\mathrm{f}_{S}(y) = \sum_{n=1}^{\infty} e^{-\lambda} \frac{\lambda ^n}{n!} \frac{\gamma^{n \alpha}}{\Gamma(n \alpha)} y^{n \alpha -1} e^{-y \gamma}.
+\tag{13.9}
+\end{equation}\]</span></p>
+<p>A primera vista, esta densidad no parece pertenecer a la familia exponencial lineal dada en la ecuación <a href="C13GLM.html#eq:eq132">(13.2)</a>. Para ver la relación, primero calculamos los momentos usando expectativas iteradas como
+<span class="math display" id="eq:eq1310">\[\begin{equation}
+\mathrm{E~}S_N = \lambda \frac{\alpha}{\gamma}~~~~~~\mathrm{y}~~~~~ \mathrm{Var~}S_N = \frac{\lambda \alpha}{\gamma^2} (1+\alpha).
+\tag{13.10}
+\end{equation}\]</span>
+Ahora, definimos tres parámetros <span class="math inline">\(\mu, \phi, p\)</span> mediante las relaciones
+<span class="math display">\[
+\lambda = \frac{\mu^{2-p}}{\phi (2-p)},~~~~~~\alpha = \frac{2-p}{p-1}~~~~~~\mathrm{y}~~~~~ \frac{1}{\gamma} = \phi(p-1)\mu^{p-1}.
+\]</span>
+Al insertar estos nuevos parámetros en la ecuación <a href="C13GLM.html#eq:eq139">(13.9)</a> obtenemos
+<span class="math display" id="eq:eq1311">\[\begin{equation}
+\mathrm{f}_{S}(y) = \exp \left[ \frac{-1}{\phi} \left( \frac{\mu^{2-p}}{2-p} + \frac{y}{(p-1)\mu^{p-1}} \right) + S(y,\phi) \right].
+\tag{13.11}
+\end{equation}\]</span>
+Dejamos el cálculo de <span class="math inline">\(S(y,\phi)\)</span> como un ejercicio.</p>
+<p>Así, la distribución de Tweedie pertenece a la familia exponencial lineal. Cálculos sencillos muestran que
+<span class="math display" id="eq:eq1312">\[\begin{equation}
+\mathrm{E~}S_N = \mu~~~~~~\mathrm{y}~~~~~ \mathrm{Var~}S_N = \phi \mu^p,
+\tag{13.12}
+\end{equation}\]</span>
+donde <span class="math inline">\(1&lt;p&lt;2.\)</span> Al examinar nuestra función de varianza <a href="C13GLM.html#Tab131">Tabla 13.1</a>, la distribución de Tweedie también puede verse como una elección que es intermedia entre las distribuciones Poisson y gamma.</p>
+</div>
+<div id="S:Sec137" class="section level2 hasAnchor" number="13.7">
+<h2><span class="header-section-number">13.7</span> Lecturas adicionales y referencias<a href="C13GLM.html#S:Sec137" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Un tratamiento más extenso de los GLM puede encontrarse en el trabajo clásico de McCullagh y Nelder (1989) o la introducción más sencilla de Dobson (2002). de Jong y Heller (2008) proporcionan una reciente introducción a los GLM con un énfasis especial en seguros.</p>
+<p>Los GLM han recibido una considerable atención de parte de los actuarios de seguros de propiedad y accidentes (generales) en los últimos tiempos. Véase Anderson et al. (2004) y Clark y Thayer (2004) para introducciones.</p>
+<p>Mildenhall (1999) proporciona un análisis sistemático de la conexión entre los modelos GLM y los algoritmos para evaluar diferentes planes de tarificación. Fu y Wu (2008) proporcionan una versión actualizada, introduciendo una clase más amplia de algoritmos iterativos que se conectan bien con los modelos GLM.</p>
+<p>Para más información sobre la distribución de Tweedie, consulte J{}rgensen y de Souza (1994) y Smyth y J{}rgensen (2002).</p>
+<p><strong>Referencias del capítulo</strong></p>
+<ul>
+<li>Anderson, Duncan, Sholom Feldblum, Claudine Modlin, Doris
+Schirmacher, Ernesto Schirmacher and Neeza Thandi (2004). A
+practitioner’s guide to generalized linear models. <em>Casualty Actuarial Society 2004 Discussion Papers</em> 1-116, Casualty Actuarial Society.</li>
+<li>Baxter, L. A., S. M. Coutts and G. A. F. Ross (1980). Applications of linear models in motor insurance. <em>Proceedings of the 21st International Congress of Actuaries.</em> Zurich. pp. 11-29.</li>
+<li>Clark, David R. and Charles A. Thayer (2004). A primer on the exponential family of distributions. <em>Casualty Actuarial Society 2004 Discussion Papers</em> 117-148, Casualty Actuarial Society.</li>
+<li>Cox, David R. and E. J. Snell (1968). A general definition of
+residuals. <em>Journal of the Royal Statistical Society</em>, Series
+B, 30, 248-275.</li>
+<li>Cox, David R. and E. J. Snell (1971). On test statistics computed
+from residuals. <em>Biometrika</em> 71, 589-594.</li>
+<li>Dobson, Annette J. (2002). <em>An Introduction to Generalized Linear Models, Second Edition.</em> Chapman &amp; Hall, London.</li>
+<li>Fu, Luyang and Cheng-sheng Peter Wu (2008). General iteration algorithm for classification ratemaking. <em>Variance</em> 1(2), 193-213, Casualty Actuarial Society.</li>
+<li>de Jong, Piet and Gillian Z. Heller (2008). <em>Generalized Linear Models for Insurance Data</em>. Cambridge University Press, Cambridge, UK.</li>
+<li>J{}rgensen, Bent and Marta C. Paes de Souza (1994). Fitting Tweedie’s compound Poisson model to insurance claims data. <em>Scandinavian Actuarial Journal</em> 1994;1, 69-93.</li>
+<li>McCullagh, P. and J.A. Nelder (1989). <em>Generalized Linear Models, Second Edition.</em> Chapman &amp; Hall, London.</li>
+<li>Mildenhall, Stephen J. (1999). A systematic relationship between minimum bias and generalized linear models. <em>Casualty Actuarial Society Proceedings</em> 86, Casualty Actuarial Society.</li>
+<li>Pierce, Donald A. and Daniel W. Schafer (1986). Residuals in generalized linear models. <em>Journal of the American Statistical Association</em> 81, 977-986.</li>
+<li>Smyth, Gordon K. and Bent J{}rgensen (2002). Fitting Tweedie’s compound Poisson model to insurance claims data: Dispersion modelling. <em>Astin Bulletin</em> 32(1), 143-157.</li>
+<li>Tweedie, M. C. K. (1984). An index which distinguishes between some important exponential families. In <em>Statistics: Applications and New Directions. </em>Proceedings of the Indian Statistical Golden Jubilee International Conference* (Editors J. K. Ghosh and J. Roy), pp. 579-604. Indian Statistical Institute, Calcutta.</li>
+</ul>
+</div>
+<div id="S:Sec138" class="section level2 hasAnchor" number="13.8">
+<h2><span class="header-section-number">13.8</span> Ejercicios<a href="C13GLM.html#S:Sec138" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>13.1 Verifica las entradas en <a href="C13GLM.html#Tab138">Tabla 13.8</a> para la distribución gamma. Específicamente:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Demuestra que la distribución gamma es un miembro de la familia exponencial lineal de distribuciones.</p></li>
+<li><p>Describe los componentes de la familia exponencial lineal (<span class="math inline">\(\theta, \phi, b(\theta), S(y,\phi)\)</span>) en términos de los parámetros de la distribución gamma.</p></li>
+<li><p>Demuestra que la media y la varianza de la distribución gamma y de las distribuciones de la familia exponencial lineal coinciden.</p></li>
+</ol>
+<p>13.2 <strong>Clasificación de Tarificación</strong>. Este ejercicio considera los datos descritos en el ejemplo de clasificación de tarificación de la Sección <a href="C13GLM.html#S:Sec1322">13.2.2</a>, utilizando los datos de la <a href="C13GLM.html#Tab133">Tabla 13.3</a>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Ajusta un modelo de regresión gamma usando una función de enlace logarítmica con los conteos de reclamaciones como ponderaciones (<span class="math inline">\(w_i\)</span>). Utiliza las variables explicativas categóricas de grupo de edad y uso del vehículo para estimar la severidad media esperada.</p></li>
+<li><p>Con base en tus parámetros estimados en la parte (a), verifica las severidades esperadas estimadas en la <a href="C13GLM.html#Tab134">Tabla 13.4</a>.</p></li>
+</ol>
+<p>13.3 Verifica que la distribución de Tweedie es un miembro de la familia exponencial lineal de distribuciones comprobando la ecuación <a href="C13GLM.html#eq:eq139">(13.9)</a>. En particular, proporciona una expresión para <span class="math inline">\(S(y,\phi)\)</span> (nota que <span class="math inline">\(S(y,\phi)\)</span> también depende de <span class="math inline">\(p\)</span> pero no de <span class="math inline">\(\mu\)</span>). Puedes consultar a Clark y Thayer (2004) para verificar tu trabajo. Además, verifica los momentos en la ecuación <a href="C13GLM.html#eq:eq1310">(13.10)</a>.</p>
+</div>
+<div id="S:Sec139" class="section level2 hasAnchor" number="13.9">
+<h2><span class="header-section-number">13.9</span> Suplementos Técnicos - Familia Exponencial<a href="C13GLM.html#S:Sec139" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="S:Sec1391" class="section level3 hasAnchor" number="13.9.1">
+<h3><span class="header-section-number">13.9.1</span> Familia Exponencial Lineal de Distribuciones<a href="C13GLM.html#S:Sec1391" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La distribución de la variable aleatoria <span class="math inline">\(y\)</span> puede ser discreta, continua o una mezcla. Así, f(.) en la ecuación <a href="C13GLM.html#eq:eq132">(13.2)</a> puede interpretarse como una función de densidad o una función de masa, dependiendo de la aplicación. <a href="C13GLM.html#Tab138">Tabla 13.8</a> proporciona varios ejemplos, incluyendo las distribuciones normal, binomial y Poisson.</p>
+<p><a id=Tab138></a></p>
+<p><span id="Tab138">Tabla 13.8</span>. <strong>Distribuciones Seleccionadas de la Familia Exponencial de Un Parámetro</strong></p>
+<p><span class="math display">\[
+\scriptsize{
+\begin{array}{l|ccccc}
+\hline
+             &amp;             &amp; \text{Densidad o} &amp; &amp; &amp; \\
+\text{Distribución} &amp; \text{Parámetros} &amp; \text{Función de Masa} &amp; \text{Componentes} &amp; \mathrm{E}~y &amp; \mathrm{Var}~y \\
+\hline \text{General} &amp; \theta,~ \phi &amp;
+\exp \left( \frac{y\theta -b(\theta )}{\phi } +S\left( y,\phi \right) \right)
+&amp; \theta,~ \phi, b(\theta), S(y, \phi) &amp; b^{\prime}(\theta) &amp; b^{\prime \prime}(\theta) \phi \\
+\text{Normal} &amp; \mu, \sigma^2 &amp;
+\frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{(y-\mu )^{2}}{2\sigma ^{2}}\right) &amp; \mu, \sigma^2,
+\frac{\theta^2}{2}, - \left(\frac{y^2}{2\phi} + \frac{\ln(2 \pi \phi)}{2} \right) &amp; \theta=\mu &amp; \phi= \sigma^2  \\
+\text{Binomial} &amp; \pi &amp; {n \choose y} \pi ^y (1-\pi)^{n-y} &amp; \ln
+\left(\frac{\pi}{1-\pi} \right), 1, n \ln(1+e^{\theta} ),  &amp; n
+\frac {e^{\theta}}{1+e^{\theta}}  &amp; n \frac
+{e^{\theta}}{(1+e^{\theta})^2}  \\
+&amp;  &amp;  &amp;  \ln {n \choose y}  &amp;  = n \pi &amp;  = n \pi (1-\pi) \\
+\text{Poisson} &amp; \lambda &amp;  \frac{\lambda^y}{y!} \exp(-\lambda)  &amp;
+\ln \lambda, 1, e^{\theta}, - \ln (y!)  &amp; e^{\theta} = \lambda  &amp;
+e^{\theta} = \lambda  \\
+\text{Negativa} &amp; r,p &amp;  \frac{\Gamma(y+r)}{y! \Gamma(r)} p^r ( 1-p)^y &amp; \ln(1-p), 1, -r \ln(1-e^{\theta}), &amp;
+\frac{r(1-p)}{p}
+&amp; \frac{r(1-p)}{p^2}  \\
+\ \ \ \text{Binomial}^{\ast} &amp; &amp; &amp; ~~~\ln \left[ \frac{\Gamma(y+r)}{y! \Gamma(r)} \right] &amp;  = \mu  &amp;
+= \mu+\mu^2/r
+\\
+\text{Gamma} &amp; \alpha, \gamma  &amp; \frac{\gamma ^ \alpha}{\Gamma (\alpha)}
+y^{\alpha -1 }\exp(-y \gamma)  &amp; - \frac{\gamma}{\alpha},
+\frac{1}{\alpha}, - \ln ( - \theta), -\phi^{-1} \ln \phi &amp;  -
+\frac{1}{\theta} = \frac{\alpha}{\gamma}  &amp; \frac{\phi}{\theta ^2}
+=
+\frac{\alpha}{\gamma ^2}  \\
+&amp; &amp; &amp;  - \ln \left( \Gamma(\phi ^{-1}) \right) +
+(\phi^{-1} - 1) \ln y &amp; &amp; \\
+\text{Inversa} &amp; \mu, \lambda &amp; \sqrt{\frac{\lambda}{2 \pi y^3}
+} \exp \left(- \frac{\lambda (y-\mu)^2}{2 \mu^2 y} \right)  &amp;
+-1/( 2\mu^2), 1/\lambda, -\sqrt{-2 \theta},  &amp;  \left(-2 \theta
+\right)^{-1/2}  &amp; \phi (-2 \theta)^{-3/2}  \\
+\ \ \  \text{Gaussiana} &amp;  &amp; &amp;  \theta/(\phi y) - 0.5 \ln (\phi 2 \pi y^3 ) &amp; = \mu &amp; = \frac{\mu^3}{\lambda} \\
+\text{Tweedie} &amp; &amp; \textit{Ver Sección 13.6}\\
+\hline  \\
+\end{array}
+}
+\]</span>
+<span class="math inline">\(^{\ast}\)</span> Esto supone que el parámetro <span class="math inline">\(r\)</span> es fijo, pero no tiene que ser un número entero.</p>
+</div>
+<div id="S:Sec1392" class="section level3 hasAnchor" number="13.9.2">
+<h3><span class="header-section-number">13.9.2</span> Momentos<a href="C13GLM.html#S:Sec1392" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para evaluar los momentos de las familias exponenciales, es conveniente trabajar con la función generadora de momentos. Para simplificar, asumimos que la variable aleatoria <span class="math inline">\(y\)</span> es continua. Definimos la función generadora de momentos</p>
+<p><span class="math display">\[\begin{eqnarray*}
+M(s) &amp;=&amp; \mathrm{E}~ e^{sy} = \int \exp \left( sy+ \frac{y \theta - b(\theta)}{\phi} + S(y, \phi) \right) dy \\
+&amp;=&amp; \exp \left(\frac{b(\theta + s \phi) - b(\theta)}{\phi} \right) \int \exp \left( \frac{y(\theta + s\phi) - b(\theta+s\phi)}{\phi} + S(y, \phi) \right) dy \\
+&amp;=&amp; \exp \left(\frac{b(\theta + s \phi) - b(\theta)}{\phi} \right),
+\end{eqnarray*}\]</span>
+porque <span class="math inline">\(\int \exp \left( \frac{1}{\phi} \left[ y(\theta + s\phi) - b(\theta+s\phi) \right] + S(y, \phi) \right) dy=1\)</span>. Con esta expresión, podemos generar los momentos. Así, para la media, tenemos
+<span class="math display">\[\begin{eqnarray*}
+\mathrm{E}~ y &amp;=&amp; M^{\prime}(0) =  \left . \frac{\partial}{\partial s} \exp \left(\frac{b(\theta + s \phi) - b(\theta)}{\phi} \right) \right | _{s=0} \\
+&amp;=&amp; \left[ b^{\prime}(\theta + s \phi ) \exp \left( \frac{b(\theta + s \phi) - b(\theta)}{\phi} \right) \right] _{s=0} = b^{\prime}(\theta).
+\end{eqnarray*}\]</span></p>
+<p>De manera similar, para el segundo momento, tenemos
+<span class="math display">\[\begin{eqnarray*}
+M^{\prime \prime}(s) &amp;=&amp;  \frac{\partial}{\partial s} \left[ b^{\prime}(\theta + s \phi) \exp \left(\frac{b(\theta + s \phi) - b(\theta)}{\phi} \right) \right]  \\
+&amp;=&amp; \phi b^{\prime \prime}(\theta + s \phi) \exp \left(\frac{b(\theta + s \phi) - b(\theta)}{\phi} \right) + (b^{\prime}(\theta + s \phi))^2 \left(\frac{b(\theta + s \phi) - b(\theta)}{\phi} \right).
+\end{eqnarray*}\]</span>
+Esto produce <span class="math inline">\(\mathrm{E}y^2 = M^{\prime \prime}(0)\)</span> <span class="math inline">\(= \phi b^{\prime \prime}(\theta) + (b^{\prime}(\theta))^2\)</span> y <span class="math inline">\(\mathrm{Var}~y =\phi b^{\prime \prime}(\theta)\)</span>.</p>
+</div>
+<div id="S:Sec1393" class="section level3 hasAnchor" number="13.9.3">
+<h3><span class="header-section-number">13.9.3</span> Estimación de Máxima Verosimilitud para Enlaces Generales<a href="C13GLM.html#S:Sec1393" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para enlaces generales, ya no asumimos la relación <span class="math inline">\(\theta_i=\mathbf{x}_i^{\mathbf{\prime }}\boldsymbol \beta\)</span>, sino que asumimos que <span class="math inline">\(\boldsymbol \beta\)</span> está relacionado con <span class="math inline">\(\theta_i\)</span> a través de las relaciones <span class="math inline">\(\mu _i=b^{\prime }(\theta_i)\)</span> y <span class="math inline">\(\mathbf{x}_i^{\mathbf{\prime }}\boldsymbol \beta = g\left( \mu _i\right)\)</span>. Seguimos asumiendo que el parámetro de escala varía según la observación, de modo que <span class="math inline">\(\phi_i = \phi/w_i\)</span>, donde <span class="math inline">\(w_i\)</span> es una función de ponderación conocida. Usando la ecuación <a href="C13GLM.html#eq:eq134">(13.4)</a>, tenemos que el <span class="math inline">\(j\)</span>-ésimo elemento de la función de puntaje es
+<span class="math display">\[
+\frac{\partial }{\partial \beta _{j}}\ln \mathrm{f}\left( \mathbf{y}\right) =\sum_{i=1}^n  \frac{\partial \theta_i}{\partial \beta _{j}} \frac{y_i-\mu _i}{\phi _i},
+\]</span>
+ya que <span class="math inline">\(b^{\prime }(\theta_i)=\mu _i\)</span>. Ahora, usamos la regla de la cadena y la relación <span class="math inline">\(\mathrm{Var~}y_i=\phi _ib^{\prime \prime }(\theta_i)\)</span> para obtener
+<span class="math display">\[
+\frac{\partial \mu _i}{\partial \beta _{j}}=\frac{\partial b^{\prime }(\theta_i)}{\partial \beta _{j}}=b^{\prime \prime }(\theta_i)\frac{ \partial \theta_i}{\partial \beta _{j}}=\frac{\mathrm{Var~}y_i}{\phi _i}\frac{\partial \theta_i}{\partial \beta _{j}}.
+\]</span>
+Así, tenemos
+<span class="math display">\[
+\frac{\partial \theta_i}{\partial \beta _{j}}\frac{1}{\phi _i}=\frac{\partial \mu _i}{\partial \beta _{j}}\frac{1}{\mathrm{Var~}y_i}.
+\]</span>
+Esto produce
+<span class="math display">\[
+\frac{\partial }{\partial \beta _{j}}\ln \mathrm{f}\left( \mathbf{y}\right) =\sum_{i=1}^n  \frac{\partial \mu _i}{\partial \beta _{j}}\left( \mathrm{Var~}y_i\right) ^{-1}\left( y_i-\mu _i\right),
+\]</span>
+que resumimos como
+<span class="math display" id="eq:eq1313">\[\begin{equation}
+\frac{\partial  L(\boldsymbol \beta) }{\partial \boldsymbol \beta } =  \frac{\partial }{\partial \boldsymbol \beta }\ln \mathrm{f}\left( \mathbf{y}\right) =\sum_{i=1}^n  \frac{\partial \mu _i}{\partial \boldsymbol \beta}\left( \mathrm{Var~}y_i\right) ^{-1}\left( y_i-\mu _i\right),
+\tag{13.13}
+\end{equation}\]</span>
+que se conoce como la forma de las <em>ecuaciones de estimación generalizadas</em>.</p>
+<p>Resolver las raíces de la ecuación de puntaje <span class="math inline">\(L(\boldsymbol \beta) = \mathbf{0}\)</span> proporciona estimaciones de máxima verosimilitud, <span class="math inline">\(\mathbf{b}_{MLE}\)</span>. En general, esto requiere métodos numéricos iterativos. Una excepción es el siguiente caso especial.</p>
+<hr />
+<p><strong>Caso especial. Sin covariables</strong>. Supongamos que <span class="math inline">\(k=1\)</span> y que <span class="math inline">\(x_i =1\)</span>. Entonces, <span class="math inline">\(\beta = \eta = g(\mu)\)</span>, y <span class="math inline">\(\mu\)</span> no depende de <span class="math inline">\(i\)</span>. A partir de la relación <span class="math inline">\(\mathrm{Var~}y_i = \phi b^{\prime \prime}(\theta)/w_i\)</span> y la ecuación <a href="C13GLM.html#eq:eq1313">(13.13)</a>, la función de puntaje es
+<span class="math display">\[
+\frac{\partial  L( \beta) }{\partial \beta } = \frac{\partial \mu}{\partial \beta} ~ \frac{1}{\phi b^{\prime \prime}(\theta)} \sum_{i=1}^n w_i \left( y_i-\mu \right).
+\]</span>
+Igualando esto a cero se obtiene <span class="math inline">\(\overline{y}_w = \sum_i w_i y_i / \sum_i w_i = \widehat{\mu}_{MLE} = g^{-1}(b_{MLE})\)</span>, o <span class="math inline">\(b_{MLE}=g(\overline{y}_w)\)</span>, donde <span class="math inline">\(\overline{y}_w\)</span> es un promedio ponderado de los <span class="math inline">\(y\)</span>.</p>
+<hr />
+<p>Para la matriz de información, usamos la independencia entre los sujetos y la ecuación <a href="C13GLM.html#eq:eq1313">(13.13)</a> para obtener
+<span class="math display" id="eq:eq1314">\[\begin{eqnarray}
+\mathbf{I}(\boldsymbol \beta)
+&amp;=&amp; \mathrm{E~} \left( \frac{\partial L(\boldsymbol \beta) }{\partial \boldsymbol \beta } \frac{\partial L(\boldsymbol \beta) }{\partial \boldsymbol \beta ^{\prime}} \right) \nonumber \\
+&amp;=&amp; \sum_{i=1}^n \frac{\partial \mu _i}{\partial \boldsymbol \beta}~\mathrm{E} \left( \left( \mathrm{Var~}y_i\right) ^{-1}\left( y_i-\mu _i\right)^2 \left( \mathrm{Var~}y_i\right) ^{-1}\right) \frac{\partial \mu _i}{\partial \boldsymbol \beta ^{\prime}} \nonumber \\
+&amp;=&amp; \sum_{i=1}^n \frac{\partial \mu _i}{\partial \boldsymbol \beta} \left( \mathrm{Var~}y_i\right) ^{-1} \frac{\partial \mu _i}{\partial \boldsymbol \beta ^{\prime}} .
+\tag{13.14}
+\end{eqnarray}\]</span></p>
+<p>Tomar la raíz cuadrada de los elementos diagonales de la inversa de <span class="math inline">\(\mathbf{I}(\boldsymbol \beta)\)</span>, después de insertar las estimaciones de los parámetros en las funciones de media y varianza, proporciona <em>errores estándar basados en el modelo</em>. Para datos en los que se duda de la correcta especificación del componente de varianza, se reemplaza Var <span class="math inline">\(y_i\)</span> por una estimación insesgada <span class="math inline">\((y_i - \mu_i)^2\)</span>. El estimador resultante
+<span class="math display">\[
+se(b_j) = \sqrt{ j\text{-ésimo elemento diagonal de } [\sum_{i=1}^n \frac{\partial \mu _i}{\partial \boldsymbol \beta} (y_i - \mu_i)^{-2} \frac{\partial \mu _i}{\partial \boldsymbol \beta ^{\prime}}]|_{\boldsymbol \beta = \mathbf{b}_{MLE}}^{-1}}
+\]</span></p>
+<p>se conoce como el <em>error estándar empírico o robusto</em>.</p>
+</div>
+<div id="S:Sec1394" class="section level3 hasAnchor" number="13.9.4">
+<h3><span class="header-section-number">13.9.4</span> Mínimos Cuadrados Reponderados Iterativos<a href="C13GLM.html#S:Sec1394" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para ver cómo funcionan los métodos iterativos generales, usamos el enlace canónico de modo que <span class="math inline">\(\eta_i = \theta_i\)</span>. Luego, la función de puntaje está dada en la ecuación <a href="C13GLM.html#eq:eq136">(13.6)</a> y el Hessiano en la ecuación <a href="C13GLM.html#eq:eq138">(13.8)</a>. Usando la ecuación de Newton-Raphson (11.15) en la Sección 11.9 obtenemos
+<span class="math display" id="eq:eq1315">\[\begin{equation}
+\boldsymbol \beta_{NEW} = \boldsymbol \beta_{OLD} -  \left( \sum_{i=1}^n w_i b^{\prime \prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta _{OLD}) \mathbf{x}_i \mathbf{x}_i^{\prime} \right)^{-1} \left( \sum_{i=1}^n w_i (y_i - b^{\prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta_{OLD})) \mathbf{x}_i \right).
+\tag{13.15}
+\end{equation}\]</span>
+Observa que, dado que la matriz de segundas derivadas no es estocástica, Newton-Raphson es equivalente al algoritmo de puntuación de Fisher. Como se describe en la Sección <a href="C13GLM.html#S:Sec1331">13.3.1</a>, la estimación de <span class="math inline">\(\boldsymbol \beta\)</span> no requiere el conocimiento de <span class="math inline">\(\phi\)</span>.</p>
+<p>Seguimos usando el enlace canónico y definimos una “variable dependiente ajustada”
+<span class="math display">\[
+y_i^{\ast}(\boldsymbol \beta) = \mathbf{x}_i^{\prime} \boldsymbol \beta + \frac{y_i - b^{\prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta)}{b^{\prime \prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta)}.
+\]</span>
+Esto tiene varianza
+<span class="math display">\[
+\mathrm{Var~}y_i^{\ast}(\boldsymbol \beta) = \frac{\mathrm{Var~}y_i}{(b^{\prime \prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta))^2} = \frac{\phi_i b^{\prime \prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta)}{(b^{\prime \prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta))^2} = \frac{\phi/ w_i }{b^{\prime \prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta)}.
+\]</span>
+Usamos el nuevo peso como el recíproco de la varianza, <span class="math inline">\(w_i(\boldsymbol \beta)=w_i b^{\prime \prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta) / \phi.\)</span> Luego, con la expresión
+<span class="math display">\[
+w_i \left(y_i - b^{\prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta)\right) = w_i b^{\prime \prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta) (y_i^{\ast}(\boldsymbol \beta) - \mathbf{x}_i^{\prime} \boldsymbol \beta) = \phi w_i(\boldsymbol \beta) (y_i^{\ast}(\boldsymbol \beta) - \mathbf{x}_i^{\prime} \boldsymbol \beta),
+\]</span>
+a partir de la iteración de Newton-Raphson en la ecuación <a href="C13GLM.html#eq:eq1315">(13.15)</a>, tenemos</p>
+<p><span class="math inline">\(\boldsymbol \beta_{NEW}\)</span>
+<span class="math display">\[\begin{eqnarray*}
+~ &amp;=&amp; \boldsymbol \beta_{OLD} -  \left( \sum_{i=1}^n w_i b^{\prime \prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta _{OLD}) \mathbf{x}_i \mathbf{x}_i^{\prime} \right)^{-1} \left( \sum_{i=1}^n w_i (y_i - b^{\prime}(\mathbf{x}_i^{\prime} \boldsymbol \beta_{OLD})) \mathbf{x}_i \right) \\
+&amp;=&amp; \boldsymbol \beta_{OLD} -  \left( \sum_{i=1}^n \phi w_i(\boldsymbol \beta _{OLD}) \mathbf{x}_i \mathbf{x}_i^{\prime} \right)^{-1} \left( \sum_{i=1}^n \phi w_i(\boldsymbol \beta _{OLD}) (y_i^{\ast}(\boldsymbol \beta_{OLD}) - \mathbf{x}_i^{\prime} \boldsymbol \beta_{OLD})\mathbf{x}_i \right) \\
+&amp;=&amp; \boldsymbol \beta_{OLD} -  \left( \sum_{i=1}^n w_i(\boldsymbol \beta _{OLD}) \mathbf{x}_i \mathbf{x}_i^{\prime} \right)^{-1} \left( \sum_{i=1}^n  w_i(\boldsymbol \beta _{OLD})\mathbf{x}_i y_i^{\ast}(\boldsymbol \beta_{OLD}) - \sum_{i=1}^n w_i(\boldsymbol \beta _{OLD})\mathbf{x}_i \mathbf{x}_i^{\prime} \boldsymbol \beta_{OLD}) \right) \\
+&amp;=&amp; \left( \sum_{i=1}^n  w_i(\boldsymbol \beta _{OLD}) \mathbf{x}_i \mathbf{x}_i^{\prime} \right)^{-1} \left( \sum_{i=1}^n w_i(\boldsymbol \beta _{OLD})\mathbf{x}_i y_i^{\ast}(\boldsymbol \beta_{OLD})  \right).
+\end{eqnarray*}\]</span>
+Así, esto proporciona un método para la iteración usando mínimos cuadrados ponderados. Los mínimos cuadrados reponderados iterativos también están disponibles para enlaces generales utilizando la puntuación de Fisher. Ver McCullagh y Nelder (1989) para más detalles.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="C12Count.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="apéndices.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+
+
+## Apéndice A2. Álgebra de Matrices {-}
+
+### Definiciones Básicas {-}
+
+*   *Matriz* - un arreglo rectangular de números organizados en filas y columnas (el plural de matriz es matrices).
+
+*   *Dimensión* de la matriz - el número de filas y columnas de la matriz.
+
+*   Consideremos una matriz $\mathbf{A}$ que tiene dimensiones $m \times k$. Sea $a_{ij}$ el símbolo para el número en la fila $i$ y la columna $j$ de $\mathbf{A}$. En general, trabajamos con matrices de la forma
+$$
+\mathbf{A} = \left(
+\begin{array}{cccc}
+a_{11} & a_{12} & \cdots & a_{1k} \\
+a_{21} & a_{22} & \cdots & a_{2k} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mk}
+\end{array}
+\right) .
+$$
+
+*   *Vector* - un vector (columna) es una matriz que contiene solo una fila ($m=1$).
+
+*   *Vector fila* - una matriz que contiene solo una columna ($k=1$).
+
+*   *Transpuesta* - la transpuesta de una matriz $\mathbf{A}$ se define al intercambiar las filas y las columnas y se denota por $\mathbf{A}^{\prime}$ (o $\mathbf{A}^{\mathrm{T}}$). Así, si $\mathbf{A}$ tiene dimensión $m \times k$, entonces $\mathbf{A}^{\prime}$ tiene dimensión $k \times m$.
+
+*   *Matriz cuadrada* - una matriz donde el número de filas es igual al número de columnas, es decir, $m=k$.
+
+*   *Elemento diagonal* - el número en la fila $r$ y columna $r$ de una matriz cuadrada, $r=1,2,\ldots$
+
+*   *Matriz diagonal* - una matriz cuadrada donde todos los números no diagonales son iguales a cero.
+
+*   *Matriz identidad* - una matriz diagonal donde todos los elementos diagonales son iguales a uno y se denota por $\mathbf{I}$.
+
+*   *Matriz simétrica* - una matriz cuadrada $\mathbf{A}$ tal que la matriz permanece sin cambios si intercambiamos los roles de las filas y las columnas, es decir, si $\mathbf{A} = \mathbf{A}^{\prime}$. Nótese que una matriz diagonal es una matriz simétrica.
+
+### Revisión de Operaciones Básicas {-}
+
+*   *Multiplicación por un escalar*. Sea $c$ un número real, llamado *escalar* (una matriz de $1 \times 1$). Multiplicar un escalar $c$ por una matriz $\mathbf{A}$ se denota por $c \mathbf{A}$ y se define por
+$$
+c\mathbf{A} = \left(
+\begin{array}{cccc}
+ca_{11} & ca_{12} & \cdots & ca_{1k} \\
+ca_{21} & ca_{22} & \cdots & ca_{2k} \\
+\vdots & \vdots & \ddots & \vdots \\
+ca_{m1} & ca_{m2} & \cdots & ca_{mk}
+\end{array}
+\right) .
+$$
+
+*   *Suma y resta de matrices*. Sean $\mathbf{A}$ y $\mathbf{B}$ matrices, cada una con dimensión $m \times k$. Utilice $a_{ij}$ y $b_{ij}$ para denotar los números en la fila $i$ y columna $j$ de $\mathbf{A}$ y $\mathbf{B}$, respectivamente. Entonces, la matriz $\mathbf{C} = \mathbf{A} + \mathbf{B}$ se define como la matriz con el número $(a_{ij} + b_{ij})$ para denotar el número en la fila $i$ y la columna $j$. De manera similar, la matriz $\mathbf{C} = \mathbf{A} - \mathbf{B}$ se define como la matriz con el número $(a_{ij} - b_{ij})$ para denotar los números en la fila $i$ y la columna $j$.
+
+*   *Multiplicación de matrices*. Si $\mathbf{A}$ es una matriz de dimensión $m \times c$ y $\mathbf{B}$ es una matriz de dimensión $c \times k$, entonces $\mathbf{C} = \mathbf{A} \mathbf{B}$ es una matriz de dimensión $m \times k$. El número en la fila $i$ y columna $j$ de $\mathbf{C}$ es $\sum_{s=1}^c a_{is} b_{sj}$.
+
+*   *Determinante* - una función de una matriz cuadrada, denotada por $\mathrm{det}(\mathbf{A})$, o $|\mathbf{A}|$. Para una matriz de $1 \times 1$, el determinante es $\mathrm{det}(\mathbf{A}) = a_{11}$. Para definir determinantes de matrices más grandes, necesitamos dos conceptos adicionales. Sea $\mathbf{A}_{rs}$ la submatriz de dimensión $(m-1) \times (m-1)$ de $\mathbf{A}$ definida al eliminar la fila $r$ y la columna $s$. Recursivamente, definimos $\mathrm{det}(\mathbf{A}) = \sum_{s=1}^m (-1)^{r+s} a_{rs} \mathrm{det}(\mathbf{A}_{rs})$, para cualquier $r=1,\ldots,m$. Por ejemplo, para $m=2$, tenemos $\mathrm{det}(\mathbf{A}) = a_{11}a_{22} - a_{12}a_{21}$.
+
+*   *Inversa de una matriz*. En álgebra de matrices, no existe el concepto de división. En su lugar, extendemos el concepto de recíprocos de números reales. Para comenzar, supongamos que $\mathbf{A}$ es una matriz cuadrada de dimensión $m \times m$ tal que $\mathrm{det}(\mathbf{A}) \neq 0$. Además, sea $\mathbf{I}$ la matriz identidad de $m \times m$. Si existe una matriz $m \times m$ $\mathbf{B}$ tal que $\mathbf{AB = I = BA}$, entonces $\mathbf{B}$ se llama la *inversa* de $\mathbf{A}$ y se escribe como $\mathbf{B} = \mathbf{A}^{-1}$.
+
+
+### Definiciones Adicionales {-}
+
+*   *Vectores linealmente dependientes* -- un conjunto de vectores $\mathbf{c}_{1},\ldots,\mathbf{c}_{k}$ se dice que son linealmente dependientes si uno de los vectores en el conjunto puede ser escrito como una combinación lineal de los otros.
+
+*   *Vectores linealmente independientes* -- un conjunto de vectores $\mathbf{c}_{1},\ldots,\mathbf{c}_{k}$ se dice que son linealmente independientes si no son linealmente dependientes. Específicamente, un conjunto de vectores $\mathbf{c}_{1},\ldots,\mathbf{c}_{k}$ se dice que son linealmente independientes si y solo si la única solución de la ecuación $x_{1}\mathbf{c}_{1} + \ldots + x_{k}\mathbf{c}_{k} = 0$ es $x_{1} = \ldots = x_{k} = 0$.
+
+*   *Rango de una matriz* -- el mayor número de columnas (o filas) linealmente independientes de una matriz.
+
+*   *Matriz singular* -- una matriz cuadrada $\mathbf{A}$ tal que $\mathrm{det}(\mathbf{A}) = 0$.
+
+*   *Matriz no singular* -- una matriz cuadrada $\mathbf{A}$ tal que $\mathrm{det}(\mathbf{A}) \neq 0$.
+
+*   *Matriz definida positiva* -- una matriz cuadrada simétrica $\mathbf{A}$ tal que $\mathbf{x}^{\prime}\mathbf{Ax} > 0$ para $\mathbf{x} \neq 0$.
+
+*   *Matriz definida no negativa* -- una matriz cuadrada simétrica $\mathbf{A}$ tal que $\mathbf{x}^{\prime}\mathbf{Ax} \geq 0$ para $\mathbf{x} \neq 0$.
+
+*   *Ortogonal* -- dos matrices $\mathbf{A}$ y $\mathbf{B}$ son ortogonales si $\mathbf{A}^{\prime}\mathbf{B} = 0$, una matriz cero.
+
+*   *Idempotente* -- una matriz cuadrada tal que $\mathbf{AA = A}$.
+
+*   *Traza* -- la suma de todos los elementos diagonales de una matriz cuadrada.
+
+*   *Valores propios* -- las soluciones del polinomio de grado $n$ $\mathrm{det}(\mathbf{A} - \lambda \mathbf{I}) = 0$. También conocidos como *raíces características* y *raíces latentes*.
+
+*   *Vector propio* -- un vector $\mathbf{x}$ tal que $\mathbf{Ax} = \lambda \mathbf{x}$, donde $\lambda$ es un valor propio de $\mathbf{A}$. También conocido como *vector característico* y *vector latente*.
+
+*   *Inversa generalizada* - de una matriz $\mathbf{A}$ es una matriz $\mathbf{B}$ tal que $\mathbf{ABA = A}$. Usamos la notación $\mathbf{A}^{-}$ para denotar la inversa generalizada de $\mathbf{A}$. En el caso de que $\mathbf{A}$ sea invertible, entonces $\mathbf{A}^{-}$ es única y es igual a $\mathbf{A}^{-1}$. Aunque existen varias definiciones de inversas generalizadas, la definición anterior es suficiente para nuestros propósitos. Ver Searle (1987) para una discusión adicional de definiciones alternativas de inversas generalizadas.
+
+*   *Vector gradiente* -- un vector de derivadas parciales. Si $\mathrm{f}(.)$ es una función del vector $\mathbf{x} = (x_1,\ldots,x_m)^{\prime}$, entonces el vector gradiente es $\partial \mathrm{f}(\mathbf{x})/\partial \mathbf{x}$. La fila $i$ del vector gradiente es $\partial \mathrm{f}(\mathbf{x})/\partial x_i$.
+
+*   *Matriz Hessiana* -- una matriz de segundas derivadas. Si $\mathrm{f}(.)$ es una función del vector $\mathbf{x} = (x_1,\ldots,x_m)^{\prime}$, entonces la matriz Hessiana es $\partial^2 \mathrm{f}(\mathbf{x})/\partial \mathbf{x}\partial \mathbf{x}^{\prime}$. El elemento en la fila $i$ y la columna $j$ de la matriz Hessiana es $\partial^{2}\mathrm{f}(\mathbf{x})/\partial x_i\partial x_j$.
+
+
+

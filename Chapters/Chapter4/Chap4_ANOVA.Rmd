@@ -48,20 +48,14 @@ $$
 
 This gives the approximate number of years of schooling that individuals in each category completed.
 
-\index{categorical variable!factor}
-\index{categorical variable!dummy}
-
 The assignment of numerical scores and treating the variable as continuous has important implications for the regression modeling interpretation. Recall that the regression coefficient is the marginal change in the expected response; in this case, the $\beta$ for education assesses the increase in $\mathrm{E }~y$ per unit change in EDUCATION. If we record EDUCATION as a rank in a regression model, then the $\beta$ for education corresponds to the increase in $\mathrm{E }~y$ moving from EDUCATION=1 to EDUCATION=2 (from low to intermediate); this increase is the same as moving from EDUCATION=2 to EDUCATION=3 (from intermediate to high). Do we want to model this increase as the same? This is an assumption that the analyst makes with this coding of EDUCATION; it may or may not be valid but certainly needs to be recognized.
 
-\index{categorical variable!unordered}
-\index{symbols!$c$, number of levels in a categorical variable}
 
 Because of this interpretation of coefficients, analysts rarely use ranks or other numerical scores to summarize *unordered* categorical variables. The most direct way of handling factors in regression is through the use of binary variables. A categorical variable with $c$ levels can be represented using $c$ binary variables, one for each category. For example, suppose that we were uncertain about the direction of the education effect and so decide to treat it as a factor. Then, we could code $c=3$ binary variables: (1) a variable to indicate low education, (2) one to indicate intermediate education, and (3) one to indicate high education. These binary variables are often known as *dummy variables*. In regression analysis with an intercept term, we use only $c-1$ of these binary variables; the remaining variable enters implicitly through the intercept term. By identifying a variable as a factor, most statistical software packages will automatically create binary variables for you.
 
 Through the use of binary variables, we do not make use of the ordering of categories within a factor. Because no assumption is made regarding the ordering of the categories, for the model fit it does not matter which variable is dropped with regard to the fit of the model. However, it does matter for the interpretation of the regression coefficients. Consider the following example.
 
 
-\index{datasets!term life insurance}
 
 ***
 
@@ -1448,7 +1442,6 @@ $$
 d. Suppose that $n = 40$, $k = 5$, and $R^2 = 0.20$. Calculate the $F$-ratio. Perform the usual test of model adequacy to determine whether or not the five explanatory variables jointly significantly affect the response variable.
 e. Suppose that $n = 400$ (not 40), $k = 5$, and $R^2 = 0.20$. Calculate the $F$-ratio. Perform the usual test of model adequacy to determine whether or not the five explanatory variables jointly significantly affect the response variable.
 
-\index{datasets!hospital costs}
 
 4.2. **Hospital Costs**. This exercise considers hospital expenditures data provided by the US Agency for Healthcare Research and Quality (AHRQ) and described in Exercise 1.4.
 
@@ -1459,8 +1452,6 @@ d. Now consider the type of admission, $APRDRG$, an acronym for "all patient ref
    **d(i)**. Run a one-factor ANOVA model, using $APRDRG$ to predict $LNTOTCHG$. Examine the $R^2$ from this model and compare it to the coefficient of determination of the linear regression model of $LNTOTCHG$ on $AGE$. Based on this comparison, which model do you think is preferred?<br>
    **d(ii)**. For the one-factor model in part d(i), provide a 95% confidence interval for the mean of $LNTOTCHG$ for level 225 corresponding to an appendectomy. Convert your final answer from logarithmic dollars to dollars via exponentiation.<br>
    **d(iii)**. Run a regression model of $APRDRG$, $FEMALE$, and $AGE$ on $LNTOTCHG$. State whether $AGE$ is a statistically significant predictor of $LNTOTCHG$. State whether $FEMALE$ is a statistically significant predictor of $LNTOTCHG$.
-
-\index{datasets!nursing home utilization}
 
 4.3. **Nursing Home Utilization**. This exercise considers nursing home data provided by the Wisconsin Department of Health and Family Services (DHFS) and described in Exercises 1.2, 2.10, and 2.20.
 
@@ -1492,7 +1483,6 @@ c. Run a regression of $LNPAID$ on $AGE$, $GENDER$, and the categorical variable
    **c(iii)**. Use the model to provide a point estimate of claims in dollars (not log dollars) for a male age 60 in STATE 2 in CLASS C7.<br>
    **c(iv)**. Write down the coefficient associated with CLASS C7 and interpret this coefficient.
 
-\index{datasets!Wisconsin lottery sales}
 
 4.5. **Wisconsin Lottery Sales**. This exercise considers State of Wisconsin lottery sales data that were described in Section 2.1 and examined in Exercise 3.4.
 
@@ -1512,7 +1502,6 @@ c. Test whether $POP$, $MEDSCHYR$, and $MEDHVL$ are jointly important explanator
 
    c. To state formally whether one should use the three or eight variable model, use a partial $F$-test. State your null and alternative hypotheses, decision-making criterion, and your decision-making rules.
 
-   \index{datasets!insurance company expenses}
 
 4.6. **Insurance Company Expenses**. This exercise considers insurance company data from the NAIC and described in Exercises 1.6 and 3.5.
 
@@ -2199,7 +2188,7 @@ With this definition, it can be shown that a solution to the equation $\mathbf{A
 
 Above, we saw that each fitted value $\hat{y}_i$ is unique. Because fitted values are simply linear combinations of parameter estimates, it seems reasonable to ask what other linear combinations of parameter estimates are unique. To this end, we say that $\mathbf{C \boldsymbol \beta}$ is an *estimable function* of parameters if $\mathbf{Cb}^{\circ}$ does not depend (is invariant) on the choice of $\mathbf{b}^{\circ}$. Because fitted values are invariant to the choice of $\mathbf{b}^{\circ}$, we have that $\mathbf{C = X}$ produces one type of estimable function. Interestingly, it turns out that all estimable functions are of the form $\mathbf{LXb}^{\circ}$, that is, $\mathbf{C} = \mathbf{LX}$. See Searle (1987, page 284) for a demonstration of this. Thus, all estimable functions are linear combinations of fitted values, that is, $\mathbf{LXb}^{\circ} = \mathbf{L\hat{y}}$.
 
-Estimable functions are unbiased and have a variance that does not depend on the choice of the generalized inverse. That is, it can be shown that $ \text{E } \mathbf{Cb}^{\circ} = \mathbf{C \boldsymbol \beta}$ and $\text{Var } \mathbf{Cb}^{\circ} = \sigma^2 \mathbf{C(X}^{\prime} \mathbf{X})^{-} \mathbf{C}^{\prime}$ does not depend on the choice of $\mathbf{(X}^{\prime} \mathbf{X})^{-}$.
+Estimable functions are unbiased and have a variance that does not depend on the choice of the generalized inverse. That is, it can be shown that $\text{E } \mathbf{Cb}^{\circ} = \mathbf{C \boldsymbol \beta}$ and $\text{Var } \mathbf{Cb}^{\circ} = \sigma^2 \mathbf{C(X}^{\prime} \mathbf{X})^{-} \mathbf{C}^{\prime}$ does not depend on the choice of $\mathbf{(X}^{\prime} \mathbf{X})^{-}$.
 
 #### Testable Hypotheses {-}
 
@@ -2267,6 +2256,6 @@ $$
 \end{bmatrix}
 = (\mathbf{X}^{\prime} \mathbf{X})^{-} \mathbf{X}^{\prime} \mathbf{y}.
 $$
-Estimable functions are linear combinations of fitted values. Because fitted values are $\hat{y}_{ij} = \bar{y}_j$, estimable functions can be expressed as $L = \sum_{j=1}^{c} a_j \bar{y}_j $ where $a_1, \ldots, a_{c}$ are constants. This linear combination of fitted values is an unbiased estimator of $\text{E } L = \sum_{i=1}^{c} a_i (\mu + \tau_i)$.
+Estimable functions are linear combinations of fitted values. Because fitted values are $\hat{y}_{ij} = \bar{y}_j$, estimable functions can be expressed as $L = \sum_{j=1}^{c} a_j \bar{y}_j$ where $a_1, \ldots, a_{c}$ are constants. This linear combination of fitted values is an unbiased estimator of $\text{E } L = \sum_{i=1}^{c} a_i (\mu + \tau_i)$.
 
 Thus, for example, by choosing $a_1 = 1$ and the other $a_i = 0$, we see that $\mu + \tau_1$ is estimable. As another example, by choosing $a_1 = 1$, $a_2 = -1$, and the other $a_i = 0$, we see that $\tau_1 - \tau_2$ is estimable. It can be shown that $\mu$ is not an estimable parameter without further restrictions on $\tau_1, \ldots, \tau_c$.

@@ -1,0 +1,241 @@
+
+## Apéndice A3. Tablas de Probabilidad {-}
+
+### Distribución Normal {-}
+
+Recuerde de la ecuación (1.1) que la función de densidad de probabilidad está definida por
+$$
+\mathrm{f}(y) = \frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{1}{2\sigma^2 }\left( y-\mu \right)^2\right)
+$$
+donde $\mu$ y $\sigma^2$ son parámetros que describen la curva. En este caso, escribimos $y \sim N(\mu,\sigma^2)$. Cálculos sencillos muestran que
+$$
+\mathrm{E}~y = \int_{-\infty}^{\infty} y \mathrm{f}(y) \, dy = \int_{-\infty}^{\infty}  y \frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{1}{2\sigma^2 }\left( y-\mu \right)^2 \right)  \, dy  = \mu
+$$
+y
+$$
+\mathrm{Var}~y = \int_{-\infty}^{\infty} (y-\mu)^2 \mathrm{f}(y) \, dy = \int_{-\infty}^{\infty} (y-\mu)^2 \frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{1}{2\sigma^2 }\left( y-\mu \right)^2 \right) \, dy = \sigma^2 .
+$$
+Así, la notación $y \sim N(\mu,\sigma^2)$ se interpreta como que la variable aleatoria está distribuida normalmente con media $\mu$ y varianza $\sigma^2$. Si $y \sim N(0,1)$, entonces se dice que $y$ es *normal estándar*.
+
+(ref:FigA1) **Función de densidad de probabilidad normal estándar**
+
+```{r FigA1, fig.cap='(ref:FigA1)', echo=FALSE,  out.width = "60%"}
+#  FIGURA A.1 - GRÁFICO NORMAL
+
+par(mar=c(3.2,1,.5,.1),cex=1.2)
+x <- seq(-4, 4, 0.01)
+y= dnorm(x)
+plot(x,y, type="l", yaxt="n", xlab="",  ylab="",las=1, cex=1.2)
+mtext("y", side=1, at=1,las=1, adj=1, padj=2, cex=1.5)
+
+x1 <- seq(0, 3, 0.1)
+X <- cbind(x1,x1+.01,x1+.02,x1+.03,x1+.04,x1+.05,x1+.06,
+     x1+.07,x1+.08,x1+.09)
+x1 <- seq(0, 3, 0.5)
+X <- cbind(x1,x1+.1,x1+.2,x1+.3,x1+.4)
+x1 <- seq(0, 3, 1)
+X <- cbind(x1,x1+.1,x1+.2,x1+.3,x1+.4,x1+.5,x1+.6,x1+.7,x1+.8,x1+.9)
+
+y1 <- pnorm(X)
+#round(y1, digits=4)
+#write.csv(y1, file = "NormalTable2.csv")
+```
+
+```{r, echo=FALSE}
+knitr::kable(
+  data.frame(
+    y = 0:3,
+    `0.0` = c(0.5000, 0.8413, 0.9772, 0.9987),
+    `0.1` = c(0.5398, 0.8643, 0.9821, 0.9990),
+    `0.2` = c(0.5793, 0.8849, 0.9861, 0.9993),
+    `0.3` = c(0.6179, 0.9032, 0.9893, 0.9995),
+    `0.4` = c(0.6554, 0.9192, 0.9918, 0.9997),
+    `0.5` = c(0.6915, 0.9332, 0.9938, 0.9998),
+    `0.6` = c(0.7257, 0.9452, 0.9953, 0.9998),
+    `0.7` = c(0.7580, 0.9554, 0.9965, 0.9999),
+    `0.8` = c(0.7881, 0.9641, 0.9974, 0.9999),
+    `0.9` = c(0.8159, 0.9713, 0.9981, 1.0000)
+  ),
+  col.names = c("$y$", "0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9"),
+  caption = "**Función de Distribución Normal Estándar**"
+)
+```
+
+*Notas*: Las probabilidades se pueden encontrar buscando en la fila adecuada para el dígito inicial y la columna para el decimal. Por ejemplo, $\Pr ( y \le 0.1) = 0.5398$.
+
+### Distribución Chi-Cuadrado {-}
+
+**Distribución Chi-Cuadrado**. Varias distribuciones importantes pueden vincularse a la distribución normal. Si $y_1, \ldots, y_n$ son variables aleatorias i.i.d. tales que cada $y_i \sim N(0,1)$, entonces se dice que $\sum_{i=1}^n y_i^2$ tiene una *distribución chi-cuadrado* con parámetro $n$. Más generalmente, una variable aleatoria $w$ con función de densidad de probabilidad
+$$
+\mathrm{f}(w) = \frac{2^{-k/2}}{\Gamma(k/2)} w^{k/2-1} \exp (-w/2), ~~~~~~w > 0
+$$
+se dice que tiene una distribución chi-cuadrado con $df = k$ grados de libertad, escrita como $w \sim \chi_k^2$. Cálculos sencillos muestran que para $w \sim \chi_k^2$, tenemos $\mathrm{E}~w = k$ y $\mathrm{Var}~w = 2k$. En general, el parámetro de grados de libertad no necesita ser un número entero, aunque lo es para las aplicaciones de este texto.
+
+(ref:FigA2) **Varias funciones de densidad de probabilidad chi-cuadrado.** Se muestran curvas para $df$ = 3, $df$ = 5, y $df$ = 10. Un mayor número de grados de libertad conduce a curvas que son menos asimétricas.
+
+```{r FigA2, fig.cap='(ref:FigA2)', echo=FALSE,  out.width = "60%"}
+#  FIGURA A.2 - GRÁFICO CHI-CUADRADO
+par(mar=c(3.2,1,.5,.1),cex=1.2)
+x <- seq(0, 20, 0.01)
+y= dchisq(x,3)
+plot(x,y, type="l", yaxt="n", ylab="",  las=1, cex=1.4)
+mtext("w", side=1, at=8,las=1, adj=1, padj=2, cex=1.5)
+y1= dchisq(x,5)
+y2= dchisq(x,10)
+lines(x,y1)
+lines(x,y2)
+text(4,.2, "df=3",cex=1.1)
+text(6,.15, "df=5",cex=1.1)
+text(12,.1, "df=10",cex=1.1)
+
+prob <- t(c(seq(.6, .9, 0.1), 0.95, 0.975, 0.99, 0.995, 0.9975, 0.999))
+df = t(c(1:5,seq(10,40,5),60, 120))
+y1 <- matrix(0, nrow=length(df),ncol=length(prob))
+for(i in 1:length(df)){
+y1[i,] <- qchisq(prob,df[i]);y1[i,]}
+#round(y1,digits=3)
+#write.csv(y1, file = "ChiSq.csv")
+```
+
+```{r, echo=FALSE}
+knitr::kable(
+  data.frame(
+    df = c(1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 35, 40, 60,
+
+ 120),
+    `0.6` = c(0.71, 1.83, 2.95, 4.04, 5.13, 10.47, 15.73, 20.95, 26.14, 31.32, 36.47, 41.62, 62.13, 123.29),
+    `0.7` = c(1.07, 2.41, 3.66, 4.88, 6.06, 11.78, 17.32, 22.77, 28.17, 33.53, 38.86, 44.16, 65.23, 127.62),
+    `0.8` = c(1.64, 3.22, 4.64, 5.99, 7.29, 13.44, 19.31, 25.04, 30.68, 36.25, 41.78, 47.27, 68.97, 132.81),
+    `0.9` = c(2.71, 4.61, 6.25, 7.78, 9.24, 15.99, 22.31, 28.41, 34.38, 40.26, 46.06, 51.81, 74.40, 140.23),
+    `0.95` = c(3.84, 5.99, 7.81, 9.49, 11.07, 18.31, 25.00, 31.41, 37.65, 43.77, 49.80, 55.76, 79.08, 146.57),
+    `0.975` = c(5.02, 7.38, 9.35, 11.14, 12.83, 20.48, 27.49, 34.17, 40.65, 46.98, 53.20, 59.34, 83.30, 152.21),
+    `0.99` = c(6.63, 9.21, 11.34, 13.28, 15.09, 23.21, 30.58, 37.57, 44.31, 50.89, 57.34, 63.69, 88.38, 158.95),
+    `0.995` = c(7.88, 10.60, 12.84, 14.86, 16.75, 25.19, 32.80, 40.00, 46.93, 53.67, 60.27, 66.77, 91.95, 163.65),
+    `0.9975` = c(9.14, 11.98, 14.32, 16.42, 18.39, 27.11, 34.95, 42.34, 49.44, 56.33, 63.08, 69.70, 95.34, 168.08),
+    `0.999` = c(10.83, 13.82, 16.27, 18.47, 20.52, 29.59, 37.70, 45.31, 52.62, 59.70, 66.62, 73.40, 99.61, 173.62)
+  ),
+  col.names = c("$df$", "0.6", "0.7", "0.8", "0.9", "0.95", "0.975", "0.99", "0.995", "0.9975", "0.999"),
+  caption = "**Percentiles de Varias Distribuciones Chi-Cuadrado**"
+)
+```
+
+
+### Distribución *t* {-}
+
+Supongamos que $y$ y $w$ son independientes con $y \sim N(0,1)$ y $w \sim \chi_k^2$. Entonces, se dice que la variable aleatoria $t = y / \sqrt{w/k}$ tiene una distribución *t* con $df = k$ grados de libertad. La función de densidad de probabilidad es
+$$
+\mathrm{f}(t) = \frac{\Gamma \left( k+ \frac{1}{2} \right)}{\Gamma(k/2)} \left( k \pi \right)^{-1/2} \left( 1 + \frac{t^2}{k} \right)^{-(k+1/2)}, ~~~~~~-\infty < t < \infty
+$$
+Esto tiene media 0, para $k > 1$, y varianza $k/(k-2)$ para $k > 2$.
+
+(ref:FigA3) **Varias funciones de densidad de probabilidad de la distribución *t*.** La distribución *t* con $df = \infty$ es la distribución normal estándar. Se muestran curvas para $df = 1$, $df = 5$ (no etiquetado) y $df = ∞$. Un menor $df$ significa colas más gruesas.
+
+```{r FigA3, fig.cap='(ref:FigA3)', echo=FALSE,  out.width = "60%"}
+#  FIGURA A.3 - GRÁFICO DE LA DISTRIBUCIÓN t
+
+par(mar=c(3.2,1,.5,.1),cex=1.2)
+x <- seq(-4, 4, 0.01)
+y= dnorm(x)
+plot(x,y, type="l", yaxt="n", ylab="",  las=1, cex=1.4)
+#mtext("Densidad de la distribución t",  side=2, at=.435,las=1.5, adj=.2,cex=1.8)
+mtext("t", side=1, at=1,las=1, adj=1, padj=2, cex=1.5)
+y1= dt(x,1)
+y2= dt(x,5)
+y3= dt(x,10)
+lines(x,y1)
+lines(x,y2)
+#lines(x,y3)
+text(0,.1, "df=1",cex=1.1)
+#text(6,.15, "df=5",cex=1.1)
+text(2.5,.38, "df=infinito",cex=1.1)
+arrows(1.2, .38, 0.33,.38, code=2, angle=10, length=0.2)
+arrows(-0.6, .1, -1.4,.1, code=2, angle=10, length=0.2)
+
+prob <- t(c(seq(.6, .9, 0.1), 0.95, 0.975, 0.99, 0.995, 0.9975, 0.999))
+df = t(c(1:5,seq(10,40,5),60, 120))
+y1 <- matrix(0, nrow=length(df),ncol=length(prob))
+for(i in 1:length(df)){
+y1[i,] <- qt(prob,df[i]);y1[i,]}
+y1 <- rbind(y1,qnorm(prob))
+#round(y1,digits=3)
+#write.csv(y1, file = "t.csv")
+```
+
+```{r, echo=FALSE}
+knitr::kable(
+  data.frame(
+    df = c(1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 35, 40, 60, 120, "∞"),
+    `0.6` = c(0.325, 0.289, 0.277, 0.271, 0.267, 0.260, 0.258, 0.257, 0.256, 0.256, 0.255, 0.255, 0.254, 0.254, 0.253),
+    `0.7` = c(0.727, 0.617, 0.584, 0.569, 0.559, 0.542, 0.536, 0.533, 0.531, 0.530, 0.529, 0.529, 0.527, 0.526, 0.524),
+    `0.8` = c(1.376, 1.061, 0.978, 0.941, 0.920, 0.879, 0.866, 0.860, 0.856, 0.854, 0.852, 0.851, 0.848, 0.845, 0.842),
+    `0.9` = c(3.078, 1.886, 1.638, 1.533, 1.476, 1.372, 1.341, 1.325, 1.316, 1.310, 1.306, 1.303, 1.296, 1.289, 1.282),
+    `0.95` = c(6.314, 2.920, 2.353, 2.132, 2.015, 1.812, 1.753, 1.725, 1.708, 1.697, 1.690, 1.684, 1.671, 1.658, 1.645),
+    `0.975` = c(12.706, 4.303, 3.182, 2.776, 2.571, 2.228, 2.131, 2.086, 2.060, 2.042, 2.030, 2.021, 2.000, 1.980, 1.960),
+    `0.99` = c(31.821, 6.965, 4.541, 3.747, 3.365, 2.764, 2.602, 2.528, 2.485, 2.457, 2.438, 2.423, 2.390, 2.358, 2.326),
+    `0.995` = c(63.657, 9.925, 5.841, 4.604, 4.032, 3.169, 2.947, 2.845, 2.787, 2.750, 2.724, 2.704, 2.660, 2.617, 2.576),
+    `0.9975` = c(127.321, 14.089, 7.453, 5.598, 4.773, 3.581, 3.286, 3.153, 3.078, 3.030, 2.996, 2.971, 2.915, 2.860, 2.807),
+    `0.999` = c(318.309, 22.327, 10.215, 7.173, 5.893, 4.144, 3.733, 3.552, 3.450, 3.385, 3.340, 3.307, 3.232, 3.160, 3.090)
+  ),
+  col.names = c("$df$", "0.6", "0.7", "0.8", "0.9", "0.95", "0.975", "0.99", "0.995", "0.9975", "0.999"),
+  caption = "**Percentiles de varias distribuciones $t$**"
+)
+```
+
+### Distribución *F* {-}
+
+Supongamos que $w_1$ y $w_2$ son independientes con distribuciones $w_1 \sim \chi_m^2$ y $w_2 \sim \chi_n^2$. Entonces, la variable aleatoria $F = (w_1/m) / (w_2/n)$ tiene una distribución *F* con parámetros $df_1 = m$ y $df_2 = n$, respectivamente. La función de densidad de probabilidad es
+$$
+\mathrm{f}(y) = \frac{\Gamma \left(\frac{m+n}{2} \right)}{\Gamma(m/2)\Gamma(n/2)} \left( \frac{m}{n} \right)^{m/2} \frac{y^{(m-2)/2}} {\left( 1 + \frac{m}{n}y \right)^{m+n+2}} , ~~~~~~y > 0
+$$
+Esto tiene media $n/(n-2)$, para $n > 2$, y varianza $2n^2(m+n-2)/[m(n-2)^2(n-4)]$ para $n > 4$.
+
+(ref:FigA4) **Varias funciones de densidad de probabilidad de la distribución $F$**. Se muestran curvas para (i) $df_1$ = 1, $df_2$ = 5, (ii) $df_1$ = 5, $df_2$ = 1 (no etiquetado), y (iii) $df_1$ = 60, $df_2$ = 60. A medida que $df_2$ tiende a $\infty$, la distribución $F$ tiende a una distribución chi-cuadrado.
+
+```{r FigA4, fig.cap='(ref:FigA4)', echo=FALSE,  out.width = "60%"}
+#  FIGURA A.4 - GRÁFICO DE LA DISTRIBUCIÓN F
+
+par(mar=c(3.2,1,.5,.1),cex=1.2)
+x <- seq(0, 4, 0.01)
+y= df(x,60,60)
+plot(x,y, type="l", yaxt="n", ylab="",  las=1, cex=1.4)
+mtext("y", side=1, at=1.5,las=1, adj=1, padj=2, cex=1.5)
+#y1= df(x,2,25)
+y2= df(x,5,1)
+y3= df(x,1,5)
+#lines(x,y1)
+lines(x,y2)
+lines(x,y3)
+text(1.7,.8, expression(df[1]==60),cex=1.1)
+text(1.7,.65, expression(df[2]==60),cex=1.1)
+text(0.35,1.5, expression(df[1]==1),cex=1.1)
+text(0.35,1.35, expression(df[2]==5),cex=1.1)
+
+df1 = t(c(1:5,seq(10,40,5),60, 120))
+df2 = t(c(1,3,5,seq(10,40,10),60, 120))
+y1 <- matrix(0, nrow=length(df1),ncol=length(df2))
+for(i in 1:length(df1)){
+y1[i,] <- qf(0.95,df1[i],df2);y1[i,]}
+#round(y1,digits=3)
+#write.csv(y1, file = "F.csv")
+```
+
+```{r, echo=FALSE}
+knitr::kable(
+  data.frame(
+    df_1 = c(1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 35, 40, 60, 120),
+    `1` = c(161.45, 199.50, 215.71, 224.58, 230.16, 241.88, 245.95, 248.01, 249.26, 250.10, 250.69, 251.14, 252.20, 253.25),
+    `3` = c(10.13, 9.55, 9.28, 9.12, 9.01, 8.79, 8.70, 8.66, 8.63, 8.62, 8.60, 8.59, 8.57, 8.55),
+    `5` = c(6.61, 5.79, 5.41, 5.19, 5.05, 4.74, 4.62, 4.56, 4.52, 4.50, 4.48, 4.46, 4.43, 4.40),
+    `10` = c(4.96, 4.10, 3.71, 3.48, 3.33, 2.98, 2.85, 2.77, 2.73, 2.70, 2.68, 2.66, 2.62, 2.58),
+    `20` = c(4.35, 3.49, 3.10, 2.87, 2.71, 2.35, 2.20, 2.12, 2.07, 2.04, 2.01, 1.99, 1.95, 1.90),
+    `30` = c(4.17, 3.32, 2.92, 2.69, 2.53, 2.16, 2.01, 1.93, 1.88, 1.84, 1.81, 1.79, 1.74, 1.68),
+    `40` = c(4.08, 3.23, 2.84, 2.61, 2.45, 2.08, 1.92, 1.84, 1.78, 1.74, 1.72, 1.69, 1.64, 1.58),
+    `60` = c(4.00, 3.15, 2.76, 2.53, 2.37, 1.99, 1.84, 1.75, 1.69, 1.65, 1.62, 1.59, 1.53, 1.47),
+    `120` = c(3.92, 3.07, 2.68, 2.45, 2.29, 1.91, 1.75, 1.66, 1.60, 1.55, 1.52, 1.50, 1.43, 1.35)
+  ),
+  col.names = c("$df_1$", "1", "3", "5", "10", "20", "30", "40", "60", "120"),
+  caption = "**Percentiles de varias distribuciones $F$**"
+)
+```
+
+

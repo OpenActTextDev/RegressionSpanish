@@ -1,0 +1,91 @@
+
+## Appendix A1. Basic Statistical Inference {-}
+
+*Appendix Preview.* This appendix provides
+definitions and facts from a course in basic statistical inference
+that are needed in one's study of regression analysis.
+
+
+### Distributions of Functions of Random Variables {-}
+
+**Statistics and Sampling Distributions.** A *statistic* summarizes information in a sample and hence is a function of observations $y_1,\ldots,y_n$. Because observations are realizations of random variables, the study of distributions of functions of random variables is really the study of the distributions of statistics, known as *sampling distributions*. Linear combinations of the form $\sum_{i=1}^n a_i y_i$ represent an important type of function. Here, $a_1,\ldots,a_n$ are known constants. To begin, we suppose that $y_1,\ldots,y_n$ are mutually independent random variables with $\mathrm{E~}y_i = \mu_i$ and $\mathrm{ Var~}y_i = \sigma_i^2$. Then, by the *linearity of expectations*, we have
+$$
+\mathrm{E}\left( \sum_{i=1}^n a_i y_i \right) = \sum_{i=1}^n a_i \mu_i~~~\mathrm{and}~~~\mathrm{Var}\left( \sum_{i=1}^n a_i y_i \right) = \sum_{i=1}^n a_i^2 \sigma_i^2.
+$$
+An important theorem in mathematical statistics is that, if each random variable is normally distributed, then linear combinations are also normally distributed. That is, we have:
+
+**Linearity of Normal Random Variables.** Suppose that $y_1,\ldots,y_n$ are mutually independent random variables with $y_i \sim N(\mu_i,\sigma_i^2)$. (Read " $\sim$ " to mean "is distributed as.") Then,
+$$
+\sum_{i=1}^n a_i y_i \sim N\left( \sum_{i=1}^n a_i \mu_i, \sum_{i=1}^n a_i^2 \sigma_i^2 \right) .
+$$
+There are several applications of this important property. First, it can be checked that if $y \sim N(\mu ,\sigma^2)$, then $(y - \mu)/\sigma \sim N(0,1)$. Second, assume that $y_1,\ldots,y_n$ are identically and independently distributed (*i.i.d.*) as $N(\mu, \sigma^2)$ and take $a_i = n^{-1}$. Then, we have
+$$
+\overline{y} = \frac{1}{n}\sum_{i=1}^n y_i \sim N\left( \mu ,\frac{\sigma^2}{n}\right) .
+$$
+Equivalently, $\sqrt{n}\left( \overline{y}-\mu \right) /\sigma$ is standard normal.
+
+Thus, the important sample statistic $\overline{y}$ has a normal distribution. Further, the distribution of the sample variance $s_y^2$ can also be calculated. For $y_1,\ldots,y_n$ are i.i.d. $N(\mu ,\sigma^2)$, we have that $\left( n-1\right) s_y^2 /\sigma^2\sim \chi_{n-1}^2$, a $\chi^2$ (chi-square) distribution with $n-1$ degrees of freedom. Further, $\overline{y}$ is independent of $s_y^2$. From these two results, we have that
+$$
+\frac{\sqrt{n}}{s_y}\left( \overline{y}-\mu \right) \sim t_{n-1},
+$$
+a $t$-distribution with $n-1$ degrees of freedom.
+
+### Estimation and Prediction {-}
+
+Suppose that $y_1,\ldots,y_n$ are i.i.d. random variables from a distribution that can be summarized by an unknown parameter $\theta$. We are interested in the quality of an estimate of $\theta$ and denote $\widehat{\theta}$ as this estimator. For example, we consider $\theta = \mu$ with $\widehat{\theta} = \overline{y}$ and $\theta = \sigma^2$ with $\widehat{\theta} = s_y^2$ as our leading examples.
+
+**Point Estimation and Unbiasedness.** Because $\widehat{\theta}$ provides a (single) approximation of $\theta$, it is referred to as a *point estimate* of $\theta$. As a statistic, $\widehat{\theta}$ is a function of the observations $y_1,\ldots,y_n$ that varies from one sample to the next. Thus, values of $\widehat{\theta}$ vary from one sample to the next. To examine how close $\widehat{\theta}$ tends to be to $\theta$, we examine several properties of $\widehat{\theta}$, in particular, the *bias* and *consistency*. A point estimator $\widehat{\theta}$ is said to be an *unbiased estimator* of $\theta$ if $\mathrm{E~}\widehat{\theta} = \theta$. For example, since $\mathrm{E~}\overline{y} = \mu$, $\overline{y}$ is an unbiased estimator of $\mu$.
+
+**Finite Sample versus Large Sample Properties of Estimators.** Biasedness is said to be a *finite sample* property since it is valid for each sample size $n$. A *limiting*, or *large sample* property is *consistency*. Consistency is expressed in two ways, *weak* and *strong* consistency. An estimator is said to be *weakly consistent* if
+$$
+\lim_{n\rightarrow \infty }\Pr \left( |\widehat{\theta }-\theta |<h\right) = 1,
+$$
+for each positive $h$. An estimator is said to be *strongly consistent* if $\lim_{n\rightarrow \infty }~\widehat{\theta }=\theta$, with probability one.
+
+**Least Squares Estimation Principle.** In this text, two main estimation principles are used, *least squares* estimation and *maximum likelihood* estimation. For the least squares procedure, consider independent random variables $y_1,\ldots,y_n$ with means $\mathrm{E~}y_i = \mathrm{g}_i(\theta )$. Here, $\mathrm{g}_i(.)$ is a known function up to $\theta$, the unknown parameter. The least squares estimator is that value of $\theta$ that minimizes the sum of squares
+$$
+\mathrm{SS}(\theta )=\sum_{i=1}^n\left( y_i-\mathrm{g}_i(\theta )\right)^2.
+$$
+
+**Maximum Likelihood Estimation Principle.** Maximum likelihood estimates are values of the parameter that are "most likely" to have been produced by the data. Consider the independent random variables $y_1,\ldots,y_n$ with probability function $\mathrm{f}_i(a_i,\theta )$. Here, $\mathrm{f}_i(a_i,\theta )$ is interpreted to be a probability mass function for discrete $y_i$ or a probability density function for continuous $y_i$, evaluated at $a_i$, the realization of $y_i$. The function $\mathrm{f}_i(a_i,\theta )$ is assumed known up to $\theta$, the unknown parameter. The likelihood of the random variables $y_1,\ldots,y_n$ taking on values $a_1,\ldots,a_n$ is
+$$
+\mathrm{L}(\theta )=\prod\limits_{i=1}^n \mathrm{f}_i(a_i,\theta ).
+$$
+
+The value of $\theta$ that maximizes $\mathrm{L}(\theta )$ is called the *maximum likelihood estimator*.
+
+**Confidence Intervals.** Although point estimates provide a single approximation to parameters, *interval estimates* provide a range that includes parameters with a certain prespecified level of probability, or *confidence*. A pair of statistics, $\widehat{\theta }_1$ and $\widehat{\theta }_{2}$, provide an interval of the form $\left[ \widehat{\theta }_1 < \widehat{\theta }_{2}\right]$. This interval is a $100(1-\alpha )\%$ confidence interval for $\theta$ if
+$$
+\Pr \left( \widehat{\theta }_1 < \theta < \widehat{\theta }_{2}\right) \geq 1-\alpha .
+$$
+For example, suppose that $y_1,\ldots,y_n$ are i.i.d. $N(\mu ,\sigma^2)$ random variables. Recall that $\sqrt{n}\left( \overline{y}-\mu\right) /s_y\sim t_{n-1}$. This fact allows us to develop a $100(1-\alpha )\%$ confidence interval for $\mu$ of the form $\overline{y}\pm (t-value)s_y/ \sqrt{n}$, where $t-value$ is the $(1-\alpha /2)^{th}$ percentile from a $t$-distribution with $n-1$ degrees of freedom.
+
+**Prediction Intervals.** Prediction intervals have the same form as confidence intervals. However, a confidence interval provides a range for a parameter whereas a prediction interval provides a range for external values of the observations. Based on observations $y_1,\ldots,y_n$, we seek to construct statistics $\widehat{\theta }_1$ and $\widehat{\theta }_{2}$ such that 
+$$
+\Pr \left( \widehat{\theta }_1 < y^{\ast } < \widehat{\theta }_{2}\right) \geq 1-\alpha .
+$$
+Here, $y^{\ast }$ is an additional observation that is not a part of the sample.
+
+### Testing Hypotheses {-}
+
+**Null and Alternative Hypotheses and Test Statistics.** An important statistical procedure involves verifying ideas about parameters. That is, before the data are observed, certain ideas about the parameters are formulated. In this text, we consider a *null hypothesis* of the form 
+$H_0:\theta =\theta_0$ versus an *alternative hypothesis*. We consider both a *two-sided alternative*, $H_{a}:\theta \neq \theta_0$, and *one-sided alternatives*, either $H_{a}:\theta >\theta_0$ or $H_{a}:\theta <\theta_0$. To choose between these competing hypotheses, we use a test statistic $T_n$ that is typically a point estimate of $\theta$ or a version that is rescaled to conform to a reference distribution under $H_0$. For example, to test $H_0:\mu =\mu_0$, we often use $T_n= \overline{y}$ or $T_n=\sqrt{n}\left( \overline{y}-\mu_0\right) /s_y$. Note that the latter choice has a $t_{n-1}$ distribution, under the assumptions of i.i.d. normal data.
+
+**Rejection Regions and Significance Level.** With a statistic in hand, we now establish a criterion for deciding between the two competing hypotheses. This can be done by establishing a *rejection*, or *critical, region*. The critical region consists of all possible outcomes of $T_n$ that leads us to reject $H_0$ in favor of $H_{a}$. In order to specify the critical region, we first quantify the types of errors that can be made in the decision-making procedure. A *Type I error* consists of rejecting $H_0$ falsely and a *Type II error* consists of rejecting $H_{a}$ falsely. The probability of a Type I error is called the *significance level*. Prespecifying the significance level is often enough to determine the critical region. For example, suppose that $y_1,\ldots,y_n$ are i.i.d. $N(\mu ,\sigma^2)$ and we are interested in deciding between $H_0:\mu =\mu_0$ and $H_{a}:\mu > \mu_0$. Thinking of our test statistic $T_n=\overline{y}$, we know that we would like to reject $H_0$ if $\overline{y}$ is larger than $\mu_0$. The question is how much larger? Specifying a significance level $\alpha$, we wish to find a critical region of the form $\{\overline{y}>c\}$ for some constant $c$. To this end, we have
+$$
+\begin{array}{ll}
+\alpha  &= \Pr \mathrm{(Type~I~error)} = \Pr (\mathrm{Reject~}H_0 \mathrm{~assuming~} H_0:\mu =\mu_0 \mathrm{~is~true)} \\
+& = \Pr (\overline{y}>c) = \Pr \left(\sqrt{n}\left( \overline{y}-\mu_0\right)/s_y>\sqrt{n}\left( c-\mu_0 \right)/s_y\right) \\
+&= \Pr \left(t_{n-1}>\sqrt{n}\left( c-\mu_0 \right)/s_y\right).
+\end{array}
+$$
+
+With $df=n-1$ degrees of freedom, we have that $t-value = \sqrt{n}\left( c-\mu_0\right)/s_y$ where the $t-value$ is the $(1-\alpha)^{th}$ percentile from a $t$-distribution. Thus, solving for $c$, our critical region is of the form $\{\overline{y} > \mu_0 + (t-value)/s_y/\sqrt{n}\}$.
+
+**Relationship between Confidence Intervals and Hypothesis Tests.** Similar calculations show, for testing $H_0:\mu = \mu_0$ versus $H_{a}:\theta \neq \theta_0$, that the critical region is of the form 
+$$
+\{ \overline{y} > \mu_0 + (t-value)/s_y/\sqrt{n} ~\mathrm{or~} \overline{y} > \mu_0 + (t-value)/s_y/\sqrt{n}\} .
+$$
+Here, the $t$-value is a $(1-\alpha /2)^{th}$ percentile from a $t$-distribution with $df=n-1$ degrees of freedom. It is interesting to note that the event of falling in this two-sided critical region is equivalent to the event of $\mu_0$ falling outside the confidence interval $\overline{y}\pm (t-value)s_y/\sqrt{n}$. This establishes the fact that confidence intervals and hypothesis tests are really reporting the same evidence with different emphasis on interpretation of the statistical inference.
+
+**$p$-value.** Another useful concept in hypothesis testing is the $p$-value, which is short for *probability value*. For a data set, a $p$-value is defined to be the smallest significance level for which the null hypothesis would be rejected. The $p$-value is a useful summary statistic for the data analyst to report since it allows the reader to understand the strength of the deviation from the null hypothesis.
