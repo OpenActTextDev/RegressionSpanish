@@ -692,7 +692,7 @@ y_i = \mathbf{x}_i^{\mathbf{\prime}} \boldsymbol \beta +
 <li><p><span class="math inline">\(\mathrm{\pi }(z)=\frac{1}{1+\exp (-z)}=\frac{e^{z}}{1+e^{z}}\)</span>, el caso logit, y</p></li>
 <li><p><span class="math inline">\(\mathrm{\pi }(z)=\mathrm{\Phi }(z)\)</span>, el caso probit.</p></li>
 </ul>
-<p>Aquí, <span class="math inline">\(\mathrm{\Phi }(\cdot)\)</span> es la función de distribución normal estándar. La elección de la función identidad (un tipo especial de función lineal), <span class="math inline">\(\mathrm{\pi }(z)=z\)</span>, da lugar al modelo de probabilidad lineal. En cambio, <span class="math inline">\(\mathrm{\pi}\)</span> es no lineal tanto en el caso logit como en el probit. Estas dos funciones son similares en el sentido de que están casi linealmente relacionadas en el intervalo <span class="math inline">\(0.1le ple 0.9\)</span>. Así que, en gran medida, la elección de la función depende de las preferencias del analista. La Figura <a href="C11Binary.html#fig:Fig111">11.1</a> compara las funciones logit y probit, mostrando que será difícil distinguir entre las dos especificaciones en la mayoría de los conjuntos de datos.</p>
+<p>Aquí, <span class="math inline">\(\mathrm{\Phi }(\cdot)\)</span> es la función de distribución normal estándar. La elección de la función identidad (un tipo especial de función lineal), <span class="math inline">\(\mathrm{\pi }(z)=z\)</span>, da lugar al modelo de probabilidad lineal. En cambio, <span class="math inline">\(\mathrm{\pi}\)</span> es no lineal tanto en el caso logit como en el probit. Estas dos funciones son similares en el sentido de que están casi linealmente relacionadas en el intervalo <span class="math inline">\(0.1 \le p \le 0.9\)</span>. Así que, en gran medida, la elección de la función depende de las preferencias del analista. La Figura <a href="C11Binary.html#fig:Fig111">11.1</a> compara las funciones logit y probit, mostrando que será difícil distinguir entre las dos especificaciones en la mayoría de los conjuntos de datos.</p>
 <p>La inversa de la función, <span class="math inline">\(\mathrm{\pi }^{-1}\)</span>, especifica la forma de la probabilidad que es lineal en las variables explicativas, es decir, <span class="math inline">\(\mathrm{\pi }^{-1}(\pi_i)= \mathbf{x}_i^{\mathbf{\prime}}\boldsymbol \beta\)</span>. En el Capítulo 13, nos referimos a esta inversa como la <em>función de enlace</em>.</p>
 
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig111"></span>
@@ -737,13 +737,13 @@ Figura 11.1: <strong>Comparación de la Distribución Logit y Probit (Normal Est
 <h3><span class="header-section-number">11.2.2</span> Interpretación del Umbral<a href="C11Binary.html#S:Sec1122" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Tanto el caso logit como el probit se pueden interpretar de la siguiente manera.
 Supongamos que existe un modelo lineal <em>subyacente</em>,
-<span class="math inline">\(y_i^{\ast} = \mathbf{x}_i^{\mathbf{\prime}}\boldsymbol \beta  + \varepsilon_i^{\ast}\)</span>. Aquí, no observamos la respuesta
+<span class="math inline">\(y_i^{\ast} = \mathbf{x}_i^{\mathbf{\prime}}\boldsymbol \beta + \varepsilon_i^{\ast}\)</span>. Aquí, no observamos la respuesta
 <span class="math inline">\(y_i^{\ast}\)</span>, pero la interpretamos como la “propensión” a poseer
 una característica. Por ejemplo, podríamos pensar en la fortaleza financiera de una empresa de seguros como una medida de su propensión a volverse insolvente (incapaz de cumplir con sus obligaciones financieras). Bajo la interpretación del umbral, no observamos la propensión, pero sí observamos cuando la propensión cruza un umbral. Es habitual asumir que este umbral es 0, por simplicidad. Así, observamos
 <span class="math display">\[
 y_i=\left\{
 \begin{array}{ll}
-0 &amp; y_i^{\ast}le 0 \\
+0 &amp; y_i^{\ast} \le 0 \\
 1 &amp; y_i^{\ast}&gt;0
 \end{array}
 \right. .
@@ -751,13 +751,14 @@ y_i=\left\{
 Para ver cómo se deriva el caso logit a partir del modelo del umbral,
 supongamos una función de distribución logística para las perturbaciones, de modo que
 <span class="math display">\[
-\mathrm{\Pr }(\varepsilon_i^{\ast}le a)=\frac{1}{1+\exp (-a)}.
+\mathrm{\Pr }(\varepsilon_i^{\ast} \le a)=\frac{1}{1+\exp (-a)}.
 \]</span>
 Al igual que la distribución normal, se puede verificar calculando la densidad que la distribución logística es simétrica alrededor de cero. Así, <span class="math inline">\(-\varepsilon_i^{\ast}\)</span> tiene la misma distribución que <span class="math inline">\(\varepsilon_i^{\ast}\)</span> y entonces
 <span class="math display">\[
-\pi_i=\Pr (y_i=1|\mathbf{x}_i)=\mathrm{\Pr }(y_i^{\ast}&gt;0)=\mathrm{
-\Pr }(\varepsilon_i^{\ast}le \mathbf{x}_i^{\mathbf{\prime}}\mathbf{
-\beta })=\frac{1}{1+\exp (-\mathbf{x}_i^{\mathbf{\prime}}\boldsymbol \beta)}
+\pi_i
+=\Pr (y_i=1|\mathbf{x}_i)=\mathrm{\Pr }(y_i^{\ast}&gt;0)
+=\mathrm{ \Pr }(\varepsilon_i^{\ast} \le \mathbf{x}_i^{\mathbf{\prime}}\mathbf{\beta })
+=\frac{1}{1+\exp (-\mathbf{x}_i^{\mathbf{\prime}}\boldsymbol \beta)}
 =\mathrm{\pi }(\mathbf{x}_i^{\mathbf{\prime}}\boldsymbol \beta).
 \]</span>
 Esto establece la interpretación del umbral para el caso logit.
