@@ -196,83 +196,6 @@ window.buildTabsets = function(tocID) {
 };
 
 </script>
-<script>
-window.initializeCodeFolding = function(show) {
-
-  // handlers for show-all and hide all
-  $("#rmd-show-all-code").click(function() {
-    $('div.r-code-collapse').each(function() {
-      $(this).collapse('show');
-    });
-  });
-  $("#rmd-hide-all-code").click(function() {
-    $('div.r-code-collapse').each(function() {
-      $(this).collapse('hide');
-    });
-  });
-
-  // index for unique code element ids
-  var currentIndex = 1;
-
-  // select all R code blocks
-  var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia, pre.foldable');
-  rCodeBlocks.each(function() {
-    // skip if the block has fold-none class
-    if ($(this).hasClass('fold-none')) return;
-
-    // create a collapsable div to wrap the code in
-    var div = $('<div class="collapse r-code-collapse"></div>');
-    var showThis = (show || $(this).hasClass('fold-show')) && !$(this).hasClass('fold-hide');
-    var id = 'rcode-643E0F36' + currentIndex++;
-    div.attr('id', id);
-    $(this).before(div);
-    $(this).detach().appendTo(div);
-
-    // add a show code button right above
-    var showCodeText = $('<span>' + (showThis ? 'Hide' : 'Show') + '</span>');
-    var showCodeButton = $('<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm code-folding-btn pull-right float-right"></button>');
-    showCodeButton.append(showCodeText);
-    showCodeButton
-        .attr('data-toggle', 'collapse')
-        .attr('data-bs-toggle', 'collapse') // BS5
-        .attr('data-target', '#' + id)
-        .attr('data-bs-target', '#' + id)   // BS5
-        .attr('aria-expanded', showThis)
-        .attr('aria-controls', id);
-
-    var buttonRow = $('<div class="row"></div>');
-    var buttonCol = $('<div class="col-md-12"></div>');
-
-    buttonCol.append(showCodeButton);
-    buttonRow.append(buttonCol);
-
-    div.before(buttonRow);
-
-    // show the div if necessary
-    if (showThis) div.collapse('show');
-
-    // update state of button on show/hide
-    //   * Change text
-    //   * add a class for intermediate states styling
-    div.on('hide.bs.collapse', function () {
-      showCodeText.text('Show');
-      showCodeButton.addClass('btn-collapsing');
-    });
-    div.on('hidden.bs.collapse', function () {
-      showCodeButton.removeClass('btn-collapsing');
-    });
-    div.on('show.bs.collapse', function () {
-      showCodeText.text('Hide');
-      showCodeButton.addClass('btn-expanding');
-    });
-    div.on('shown.bs.collapse', function () {
-      showCodeButton.removeClass('btn-expanding');
-    });
-
-  });
-
-}
-</script>
 <style type="text/css">.hljs-literal {
 color: #990073;
 }
@@ -699,9 +622,6 @@ display: none;
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -718,14 +638,6 @@ display: none;
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
-
 
 
 <h1 class="title toc-ignore">Workshop on the Foundations: <br> Regression with Actuarial Applications</h1>
@@ -739,7 +651,7 @@ display: none;
 <div id="about-the-workshop" class="section level1">
 <h1>About the Workshop</h1>
 <p>Modern machine learning tools are founded on classical regression principles. Participants in this course will receive an exposure, both theoretical and practical, to regression tools. This course will provide participants with a springboard to further their studies to gain a deep understanding of machine learning approaches.</p>
-<p>The format of the course will consist of alternating between presentations of the underlying principles and practical applications. In a typical block, the instructor will spend 45 minutes reviewing the key mathematical underpinnings. This will be followed by a 45 minute block of time in which participants will actively explore a selected case study. Thus, it is anticipated that participants will bring a laptop with the statistical package <strong>R</strong> installed to the workshop. (Sharing a laptop with a colleague is also a great way to learn.)</p>
+<p>The format of the course will consist of alternating between presentations of the underlying principles and practical applications. In a typical block, the instructor will spend 45 minutes reviewing the insurance motivation and key mathematical underpinnings. This will be followed by a 45 minute block of time in which participants will actively explore a selected case study. Thus, it is anticipated that participants will <strong>bring a laptop</strong> with the statistical package <strong>R</strong> installed to the workshop. (Sharing a laptop with a colleague is also a great way to learn.)</p>
 <p><strong>Target Audience</strong>: Practicing actuaries, students, and educators interested in exposure to the foundations of insurance analytics.</p>
 <p><strong>Keywords and Phrases</strong>: Insurance analytics, ratemaking, statistical distributions, estimation and model selection, regression analysis.</p>
 <p><strong>Workshop Preparation</strong>. To prepare for the workshop, many participants will wish to review <strong>R</strong> code available at the website:</p>
@@ -780,7 +692,10 @@ display: none;
 <li><a href="https://openacttexts.github.io/LDAVer2/index.html"><em>Loss Data Analytics, Edition Two</em></a> (2024).</li>
 </ul>
 <p>Participants need not purchase these books for the workshop. The sources are provided for your information.</p>
-<p>A group of volunteers is working to make available a Spanish translation of the first book that will be free and available online. See our current progress at <a href="https://openacttextdev.github.io/RegressionSpanish/index.html"><em>Modelado de Regresión con Aplicaciones Actuariales y Financieras</em></a>.</p>
+<p>A group of volunteers is working to make available a Spanish translation of the first book that will be free and available online. See our current progress at</p>
+<div style="text-align: center;">
+<p><a href="https://openacttextdev.github.io/RegressionSpanish/index.html"><em>Modelado de Regresión con Aplicaciones Actuariales y Financieras</em></a>.</p>
+</div>
 </div>
 <div id="about-the-instructor" class="section level1">
 <h1>About the Instructor</h1>
@@ -840,6 +755,7 @@ display: none;
 <li>WiscHospCosts.csv (also called ‘WiscHcosts.csv’ in the online tutorial)</li>
 <li>WiscLottery.csv (also called ‘Wisc_lottery.csv’ in the online tutorial)</li>
 </ul>
+<p>These datasets were developed over several years and so sometimes variables are in upper case and sometimes in lower case. Hence, there are different versions of a single dataset.</p>
 <p>You may download these datasets from the <a href="https://instruction.bus.wisc.edu/jfrees/jfreesbooks/Regression%20Modeling/BookWebDec2010/data.html">Frees Regression Book Data Site</a>. Here, you will also find additional documentation regarding variable definitions.</p>
 </div>
 </div>
@@ -851,6 +767,7 @@ display: none;
 <div id="toggleExample.slides.Hide" style="display: none">
 <p>Here is a list of the slides/overheads that will be used in the course. Most participants will not need them but I have found that some like to have them. So, you will find them listed below.</p>
 <ul>
+<li><a href="https://openacttextdev.github.io/RegressionSpanish/Chapters1113Presentation2024.pdf"><em>Presentation Slides: Chapters 11 and 13 of </em>Regression Modeling with Actuarial and Financial Applications*</a></li>
 <li><a href="https://openacttextdev.github.io/RegressionSpanish/FreqSevPresentation2024.pdf"><em>Predictive Modeling: Frequency-Severity Models</em></a></li>
 </ul>
 </div>
@@ -858,38 +775,6 @@ display: none;
 </div>
 <div id="detailed-schedule" class="section level1">
 <h1>Detailed Schedule</h1>
-<pre class="r"><code>library(dplyr)
-library(kableExtra)
-row1 &lt;- c(&quot;9:00-9:20 am&quot;  ,&quot;Welcome by the Sponsors&quot;, &quot;Introduction to the workshop, how it will work, what you can get out of it&quot;)
-row2 &lt;- c(&quot;9:20-10:00 am&quot; ,&quot;**Topic 1**. Introduction to Analytics&quot;, &quot;Instructor presentation of  [Chapter 2 of *Loss Data Analytics, Second Edition*](https://openacttexts.github.io/LDAVer2/ChapDataAnalytics.html)&quot;)
-row2a &lt;- c(&quot;&quot;,&quot;&quot; ,&quot;Instructor provides an overview of code from the [Online Tutorial on Regression Modeling with Actuarial and Financial Applications](https://ewfreesres.github.io/RegressModel/index.html)&quot;)
-row3 &lt;- c(&quot;10:00-10:30 am&quot;,&quot;Explore features that influence
-prices of term life policies&quot; ,&quot;Participants will review term life data and code from the [Chapter 3, Regression Modeling with Actuarial and Financial Applications](https://openacttextdev.github.io/RegressionSpanish/C3BasicMLR.html#Sec31)&quot;) 
-row3a &lt;- c(&quot;&quot;,&quot;&quot; ,&quot;Participants will review code from [Chapter 3 of the Online Tutorial](https://ewfreesres.github.io/RegressModel/multiple-linear-regression.html)&quot;)
-row4 &lt;- c(&quot;10:30-11:00 am&quot;,&quot;Coffee Break&quot;,&quot;&quot;)
-row5 &lt;- c(&quot;11:00-11:45 am&quot;,&quot;**Topic 2**. Regression and Linear Models with an emphasis on Prediction&quot;,&quot;Instructor overview of Chapters 3, 4, 5, and 6 of *Regression Modeling with Actuarial and Financial Applications*&quot;)
-row6 &lt;- c(&quot;11:45-12:30&quot;   ,&quot;Explore health expenditures data&quot;,&quot;Learn about the data in [Regression Modeling with Actuarial and Financial Applications](https://openacttextdev.github.io/RegressionSpanish/index.html), Exercise 1.1. Review the code in [Chapter 5 of the Online Tutorial](https://ewfreesres.github.io/RegressModel/interpreting-regression-results.html)&quot;)
-row7 &lt;- c(&quot;12:30-2:00 pm&quot; ,&quot;Lunch&quot;,&quot;&quot;)
-row8 &lt;- c(&quot;2:00-2:45 pm&quot;  ,&quot;**Topic 3**. Logistic Regression and Generalized Linear Models&quot;,&quot;Chapters 11 and 13 of *Regression Modeling with Actuarial and Financial Applications*&quot;)
-row9 &lt;- c(&quot;2:45-3:30 pm&quot;  ,&quot;Explore health expenditures data&quot;,&quot;Review the code in [Regression Modeling with Actuarial and Financial Applications](https://openacttextdev.github.io/RegressionSpanish/index.html), Example 11.1, Section 11.4, Exercise 12.5, and Section 13.4&quot;)
-row10 &lt;- c(&quot;3:30-3:50 pm&quot;  ,&quot;Break&quot;,&quot;&quot;)
-row11 &lt;- c(&quot;4:50-4:20 pm&quot;  , &quot;**Topic 4**. Predictive Modeling: Frequency-Severity Models&quot;,&quot;Instructor presentation of 
-           [Chapter 6 of *Predictive Modeling Applications in Actuarial Science, Volume 1*](https://openacttextdev.github.io/RegressionSpanish/Chap6PredModelBook08Nov.pdf).&quot;)
-row12 &lt;- c(&quot;4:20-4:50 pm&quot; ,&quot;Explore automobile data for pricing purposes&quot;,&quot;Participants will review [Chapter 6 Code and Data for *Predictive Modeling Applications in Actuarial Science*](https://instruction.bus.wisc.edu/jfrees/jfreesbooks/PredictiveModelingVol1/predictive-modeling-foundations/chapter-6.html). See also the study based on the
-[*Massachusetts Automobile Claims* ](https://openacttextdev.github.io/RegressionSpanish/MassAutoStart.html).&quot;)
-row13 &lt;- c(&quot;4:50-5:00 pm&quot;  ,&quot;Wrap-Up&quot;,&quot;&quot;)
-tableout &lt;- rbind(row1, row2, row2a, row3, row3a, row4, row5,
-                  row6, row7, row8, row9, row10,
-                  row11, row12, row13)
-row.names(tableout) &lt;- NULL
-colnames(tableout) &lt;- c(&quot;**Time**&quot;, &quot;**Topic**&quot;, &quot;**Activity**&quot;)
-kableExtra::kbl(tableout, caption=&#39;**Detailed Schedule**&#39;, 
-                align = &#39;cll&#39;,
-              table.attr = &quot;style=&#39;width:100%;&#39;&quot;) %&gt;%
-  kableExtra::kable_classic(full_width = F, font = 14, html_font = &quot;Cambria&quot;) %&gt;%
-  kableExtra::kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;condensed&quot;)) %&gt;%
-    kableExtra::column_spec(2, width = &quot;6cm&quot;) %&gt;%
-    kableExtra::column_spec(3, width = &quot;10cm&quot;) </code></pre>
 <table style="width:100%; font-size: 14px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;" class=" lightable-classic table table-striped table-condensed">
 <caption style="font-size: initial !important;">
 <span id="tab:unnamed-chunk-4">Table 1: </span><strong>Detailed Schedule</strong>
@@ -1021,7 +906,7 @@ Chapters 11 and 13 of <em>Regression Modeling with Actuarial and Financial Appli
 Explore health expenditures data
 </td>
 <td style="text-align:left;width: 10cm; ">
-Review the code in <a href="https://openacttextdev.github.io/RegressionSpanish/index.html">Regression Modeling with Actuarial and Financial Applications</a>, Example 11.1, Section 11.4, Exercise 12.5, and Section 13.4
+Review the code in <a href="https://openacttextdev.github.io/RegressionSpanish/index.html">Regression Modeling with Actuarial and Financial Applications</a>, Example 11.1, Section 11.4, and Section 13.4. Also see Exercise 12.5 (no code available).
 </td>
 </tr>
 <tr>
@@ -1070,7 +955,6 @@ Wrap-Up
 </tr>
 </tbody>
 </table>
-<!-- </div> -->
 </div>
 
 
@@ -1106,11 +990,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
