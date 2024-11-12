@@ -1,0 +1,64 @@
+---
+title: "Preliminary R Code
+author: "EW (Jed) Frees"
+date: "16 November 2024"
+output: html_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(abind)
+library(cluster)
+library(doBy)
+library(dplyr)
+library(faraway)
+library(Hmisc)
+library(knitr)
+library(kableExtra)
+library(MASS)
+library(psych)
+library(stargazer)
+library(statmod)
+library(tweedie)
+
+
+HtmlEval <- TRUE
+#  Default Widths for Latex
+ColWidth4  <- "1.8cm"
+ColWidth5  <- "1.6cm"
+ColWidth6  <- "1.4cm"
+ColWidth7  <- "1.3cm"
+ColWidth8  <- "1.1cm"
+ColWidth9  <- "1.0cm"
+ColWidth10 <- "0.9cm"
+ColWidth14 <- "0.5cm"
+#  Function to Create a Style for Generating Tables
+TableGen1 <-function(TableData,TextTitle,Align=`r`, Digits=0, ColumnSpec=1,
+                     ColumnSpec0=1, ColWidth0= "2.5cm", 
+                     BorderRight=1, ColWidth= "1.5cm", latexFont = 9){
+  if (HtmlEval){ColumnSpec <- ColumnSpec+1
+  #kable(TableData)
+     TextTitle1 <- paste0('**', TextTitle,'**', collapse='')
+     kableExtra::kbl(TableData, caption=TextTitle1, align = Align,
+                     booktabs = T, digits=Digits) %>%
+     kableExtra::kable_classic(full_width = F, font = 12, html_font = "Cambria") %>%
+     kable_styling(bootstrap_options = c("striped", "condensed"))  %>%
+     kableExtra::column_spec(ColumnSpec0, width =  ColWidth0) %>%
+     kableExtra::column_spec(ColumnSpec, width =  ColWidth) %>%
+     kableExtra::column_spec(BorderRight, border_right = TRUE)
+   } else  
+   { ColumnSpec <- ColumnSpec+1
+     TextTitle1 <- paste0('\\textbf{',TextTitle,'}', collapse='')
+     kableExtra::kbl(TableData, caption = TextTitle1, align = Align,
+                     booktabs = T, digits=Digits,escape = FALSE) %>%
+    kableExtra::kable_styling(latex_options = c("striped", "condensed") ,
+                              font = latexFont, protect_latex= TRUE)   %>%
+    kableExtra::column_spec(ColumnSpec, width =  ColWidth) %>%
+    kableExtra::column_spec(BorderRight, border_right = TRUE) 
+   }  
+}
+````

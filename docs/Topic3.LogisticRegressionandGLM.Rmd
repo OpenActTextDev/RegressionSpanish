@@ -1,0 +1,143 @@
+---
+title: "Topic 3. Logistic Regression and Generalized Linear Models"
+author: "EW (Jed) Frees"
+date: "16 November 2024"
+output: html_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#  Section 11.1
+
+```{r eval = FALSE}
+#  Section 11.1
+#  Change the read.csv to point to your local data folder
+#Hexpend <- read.csv("CSVData/HealthExpend.csv", header=TRUE)
+Hexpend <- read.csv(file = "https://instruction.bus.wisc.edu/jfrees/jfreesbooks/Regression%20Modeling/BookWebDec2010/CSVData/HealthExpend.csv", header = TRUE)
+#  Tabla 11.1
+POSEXP = 1*(Hexpend$EXPENDIP>0)
+table(POSEXP)
+table(Hexpend$GENDER)
+Hmisc::summarize(POSEXP, Hexpend$GENDER, mean)
+
+row1 <- c("No hospitalizado" , "$y=0$" , "902 (95.3%)" , "941 (89.3%)" )
+row2 <- c("Hospitalizado" , "$y=1$ ",  "44 (4.7%)"  , "113 (10.7%)" )
+row3 <- c("Total" ,  "", "946"  , "1,054" )
+tableout <- rbind(row1, row2, row3)
+row.names(tableout) <- NULL
+colnames(tableout) <- c("", "", "Hombres", "Mujeres")
+TableGen1(TableData=tableout, 
+         TextTitle='Hospitalización por Sexo', 
+         Align='lccc', ColumnSpec=1:3,
+         ColWidth = "3cm")  %>% 
+     kableExtra::column_spec(1, width =  "4cm")
+```
+
+```{r eval = FALSE}
+# Section 11.4
+fun1 <- function(y){
+  options(digits=3)
+  temp0 <- cbind(table(y)/length(y),summarize(POSEXP, y, mean)) 
+  temp <- temp0[c(2,1),] 
+  temp[,c(2,4)] <- round(temp[,c(2,4)], digits=3)
+return(cbind(temp[,3],temp[,2],temp[,4]))}
+
+var1 <- fun1(Hexpend$GENDER)
+var2 <- fun1(Hexpend$RACE)
+var3 <- fun1(Hexpend$REGION)
+var4 <- fun1(Hexpend$EDUC)
+var5 <- fun1(Hexpend$PHSTAT)
+#var6 <- fun1(Hexpend$MPOOR)
+var7 <- fun1(Hexpend$ANYLIMIT)
+var8 <- fun1(Hexpend$INCOME)
+var9 <- fun1(Hexpend$insure)
+
+tableout <- rbind(var1, var2, var3, var4,
+                  var5, var7, var8, var9)
+tableout
+TableGen1(TableData=tableout, 
+         TextTitle='Hospitalización por Sexo', 
+         Align='lccc', ColumnSpec=1:2,
+         ColWidth = "3cm")  %>% 
+     kableExtra::column_spec(1, width =  "4cm")
+```
+
+
+# Section 13.4
+
+
+```{r eval = FALSE}
+
+#  Tabla 13.5
+#Hexpend$POSEXP <- 1*(Hexpend$EXPENDIP>0)
+HexpendPos  <- subset(Hexpend, EXPENDIP > 0)
+
+#  CREAR UNA FUNCI N CORTA PARA AHORRAR TRABAJO
+fun2 <- function(group_var, summary_vars){
+    # Convertir group_var y summary_vars a caracteres si no lo son
+  group_var <- as.character(substitute(group_var))
+  summary_vars <- as.character(substitute(summary_vars))
+temp <- doBy::summaryBy(
+  formula = as.formula(paste(summary_vars, "~", group_var)),
+        data = HexpendPos, 
+           FUN = function(x) { c(m = median(x), num = length(x)) } )
+temp1 <- temp[,c(1,3,2)]
+temp1[,2] <- round(100*temp1[,2]/length(HexpendPos$EXPENDIP), digits=1)
+colnames(temp1) <- NULL
+temp1[,1] <- as.character(temp1[,1])
+return(as.matrix(temp1) )
+}
+
+var1 <- fun2(GENDER,EXPENDIP)
+var2 <- fun2(RACE,EXPENDIP)
+var3 <- fun2(REGION,EXPENDIP)
+var4 <- fun2(EDUC,EXPENDIP)
+var5 <- fun2(PHSTAT,EXPENDIP)
+#var6 <- fun2(MPOOR,EXPENDIP)
+var7 <- fun2(ANYLIMIT,EXPENDIP)
+var8 <- fun2(INCOME,EXPENDIP)
+var9 <- fun2(insure,EXPENDIP)
+
+tableout <- rbind(var1, var2, var3, var4,
+                  var5, var7, var8, var9)
+
+TableGen1(TableData=tableout, 
+         TextTitle='Gastos Medianos por Variable Explicativa Basado en una Muestra de $n=157$ con Gastos Positivos', 
+         Align='crr', ColumnSpec=1:3, ColWidth = ColWidth4 )
+
+```
+
+
+```{r eval = FALSE}
+
+# ELIMINAR TEMPORALMENTE EL OBS # 58
+#Hexpend <- read.csv("CSVData/HealthExpend.csv", header=TRUE)
+Hexpend58 <- subset(Hexpend, !(EXPENDIP>600000))
+plot(density(Hexpend58$EXPENDIP), main="", xlab="Gastos")
+
+#  Tabla 13.6
+#POSEXP = 1*(Hexpend$EXPENDIP>0)
+HexpendPos  <- subset(Hexpend, EXPENDIP > 0)
+```
+
+```{r eval = FALSE}
+
+#  MODELO CON TODAS LAS VARIABLES
+#  SE TUVO QUE AUMENTAR EL N MERO POR DEFECTO DE ITERACIONES PARA LA CONVERGENCIA
+model1 = glm(EXPENDIP~COUNTIP+AGE+GENDER
+    +factor(RACE)+factor(REGION)+factor(EDUC)+factor(PHSTAT)
+    +MNHPOOR+ANYLIMIT+factor(INCOME)+insure, 
+    control = glm.control(maxit = 50), 
+    data=HexpendPos,family=Gamma(link="log"))
+output1 <- summary(model1 )
+tidy_model <- broom::tidy(model1)
+kable(tidy_model, format = "html", digits = 3, 
+      table.attr = "class='table table-striped'", 
+      caption = "Resumen del Modelo de Regresi n Gamma")
+
+```
+
+
+

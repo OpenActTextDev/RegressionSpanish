@@ -1,0 +1,235 @@
+---
+title: "BMI Linear Model Example"
+author: "Instructor: Edward (Jed) Frees"
+date: "16 November 2024"
+output:
+  bookdown::html_document2:
+    toc: yes
+    toc_depth: '3'
+    number_sections: yes
+    fig_width: 6
+    fig_height: 4
+    code_folding: none
+    includes:
+      in_header: ShowHide2023New.js
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment=NA, message = FALSE, warning = FALSE, fig.align="center", out.width='100%', fig.asp=0.60, results = 'verbatim')
+
+library(knitr)
+library(kableExtra)
+library(dplyr)
+library(stargazer)
+
+HtmlEval <- TRUE
+PdfEval <- FALSE
+```
+
+
+```{r echo = FALSE, child = 'HideShowCode.Rmd'}
+```
+
+```{r echo = FALSE, child = 'TableGenerate.Rmd'}
+```
+
+
+# Read in the Data
+
+
+`r HideRCode('Read.Hide',"Output When Bringing in the Data")`
+
+
+```{r ReadData, echo = FALSE}
+#  MEPS data
+#  read file MEPSpanel13.csv
+#  sample of 750 observations from panel 13
+
+ bmi <- read.table(file="http://instruction.bus.wisc.edu/jfrees/jfreesbooks/Regression%20Modeling/KyotoSageDataCode/MEPSpanel13.csv", header = TRUE, sep = ",")
+ str(bmi) 
+
+```
+
+</div>
+
+
+```{r ref.label = 'ReadData', eval = FALSE}
+```
+
+
+# Summary Statistics
+
+
+`r HideRCode('Summary.Hide',"Output When Summarizing the Data")`
+
+```{r Summary}
+ summary(bmi)
+ 
+```
+
+</div>
+
+
+```{r ref.label = 'Summary', eval = FALSE}
+```
+
+# Plotting the Data
+
+(ref:Figure1) **Distribution of BMI** 
+
+```{r Figure1, fig.cap = '(ref:Figure1)', echo = FALSE} 
+ ##  Plots
+ par(mfrow = c(2, 2))
+
+ hist(bmi$BMI)
+ qqnorm( bmi$BMI)
+ qqline(bmi$BMI)
+
+ hist(bmi$Log.BMI)
+ qqnorm( bmi$Log.BMI)
+ qqline(bmi$Log.BMI)
+ 
+```
+ 
+(ref:Figure2) *BMI versus Candidate Predictors** 
+
+```{r Figure2, fig.cap = '(ref:Figure2)', echo = FALSE} 
+ 
+ par(mfrow = c(2, 3))
+
+ plot(bmi$Age, bmi$Log.BMI, main="Log(BMI) vs. Age")
+
+ boxplot(Log.BMI ~  AgeCat, data =  bmi, main="Log(BMI) vs. Age Category")
+ boxplot(Log.BMI ~ Sex.f, data =  bmi, main="Log(BMI) vs. Sex")
+
+ boxplot(Log.BMI ~ Race.f, data =  bmi, main="Log(BMI) vs. Race")
+ boxplot(Log.BMI ~ Uninsured, data =  bmi, main="Log(BMI) vs. Uninsured")
+ boxplot(Log.BMI ~ Comord.Cnt, data = bmi, main="Log(BMI) vs. Comord.Cnt")
+ 
+```
+
+ 
+(ref:Figure3) **BMI versus Risk Types** 
+
+
+```{r Figure3, fig.cap = '(ref:Figure3)', echo = FALSE, out.width='100%'} 
+par(mfrow = c(3, 3), cex = 0.5)  
+
+ boxplot(Log.BMI ~ CANCER, data =  bmi, main="Log(BMI) vs. CANCER")
+ boxplot(Log.BMI ~  DIABETES, data =  bmi, main="Log(BMI) vs. DIABETES")
+ boxplot(Log.BMI ~  EMPHYSEMA, data =  bmi, main="Log(BMI) vs. EMPHYSEMA")
+ 
+ boxplot(Log.BMI ~  ASTHMA, data =  bmi, main="Log(BMI) vs. ASTHMA")
+ boxplot(Log.BMI ~ STROKE, data =  bmi, main="Log(BMI) vs. STROKE")
+ boxplot(Log.BMI ~ CORONARY, data =  bmi, main="Log(BMI) vs. CORONARY")
+  
+ 
+ boxplot(Log.BMI ~CHOLEST, data =  bmi, main="Log(BMI) vs. CHOLEST")
+ boxplot(Log.BMI ~  HIGHBP, data =  bmi, main="Log(BMI) vs. HIGHBP")
+ boxplot(Log.BMI ~ MentHealth, data =  bmi, main="Log(BMI) vs. MentHealth")
+ 
+```
+
+
+`r HideRCode('Plot.Hide',"R Code for Plotting the Data")`
+
+
+```{r ref.label = 'Figure1', eval = FALSE}
+```
+
+```{r ref.label = 'Figure2', eval = FALSE}
+```
+
+```{r ref.label = 'Figure3', eval = FALSE}
+```
+</div>
+
+
+# Model A
+
+## Insample Analysis
+
+
+`r HideRCode('ModelA.Hide',"Output When Calibrating Model A")`
+
+
+```{r ModelA, echo = FALSE}
+#  Linear Model A
+
+## function to calculate the PRESS statistic
+  PRESS <- function(mod){
+    pr <- residuals(mod)/(1 - hatvalues(mod))
+    press <- sum(pr^2)
+    return(press)
+    }
+## Here's the model 
+  Model.a <- lm(Log.BMI ~ Age + I(Age*Age) + Female +  
+   Race.f  +  Comord.Cnt, data = bmi)
+   summary(Model.a)
+
+ AIC(Model.a)
+ PRESS(Model.a) 
+
+ par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
+ plot(Model.a, which = c(1,2)) 
+ 
+```
+
+</div>
+
+
+```{r ref.label = 'ModelA', eval = FALSE}
+```
+
+
+## Out of Sample Analysis
+
+```{r ModelAOut}
+## read Out of Sample data
+
+bmi.14 <- read.table(file = "http://instruction.bus.wisc.edu/jfrees/jfreesbooks/Regression%20Modeling/KyotoSageDataCode/MEPSpanel14.csv", header = TRUE, sep = ",")
+
+## functions to calculate the SSPE statistic
+   SSPE <- function(mod, test){
+     yhat <- predict(mod, test)
+     y <- test$Log.BMI
+     sspe <- sum( (y-yhat)^2 )
+     return(sspe)
+   }
+ SSPE(Model.a, bmi.14)
+   
+```   
+   
+   
+
+# Model B
+
+
+`r HideRCode('ModelB.Hide',"Output When Calibrating Model B")`
+
+
+```{r ModelB, echo = FALSE}
+#  Linear Model B
+
+## Here's the model  
+ Model.b <- lm(Log.BMI ~ AgeCat + Female +  
+   Race.f  + CANCER + DIABETES +  EMPHYSEMA + ASTHMA + STROKE + 
+   CORONARY + CHOLEST  + HIGHBP, data = bmi)
+ summary(Model.b)
+ 
+ AIC(Model.b)
+ PRESS(Model.b)
+ SSPE(Model.b, bmi.14)
+
+ par(mfrow = c(1, 2), oma = c(0, 0, 2, 0))
+ plot(Model.b, which = c(1,2))
+
+
+```
+
+
+</div>
+
+
+```{r ref.label = 'ModelB', eval = FALSE}
+```

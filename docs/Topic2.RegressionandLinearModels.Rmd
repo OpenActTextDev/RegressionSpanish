@@ -1,0 +1,54 @@
+---
+title: "Topic 2. Regression and Linear Models"
+author: "EW (Jed) Frees"
+date: "16 November 2024"
+output: html_document
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#  From Chapter 5 Multiple Linear Regression of the Online Tutorial
+
+```{r eval = FALSE}
+
+meps <- read.csv("https://assets.datacamp.com/production/repositories/2610/datasets/7b7dab6d0c528e4cd2f8d0e0fc7824a254429bf8/HealthMeps.csv", header = TRUE)
+
+# Exercise 5.1.2
+str(meps)
+summary(meps)
+table(meps$race)
+par(mfrow = c(1, 2))
+hist(meps$expendop, main = "", xlab = "outpatient expenditures")
+hist(log(meps$expendop), main = "", xlab = "log expenditures")
+par(mfrow = c(1, 1))
+meps$logexpend <- log(meps$expendop)
+boxplot(logexpend ~ phstat, data = meps, main = "boxplot of log expend")
+plot(meps$age,meps$logexpend, xlab = "age", ylab = "log expend")
+lines(lowess(meps$age, meps$logexpend), col="red")
+```
+
+
+```{r eval = FALSE}
+# Exercise 5.1.3
+# Split the sample into a `training` and `test` data
+n <- nrow(meps)
+set.seed(12347)
+shuffled_meps <- meps[sample(n), ]
+train_indices <- 1:round(0.75 * n)
+train_meps    <- shuffled_meps[train_indices, ]
+test_indices  <- (round(0.25 * n) + 1):n
+test_meps     <- shuffled_meps[test_indices, ]
+
+meps_mlr1 <- lm(expendop ~ gender + age + race + region + educ + phstat + mpoor + anylimit + income + insure + usc + unemploy + managedcare, data = train_meps)
+summary(meps_mlr1)
+par(mfrow = c(2, 2))
+plot(x=meps_mlr1)
+
+meps_mlr2 <- lm(logexpend ~ gender + age + race + region + educ + phstat + mpoor + anylimit + income + insure + usc + unemploy + managedcare, data = train_meps)
+summary(meps_mlr2)
+plot(meps_mlr2)
+
+```
+

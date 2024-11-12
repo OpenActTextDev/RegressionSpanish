@@ -1,0 +1,229 @@
+---
+title: "Topic 4. Predictive Modeling"
+author: "EW (Jed) Frees"
+date: "2024-11-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Summary Statistics
+
+```{r eval = FALSE}
+# R - code to bring in the data, modify it, and produce Table 1 
+CDatasample = read.table(file="https://instruction.bus.wisc.edu/jfrees/jfreesbooks/PredictiveModelingVol1/files/chapter-6/FreqSevMassAutoInSample.csv", header=TRUE, sep = ",")
+
+summary(CDatasample)
+CDatasample$TotLoss[CDatasample$TotLoss<50] <- 0
+CDatasample$ClaimNum <- CDatasample$ClaimNum*(CDatasample$TotLoss>0)
+summary(CDatasample)
+Table1 <- with(CDatasample, table(cgroup, tgroup, useNA = "ifany"))
+Table1 
+# R - code to produce Tables 2 and 3 
+#install.packages('Rcmdr') #installing packages  takes a bit of time
+library(Rcmdr)
+#  TABLES 2 AND 3
+tableoutc <- numSummary(CDatasample[, c("TotLoss","ClaimNum","earnexpo","ann_miles")], groups=CDatasample$cgroup, statistics=c("mean"))
+Table2 <- cbind(tableoutc$table,as.matrix(tableoutc$n[1,]),as.matrix(tableoutc$n[4,]))
+Table2
+tableout <- numSummary(CDatasample[, c("TotLoss","ClaimNum","earnexpo","ann_miles")], groups=CDatasample$tgroup, 
+                       statistics=c("mean"))
+Table3 <- cbind(tableout$table,as.matrix(tableout$n[1,]),as.matrix(tableout$n[4,]))
+Table3
+detach("package:Rcmdr", unload = TRUE)
+```
+
+```{r eval = FALSE}
+#  Distribution of the Claims Severity
+SeverityData = subset(CDatasample, TotLoss>0)
+par(mfrow=c(1, 2))
+par(yaxt="n",xaxt="s")
+plot(density(SeverityData$TotLoss), main="Loss", xlab="", ylab="")   
+par(yaxt="s")
+plot(density(log(SeverityData$TotLoss)), main="Logarithmic Loss", xlab="", ylab="") 
+#dev.off()
+par(mfrow=c(1, 2))
+boxplot(log(TotLoss)~cgroup,data=SeverityData,main="By Rating Group")
+boxplot(log(TotLoss)~tgroup,data=SeverityData,main="By Territory")
+#dev.off()
+```
+
+
+## Model Fitting
+
+```{r eval = FALSE}
+# R - code to produce Table 4
+#CDatasample = read.table(file="FreqSevMassAutoInSample.csv", header=TRUE, sep = ",")
+CDatasample$TotLoss[CDatasample$TotLoss<50] <- 0
+CDatasample$ClaimNum <- CDatasample$ClaimNum*(CDatasample$TotLoss>0)
+#  POISSON MODEL
+CDatasample$cgroupF = relevel(factor(CDatasample$cgroup), ref="A")
+CDatasample$tgroupF = relevel(factor(CDatasample$tgroup), ref="6")
+ModFreq.3 <- glm(ClaimNum ~ cgroupF+tgroupF, poisson(link=log), 
+                 offset=log(earnexpo), data=CDatasample)
+summary(ModFreq.3)
+#  KEEP COEFFICIENTS AND T-STATISTICS
+temp1FA = coefficients(ModFreq.3 )
+temp2FA = temp1FA/sqrt(diag(summary(ModFreq.3 )$cov.scaled))
+(temp3FA = cbind(temp1FA,temp2FA))
+```
+
+```{r eval = FALSE}
+#  ALTERNATIVE POISSON MODEL WITH INTERACTIONS
+ModFreq.4 <- glm(ClaimNum ~ cgroupF+tgroupF+tgroupF:cgroupF,
+                 poisson(link=log), offset=log(earnexpo), data=CDatasample)
+summary(ModFreq.4)
+anova(ModFreq.3,ModFreq.4)
+anova(ModFreq.4,test="Chisq")
+```
+
+```{r eval = FALSE}
+# FIT A NEGATIVE BINOMIAL MODEL;
+#install.packages('MASS')  
+library(MASS)             # library need to fit negative binomial
+ModFreq.5 <- glm.nb(ClaimNum ~ cgroupF+tgroupF+offset(log(earnexpo)),
+                    link=log, data=CDatasample)
+summary(ModFreq.5)
+#  KEEP COEFFICIENTS AND T-STATISTICS
+temp1F = coefficients(ModFreq.5)
+temp2F = temp1F/sqrt(diag(summary(ModFreq.5 )$cov.scaled))
+temp3F = cbind(temp1F,temp2F)
+(tempF = cbind(temp3FA,temp3F))
+```
+
+```{r eval = FALSE}
+
+# R - code to produce Table 5
+#  Claims Severity Modeling
+SeverityData = subset(CDatasample, TotLoss>0)
+SeverityGAM2=glm(TotLoss/ClaimNum  ~ cgroupF+tgroupF, weights=1/ClaimNum, 
+                 Gamma(link=log), data=SeverityData)
+summary(SeverityGAM2)
+anova(SeverityGAM2,test="Chisq")
+resids = residuals(SeverityGAM2,type=c("deviance"))
+hist(resids)
+temp1S = coefficients(SeverityGAM2)
+temp2S = temp1S/sqrt(diag(summary(SeverityGAM2)$cov.scaled))
+(temp3S = cbind(temp1S,temp2S) )
+```
+
+```{r eval = FALSE}
+# R - code to produce Table 6
+#  Tweedie Model
+#install.packages('tweedie')
+library(tweedie)
+#  Warning - This code can take awhile ...
+out=tweedie.profile(CDatasample$TotLoss~1,p.vec=seq(1.1,1.9,length=9),
+                    method="interpolation",do.ci=TRUE,do.smooth=TRUE,do.plot=TRUE)
+out=tweedie.profile(TotLoss ~ cgroupF+tgroupF,
+                    data=CDatasample,p.vec=seq(1.4,1.6,length=5),
+                    method="interpolation",do.ci=TRUE,do.smooth=TRUE,do.plot=TRUE)
+out$p.max;out$phi.max
+Mod.tweedie=glm(TotLoss ~ cgroupF+tgroupF,
+                data=CDatasample,family=tweedie(var.power=out$p.max,link.power=0))
+summary(Mod.tweedie)
+Mod1.tweedie=glm(TotLoss ~ cgroupF+tgroupF,
+                 data=CDatasample,family=tweedie(var.power=1.5,link.power=0))
+summary(Mod1.tweedie)
+Mod2.tweedie=glm(TotLoss ~ cgroupF+tgroupF+offset(log(earnexpo)),
+                 data=CDatasample,family=tweedie(var.power=1.5,link.power=0))
+summary(Mod2.tweedie)
+temp1T = coefficients(Mod2.tweedie)
+temp2T = temp1T/sqrt(diag(summary(Mod2.tweedie)$cov.scaled))
+(temp3T = cbind(temp1T,temp2T))
+
+```
+
+## Out of Sample Validation
+
+You don't have access to the original data files and thus can not draw the random samples that we did. 
+Nonetheless, you may find the follow R code interesting, to see how we did it.
+
+```{r eval = FALSE}
+
+# R code for drawing the independent insample and out-of-sample data
+ComboData = read.csv(choose.files(), header=TRUE);str(ComboData)
+length(ComboData$ann_miles[ComboData$ann_miles==-1])#356,446 obs with mileage missing
+(nsamp <- length(ComboData$ann_miles))#3,599,649 records
+set.seed(123457)
+ComboData$select <- runif(nsamp)
+ComboData <- ComboData[order(ComboData$select),]
+CDatasample<- ComboData[1:100000,]
+str(CDatasample)
+OutDatasample<- ComboData[100001:150000,]
+write.csv(CDatasample, file = "CDatasample1.csv")
+write.csv(OutDatasample, file = "OutDatasample.csv")
+```
+
+```{r eval = FALSE}
+# R - code to produce Figure 3
+
+OutDatasample = read.table(file="https://instruction.bus.wisc.edu/jfrees/jfreesbooks/PredictiveModelingVol1/files/chapter-6/FreqSevMassAutoOutSample.csv", header=TRUE, sep = ",")
+
+
+OutDatasample$TotLoss[OutDatasample$TotLoss<50] <- 0
+OutDatasample$ClaimNum <- OutDatasample$ClaimNum*(OutDatasample$TotLoss>0)
+RGA <- 1*(OutDatasample$cgroup=="A")
+RGB <- 1*(OutDatasample$cgroup=="B")
+RGI <- 1*(OutDatasample$cgroup=="I")
+RGM <- 1*(OutDatasample$cgroup=="M")
+RGS <- 1*(OutDatasample$cgroup=="S")
+t1 <- 1*(OutDatasample$tgroup==1)
+t2 <- 1*(OutDatasample$tgroup==2)
+t3 <- 1*(OutDatasample$tgroup==3)
+t4 <- 1*(OutDatasample$tgroup==4)
+t5 <- 1*(OutDatasample$tgroup==5)
+t6 <- 1*(OutDatasample$tgroup==6)
+Xout = as.matrix(cbind(rep(1,length(OutDatasample$cgroup)),RGB,RGI,RGM,RGS,t1,t2,t3,t4,t5))
+remove(RGA,RGB,RGI,RGM,RGS,t1,t2,t3,t4,t5,t6)
+ModFreq.coeff <- c(-2.63630253,0.34417693,1.04343965,0.54125024,-0.06883301,-0.76823395,-0.64125693,-0.59975338,-0.43333458,-0.26509998)
+ModSev.coeff <- c(7.9765427877,0.0424532525,0.2845107148,-0.0269906013,0.0618664973,0.0217031346,-0.1456262957,0.0184503523,-0.0233348614,-0.0002602852) 
+ModTweed.coeff <- c(5.35593653,0.34031489,1.28297178,0.47387179,-0.03307208,-0.74268966,-0.78193822,-0.55239787,-0.48021351,-0.26879875) 
+freq1score = exp(Xout %*% ModFreq.coeff)*OutDatasample$earnexpo
+sevscore = exp(Xout %*% ModSev.coeff) 
+totscore <- freq1score*sevscore
+ppscore = exp(Xout %*% ModTweed.coeff)*OutDatasample$earnexpo 
+par(mfrow=c(1, 2))
+hist(ppscore, main="", xlab="Pure Premium Score")
+plot(ppscore,totscore,ylab="Freq Sever Score", xlab="Pure Premium Score")
+```
+
+```{r eval = FALSE}
+# R - code to produce Figure 3
+out2phi <- 515.3381
+alpha <- 1/2.34693
+freq1score = exp(Xout %*% ModFreq.coeff)*OutDatasample$earnexpo
+sevscore = exp(Xout %*% ModSev.coeff) 
+totscore <- freq1score*sevscore
+ppscore = exp(Xout %*% ModTweed.coeff)*OutDatasample$earnexpo 
+#ntest <- 50000
+ntest <- 250
+ppscore1 <- ppscore[1:ntest]
+
+mui = (freq1score*sevscore)[1:ntest]
+p <- (alpha+2)/(alpha+1)
+phii <- (mui^(-p)*freq1score*(sevscore^2/alpha)*(1+alpha))[1:ntest]
+
+yout <- OutDatasample$TotLoss[1:ntest]
+library(tweedie)
+percTweed <- ptweedie(yout, xi=1.5, mu=ppscore1, phi=out2phi, power=NULL)
+percFS <- ptweedie(yout, xi=p, mu=mui, phi=phii, power=NULL)
+plot(percTweed,percFS)
+
+quantTWFS <-function(perc)
+{ t1 <- sum(1*(percTweed<perc))/ntest
+  t2 <- sum(1*(percFS<perc))/ntest
+  outt <- c(perc,t1,t2)
+  t(as.matrix(outt))
+}
+out <- rbind(quantTWFS(0.96),
+             quantTWFS(0.97),
+             quantTWFS(0.98),
+             quantTWFS(0.985),
+             quantTWFS(0.99),
+             quantTWFS(0.995),
+             quantTWFS(0.999))
+out
+```

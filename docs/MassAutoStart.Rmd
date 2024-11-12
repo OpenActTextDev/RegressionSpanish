@@ -1,0 +1,493 @@
+---
+title: "Massachusetts Automobile Claims"
+author: "Instructor: Edward (Jed) Frees"
+date: "16 November 2024"
+output:
+  bookdown::html_document2:
+    toc: yes
+    toc_depth: '3'
+    number_sections: no
+    fig_width: 6
+    fig_height: 4
+    code_folding: none
+    includes:
+      in_header: ShowHide2023New.js
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment=NA, message = FALSE, warning = FALSE, fig.align="center", out.width='100%', fig.asp=0.60, results = 'asis')
+
+library(knitr)
+library(kableExtra)
+library(dplyr)
+library(stargazer)
+
+HtmlEval <- TRUE
+PdfEval <- FALSE
+```
+
+
+```{r echo = FALSE, child = 'HideShowCode.Rmd'}
+```
+
+```{r echo = FALSE, child = 'TableGenerate.Rmd'}
+```
+
+
+#  Introduction
+
+We investigate frequency-severity modeling using an insurance automobile claims dataset studied in Ferreira and Minikel (2010, 2012). These data, made public by the Massachusetts Executive Office of Energy and Environmental Affairs (EOEEA), summarizes automobile insurance experience from the state of Massachusetts in year 2006. The dataset consists of approximately 3.25 million policies representing over half a billion dollars of claims.
+
+Because the dataset represents experience from several insurance carriers, it is not surprising that the amount of policyholder information is less than typically used by large carriers that employ advanced analytic techniques. Nonetheless, we do have basic ratemaking information that is common to all carriers, including primary driver characteristics and territory groupings. At the vehicle level, we also have mileage driven in a year, the focus of the Ferreira and Minikel study.
+
+## Data and Summary Statistics
+
+
+From the Ferreira and Minikel (2010, 2012) data, we drew a random sample of 100,000 policyholders for our analysis. With the following code, you will see after importing the data and looking it over, many values of "TotLoss" were negative. We followed the recommendation of Ferreira and Minikel and forced all losses of less than 50 to be equal to 0.
+
+`r HideRCode('Summary.Hide',"R Code to Bring in Data")`
+
+```{r}
+# R - code to bring in the data, modify it, and produce Table 1 
+CDatasample <- read.table(file="http://instruction.bus.wisc.edu/jfrees/jfreesbooks/PredictiveModelingVol1/files/chapter-6/FreqSevMassAutoInSample.csv", header=TRUE, sep = ",")
+#summary(CDatasample)
+CDatasample$TotLoss[CDatasample$TotLoss<50] <- 0
+CDatasample$ClaimNum <- CDatasample$ClaimNum*(CDatasample$TotLoss>0)
+
+summary(CDatasample)
+Table1 <- with(CDatasample, table(cgroup, tgroup, useNA = "ifany"))
+
+```
+
+</div>
+
+
+```{r Table1, echo = FALSE}
+
+colnames(Table1) <- c("Terr 1", "Terr 2", "Terr 3", "Terr 4", "Terr 5", "Terr 6")
+TableGen1(TableData=Table1, 
+         TextTitle='Number of Policies by Rating Group and Territory', 
+         Align='lrrrrrrr', Digits=3, ColumnSpec=1:6,
+         ColWidth = ColWidth4) 
+```
+The code also creates a table that shows the distribution of number of policies by rating group and territory. The distribution of policies is reasonably level across territories. In contrast, the distribution by rating group is more uneven; for example, over three quarters of the policies are from the "Adult" group. The sparsest cell is business drivers in territory 6; the most heavily populated cell is territory 4 adult drivers.
+
+
+For this study, an insurance claim is from only bodily injury, property damage liability, and personal injury protection coverages. These are the compulsory, and thus fairly uniform, types of insurance coverages in Massachusetts; it is critical to have uniformity in reporting standards in an intercompany study such as in Ferreira and Minikel (2010, 2012). As a result, in Table \@ref(tab:Table2), the averages of the loss might appear to be lower than in other studies. This is because the *total* is over the three compulsory coverages and does not represent, for example, losses from the commonly available (and costlier) comprehensive coverage. The average total loss in Table 1 is 127.48. We also see important differences by rating group, where average losses for inexperienced youthful drivers are over 3 times greater than adult drivers. We can think of this total loss as a *pure premium*.
+
+Table \@ref(tab:Table2) shows that the average claim number is 4.3%. Specifically, for the 100,000 policies, there were 95,875 that had zero claims, 	3,942 that had one claim, 176 that had two claims, and 7 that had three claims. The table also reports important difference by rating group,	where the average number of losses for inexperienced youthful drivers are about 2.5 times greater than adult drivers.
+	
+Table \@ref(tab:Table2) also summarizes information on the earned exposure, defined here as the amount of time that the policy was in force in the study, and annual mileage. Annual mileage was estimated by Ferreira and Minikel (2010,2012) based on Massachusetts' Commonwealth's Registry of Motor Vehicles mandatory annual safety checks, combined with automobile information from the vehicle identification number (commonly known using the acronym VIN). Interestingly, Table \@ref(tab:Table2) shows that only about 90% of our data possess valid information about the number of miles driven, so that about 10% are missing.
+	
+Here is the **R** code used to produce Tables \@ref(tab:Table2) and \@ref(tab:Table3). 
+
+
+`r HideRCode('Tables23.Hide',"R Code for Tables 2 and 3")`
+
+```{r Tables23}
+# R - code to produce Tables 2 and 3 
+
+library(Hmisc)
+t21 <- summarize(CDatasample[, "TotLoss"],CDatasample[, "cgroup"], length ) 
+t22 <- summarize(CDatasample[, "TotLoss"],CDatasample[, "cgroup"], mean )  
+t23 <- summarize(CDatasample[, "ClaimNum"],CDatasample[, "cgroup"], mean )  
+t24 <- summarize(CDatasample[, "earnexpo"],CDatasample[, "cgroup"], mean )  
+t25 <- summarize(CDatasample[, "ann_miles"],CDatasample[, "cgroup"], mean, na.rm = TRUE )  
+Table2<- cbind(t21,
+                  format(round(t22[2], digits = 2), big.mark = ','),
+                  round(t23[2], digits = 3),
+                  round(t24[2], digits = 3),
+                  round(t25[2], digits = 3))
+colnames(Table2) <- c("Rating Group",
+  "Number", "Total Loss", "Claim Number", "Earned Exposure", "Annual Miles")
+#Table2
+t31 <- summarize(CDatasample[, "TotLoss"],CDatasample[, "tgroup"], length ) 
+t32 <- summarize(CDatasample[, "TotLoss"],CDatasample[, "tgroup"], mean )  
+t33 <- summarize(CDatasample[, "ClaimNum"],CDatasample[, "tgroup"], mean )  
+t34 <- summarize(CDatasample[, "earnexpo"],CDatasample[, "tgroup"], mean )  
+t35 <- summarize(CDatasample[, "ann_miles"],CDatasample[, "tgroup"], mean, na.rm = TRUE )  
+Table3<- cbind(t31,
+                  format(round(t32[2], digits = 2), big.mark = ','),
+                  round(t33[2], digits = 3),
+                  round(t34[2], digits = 3),
+                  round(t35[2], digits = 3))
+colnames(Table3) <- c("Territory","Number", "Total Loss", "Claim Number", "Earned Exposure", "Annual Miles")
+#Table3
+
+```
+
+</div>
+
+```{r Table2, echo = FALSE}
+
+TableGen1(TableData=Table2, 
+         TextTitle='Averages by Rating Group', 
+         Align='crrrrrrr', Digits=3, ColumnSpec=1:3,
+         ColWidth = ColWidth4) 
+```
+
+```{r Table3, echo = FALSE}
+
+TableGen1(TableData=Table3, 
+         TextTitle='Averages by Territory', 
+         Align='crrrrrrr', Digits=3, ColumnSpec=1:3,
+         ColWidth = ColWidth4) %>%
+  footnote(general = "Both models use logarithmic exposure as an offset. 
+           Estimated negative binomial dispersion parameter is 2.128. 
+           Reference levels are 'A' for Rating Group and '6' for Territory", 
+           general_title = "Note:", 
+           footnote_as_chunk = TRUE)
+```
+
+
+Table \@ref(tab:Table3) provides similar information but by territory. Here, we see that the average total loss and number of claims for territory 6 is about twice that for territory 1.
+
+
+There 4,125 (= 100,000 - 95,875) policies with losses. To get a better handle on claim sizes, Figure 1 provides smooth histograms of the loss distribution. The left-hand panel is in the original (dollar) units, indicating a distribution that is right-skewed. The right-hand panel shows the same distribution on a logarithmic scale where we see a more symmetric behavior.
+
+
+Do our rating factors affect claim size? To get some insights into this question, Figure 2 shows the logarithmic loss distribution by each factor. The left-hand panel shows the distribution by rating group, the right-hand panel shows the distribution by territory. Neither figure suggests that the rating factors have a strong influence on the size distribution.
+
+
+Here is the **R** code used to Figures 1 and 2.
+
+`r HideRCode('Figures12.Hide',"R Code for Figures 1 and 2")`
+
+```{r eval = FALSE}
+#  Distribution of the Claims Severity
+SeverityData = subset(CDatasample, TotLoss>0)
+#Figure 1
+par(mfrow=c(1, 2))
+par(yaxt="n",xaxt="s")
+plot(density(SeverityData$TotLoss), main="Loss", xlab="", ylab="")   
+par(yaxt="s")
+plot(density(log(SeverityData$TotLoss)), main="Logarithmic Loss", xlab="", ylab="") 
+
+#Figure 2
+par(mfrow=c(1, 2))
+boxplot(log(TotLoss)~cgroup,data=SeverityData,main="By Rating Group")
+boxplot(log(TotLoss)~tgroup,data=SeverityData,main="By Territory")
+```
+
+</div>
+
+(ref:Figure1) **Loss Distribution.** The left-hand panel shows the distribution of loss, the right-hand panel shows the same distribution but on a (natural) logarithmic scale.
+
+
+```{r Figure1, fig.cap='(ref:Figure1)', echo = FALSE}
+#  Distribution of the Claims Severity
+SeverityData = subset(CDatasample, TotLoss>0)
+#Figure 1
+par(mfrow=c(1, 2))
+par(yaxt="n",xaxt="s")
+plot(density(SeverityData$TotLoss), main="Loss", xlab="", ylab="")   
+par(yaxt="s")
+plot(density(log(SeverityData$TotLoss)), main="Logarithmic Loss", xlab="", ylab="") 
+```
+
+(ref:Figure2)  **Logarithmic Loss Distribution by Factor.** The left-hand panel shows the distribution by rating group, the right-hand panel shows the distribution by territory.
+
+```{r Figure2, fig.cap='(ref:Figure2)', echo = FALSE}
+#Figure 2
+par(mfrow=c(1, 2))
+boxplot(log(TotLoss)~cgroup,data=SeverityData,main="By Rating Group")
+boxplot(log(TotLoss)~tgroup,data=SeverityData,main="By Territory")
+
+```
+
+# Model Fitting
+
+We report three types of fitted models here: (1) frequency models, (2) a severity model, and (3) a pure premium model.
+
+## Model Fitting - Frequency 
+
+Table \@ref(tab:Table4) summarizes the results from two frequency models, Poisson and negative binomial regression models. For both models, we used a logarithmic link with logarithmic exposure as an offset variable. Focussing on the Poisson fit, we see that the $t$-statistics indicate strong statistical significance for several levels of each factor, rating group and territory. Additional tests confirm that they are statistically significant factors. Although not reported in Table \@ref(tab:Table4), we also ran a model that included interactions among terms. The interaction terms were statistically insignificant at the $p-value = 0.303$ level. Hence, we report on the model without interactions, in part because of our desire for simplicity.	
+
+We also ran an analysis including annual mileage. This variable turned out to be strongly statistically significant with a $t$-statistic equal to 12.08. However, by including this variable, we also lost 9,869 observations due to missing values in annual mileage. Thus, we treat the potential inclusion of this variable as an interesting follow-up study.
+
+For some audiences, analysts may wish to present the more flexible negative binomial regression model. Table \@ref(tab:Table4) shows that there is little difference in the estimated coefficients for this data set, indicating that the simpler Poisson model is acceptable.
+
+
+`r HideRCode('Table4.Hide',"R Code for Table 4")`
+
+```{r}
+# R - code to produce Table 4
+#  POISSON MODEL
+CDatasample$cgroupF <- relevel(factor(CDatasample$cgroup), ref="A")
+CDatasample$tgroupF <- relevel(factor(CDatasample$tgroup), ref="6")
+ModFreq.3 <- glm(ClaimNum ~ cgroupF+tgroupF, poisson(link=log), 
+                          offset=log(earnexpo), data=CDatasample)
+#summary(ModFreq.3)
+stargazer(ModFreq.3, type = "html")
+#  KEEP COEFFICIENTS AND T-STATISTICS
+temp1FA <- coefficients(ModFreq.3 )
+temp2FA <- temp1FA/sqrt(diag(summary(ModFreq.3 )$cov.scaled))
+temp3FA <- cbind(temp1FA,temp2FA)
+
+#  ALTERNATIVE POISSON MODEL WITH INTERACTIONS
+ModFreq.4 <- glm(ClaimNum ~ cgroupF+tgroupF+tgroupF:cgroupF,
+                 poisson(link=log), offset=log(earnexpo),
+                 data=CDatasample)
+#summary(ModFreq.4)
+stargazer(ModFreq.4, type = "html")
+anova(ModFreq.3,ModFreq.4)
+anova(ModFreq.4,test="Chisq")
+
+#FIT A NEGATIVE BINOMIAL MODEL;
+library(MASS)             # library need to fit negative binomial
+ModFreq.5 <- glm.nb(ClaimNum ~ cgroupF+tgroupF+offset(log(earnexpo)),
+                   link=log, data=CDatasample)
+#summary(ModFreq.5)
+stargazer(ModFreq.5, type = "html")
+# KEEP COEFFICIENTS AND T-STATISTICS
+temp1F <- coefficients(ModFreq.5)
+temp2F <- temp1F/sqrt(diag(summary(ModFreq.5 )$cov.scaled))
+temp3F <- cbind(temp1F,temp2F)
+
+```
+</div>
+
+```{r Table4, echo = FALSE}
+
+tableout <- cbind(temp3FA,temp3F) 
+colnames(tableout) <- c("Poisson Estimate", "Poisson t-statistic",
+                        "Neg Bin Estimate", "Neg Bin t-statistic")
+TableGen1(TableData=tableout, 
+         TextTitle='Comparison of Poisson and Negative Binomial Models',
+         Align='crrrrrrr', Digits=3, ColumnSpec=1:3,
+         ColWidth = ColWidth4) 
+
+```
+
+## Model Fitting - Severity 
+
+Table 5 summarizes the fit of a gamma regression severity model. As described earlier, we use total losses divided by number of claims as the dependent variable and the reciprocal of the number of claims as the weight. We fit a gamma distribution with a logarithmic link and the two factors, rating group and territory. Table 5 shows small $t$-statistics associated with levels of rating group and territory  - only "inexperienced" drivers are statistically significant. Additional tests indicate that the territory factor is not statistically significant and the rating group factor is marginally statistically significant with a $p-value = 0.042$. This is an interesting finding.
+
+`r HideRCode('Tables5.Hide',"R Code for Table 5")`
+
+
+```{r}
+# R - code to produce Table 5
+
+CDatasample$cgroupF <- relevel(factor(CDatasample$cgroup), ref="A")
+CDatasample$tgroupF <- relevel(factor(CDatasample$tgroup), ref="6")
+#  Claims Severity Modeling
+SeverityData <- subset(CDatasample, TotLoss>0)
+SeverityGAM2 <- glm(TotLoss/ClaimNum  ~ cgroupF+tgroupF,
+                    weights=ClaimNum, 
+                    Gamma(link=log), data=SeverityData)
+#summary(SeverityGAM2)
+stargazer(SeverityGAM2, type = "html")
+anova(SeverityGAM2,test="Chisq")
+resids <- residuals(SeverityGAM2,type=c("deviance"))
+#hist(resids)
+temp1S <- coefficients(SeverityGAM2)
+temp2S <- temp1S/sqrt(diag(summary(SeverityGAM2)$cov.scaled))
+ 
+```
+
+
+</div>
+
+```{r Table5, echo = FALSE}
+Table5 <- cbind(temp1S,temp2S) 
+TableGen1(TableData=Table5, 
+         TextTitle='Gamma Regression Models', 
+         Align='crrrrrrr', Digits=3, ColumnSpec=1:2,
+         ColWidth = ColWidth4) 
+```
+
+## Model Fitting - Pure Premium
+
+As an alternative to the frequency severity approach, we also fit a model using "pure premiums," total losses, as the dependent variable. Similar to the frequency and severity models, we use a logarithmic link function with the factors rating group and territory. The Tweedie distribution was used. We approximated the Tweedie shape parameter $p$ using profile likelihood and found that the value $p=1.5$ was acceptable. This was the value used in the final estimation.	
+
+Table \@ref(tab:Table6) reports the fitted Tweedie regression model. The $t$-statistics associated with several levels of rating group and territory are statistically significant. This suggests, and was confirmed through additional testing, that both factors are statistically significant determinants of total loss. The table also reports the relativities (computed as the exponentiated parameter estimates). Interestingly, these relativities turn out to be close to those of the frequency model; this is not surprising given the lack of statistical significance associated with the factors in the severity model.	
+
+`r HideRCode('Tables6.Hide',"R Code for Table 6")`
+
+```{r}
+# R - code to produce Table \@ref(tab:Table6)
+
+# Tweedie Model
+library(tweedie)
+library(statmod)
+out <- tweedie.profile(CDatasample$TotLoss~1,
+                   p.vec=seq(1.1,1.9,length=9),
+                   method="interpolation",do.ci=TRUE,
+                   do.smooth=TRUE,do.plot=TRUE)
+out <- tweedie.profile(TotLoss ~ cgroupF+tgroupF,
+                   data=CDatasample,p.vec=seq(1.4,1.6,length=5),
+                   method="interpolation",do.ci=TRUE,
+                   do.smooth=TRUE,do.plot=TRUE)
+out$p.max;out$phi.max
+Mod.tweedie <- glm(TotLoss ~ cgroupF+tgroupF,
+              data=CDatasample,
+              family=tweedie(var.power=out$p.max,link.power=0))
+#summary(Mod.tweedie)
+stargazer(Mod.tweedie, type = "html")
+Mod1.tweedie <- glm(TotLoss ~ cgroupF+tgroupF,
+               data=CDatasample,
+               family=tweedie(var.power=1.5,link.power=0))
+#summary(Mod1.tweedie)
+stargazer(Mod1.tweedie, type = "html")
+Mod2.tweedie <- glm(TotLoss ~ cgroupF+tgroupF+offset(log(earnexpo)),
+                data=CDatasample,
+                family=tweedie(var.power=1.5,link.power=0) )
+#summary(Mod2.tweedie)
+stargazer(Mod2.tweedie, type = "html")
+temp1T <- coefficients(Mod2.tweedie)
+temp2T <- temp1T/sqrt(diag(summary(Mod2.tweedie)$cov.scaled))
+
+
+```
+
+</div>
+
+```{r Table6, echo = FALSE}
+Table6 <- cbind(temp1T,temp2T)
+colnames(Table6) <- c("Estimate", "$t$-statistic")
+TableGen1(TableData=Table6, 
+         TextTitle='Tweedie Regression Model', 
+         Align='crrrrrrr', Digits=3, ColumnSpec=1:2,
+         ColWidth = ColWidth4) 
+```
+
+# Application: Massachusetts Automobile Claims
+
+## Out-of-Sample Model Comparisons
+
+
+To compare the frequency-severity and pure premium approaches, we examined a *held-out* validation sample. Specifically, from our original database, we drew a random sample of 100,000 policies and developed the models reported earlier. Then, we drew an (independent) sample of 50,000 policies. You don't have access to the original data files and thus can not draw the random samples that we did. Nonetheless, you may find the follow **R** code interesting, to see how we did it.
+
+`r HideRCode('Selection.Hide',"R Code for Independent In- and Out-Samples")`
+
+
+```{r eval = FALSE}
+# R code for drawing the independent in-sample and out-of-sample data
+ComboData <-  read.csv(choose.files(), header=TRUE);str(ComboData)
+length(ComboData$ann_miles[ComboData$ann_miles==-1])  #356,446 obs with mileage missing
+nsamp <- length(ComboData$ann_miles) #3,599,649 records
+set.seed(123457)
+ComboData$select <- runif(nsamp)
+ComboData        <- ComboData[order(ComboData$select),]
+CDatasample      <- ComboData[1:100000,]
+str(CDatasample)
+OutDatasample    <- ComboData[100001:150000,]
+write.csv(CDatasample, file = "CDatasample1.csv")
+write.csv(OutDatasample, file = "OutDatasample.csv")
+```
+
+
+</div>
+
+For the frequency-severity model, our predictions are based on  the Poisson frequency coefficients in Table \@ref(tab:Table4) to estimate $\boldsymbol \beta_F$, severity coefficients in Table 5 to estimate $\boldsymbol \beta_S$, and with values of the independent variables from the held-out validation sample. The predictions for the Tweedie model followed similarly using the coefficients reported in Table \@ref(tab:Table6).
+
+
+Table \@ref(fig:Figure3) compares the predictions for frequency-severity and the pure premium models.
+The left-hand panel shows the distribution of our pure premium predictions. The right-hand panel shows the strong relationship between the two predictions; it turns out that the correlation is approximately 0.999. Both models provided some ability to predict total losses; the (Spearman) correlation between held-out losses and (either) predictor turned out to be 8.2%.
+
+Here is the **R** code to produce Figure \@ref(fig:Figure3).
+
+
+`r HideRCode('Figure3.Hide',"R Code for Figure 3")`
+
+```{r}
+# R - code to produce Figure 3
+OutDatasample <- read.table(file="http://instruction.bus.wisc.edu/jfrees/jfreesbooks/PredictiveModelingVol1/files/chapter-6/FreqSevMassAutoOutSample.csv", header=TRUE, sep = ",")
+OutDatasample$TotLoss[OutDatasample$TotLoss<50] <- 0
+OutDatasample$ClaimNum <- OutDatasample$ClaimNum*(OutDatasample$TotLoss>0)
+
+RGA <- 1*(OutDatasample$cgroup=="A")
+RGB <- 1*(OutDatasample$cgroup=="B")
+RGI <- 1*(OutDatasample$cgroup=="I")
+RGM <- 1*(OutDatasample$cgroup=="M")
+RGS <- 1*(OutDatasample$cgroup=="S")
+t1 <- 1*(OutDatasample$tgroup==1)
+t2 <- 1*(OutDatasample$tgroup==2)
+t3 <- 1*(OutDatasample$tgroup==3)
+t4 <- 1*(OutDatasample$tgroup==4)
+t5 <- 1*(OutDatasample$tgroup==5)
+t6 <- 1*(OutDatasample$tgroup==6)
+Xout <- as.matrix(cbind(rep(1,length(OutDatasample$cgroup)),RGB,RGI,RGM,RGS,t1,t2,t3,t4,t5))
+
+ModFreq.coeff  <- c(-2.63630253,0.34417693,1.04343965,0.54125024,-0.06883301,-0.76823395,-0.64125693,-0.59975338,-0.43333458,-0.26509998)
+ModSev.coeff   <- c(7.9765427877,0.0424532525,0.2845107148,-0.0269906013,0.0618664973,0.0217031346,-0.1456262957,0.0184503523,-0.0233348614,-0.0002602852) 
+ModTweed.coeff <- c(5.35593653,0.34031489,1.28297178,0.47387179,-0.03307208,-0.74268966,-0.78193822,-0.55239787,-0.48021351,-0.26879875) 
+freq1score <- exp(Xout %*% ModFreq.coeff)*OutDatasample$earnexpo
+sevscore <- exp(Xout %*% ModSev.coeff) 
+totscore <- freq1score*sevscore
+ppscore <- exp(Xout %*% ModTweed.coeff)*OutDatasample$earnexpo 
+# par(mfrow=c(1, 2))
+# hist(ppscore, main="", xlab="Pure Premium Score")
+# plot(ppscore,totscore,ylab="Freq Sever Score", xlab="Pure Premium Score")
+```
+
+</div>
+
+(ref:Figure3) **Out-of-Sample Mean Performance.** The left-hand panel shows the distribution of the out-of-sample predictions calculated using the pure premium, or Tweedie, model. The right-hand panel shows the strong relationship between the scores from the frequency-severity and the pure premium models.
+
+
+```{r Figure3, fig.cap = '(ref:Figure3)', echo = FALSE}
+
+par(mfrow=c(1, 2))
+hist(ppscore, main="", xlab="Pure Premium Score")
+plot(ppscore,totscore,ylab="Freq Sever Score", xlab="Pure Premium Score")
+
+```
+
+
+Because the mean predictor did not provide a way of discriminating between the pure premium and frequency-severity models, 	we also looked to tail percentiles. Specifically, in the Tweedie regression model, we cited $p=1.5$ and $\hat{\phi} = 2.371$ and described how to estimate $\hat{\mu}_i$ for each observation $i$. Then, we noted that one could use the *qTweedie* function in **R** to get quantiles, e.g., the 95th quantile. We did this for *each* held-out observation and compared it to the actual realized value. If the model is correct, we expect 95% of the 	observations to be less than the corresponding quantile.
+	
+On a separate note, actuaries might wish to use this set of quantiles, that varies by policy characteristics, when selecting a reinsurance treaty.
+	
+The procedure for Poisson frequency and gamma severity models is similar but a bit more complex. Earlier, we noted that a Poisson sum of gamma random variables has a Tweedie distribution. So, even though we estimate the frequency and severity parameters separately, they can still be combined when we look at the loss distribution. We showed explicitly how to get Tweedie parameters from the Poisson 	frequency and gamma severity models. Then, as with the Tweedie GLM, we can calculate, e.g., a 95th quantile for each observation and 	compare it to the actual realized value.
+	
+Table \@ref(tab:Table7) provides the comparisons for selected percentiles. Both models provide disappointing results. On the one hand, this table suggests that fitting the tails of the distribution is a more complex problem that requires more refined data and sophisticated models. On the other hand, the similarity of results in Table \@ref(fig:Figure3) when predicting the mean suggests a robustness of the GLM procedures that gives the analyst confidence when providing recommendations.
+	
+
+Here is the **R** code to produce Table \@ref(tab:Table7). To test this out, use the number "ntest" to be something small, like 2500. On my machine, the full run of ntest=50000 takes longer.
+
+`r HideRCode('Table7.Hide',"R Code for Table 7")`
+	
+```{r}
+# R - code to produce Table 7
+out2phi  <- 515.3381
+alpha    <- 1/2.34693
+#ntest   <- 50000
+ntest    <- 2500
+ppscore1 <- ppscore[1:ntest]
+
+mui  <- (freq1score*sevscore)[1:ntest]
+p    <- (alpha+2)/(alpha+1)
+phii <- (mui^(-p)*freq1score*(sevscore^2/alpha)*(1+alpha))[1:ntest]
+
+yout <- OutDatasample$TotLoss[1:ntest]
+library(tweedie)
+percTweed <- ptweedie(yout, xi=1.5, mu=ppscore1, phi=out2phi, power=NULL)
+percFS    <- ptweedie(yout, xi=p, mu=mui, phi=phii, power=NULL)
+plot(percTweed,percFS)
+
+quantTWFS <-function(perc){ 
+  t1 <- sum(1*(percTweed<perc))/ntest
+  t2 <- sum(1*(percFS<perc))/ntest
+  outt <- c(perc,t1,t2)
+  t(as.matrix(outt) )
+  }
+Table7 <- rbind(quantTWFS(0.96),  quantTWFS(0.97),
+             quantTWFS(0.98),  quantTWFS(0.985),
+             quantTWFS(0.99),  quantTWFS(0.995),
+             quantTWFS(0.999) )
+
+```
+
+</div>
+
+
+```{r Table7, echo = FALSE}
+colnames(Table7) <- c("Percentile", "Pure Premium", "Frequency Severity")
+
+TableGen1(TableData=Table7, 
+         TextTitle='Out-of-Sample Quantile Performance', 
+         Align='r', Digits=5, ColumnSpec=1:2,
+         ColWidth = ColWidth4) 
+```
