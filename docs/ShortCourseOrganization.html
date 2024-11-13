@@ -791,53 +791,6 @@ bmi.14 &lt;- read.table(file = &quot;http://instruction.bus.wisc.edu/jfrees/jfre
 </ul>
 </div>
 </div>
-<div id="table-presentation" class="section level3">
-<h3><em>Table Presentation</em></h3>
-<p>I wrote a small function to present tables nicely. This is not really necessary (you can just print a table or matrix to the screen). However, to replicate the code provided, you can run the following code to implement the <code>TableGen1()</code> function.</p>
-<h5 style="text-align: center;">
-<a id="displayExample.Function.Hide" href="javascript:toggleEX(&#39;toggleExample.Function.Hide&#39;,&#39;displayExample.Function.Hide&#39;);"><i><strong>A Small Function to Present Tables</strong></i></a>
-</h5>
-<div id="toggleExample.Function.Hide" style="display: none">
-<pre class="r"><code>HtmlEval &lt;- TRUE
-library(dplyr)
-library(&quot;kableExtra&quot;)
-
-#  Default Widths for Latex
-ColWidth4  &lt;- &quot;1.8cm&quot;
-ColWidth5  &lt;- &quot;1.6cm&quot;
-ColWidth6  &lt;- &quot;1.4cm&quot;
-ColWidth7  &lt;- &quot;1.3cm&quot;
-ColWidth8  &lt;- &quot;1.1cm&quot;
-ColWidth9  &lt;- &quot;1.0cm&quot;
-ColWidth10 &lt;- &quot;0.9cm&quot;
-ColWidth14 &lt;- &quot;0.5cm&quot;
-#  Function to Create a Style for Generating Tables
-TableGen1 &lt;-function(TableData,TextTitle,Align=`r`, Digits=0, ColumnSpec=1,
-                     ColumnSpec0=1, ColWidth0= &quot;2.5cm&quot;, 
-                     BorderRight=1, ColWidth= &quot;1.5cm&quot;, latexFont = 9){
-  if (HtmlEval){ColumnSpec &lt;- ColumnSpec+1
-  #kable(TableData)
-     TextTitle1 &lt;- paste0(&#39;**&#39;, TextTitle,&#39;**&#39;, collapse=&#39;&#39;)
-     kableExtra::kbl(TableData, caption=TextTitle1, align = Align,
-                     booktabs = T, digits=Digits) %&gt;%
-     kableExtra::kable_classic(full_width = F, font = 12, html_font = &quot;Cambria&quot;) %&gt;%
-     kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;condensed&quot;))  %&gt;%
-     kableExtra::column_spec(ColumnSpec0, width =  ColWidth0) %&gt;%
-     kableExtra::column_spec(ColumnSpec, width =  ColWidth) %&gt;%
-     kableExtra::column_spec(BorderRight, border_right = TRUE)
-   } else  
-   { ColumnSpec &lt;- ColumnSpec+1
-     TextTitle1 &lt;- paste0(&#39;\\textbf{&#39;,TextTitle,&#39;}&#39;, collapse=&#39;&#39;)
-     kableExtra::kbl(TableData, caption = TextTitle1, align = Align,
-                     booktabs = T, digits=Digits,escape = FALSE) %&gt;%
-    kableExtra::kable_styling(latex_options = c(&quot;striped&quot;, &quot;condensed&quot;) ,
-                              font = latexFont, protect_latex= TRUE)   %&gt;%
-    kableExtra::column_spec(ColumnSpec, width =  ColWidth) %&gt;%
-    kableExtra::column_spec(BorderRight, border_right = TRUE) 
-   }  
-}</code></pre>
-</div>
-</div>
 <div id="r-code" class="section level3">
 <h3><em>R Code</em></h3>
 <p>Given a lot of time, the best way to learn the <code>R</code> code is to go to the original sources and work carefully through the motivation and the execution. However, in this workshop, you will not have a lot of time. So, here is a sequence of <strong>R markdown</strong> (.Rmd) files that contain the code.</p>
@@ -856,6 +809,8 @@ TableGen1 &lt;-function(TableData,TextTitle,Align=`r`, Digits=0, ColumnSpec=1,
 <li><a href="https://raw.githubusercontent.com/OpenActTextDev/RegressionSpanish/refs/heads/main/docs/MassAutoStart.Rmd">Massachuesetts Auto</a></li>
 <li><a href="https://raw.githubusercontent.com/OpenActTextDev/RegressionSpanish/refs/heads/main/docs/Topic4.PredictiveModels.Rmd">Topic 4. Predictive Modeling: Frequency-Severity Models</a></li>
 </ul>
+<p><br></p>
+<p>In the <em>Preliminary Code</em> file, you will find the packages as well as a small function that I wrote to present tables nicely. This is not really necessary (you can just print a table or matrix to the screen). However, to replicate the code provided, you can run the following code to implement the <code>TableGen1()</code> function.</p>
 </div>
 </div>
 </div>
@@ -863,7 +818,7 @@ TableGen1 &lt;-function(TableData,TextTitle,Align=`r`, Digits=0, ColumnSpec=1,
 <h1>Detailed Schedule</h1>
 <table style="width:100%; font-size: 14px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;" class=" lightable-classic table table-striped table-condensed">
 <caption style="font-size: initial !important;">
-<span id="tab:unnamed-chunk-6">Table 1: </span><strong>Detailed Schedule</strong>
+<span id="tab:unnamed-chunk-5">Table 1: </span><strong>Detailed Schedule</strong>
 </caption>
 <thead>
 <tr>
@@ -1025,7 +980,7 @@ Instructor presentation of
 Explore automobile data for pricing purposes
 </td>
 <td style="text-align:left;width: 10cm; ">
-Start by reviewing the lecture the study based on the
+Start by reviewing the lecture study based on the
 <a href="https://openacttextdev.github.io/RegressionSpanish/MassAutoStart.html"><em>Massachusetts Automobile Claims</em></a>. If there is sufficient time, participants can review the <a href="https://instruction.bus.wisc.edu/jfrees/jfreesbooks/PredictiveModelingVol1/predictive-modeling-foundations/chapter-6.html">Chapter 6 Code and Data for <em>Predictive Modeling Applications in Actuarial Science</em></a>.
 </td>
 </tr>
