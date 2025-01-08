@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 19 Triángulos de Reclamos | Modelado de Regresión con Aplicaciones Actuariales y Financieras</title>
+  <meta name="description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 19 Triángulos de Reclamos | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 19 Triángulos de Reclamos | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  
+  <meta name="twitter:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="C18Cred.html"/>
+<link rel="next" href="C20Report.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Modelado de Regresión</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prólogo"><i class="fa fa-check"></i>Prólogo</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#para-quién-es-este-libro"><i class="fa fa-check"></i>¿Para Quién Es Este Libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#de-qué-trata-este-libro"><i class="fa fa-check"></i>¿De Qué Trata Este Libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cómo-transmite-este-libro-su-mensaje"><i class="fa fa-check"></i>¿Cómo Transmite Este Libro Su Mensaje?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#dedicación"><i class="fa fa-check"></i>Dedicación</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html"><i class="fa fa-check"></i>Translation</a></li>
+<li class="chapter" data-level="1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html"><i class="fa fa-check"></i><b>1</b> Regresión y la Distribución Normal</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec11"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es el Análisis de Regresión?</a></li>
+<li class="chapter" data-level="1.2" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec12"><i class="fa fa-check"></i><b>1.2</b> Ajuste de Datos a una Distribución Normal</a></li>
+<li class="chapter" data-level="1.3" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec13"><i class="fa fa-check"></i><b>1.3</b> Transformaciones de Potencia</a></li>
+<li class="chapter" data-level="1.4" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec14"><i class="fa fa-check"></i><b>1.4</b> Muestreo y el Papel de la Normalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec15"><i class="fa fa-check"></i><b>1.5</b> Regresión y Diseños de Muestreo</a></li>
+<li class="chapter" data-level="1.6" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec16"><i class="fa fa-check"></i><b>1.6</b> Aplicaciones Actuariales de la Regresión</a></li>
+<li class="chapter" data-level="1.7" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec17"><i class="fa fa-check"></i><b>1.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="1.8" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec18"><i class="fa fa-check"></i><b>1.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="1.9" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec19"><i class="fa fa-check"></i><b>1.9</b> Suplemento Técnico - Teorema del Límite Central</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="C2BasicLR.html"><a href="C2BasicLR.html"><i class="fa fa-check"></i><b>2</b> Regresión Lineal Básica</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec21"><i class="fa fa-check"></i><b>2.1</b> Correlaciones y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="2.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec22"><i class="fa fa-check"></i><b>2.2</b> Modelo Básico de Regresión Lineal</a></li>
+<li class="chapter" data-level="2.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec23"><i class="fa fa-check"></i><b>2.3</b> ¿Es Útil el Modelo? Algunas Medidas de Resumen Básicas</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec231"><i class="fa fa-check"></i><b>2.3.1</b> Particionando la Variabilidad</a></li>
+<li class="chapter" data-level="2.3.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec232"><i class="fa fa-check"></i><b>2.3.2</b> El Tamaño de una Desviación Típica: <em>s</em></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec24"><i class="fa fa-check"></i><b>2.4</b> Propiedades de los Estimadores del Coeficiente de Regresión</a></li>
+<li class="chapter" data-level="2.5" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec25"><i class="fa fa-check"></i><b>2.5</b> Inferencia Estadística</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec251"><i class="fa fa-check"></i><b>2.5.1</b> ¿Es Importante la Variable Explicativa?: La Prueba <em>t</em></a></li>
+<li class="chapter" data-level="2.5.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec252"><i class="fa fa-check"></i><b>2.5.2</b> Intervalos de Confianza</a></li>
+<li class="chapter" data-level="2.5.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec253"><i class="fa fa-check"></i><b>2.5.3</b> Intervalos de Predicción</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec26"><i class="fa fa-check"></i><b>2.6</b> Construyendo un Mejor Modelo: Análisis de Residuos</a></li>
+<li class="chapter" data-level="2.7" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec27"><i class="fa fa-check"></i><b>2.7</b> Aplicación: Modelo de Valoración de Activos Financieros</a></li>
+<li class="chapter" data-level="2.8" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec28"><i class="fa fa-check"></i><b>2.8</b> Salida Computacional Ilustrativa de Regresión</a></li>
+<li class="chapter" data-level="2.9" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec29"><i class="fa fa-check"></i><b>2.9</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="2.10" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec210"><i class="fa fa-check"></i><b>2.10</b> Ejercicios</a></li>
+<li class="chapter" data-level="2.11" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec211"><i class="fa fa-check"></i><b>2.11</b> Suplemento Técnico - Elementos del Álgebra de Matrices</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2111"><i class="fa fa-check"></i><b>2.11.1</b> Definiciones Básicas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2112"><i class="fa fa-check"></i><b>2.11.2</b> Algunas Matrices Especiales</a></li>
+<li class="chapter" data-level="2.11.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2113"><i class="fa fa-check"></i><b>2.11.3</b> Operaciones Básicas</a></li>
+<li class="chapter" data-level="2.11.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2114"><i class="fa fa-check"></i><b>2.11.4</b> Matrices Aleatorias</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html"><i class="fa fa-check"></i><b>3</b> Regresión Lineal Múltiple - I</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec31"><i class="fa fa-check"></i><b>3.1</b> Método de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="3.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec32"><i class="fa fa-check"></i><b>3.2</b> Modelo de Regresión Lineal y Propiedades de los Estimadores</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec321"><i class="fa fa-check"></i><b>3.2.1</b> Función de Regresión</a></li>
+<li class="chapter" data-level="3.2.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec322"><i class="fa fa-check"></i><b>3.2.2</b> Interpretación del Coeficiente de Regresión</a></li>
+<li class="chapter" data-level="3.2.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec323"><i class="fa fa-check"></i><b>3.2.3</b> Suposiciones del Modelo</a></li>
+<li class="chapter" data-level="3.2.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec324"><i class="fa fa-check"></i><b>3.2.4</b> Propiedades de los Estimadores de los Coeficientes de Regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec33"><i class="fa fa-check"></i><b>3.3</b> Estimación y Bondad de Ajuste</a></li>
+<li class="chapter" data-level="3.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec34"><i class="fa fa-check"></i><b>3.4</b> Inferencia Estadística para un Coeficiente Único</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec341"><i class="fa fa-check"></i><b>3.4.1</b> La Prueba <em>t</em></a></li>
+<li class="chapter" data-level="3.4.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec342"><i class="fa fa-check"></i><b>3.4.2</b> Intervalos de Confianza</a></li>
+<li class="chapter" data-level="3.4.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec343"><i class="fa fa-check"></i><b>3.4.3</b> Gráficos de Variables Añadidas</a></li>
+<li class="chapter" data-level="3.4.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec344"><i class="fa fa-check"></i><b>3.4.4</b> Coeficientes de Correlación Parcial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec35"><i class="fa fa-check"></i><b>3.5</b> Algunas Variables Explicativas Especiales</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec351"><i class="fa fa-check"></i><b>3.5.1</b> Variables Binarias</a></li>
+<li class="chapter" data-level="3.5.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec352"><i class="fa fa-check"></i><b>3.5.2</b> Transformación de Variables Explicativas</a></li>
+<li class="chapter" data-level="3.5.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec353"><i class="fa fa-check"></i><b>3.5.3</b> Términos de Interacción</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec36"><i class="fa fa-check"></i><b>3.6</b> Lectura Adicional y Referencias</a></li>
+<li class="chapter" data-level="3.7" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec37"><i class="fa fa-check"></i><b>3.7</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html"><i class="fa fa-check"></i><b>4</b> Regresión Lineal Múltiple - II</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec41"><i class="fa fa-check"></i><b>4.1</b> El Papel de las Variables Binarias</a></li>
+<li class="chapter" data-level="4.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec42"><i class="fa fa-check"></i><b>4.2</b> Inferencia Estadística para Varios Coeficientes</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec421"><i class="fa fa-check"></i><b>4.2.1</b> Conjuntos de Coeficientes de Regresión</a></li>
+<li class="chapter" data-level="4.2.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec422"><i class="fa fa-check"></i><b>4.2.2</b> La Hipótesis Lineal General</a></li>
+<li class="chapter" data-level="4.2.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec423"><i class="fa fa-check"></i><b>4.2.3</b> Estimando y Prediciendo Varios Coeficientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec43"><i class="fa fa-check"></i><b>4.3</b> Modelo ANOVA de Un Factor</a></li>
+<li class="chapter" data-level="4.4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec44"><i class="fa fa-check"></i><b>4.4</b> Combinando Variables Explicativas Categóricas y Continuas</a></li>
+<li class="chapter" data-level="4.5" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec45"><i class="fa fa-check"></i><b>4.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="4.6" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec46"><i class="fa fa-check"></i><b>4.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="4.7" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec47"><i class="fa fa-check"></i><b>4.7</b> Suplemento Técnico - Expresiones Matriciales</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec471"><i class="fa fa-check"></i><b>4.7.1</b> Expresión de Modelos con Variables Categóricas en Forma Matricial</a></li>
+<li class="chapter" data-level="4.7.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec472"><i class="fa fa-check"></i><b>4.7.2</b> Cálculo Recursivo de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="4.7.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec473"><i class="fa fa-check"></i><b>4.7.3</b> Modelo Lineal General</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="C5VarSelect.html"><a href="C5VarSelect.html"><i class="fa fa-check"></i><b>5</b> Selección de Variables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec51"><i class="fa fa-check"></i><b>5.1</b> Un Enfoque Iterativo para el Análisis de Datos y Modelado</a></li>
+<li class="chapter" data-level="5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec52"><i class="fa fa-check"></i><b>5.2</b> Procedimientos Automáticos de Selección de Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec53"><i class="fa fa-check"></i><b>5.3</b> Análisis de Residuales</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec531"><i class="fa fa-check"></i><b>5.3.1</b> Residuales</a></li>
+<li class="chapter" data-level="5.3.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec532"><i class="fa fa-check"></i><b>5.3.2</b> Uso de los Residuales para Identificar Valores Atípicos</a></li>
+<li class="chapter" data-level="5.3.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec533"><i class="fa fa-check"></i><b>5.3.3</b> Uso de los Residuales para Seleccionar Variables Explicativas</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec54"><i class="fa fa-check"></i><b>5.4</b> Puntos Influyentes</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec541"><i class="fa fa-check"></i><b>5.4.1</b> Apalancamiento</a></li>
+<li class="chapter" data-level="5.4.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec542"><i class="fa fa-check"></i><b>5.4.2</b> Distancia de Cook</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec55"><i class="fa fa-check"></i><b>5.5</b> Colinealidad</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec551"><i class="fa fa-check"></i><b>5.5.1</b> ¿Qué es la Colinealidad?</a></li>
+<li class="chapter" data-level="5.5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec552"><i class="fa fa-check"></i><b>5.5.2</b> Factores de Inflación de Varianza</a></li>
+<li class="chapter" data-level="5.5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec553"><i class="fa fa-check"></i><b>5.5.3</b> Colinealidad e Influencia</a></li>
+<li class="chapter" data-level="5.5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec554"><i class="fa fa-check"></i><b>5.5.4</b> Variables Suprensoras</a></li>
+<li class="chapter" data-level="5.5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec555"><i class="fa fa-check"></i><b>5.5.5</b> Variables Ortogonales</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec56"><i class="fa fa-check"></i><b>5.6</b> Criterios de Selección</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec561"><i class="fa fa-check"></i><b>5.6.1</b> Bondad de Ajuste</a></li>
+<li class="chapter" data-level="5.6.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec562"><i class="fa fa-check"></i><b>5.6.2</b> Validación del Modelo</a></li>
+<li class="chapter" data-level="5.6.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec563"><i class="fa fa-check"></i><b>5.6.3</b> Validación Cruzada</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec57"><i class="fa fa-check"></i><b>5.7</b> Heterocedasticidad</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec571"><i class="fa fa-check"></i><b>5.7.1</b> Detección de Heterocedasticidad</a></li>
+<li class="chapter" data-level="5.7.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec572"><i class="fa fa-check"></i><b>5.7.2</b> Errores Estándar Consistentes con Heterocedasticidad</a></li>
+<li class="chapter" data-level="5.7.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec573"><i class="fa fa-check"></i><b>5.7.3</b> Mínimos Cuadrados Ponderados</a></li>
+<li class="chapter" data-level="5.7.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec574"><i class="fa fa-check"></i><b>5.7.4</b> Transformaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec58"><i class="fa fa-check"></i><b>5.8</b> Lectura Adicional y Referencias</a></li>
+<li class="chapter" data-level="5.9" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec59"><i class="fa fa-check"></i><b>5.9</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.10" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec510"><i class="fa fa-check"></i><b>5.10</b> Suplementos Técnicos para el Capítulo 5</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5101"><i class="fa fa-check"></i><b>5.10.1</b> Matriz de Proyección</a></li>
+<li class="chapter" data-level="5.10.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5102"><i class="fa fa-check"></i><b>5.10.2</b> Estadísticas Leave-One-Out</a></li>
+<li class="chapter" data-level="5.10.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5103"><i class="fa fa-check"></i><b>5.10.3</b> Omisión de Variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html"><i class="fa fa-check"></i><b>6</b> Interpretación de Resultados de Regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec61"><i class="fa fa-check"></i><b>6.1</b> Lo que nos dice el proceso de modelado</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec611"><i class="fa fa-check"></i><b>6.1.1</b> Interpretación de efectos individuales</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec612"><i class="fa fa-check"></i><b>6.1.2</b> Otras Interpretaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec62"><i class="fa fa-check"></i><b>6.2</b> La Importancia de la Selección de Variables</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec621"><i class="fa fa-check"></i><b>6.2.1</b> Sobreajuste del Modelo</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec622"><i class="fa fa-check"></i><b>6.2.2</b> Subajuste del Modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec63"><i class="fa fa-check"></i><b>6.3</b> La Importancia de la Recolección de Datos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec631"><i class="fa fa-check"></i><b>6.3.1</b> Error en el Marco Muestral y Selección Adversa</a></li>
+<li class="chapter" data-level="6.3.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec632"><i class="fa fa-check"></i><b>6.3.2</b> Regiones de Muestreo Limitadas</a></li>
+<li class="chapter" data-level="6.3.3" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec633"><i class="fa fa-check"></i><b>6.3.3</b> Variables Dependientes Limitadas, Censura y Truncamiento</a></li>
+<li class="chapter" data-level="6.3.4" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec634"><i class="fa fa-check"></i><b>6.3.4</b> Variables Omitidas y Endógenas</a></li>
+<li class="chapter" data-level="6.3.5" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec635"><i class="fa fa-check"></i><b>6.3.5</b> Datos Faltantes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec64"><i class="fa fa-check"></i><b>6.4</b> Modelos de Datos Faltantes</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec641"><i class="fa fa-check"></i><b>6.4.1</b> Faltante al Azar</a></li>
+<li class="chapter" data-level="6.4.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec642"><i class="fa fa-check"></i><b>6.4.2</b> Datos Faltantes No Ignorables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec65"><i class="fa fa-check"></i><b>6.5</b> Aplicación: Eficiencia en el Costo de los Gestores de Riesgos</a></li>
+<li class="chapter" data-level="6.6" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec66"><i class="fa fa-check"></i><b>6.6</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="6.7" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec67"><i class="fa fa-check"></i><b>6.7</b> Ejercicios</a></li>
+<li class="chapter" data-level="6.8" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec68"><i class="fa fa-check"></i><b>6.8</b> Suplementos Técnicos para el Capítulo 6</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec681"><i class="fa fa-check"></i><b>6.8.1</b> Efectos de la Especificación Incorrecta del Modelo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="C7Trends.html"><a href="C7Trends.html"><i class="fa fa-check"></i><b>7</b> Modelado de Tendencias</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="C7Trends.html"><a href="C7Trends.html#introducción-1"><i class="fa fa-check"></i><b>7.1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#series-temporales-y-procesos-estocásticos"><i class="fa fa-check"></i>Series Temporales y Procesos Estocásticos</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#series-temporales-versus-modelos-causales"><i class="fa fa-check"></i>Series Temporales versus Modelos Causales</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="C7Trends.html"><a href="C7Trends.html#S7:Trends"><i class="fa fa-check"></i><b>7.2</b> Ajuste de Tendencias en el Tiempo</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#comprendiendo-patrones-en-el-tiempo"><i class="fa fa-check"></i>Comprendiendo Patrones en el Tiempo</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#ajuste-de-tendencias-en-el-tiempo"><i class="fa fa-check"></i>Ajuste de Tendencias en el Tiempo</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#ajuste-de-tendencias-estacionales"><i class="fa fa-check"></i>Ajuste de Tendencias Estacionales</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#confiabilidad-de-los-pronósticos-de-series-temporales"><i class="fa fa-check"></i>Confiabilidad de los Pronósticos de Series Temporales</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="C7Trends.html"><a href="C7Trends.html#S7:RandomWalk"><i class="fa fa-check"></i><b>7.3</b> Estacionariedad y Modelos de Paseo Aleatorio</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#ruido-blanco"><i class="fa fa-check"></i>Ruido Blanco</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#paseo-aleatorio"><i class="fa fa-check"></i>Paseo Aleatorio</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="C7Trends.html"><a href="C7Trends.html#inferencia-usando-modelos-de-paseo-aleatorio"><i class="fa fa-check"></i><b>7.4</b> Inferencia usando Modelos de Paseo Aleatorio</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#propiedades-del-modelo"><i class="fa fa-check"></i>Propiedades del Modelo</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#pronósticos"><i class="fa fa-check"></i>Pronósticos</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#identificación-de-estacionariedad"><i class="fa fa-check"></i>Identificación de Estacionariedad</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#identificación-de-paseos-aleatorios"><i class="fa fa-check"></i>Identificación de Paseos Aleatorios</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#paseo-aleatorio-versus-modelo-de-tendencia-lineal-en-el-tiempo"><i class="fa fa-check"></i>Paseo Aleatorio versus Modelo de Tendencia Lineal en el Tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="C7Trends.html"><a href="C7Trends.html#filtrado-para-lograr-estacionariedad"><i class="fa fa-check"></i><b>7.5</b> Filtrado para Lograr Estacionariedad</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#transformaciones"><i class="fa fa-check"></i>Transformaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="C7Trends.html"><a href="C7Trends.html#evaluación-de-pronósticos"><i class="fa fa-check"></i><b>7.6</b> Evaluación de Pronósticos</a></li>
+<li class="chapter" data-level="7.7" data-path="C7Trends.html"><a href="C7Trends.html#lecturas-adicionales-y-referencias"><i class="fa fa-check"></i><b>7.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="7.8" data-path="C7Trends.html"><a href="C7Trends.html#ejercicios"><i class="fa fa-check"></i><b>7.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="C8AR.html"><a href="C8AR.html"><i class="fa fa-check"></i><b>8</b> Autocorrelaciones y Modelos Autorregresivos</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="C8AR.html"><a href="C8AR.html#S8:Autocorrs"><i class="fa fa-check"></i><b>8.1</b> Autocorrelaciones</a>
+<ul>
+<li class="chapter" data-level="" data-path="C8AR.html"><a href="C8AR.html#aplicación-retornos-de-bonos-con-inflación"><i class="fa fa-check"></i>Aplicación: Retornos de Bonos con Inflación</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="C8AR.html"><a href="C8AR.html#modelos-autorregresivos-de-orden-uno"><i class="fa fa-check"></i><b>8.2</b> Modelos Autorregresivos de Orden Uno</a></li>
+<li class="chapter" data-level="8.3" data-path="C8AR.html"><a href="C8AR.html#S8:Estimation"><i class="fa fa-check"></i><b>8.3</b> Estimación y Verificación de Diagnóstico</a></li>
+<li class="chapter" data-level="8.4" data-path="C8AR.html"><a href="C8AR.html#S8:AR1Smooth"><i class="fa fa-check"></i><b>8.4</b> Suavización y Predicción</a></li>
+<li class="chapter" data-level="8.5" data-path="C8AR.html"><a href="C8AR.html#S8:BoxJenkins"><i class="fa fa-check"></i><b>8.5</b> Modelado y Pronóstico de Box-Jenkins</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="C8AR.html"><a href="C8AR.html#modelos"><i class="fa fa-check"></i><b>8.5.1</b> Modelos</a></li>
+<li class="chapter" data-level="8.5.2" data-path="C8AR.html"><a href="C8AR.html#pronóstico"><i class="fa fa-check"></i><b>8.5.2</b> Pronóstico</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="C8AR.html"><a href="C8AR.html#aplicación-tasas-de-cambio-de-hong-kong"><i class="fa fa-check"></i><b>8.6</b> Aplicación: Tasas de Cambio de Hong Kong</a></li>
+<li class="chapter" data-level="8.7" data-path="C8AR.html"><a href="C8AR.html#lecturas-adicionales-y-referencias-1"><i class="fa fa-check"></i><b>8.7</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="C9Forecast.html"><a href="C9Forecast.html"><i class="fa fa-check"></i><b>9</b> Pronósticos y Modelos de Series Temporales</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="C9Forecast.html"><a href="C9Forecast.html#suavización-con-promedios-móviles"><i class="fa fa-check"></i><b>9.1</b> Suavización con Promedios Móviles</a></li>
+<li class="chapter" data-level="9.2" data-path="C9Forecast.html"><a href="C9Forecast.html#S9:ExponSmooth"><i class="fa fa-check"></i><b>9.2</b> Suavización Exponencial</a></li>
+<li class="chapter" data-level="9.3" data-path="C9Forecast.html"><a href="C9Forecast.html#S9:SeasonalTSModels"><i class="fa fa-check"></i><b>9.3</b> Modelos de Series Temporales Estacionales</a></li>
+<li class="chapter" data-level="9.4" data-path="C9Forecast.html"><a href="C9Forecast.html#pruebas-de-raíces-unitarias"><i class="fa fa-check"></i><b>9.4</b> Pruebas de Raíces Unitarias</a></li>
+<li class="chapter" data-level="9.5" data-path="C9Forecast.html"><a href="C9Forecast.html#modelos-archgarch"><i class="fa fa-check"></i><b>9.5</b> Modelos ARCH/GARCH</a></li>
+<li class="chapter" data-level="9.6" data-path="C9Forecast.html"><a href="C9Forecast.html#lecturas-y-referencias-adicionales"><i class="fa fa-check"></i><b>9.6</b> Lecturas y Referencias Adicionales</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="C10Panel.html"><a href="C10Panel.html"><i class="fa fa-check"></i><b>10</b> Modelos de Datos Longitudinales y de Panel</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="C10Panel.html"><a href="C10Panel.html#S10:Intro"><i class="fa fa-check"></i><b>10.1</b> ¿Qué son los Datos Longitudinales y de Panel?</a></li>
+<li class="chapter" data-level="10.2" data-path="C10Panel.html"><a href="C10Panel.html#S10:Visual"><i class="fa fa-check"></i><b>10.2</b> Visualización de Datos Longitudinales y de Panel</a></li>
+<li class="chapter" data-level="10.3" data-path="C10Panel.html"><a href="C10Panel.html#S10:FEModels"><i class="fa fa-check"></i><b>10.3</b> Modelos Básicos de Efectos Fijos</a></li>
+<li class="chapter" data-level="10.4" data-path="C10Panel.html"><a href="C10Panel.html#S10:FEModels2"><i class="fa fa-check"></i><b>10.4</b> Modelos Extendidos de Efectos Fijos</a></li>
+<li class="chapter" data-level="10.5" data-path="C10Panel.html"><a href="C10Panel.html#S10:REModels"><i class="fa fa-check"></i><b>10.5</b> Modelos de Efectos Aleatorios</a></li>
+<li class="chapter" data-level="10.6" data-path="C10Panel.html"><a href="C10Panel.html#S10:References"><i class="fa fa-check"></i><b>10.6</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="C11Binary.html"><a href="C11Binary.html"><i class="fa fa-check"></i><b>11</b> Variables Dependientes Categóricas</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec111"><i class="fa fa-check"></i><b>11.1</b> Variables Dependientes Binarias</a></li>
+<li class="chapter" data-level="11.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec112"><i class="fa fa-check"></i><b>11.2</b> Modelos de Regresión Logística y Probit</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1121"><i class="fa fa-check"></i><b>11.2.1</b> Uso de Funciones No Lineales de Variables Explicativas</a></li>
+<li class="chapter" data-level="11.2.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1122"><i class="fa fa-check"></i><b>11.2.2</b> Interpretación del Umbral</a></li>
+<li class="chapter" data-level="11.2.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1123"><i class="fa fa-check"></i><b>11.2.3</b> Interpretación de Utilidad Aleatoria</a></li>
+<li class="chapter" data-level="11.2.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1124"><i class="fa fa-check"></i><b>11.2.4</b> Regresión Logística</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec113"><i class="fa fa-check"></i><b>11.3</b> Inferencia para Modelos de Regresión Logística y Probit</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="C11Binary.html"><a href="C11Binary.html#estimación-de-parámetros"><i class="fa fa-check"></i><b>11.3.1</b> Estimación de Parámetros</a></li>
+<li class="chapter" data-level="11.3.2" data-path="C11Binary.html"><a href="C11Binary.html#inferencia-adicional"><i class="fa fa-check"></i><b>11.3.2</b> Inferencia Adicional</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec114"><i class="fa fa-check"></i><b>11.4</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="11.5" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec115"><i class="fa fa-check"></i><b>11.5</b> Variables Dependientes Nominales</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1151"><i class="fa fa-check"></i><b>11.5.1</b> Logit Generalizado</a></li>
+<li class="chapter" data-level="11.5.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1152"><i class="fa fa-check"></i><b>11.5.2</b> Logit Multinomial</a></li>
+<li class="chapter" data-level="11.5.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1153"><i class="fa fa-check"></i><b>11.5.3</b> Logit Anidado</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec116"><i class="fa fa-check"></i><b>11.6</b> Variables Dependientes Ordinales</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="C11Binary.html"><a href="C11Binary.html#logit-acumulativo"><i class="fa fa-check"></i><b>11.6.1</b> Logit Acumulativo</a></li>
+<li class="chapter" data-level="11.6.2" data-path="C11Binary.html"><a href="C11Binary.html#probit-acumulativo"><i class="fa fa-check"></i><b>11.6.2</b> Probit Acumulativo</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec117"><i class="fa fa-check"></i><b>11.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="11.8" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec118"><i class="fa fa-check"></i><b>11.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="11.9" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec119"><i class="fa fa-check"></i><b>11.9</b> Suplementos Técnicos - Inferencia Basada en Verosimilitud</a>
+<ul>
+<li class="chapter" data-level="11.9.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1191"><i class="fa fa-check"></i><b>11.9.1</b> Propiedades de las Funciones de Verosimilitud</a></li>
+<li class="chapter" data-level="11.9.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1192"><i class="fa fa-check"></i><b>11.9.2</b> Estimadores de Máxima Verosimilitud</a></li>
+<li class="chapter" data-level="11.9.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1193"><i class="fa fa-check"></i><b>11.9.3</b> Pruebas de Hipótesis</a></li>
+<li class="chapter" data-level="11.9.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1194"><i class="fa fa-check"></i><b>11.9.4</b> Criterios de Información</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="C12Count.html"><a href="C12Count.html"><i class="fa fa-check"></i><b>12</b> Variables Dependientes de Conteo</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec121"><i class="fa fa-check"></i><b>12.1</b> Regresión de Poisson</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec1211"><i class="fa fa-check"></i><b>12.1.1</b> Distribución de Poisson</a></li>
+<li class="chapter" data-level="12.1.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec1212"><i class="fa fa-check"></i><b>12.1.2</b> Modelo de Regresión</a></li>
+<li class="chapter" data-level="12.1.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec1213"><i class="fa fa-check"></i><b>12.1.3</b> Estimación</a></li>
+<li class="chapter" data-level="12.1.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec1214"><i class="fa fa-check"></i><b>12.1.4</b> Inferencia Adicional</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec122"><i class="fa fa-check"></i><b>12.2</b> Aplicación: Seguro de Automóviles en Singapur</a></li>
+<li class="chapter" data-level="12.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec123"><i class="fa fa-check"></i><b>12.3</b> Sobre dispersión y Modelos Binomiales Negativos</a></li>
+<li class="chapter" data-level="12.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec124"><i class="fa fa-check"></i><b>12.4</b> Otros Modelos de Conteo</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="C12Count.html"><a href="C12Count.html#modelos-inflados-en-ceros"><i class="fa fa-check"></i><b>12.4.1</b> Modelos Inflados en Ceros</a></li>
+<li class="chapter" data-level="12.4.2" data-path="C12Count.html"><a href="C12Count.html#modelos-hurdle"><i class="fa fa-check"></i><b>12.4.2</b> Modelos Hurdle</a></li>
+<li class="chapter" data-level="12.4.3" data-path="C12Count.html"><a href="C12Count.html#modelos-de-heterogeneidad"><i class="fa fa-check"></i><b>12.4.3</b> Modelos de Heterogeneidad</a></li>
+<li class="chapter" data-level="12.4.4" data-path="C12Count.html"><a href="C12Count.html#modelos-de-clases-latentes"><i class="fa fa-check"></i><b>12.4.4</b> Modelos de Clases Latentes</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="C12Count.html"><a href="C12Count.html#S:Sec125"><i class="fa fa-check"></i><b>12.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="12.6" data-path="C12Count.html"><a href="C12Count.html#S:Sec126"><i class="fa fa-check"></i><b>12.6</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="C13GLM.html"><a href="C13GLM.html"><i class="fa fa-check"></i><b>13</b> Modelos Lineales Generalizados</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec131"><i class="fa fa-check"></i><b>13.1</b> Introducción</a></li>
+<li class="chapter" data-level="13.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec132"><i class="fa fa-check"></i><b>13.2</b> Modelo GLM</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1321"><i class="fa fa-check"></i><b>13.2.1</b> Familia Exponencial Lineal de Distribuciones</a></li>
+<li class="chapter" data-level="13.2.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1322"><i class="fa fa-check"></i><b>13.2.2</b> Funciones de Enlace</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec133"><i class="fa fa-check"></i><b>13.3</b> Estimación</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1331"><i class="fa fa-check"></i><b>13.3.1</b> Estimación de Máxima Verosimilitud para Enlaces Canónicos</a></li>
+<li class="chapter" data-level="13.3.2" data-path="C13GLM.html"><a href="C13GLM.html#sobredispersión"><i class="fa fa-check"></i><b>13.3.2</b> Sobredispersión</a></li>
+<li class="chapter" data-level="13.3.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1333"><i class="fa fa-check"></i><b>13.3.3</b> Estadísticas de Bondad de Ajuste</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec134"><i class="fa fa-check"></i><b>13.4</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="13.5" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec135"><i class="fa fa-check"></i><b>13.5</b> Residuales</a></li>
+<li class="chapter" data-level="13.6" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec136"><i class="fa fa-check"></i><b>13.6</b> Distribución de Tweedie</a></li>
+<li class="chapter" data-level="13.7" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec137"><i class="fa fa-check"></i><b>13.7</b> Lecturas adicionales y referencias</a></li>
+<li class="chapter" data-level="13.8" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec138"><i class="fa fa-check"></i><b>13.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="13.9" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec139"><i class="fa fa-check"></i><b>13.9</b> Suplementos Técnicos - Familia Exponencial</a>
+<ul>
+<li class="chapter" data-level="13.9.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1391"><i class="fa fa-check"></i><b>13.9.1</b> Familia Exponencial Lineal de Distribuciones</a></li>
+<li class="chapter" data-level="13.9.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1392"><i class="fa fa-check"></i><b>13.9.2</b> Momentos</a></li>
+<li class="chapter" data-level="13.9.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1393"><i class="fa fa-check"></i><b>13.9.3</b> Estimación de Máxima Verosimilitud para Enlaces Generales</a></li>
+<li class="chapter" data-level="13.9.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1394"><i class="fa fa-check"></i><b>13.9.4</b> Mínimos Cuadrados Reponderados Iterativos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="C14Survival.html"><a href="C14Survival.html"><i class="fa fa-check"></i><b>14</b> Modelos de Supervivencia</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="C14Survival.html"><a href="C14Survival.html#introducción-2"><i class="fa fa-check"></i><b>14.1</b> Introducción</a></li>
+<li class="chapter" data-level="14.2" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec142"><i class="fa fa-check"></i><b>14.2</b> Censura y Truncamiento</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="C14Survival.html"><a href="C14Survival.html#definiciones-y-ejemplos"><i class="fa fa-check"></i><b>14.2.1</b> Definiciones y Ejemplos</a></li>
+<li class="chapter" data-level="14.2.2" data-path="C14Survival.html"><a href="C14Survival.html#inferencia-por-verosimilitud"><i class="fa fa-check"></i><b>14.2.2</b> Inferencia por Verosimilitud</a></li>
+<li class="chapter" data-level="14.2.3" data-path="C14Survival.html"><a href="C14Survival.html#estimador-producto-límite"><i class="fa fa-check"></i><b>14.2.3</b> Estimador Producto-Límite</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec143"><i class="fa fa-check"></i><b>14.3</b> Modelo de Tiempo de Fallo Acelerado</a></li>
+<li class="chapter" data-level="14.4" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec144"><i class="fa fa-check"></i><b>14.4</b> Modelo de Riesgos Proporcionales</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec1441"><i class="fa fa-check"></i><b>14.4.1</b> Riesgos Proporcionales</a></li>
+<li class="chapter" data-level="14.4.2" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec1442"><i class="fa fa-check"></i><b>14.4.2</b> Inferencia</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec145"><i class="fa fa-check"></i><b>14.5</b> Eventos Recurrentes</a></li>
+<li class="chapter" data-level="14.6" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec146"><i class="fa fa-check"></i><b>14.6</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="C15Misc.html"><a href="C15Misc.html"><i class="fa fa-check"></i><b>15</b> Temas Misceláneos de Regresión</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec151"><i class="fa fa-check"></i><b>15.1</b> Modelos Lineales Mixtos</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="C15Misc.html"><a href="C15Misc.html#mínimos-cuadrados-ponderados-2"><i class="fa fa-check"></i><b>15.1.1</b> Mínimos Cuadrados Ponderados</a></li>
+<li class="chapter" data-level="15.1.2" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec1512"><i class="fa fa-check"></i><b>15.1.2</b> Estimación de Componentes de Varianza</a></li>
+<li class="chapter" data-level="15.1.3" data-path="C15Misc.html"><a href="C15Misc.html#mejor-predicción-lineal-insesgada"><i class="fa fa-check"></i><b>15.1.3</b> Mejor Predicción Lineal Insesgada</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="C15Misc.html"><a href="C15Misc.html#regresión-bayesiana"><i class="fa fa-check"></i><b>15.2</b> Regresión Bayesiana</a></li>
+<li class="chapter" data-level="15.3" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec153"><i class="fa fa-check"></i><b>15.3</b> Estimación de Densidad y Suavizado de Diagramas de Dispersión</a></li>
+<li class="chapter" data-level="15.4" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec154"><i class="fa fa-check"></i><b>15.4</b> Modelos Aditivos Generalizados</a></li>
+<li class="chapter" data-level="15.5" data-path="C15Misc.html"><a href="C15Misc.html#bootstrapping"><i class="fa fa-check"></i><b>15.5</b> Bootstrapping</a></li>
+<li class="chapter" data-level="15.6" data-path="C15Misc.html"><a href="C15Misc.html#lecturas-adicionales-y-referencias-2"><i class="fa fa-check"></i><b>15.6</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="C16FreqSev.html"><a href="C16FreqSev.html"><i class="fa fa-check"></i><b>16</b> Modelos de Frecuencia-Severidad</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec161"><i class="fa fa-check"></i><b>16.1</b> Introducción</a></li>
+<li class="chapter" data-level="16.2" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec162"><i class="fa fa-check"></i><b>16.2</b> Modelo Tobit</a></li>
+<li class="chapter" data-level="16.3" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec163"><i class="fa fa-check"></i><b>16.3</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="16.4" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec164"><i class="fa fa-check"></i><b>16.4</b> Modelo de Dos Partes</a></li>
+<li class="chapter" data-level="16.5" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec165"><i class="fa fa-check"></i><b>16.5</b> Modelo de Pérdidas Agregadas</a></li>
+<li class="chapter" data-level="16.6" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec166"><i class="fa fa-check"></i><b>16.6</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="16.7" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec167"><i class="fa fa-check"></i><b>16.7</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="C17Fat.html"><a href="C17Fat.html"><i class="fa fa-check"></i><b>17</b> Modelos de Regresión con Colas Gruesas</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="C17Fat.html"><a href="C17Fat.html#introducción-3"><i class="fa fa-check"></i><b>17.1</b> Introducción</a></li>
+<li class="chapter" data-level="17.2" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec172"><i class="fa fa-check"></i><b>17.2</b> Transformaciones</a></li>
+<li class="chapter" data-level="17.3" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec173"><i class="fa fa-check"></i><b>17.3</b> Modelos Lineales Generalizados</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec1731"><i class="fa fa-check"></i><b>17.3.1</b> ¿Qué significa “Cola Gruesa”?</a></li>
+<li class="chapter" data-level="17.3.2" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec1732"><i class="fa fa-check"></i><b>17.3.2</b> Aplicación: Asilos de Ancianos en Wisconsin</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec174"><i class="fa fa-check"></i><b>17.4</b> Distribuciones Generalizadas</a>
+<ul>
+<li class="chapter" data-level="" data-path="C17Fat.html"><a href="C17Fat.html#aplicación-hogares-de-ancianos-en-wisconsin"><i class="fa fa-check"></i>Aplicación: Hogares de Ancianos en Wisconsin</a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec175"><i class="fa fa-check"></i><b>17.5</b> Regresión por Cuantiles</a></li>
+<li class="chapter" data-level="17.6" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec176"><i class="fa fa-check"></i><b>17.6</b> Modelos de Valores Extremos</a></li>
+<li class="chapter" data-level="17.7" data-path="C17Fat.html"><a href="C17Fat.html#lecturas-adicionales-y-referencias-3"><i class="fa fa-check"></i><b>17.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="17.8" data-path="C17Fat.html"><a href="C17Fat.html#ejercicios-1"><i class="fa fa-check"></i><b>17.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="C18Cred.html"><a href="C18Cred.html"><i class="fa fa-check"></i><b>18</b> Credibilidad y Bonus-Malus</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="C18Cred.html"><a href="C18Cred.html#clasificación-de-riesgos-y-experiencia"><i class="fa fa-check"></i><b>18.1</b> Clasificación de Riesgos y Experiencia</a></li>
+<li class="chapter" data-level="18.2" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec182"><i class="fa fa-check"></i><b>18.2</b> Credibilidad</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec1821"><i class="fa fa-check"></i><b>18.2.1</b> Credibilidad de Fluctuación Limitada</a></li>
+<li class="chapter" data-level="18.2.2" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec1822"><i class="fa fa-check"></i><b>18.2.2</b> Credibilidad de Máxima Precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec183"><i class="fa fa-check"></i><b>18.3</b> Credibilidad y Regresión</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="C18Cred.html"><a href="C18Cred.html#modelo-de-efectos-aleatorios-unidireccional"><i class="fa fa-check"></i><b>18.3.1</b> Modelo de Efectos Aleatorios Unidireccional</a></li>
+<li class="chapter" data-level="18.3.2" data-path="C18Cred.html"><a href="C18Cred.html#modelos-longitudinales"><i class="fa fa-check"></i><b>18.3.2</b> Modelos Longitudinales</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec184"><i class="fa fa-check"></i><b>18.4</b> Bonus-Malus</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="C19Triangles.html"><a href="C19Triangles.html"><i class="fa fa-check"></i><b>19</b> Triángulos de Reclamos</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="C19Triangles.html"><a href="C19Triangles.html#introducción-4"><i class="fa fa-check"></i><b>19.1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1911"><i class="fa fa-check"></i><b>19.1.1</b> Evolución de los Reclamos</a></li>
+<li class="chapter" data-level="19.1.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1912"><i class="fa fa-check"></i><b>19.1.2</b> Triángulos de Reclamos</a></li>
+<li class="chapter" data-level="19.1.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1913"><i class="fa fa-check"></i><b>19.1.3</b> Método de Escalera de Cadenas</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec192"><i class="fa fa-check"></i><b>19.2</b> Regresión Usando Funciones del Tiempo como Variables Explicativas</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1921"><i class="fa fa-check"></i><b>19.2.1</b> Modelo Lognormal</a></li>
+<li class="chapter" data-level="19.2.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1922"><i class="fa fa-check"></i><b>19.2.2</b> Curva de Hoerl</a></li>
+<li class="chapter" data-level="19.2.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1923"><i class="fa fa-check"></i><b>19.2.3</b> Modelos de Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec193"><i class="fa fa-check"></i><b>19.3</b> Usando Desarrollos Pasados</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1931"><i class="fa fa-check"></i><b>19.3.1</b> Modelo de Mack</a></li>
+<li class="chapter" data-level="19.3.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1932"><i class="fa fa-check"></i><b>19.3.2</b> Modelos Distribucionales</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="C19Triangles.html"><a href="C19Triangles.html#lecturas-adicionales-y-referencias-4"><i class="fa fa-check"></i><b>19.4</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="19.5" data-path="C19Triangles.html"><a href="C19Triangles.html#ejercicios-2"><i class="fa fa-check"></i><b>19.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="C20Report.html"><a href="C20Report.html"><i class="fa fa-check"></i><b>20</b> Redacción de Informes: Comunicando Resultados del Análisis de Datos</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="C20Report.html"><a href="C20Report.html#S20:Overview"><i class="fa fa-check"></i><b>20.1</b> Visión General</a></li>
+<li class="chapter" data-level="20.2" data-path="C20Report.html"><a href="C20Report.html#S20:Methods"><i class="fa fa-check"></i><b>20.2</b> Métodos para Comunicar Datos</a>
+<ul>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#datos-dentro-del-texto"><i class="fa fa-check"></i>Datos Dentro del Texto</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#gráficos"><i class="fa fa-check"></i>Gráficos</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="C20Report.html"><a href="C20Report.html#S20:Organize"><i class="fa fa-check"></i><b>20.3</b> Cómo Organizar</a>
+<ul>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#título-y-resumen"><i class="fa fa-check"></i>Título y Resumen</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#introducción-5"><i class="fa fa-check"></i>Introducción</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#selección-e-interpretación-del-modelo"><i class="fa fa-check"></i>Selección e Interpretación del Modelo</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#referencias-y-apéndice"><i class="fa fa-check"></i>Referencias y Apéndice</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="C20Report.html"><a href="C20Report.html#sugerencias-adicionales-para-la-redacción-de-informes"><i class="fa fa-check"></i><b>20.4</b> Sugerencias Adicionales para la Redacción de Informes</a></li>
+<li class="chapter" data-level="20.5" data-path="C20Report.html"><a href="C20Report.html#estudio-de-caso-reclamos-de-automóviles-en-suecia"><i class="fa fa-check"></i><b>20.5</b> Estudio de Caso: Reclamos de Automóviles en Suecia</a></li>
+<li class="chapter" data-level="20.6" data-path="C20Report.html"><a href="C20Report.html#ejercicios-3"><i class="fa fa-check"></i><b>20.6</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="C21Design.html"><a href="C21Design.html"><i class="fa fa-check"></i><b>21</b> Designing Effective Graphs</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="C21Design.html"><a href="C21Design.html#S21:Intro"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
+<li class="chapter" data-level="21.2" data-path="C21Design.html"><a href="C21Design.html#S21:GDesign"><i class="fa fa-check"></i><b>21.2</b> Graphic Design Choices Make a Difference</a></li>
+<li class="chapter" data-level="21.3" data-path="C21Design.html"><a href="C21Design.html#S21:DesignGuide"><i class="fa fa-check"></i><b>21.3</b> Design Guidelines</a>
+<ul>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-one-avoid-chartjunk"><i class="fa fa-check"></i>Guideline One: Avoid Chartjunk</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-two-use-small-multiples-to-promote-comparisons-and-assess-change"><i class="fa fa-check"></i>Guideline Two: Use Small Multiples to Promote Comparisons and Assess Change</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-three-use-complex-graphs-to-portray-complex-patterns"><i class="fa fa-check"></i>Guideline Three: Use Complex Graphs to Portray Complex Patterns</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-four-relate-graph-size-to-information-content"><i class="fa fa-check"></i>Guideline Four: Relate Graph Size to Information Content</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-five-use-graphical-forms-that-promote-comparisons"><i class="fa fa-check"></i>Guideline Five: Use Graphical Forms That Promote Comparisons</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-six-integrate-graphs-and-text"><i class="fa fa-check"></i>Guideline Six: Integrate Graphs and Text</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-seven-demonstrate-an-important-message"><i class="fa fa-check"></i>Guideline Seven: Demonstrate an Important Message</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-eight-know-your-audience"><i class="fa fa-check"></i>Guideline Eight: Know Your Audience</a></li>
+</ul></li>
+<li class="chapter" data-level="21.4" data-path="C21Design.html"><a href="C21Design.html#S21:EmpiricalFoundations"><i class="fa fa-check"></i><b>21.4</b> Empirical Foundations For Guidelines</a>
+<ul>
+<li class="chapter" data-level="21.4.1" data-path="C21Design.html"><a href="C21Design.html#graphs-as-units-of-study"><i class="fa fa-check"></i><b>21.4.1</b> Graphs as Units of Study</a></li>
+</ul></li>
+<li class="chapter" data-level="21.5" data-path="C21Design.html"><a href="C21Design.html#S21:Conclude"><i class="fa fa-check"></i><b>21.5</b> Concluding Remarks</a></li>
+<li class="chapter" data-level="21.6" data-path="C21Design.html"><a href="C21Design.html#S21:References"><i class="fa fa-check"></i><b>21.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="apéndices.html"><a href="apéndices.html"><i class="fa fa-check"></i><b>22</b> Apéndices</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a1.-inferencia-estadística-básica"><i class="fa fa-check"></i>Apéndice A1. Inferencia Estadística Básica</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribuciones-de-funciones-de-variables-aleatorias"><i class="fa fa-check"></i>Distribuciones de Funciones de Variables Aleatorias</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#estimación-y-predicción"><i class="fa fa-check"></i>Estimación y Predicción</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#pruebas-de-hipótesis"><i class="fa fa-check"></i>Pruebas de Hipótesis</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a2.-álgebra-de-matrices"><i class="fa fa-check"></i>Apéndice A2. Álgebra de Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#definiciones-básicas"><i class="fa fa-check"></i>Definiciones Básicas</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#revisión-de-operaciones-básicas"><i class="fa fa-check"></i>Revisión de Operaciones Básicas</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#definiciones-adicionales"><i class="fa fa-check"></i>Definiciones Adicionales</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a3.-tablas-de-probabilidad"><i class="fa fa-check"></i>Apéndice A3. Tablas de Probabilidad</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-normal"><i class="fa fa-check"></i>Distribución Normal</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-chi-cuadrado"><i class="fa fa-check"></i>Distribución Chi-Cuadrado</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-t"><i class="fa fa-check"></i>Distribución <em>t</em></a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-f"><i class="fa fa-check"></i>Distribución <em>F</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="brief-answers-to-selected-exercises.html"><a href="brief-answers-to-selected-exercises.html"><i class="fa fa-check"></i>Brief Answers to Selected Exercises</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Regresión en Español en GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Modelado de Regresión con Aplicaciones Actuariales y Financieras</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="C19Triangles" class="section level1 hasAnchor" number="19">
+<h1><span class="header-section-number">Capítulo 19</span> Triángulos de Reclamos<a href="C19Triangles.html#C19Triangles" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Vista Previa del Capítulo</em>. Este capítulo introduce un problema clásico de reservación actuarial que se encuentra ampliamente en los seguros de propiedad y accidentes, así como en los seguros de salud. Los datos se presentan en un formato triangular para enfatizar su naturaleza longitudinal y censurada. Este capítulo explica cómo surgen naturalmente estos datos e introduce métodos de regresión para abordar el problema de la reservación actuarial.</p>
+<div id="introducción-4" class="section level2 hasAnchor" number="19.1">
+<h2><span class="header-section-number">19.1</span> Introducción<a href="C19Triangles.html#introducción-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En muchos tipos de seguros, poco tiempo transcurre entre el evento de un reclamo, la notificación a una compañía de seguros y el pago a los beneficiarios. Por ejemplo, en los seguros de vida, la notificación y el pago de beneficios típicamente ocurren dentro de las dos semanas posteriores al fallecimiento del asegurado. Sin embargo, en otras líneas de seguro, el tiempo desde la ocurrencia del reclamo hasta el pago final puede ser mucho más largo, tomando meses e incluso años. Para introducir esta situación, esta sección describe la evolución de un reclamo, introduce medidas de resumen utilizadas por las aseguradoras y luego describe el método determinista predominante para pronosticar reclamos, el método del eslabón en cadena.</p>
+<div id="S:Sec1911" class="section level3 hasAnchor" number="19.1.1">
+<h3><span class="header-section-number">19.1.1</span> Evolución de los Reclamos<a href="C19Triangles.html#S:Sec1911" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Por ejemplo, suponga que usted sufre una lesión en un accidente automovilístico cubierto por un seguro. Puede tomar meses para que la lesión se cure y todos los pagos por atención médica sean conocidos y realizados por la compañía de seguros. Además, pueden surgir disputas entre usted, otras partes involucradas en el accidente, su aseguradora y las aseguradoras de otras partes, alargando así el tiempo hasta que los reclamos se resuelvan y paguen. Cuando los reclamos tardan mucho en desarrollarse, las obligaciones del reclamo de una aseguradora pueden ser incurridas en un período contable pero no pagadas hasta un período contable posterior. En el ejemplo de su accidente, la aseguradora sabe que ha ocurrido un reclamo e incluso puede haber realizado algunos pagos en el período contable actual. Las cantidades de pagos futuros son desconocidas al final del período contable actual, pero la aseguradora desea realizar un pronóstico preciso de las obligaciones futuras para apartar una cantidad adecuada de dinero para estas obligaciones futuras, conocido como una <em>reserva</em>. El objetivo de la aseguradora es utilizar la información actual del reclamo para predecir el momento y la cantidad de los pagos futuros del reclamo.</p>
+<p>Para establecer la terminología, es útil seguir la línea de tiempo de un reclamo a medida que se desarrolla. En la Figura <a href="C19Triangles.html#fig:Fig191">19.1</a>, el reclamo ocurre en el tiempo <span class="math inline">\(t_1\)</span> y la compañía aseguradora es notificada en el tiempo <span class="math inline">\(t_3\)</span>. Puede haber un largo intervalo entre la ocurrencia y la notificación, tal que una <em>fecha de valoración</em> (<span class="math inline">\(t_2\)</span>) puede ocurrir dentro de este intervalo. Aquí, <span class="math inline">\(t_2\)</span> es el momento en que se valoran las obligaciones, que típicamente, pero no siempre, coincide con el final de un período de reporte financiero de la compañía. En este caso, se dice que el reclamo está <em>incurrido pero no reportado</em> en esta fecha de valoración.</p>
+<p>Después de la notificación del reclamo, puede haber uno o más pagos por pérdidas. No todos los pagos pueden realizarse antes de la siguiente fecha de valoración (<span class="math inline">\(t_4\)</span>). A medida que el reclamo se desarrolla, eventualmente la compañía considera que sus obligaciones financieras sobre el reclamo están resueltas y declara el reclamo como “cerrado.” Sin embargo, es posible que surjan nuevos hechos y el reclamo deba reabrirse, dando lugar a pagos adicionales por pérdidas antes de cerrarse nuevamente.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig191"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig191-1.png" alt="Cronología del Desarrollo de un Reclamo." width="80%" />
+<p class="caption">
+Figura 19.1: <strong>Cronología del Desarrollo de un Reclamo.</strong>
+</p>
+</div>
+</div>
+<div id="S:Sec1912" class="section level3 hasAnchor" number="19.1.2">
+<h3><span class="header-section-number">19.1.2</span> Triángulos de Reclamos<a href="C19Triangles.html#S:Sec1912" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Las aseguradoras no suelen modelar la evolución de cada reclamo y luego sumarlos (como se hace en un análisis basado en pólizas en los seguros de vida). En cambio, los portafolios de reclamos se resumen en cada fecha de valoración; son estos resúmenes los que se utilizan para realizar pronósticos de los reclamos pendientes.</p>
+<p>Específicamente, sea <span class="math inline">\(i\)</span> el año en que se ha incurrido un reclamo y <span class="math inline">\(j\)</span> el número de años desde el incurrimiento hasta el momento en que se realiza el pago, conocido como año de “desarrollo” (o “retraso”). Por lo tanto, <span class="math inline">\(y_{ij}\)</span> representa la suma de los montos de pago en el <span class="math inline">\(i\)</span>-ésimo año de incurrimiento y el <span class="math inline">\(j\)</span>-ésimo año de desarrollo. Aquí, “año” se refiere al período contable; en ejemplos posteriores, verá que a menudo usamos mes, trimestre u otros períodos fijos. <a href="C19Triangles.html#Tab191">Tabla 19.1</a> muestra la información que típicamente enfrentan los actuarios.</p>
+<p><a id=Tab191></a></p>
+<p><span id="Tab191">Table 19.1</span>. <strong>Triángulo Clásico de Desarrollo de Reclamos</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{c|ccccc}
+  \hline
+  \text{Año de } &amp;  \text{Año de Desarrollo }&amp;(j)    \\
+   \text{Incurrencia }(i) &amp; 1&amp; 2&amp; 3&amp;4&amp;5 \\
+   \hline
+  1  &amp; y_{11}  &amp; y_{12} &amp; y_{13} &amp;  y_{14} &amp; y_{15}  \\
+  2  &amp; y_{21}  &amp; y_{22} &amp; y_{23} &amp;  y_{24} &amp; .      \\
+  3  &amp; y_{31}  &amp; y_{32} &amp; y_{33} &amp;   .       &amp; .      \\
+  4  &amp; y_{41}  &amp; y_{42} &amp;  .       &amp;.          &amp; .      \\
+  5  &amp; y_{51}  &amp; .        &amp;  .       &amp;.          &amp; .      \\
+  \hline
+\end{array}
+}
+\]</span></p>
+<p>El término “triángulo de reclamos” es evidente a partir de <a href="C19Triangles.html#Tab191">Table 19.1</a>. Observamos datos en el triángulo superior izquierdo, <span class="math inline">\(y_{ij}, i=1,\ldots, 5, j=1, \ldots,6-i\)</span>. El objetivo es “completar el triángulo,” es decir, pronosticar valores en el triángulo inferior derecho (<span class="math inline">\(y_{ij}, i=2,\ldots, 5, j=7-i, \ldots,5\)</span>). Por ejemplo, el año más reciente de incurrencia es <span class="math inline">\(i=5\)</span>, para el cual solo tenemos un año de experiencia de reclamos, <span class="math inline">\(y_{51}\)</span>. Los otros valores, <span class="math inline">\(y_{5j}, j=2, \ldots,5\)</span>, son desconocidos en la fecha de valoración. En algunas situaciones, también es de interés pronosticar reclamos en años de desarrollo seis y posteriores.</p>
+<p><a href="C19Triangles.html#Tab191">Table 19.1</a> resalta el hecho de que los datos son tanto longitudinales como censurados. Este es el punto clave con respecto a los supuestos de modelado estadístico. En las aplicaciones, las observaciones pueden variar significativamente dependiendo del tipo y propósito. Cada elemento del triángulo puede representar pagos reales realizados por la compañía de seguros, conocidos como “pagos incrementales,” o la suma “acumulativa” de pagos desde el desarrollo. Para algunas líneas de negocio, están disponibles estimaciones de los pagos pendientes en una base reclamo por reclamo, conocidas como “estimaciones de caso.” Aquí, los elementos del triángulo pueden representar reclamos incurridos en lugar de reclamos pagados. Es decir, un reclamo incurrido es el monto pagado más la reserva. Debido a que las estimaciones de caso se revisan a medida que se recibe nueva información sobre un reclamo, no es raro que los pagos incurridos sean negativos. Además, incluso los pagos incrementales realizados pueden ser negativos debido a la reaseguradora o la recuperación de montos de reclamos por parte de otras partes responsables. (Muchas aseguradoras emiten cheques para pagar a los reclamantes rápidamente tras la ocurrencia de un accidente y luego son reembolsadas por otra parte responsable del accidente). Los datos de triángulos de reclamos también pueden estar en forma de número de notificaciones de reclamos. Este tipo de datos es particularmente útil para estimar reservas “incurridas pero no reportadas.”</p>
+<hr />
+<p><strong>Ejemplo: Daños a Propiedades en Singapur.</strong> <a href="C19Triangles.html#Tab192">Table 19.2</a> reporta pagos incrementales de un portafolio de pólizas de automóviles de una aseguradora general (de propiedad y accidentes) en Singapur. Aquí, los pagos son por daños a terceros en propiedad de pólizas de seguros de autos de cobertura total. Todos los pagos han sido ajustados usando un índice de precios al consumidor de Singapur, por lo que están en dólares constantes. Los datos corresponden a pólizas con coberturas desde 1997 hasta 2001, inclusive. <a href="C19Triangles.html#Tab192">Table 19.2</a> también proporciona las primas de estas pólizas (en miles de dólares singapurenses) para proporcionar una idea de la creciente exposición de la aseguradora a posibles obligaciones de reclamos.</p>
+<p><a id=Tab192></a></p>
+<p><span id="Tab192">Table 19.2</span>. <strong>Pagos Incrementales en Singapur</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{lr|rrrrr}
+  \hline
+\text{Año de } &amp;   \text{Prima} &amp;\text{ Año de Desarrollo}       \\
+\text{Incurrencia}      &amp;  \text{(en miles)} &amp;          1 &amp;          2 &amp;          3 &amp;          4 &amp;          5 \\ \hline
+1997 &amp;     32,691 &amp;  1,188,675 &amp;  2,257,909 &amp;    695,237 &amp;    166,812 &amp;     92,129 \\
+1998 &amp;     33,425 &amp;  1,235,402 &amp;  3,250,013 &amp;    649,928 &amp;    211,344 &amp;          . \\
+1999 &amp;     34,849 &amp;  2,209,850 &amp;  3,718,695 &amp;    818,367 &amp;          . &amp;          . \\
+2000 &amp;     37,011 &amp;  2,662,546 &amp;  3,487,034 &amp;          . &amp;          . &amp;          . \\
+2001 &amp;     40,152 &amp;  2,457,265 &amp;          . &amp;          . &amp;          . &amp;          . \\
+        \hline
+\end{array}
+}
+\]</span></p>
+<h5 style="text-align: center;">
+<a id="displayCode.Tab192.Hide" href="javascript:togglecode('toggleCode.Tab192.Hide','displayCode.Tab192.Hide');"><i><strong>Código R para Producir Tabla 19.2</strong></i></a>
+</h5>
+<div id="toggleCode.Tab192.Hide" style="display: none">
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="C19Triangles.html#cb139-1" tabindex="-1"></a><span class="co"># Table 19.2</span></span>
+<span id="cb139-2"><a href="C19Triangles.html#cb139-2" tabindex="-1"></a>SingProperty <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/SingaporeProperty.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb139-3"><a href="C19Triangles.html#cb139-3" tabindex="-1"></a><span class="co">#SingProperty  &lt;- read.csv(&quot;../../CSVData/SingaporeProperty.csv&quot;, header=TRUE)</span></span>
+<span id="cb139-4"><a href="C19Triangles.html#cb139-4" tabindex="-1"></a>SingPropertyA <span class="ot">&lt;-</span> SingProperty[<span class="fu">c</span>(<span class="st">&quot;Year&quot;</span>, <span class="st">&quot;Delay&quot;</span>, <span class="st">&quot;Payments&quot;</span>)]</span>
+<span id="cb139-5"><a href="C19Triangles.html#cb139-5" tabindex="-1"></a></span>
+<span id="cb139-6"><a href="C19Triangles.html#cb139-6" tabindex="-1"></a><span class="fu">library</span>(ChainLadder)</span>
+<span id="cb139-7"><a href="C19Triangles.html#cb139-7" tabindex="-1"></a>SingProperty_triangle <span class="ot">&lt;-</span> <span class="fu">as.triangle</span>(SingPropertyA, <span class="at">origin =</span> <span class="st">&quot;Year&quot;</span>, </span>
+<span id="cb139-8"><a href="C19Triangles.html#cb139-8" tabindex="-1"></a>                                   <span class="at">dev =</span> <span class="st">&quot;Delay&quot;</span>, <span class="at">value =</span> <span class="st">&quot;Payments&quot;</span>)</span>
+<span id="cb139-9"><a href="C19Triangles.html#cb139-9" tabindex="-1"></a></span>
+<span id="cb139-10"><a href="C19Triangles.html#cb139-10" tabindex="-1"></a>SingProperty_triangle</span></code></pre></div>
+<pre><code>      Delay
+Year           1         2         3         4        5
+  1997 1188675.0 2257908.9 695237.49 166811.73 92128.79
+  1998 1235401.8 3250012.7 649928.28 211344.22       NA
+  1999 2209849.6 3718694.9 818367.44        NA       NA
+  2000 2662546.0 3487034.0        NA        NA       NA
+  2001 2457265.3        NA        NA        NA       NA</code></pre>
+</div>
+<hr />
+</div>
+<div id="S:Sec1913" class="section level3 hasAnchor" number="19.1.3">
+<h3><span class="header-section-number">19.1.3</span> Método de Escalera de Cadenas<a href="C19Triangles.html#S:Sec1913" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para introducir el método básico de escalera de cadenas, continuamos trabajando en el contexto del ejemplo de daños a propiedades en Singapur. <a href="C19Triangles.html#Tab193">Table 19.3</a> muestra los mismos pagos que
+<a href="C19Triangles.html#Tab192">Table 19.2</a> pero en forma acumulativa en lugar de incremental. Sea <span class="math inline">\(S_{ij} = y_{i1} + \cdots + y_{ij}\)</span> denotar los reclamos acumulativos.</p>
+<p><a id=Tab193></a></p>
+<p><span id="Tab193">Table 19.3</span>. <strong>Pagos Acumulativos en Singapur con Estimaciones de Escalera de Cadenas</strong></p>
+<p><span class="math display">\[
+\scriptsize{
+\begin{array}{lllrrrr|r|c}
+\hline \hline
+&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;\text{Pérdida}\\
+  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp; \text{Final} \\
+\text{Año de}   &amp;&amp;\text{Año de Desarrollo}&amp; \text{Desarrollo}   &amp; &amp;&amp;&amp;&amp;\text{Relación}   \\
+\text{Incurrencia} &amp; \text{Prima} &amp;~~~~~~~~1 &amp; 2~~~ &amp;  3~~~&amp; 4~~~&amp;   5~~~&amp; \text{Reserva} &amp; (\%) \\
+\hline
+1997 &amp;     32,691 &amp;  1,188,675 &amp;  3,446,584 &amp;  4,141,821 &amp;  4,308,633 &amp;  4,400,762 &amp;            &amp;       13.5 \\
+1998 &amp;     33,425 &amp;  1,235,402 &amp;  4,485,415 &amp;  5,135,343 &amp;  5,346,687 &amp; {\bf 5,461,012} &amp;    114,325 &amp;       16.3 \\
+1999 &amp;     34,849 &amp;  2,209,850 &amp;  5,928,544 &amp;  6,746,912 &amp; {\bf 7,021,930} &amp;  {\bf 7,172,075} &amp;    425,163 &amp;       20.6 \\
+2000 &amp;     37,011 &amp;  2,662,546 &amp;  6,149,580 &amp; {\bf 7,109,486} &amp; {\bf 7,399,283} &amp; {\bf 7,557,497} &amp;  1,407,917 &amp;       20.4 \\
+2001 &amp;     40,152 &amp;  2,457,265 &amp;{\bf 6,738,898} &amp; {\bf 7,790,792} &amp; {\bf 8,108,361} &amp; {\bf 8,281,737} &amp;  5,824,471 &amp;       20.6 \\
+\hline
+\text{Total}   &amp;\text{Reserva}             &amp;    &amp;       &amp;       &amp; &amp;&amp;7,771,877 \\
+Escalera &amp; de Cadenas&amp; Factores      &amp; 2.742 &amp;      1.156 &amp;      1.041 &amp;      1.021 &amp;  \\
+\hline \hline
+\end{array}
+}
+\]</span></p>
+<p>La relación de escalera de cadenas para el <span class="math inline">\(j\)</span>-ésimo año de desarrollo se calcula tomando el cociente de la suma de los reclamos sobre todos los años de incurrencia para el <span class="math inline">\(j\)</span>-ésimo año de desarrollo, dividido por la suma de los mismos pagos del año de incurrencia para el <span class="math inline">\(j-1^{er}\)</span> año de desarrollo. Utilizando notación, tenemos:
+<span class="math display">\[
+CL_j = \frac {\sum_{i=1}^{6-j} S_{ij}}{\sum_{i=1}^{6-j} S_{i,j-1}}.
+\]</span>
+Por ejemplo, <span class="math inline">\(CL_5 = 4,400,762/4,308,633 = 1.021\)</span> y <span class="math inline">\(CL_4 = (5,346,687+4,308,633)/(5,135,343+4,141,821)= 1.041\)</span>.</p>
+<p>Los números en negrita son pronósticos calculados recursivamente utilizando las relaciones de escalera de cadenas y <span class="math inline">\(\widehat{S}_{i,j} = CL_{j} \times \widehat{S}_{i,j-1}.\)</span> La recursión comienza cuando se conoce el valor del pago acumulativo, de modo que <span class="math inline">\(\widehat{S}_{ij}=S_{ij}\)</span>. Por ejemplo, para el año de incurrencia 2, <span class="math inline">\(\widehat{S}_{25} = CL_5 \times S_{24} = (1.021)(5,346,687)=5,461,012\)</span>. Para el año de incurrencia 3, <span class="math inline">\(\widehat{S}_{34} = CL_4 \times S_{33} = (1.041)(6,746,912)=7,021,930\)</span> y <span class="math inline">\(\widehat{S}_{35} = CL_5 \times \widehat{S}_{34} = (1.021)(7,021,930)=7,172,075\)</span>. Alternativamente, se puede ir directamente al último año de desarrollo y utilizar <span class="math inline">\(\widehat{S}_{35} = CL_5 \times CL_4 \times S_{33} = (1.041)(1.021)(6,746,912)=7,172,075.\)</span></p>
+<p>En <a href="C19Triangles.html#Tab193">Tabla 19.3</a>, la reserva es la cantidad final pronosticada menos el reclamo acumulativo pagado más reciente. La relación de pérdida final es la proporción del pronóstico de los reclamos acumulativos en el último año de desarrollo (5) respecto a las primas pagadas (expresadas como un porcentaje, recordando que las primas están en miles).</p>
+</div>
+</div>
+<div id="S:Sec192" class="section level2 hasAnchor" number="19.2">
+<h2><span class="header-section-number">19.2</span> Regresión Usando Funciones del Tiempo como Variables Explicativas<a href="C19Triangles.html#S:Sec192" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El método de escalera de cadenas es una herramienta importante que los actuarios utilizan ampliamente al pronosticar reclamos. Generalmente se presenta de manera determinista, como en la Sección <a href="C19Triangles.html#S:Sec1913">19.1.3</a>. Los modelos estocásticos alternativos para el pronóstico de reclamos tienen dos ventajas principales:</p>
+<ul>
+<li>Al modelar explícitamente la distribución de los reclamos, se pueden realizar estimaciones de la incertidumbre de los pronósticos de reserva.</li>
+<li>Existen muchas variaciones de las técnicas de escalera de cadenas porque se aplican en diferentes situaciones. Como vimos en el Capítulo 5, los métodos estocásticos ofrecen una forma disciplinada de selección de modelos que puede ayudar a determinar el modelo más adecuado para un conjunto de datos dado.</li>
+</ul>
+<p>Como veremos, no es necesario elegir entre usar el método de escalera de cadenas y un modelo estocástico. La Sección <a href="C19Triangles.html#S:Sec1923">19.2.3</a> modelo Poisson sobredisperso y la Sección <a href="C19Triangles.html#S:Sec1931">19.3.1</a> modelo Mack generan pronósticos puntuales que son iguales a los de escalera de cadenas.</p>
+<div id="S:Sec1921" class="section level3 hasAnchor" number="19.2.1">
+<h3><span class="header-section-number">19.2.1</span> Modelo Lognormal<a href="C19Triangles.html#S:Sec1921" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Nuestro punto de partida es el modelo lognormal para los reclamos incrementales. Es decir, consideramos un modelo de dos factores de la forma:</p>
+<p><span class="math display" id="eq:eq191">\[\begin{equation}
+\ln y_{ij} = \mu + \alpha_i + \tau_j + \varepsilon_{ij},
+\tag{19.1}
+\end{equation}\]</span>
+donde <span class="math inline">\(\{ \alpha_i \}\)</span> son parámetros para el factor del año de incurrencia y <span class="math inline">\(\{ \tau_j \}\)</span> son parámetros para el factor del año de desarrollo. Un modelo de regresión con dos factores se introdujo en la Sección 4.4. Recordemos que requerimos restricciones en los parámetros de los factores para su estimabilidad, como <span class="math inline">\(\sum_i \alpha_i = 0\)</span> y <span class="math inline">\(\sum_j \tau_j= 0\)</span>. Asumiendo normalidad de <span class="math inline">\(\{\varepsilon_{ij} \}\)</span> se deriva la especificación lognormal para los reclamos incrementales <span class="math inline">\(y_{ij}\)</span>.</p>
+<hr />
+<p><strong>Ejemplo: Lesiones a Terceros en Singapur.</strong> <a href="C19Triangles.html#Tab194">Tabla 19.4</a> reporta pagos de un portafolio de pólizas de automóviles para una aseguradora general (de bienes y accidentes) en Singapur. Los pagos, ajustados por inflación, corresponden a lesiones a terceros de pólizas de seguro integral. Los datos son para pólizas con coberturas desde 1993 hasta 2001, inclusive.</p>
+<p>En el seguro de automóviles, generalmente se tarda más en resolver y pagar las lesiones en comparación con los reclamos por daños a la propiedad. Por lo tanto, el número de años de desarrollo, “el desgaste”, es más largo en <a href="C19Triangles.html#Tab194">Tabla 19.4</a> que en <a href="C19Triangles.html#Tab192">Tabla 19.2</a>. <a href="C19Triangles.html#Tab194">Tabla 19.4</a> también muestra una falta de estabilidad en los pagos por lesiones que la Figura <a href="C19Triangles.html#fig:Fig192">19.2</a> nos ayuda a visualizar. El panel izquierdo muestra líneas de tendencia por desarrollo para cada año de incurrencia. El panel derecho presenta diagramas de caja de pagos logarítmicos para cada año de desarrollo. Este gráfico muestra que los pagos tienden a aumentar en los dos primeros periodos de desarrollo (<span class="math inline">\(j=1,2\)</span>), alcanzan un pico en el tercer periodo (<span class="math inline">\(j=3\)</span>) y luego disminuyen.</p>
+<p><a id=Tab194></a></p>
+<p><span id="Tab194">Tabla 19.4</span>. <strong>Pagos Incrementales por Lesiones en Singapur, 1993-2001</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{c|rrrrrrrrr}
+  \hline
+\text{Año de Incurrencia}&amp;\text{Año de Desarrollo} &amp; \\
+\text{Año} &amp; 1 &amp; 2 &amp;3 &amp;4 &amp; 5 &amp; 6 &amp; 7 &amp; 8 &amp; 9 \\
+         \hline
+1993 &amp;    14,695 &amp;    205,515 &amp;    118,686 &amp;    416,286 &amp;     93,544 &amp;    185,043 &amp;     37,750 &amp;     0 &amp;14,086 \\
+1994 &amp;   153,615 &amp;    467,722 &amp;    645,513 &amp;    421,896 &amp;    146,576 &amp;     96,470 &amp;     27,765 &amp;38,017 &amp;   . \\
+1995 &amp;    24,741 &amp;    547,862 &amp;    754,475 &amp;    417,573 &amp;    156,596 &amp;     55,155 &amp;     36,984 &amp;  . &amp;  . \\
+1996 &amp;    68,630 &amp;    188,627 &amp;    492,306 &amp;    179,249 &amp;     34,062 &amp;    443,436 &amp;          . &amp;  . &amp;   . \\
+1997 &amp;    29,177 &amp;    364,672 &amp;    437,507 &amp;    385,571 &amp;    529,319 &amp;          . &amp;          . &amp; . &amp;  . \\
+1998 &amp;    40,430 &amp;    241,809 &amp;    678,541 &amp;    528,026 &amp;          . &amp;          . &amp;          . &amp; . &amp;  . \\
+1999 &amp;    45,125 &amp;    372,935 &amp;    704,168 &amp;          . &amp;          . &amp;          . &amp;          . &amp; . &amp;  . \\
+2000 &amp;    21,695 &amp;    158,005 &amp;          . &amp;          . &amp;          . &amp;          . &amp;          . &amp; . &amp; . \\
+2001 &amp;     6,626 &amp;     . &amp;          . &amp;          . &amp;          . &amp;          . &amp;          . &amp;  . &amp; . \\
+\hline \hline
+\end{array}
+}
+\]</span></p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig192"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig192-1.png" alt="Pagos Incrementales por Lesiones en Singapur. El panel izquierdo muestra pagos por año de desarrollo con cada línea conectando pagos del mismo año de incurrencia. El panel derecho muestra la distribución de los pagos logarítmicos para cada año de desarrollo." width="100%" />
+<p class="caption">
+Figura 19.2: <strong>Pagos Incrementales por Lesiones en Singapur.</strong> El panel izquierdo muestra pagos por año de desarrollo con cada línea conectando pagos del mismo año de incurrencia. El panel derecho muestra la distribución de los pagos logarítmicos para cada año de desarrollo.
+</p>
+</div>
+<h5 style="text-align: center;">
+<a id="displayCode.FigFig192.Hide" href="javascript:togglecode('toggleCode.FigFig192.Hide','displayCode.FigFig192.Hide');"><i><strong>Código R para Producir Figura 19.2</strong></i></a>
+</h5>
+<div id="toggleCode.FigFig192.Hide" style="display: none">
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="C19Triangles.html#cb141-1" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb141-2"><a href="C19Triangles.html#cb141-2" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb141-3"><a href="C19Triangles.html#cb141-3" tabindex="-1"></a><span class="fu">library</span>(gridGraphics)</span>
+<span id="cb141-4"><a href="C19Triangles.html#cb141-4" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb141-5"><a href="C19Triangles.html#cb141-5" tabindex="-1"></a></span>
+<span id="cb141-6"><a href="C19Triangles.html#cb141-6" tabindex="-1"></a><span class="co"># Figura 19.2</span></span>
+<span id="cb141-7"><a href="C19Triangles.html#cb141-7" tabindex="-1"></a>SingInjury <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/SingaporeInjury.csv&quot;</span>, <span class="at">quote=</span><span class="st">&quot;&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb141-8"><a href="C19Triangles.html#cb141-8" tabindex="-1"></a>SingInjuryA <span class="ot">&lt;-</span> <span class="fu">subset</span>(SingInjury, Payment <span class="sc">!=</span> <span class="dv">0</span> )</span>
+<span id="cb141-9"><a href="C19Triangles.html#cb141-9" tabindex="-1"></a>SingInjuryA<span class="sc">$</span>lnPayment <span class="ot">&lt;-</span> <span class="fu">log</span>(SingInjuryA<span class="sc">$</span>Payment)</span>
+<span id="cb141-10"><a href="C19Triangles.html#cb141-10" tabindex="-1"></a></span>
+<span id="cb141-11"><a href="C19Triangles.html#cb141-11" tabindex="-1"></a><span class="co">#trellis.device(color=F) # telling the trellis device to mimic &#39;black and white&#39;</span></span>
+<span id="cb141-12"><a href="C19Triangles.html#cb141-12" tabindex="-1"></a>tempPlotB <span class="ot">&lt;-</span> <span class="fu">xyplot</span>(SingInjuryA<span class="sc">$</span>Payment<span class="sc">~</span>SingInjuryA<span class="sc">$</span>Delay,</span>
+<span id="cb141-13"><a href="C19Triangles.html#cb141-13" tabindex="-1"></a>       <span class="at">groups=</span>SingInjuryA<span class="sc">$</span>Year, <span class="at">type=</span><span class="st">&quot;b&quot;</span>, <span class="at">pch=</span><span class="dv">16</span>, <span class="at">lty=</span><span class="dv">1</span>, </span>
+<span id="cb141-14"><a href="C19Triangles.html#cb141-14" tabindex="-1"></a>       <span class="at">ylab=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb141-15"><a href="C19Triangles.html#cb141-15" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Periodo de Desarrollo&quot;</span>, </span>
+<span id="cb141-16"><a href="C19Triangles.html#cb141-16" tabindex="-1"></a>       <span class="at">scales=</span> <span class="fu">list</span>(<span class="at">y=</span><span class="fu">list</span>(<span class="at">at=</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">600000</span>,<span class="dv">200000</span>),</span>
+<span id="cb141-17"><a href="C19Triangles.html#cb141-17" tabindex="-1"></a>                      <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;0&quot;</span>,<span class="st">&quot;200,000&quot;</span>,<span class="st">&quot;400,000&quot;</span>,<span class="st">&quot;600,000&quot;</span>)))</span>
+<span id="cb141-18"><a href="C19Triangles.html#cb141-18" tabindex="-1"></a>       )</span>
+<span id="cb141-19"><a href="C19Triangles.html#cb141-19" tabindex="-1"></a><span class="co"># Capture the current plot as a grob</span></span>
+<span id="cb141-20"><a href="C19Triangles.html#cb141-20" tabindex="-1"></a>boxplot_grob <span class="ot">&lt;-</span> <span class="fu">as_grob</span>(<span class="sc">~</span> {</span>
+<span id="cb141-21"><a href="C19Triangles.html#cb141-21" tabindex="-1"></a>  <span class="fu">boxplot</span>(SingInjuryA<span class="sc">$</span>Payment <span class="sc">~</span> SingInjuryA<span class="sc">$</span>Delay,</span>
+<span id="cb141-22"><a href="C19Triangles.html#cb141-22" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">&quot;Periodo de Desarrollo&quot;</span>, <span class="at">yaxt =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Pago&quot;</span>)</span>
+<span id="cb141-23"><a href="C19Triangles.html#cb141-23" tabindex="-1"></a>  <span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">800000</span>, <span class="dv">200000</span>),</span>
+<span id="cb141-24"><a href="C19Triangles.html#cb141-24" tabindex="-1"></a>       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;200,000&quot;</span>, <span class="st">&quot;400,000&quot;</span>, <span class="st">&quot;600,000&quot;</span>, <span class="st">&quot;800,000&quot;</span>))</span>
+<span id="cb141-25"><a href="C19Triangles.html#cb141-25" tabindex="-1"></a>})</span>
+<span id="cb141-26"><a href="C19Triangles.html#cb141-26" tabindex="-1"></a></span>
+<span id="cb141-27"><a href="C19Triangles.html#cb141-27" tabindex="-1"></a><span class="fu">grid.arrange</span>( <span class="at">grobs =</span> <span class="fu">list</span>(boxplot_grob, tempPlotB), <span class="at">ncol =</span> <span class="dv">2</span> )</span></code></pre></div>
+</div>
+<p>El modelo lognormal basado en la ecuación <a href="C19Triangles.html#eq:eq191">(19.1)</a> se ajustó a estos datos. Como era de esperar, tanto los factores de incurrencia como los años de desarrollo fueron estadísticamente significativos. El coeficiente de determinación del ajuste es <span class="math inline">\(R^2 = 73.3 \%\)</span>. Un gráfico <span class="math inline">\(qq\)</span> (no presentado aquí) mostró una concordancia razonable con la suposición de normalidad. Los valores ajustados del modelo, después de la exponenciación para convertir de nuevo a dólares, aparecen en la Figura <a href="C19Triangles.html#fig:Fig193">19.3</a>. Esta figura parece capturar los patrones de pago que aparecen en el panel izquierdo de la Figura <a href="C19Triangles.html#fig:Fig192">19.2</a>. Cabe destacar que los valores ajustados para la porción no observada del triángulo son pronósticos.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig193"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig193-1.png" alt="Valores Ajustados para los Pagos Incrementales por Lesiones en Singapur. Estas estimaciones están basadas en el modelo lognormal de dos factores." width="60%" />
+<p class="caption">
+Figura 19.3: <strong>Valores Ajustados para los Pagos Incrementales por Lesiones en Singapur.</strong> Estas estimaciones están basadas en el modelo lognormal de dos factores.
+</p>
+</div>
+<h5 style="text-align: center;">
+<a id="displayCode.FigFig193.Hide" href="javascript:togglecode('toggleCode.FigFig193.Hide','displayCode.FigFig193.Hide');"><i><strong>Código R para Producir la Figura 19.3</strong></i></a>
+</h5>
+<div id="toggleCode.FigFig193.Hide" style="display: none">
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="C19Triangles.html#cb142-1" tabindex="-1"></a><span class="co"># Figura 19.3</span></span>
+<span id="cb142-2"><a href="C19Triangles.html#cb142-2" tabindex="-1"></a><span class="co">#  VALORES AJUSTADOS PARA EL MODELO LOGNORMAL</span></span>
+<span id="cb142-3"><a href="C19Triangles.html#cb142-3" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(lnPayment <span class="sc">~</span> <span class="fu">factor</span>(Year) <span class="sc">+</span> <span class="fu">factor</span>(Delay), <span class="at">data =</span> SingInjuryA )</span>
+<span id="cb142-4"><a href="C19Triangles.html#cb142-4" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(model1)</span>
+<span id="cb142-5"><a href="C19Triangles.html#cb142-5" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">81</span>)</span>
+<span id="cb142-6"><a href="C19Triangles.html#cb142-6" tabindex="-1"></a>forei <span class="ot">&lt;-</span> forecast</span>
+<span id="cb142-7"><a href="C19Triangles.html#cb142-7" tabindex="-1"></a>forej <span class="ot">&lt;-</span> forecast</span>
+<span id="cb142-8"><a href="C19Triangles.html#cb142-8" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb142-9"><a href="C19Triangles.html#cb142-9" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb142-10"><a href="C19Triangles.html#cb142-10" tabindex="-1"></a>    xij <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">16</span>))</span>
+<span id="cb142-11"><a href="C19Triangles.html#cb142-11" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">1</span>) { xij[i] <span class="ot">&lt;-</span> <span class="dv">1</span> }</span>
+<span id="cb142-12"><a href="C19Triangles.html#cb142-12" tabindex="-1"></a>    <span class="cf">if</span> (j <span class="sc">&gt;</span> <span class="dv">1</span>) { xij[<span class="dv">8</span> <span class="sc">+</span> j] <span class="ot">&lt;-</span> <span class="dv">1</span> }</span>
+<span id="cb142-13"><a href="C19Triangles.html#cb142-13" tabindex="-1"></a>    foreij <span class="ot">&lt;-</span> xij <span class="sc">%*%</span> beta</span>
+<span id="cb142-14"><a href="C19Triangles.html#cb142-14" tabindex="-1"></a>    forecast[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j] <span class="ot">&lt;-</span> <span class="fu">exp</span>(foreij)</span>
+<span id="cb142-15"><a href="C19Triangles.html#cb142-15" tabindex="-1"></a>    forei[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j] <span class="ot">&lt;-</span> i</span>
+<span id="cb142-16"><a href="C19Triangles.html#cb142-16" tabindex="-1"></a>    forej[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j] <span class="ot">&lt;-</span> j</span>
+<span id="cb142-17"><a href="C19Triangles.html#cb142-17" tabindex="-1"></a>  }</span>
+<span id="cb142-18"><a href="C19Triangles.html#cb142-18" tabindex="-1"></a>}</span>
+<span id="cb142-19"><a href="C19Triangles.html#cb142-19" tabindex="-1"></a><span class="co"># forecast; forei; forej</span></span>
+<span id="cb142-20"><a href="C19Triangles.html#cb142-20" tabindex="-1"></a><span class="co"># trellis.device(color = F) </span></span>
+<span id="cb142-21"><a href="C19Triangles.html#cb142-21" tabindex="-1"></a><span class="fu">xyplot</span>(forecast <span class="sc">~</span> forej, <span class="at">groups =</span> forei, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb142-22"><a href="C19Triangles.html#cb142-22" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;Periodo de Desarrollo&quot;</span>, </span>
+<span id="cb142-23"><a href="C19Triangles.html#cb142-23" tabindex="-1"></a>       <span class="at">scales =</span> <span class="fu">list</span>(<span class="at">y =</span> <span class="fu">list</span>(<span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">600000</span>, <span class="dv">200000</span>),</span>
+<span id="cb142-24"><a href="C19Triangles.html#cb142-24" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;200,000&quot;</span>, <span class="st">&quot;400,000&quot;</span>, <span class="st">&quot;600,000&quot;</span>)))</span>
+<span id="cb142-25"><a href="C19Triangles.html#cb142-25" tabindex="-1"></a>       )</span></code></pre></div>
+</div>
+<hr />
+</div>
+<div id="S:Sec1922" class="section level3 hasAnchor" number="19.2.2">
+<h3><span class="header-section-number">19.2.2</span> Curva de Hoerl<a href="C19Triangles.html#S:Sec1922" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La componente sistemática de la ecuación <a href="C19Triangles.html#eq:eq191">(19.1)</a> puede ser
+modificada fácilmente. Una posibilidad es la denominada “curva de Hoerl,”
+lo que lleva a la ecuación del modelo</p>
+<p><span class="math display" id="eq:eq192">\[\begin{equation}
+\ln y_{ij} = \mu + \alpha_i + \beta_i \ln (j) + \gamma_i \times j +
+\varepsilon_{ij} .
+\tag{19.2}
+\end{equation}\]</span>
+Una ventaja de tratar el tiempo de desarrollo <span class="math inline">\(j\)</span> como una covariable
+continua es que la extrapolación es posible más allá del rango de los
+tiempos de desarrollo observados. Como una variación, England y Verrall
+(2002) sugieren permitir que los primeros años de desarrollo tengan sus
+propios niveles e imponer el mismo patrón de agotamiento para todos los
+años de incurrencia (<span class="math inline">\(\beta_i = \beta\)</span>, <span class="math inline">\(\gamma_i = \gamma\)</span>).</p>
+<hr />
+<p><strong>Ejemplo: Lesiones de Terceros en Singapur - Continuación.</strong> El modelo básico de la ecuación <a href="C19Triangles.html#eq:eq192">(19.2)</a> se ajustó bien, con un coeficiente de determinación de <span class="math inline">\(R^2 = 87.8 \%\)</span>. También examinamos un modelo más simple basado en la ecuación
+<span class="math display" id="eq:eq193">\[\begin{equation}
+\ln y_{ij} = \mu + \alpha_i +  \beta \ln (j) + \gamma \times j +
+\varepsilon_{ij} .
+\tag{19.3}
+\end{equation}\]</span>
+Este modelo más simple no se ajustó tan bien como el modelo más completo de Hoerl de la ecuación <a href="C19Triangles.html#eq:eq192">(19.2)</a>, teniendo <span class="math inline">\(R^2 = 78.6 \%\)</span>. Sin embargo, una prueba parcial <span class="math inline">\(F\)</span> estableció que los parámetros adicionales no eran estadísticamente significativos, por lo que se prefirió el modelo más simple de la ecuación <a href="C19Triangles.html#eq:eq193">(19.3)</a>.</p>
+<p>Basándonos en el modelo más simple, los valores ajustados se muestran en la Figura <a href="C19Triangles.html#fig:Fig194">19.4</a>. Esta figura muestra los valores ajustados que disminuyen geométricamente comenzando en el cuarto período de desarrollo.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig194"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig194-1.png" alt="Valores Ajustados del Modelo Reducido de Hoerl en la Ecuación (19.3)." width="60%" />
+<p class="caption">
+Figura 19.4: <strong>Valores Ajustados del Modelo Reducido de Hoerl en la Ecuación (19.3).</strong>
+</p>
+</div>
+<h5 style="text-align: center;">
+<a id="displayCode.Fig194.Hide" href="javascript:togglecode('toggleCode.Fig194.Hide','displayCode.Fig194.Hide');"><i><strong>Código R para Producir la Figura 19.4</strong></i></a>
+</h5>
+<div id="toggleCode.Fig194.Hide" style="display: none">
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="C19Triangles.html#cb143-1" tabindex="-1"></a><span class="co"># Figura 19.4</span></span>
+<span id="cb143-2"><a href="C19Triangles.html#cb143-2" tabindex="-1"></a><span class="co"># VALORES AJUSTADOS PARA LA FORMA REDUCIDA DE LA CURVA DE HOERL</span></span>
+<span id="cb143-3"><a href="C19Triangles.html#cb143-3" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(lnPayment <span class="sc">~</span> <span class="fu">factor</span>(Year) <span class="sc">+</span> <span class="fu">log</span>(Delay) <span class="sc">+</span> Delay, <span class="at">data =</span> SingInjuryA)</span>
+<span id="cb143-4"><a href="C19Triangles.html#cb143-4" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(model3)</span>
+<span id="cb143-5"><a href="C19Triangles.html#cb143-5" tabindex="-1"></a>forecast <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">81</span>)</span>
+<span id="cb143-6"><a href="C19Triangles.html#cb143-6" tabindex="-1"></a>forei <span class="ot">&lt;-</span> forecast</span>
+<span id="cb143-7"><a href="C19Triangles.html#cb143-7" tabindex="-1"></a>forej <span class="ot">&lt;-</span> forecast</span>
+<span id="cb143-8"><a href="C19Triangles.html#cb143-8" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb143-9"><a href="C19Triangles.html#cb143-9" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb143-10"><a href="C19Triangles.html#cb143-10" tabindex="-1"></a>    xij <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">8</span>), <span class="fu">log</span>(j), j)</span>
+<span id="cb143-11"><a href="C19Triangles.html#cb143-11" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">1</span>) { xij[i] <span class="ot">&lt;-</span> <span class="dv">1</span> }</span>
+<span id="cb143-12"><a href="C19Triangles.html#cb143-12" tabindex="-1"></a>    foreij <span class="ot">&lt;-</span> xij <span class="sc">%*%</span> beta</span>
+<span id="cb143-13"><a href="C19Triangles.html#cb143-13" tabindex="-1"></a>    forecast[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j] <span class="ot">&lt;-</span> <span class="fu">exp</span>(foreij)</span>
+<span id="cb143-14"><a href="C19Triangles.html#cb143-14" tabindex="-1"></a>    forei[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j] <span class="ot">&lt;-</span> i</span>
+<span id="cb143-15"><a href="C19Triangles.html#cb143-15" tabindex="-1"></a>    forej[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j] <span class="ot">&lt;-</span> j</span>
+<span id="cb143-16"><a href="C19Triangles.html#cb143-16" tabindex="-1"></a>  }</span>
+<span id="cb143-17"><a href="C19Triangles.html#cb143-17" tabindex="-1"></a>}</span>
+<span id="cb143-18"><a href="C19Triangles.html#cb143-18" tabindex="-1"></a><span class="co"># trellis.device(color = F) </span></span>
+<span id="cb143-19"><a href="C19Triangles.html#cb143-19" tabindex="-1"></a><span class="fu">xyplot</span>(forecast <span class="sc">~</span> forej, <span class="at">groups =</span> forei, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb143-20"><a href="C19Triangles.html#cb143-20" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;Periodo de Desarrollo&quot;</span>, </span>
+<span id="cb143-21"><a href="C19Triangles.html#cb143-21" tabindex="-1"></a>       <span class="at">scales =</span> <span class="fu">list</span>(<span class="at">y =</span> <span class="fu">list</span>(<span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">600000</span>, <span class="dv">200000</span>),</span>
+<span id="cb143-22"><a href="C19Triangles.html#cb143-22" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;0&quot;</span>, <span class="st">&quot;200,000&quot;</span>, <span class="st">&quot;400,000&quot;</span>, <span class="st">&quot;600,000&quot;</span>)))</span>
+<span id="cb143-23"><a href="C19Triangles.html#cb143-23" tabindex="-1"></a>       )</span></code></pre></div>
+</div>
+<hr />
+</div>
+<div id="S:Sec1923" class="section level3 hasAnchor" number="19.2.3">
+<h3><span class="header-section-number">19.2.3</span> Modelos de Poisson<a href="C19Triangles.html#S:Sec1923" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Una desventaja del modelo lognormal es que las predicciones producidas
+por este no replican las estimaciones tradicionales de escalera en
+cadena. Esta sección introduce el modelo de Poisson sobredisperso, que
+sí tiene esta característica deseable.</p>
+<p>Para comenzar, a partir de la ecuación <a href="C19Triangles.html#eq:eq191">(19.1)</a>, podemos escribir
+<span class="math display">\[
+\mathrm{E}~ y_{ij} = \exp(\eta_{i,j})~~ \mathrm{E}~ e^{\varepsilon}
+\]</span>
+donde el componente sistemático es <span class="math inline">\(\eta_{i,j} = \mu + \alpha_i + \tau_j\)</span>.
+Este es un modelo con una función de enlace logarítmica (es decir,
+<span class="math inline">\(\ln \mathrm{E}~y = \eta\)</span>). En lugar de usar la distribución lognormal
+para <span class="math inline">\(y\)</span>, esta sección asume que <span class="math inline">\(y\)</span> sigue un modelo de Poisson
+sobredisperso con función de varianza
+<span class="math display">\[
+\mathrm{Var}~ y_{ij} = \phi \exp(\eta_{i,j}).
+\]</span>
+Note que hemos absorbido el escalar <span class="math inline">\(\mathrm{E}~ e^{\varepsilon}\)</span> en
+el parámetro de sobredispersión <span class="math inline">\(\phi\)</span>.</p>
+<p>Introducimos modelos de Poisson sobredispersos en la Sección 12.3. Por
+lo tanto, este modelo se puede estimar con software estadístico
+estándar y, al igual que con el modelo lognormal, se pueden producir
+fácilmente pronósticos. Se puede demostrar que los pronósticos
+producidos por el modelo de Poisson sobredisperso son equivalentes a
+los pronósticos determinísticos de escalera en cadena. Ver, por
+ejemplo, Taylor (2000) o Wüthrich y Merz (2008) para una prueba.
+Esto no solo nos da un mecanismo para cuantificar la incertidumbre
+asociada con los pronósticos de escalera en cadena, sino que también
+podemos usar software estadístico estándar para calcular estas
+estimaciones.</p>
+<hr />
+<p><strong>Ejemplo: Lesiones de Terceros en Singapur - Continuación.</strong> El modelo
+de Poisson sobredisperso se ajustó a los datos de pagos por lesiones
+en Singapur. Se utilizó software estadístico estándar para calcular
+las estimaciones de parámetros, utilizando las técnicas descritas en
+la Sección 12.3. La Figura <a href="C19Triangles.html#fig:Fig195">19.5</a> resume los pronósticos
+de estos modelos. Esta figura muestra pagos acumulativos, no
+incrementales, marcados con símbolos de trazado opacos en la figura.
+Los pronósticos de pagos incrementales se produjeron y luego se
+sumaron para obtener los pronósticos de pagos acumulativos en la Figura
+<a href="C19Triangles.html#fig:Fig195">19.5</a>; estos están marcados con los símbolos de trazado
+abiertos. Se invita al lector a verificar que estos pronósticos son
+idénticos a los producidos por el método determinístico de escalera en
+cadena hasta el octavo año de desarrollo. Aquí, el valor de cero para
+el primer año de incurrencia causa pequeñas diferencias entre los
+pronósticos del modelo de Poisson y la escalera en cadena.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig195"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig195-1.png" alt="Valores Reales y Pronósticos para los Pagos Acumulativos por Lesiones en Singapur. Los valores reales están marcados con un símbolo opaco. Los pronósticos de escalera en cadena, de un modelo de Poisson sobredisperso, están marcados con un símbolo abierto." width="60%" />
+<p class="caption">
+Figura 19.5: <strong>Valores Reales y Pronósticos para los Pagos Acumulativos por Lesiones en Singapur.</strong> Los valores reales están marcados con un símbolo opaco. Los pronósticos de escalera en cadena, de un modelo de Poisson sobredisperso, están marcados con un símbolo abierto.
+</p>
+</div>
+<h5 style="text-align: center;">
+<a id="displayCode.FigFig195.Hide" href="javascript:togglecode('toggleCode.FigFig195.Hide','displayCode.FigFig195.Hide');"><i><strong>Código R para Producir la Figura 19.5</strong></i></a>
+</h5>
+<div id="toggleCode.FigFig195.Hide" style="display: none">
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="C19Triangles.html#cb144-1" tabindex="-1"></a><span class="co"># Figura 19.5</span></span>
+<span id="cb144-2"><a href="C19Triangles.html#cb144-2" tabindex="-1"></a></span>
+<span id="cb144-3"><a href="C19Triangles.html#cb144-3" tabindex="-1"></a><span class="co"># PAGOS ACUMULATIVOS</span></span>
+<span id="cb144-4"><a href="C19Triangles.html#cb144-4" tabindex="-1"></a><span class="co"># ordenar por Año y Retraso</span></span>
+<span id="cb144-5"><a href="C19Triangles.html#cb144-5" tabindex="-1"></a>SingInjuryB <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(SingInjury)  </span>
+<span id="cb144-6"><a href="C19Triangles.html#cb144-6" tabindex="-1"></a>newdata <span class="ot">&lt;-</span> SingInjuryB[<span class="fu">order</span>(SingInjury<span class="sc">$</span>Year, SingInjury<span class="sc">$</span>Delay),]</span>
+<span id="cb144-7"><a href="C19Triangles.html#cb144-7" tabindex="-1"></a>cumpay <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">81</span>)</span>
+<span id="cb144-8"><a href="C19Triangles.html#cb144-8" tabindex="-1"></a>counter <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb144-9"><a href="C19Triangles.html#cb144-9" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb144-10"><a href="C19Triangles.html#cb144-10" tabindex="-1"></a>  counter <span class="ot">&lt;-</span> counter <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb144-11"><a href="C19Triangles.html#cb144-11" tabindex="-1"></a>  cumpay[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> newdata<span class="sc">$</span>Payment[counter]</span>
+<span id="cb144-12"><a href="C19Triangles.html#cb144-12" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb144-13"><a href="C19Triangles.html#cb144-13" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="sc">&lt;=</span> <span class="dv">10</span> <span class="sc">-</span> j) {</span>
+<span id="cb144-14"><a href="C19Triangles.html#cb144-14" tabindex="-1"></a>      counter <span class="ot">&lt;-</span> counter <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb144-15"><a href="C19Triangles.html#cb144-15" tabindex="-1"></a>      cumpay[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j] <span class="ot">&lt;-</span> cumpay[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> newdata<span class="sc">$</span>Payment[counter]</span>
+<span id="cb144-16"><a href="C19Triangles.html#cb144-16" tabindex="-1"></a>    }</span>
+<span id="cb144-17"><a href="C19Triangles.html#cb144-17" tabindex="-1"></a>  }</span>
+<span id="cb144-18"><a href="C19Triangles.html#cb144-18" tabindex="-1"></a>}</span>
+<span id="cb144-19"><a href="C19Triangles.html#cb144-19" tabindex="-1"></a>cumout <span class="ot">&lt;-</span> <span class="fu">cbind</span>(forei, forej, cumpay)</span>
+<span id="cb144-20"><a href="C19Triangles.html#cb144-20" tabindex="-1"></a><span class="co"># cumout</span></span>
+<span id="cb144-21"><a href="C19Triangles.html#cb144-21" tabindex="-1"></a></span>
+<span id="cb144-22"><a href="C19Triangles.html#cb144-22" tabindex="-1"></a><span class="co"># PRONÓSTICOS DE PAGOS ACUMULATIVOS</span></span>
+<span id="cb144-23"><a href="C19Triangles.html#cb144-23" tabindex="-1"></a>cumfore <span class="ot">&lt;-</span> cumpay</span>
+<span id="cb144-24"><a href="C19Triangles.html#cb144-24" tabindex="-1"></a>foretype <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">81</span>)</span>
+<span id="cb144-25"><a href="C19Triangles.html#cb144-25" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb144-26"><a href="C19Triangles.html#cb144-26" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>) {</span>
+<span id="cb144-27"><a href="C19Triangles.html#cb144-27" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">10</span> <span class="sc">-</span> j) {</span>
+<span id="cb144-28"><a href="C19Triangles.html#cb144-28" tabindex="-1"></a>      cumfore[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j] <span class="ot">&lt;-</span> cumfore[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> forecast[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j]</span>
+<span id="cb144-29"><a href="C19Triangles.html#cb144-29" tabindex="-1"></a>      foretype[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb144-30"><a href="C19Triangles.html#cb144-30" tabindex="-1"></a>    }</span>
+<span id="cb144-31"><a href="C19Triangles.html#cb144-31" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="sc">==</span> <span class="dv">10</span> <span class="sc">-</span> j) {</span>
+<span id="cb144-32"><a href="C19Triangles.html#cb144-32" tabindex="-1"></a>      foretype[<span class="dv">9</span> <span class="sc">*</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> j] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb144-33"><a href="C19Triangles.html#cb144-33" tabindex="-1"></a>    }</span>
+<span id="cb144-34"><a href="C19Triangles.html#cb144-34" tabindex="-1"></a>  }</span>
+<span id="cb144-35"><a href="C19Triangles.html#cb144-35" tabindex="-1"></a>}</span>
+<span id="cb144-36"><a href="C19Triangles.html#cb144-36" tabindex="-1"></a>foretype[<span class="dv">9</span> <span class="sc">*</span> (<span class="dv">9</span> <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb144-37"><a href="C19Triangles.html#cb144-37" tabindex="-1"></a>cumout <span class="ot">&lt;-</span> <span class="fu">cbind</span>(forei, forej, cumfore, foretype)</span>
+<span id="cb144-38"><a href="C19Triangles.html#cb144-38" tabindex="-1"></a>CUMOUT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(cumout) </span>
+<span id="cb144-39"><a href="C19Triangles.html#cb144-39" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">xyplot</span>(cumfore <span class="sc">~</span> forej, <span class="at">data =</span> <span class="fu">subset</span>(CUMOUT, foretype <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)), </span>
+<span id="cb144-40"><a href="C19Triangles.html#cb144-40" tabindex="-1"></a>                <span class="at">groups =</span> forei, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb144-41"><a href="C19Triangles.html#cb144-41" tabindex="-1"></a>                <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2500000</span>), <span class="at">xlab =</span> <span class="st">&quot;Periodo de Desarrollo&quot;</span>)</span>
+<span id="cb144-42"><a href="C19Triangles.html#cb144-42" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> <span class="fu">xyplot</span>(cumfore <span class="sc">~</span> forej, <span class="at">data =</span> <span class="fu">subset</span>(CUMOUT, foretype <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>)), </span>
+<span id="cb144-43"><a href="C19Triangles.html#cb144-43" tabindex="-1"></a>                <span class="at">groups =</span> forei, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb144-44"><a href="C19Triangles.html#cb144-44" tabindex="-1"></a>                <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2500000</span>), <span class="at">xlab =</span> <span class="st">&quot;Periodo de Desarrollo&quot;</span>)</span>
+<span id="cb144-45"><a href="C19Triangles.html#cb144-45" tabindex="-1"></a><span class="co"># trellis.device(color = F) </span></span>
+<span id="cb144-46"><a href="C19Triangles.html#cb144-46" tabindex="-1"></a><span class="fu">print</span>(plot1, <span class="at">position =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">more =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb144-47"><a href="C19Triangles.html#cb144-47" tabindex="-1"></a><span class="fu">print</span>(plot2, <span class="at">position =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+</div>
+<hr />
+</div>
+</div>
+<div id="S:Sec193" class="section level2 hasAnchor" number="19.3">
+<h2><span class="header-section-number">19.3</span> Usando Desarrollos Pasados<a href="C19Triangles.html#S:Sec193" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Al igual que con los modelos autorregresivos, se puede usar el historial previo para pronosticar pagos. ¿Qué es el historial previo? En el marco del triángulo de reclamaciones en <a href="C19Triangles.html#Tab191">Tabla 19.1</a>, hay <em>dos</em> dimensiones de tiempo: año de incurrencia y año de desarrollo. La mayoría de los modelos se centran en usar el desarrollo previo (“<span class="math inline">\(j\)</span>”) para realizar pronósticos. Al centrarnos en la experiencia de desarrollo previo, nos permitimos la flexibilidad de modelar pagos acumulativos (<span class="math inline">\(S_{ij}\)</span>) o incrementales (<span class="math inline">\(y_{ij}\)</span>). Como aprendimos en los Capítulos 7 y 8 al estudiar series de tiempo, es útil poder modelar tanto una serie (<span class="math inline">\(S_{ij}\)</span>) como sus cambios (<span class="math inline">\(y_{ij} = S_{ij} - S_{i,j-1}\)</span>).</p>
+<div id="S:Sec1931" class="section level3 hasAnchor" number="19.3.1">
+<h3><span class="header-section-number">19.3.1</span> Modelo de Mack<a href="C19Triangles.html#S:Sec1931" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El modelo propuesto por Mack (1993) especifica los dos primeros momentos condicionales de los pagos acumulativos y utiliza mínimos cuadrados generalizados para ajustar el modelo. Bajo esta especificación estocástica, se producen pronósticos tradicionales de escalera en cadena.</p>
+<p>Específicamente, asumimos</p>
+<p><span class="math display" id="eq:eq194">\[\begin{equation}
+\mathrm{E} \left( S_{i,j} | S_{i,j-1} \right) = \nu_j  S_{i,j-1}
+\tag{19.4}
+\end{equation}\]</span>
+y
+<span class="math display" id="eq:eq195">\[\begin{equation}
+\mathrm{Var} \left( S_{i,j} | S_{i,j-1} \right) = \sigma^2_j S_{i,j-1},
+\tag{19.5}
+\end{equation}\]</span>
+donde <span class="math inline">\(\nu_j\)</span> y <span class="math inline">\(\sigma^2_j\)</span> son parámetros del modelo.</p>
+<p>Los parámetros de media, <span class="math inline">\(\nu_j\)</span>, se determinan a través de mínimos cuadrados generalizados al minimizar la cantidad
+<span class="math display">\[
+Q = \sum_{j=2}^n \sum_{i=1}^{n+1-i}
+\frac{(S_{ij} - \nu_j S_{i,j-1})^2}{\sigma_j^2 S_{i,j-1}}.
+\]</span>
+Tomando derivadas con respecto a los parámetros <span class="math inline">\(\nu_j\)</span> y estableciendo estas igual a cero, se obtiene
+<span class="math display">\[
+\frac{\partial}{\partial \nu_j}Q = \sum_{i=1}^{n+1-i}
+     \frac{(-2) (S_{ij} - \nu_j S_{i,j-1})}{\sigma_j^2 S_{i,j-1}} = 0.
+\]</span>
+La solución de esta ecuación resulta en
+<span class="math display">\[
+\hat{\nu_j}= \frac{\sum_{i=1}^{n+1-i} S_{ij}} {\sum_{i=1}^{n+1-i} S_{i,j-1}},
+\]</span>
+el factor de escalera en cadena. Aquí, el símbolo “hat” o “sombrero” en <span class="math inline">\(\nu_j\)</span> indica que <span class="math inline">\(\hat{\nu_j}\)</span> es un estimador determinado por los datos.</p>
+<p>Con estas estimaciones de parámetros, se puede utilizar la ecuación <a href="C19Triangles.html#eq:eq194">(19.4)</a> para producir valores ajustados que son iguales a las estimaciones de la escalera en cadena. Además, se pueden estimar los parámetros de escala <span class="math inline">\(\sigma^2_j\)</span> y luego usar la ecuación <a href="C19Triangles.html#eq:eq195">(19.5)</a> para cuantificar la incertidumbre de las estimaciones. Consulte a England y Verrall (2002) o Wüthrich y Merz (2008) para obtener detalles sobre la estimación de parámetros de escala.</p>
+<p>La fortaleza y limitación de este modelo es que solo emplea suposiciones sobre los dos primeros momentos condicionales. Es una fortaleza en el sentido de que no necesitamos preocuparnos si la distribución subyacente se acerca a lognormal o Poisson. Por lo tanto, a veces se lo denomina un modelo “no paramétrico”. Es una limitación en el sentido de que las medidas de incertidumbre en la ecuación <a href="C19Triangles.html#eq:eq195">(19.5)</a> están relacionadas con el segundo momento que utiliza una función de pérdida de error cuadrático. Para reclamaciones de seguros, los datos suelen estar sesgados, por lo que la varianza no es una buena medida de escala. Además, en la reserva de pérdidas, queremos saber si las reservas son demasiado altas o demasiado bajas; usar una medida de incertidumbre que solo informe desviaciones absolutas no proporciona al actuario el tipo de información necesaria.</p>
+</div>
+<div id="S:Sec1932" class="section level3 hasAnchor" number="19.3.2">
+<h3><span class="header-section-number">19.3.2</span> Modelos Distribucionales<a href="C19Triangles.html#S:Sec1932" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Se han propuesto en la literatura modelos que complementan las suposiciones de momentos en las ecuaciones <a href="C19Triangles.html#eq:eq194">(19.4)</a> y <a href="C19Triangles.html#eq:eq195">(19.5)</a> con suposiciones distribucionales sobre los pagos.</p>
+<p>Por ejemplo, Verrall propuso usar la binomial negativa como distribución para <span class="math inline">\(\{y_{ij}\}\)</span> con momentos condicionales</p>
+<p><span class="math display">\[
+\mathrm{E} \left( y_{i,j} | S_{i,j-1} \right) = (\nu_j-1) S_{i,j-1}
+\]</span>
+y
+<span class="math display">\[
+\mathrm{Var} \left( y_{i,j} | S_{i,j-1} \right) = \phi \nu_j (\nu_j -1) S_{i,j-1},
+\]</span>
+donde <span class="math inline">\(\phi\)</span> y <span class="math inline">\(\nu_j\)</span> son parámetros del modelo. Note que la suposición de media condicional es la misma que en la ecuación <a href="C19Triangles.html#eq:eq194">(19.4)</a> debido a la relación <span class="math inline">\(\mathrm{E} \left( S_{i,j} | S_{i,j-1} \right) = S_{i,j-1} + \mathrm{E} \left( y_{i,j} | S_{i,j-1} \right)\)</span>. De manera similar, podemos expresar la varianza de los pagos acumulativos como <span class="math inline">\(\mathrm{Var} \left( S_{i,j} | S_{i,j-1} \right) = \mathrm{Var} \left( y_{i,j} | S_{i,j-1} \right)\)</span>. Por lo tanto, la suposición de varianza condicional es como en la ecuación <a href="C19Triangles.html#eq:eq195">(19.5)</a> con parámetros <span class="math inline">\(\sigma^2_j = \phi \nu_j (\nu_j -1)\)</span>. Este modelo puede implementarse fácilmente utilizando software de modelos lineales generalizados especificando el modelo binomial negativo con función de enlace logarítmica
+<span class="math display">\[
+\ln \mu_{ij} = \ln \lambda_j + \ln S_{i,j-1},
+\]</span>
+donde <span class="math inline">\(\mu_{ij} = \mathrm{E} \left( y_{i,j} | S_{i,j-1} \right)\)</span>. Consulte England y Verrall (2002, Sección 7.3) para mayor discusión.</p>
+<p>Otro modelo distribucional, sugerido por England y Verrall (2002, Sección 2.5), consiste en usar los momentos en las ecuaciones <a href="C19Triangles.html#eq:eq194">(19.4)</a> y <a href="C19Triangles.html#eq:eq195">(19.5)</a> pero especificar una distribución normal para los pagos <span class="math inline">\(\{y_{ij} \}\)</span>. Esto puede ser útil como una aproximación al modelo binomial negativo, particularmente en el caso cuando las estimaciones de <span class="math inline">\(\nu_j\)</span> son menores a uno, lo que indica que la varianza condicional está mal especificada.</p>
+<p>Como se enfatizó al comienzo de la Sección <a href="C19Triangles.html#S:Sec192">19.2</a>, las principales fortalezas de los modelos distribucionales son que (1) permiten a los analistas cuantificar la incertidumbre de los pronósticos y (2) proporcionan mecanismos disciplinados para la selección de modelos.</p>
+</div>
+</div>
+<div id="lecturas-adicionales-y-referencias-4" class="section level2 hasAnchor" number="19.4">
+<h2><span class="header-section-number">19.4</span> Lecturas Adicionales y Referencias<a href="C19Triangles.html#lecturas-adicionales-y-referencias-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Dos introducciones extensas a los triángulos de reclamaciones son Taylor (2000) y Wüthrich y Merz (2008). Los actuarios en ejercicio encontrarán útil el artículo de revisión de England y Verrall (2002).</p>
+<p>Cuando hay inestabilidad en los patrones de desarrollo en los primeros años, un método desarrollado por Bornheuetter y Ferguson (1972) puede ser útil, ya que permite al actuario incorporar una evaluación externa de las reclamaciones pagadas definitivas. Al igual que con la escalera en cadena, esta técnica puede expresarse en términos de modelado estocástico mediante modelado bayesiano. Vea, por ejemplo, la discusión de England y Verrall (2002), Wüthrich y Merz (2008) y de Alba (2006).</p>
+<p>Un problema emergente es desarrollar reservas cuando un triángulo está correlacionado con otro. Tal correlación podría esperarse entre líneas de negocio de seguros. Braun (2004) proporciona una introducción a este tema.</p>
+<p>Otra área emergente es desarrollar reservas basadas en patrones de desarrollo de reclamaciones individuales, como se describe en la Sección <a href="C19Triangles.html#S:Sec1911">19.1.1</a>. Antonio et al. (2006) proporciona una introducción a este tema, donde usan modelos lineales mixtos para desarrollar reservas para reclamaciones que han sido reportadas pero aún no liquidadas. Vea también la Sección 14.5 sobre teoría de eventos recurrentes.</p>
+<p><strong>Referencias del Capítulo</strong></p>
+<ul>
+<li>de Alba, Enrique (2006). Claims reserving when there are negative values in the runoff triangle: Bayesian analysis using the three-parameter log-normal distribution. <em>North American Actuarial Journal</em> 10 (3), 45-59.</li>
+<li>Antonio, Katrien, Jan Beirlant, Tom Hoedemakers and Robert Verlaak (2006). Lognormal mixed models for reported claim reserves. <em>North American Actuarial Journal</em> 10 (1), 30-48.</li>
+<li>Bornheuetter, Ronald L. and Ronald E. Ferguson (1972). The actuary and IBNR. <em>Proceedings of the Casualty Actuarial Society</em> 59, 181-195.</li>
+<li>Braun, Christian (2004). The prediction error of the chain ladder method applied to correlated run-off triangles. <em>Astin Bulletin</em> 34 (2), 399-423.</li>
+<li>England, Peter D. and Richard J. Verrall (2002). Stochastic claims reserving in general insurance. <em>British Actuarial Journal</em> 8, 443-544.</li>
+<li>Gamage, Jinadasa, Jed Linfield, Krzysztof Ostaszewski and Steven Siegel (2007). Statistical methods for health actuaries - IBNR estimates: An introduction. Society of Actuaries working paper,
+Society of Actuaries, Schaumburg IL.</li>
+<li>Mack, Thomas (1993). Distribution-free calculation of the standard error of chain-ladder reserve estimates. <em>ASTIN Bulletin</em> 23 (2), 213-225.</li>
+<li>Mack, Thomas (1994). Measuring the variability of chain-ladder reserve estimates. <em>Casualty Actuarial Society</em>, Spring Forum.</li>
+<li>Taylor, Greg (2000). <em>Loss Reserving: An Actuarial Perspective</em>. Kluwer Academic Publishers, Boston.</li>
+<li>Wacek, Michael G. (2007). The path of the ultimate loss ratio estimate. <em>Variance</em> 1(2), 173-192.</li>
+<li>Wüthrich, Mario V. and Michael Merz (2008). <em>Stochastic Claims Reserving Methods in Insurance.</em> Wiley, New York.</li>
+</ul>
+</div>
+<div id="ejercicios-2" class="section level2 hasAnchor" number="19.5">
+<h2><span class="header-section-number">19.5</span> Ejercicios<a href="C19Triangles.html#ejercicios-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>19.1</strong>. Los datos en <a href="C19Triangles.html#Tab195">Tabla 19.5</a> provienen de la edición de 1991 del “Historical Loss Development Study” publicado por la Reinsurance Association of America (página 91). Estos datos se han utilizado ampliamente para ilustrar métodos de triángulo, comenzando con Mack (1994) y posteriormente por England y Verrall (2002). Estos datos provienen de negocios de reaseguro facultativo automático en coberturas de responsabilidad civil general (excluyendo asbesto y medio ambiente). (Bajo una base facultativa, cada riesgo es suscrito por el reasegurador según sus propios méritos). <a href="C19Triangles.html#Tab195">Tabla 19.5</a> reporta pérdidas incurridas incrementales de 1981 a 1990, en miles de dólares estadounidenses.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Comience calculando los factores determinísticos de la cadena en escalera. Note que el elemento en el segundo origen y el séptimo año de desarrollo es negativo. Puede que desee convertir primero los pagos incrementales en pagos acumulativos. Use estos factores para “completar el triángulo.”</p></li>
+<li><p>Utilice su trabajo en la parte (a) para calcular la estimación de la reserva.</p></li>
+<li><p>Elimine la observación en el segundo origen y el séptimo año de desarrollo. Ajuste un modelo lognormal a los datos restantes. Comente sobre la significancia estadística de cada factor y la bondad de ajuste.</p></li>
+<li><p>Ajuste el modelo de Hoerl a los datos de la parte (c). Genere un gráfico de los valores ajustados.</p></li>
+<li><p>Ajuste el modelo de Poisson sobredisperso a los datos de la parte (c). Verifique la proximidad de estos valores ajustados con los valores de la cadena en escalera producidos en la parte (a).</p></li>
+</ol>
+<p><a id=Tab195></a></p>
+<p><span id="Tab195">Tabla 19.5</span>. <strong>Estudio de Desarrollo de Pérdidas (1991) Reaseguro Facultativo</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{crrrrrrrrrr}
+\hline
+\text{Año} &amp;          1 &amp;          2 &amp;          3 &amp;          4 &amp;          5 &amp;          6 &amp;          7 &amp;          8 &amp;          9 &amp;         10 \\
+\hline         1 &amp;      5,012 &amp;      3,257 &amp;      2,638 &amp;        898 &amp;      1,734 &amp;      2,642 &amp;      1,828 &amp;        599 &amp;         54 &amp;        172 \\
+         2 &amp;        106 &amp;      4,179 &amp;      1,111 &amp;      5,270 &amp;      3,116 &amp;      1,817 &amp;       -103 &amp;        673 &amp;        535 &amp;            \\
+         3 &amp;      3,410 &amp;      5,582 &amp;      4,881 &amp;      2,268 &amp;      2,594 &amp;      3,479 &amp;        649 &amp;        603 &amp;            &amp;            \\
+         4 &amp;      5,655 &amp;      5,900 &amp;      4,211 &amp;      5,500 &amp;      2,159 &amp;      2,658 &amp;        984 &amp;            &amp;            &amp;            \\
+         5 &amp;      1,092 &amp;      8,473 &amp;      6,271 &amp;      6,333 &amp;      3,786 &amp;        225 &amp;            &amp;            &amp;            &amp;            \\
+         6 &amp;      1,513 &amp;      4,932 &amp;      5,257 &amp;      1,233 &amp;      2,917 &amp;            &amp;            &amp;            &amp;            &amp;            \\
+         7 &amp;        557 &amp;      3,463 &amp;      6,926 &amp;      1,368 &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            \\
+         8 &amp;      1,351 &amp;      5,596 &amp;      6,165 &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            \\
+         9 &amp;      3,133 &amp;      2,262 &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            \\
+        10 &amp;      2,063 &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            \\
+\hline
+\end{array}
+}
+\]</span></p>
+<p><strong>19.2</strong>. Los datos en <a href="C19Triangles.html#Tab196">Tabla 19.6</a> son un extracto de Braun (2004) basado en la edición de 2001 del “Historical Loss Development Study” publicado por la Reinsurance Association of America. Los datos más amplios (disponibles en el archivo “ReinsGL2004”) contienen datos de los años 1987-2000, inclusive.</p>
+<p>Repita las partes (a)-(e) del Ejercicio 19.1 para estos datos.</p>
+<p><a id=Tab196></a></p>
+<p><span id="Tab196">Tabla 19.6</span>. <strong>Reaseguro de Responsabilidad General</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{lrrrrrr}
+\hline
+\text{Año} &amp;          1 &amp;          2 &amp;          3 &amp;          4 &amp;          5 &amp;          6           \\
+\hline
+      1995 &amp;     97,518 &amp;    343,218 &amp;    575,441 &amp;    769,017 &amp;    934,103 &amp;   1,019,303           \\
+      1996 &amp;    173,686 &amp;    459,416 &amp;    722,336 &amp;    955,335 &amp;   1,141,750 &amp;                      \\
+      1997 &amp;    139,821 &amp;    436,958 &amp;    809,926 &amp;   1,174,196 &amp;            &amp;                      \\
+      1998 &amp;    154,965 &amp;    528,080 &amp;   1,032,684 &amp;            &amp;            &amp;                      \\
+      1999 &amp;    196,124 &amp;    772,971 &amp;            &amp;            &amp;            &amp;                      \\
+      2000 &amp;    204,325 &amp;            &amp;            &amp;            &amp;            &amp;                      \\
+\hline
+\end{array}
+}
+\]</span></p>
+<p><strong>19.3</strong>. Los datos en <a href="C19Triangles.html#Tab197">Tabla 19.7</a> provienen de Wacek (2007). Los datos representan agregados de la industria para coberturas de responsabilidad civil y médicas de automóviles particulares del año 2004, en millones de dólares. Están basados en los estados anuales de las compañías de seguros, específicamente, en el Anexo P, Parte 3B. Los elementos del triángulo representan pagos netos acumulados, incluidos los gastos de defensa y contención de costos.</p>
+<p>Repita las partes (a)-(e) del Ejercicio 19.1 para estos datos.</p>
+<p><a id=Tab197></a></p>
+<p><span id="Tab197">Tabla 19.7</span>. <strong>2004 Agregados de la Industria de Seguros de los EE. UU. para Responsabilidad Civil y Médica de Automóviles Particulares</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{rrrrrrrrrrr}
+\hline
+\text{Año} &amp;          1 &amp;          2 &amp;          3 &amp;          4 &amp;          5 &amp;          6 &amp;          7 &amp;          8 &amp;          9 &amp;         10 \\
+\hline
+      1995 &amp;     17,674 &amp;     32,062 &amp;     38,619 &amp;     42,035 &amp;     43,829 &amp;     44,723 &amp;     45,162 &amp;     45,375 &amp;     45,483 &amp;     45,540 \\
+      1996 &amp;     18,315 &amp;     32,791 &amp;     39,271 &amp;     42,933 &amp;     44,950 &amp;     45,917 &amp;     46,392 &amp;     46,600 &amp;     46,753 &amp;            \\
+      1997 &amp;     18,606 &amp;     32,942 &amp;     39,634 &amp;     43,411 &amp;     45,428 &amp;     46,357 &amp;     46,681 &amp;     46,921 &amp;            &amp;            \\
+      1998 &amp;     18,816 &amp;     33,667 &amp;     40,575 &amp;     44,446 &amp;     46,476 &amp;     47,350 &amp;     47,809 &amp;            &amp;            &amp;            \\
+      1999 &amp;     20,649 &amp;     36,515 &amp;     43,724 &amp;     47,684 &amp;     49,753 &amp;     50,716 &amp;            &amp;            &amp;            &amp;            \\
+      2000 &amp;     22,327 &amp;     39,312 &amp;     46,848 &amp;     51,065 &amp;     53,242 &amp;            &amp;            &amp;            &amp;            &amp;            \\
+      2001 &amp;     23,141 &amp;     40,527 &amp;     48,284 &amp;     52,661 &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            \\
+      2002 &amp;     24,301 &amp;     42,168 &amp;     50,356 &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            \\
+      2003 &amp;     24,210 &amp;     41,640 &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            \\
+      2004 &amp;     24,468 &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            &amp;            \\
+\hline
+\end{array}
+}
+\]</span></p>
+<p><strong>19.4</strong>. Los datos en <a href="C19Triangles.html#Tab198">Tabla 19.8</a> provienen de Gamage et al. (2007). Estos datos corresponden a 36 meses de pagos de atención médica, desde enero de 2001 hasta diciembre de 2003, inclusive. Estos son pagos por cobertura médica sin deducible ni coseguro. Los copagos eran relativamente bajos, como $10 por visita al consultorio. Los pagos excluyen medicamentos recetados, que generalmente tienen un patrón de pago más corto en comparación con otras reclamaciones médicas.</p>
+<p>Repita las partes (a)-(e) del Ejercicio 19.1 para estos datos.</p>
+<p><a id=Tab198></a></p>
+<p><span id="Tab198">Tabla 19.8</span>. <strong>Pagos Mensuales de Atención Médica, 2001-2003</strong></p>
+<div class="mathjax-tiny">
+<p><span class="math display">\[
+\begin{array}{lrcrrrrrrrrrrrrr}
+\hline
+\text{Fecha} &amp;    \text{Miembros} &amp;     \text{ Mes} &amp;          1 &amp;          2 &amp;          3 &amp;          4 &amp;          5 &amp;          6 &amp;          7 &amp;          8 &amp;          9 &amp;         10 &amp;         11 &amp;         12 &amp;         13 \\
+\hline
+    Ene-01 &amp;     11,154 &amp;          1 &amp;        180 &amp;    436,082 &amp;    933,353 &amp;    116,978 &amp;     42,681 &amp;     41,459 &amp;      5,088 &amp;     22,566 &amp;      4,751 &amp;      3,281 &amp;       -188 &amp;      1,464 &amp;      1,697 \\
+    Feb-01 &amp;     11,118 &amp;          2 &amp;      5,162 &amp;    940,722 &amp;    561,967 &amp;     21,694 &amp;    171,659 &amp;     11,008 &amp;     19,088 &amp;      5,213 &amp;      4,337 &amp;      7,844 &amp;      2,973 &amp;      4,061 &amp;     10,236 \\
+    Mar-01 &amp;     11,070 &amp;          3 &amp;     42,263 &amp;    844,293 &amp;    720,302 &amp;     94,634 &amp;    182,077 &amp;     32,216 &amp;     12,937 &amp;     22,815 &amp;      1,754 &amp;      4,695 &amp;      1,326 &amp;        758 &amp;      2,177 \\
+    Abr-01 &amp;     11,069 &amp;          4 &amp;     20,781 &amp;    762,302 &amp;    394,625 &amp;     78,043 &amp;    157,950 &amp;     46,173 &amp;    126,254 &amp;      4,839 &amp;        337 &amp;      1,573 &amp;      9,573 &amp;      1,947 &amp;      5,937 \\
+    May-01 &amp;     11,130 &amp;          5 &amp;     20,346 &amp;    772,404 &amp;    392,330 &amp;    315,888 &amp;     39,197 &amp;     21,360 &amp;      8,721 &amp;      5,452 &amp;     16,627 &amp;      2,118 &amp;      4,119 &amp;      5,666 &amp;     -1,977 \\
+    Jun-01 &amp;     11,174 &amp;          6 &amp;     20,491 &amp;    831,793 &amp;    738,087 &amp;     65,526 &amp;     27,768 &amp;     12,185 &amp;      1,493 &amp;     11,265 &amp;      1,805 &amp;     29,278 &amp;     13,020 &amp;      2,967 &amp;        -83 \\
+    Jul-01 &amp;     11,180 &amp;          7 &amp;     37,954 &amp;  1,126,675 &amp;    360,514 &amp;     89,317 &amp;     40,126 &amp;     16,576 &amp;     16,701 &amp;      2,444 &amp;      8,266 &amp;     11,310 &amp;      8,006 &amp;      1,403 &amp;      3,124 \\
+    Ago-01 &amp;     11,420 &amp;          8 &amp;    138,558 &amp;    806,362 &amp;    589,304 &amp;    273,117 &amp;     36,912 &amp;     16,831 &amp;     19,941 &amp;     13,310 &amp;      8,619 &amp;      4,679 &amp;      3,094 &amp;      4,609 &amp;        236 \\
+    Sep-01 &amp;     11,400 &amp;          9 &amp;     28,332 &amp;    954,543 &amp;    246,571 &amp;    205,528 &amp;     60,060 &amp;     15,198 &amp;     42,208 &amp;     17,568 &amp;      1,686 &amp;      9,897 &amp;      3,367 &amp;      2,062 &amp;        421 \\
+    Oct-01 &amp;     11,456 &amp;         10 &amp;    104,160 &amp;    704,796 &amp;    565,939 &amp;    323,789 &amp;     45,307 &amp;     32,518 &amp;     26,227 &amp;      7,976 &amp;      3,364 &amp;        992 &amp;     33,963 &amp;      2,200 &amp;      1,293 \\
+    Nov-01 &amp;     11,444 &amp;         11 &amp;     40,747 &amp;    927,158 &amp;    425,794 &amp;    146,145 &amp;     66,663 &amp;     31,214 &amp;     12,808 &amp;     15,859 &amp;        374 &amp;      3,079 &amp;        412 &amp;        937 &amp;      1,875 \\
+    Dic-01 &amp;     11,555 &amp;         12 &amp;     10,861 &amp;    847,338 &amp;    272,165 &amp;    134,798 &amp;     71,804 &amp;     27,800 &amp;     17,917 &amp;      3,930 &amp;      2,794 &amp;        846 &amp;      1,962 &amp;      1,879 &amp;     16,060 \\
+\hline
+\end{array}
+\]</span></p>
+</div>
+
+<!-- # Chap 1 -->
+<!-- # Chap 2 -->
+<!-- # Chap 3 -->
+<!-- # Chap 4 -->
+<!-- # Chap 5 -->
+<!-- # Chap 6 -->
+<!-- # Chap 7 -->
+<!-- # Chap 8 -->
+<!-- # Chap 9 -->
+<!-- # Chap 10 -->
+<!-- # Chap 11 -->
+<!-- # Chap 12 -->
+<!-- # Chap 13 -->
+<!-- # Chap 14 -->
+<!-- # Chap 15 -->
+<!-- # Chap 16 -->
+<!-- # Chap 17 -->
+<!-- # Chap 18 -->
+<!-- # Chap 19 -->
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="C18Cred.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="C20Report.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
