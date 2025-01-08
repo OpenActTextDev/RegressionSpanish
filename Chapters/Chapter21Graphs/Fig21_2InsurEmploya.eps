@@ -10,32 +10,50 @@
 %%BoundingBox: 0 0 288 288
 %%EndComments
 %%BeginProlog
-/bp  { gs gs } def
+/bp  { gs sRGB gs } def
 % begin .ps.prolog
-/gs  { gsave } def
-/gr  { grestore } def
-/ep  { showpage gr gr } def
-/m   { moveto } def
-/l  { rlineto } def
-/np  { newpath } def
-/cp  { closepath } def
-/f   { fill } def
-/o   { stroke } def
-/c   { newpath 0 360 arc } def
-/r   { 4 2 roll moveto 1 copy 3 -1 roll exch 0 exch rlineto 0 rlineto -1 mul 0 exch rlineto closepath } def
-/p1  { stroke } def
-/p2  { gsave bg fill grestore newpath } def
-/p3  { gsave bg fill grestore stroke } def
-/t   { 6 -2 roll moveto gsave rotate
-       ps mul neg 0 2 1 roll rmoveto
+/gs  { gsave } bind def
+/gr  { grestore } bind def
+/ep  { showpage gr gr } bind def
+/m   { moveto } bind def
+/l  { rlineto } bind def
+/np  { newpath } bind def
+/cp  { closepath } bind def
+/f   { fill } bind def
+/o   { stroke } bind def
+/c   { newpath 0 360 arc } bind def
+/r   { 4 2 roll moveto 1 copy 3 -1 roll exch 0 exch rlineto 0 rlineto -1 mul 0 exch rlineto closepath } bind def
+/p1  { stroke } bind def
+/p2  { gsave bg fill grestore newpath } bind def
+/p3  { gsave bg fill grestore stroke } bind def
+/p6  { gsave bg eofill grestore newpath } bind def
+/p7  { gsave bg eofill grestore stroke } bind def
+/t   { 5 -2 roll moveto gsave rotate
        1 index stringwidth pop
-       mul neg 0 rmoveto show grestore } def
+       mul neg 0 rmoveto show grestore } bind def
+/ta  { 4 -2 roll moveto gsave rotate show } bind def
+/tb  { 2 -1 roll 0 rmoveto show } bind def
 /cl  { grestore gsave newpath 3 index 3 index moveto 1 index
        4 -1 roll lineto  exch 1 index lineto lineto
-       closepath clip newpath } def
-/rgb { setrgbcolor } def
-/s   { scalefont setfont } def
+       closepath clip newpath } bind def
+/rgb { setrgbcolor } bind def
+/s   { scalefont setfont } bind def
 % end   .ps.prolog
+/sRGB { [ /CIEBasedABC
+          << /DecodeLMN
+               [ { dup 0.03928 le
+                        {12.92321 div}
+                        {0.055 add 1.055 div 2.4 exp }
+                     ifelse
+                 } bind dup dup
+               ]
+             /MatrixLMN [0.412457 0.212673 0.019334
+                         0.357576 0.715152 0.119192
+                         0.180437 0.072175 0.950301]
+             /WhitePoint [0.9505 1.0 1.0890]
+           >>
+         ] setcolorspace } bind def
+/srgb { setcolor } bind def
 % begin encoding
 /WinAnsiEncoding [
  /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef /.notdef
@@ -115,9 +133,10 @@ dup length dict begin
 %%EndProlog
 %%Page: 1 1
 bp
+/bg { 1 1 1 srgb } def
+0.00 0.00 288.00 288.00 r p2
 58.03 76.75 269.28 241.20 cl
-58.03 76.75 269.28 241.20 cl
-0 setgray
+0 0 0 srgb
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -172,7 +191,7 @@ np
 4.35 -2.72 l
 o
 0.00 0.00 288.00 288.00 cl
-0 setgray
+0 0 0 srgb
 0.75 setlinewidth
 [] 0 setdash
 1 setlinecap
@@ -202,10 +221,10 @@ np
 248.42 76.75 m
 0 -9.36 l
 o
-/ps 16 def /Font1 findfont 16 s
-74.55 43.06 (1950) .5 0 0 t
-161.48 43.06 (1970) .5 0 0 t
-248.42 43.06 (1990) .5 0 0 t
+/Font1 findfont 16 s
+74.55 43.06 (1950) .5 0 t
+161.48 43.06 (1970) .5 0 t
+248.42 43.06 (1990) .5 0 t
 np
 58.03 82.84 m
 0 142.75 l
@@ -226,26 +245,29 @@ np
 58.03 225.59 m
 -9.36 0 l
 o
-39.31 77.10 (0.0) 1 0 0 t
-39.31 124.68 (0.5) 1 0 0 t
-39.31 172.27 (1.0) 1 0 0 t
-39.31 219.85 (1.5) 1 0 0 t
+39.31 77.10 (0.0) 1 0 t
+39.31 124.68 (0.5) 1 0 t
+39.31 172.27 (1.0) 1 0 t
+39.31 219.85 (1.5) 1 0 t
 np
-58.03 76.75 m
+ 58.03 76.75 m
 211.25 0 l
 0 164.45 l
 -211.25 0 l
-0 -164.45 l
-o
+cp p1
 0.00 0.00 288.00 288.00 cl
-/ps 16 def /Font1 findfont 16 s
-0 setgray
-163.66 5.62 (Year) .5 0 0 t
+/Font1 findfont 16 s
+0 0 0 srgb
+146.76 5.62 (Y) 0 ta
+-2.240 (ear) tb gr
 0.00 0.00 288.00 288.00 cl
-/ps 14 def /Font1 findfont 14 s
-0 setgray
-58.03 260.61 (Insurance ) 0.70 0 0 t
-58.03 243.33 ( Employees) 0.70 0 0 t
+/Font1 findfont 14 s
+0 0 0 srgb
+12.28 260.61 (Insur) 0 ta
+-0.140 (ance ) tb gr
+6.84 243.33 ( Emplo) 0 ta
+-0.420 (y) tb
+-0.280 (ees) tb gr
 ep
 %%Trailer
 %%Pages: 1

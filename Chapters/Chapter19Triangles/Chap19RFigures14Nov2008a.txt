@@ -1,0 +1,150 @@
+#  FILENAME IS Chap19RFigures14Nov2008.txt ;
+
+setwd("c://BOOK3//CUPBook//Chapter19Triangles")
+#setwd("e://CUPBook//Chapter19Triangles")
+#setwd("R://BOOK3//CUPBook//Chapter19Triangles")
+library(HH)
+
+#  READ IN DATA
+SingInjury = read.csv(choose.files(),header=TRUE)
+SingInjuryA = subset(SingInjury, Payment != 0 )
+fix(SingInjuryA)
+str(SingInjuryA)
+attach(SingInjuryA)
+lnPayment = log(Payment)
+
+#  FIGURE 19.2 - Payments
+boxplot(Payment ~ Delay,xlab="Development Period",yaxt="n")
+axis(2,at=seq(0, 800000,200000),
+    labels=c("0","200,000","400,000","600,000","800,000"))
+trellis.device(color=F) # telling the trellis device to mimic 'black and white'
+xyplot(Payment~Delay, groups=Year, type="b", pch=16, lty=1, ylab="",
+     xlab="Development Period", scales=
+list(y=list(at=seq(0, 600000,200000),
+    labels=c("0","200,000","400,000","600,000"))))
+export.eps("F19PaymentMTimeSeries.eps", width=5.2,height=5)
+dev.off()
+
+#  FIGURE 19.2 - Log Payments
+boxplot(lnPayment ~ Delay,xlab="Development Period", cex.label=3)
+export.eps("F19PaymentBoxPlotLog.eps", width=5,height=5.5)
+dev.off()
+
+trellis.device(color=F) # telling the trellis device to mimic 'black and white'
+xyplot(lnPayment~Delay, groups=Year, type="b", pch=16, lty=1, ylab="",
+     xlab="Development Period")
+export.eps("F19PaymentMTimeSeriesLog.eps", width=5.2,height=5)
+dev.off()
+
+#  FITTED VALUES FOR LOGNORMAL MODEL
+model1<-lm(lnPayment ~ factor(Year)+factor(Delay) )
+beta = coefficients(model1)
+forecast=rep(0,81);forei=forecast;forej=forecast
+for(i in 1:9){
+for(j in 1:9){
+xij = c(1, rep(0,16))
+if(i>1){xij[i]=1}
+if(j>1){xij[8+j]=1}
+foreij = xij %*% beta
+forecast[9*(i-1)+j]=exp(foreij)
+forei[9*(i-1)+j]=i
+forej[9*(i-1)+j]=j
+}}
+forecast;forei;forej
+trellis.device(color=F) 
+xyplot(forecast~forej, groups=forei, type="b", pch=16, lty=1, ylab="",
+     xlab="Development Period", scales=
+list(y=list(at=seq(0, 600000,200000),
+    labels=c("0","200,000","400,000","600,000"))))
+export.eps("F19PaymentFittedValues.eps", width=5.2,height=5)
+dev.off()
+
+#  FITTED VALUES FOR REDUCED FORM OF HOERL CURVE
+model3<-lm(lnPayment ~ factor(Year)+log(Delay)+Delay )
+beta = coefficients(model3)
+forecast=rep(0,81);forei=forecast;forej=forecast
+for(i in 1:9){
+for(j in 1:9) {
+xij = c(1, rep(0,8),log(j),j)
+if(i>1){xij[i]<-1}
+foreij = xij %*% beta
+forecast[9*(i-1)+j]=exp(foreij)
+forei[9*(i-1)+j]=i
+forej[9*(i-1)+j]=j
+}}
+trellis.device(color=F) 
+xyplot(forecast~forej, groups=forei, type="b", pch=16, lty=1, ylab="",
+     xlab="Development Period", scales=
+list(y=list(at=seq(0, 600000,200000),
+    labels=c("0","200,000","400,000","600,000"))))
+export.eps("F19HoerlFittedValues.eps", width=5.2,height=5)
+dev.off()
+
+# FITTED VALUES FOR POISSON MODEL
+model4<-glm(Payment ~ factor(Year)+factor(Delay),
+  data=SingInjuryA,poisson(link="log") )
+beta = coefficients(model4)
+forecast=rep(0,81);forei=forecast;forej=forecast
+for(i in 1:9){
+for(j in 1:9){
+xij = c(1, rep(0,16))
+if(i>1){xij[i]=1}
+if(j>1){xij[8+j]=1}
+foreij = xij %*% beta
+forecast[9*(i-1)+j]=exp(foreij)
+forei[9*(i-1)+j]=i
+forej[9*(i-1)+j]=j
+}}
+foreout=cbind(forei,forej,forecast)
+trellis.device(color=F) 
+xyplot(forecast~forej, groups=forei, type="b", pch=16, lty=1, ylab="",
+     xlab="Development Period", scales=
+list(y=list(at=seq(0, 600000,200000),
+    labels=c("0","200,000","400,000","600,000"))))
+
+#  CUMULATIVE PAYMENTS
+# sort by Year and Delay
+SingInjuryB <- data.frame(SingInjury)  
+newdata <- SingInjuryB[order(SingInjury$Year, SingInjury$Delay),]
+cumpay=rep(0,81)
+counter=0
+for(i in 1:9){
+counter=counter+1
+cumpay[9*(i-1)+1]=newdata$Payment[counter]
+for(j in 2:9){
+if(i<=10-j){
+counter=counter+1
+cumpay[9*(i-1)+j]=cumpay[9*(i-1)+j-1]+newdata$Payment[counter]}
+}}
+cumout=cbind(forei,forej,cumpay);cumout
+
+
+#  FORECASTS OF CUMULATIVE PAYMENTS
+cumfore=cumpay
+foretype=rep(0,81)
+for(i in 1:9){
+for(j in 2:9){
+if(i>10-j){cumfore[9*(i-1)+j]=cumfore[9*(i-1)+j-1]+forecast[9*(i-1)+j]
+foretype[9*(i-1)+j]=1}
+if(i==10-j){foretype[9*(i-1)+j]=2}
+}}
+foretype[9*(9-1)+1]=2
+cumout=cbind(forei,forej,cumfore,foretype)
+
+CUMOUT <- data.frame(cumout) 
+
+plot1 <- xyplot(cumfore~forej, data = subset(CUMOUT, foretype %in% c(1,2)), 
+     groups=forei, type="b", pch=1, lty=1, ylab="", xlim=c(0,10),
+     ylim=c(0,2500000), xlab="Development Period")
+plot2 <- xyplot(cumfore~forej, data = subset(CUMOUT, foretype %in% c(0,2)), 
+     groups=forei, type="b", pch=16, lty=1, ylab="", xlim=c(0,10),
+     ylim=c(0,2500000), xlab="Development Period")
+dev.off()
+trellis.device(color=F) 
+print(plot1, position=c(0, 0, 1,1), more=TRUE)
+print(plot2, position=c(0, 0, 1,1) )
+export.eps("F19PoissonCumForecasts.eps", width=5.2,height=5)
+dev.off()
+
+
+

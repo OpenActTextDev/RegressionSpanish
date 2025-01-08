@@ -1,0 +1,165 @@
+## FILENAME IS Chap9RFigures.txt 
+library(HH)
+setwd("c://BOOK3//CUPBook//Chapter9Forecasting")
+#setwd("R://BOOK3//CUPBook//Chapter9Forecasting")
+
+#  FIGURE 9.1
+#  Input filename is Chapter9Figures1&2data.csv;
+
+#MCPIData = read.table(choose.files(),  quote = "",header=TRUE)
+
+MCPIData = read.csv(choose.files(),  quote = "",header=TRUE)
+names(MCPIData)
+YEAR=MCPIData$YEAR
+MCPI=MCPIData$PerMEDCPI
+MCPIS4=MCPIData$MCPISM4
+MCPIS8=MCPIData$MCPISM8
+MCPIES2=MCPIData$MCPISMw.2
+MCPIES8=MCPIData$MCPISMw.8
+
+
+par(mfrow=c(2, 1), mar=c(3.5,3,1.1,.2), cex=1.1)
+plot(YEAR,MCPI, type="l", lty=3,  xlab="", las=1, ylab="")
+lines(YEAR,MCPIS4, type="l")
+mtext("MCPI", side=2, at=245, las=1, cex=1.1, adj=1.1)
+
+par(mar=c(4.1,3,.5,.2))
+plot(YEAR,MCPI, type="l", lty=3, las=1, ylab="",xlab="Year", cex.lab=1.2)
+lines(YEAR,MCPIS8, type="l")
+mtext("MCPI", side=2, at=245, las=1, cex=1.1, adj=1.1)
+
+export.eps("MCPISmooth.eps", width=6,height=4)
+dev.off()
+
+#  FIGURE 9.2
+par(mfrow=c(2, 1), mar=c(3.5,3,1.1,.2), cex=1.1)
+plot(YEAR,MCPI, type="l", lty=3,  xlab="", ylab="", las=1)
+lines(YEAR,MCPIES2, type="l")
+mtext("MCPI", side=2, at=245, las=1, cex=1.1, adj=1.1)
+
+par(mar=c(4.1,3,.5,.2))
+plot(YEAR,MCPI, type="l", lty=3 , las=1, ylab="",xlab="Year", cex.lab=1.2)
+lines(YEAR,MCPIES8, type="l")
+mtext("MCPI", side=2, at=245, las=1, cex=1.3, adj=1.1)
+export.eps("MCPIESmooth.eps", width=6,height=4)
+dev.off()
+
+
+# Figure 9.3
+# Input filename is Chapter9Figure3data.txt;
+
+smooth = read.table(choose.files(),  quote = "",header=TRUE)
+
+par(cex=1.3,mar=c(4,3,1.3,.2))
+plot(smooth$w, smooth$SS, type="o", pch=20, ylim=c(50,70),    
+   xlim=c(0,.9), las=1,ylab="SS", xlab="w")
+mtext("SS", side=2, at=72, las=1, cex=1.3, adj=0.8)
+export.eps("SSPE.eps", width=5,height=4)
+dev.off()
+
+
+# Figure 9.4
+# Input filename is Chapter9Figure4&5data.txt;
+
+
+trig = read.table(choose.files(),  quote = "",header=TRUE)
+attach(trig)
+
+par(cex=1.1,mar=c(2.2,2,.4,.8))
+plot(TIME, g2.t., type="l", ylim=c(-6,6), xlim=c(0,120), las=1, yaxs="i",ylab="", xlab="",xaxs="i")
+par(new=TRUE)
+plot(TIME, g1.t., type="l", lty=4, ylim=c(-6,6), xlim=c(0,120), las=1, yaxs="i",ylab="", xlab="",xaxs="i")
+abline(h=0, col="grey")
+legend(35,5.995, lty=1, "g1(t)", bty="n", cex=.9)
+legend(65,5.995, lty=4, "g2(t)", bty="n", cex=.9)
+export.eps("TrigFctb.eps", width=8,height=4)
+dev.off()
+
+# Figure 9.5
+# Input filename is  Chapter9Figure4&5data.txt;
+
+par(cex=1.1,mar=c(2.2,2,.4,.8))
+plot(TIME, sum, type="o", pch=20, ylim=c(-7,6), xlim=c(0,120), las=1, yaxs="i",ylab="", xlab="",yaxt="n",xaxs="i")
+axis(2, at=seq(-6,6,2),las=1)
+abline(h=0, col="grey")
+export.eps("TrigFctSum.eps", width=8,height=4)
+dev.off()
+
+detach(trig)
+
+
+# Figure 9.6
+# Input filename is  Chapter9Figure6&7data.txt;
+
+drug = read.table(choose.files(),  quote = "",header=TRUE)
+attach(drug)
+
+par(cex=1.3,mar=c(4.1,2.6,.6,.2))
+plot(YEAR, COST, type="o",pch=20, las=1,ylab="", xlab="Year", ylim=c(12,33))
+mtext("Cost", side=2, las=1, at=34, cex=1.3, adj=1.2)
+#abline(h=seq(15,30,5), col="grey")
+export.eps("NJPrescTS.eps", width=6,height=4)
+dev.off()
+
+# Figure 9.7
+# Input filename is Chapter9Figure6&7data.txt;
+
+par(cex=1.1,mar=c(4.1,2.3,2.1,.2))
+plot(YEAR, RATEC, type="o",pch=20, las=1,ylab="", xlab="Year",ylim=c(-4,6))
+mtext("Percent Increase", side=2, las=1, at=7, cex=1.1, adj=0.3)
+abline(h=0, col="grey")
+export.eps("NJPrescPChangeTS.eps", width=6,height=4)
+dev.off()
+detach(drug)
+
+# Figure 9.8
+# Input filename is Chapter9Figure8&9data.txt;
+
+regress = read.table(choose.files(),  quote = "",header=TRUE)
+attach(regress)
+
+par(cex=1.1,mar=c(4.1,2.3,2.3,.2))
+plot(YEAR, RATEC, type="l",las=1,ylab="", xlab="Year",ylim=c(-4,6))
+mtext("Percent Increase", side=2, las=1, at=7.5, cex=1.1, adj=.3)
+par(new=TRUE)
+plot(YEAR, FITS, type="l",las=1,ylab="", xlab="",ylim=c(-4,6),lwd=2)
+abline(h=0, col="grey")
+export.eps("NJPrescSeason.eps", width=6,height=4)
+dev.off()
+
+# Figure 9.9
+# Input filename is  Chapter9Figure8&9data.txt;
+
+par(cex=1.3,mar=c(4.1,2.3,1.6,.2))
+plot(YEAR, COST, type="o", pch=1,las=1,ylab="", xlab="Year",
+      ylim=c(10,35),yaxs="i")
+mtext("Cost Per Claim", side=2, las=1, at=36.5, cex=1.25, adj=.16)
+par(new=TRUE)
+plot(YEAR, FITCCLAIM, type="o",pch=20,las=1,ylab="", xlab="",
+      ylim=c(10,35), yaxs="i")
+text(1990.2, 31, "Fitted Values", cex=.9)
+arrows(1990.65, 30.95, 1991.4,30, length =.15)
+
+#legend(1990.5,14, pch=19, lty=1, col="grey45", "Fitted Values", cex=.8, bty="n")
+#abline(h=seq(15,30,5), col="grey")
+export.eps("NJPrescFits.eps", width=6,height=4)
+dev.off()
+detach(regress)
+
+
+# Figure 9.10
+# Input filename is Chapter9Figure10data.txt;
+
+returns = read.table(choose.files(),  quote = "",header=TRUE)
+attach(returns)
+
+postscript("Fig9_10.ps")
+
+par(cex=1.3,mar=c(4.1,3.3,1.8,1))
+plot(time, vwretd, type="l", las=1,ylab="", xlab="Year",ylim=c(-.06,.06),yaxs="i", xaxt="n", xlim=c(0,1750), xaxs="i")
+mtext("Daily Returns", side=2, las=1, at=.067, cex=1.3, adj=.6)
+axis(1, at=seq(0,1750,250), labels=c("2000","2001", "2002", "2003","2004","2005","2006","2007"))
+abline(h=0, col="grey")
+export.eps("xxx.eps", width=6,height=4)
+dev.off()
+detach(returns)

@@ -24,9 +24,9 @@
 
 <!-- # Chap 13 -->
 
-# Chap 14
+<!-- # Chap 14 -->
 
-# Chap 15
+<!-- # Chap 15 -->
 
 
 
@@ -59,9 +59,10 @@ The two-part aspect can be obscured by a natural way of recording data; enter th
 ```{r Fig161, fig.cap='(ref:Fig161)', echo=FALSE,  out.width = "60%"}
 
 #  FIGURE 16,1 and 6.3
-pointsxy<-matrix(c(5,0,9,0,18,0,30,0,34,0,40,0,47,0,50,0,60,0,68,0,80,0,40,20,50,50,55,46,60,80,80,74,74,80,38,
-    29,78,30,90,93,81,62,68,45,48,72,64,46,82,55,23,38),ncol=2,byrow=TRUE)
-
+pointsxy<-matrix(c(5,0,9,0,18,0,30,0,34,0,40,0,47,0,
+                   50,0,60,0,68,0,80,0,40,20,50,50,55,46,60,80,
+                   80,74,74,80,38, 29,78,30,90,93,81,62,68,45,48,72,
+                   64,46,82,55,23,38),ncol=2,byrow=TRUE)
 
 par(mar=c(4.1,3,.2,.2))
 plot(pointsxy,type="p",pch=16,cex=2,xlim=c(0,100),
@@ -85,7 +86,7 @@ $$
 y_i^{\ast} = \mathbf{x}_i^{\prime} \boldsymbol{\beta} + \varepsilon_i.
 (\#eq:eq161)
 $$
-The responses are censored or "limited" in the sense that we observe $y_i = \max \left( y_i^{\ast},d_i\right)$. The limiting value, $d_i$, is a known amount. Many applications use $d_i=0$, corresponding to zero sales or expenses, depending on the application. However, we also might use $d_i$ for the daily expenses claimed for travel reimbursement and allow the reimbursement (such as \$50 or \$100) to vary by employee $i$. Some readers may wish to review Section 14.2 for an introduction to censoring.
+The responses are censored or "limited" in the sense that we observe $y_i = \max \left( y_i^{\ast},d_i\right)$. The limiting value, $d_i$, is a known amount. Many applications use $d_i=0$, corresponding to zero sales or expenses, depending on the application. However, we also might use $d_i$ for the daily expenses claimed for travel reimbursement and allow the reimbursement (such as 50 or 100) to vary by employee $i$. Some readers may wish to review Section 14.2 for an introduction to censoring.
 
 The model parameters consist of the regression coefficients, $\boldsymbol{\beta}$, and the variability term, $\sigma^2 = \mathrm{Var}~\varepsilon_i$. With equation \@ref(eq:eq161), we interpret the regression coefficients as the marginal change of $\mathrm{E~}y^{\ast}$ per unit change in each explanatory variable. This may be satisfactory in some applications, such as when $y^{\ast}$ represents an insurance loss. However, for most applications, users are typically interested in marginal changes in $\mathrm{E~}y$, that is, the expected value of the *observed* response.
 
@@ -98,7 +99,7 @@ where
 $$
 \lambda_i = \frac{\mathrm{\phi}\left( \left(\mathbf{x}_i^{\prime} \boldsymbol{\beta} - d_i\right)/\sigma \right)}{\Phi\left( \left(\mathbf{x}_i^{\prime} \boldsymbol{\beta} - d_i\right)/\sigma \right)}.
 $$
-Here, $\mathrm{\phi}(.)$ and $\Phi(.)$ are the standard normal density and distribution functions, respectively. The ratio of a probability density function to a cumulative distribution function is sometimes called an *inverse Mills ratio*. Although complex in appearance, equation \@ref(eq:eq162) allows one to readily compute $\mathrm{E~} y$. For large values of $\left(\mathbf{x}_i^{\prime}\boldsymbol{\beta} - d_i\right)/\sigma$, we see that $\lambda_i$ is close to 0 and $\Phi\left( \left(\mathbf{x}_i^{\prime}\boldsymbol{\beta} - d_i\right)/\sigma \right)$ is close to 1. We interpret this to mean, for large values of the systematic component $\mathbf{x}_i^{\prime}\boldsymbol{\beta}$, that the regression function $\mathrm{E~}y_i$ tends to be linear and the usual interpretations apply. The tobit model specification has the greatest impact on observations close to the limiting value $d_i$.
+Here, $\mathrm{\phi}(\cdot)$ and $\Phi(\cdot)$ are the standard normal density and distribution functions, respectively. The ratio of a probability density function to a cumulative distribution function is sometimes called an *inverse Mills ratio*. Although complex in appearance, equation \@ref(eq:eq162) allows one to readily compute $\mathrm{E~} y$. For large values of $\left(\mathbf{x}_i^{\prime}\boldsymbol{\beta} - d_i\right)/\sigma$, we see that $\lambda_i$ is close to 0 and $\Phi\left( \left(\mathbf{x}_i^{\prime}\boldsymbol{\beta} - d_i\right)/\sigma \right)$ is close to 1. We interpret this to mean, for large values of the systematic component $\mathbf{x}_i^{\prime}\boldsymbol{\beta}$, that the regression function $\mathrm{E~}y_i$ tends to be linear and the usual interpretations apply. The tobit model specification has the greatest impact on observations close to the limiting value $d_i$.
 
 Equation \@ref(eq:eq162) shows that if an analyst ignores the effects of censoring, then the regression function can be quite different than the typical linear regression function, $\mathrm{E~}y=\mathbf{x}^{\prime}\boldsymbol{\beta}$, resulting in biased estimates of coefficients. The other tempting path is to exclude limited observations ($y_i=d_i$) from the dataset and again run ordinary regression. However, standard calculations also show that
 
@@ -139,7 +140,7 @@ r_i=\left\{
 $$
 indicating whether or not the observation is censored. Run a probit regression using $r_i$ as the dependent variable and $\mathbf{x}_i$ as explanatory variables. Call the resulting regression coefficients $\mathbf{g}_{PROBIT}$.
 
-2. For each uncensored observation, compute the estimated variable
+2. For each observation, compute the estimated variable
 $$
 \widehat{\lambda}_i=\frac{\mathrm{\phi }\left( \mathbf{x}_i^{\prime} \mathbf{g}_{PROBIT}\right) }{\Phi \left( \mathbf{x}_i^{\prime} \mathbf{g}_{PROBIT}\right) },
 $$
@@ -153,7 +154,7 @@ The idea behind this algorithm is that equation \@ref(eq:eq161) has the same for
 
 This section considers data from the Medical Expenditure Panel Survey (MEPS) that were introduced in Section 11.4. Recall that MEPS is a probability survey that provides nationally representative estimates of health care use, expenditures, sources of payment, and insurance coverage for the U.S. civilian population. We consider MEPS data from the first panel of 2003 and take a random sample of $n=2,000$ individuals between ages 18 and 65. Section 11.4 analyzed the frequency component, trying to understand the determinants that influenced whether or not people were hospitalized. Section 13.4 analyzed the severity component; given that a person was hospitalized, what are the determinants of medical expenditures? This chapter seeks to unify these two components into a single model of healthcare utilization.
 
-#### Summary Statistics
+#### Summary Statistics {-}
 
 [Table 16.1](#Tab161) reviews these explanatory variables and provides summary statistics that suggest their effects on expenditures of inpatient visits. The second column, "Average Expend," displays the average logarithmic expenditure by explanatory variable, treating no expenditures as a zero (logarithmic) expenditure. This would be the primary variable of interest if one did not decompose the total expenditure into a discrete zero and continuous amount.
 
@@ -174,7 +175,7 @@ To illustrate, consider that females had higher average expenditures than males 
 
 $$
 \scriptsize{
-\begin{array}{lllrrrr}
+\begin{array}{lllrrrr}\hline
 \text{Category} & \text{Variable} & \text{Description} & \text{Percent} & \text{Average} & \text{Percent} & \text{Average} \\
 &  &  & \text{of data} & \text{Expend} & \text{Positive}
 & \text{of Pos} \\
@@ -182,7 +183,7 @@ $$
 \hline \text{Demography} &        AGE &  \text{Age in years }          \\
  &         &  \ \ \ \text{18  to 65 (mean: 39.0)}          \\
            &     GENDER & \text{1 if female} &       52.7 &       0.91 &       10.7 &       8.53 \\
-           &     GENDER &  \text{1 if male} &       47.3 &       0.40 &       4.7 &       8.66 \\
+           &     GENDER &  \text{0 if male} &       47.3 &       0.40 &       4.7 &       8.66 \\
  \text{Ethnicity} &      ASIAN & \text{1 if Asian} &        4.3 &       0.37 &        4.7 &       7.98 \\
            &      BLACK & \text{1 if Black} &       14.8 &       0.90 &       10.5 &       8.60 \\
            &     NATIVE & \text{1 if Native} &        1.1 &       1.06 &       13.6 &       7.79 \\
@@ -222,6 +223,139 @@ $$
 \end{array}
 } 
 $$
+
+`r HideRCode('Tab161.Hide',"R Code to Produce Table 16.1")`
+
+```{r }
+# Table 16.1
+Hexpend <- read.csv("CSVData/HealthExpend.csv", header=TRUE)
+#Hexpend  <- read.csv("../../CSVData/HealthExpend.csv", header=TRUE)
+
+attach(Hexpend)
+#  RECODE A FEW VARIABLES ;
+ASIAN  <- 1*(RACE1==1)
+BLACK  <- 1*(RACE1==2)
+NATIVE <- 1*(RACE1==3)
+WHITE  <- 1-ASIAN-BLACK-NATIVE   # combined other and white
+
+NORTHEAST <- 1*(REGION1==1)
+MIDWEST   <- 1*(REGION1==2)
+SOUTH     <- 1*(REGION1==3)
+WEST      <- 1-NORTHEAST-MIDWEST-SOUTH
+
+HIGHSCHOOL<- 1*(EDUC1==1)
+COLLEGE   <- 1*(EDUC1==2)
+LOWERHS   <- 1-HIGHSCHOOL-COLLEGE
+
+POOR     <- 1*(PHSTAT1==4)
+FAIR     <- 1*(PHSTAT1==3)
+GOOD     <- 1*(PHSTAT1==2)
+VGOOD    <- 1*(PHSTAT1==1)
+EXCELLNT <- 1-POOR-FAIR-GOOD-VGOOD
+
+NPOOR    <- 1*(INCOME1==1)
+LINCOME  <- 1*(INCOME1==2)
+MINCOME  <- 1*(INCOME1==3)
+HINCOME  <- 1*(INCOME1==4)
+POORNEG  <- 1-NPOOR-LINCOME-MINCOME-HINCOME
+
+COUNT    <- COUNTIP
+EXP      <- EXPENDIP
+
+POSEXP   <- 1*(EXP>0)
+LNEXP    <- ifelse(EXP>0,log(EXP),0)
+LOWERBOUND <- ifelse(EXP>0, LNEXP,'')  
+
+RaceFactor   <- cbind(ASIAN, BLACK, NATIVE, WHITE)
+RegionFactor <- cbind(NORTHEAST, MIDWEST, SOUTH, WEST)
+EducFactor   <- cbind(HIGHSCHOOL, COLLEGE, LOWERHS)
+PhstatFactor <- cbind(POOR,FAIR,GOOD,VGOOD,EXCELLNT)
+IncomeFactor <- cbind(NPOOR,LINCOME,MINCOME,HINCOME,POORNEG)
+PersonLevel  <- cbind(Hexpend, RaceFactor, RegionFactor, EducFactor,
+                      PhstatFactor, IncomeFactor, COUNT,EXP, POSEXP,
+                      LNEXP, LOWERBOUND)
+
+detach(Hexpend)
+
+Hexpend$POSEXP   <- 1*(Hexpend$EXPENDIP>0)
+Hexpend$LNEXP <- ifelse(Hexpend$EXPENDIP>0,log(Hexpend$EXPENDIP),0)
+
+detach("package:Hmisc", unload = TRUE)
+library(dplyr)
+
+# Summarize using dplyr
+summary_by_group <- function(group){
+    Hexpend %>%
+  group_by(!!sym(group)) %>%
+  summarize(
+    Propn = 100 * n() /dim(Hexpend)[1], 
+    Mean1 = mean(LNEXP),
+    Mean2 = mean(POSEXP),
+    Mean3 = Mean1 / Mean2
+  ) %>%
+  rename("Var" = group )
+    }
+# summary_by_group(group = "GENDER")
+# 
+# summary_by_group(group = "RACE1")
+
+
+# POSITIVE EXPENDITURES ;
+PersonLevelPOSEXP <-subset(PersonLevel, POSEXP==1)
+
+
+TabGender <- summary_by_group(group = "GENDER")
+Label <- c("MALE","FEMALE")
+Table161Gender <- cbind(TabGender,Label)
+
+TabRace <- summary_by_group(group = "RACE1")
+Label <- c("OTHERS","ASIAN","BLACK","NATIVE","WHITE")
+Table161Race <- cbind(TabRace,Label)
+
+TabRegion <- summary_by_group(group = "REGION1")
+Label <- c("WEST","NORTHEAST","MIDWEST","SOUTH")
+Table161Region <- cbind(TabRegion,Label)
+
+TabEduc <- summary_by_group(group = "EDUC1")
+Label <- c("LOWERHS","HIGHSCHOOL","COLLEGE")
+Table161Educ <- cbind(TabEduc,Label)
+
+TabPhstat <- summary_by_group(group = "PHSTAT1")
+Label <- c("EXCELLENT","VGOOD","GOOD","FAIR","POOR")
+Table161Phstat <- cbind(TabPhstat,Label)
+
+TabMnh <- summary_by_group(group = "MNHPOOR")
+Label <- c("GOOD","POOR")
+Table161Mnh <- cbind(TabMnh,Label)
+
+TabAnylimit <- summary_by_group(group = "ANYLIMIT")
+Label <- c("NO","YES")
+Table161Anylimit <- cbind(TabAnylimit,Label)
+
+TabIncome <- summary_by_group(group = "INCOME1")
+Label <- c("POOR","NPOOR","LINCOME","MINCOME","HINCOME")
+Table161Income <- cbind(TabIncome,Label)
+
+TabInsure <- summary_by_group(group = "insure")
+Label <- c("UNINSURED","INSURED")
+Table161Insure <- cbind(TabInsure,Label)
+
+# CREATE TABLE 16.1
+Table161n <- rbind(Table161Gender, Table161Race, Table161Region, Table161Educ,
+                   Table161Phstat, Table161Mnh, Table161Anylimit,
+                   Table161Income, Table161Insure)
+Category <- c("GENDER"," ","RACE"," "," "," "," ",
+              "REGION"," "," "," ", "EDUCATION"," "," ",
+              "PHSTAT"," "," "," "," ", 
+              "MNHEALTH"," ", "ANYLIMIT"," ", 
+              "INCOME"," "," "," "," ", "INSURED", " ")
+Table161 <- cbind(Category,Table161n)
+
+knitr::kable(Table161, digits = 2)
+
+```
+
+</div>
 
 
 <a id=Tab162></a> 
@@ -263,7 +397,7 @@ HIGHSCHOOL &     -0.027 &     -0.209 &     -0.030 &     -0.019 &     -0.026 &   
      NPOOR &     -0.116 &     -0.478 &     -2.274 &     -0.790 &     -0.065 &     -0.243 \\
     INSURE &      0.594 &      4.486 &      8.534 &      4.130 &      0.455 &      2.094 \\
       \hline
-\text{Inverse Mill's Ratio} \widehat{\lambda}  &  & & -3.616 &     -0.642 \\
+\text{Inverse Mill's Ratio } \widehat{\lambda}  &  & && &-3.616 &     -0.642 \\
 \text{Scale } \sigma^2&  4.999 &            &     14.738 &            &      4.997 &            \\
 \hline
 \end{array}
@@ -271,6 +405,100 @@ HIGHSCHOOL &     -0.027 &     -0.209 &     -0.030 &     -0.019 &     -0.026 &   
 $$
 
 *Note:* $^{\ast}$ Two-stage $t$-ratios are calculated using heteroscedasticity-consistent standard errors.
+
+
+
+`r HideRCode('Tab162.Hide',"R Code to Produce Table 16.2")`
+
+```{r }
+# Table 16.2
+#Hexpend <- read.csv("CSVData/HealthExpend.csv", header=TRUE)
+#Hexpend  <- read.csv("../../CSVData/HealthExpend.csv", header=TRUE)
+
+#  TABLE 16.2 OLS REGRESSION ;
+
+modelOLS <- lm(LNEXP ~ AGE+GENDER+ASIAN+BLACK+NATIVE+NORTHEAST+MIDWEST+SOUTH +
+                COLLEGE+HIGHSCHOOL+POOR+FAIR+GOOD+VGOOD+MNHPOOR+ANYLIMIT+HINCOME+MINCOME+
+                LINCOME+NPOOR+insure, data=PersonLevel)
+OLSSum <- summary(modelOLS)
+#OLSSum
+
+# The above result replicates the parameter estimates given in Table 16.2
+# But the standard errors and t ratios are slightly different
+# That's because glm model in R uses "reml" to compute the standard errors
+# while the result given by Table 16.2 is based on a "ml" method
+# To replicate the result, run the following function
+
+# coefficients=result given by glm, n=number of observations, k=number of regressors including intercept;
+SummaryML <- function(coefficients, n, k)  {
+   Estimate  <- coefficients[,1]
+   Std_Error <- coefficients[,2] * sqrt((n-k)/n)
+   t_Ratio   <- coefficients[,3] * sqrt(n/(n-k))
+   coeffML   <- cbind(Estimate, Std_Error, t_Ratio)
+   return(coeffML)
+   }
+
+modelOlsML <- SummaryML(OLSSum$coefficients,2000,22)
+#modelOlsML
+
+#  TABLE 16.2 TOBIT REGRESSION ;
+library(survival)
+modelTobit <- survreg(Surv(LNEXP,LNEXP>0,type="left") ~ AGE+GENDER+ASIAN+BLACK+
+                      NATIVE+NORTHEAST+MIDWEST+SOUTH+COLLEGE+HIGHSCHOOL+POOR+
+                      FAIR+GOOD+VGOOD+MNHPOOR+ANYLIMIT+HINCOME+MINCOME+
+                      LINCOME+NPOOR+insure, dist="gaussian", data=PersonLevel)
+TobitSum <- summary(modelTobit)
+#TobitSum
+
+# TABLE 16.2 HECKMAN TWO-STAGE ALGORITHM ; 
+# STAGE 1 - PROBIT MODEL
+model1S <- glm(POSEXP ~ AGE+GENDER+ASIAN+BLACK+NATIVE+NORTHEAST+MIDWEST+SOUTH+
+              COLLEGE+HIGHSCHOOL+POOR+FAIR+GOOD+VGOOD+MNHPOOR+ANYLIMIT+
+              HINCOME+MINCOME+LINCOME+NPOOR+insure,
+              binomial(link=probit),data=PersonLevel)
+model1SSum <- summary(model1S)
+#model1SSum
+
+# COMPUTE INVERSE MILL'S RATIO
+invMillRatio <- dnorm(model1S$fitted.values)/pnorm(model1S$fitted.values)
+ordernum <- seq(1,2000)
+PLnew <- cbind(PersonLevel, invMillRatio, ordernum)
+
+# STAGE 2 
+model2S <- lm(LNEXP ~ AGE+GENDER+ASIAN+BLACK+NATIVE+NORTHEAST+MIDWEST+SOUTH+
+              COLLEGE+HIGHSCHOOL+POOR+FAIR+GOOD+VGOOD+MNHPOOR+
+              ANYLIMIT+HINCOME+MINCOME+LINCOME+NPOOR+insure+
+              invMillRatio, data=PLnew)
+model2SSum <- summary(model2S)
+#model2SSum
+
+# COMPUTE Heteroscedasticity-Corrected Covariance Matrix; 
+#install.packages("car")
+library(car)
+#?hccm
+cov_corrected     <- hccm(model2S,"hc1")
+var_corrected     <- diag(cov_corrected)
+StdErr_corrected  <- sqrt(var_corrected)
+tRatio_corrected  <- model2S$coefficients/StdErr_corrected
+summary_corrected <-  cbind(model2S$coefficients,StdErr_corrected,tRatio_corrected)
+#summary_corrected
+
+# REPLICATE RESULT GIVEN BY TABLE 16.2 ;
+model2SML <- SummaryML(summary_corrected,2000,23)
+#model2SML
+
+# CREATE TABLE 16.2 ;
+Table162OLS   <- modelOlsML
+Table162Tobit <- TobitSum$table[-c(23),]
+Table1622S    <- model2SML[-c(23),]
+Table162      <- cbind(Table162OLS,Table162Tobit,Table1622S)
+Table162print <- Table162[,c(1,3,4,6,8,10)]
+knitr::kable(Table162print, digits = 3)
+
+```
+
+</div>
+
 
 [Table 16.2](#Tab162) also reports the fit using the two-stage Heckman algorithm. The coefficient associated with the inverse Mill's ratio selection correction is statistically insignificant. Thus, there is general agreement between the OLS coefficients and those estimated using the two-stage algorithm. The two-stage $t$-ratios were calculated using heteroscedasticity-consistent standard errors, described in Section 5.7.2. Here, we see some disagreement between the $t$-ratios calculated using Heckman's algorithm and the maximum likelihood values calculated using the tobit model. For example, GENDER, POOR, HINCOME, and MINCOME are statistically significant in the tobit model but are not in the two-stage algorithm. This is troubling because both techniques yield consistent estimators providing the assumptions of the tobit model are valid. Thus, we suspect the validity of the model assumptions for these data; the next section provides an alternative model that turns out to be more suitable for this dataset.
 
@@ -291,10 +519,10 @@ This is the basis for the two-part model, where we also use explanatory variable
 *Definition. **Two-Part Model***
 
 
-*   Use a binary regression model with $r_i$ as the dependent variable and $\mathbf{x}_{1i}$ as the set of explanatory variables. Denote the corresponding set of regression coefficients as $\boldsymbol{\beta_{1}}$. Typical models include the linear probability, logit, and probit models.
+(i)   Use a binary regression model with $r_i$ as the dependent variable and $\mathbf{x}_{1i}$ as the set of explanatory variables. Denote the corresponding set of regression coefficients as $\boldsymbol{\beta_{1}}$. Typical models include the linear probability, logit, and probit models.
 
-*   Conditional on $r_i=1$, specify a regression model with $y_i$ as the dependent variable and $\mathbf{x}_{2i}$ as the set of explanatory variables. Denote the corresponding set of regression coefficients as $\boldsymbol{\beta_{2}}$. Typical models include the linear and gamma regression models.
-\end{enumerate}
+(ii)   Conditional on $r_i=1$, specify a regression model with $y_i$ as the dependent variable and $\mathbf{x}_{2i}$ as the set of explanatory variables. Denote the corresponding set of regression coefficients as $\boldsymbol{\beta_{2}}$. Typical models include the linear and gamma regression models.
+
 
 :::: 
 
@@ -320,8 +548,8 @@ $$
 & \text{Full Model} & & \text{Full Model}& & \text{Reduced Model}& &\text{Reduced Model} \\
 & \text{Frequency}  & & \text{Severity} & &
 \text{Frequency} & &\text{Severity} \\
- & \text{Parameter} &  & Parameter &  &
-Parameter &  & Parameter
+ & \text{Parameter} &  & \text{Parameter} &  &
+\text{Parameter} &  & \text{Parameter}
   \\
 \text{Effect} & \text{Estimate} &
 t\text{-ratio} & \text{Estimate} & t\text{-ratio} & \text{Estimate} &
@@ -359,7 +587,58 @@ HIGHSCHOOL &      0.002 &      0.017 &     -0.415 &     -1.745 &      0.003 &   
 $$
 
 
+`r HideRCode('Tab163.Hide',"R Code to Produce Table 16.3")`
 
+```{r }
+# Table 16.3
+#Hexpend <- read.csv("CSVData/HealthExpend.csv", header=TRUE)
+#Hexpend  <- read.csv("../../CSVData/HealthExpend.csv", header=TRUE)
+
+SummaryML <- function(coefficients, n, k)  {
+   Estimate  <- coefficients[,1]
+   Std_Error <- coefficients[,2] * sqrt((n-k)/n)
+   t_Ratio   <- coefficients[,3] * sqrt(n/(n-k))
+   coeffML   <- cbind(Estimate, Std_Error, t_Ratio)
+   return(coeffML)
+   }
+
+#  TWO-PART MODEL - PART ONE;
+modelPart1 <- glm(POSEXP ~ AGE+GENDER+ASIAN+BLACK+NATIVE+NORTHEAST+MIDWEST+
+                    SOUTH+COLLEGE+HIGHSCHOOL+POOR+FAIR+GOOD+VGOOD+MNHPOOR+
+                    ANYLIMIT+HINCOME+MINCOME+LINCOME+NPOOR+insure,
+                  binomial(link=probit),data=PersonLevel,na.action=na.pass)
+modelPart1Sum <- summary(modelPart1)
+#modelPart1Sum
+
+#  TWO-PART MODEL - PART TWO;
+modelPart2 <- glm(LNEXP ~ AGE+GENDER+ASIAN+BLACK+NATIVE+NORTHEAST+MIDWEST+
+                    SOUTH+COLLEGE+HIGHSCHOOL+POOR+FAIR+GOOD+VGOOD+MNHPOOR+
+                    ANYLIMIT+HINCOME+MINCOME+LINCOME+NPOOR+insure,
+                  family=gaussian(link="identity"),data=PersonLevelPOSEXP)
+modelPart2Sum <- summary(modelPart2)
+modelPart2ML <- SummaryML(modelPart2Sum$coefficients,157,22)
+#modelPart2ML
+
+# TWO-PART MODEL - PART ONE - INCLUDING ONLY IMPORTANT VARIABLES;
+reducedPart1 <- glm(POSEXP ~ GENDER+ASIAN+BLACK+NATIVE+NORTHEAST+MIDWEST+
+                      SOUTH+COLLEGE+HIGHSCHOOL+POOR+FAIR+GOOD+VGOOD+ANYLIMIT+
+                      HINCOME+MINCOME+LINCOME+NPOOR+insure,
+                    binomial(link=probit),data=PersonLevel)
+reducedPart1Sum <- summary(reducedPart1)
+#reducedPart1Sum
+
+# TWO-PART MODEL - PART TWO - INCLUDING ONLY IMPORTANT VARIABLES;
+reducedPart2 <- glm(LNEXP ~ AGE+GENDER+ASIAN+BLACK+NATIVE+NORTHEAST+MIDWEST+
+                      SOUTH+COLLEGE+HIGHSCHOOL+MNHPOOR+ANYLIMIT+insure,
+                    gaussian,data=PersonLevelPOSEXP)
+reducedPart2Sum <- summary(reducedPart2)
+modelPart2ML <- SummaryML(reducedPart2Sum$coefficients,157,14)
+#modelPart2ML
+
+```
+
+
+</div>
 
 #### Tobit Type II Model  {-}
 
@@ -423,16 +702,16 @@ To establish notation, for each \{$i$\}, the observable responses consist of:
 *  $y_{ij},~j=1,...,N_i~-$ the amount of each claim (loss).
 
 
-\noindent By convention, the set $\{y_{ij}\}$ is empty when $N_i=0$.
+By convention, the set $\{y_{ij}\}$ is empty when $N_i=0$.
 If one uses $N_i$ as a binary variable, then this framework reduces
 to the two-part set-up.
 
 Although we have detailed information on losses per event, the
-interest often is in \emph{aggregate losses},
+interest often is in *aggregate losses*,
 $S_i=y_{i1}+...+y_{i,N_i}$. In traditional actuarial modeling, one
 assumes that the distribution of losses are, conditional on the
 frequency $N_i$, identical and independent over replicates $~j$.
-This representation is known as the \emph{collective risk model},
+This representation is known as the *collective risk model*,
 see, for example, Klugman et al. (2008). We also maintain this
 assumption.
 
@@ -464,10 +743,10 @@ distribution of the dependent variables as:
 \begin{eqnarray*}
 \mathrm{f}\left( N,\mathbf{y}\right) &=&\mathrm{f}\left( N\right) ~\times ~
 \mathrm{f}\left( \mathbf{y|}N\right) \\
-\text{joint} &=&\text{frequency~}\times ~\text{conditional severity,}
+\text{joint} &=&\text{frequency}~\times ~\text{conditional severity,}
 \end{eqnarray*}
 where $\mathrm{f}\left( N,\mathbf{y}\right)$ denotes the joint distribution
-of $\left( N,\mathbf{y}\right) $. This joint distribution equals the product
+of $\left( N,\mathbf{y}\right)$. This joint distribution equals the product
 of the two components:
 
 
@@ -483,16 +762,15 @@ aggregate loss model as follows.
 
 :::: {.blackbox}
 
-\textit{Definition. Aggregate Loss Model I}
+*Definition. Aggregate Loss Model I*
 
-
-*  Use a count regression model with $N_i$ as the dependent variable
+(i)  Use a count regression model with $N_i$ as the dependent variable
 and $\mathbf{x}_{1i}$ as the set of explanatory variables. Denote
 the corresponding set of regression coefficients as $\boldsymbol
 \beta_{1}$. Typical models include the Poisson and negative binomial
 models.
 
-*  Conditional on $N_i>0$, use a regression model with $y_{ij}$ as the
+(ii)  Conditional on $N_i>0$, use a regression model with $y_{ij}$ as the
 dependent variable and $\mathbf{x}_{2i}$ as the set of explanatory
 variables. Denote the corresponding set of regression coefficients as $
 \boldsymbol \beta_{2}$. Typical models include the linear
@@ -504,14 +782,13 @@ the heterogeneity among subjects.
 ::::
 
 To model the second data form, the set-up is similar. The count data model
-in step 1 will not change. However, the regression model in step 2 will use $
-S_i$\ as the dependent variable. Because the dependent variable is
+in step 1 will not change. However, the regression model in step 2 will use $S_i$\ as the dependent variable. Because the dependent variable is
 the sum over $N_i$ independent replicates, it may be that you will
 need to allow the variability to depend on $N_i$.
 
 ***
 
-\textbf{Example: MEPS Expenditure Data - Continued.} To get a sense
+**Example: MEPS Expenditure Data - Continued.** To get a sense
 of the empirical observations for claim frequency, we present the
 overall claim frequency. According to this table, there were a total
 of 2,000 observations of which 92.15\% did not have any claims.
@@ -562,10 +839,9 @@ distributions such as medical expenditures.
 $$
 \scriptsize{
 \begin{array}{l|rr|rr|rr}
-\hline & \text{Negative} &\text{Binomial} & \text{Ordinary} &\text{Regression} & \text{Gamma }& \text{Regression} \\
+\hline & \text{Negative} &\text{Binomial} & \text{Ordinary} &\text{Regression} & \text{Gamma} & \text{Regression} \\
  & \text{Frequency} & & \text{Severity} & &\text{Severity} \\
- & \text{Parameter} &  & Parameter &  &
-Parameter &  \\
+ & \text{Parameter} &  & \text{Parameter}  &  & \text{Parameter} &  \\
 \text{Effect} & \text{Estimate} &
 t\text{-ratio} & \text{Estimate} & t\text{-ratio} & \text{Estimate} &  t\text{-ratio} \\ 
 \hline  Intercept &     -4.214 &     -9.169 &      7.424 &     15.514 &      8.557 &     20.521 \\
@@ -594,13 +870,11 @@ HIGHSCHOOL &     -0.085 &     -0.399 &     -0.722 &     -3.396 &     -0.742 &   
      NPOOR &     -0.465 &     -1.131 &     -0.056 &     -0.135 &      0.217 &      0.619 \\
     INSURE &      1.312 &      4.207 &      1.500 &      4.551 &      1.380 &      4.912 \\
     \hline
-Dispersion &      2.177 &            &      1.314 &            &
-1.131 &            \\ \hline
+Dispersion &      2.177 &            &      1.314 &            & 1.131 &  \\ 
+\hline
 \end{array}
 }
 $$
-
-
 
 ## Further Reading and References {#S:Sec166}
 
@@ -678,6 +952,15 @@ individuals is related primarily to personal characteristics whereas
 the cost per user may be more related to characteristics of the
 healthcare provider.
 
+<br>
+
+`r HideRCode('Chapter16.Hide',"R Code to Produce Chapters and Figures")`
+
+[Click Here for Additional Chapter 16 R Code](https://instruction.bus.wisc.edu/jfrees/jfreesbooks/Regression%20Modeling/BookWebDec2010/RScripts/Chap16RCode.txt)
+
+</div>
+
+
 
 
 **Chapter References**
@@ -723,24 +1006,15 @@ constant and $d_s=(d-\mu )/\sigma $\ be the standardized version.
 
 a. Determine the density of $y$, conditional on $\{y>d\}$
 
-b. Show that $\mathrm{E\ }\left( y|y>d\right) = \mu + \sigma
-\mathrm{h}( d_s).$
+b. Show that $\mathrm{E}\left( y|y>d\right) = \mu + \sigma\mathrm{h}( d_s).$
 
-c. Show that $\mathrm{E\ }\left( y|y\leq d\right) =\mu -\sigma
-\mathrm{\phi}(d)\ \mathrm{/} \Phi (d).$
+c. Show that $\mathrm{E\ }\left( y|y\leq d\right) =\mu -\sigma\mathrm{\phi}(d)\ \mathrm{/} \Phi (d).$
 
-d. Show that $\mathrm{Var\ }\left( y|y>d\right) =\sigma \left(
-1-\delta \left( d_s\right) \right) $, where $\delta \left( d\right)
-=\mathrm{h} \left( d\right) \left( \mathrm{h} \left( d\right)
--d\right) .$
+d. Show that $\mathrm{Var}\left( y|y>d\right) =\sigma \left(1-\delta \left( d_s\right) \right)$, where $\delta \left( d\right)=\mathrm{h} \left( d\right) \left( \mathrm{h} \left( d\right)-d\right) .$
 
-e. Show that $\mathrm{E\ }\max \left( y,d\right) =\left( \mu +\sigma
-\mathrm{h} \left( d_s\right) \right) \left( 1-\Phi (d_s)\right)
-+d\Phi (d_s).$
+e. Show that $\mathrm{E\ }\max \left( y,d\right) =\left( \mu +\sigma\mathrm{h} \left( d_s\right) \right) \left( 1-\Phi (d_s)\right)+d\Phi (d_s).$
 
-f. Show that $\mathrm{E~\min }\left( y,d\right) =\mu +d-\left(
-\left( \mu +\sigma \mathrm{h} \left( d_s\right) \right) \left(
-1-\Phi (d_s)\right) +d\Phi (d_s)\right) .$
+f. Show that $\mathrm{E~\min }\left( y,d\right) =\mu +d-\left(\left( \mu +\sigma \mathrm{h} \left( d_s\right) \right) \left(1-\Phi (d_s)\right) +d\Phi (d_s)\right) .$
 
 
 16.2 Verify the log-likelihood in equation \@ref(eq:eq164) for the tobit model.

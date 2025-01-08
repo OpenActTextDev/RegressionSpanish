@@ -1,0 +1,537 @@
+#  FILENAME IS Chap17R.txt  ;
+
+setwd("c://BOOK3//CUPBook//Chapter17FatTail")
+#setwd("R://BOOK3//CUPBook//Chapter17FatTail")
+library(HH)
+
+
+#  FIGURE 17.1
+
+z <- seq(-3, 3, 0.01)
+YJTrans <- function(lambda)
+{ lambda0 <- lambda+(lambda==0)
+ lambda2 <- lambda+(lambda==2)
+ yp <- (lambda==0)*log(1+abs(z))+(lambda!=0)*((1+abs(z))^lambda0-1)/lambda0
+ yn <- -(lambda==2)*log(1+abs(z))-(lambda!=2)*((1+abs(z))^(2-lambda2)-1)/(2-lambda2)
+ foo <- yp*(z>=0)+yn*(z<0) 
+ foo}
+
+par(mar=c(3.2,3.2,2.2,0.2),cex=1.1)
+plot(z, YJTrans(0), xlim=c(-3, 3), ylim=c(-3, 3), 
+         type="l", ylab="", xlab="", lty=1, las=1)
+mtext("Transformed Values", at=3.5, side=2, las=1, adj=0.35, cex=1.3)
+mtext("Original Values", side=1, line=2, cex=1.3)
+lines(z, YJTrans(0.5), lty=2)
+abline(0, 1, lty=3)
+lines(z, YJTrans(1.5), lty=4)
+lines(z, YJTrans(2), lty=5)
+export.eps("F17Transform.eps", width=5,height=4)
+dev.off()
+
+
+#  NURSING HOME DATA
+NurseDat <- read.csv(file.choose(),quote="",header=TRUE)
+str(NurseDat)
+NurseDat01=subset(NurseDat,CRYEAR==2001)
+NurseDat01=subset(NurseDat01,SQRFOOT>5) # 5 homes without square footage are removed
+NurseDat01$RATE= 100*NurseDat01$TPY/NurseDat01$NUMBED
+NurseDat01=subset(NurseDat01,RATE>50) # 1 home with RATE = 40 - wierd ...
+attach(NurseDat01)
+
+#  TABLE 17.1
+library(Hmisc)
+median(TPY) 
+median(NUMBED)   # Number of Beds
+median(SQRFOOT)  # Square Footage
+t1a <- summarize(TPY, SELFFUNDINS, median)
+t1b <- summarize(TPY, SELFFUNDINS, length)/length(SELFFUNDINS)
+round(cbind(t1a,t1b[2]),digits=4)  
+t2a <- summarize(TPY, MCERT, median)
+t2b <- summarize(TPY, MCERT, length)/length(MCERT)
+round(cbind(t2a,t2b[2]),digits=4)    
+t3a <- summarize(TPY, ORGSTR, median)
+t3b <- summarize(TPY, ORGSTR, length)/length(ORGSTR) 
+round(cbind(t3a,t3b[2]),digits=4)  
+t4a <- summarize(TPY, URBAN, median)
+t4b <- summarize(TPY, URBAN, length)/length(URBAN) 
+round(cbind(t4a,t4b[2]),digits=4)  
+
+
+#  DISTRIBUTION OF THE DEPENDENT VARIRABLE
+hist(TPY)
+#  FIGURE 17.2
+hist(TPY, freq=FALSE, nclass=32, main="", ylab="", las=1,
+          cex.lab=1.3)
+mtext("Density", side=2, at=.016,las=1, adj=.7,cex=1.3)
+export.eps("F17NursHist.eps", width=6,height=6)
+dev.off()
+
+
+plot(density(TPY), main="", xlab="Total Person Years")#Gaussian kernel
+
+#  THE NORMAL LINEAR MODEL IS NOT ADEQUATE
+qqnorm(TPY)
+qqline(TPY)
+lmnurse<-lm(TPY~NUMBED+SQRFOOT+PRO+TAXEXEMPT+
+            SELFFUNDINS+MCERT+URBAN,data=NurseDat01)
+summary(lmnurse)
+par(mfrow=c(2, 2))
+plot(lmnurse)
+dev.off()
+
+qq.plot(RATE, dist="gamma", shape=1, rate=2,labels=FALSE)
+
+#  LOOK AT THE GAMMA DISTRIBUTION INTERACTIVELY
+library(TeachingDemos)
+if(interactive()){vis.gamma()}
+if(interactive()){vis.t()}
+
+#  GAMMA QQ PLOT
+# The Gamma distribution with parameters shape = a and scale = s
+# The mean and variance are E(X) = a*s and Var(X) = a*s^2. 
+s=var(TPY)/mean(TPY)
+rate = 1/s
+a = mean(TPY)*rate
+p1 = seq(1, length(TPY), by = 1) / (1 + length(TPY))
+theoreticalquantiles = qgamma(p1 , shape=a, scale=s)
+plot(theoreticalquantiles, sort(TPY), cex.lab=1.3,
+        xlab="Gamma Quantiles",ylab="Empirical Quantiles")
+abline(a=0,b=1)
+#  FIGURE 17.3a
+export.eps("F17GammaQQ.eps", width=6,height=6)
+dev.off()
+
+
+#  HERE'S ANOTHER WAY
+library(car)
+qq.plot(TPY, dist="gamma", shape=a, scale=s,labels=FALSE)
+
+#  INVERSE GAUSSIAN QQ PLOT
+library(statmod)
+#The variance of the distribution is $µ^3/lambda$
+mu=mean(TPY)
+lambda = (mu)^3/var(TPY)
+p1 = seq(1, length(TPY), by = 1) / (1 + length(TPY))
+theoreticalquantiles = qinvgauss(p1 , mu, lambda)
+plot(theoreticalquantiles, sort(TPY), cex.lab=1.3,
+        xlab="Inverse Gaussian Quantiles",ylab="Empirical Quantiles")
+abline(a=0,b=1)
+#  FIGURE 17.3b
+export.eps("F17InvGausQQ.eps", width=6,height=6)
+dev.off()
+
+
+#  DISTRIBUTION OF THE DEPENDENT VARIABLE - not used
+plot(density(TPY), main="", xlab="Total Person Years", ylim=c(0, 0.012))#Gaussian kernel
+x <- seq(-30, 400, 0.1)
+pdf= dnorm(x, mean=mean(TPY), sd=sd(TPY))  #  Normal
+lines(x,pdf, col='blue')
+pdf1= dgamma(x, shape=a, scale=s)  #Gamma
+lines(x,pdf1, col='red')
+pdf2= dinvgauss(x, mu, lambda)  #Inverse Gaussian
+lines(x,pdf2, col='green')
+  
+
+
+#  START FITTING DISTRIBUTIONS - HERE IS THE GAMMA WITH THE LOG LINK
+glmGammanurse1 <- glm(TPY~log(NUMBED)+log(SQRFOOT)+PRO+TAXEXEMPT+
+            SELFFUNDINS+MCERT+URBAN,data=NurseDat01, 
+    control = glm.control(maxit = 50), 
+    family=Gamma(link="log"))
+summary(glmGammanurse1)
+AIC(glmGammanurse1, k=0)/(-2)  # LogLikelihood
+AIC(glmGammanurse1)
+AIC(glmGammanurse1, k = log(length(NurseDat01$TPY))) # BIC
+par(mfrow=c(2, 2))
+plot(glmGammanurse1)
+dev.off()
+scale=1/gamma.dispersion(glmGammanurse1);scale
+
+#deviance residual plot - not used
+dr<-residuals(glmGammanurse1,type=c("deviance"))
+plot(dr)
+qqnorm(dr)
+qqline(dr)
+
+#other diagnostic plot - not used
+library(boot)
+glmGammanurse1dr<-glm.diag(glmGammanurse1)
+glm.diag.plots(glmGammanurse1,glmGammanurse1dr)
+
+#  GAMMA WITH THE IDENTITY LINK - not used
+glmGammanurse2 <- glm(TPY~NUMBED+SQRFOOT+PRO+TAXEXEMPT+
+            SELFFUNDINS+MCERT+URBAN,data=NurseDat01, 
+    control = glm.control(maxit = 50), 
+    family=Gamma(link="identity"))
+summary(glmGammanurse2)
+AIC(glmGammanurse2, k=0)/(-2)  # LogLikelihood
+AIC(glmGammanurse2)
+AIC(glmGammanurse2, k = log(length(NurseDat01$TPY))) # BIC
+par(mfrow=c(2, 2))
+plot(glmGammanurse2)
+dev.off()
+#  LOG LINK IS PREFERABLE IN TERMS OF AIC, BIC (BUT VERY SMALL)
+
+#  INVERSE GAUSSIAN WITH THE LOG LINK
+glmInvGaunurse1 <- glm(TPY~log(NUMBED)+log(SQRFOOT)+PRO+TAXEXEMPT+
+            SELFFUNDINS+MCERT+URBAN,data=NurseDat01,
+    family=inverse.gaussian(link = "log"))
+summary(glmInvGaunurse1)
+par(mfrow=c(2, 2))
+plot(glmInvGaunurse1)
+dev.off()
+AIC(glmInvGaunurse1, k=0)/(-2)  # LogLikelihood
+AIC(glmInvGaunurse1)
+AIC(glmInvGaunurse1, k = log(length(NurseDat01$TPY))) # BIC
+inverse.gaussian.dispersion(glmInvGaunurse1)
+
+#  IDENTITY LINK - INVERSE GAUSSIAN  - not used
+glmInvGaunurse2 <- glm(TPY~NUMBED+SQRFOOT+PRO+TAXEXEMPT+
+            SELFFUNDINS+MCERT+URBAN,data=NurseDat01,
+    family=inverse.gaussian(link = "identity"))
+summary(glmInvGaunurse2)
+par(mfrow=c(2, 2))
+plot(glmInvGaunurse2)
+dev.off()
+AIC(glmInvGaunurse2)
+AIC(glmInvGaunurse2, k = log(length(NurseDat01$TPY))) # BIC
+#   CANONICAL LINK family=inverse.gaussian(link = "1/mu^2")
+
+#  RESIDUAL PLOTS - FIGURE 17.4
+plot(glmGammanurse1$fitted.values, glm.diag(glmGammanurse1)$rd, cex.lab=1.3,
+    xlab="Fitted value of TPY", ylab="Gamma deviance residuals" )
+export.eps("F17GamResids.eps", width=6,height=6)
+dev.off()
+plot(glmInvGaunurse1$fitted.values, glm.diag(glmInvGaunurse1)$rd,cex.lab=1.3,
+    xlab="Fitted value of TPY", ylab="Inv Gauss deviance residuals" )
+export.eps("F17InvGaussResids.eps", width=6,height=6)
+dev.off()
+
+#  PLOT RESIDUALS OF GAMMA DISTRIBUTIONS - NOT USED
+#  START FITTING DISTRIBUTIONS - HERE IS THE GAMMA WITH THE LOG LINK
+glmGammanurse1 <- glm(TPY~log(NUMBED)+log(SQRFOOT)+PRO+TAXEXEMPT+
+            SELFFUNDINS+MCERT+URBAN,data=NurseDat01, 
+    control = glm.control(maxit = 50), 
+    family=Gamma(link="log"))
+
+#  GAMMA QQ PLOT
+# The Gamma distribution with parameters shape = a and scale = s
+# The mean and variance are E(X) = a*s and Var(X) = E(X)*s. 
+s=var(RATE)/mean(RATE)
+a = mean(RATE)/s
+theoreticalquantiles = qgamma(p1 , shape=a, scale=s)
+muhat <- glmGammanurse3$fitted.values
+#(Dispersion parameter for Gamma family taken to be 0.005704363)
+s = 0.005704363
+a = muhat/s
+epercentiles = pgamma(RATE , shape=a, scale=s)
+hist(epercentiles)
+
+library(car)
+qq.plot(equantiles, dist="unif",labels=FALSE)
+
+Xmat1 <- as.matrix(glmGammanurse3$model[,-1]);dim(Xmat1)
+Xmat <- cbind(rep(1,nrow(Xmat1)),Xmat)
+beta <-  matrix(glmGammanurse3$coefficients);dim(beta)
+mu = exp(Xmat %*% beta)
+diff = mu - glmGammanurse3$fitted.values;sum(diff)
+
+
+
+
+
+
+
+#  NORMAL WITH THE LOG LINK
+glmNormal1 <- glm(RATE~log(NUMBED)+log(SQRFOOT)+PRO+TAXEXEMPT+
+            SELFFUNDINS+MCERT+URBAN,data=NurseDat01,
+    family=gaussian(link = "log"))
+summary(glmNormal1)
+par(mfrow=c(2, 2))
+plot(glmNormal1)
+dev.off()
+AIC(glmNormal1)
+AIC(glmNormal1, k = log(length(NurseDat01$RATE))) # BIC
+
+
+
+########################GB2################################################
+
+##   GB2 AND GENERALIZED GAMMA MODELS
+#  SET UP DATA
+ dat <- NurseDat01
+ dat$Rate = dat$RATE
+ x1 <- log(dat$NUMBED)
+ x2 <- log(dat$SQRFOOT)
+ x3 <- dat$PRO
+ x4 <- dat$TAXEXEMPT
+ x5 <- dat$SELFFUNDINS
+ x6 <- dat$MCERT
+ x7 <- dat$URBAN
+
+#  SPECIFY LOGARITHMIC DENSITY FOR GB2
+#dGBII <- function(y, delta, sigma, p, q, log = TRUE){
+# lnfstterm <- p * (log(y) - delta) /sigma
+# lnsndterm <- log(y) + log(abs(sigma))+ lgamma(p) + lgamma(q) - lgamma(p+q) 
+# lnfthterm <- (p+q)*log(1 +  exp(( log(y) - delta)/sigma  ) ) 
+# lnans <- lnfstterm - lnsndterm - lnfthterm
+# if (log) lnans else exp(lnans)
+#}
+
+dGBII <- function(y, delta, sigma, alpha1, alpha2, log = TRUE){
+ lnfstterm <- alpha1 * (log(y) - delta)/sigma
+ lnsndterm <- log(y) + log(abs(sigma))+ 
+                       lgamma(alpha1) + lgamma(alpha2) - lgamma(alpha1+alpha2) 
+ lnfthterm <- (alpha1+alpha2)*log(1 +  exp( (log(y) - delta)/sigma) ) 
+ lnans <- lnfstterm - lnsndterm - lnfthterm
+ if (log) lnans else exp(lnans)
+}
+
+
+
+#  DISTRIBUTION OF THE DEPENDENT VARIABLE
+library(statmod)
+plot(density(RATE), main="", xlab="Occupancy Rate")#Gaussian kernel
+x <- seq(60, 120, 0.1)
+pdf= dnorm(x, mean=mean(RATE), sd=sd(RATE))  #  Normal
+lines(x,pdf, col='blue')
+s=var(RATE)/mean(RATE)
+a = mean(RATE)/s
+pdf1= dgamma(x, shape=a, scale=s)  #Gamma
+lines(x,pdf1, col='red')
+mu=mean(RATE)
+lambda = (mu)^3/var(RATE)
+pdf2= dinvgauss(x, mu, lambda)  #Inverse Gaussian
+lines(x,pdf2, col='green')
+#  GB2 WITHOUT COVARIATES
+myLoglik1 <- function(beta,y){ 
+       sum(dGBII(y,delta=beta[1],sigma=exp(beta[2]),alpha1=exp(beta[3]),
+          alpha2=exp(beta[4]), log=TRUE))}
+ip1 <- c(4.6, -5, -2, -1.5 )
+myLoglik1(ip1,y=RATE)
+z1 <- optim(ip1,myLoglik1,y=RATE,
+      control=list(fnscale=-1,trace=1,maxit=3000,temp=20))
+delta=z1$par[1];sigma=exp(z1$par[2])
+alpha1=exp(z1$par[3]);alpha2=exp(z1$par[4])
+#  DISTRIBUTION OF THE DEPENDENT VARIABLE
+library(statmod)
+plot(density(RATE), main="", xlab="Occupancy Rate", ylim=c(0, 0.1))#Gaussian kernel
+x <- seq(60, 120, 0.1)
+#pdf= dnorm(x, mean=mean(RATE), sd=sd(RATE))  #  Normal
+#lines(x,pdf, col='blue')
+#pdf1= dgamma(x, shape=a, scale=s)  #Gamma
+#lines(x,pdf1, col='red')
+pdf2= dinvgauss(x, mu, lambda)  #Inverse Gaussian
+lines(x,pdf2,lty=3)
+pdf3= dGBII(x,delta,sigma,alpha1,alpha2, log=FALSE)
+lines(x,pdf3, lty=3)
+text(105, 0.09, "GB 2", cex=1.3)
+text(115, 0.015, "inverse", cex=1.3)
+text(115, 0.01, "gaussian", cex=1.3)
+text(80, 0.08, "smoothed", cex=1.3)
+text(80, 0.075, "data", cex=1.3)
+arrows(85, 0.07, 90, 0.068,code=2, angle=20, length=0.1)
+#  FIGURE 17.5
+export.eps("F17GB2Nurse.eps", width=6,height=6)
+dev.off()
+
+#  LIKELIHOOD FUNCTION
+myLoglik <- function(beta,y){ 
+       sum(dGBII(y,
+          delta=beta[1]+beta[2]*x1+beta[3]*x2+beta[4]*x3+beta[5]*x4
+             +beta[6]*x5+beta[7]*x6+beta[8]*x7,
+          sigma=exp(beta[9]),
+          alpha1=exp(beta[10]),
+          alpha2=exp(beta[11]), log=TRUE))}
+
+#  INITIAL PARAMETERS
+ip <- c(4.6, rep(0, 7), -5, -2, -1.5)
+myLoglik(ip,y=dat$Rate)
+
+#  CALL THE OPTIMIZATION ROUTINE
+z <- optim(ip,myLoglik,y=dat$Rate,
+      control=list(fnscale=-1,trace=1,maxit=3000,temp=20))
+#  HERE ARE THE PARAMETERS FROM THIS OPTIMIZATION RUN
+z$par
+ 
+#  NOW, RUN THIS FOR A WHILE TO ENSURE CONVERGENCE
+for (i in 1:3) {
+z <- optim(z$par,myLoglik,y=dat$Rate,
+  control=list(fnscale=-1,trace=1,maxit=3000,temp=20))}
+#  GET OUT HESSIAN
+z <- optim(z$par,myLoglik,y=dat$Rate,
+   control=list(fnscale=-1,trace=1,maxit=3000,temp=20),hessian=T)
+#  PRINT OPTIMAL VALUES
+z$se <- sqrt(diag(solve(-z$hess)))
+z$tvalue <- z$par/z$se
+outmat = cbind(z$par,z$se,z$tvalue)
+round(outmat,digits=5)
+LogLike = z$value
+AIC = -2*LogLike + 2*length(z$par)
+BIC = -2*LogLike  + log(length(z$par))*length(z$par)
+LogLike;AIC;BIC
+
+
+#  WRITES OUT A LATEX TABLE THAT YOU COPY AND PASTE INTO A LATEX FILE
+library(xtable)
+xtable(outmat, digits=4)
+#  BETTER
+write.csv(outmat, file = "Chap17Outmat.csv")
+
+#  CORRELATIONS AMONG PARAMETER ESTIMATES
+invse <- z$se^(-1)
+A <- diag(invse)
+B <- A %*% solve(-z$hess) %*% A
+round(B,digits=3)
+#  SOME SERIOUS CORRELATIONS AMONG sigma, alpha1 AND alpha2
+
+#  TRY SOME RESIDUAL PLOTTING  
+beta <- z$par
+delta=beta[1]+beta[2]*x1+beta[3]*x2+beta[4]*x3+beta[5]*x4+
+      beta[6]*x5+beta[7]*x6+beta[8]*x7
+sigma=exp(beta[9])
+alpha1=exp(beta[10])
+alpha2=exp(beta[11])
+dat$res <- (log(dat$Rate) - delta) / sigma
+dat$fits=exp(delta)
+
+plot(dat$fits, dat$res,xlab="Fitted Values", ylab="Residuals", cex.lab = 1.3)
+abline(0,0)
+export.eps("F17GB2FITRESIDS.eps", width=6,height=6)
+dev.off()
+
+#  QQ PLOT
+p1 = seq(1, length(dat$res), by = 1) / (1 + length(dat$res))
+#  METHOD 1 WITH F DISTRIBUTION
+quan1 <- qf(p1, 2*alpha1, 2*alpha2)
+quan2 <- log(quan1*alpha1/alpha2)
+#  METHOD 2 WITH BETA DISTRIBUTION  
+quan3 <- qbeta(p1,  alpha1, alpha2)
+quan4 <- log(quan3/(1-quan3))
+quantile <- quan4
+for (i in 1:length(quantile)) {
+     if (quan4[i]==Inf) quantile[i] <- quan2[i]
+    }
+#  NEITHER DOES THE JOB - USE BOTH 
+plot(quantile, sort(dat$res),ylab="empirical quantile", 
+                             xlab="theoretical quantile", cex.lab = 1.3)
+abline(0, 1)
+export.eps("F17GB2QQPlot.eps", width=6,height=6)
+dev.off()
+
+
+## Generalized Gamma Dist'n
+#  SPECIFY LOGARITHMIC DENSITY FOR GB2
+dGGM  <- function(y, delta, sigma, alpha1, log = FALSE){
+    z <- ( log(y) - delta )/sigma
+    lnfstterm <- log(sigma*y) + lgamma(alpha1)
+    lnans <-  -lnfstterm + alpha1*z - exp(z)
+ if (log) lnans else exp(lnans)
+}
+myLoglikGGM <- function(beta,y){ 
+       sum(dGGM(y,
+          delta=beta[1]+beta[2]*x1+beta[3]*x2+beta[4]*x3+beta[5]*x4
+             +beta[6]*x5+beta[7]*x6+beta[8]*x7,
+          sigma=exp(beta[9]),
+          alpha1=exp(beta[10]), log=TRUE))}
+#  INITIAL PARAMETERS
+ip <- c(4.6, rep(0, 7), -2, 0)
+myLoglikGGM(ip,y=dat$Rate)
+
+#  CALL THE OPTIMIZATION ROUTINE
+z <- optim(ip,myLoglikGGM,y=dat$Rate,
+      control=list(fnscale=-1,trace=1,maxit=3000,temp=20))
+z$par
+beta <- z$par
+delta=beta[1]+beta[2]*x1+beta[3]*x2+beta[4]*x3+beta[5]*x4+
+      beta[6]*x5+beta[7]*x6+beta[8]*x7
+hist(delta)
+
+#  NOW, RUN THIS FOR A WHILE TO ENSURE CONVERGENCE
+for (i in 1:30) {
+z <- optim(z$par,myLoglikGGM,y=dat$Rate,
+  control=list(fnscale=-1,trace=1,maxit=3000,temp=20))}
+#  GET OUT HESSIAN
+z <- optim(z$par,myLoglikGGM,y=dat$Rate,
+   control=list(fnscale=-1,trace=1,maxit=3000,temp=20),hessian=T)
+#  PRINT OPTIMAL VALUES
+z$se <- sqrt(diag(solve(-z$hess)))
+z$tvalue <- z$par/z$se
+outmat = cbind(z$par,z$se,z$tvalue)
+round(outmat,digits=5)
+write.csv(outmat, file = "Chap17OutmatGG.csv")
+LogLike = z$value
+AIC = -2*LogLike + 2*length(z$par)
+BIC = -2*LogLike  + log(length(z$par))*length(z$par)
+LogLike;AIC;BIC
+
+#  CORRELATIONS AMONG PARAMETER ESTIMATES
+invse <- z$se^(-1)
+A <- diag(invse)
+B <- A %*% solve(-z$hess) %*% A
+round(B,digits=3)
+#  SOME SERIOUS CORRELATIONS AMONG sigma AND alpha1
+
+#  EXERCISE 17.2
+theta = 10
+dGGM(y=1, delta=theta, sigma=1, alpha1=1,log=FALSE)
+
+alpha2=5000
+dGBII(y=1, delta=theta+ sigma*log(alpha2), sigma=1, 
+            alpha1=1, alpha2=alpha2,log=FALSE)
+
+#  QUANTILE REGRESSION
+library(SparseM)
+library(quantreg)
+
+fit1<-rq(TPY~log(NUMBED)+log(SQRFOOT)+PRO+TAXEXEMPT+SELFFUNDINS+MCERT+URBAN,tau=0.5)
+summary(fit1)
+summary(fit1,se="nid")
+
+fit2a<-lm(log(TPY)~log(NUMBED)+log(SQRFOOT)+PRO+
+   TAXEXEMPT+SELFFUNDINS+MCERT+URBAN)
+
+fit2<-rq(injury$RATE~log(NUMBED)+log(SQRFOOT)+PRO+
+   TAXEXEMPT+SELFFUNDINS+MCERT+URBAN,tau=c(0.25,0.5,0.75))
+plot(summary(fit2,se="nid"))
+
+injury$RATE= 100*injury$TPY/injury$NUMBED
+
+
+
+fit3<-rq(TPY~log(NUMBED)+log(SQRFOOT)+PRO+TAXEXEMPT+SELFFUNDINS+MCERT+URBAN,tau=-1)
+plot(fit3)
+
+fit4<-rq(TPY~log(NUMBED)+log(SQRFOOT)+PRO+TAXEXEMPT+SELFFUNDINS+MCERT+URBAN,tau=1:99/100)
+plot(summary(fit4))
+
+fit1a<-rq(TPY~log(NUMBED)+log(SQRFOOT)+PRO+TAXEXEMPT+SELFFUNDINS+MCERT+URBAN,tau=0.25)
+fit1b<-rq(TPY~log(NUMBED)+log(SQRFOOT)+PRO+TAXEXEMPT+SELFFUNDINS+MCERT+URBAN,tau=0.5)
+fit1c<-rq(TPY~log(NUMBED)+log(SQRFOOT)+PRO+TAXEXEMPT+SELFFUNDINS+MCERT+URBAN,tau=0.75)
+
+anova(fit1a,fit1b,fit1c)
+
+
+fitnew<-rq(injury$RATE~NUMBED,tau=c(0.25,0.5,0.75))
+plot(summary(fitnew,se="nid"))
+
+#  FIGURE
+plot(SQRFOOT,TPY,xlab="Square Footage",ylab="Total Person Years",type = "n", cex=.5)
+points(SQRFOOT,TPY,cex=.5)#,col="blue")
+taus <- c(.05,.25,.75,.95)
+#xx <- seq(min(SQRFOOT),max(SQRFOOT),1)
+xx <- seq(0,260,1)
+f <- coef(rq((TPY)~(SQRFOOT),tau=taus))
+yy <- cbind(1,xx)%*%f
+for(i in 1:length(taus)){
+        lines(xx,yy[,i],col = "gray")
+        }
+abline(lm(TPY ~ SQRFOOT),lty = 2)#,col="red")
+abline(rq(TPY ~ SQRFOOT))#, col="blue")
+legend(190,65,c("OLS fit", "LAD fit"),
+        lty = c(2,1))#col = c("red","blue"),
+export.eps("F17QuanReg.eps", width=6,height=6)
+dev.off()
+
+
+

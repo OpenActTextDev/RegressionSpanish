@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 14 Modelos de Supervivencia | Modelado de Regresión con Aplicaciones Actuariales y Financieras</title>
+  <meta name="description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 14 Modelos de Supervivencia | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 14 Modelos de Supervivencia | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  
+  <meta name="twitter:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="C13GLM.html"/>
+<link rel="next" href="C15Misc.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Regression Modeling With Actuarial and Financial Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prólogo"><i class="fa fa-check"></i>Prólogo</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#para-quién-es-este-libro"><i class="fa fa-check"></i>¿Para Quién Es Este Libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#de-qué-trata-este-libro"><i class="fa fa-check"></i>¿De Qué Trata Este Libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cómo-transmite-este-libro-su-mensaje"><i class="fa fa-check"></i>¿Cómo Transmite Este Libro Su Mensaje?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#dedicación"><i class="fa fa-check"></i>Dedicación</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html"><i class="fa fa-check"></i>Translation</a></li>
+<li class="chapter" data-level="1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html"><i class="fa fa-check"></i><b>1</b> Regresión y la Distribución Normal</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec11"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es el Análisis de Regresión?</a></li>
+<li class="chapter" data-level="1.2" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec12"><i class="fa fa-check"></i><b>1.2</b> Ajuste de Datos a una Distribución Normal</a></li>
+<li class="chapter" data-level="1.3" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec13"><i class="fa fa-check"></i><b>1.3</b> Transformaciones de Potencia</a></li>
+<li class="chapter" data-level="1.4" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec14"><i class="fa fa-check"></i><b>1.4</b> Muestreo y el Papel de la Normalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec15"><i class="fa fa-check"></i><b>1.5</b> Regresión y Diseños de Muestreo</a></li>
+<li class="chapter" data-level="1.6" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec16"><i class="fa fa-check"></i><b>1.6</b> Aplicaciones Actuariales de la Regresión</a></li>
+<li class="chapter" data-level="1.7" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec17"><i class="fa fa-check"></i><b>1.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="1.8" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec18"><i class="fa fa-check"></i><b>1.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="1.9" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec19"><i class="fa fa-check"></i><b>1.9</b> Suplemento Técnico - Teorema del Límite Central</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="C2BasicLR.html"><a href="C2BasicLR.html"><i class="fa fa-check"></i><b>2</b> Regresión Lineal Básica</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec21"><i class="fa fa-check"></i><b>2.1</b> Correlaciones y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="2.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec22"><i class="fa fa-check"></i><b>2.2</b> Modelo Básico de Regresión Lineal</a></li>
+<li class="chapter" data-level="2.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec23"><i class="fa fa-check"></i><b>2.3</b> ¿Es Útil el Modelo? Algunas Medidas de Resumen Básicas</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec231"><i class="fa fa-check"></i><b>2.3.1</b> Particionando la Variabilidad</a></li>
+<li class="chapter" data-level="2.3.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec232"><i class="fa fa-check"></i><b>2.3.2</b> El Tamaño de una Desviación Típica: <em>s</em></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec24"><i class="fa fa-check"></i><b>2.4</b> Propiedades de los Estimadores del Coeficiente de Regresión</a></li>
+<li class="chapter" data-level="2.5" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec25"><i class="fa fa-check"></i><b>2.5</b> Inferencia Estadística</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec251"><i class="fa fa-check"></i><b>2.5.1</b> ¿Es Importante la Variable Explicativa?: La Prueba <em>t</em></a></li>
+<li class="chapter" data-level="2.5.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec252"><i class="fa fa-check"></i><b>2.5.2</b> Intervalos de Confianza</a></li>
+<li class="chapter" data-level="2.5.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec253"><i class="fa fa-check"></i><b>2.5.3</b> Intervalos de Predicción</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec26"><i class="fa fa-check"></i><b>2.6</b> Construyendo un Mejor Modelo: Análisis de Residuos</a></li>
+<li class="chapter" data-level="2.7" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec27"><i class="fa fa-check"></i><b>2.7</b> Aplicación: Modelo de Valoración de Activos Financieros</a></li>
+<li class="chapter" data-level="2.8" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec28"><i class="fa fa-check"></i><b>2.8</b> Salida Computacional Ilustrativa de Regresión</a></li>
+<li class="chapter" data-level="2.9" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec29"><i class="fa fa-check"></i><b>2.9</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="2.10" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec210"><i class="fa fa-check"></i><b>2.10</b> Ejercicios</a></li>
+<li class="chapter" data-level="2.11" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec211"><i class="fa fa-check"></i><b>2.11</b> Suplemento Técnico - Elementos del Álgebra de Matrices</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2111"><i class="fa fa-check"></i><b>2.11.1</b> Definiciones Básicas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2112"><i class="fa fa-check"></i><b>2.11.2</b> Algunas Matrices Especiales</a></li>
+<li class="chapter" data-level="2.11.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2113"><i class="fa fa-check"></i><b>2.11.3</b> Operaciones Básicas</a></li>
+<li class="chapter" data-level="2.11.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2114"><i class="fa fa-check"></i><b>2.11.4</b> Matrices Aleatorias</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html"><i class="fa fa-check"></i><b>3</b> Regresión Lineal Múltiple - I</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec31"><i class="fa fa-check"></i><b>3.1</b> Método de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="3.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec32"><i class="fa fa-check"></i><b>3.2</b> Modelo de Regresión Lineal y Propiedades de los Estimadores</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec321"><i class="fa fa-check"></i><b>3.2.1</b> Función de Regresión</a></li>
+<li class="chapter" data-level="3.2.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec322"><i class="fa fa-check"></i><b>3.2.2</b> Interpretación del Coeficiente de Regresión</a></li>
+<li class="chapter" data-level="3.2.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec323"><i class="fa fa-check"></i><b>3.2.3</b> Suposiciones del Modelo</a></li>
+<li class="chapter" data-level="3.2.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec324"><i class="fa fa-check"></i><b>3.2.4</b> Propiedades de los Estimadores de los Coeficientes de Regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec33"><i class="fa fa-check"></i><b>3.3</b> Estimación y Bondad de Ajuste</a></li>
+<li class="chapter" data-level="3.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec34"><i class="fa fa-check"></i><b>3.4</b> Inferencia Estadística para un Coeficiente Único</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec341"><i class="fa fa-check"></i><b>3.4.1</b> La Prueba <em>t</em></a></li>
+<li class="chapter" data-level="3.4.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec342"><i class="fa fa-check"></i><b>3.4.2</b> Intervalos de Confianza</a></li>
+<li class="chapter" data-level="3.4.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec343"><i class="fa fa-check"></i><b>3.4.3</b> Gráficos de Variables Añadidas</a></li>
+<li class="chapter" data-level="3.4.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec344"><i class="fa fa-check"></i><b>3.4.4</b> Coeficientes de Correlación Parcial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec35"><i class="fa fa-check"></i><b>3.5</b> Algunas Variables Explicativas Especiales</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec351"><i class="fa fa-check"></i><b>3.5.1</b> Variables Binarias</a></li>
+<li class="chapter" data-level="3.5.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec352"><i class="fa fa-check"></i><b>3.5.2</b> Transformación de Variables Explicativas</a></li>
+<li class="chapter" data-level="3.5.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec353"><i class="fa fa-check"></i><b>3.5.3</b> Términos de Interacción</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec36"><i class="fa fa-check"></i><b>3.6</b> Lectura Adicional y Referencias</a></li>
+<li class="chapter" data-level="3.7" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec37"><i class="fa fa-check"></i><b>3.7</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html"><i class="fa fa-check"></i><b>4</b> Regresión Lineal Múltiple - II</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec41"><i class="fa fa-check"></i><b>4.1</b> El Papel de las Variables Binarias</a></li>
+<li class="chapter" data-level="4.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec42"><i class="fa fa-check"></i><b>4.2</b> Inferencia Estadística para Varios Coeficientes</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec421"><i class="fa fa-check"></i><b>4.2.1</b> Conjuntos de Coeficientes de Regresión</a></li>
+<li class="chapter" data-level="4.2.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec422"><i class="fa fa-check"></i><b>4.2.2</b> La Hipótesis Lineal General</a></li>
+<li class="chapter" data-level="4.2.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec423"><i class="fa fa-check"></i><b>4.2.3</b> Estimando y Prediciendo Varios Coeficientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec43"><i class="fa fa-check"></i><b>4.3</b> Modelo ANOVA de Un Factor</a></li>
+<li class="chapter" data-level="4.4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec44"><i class="fa fa-check"></i><b>4.4</b> Combinando Variables Explicativas Categóricas y Continuas</a></li>
+<li class="chapter" data-level="4.5" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec45"><i class="fa fa-check"></i><b>4.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="4.6" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec46"><i class="fa fa-check"></i><b>4.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="4.7" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec47"><i class="fa fa-check"></i><b>4.7</b> Suplemento Técnico - Expresiones Matriciales</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec471"><i class="fa fa-check"></i><b>4.7.1</b> Expresión de Modelos con Variables Categóricas en Forma Matricial</a></li>
+<li class="chapter" data-level="4.7.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec472"><i class="fa fa-check"></i><b>4.7.2</b> Cálculo Recursivo de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="4.7.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec473"><i class="fa fa-check"></i><b>4.7.3</b> Modelo Lineal General</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="C5VarSelect.html"><a href="C5VarSelect.html"><i class="fa fa-check"></i><b>5</b> Selección de Variables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec51"><i class="fa fa-check"></i><b>5.1</b> Un Enfoque Iterativo para el Análisis de Datos y Modelado</a></li>
+<li class="chapter" data-level="5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec52"><i class="fa fa-check"></i><b>5.2</b> Procedimientos Automáticos de Selección de Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec53"><i class="fa fa-check"></i><b>5.3</b> Análisis de Residuales</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec531"><i class="fa fa-check"></i><b>5.3.1</b> Residuales</a></li>
+<li class="chapter" data-level="5.3.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec532"><i class="fa fa-check"></i><b>5.3.2</b> Uso de los Residuales para Identificar Valores Atípicos</a></li>
+<li class="chapter" data-level="5.3.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec533"><i class="fa fa-check"></i><b>5.3.3</b> Uso de los Residuales para Seleccionar Variables Explicativas</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec54"><i class="fa fa-check"></i><b>5.4</b> Puntos Influyentes</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec541"><i class="fa fa-check"></i><b>5.4.1</b> Apalancamiento</a></li>
+<li class="chapter" data-level="5.4.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec542"><i class="fa fa-check"></i><b>5.4.2</b> Distancia de Cook</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec55"><i class="fa fa-check"></i><b>5.5</b> Colinealidad</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec551"><i class="fa fa-check"></i><b>5.5.1</b> ¿Qué es la Colinealidad?</a></li>
+<li class="chapter" data-level="5.5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec552"><i class="fa fa-check"></i><b>5.5.2</b> Factores de Inflación de Varianza</a></li>
+<li class="chapter" data-level="5.5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec553"><i class="fa fa-check"></i><b>5.5.3</b> Colinealidad e Influencia</a></li>
+<li class="chapter" data-level="5.5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec554"><i class="fa fa-check"></i><b>5.5.4</b> Variables Suprensoras</a></li>
+<li class="chapter" data-level="5.5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec555"><i class="fa fa-check"></i><b>5.5.5</b> Variables Ortogonales</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec56"><i class="fa fa-check"></i><b>5.6</b> Criterios de Selección</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec561"><i class="fa fa-check"></i><b>5.6.1</b> Bondad de Ajuste</a></li>
+<li class="chapter" data-level="5.6.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec562"><i class="fa fa-check"></i><b>5.6.2</b> Validación del Modelo</a></li>
+<li class="chapter" data-level="5.6.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec563"><i class="fa fa-check"></i><b>5.6.3</b> Validación Cruzada</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec57"><i class="fa fa-check"></i><b>5.7</b> Heterocedasticidad</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec571"><i class="fa fa-check"></i><b>5.7.1</b> Detección de Heterocedasticidad</a></li>
+<li class="chapter" data-level="5.7.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec572"><i class="fa fa-check"></i><b>5.7.2</b> Errores Estándar Consistentes con Heterocedasticidad</a></li>
+<li class="chapter" data-level="5.7.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec573"><i class="fa fa-check"></i><b>5.7.3</b> Mínimos Cuadrados Ponderados</a></li>
+<li class="chapter" data-level="5.7.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec574"><i class="fa fa-check"></i><b>5.7.4</b> Transformaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec58"><i class="fa fa-check"></i><b>5.8</b> Lectura Adicional y Referencias</a></li>
+<li class="chapter" data-level="5.9" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec59"><i class="fa fa-check"></i><b>5.9</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.10" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec510"><i class="fa fa-check"></i><b>5.10</b> Suplementos Técnicos para el Capítulo 5</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5101"><i class="fa fa-check"></i><b>5.10.1</b> Matriz de Proyección</a></li>
+<li class="chapter" data-level="5.10.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5102"><i class="fa fa-check"></i><b>5.10.2</b> Estadísticas Leave-One-Out</a></li>
+<li class="chapter" data-level="5.10.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5103"><i class="fa fa-check"></i><b>5.10.3</b> Omisión de Variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html"><i class="fa fa-check"></i><b>6</b> Interpretación de Resultados de Regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec61"><i class="fa fa-check"></i><b>6.1</b> Lo que nos dice el proceso de modelado</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec611"><i class="fa fa-check"></i><b>6.1.1</b> Interpretación de efectos individuales</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec612"><i class="fa fa-check"></i><b>6.1.2</b> Otras Interpretaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec62"><i class="fa fa-check"></i><b>6.2</b> La Importancia de la Selección de Variables</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec621"><i class="fa fa-check"></i><b>6.2.1</b> Sobreajuste del Modelo</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec622"><i class="fa fa-check"></i><b>6.2.2</b> Subajuste del Modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec63"><i class="fa fa-check"></i><b>6.3</b> La Importancia de la Recolección de Datos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec631"><i class="fa fa-check"></i><b>6.3.1</b> Error en el Marco Muestral y Selección Adversa</a></li>
+<li class="chapter" data-level="6.3.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec632"><i class="fa fa-check"></i><b>6.3.2</b> Regiones de Muestreo Limitadas</a></li>
+<li class="chapter" data-level="6.3.3" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec633"><i class="fa fa-check"></i><b>6.3.3</b> Variables Dependientes Limitadas, Censura y Truncamiento</a></li>
+<li class="chapter" data-level="6.3.4" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec634"><i class="fa fa-check"></i><b>6.3.4</b> Variables Omitidas y Endógenas</a></li>
+<li class="chapter" data-level="6.3.5" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec635"><i class="fa fa-check"></i><b>6.3.5</b> Datos Faltantes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec64"><i class="fa fa-check"></i><b>6.4</b> Modelos de Datos Faltantes</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec641"><i class="fa fa-check"></i><b>6.4.1</b> Faltante al Azar</a></li>
+<li class="chapter" data-level="6.4.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec642"><i class="fa fa-check"></i><b>6.4.2</b> Datos Faltantes No Ignorables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec65"><i class="fa fa-check"></i><b>6.5</b> Aplicación: Eficiencia en el Costo de los Gestores de Riesgos</a></li>
+<li class="chapter" data-level="6.6" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec66"><i class="fa fa-check"></i><b>6.6</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="6.7" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec67"><i class="fa fa-check"></i><b>6.7</b> Ejercicios</a></li>
+<li class="chapter" data-level="6.8" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec68"><i class="fa fa-check"></i><b>6.8</b> Suplementos Técnicos para el Capítulo 6</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec681"><i class="fa fa-check"></i><b>6.8.1</b> Efectos de la Especificación Incorrecta del Modelo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="C7Trends.html"><a href="C7Trends.html"><i class="fa fa-check"></i><b>7</b> Modelado de Tendencias</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="C7Trends.html"><a href="C7Trends.html#introducción-1"><i class="fa fa-check"></i><b>7.1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#series-temporales-y-procesos-estocásticos"><i class="fa fa-check"></i>Series Temporales y Procesos Estocásticos</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#series-temporales-versus-modelos-causales"><i class="fa fa-check"></i>Series Temporales versus Modelos Causales</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="C7Trends.html"><a href="C7Trends.html#S7:Trends"><i class="fa fa-check"></i><b>7.2</b> Ajuste de Tendencias en el Tiempo</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#comprendiendo-patrones-en-el-tiempo"><i class="fa fa-check"></i>Comprendiendo Patrones en el Tiempo</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#ajuste-de-tendencias-en-el-tiempo"><i class="fa fa-check"></i>Ajuste de Tendencias en el Tiempo</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#ajuste-de-tendencias-estacionales"><i class="fa fa-check"></i>Ajuste de Tendencias Estacionales</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#confiabilidad-de-los-pronósticos-de-series-temporales"><i class="fa fa-check"></i>Confiabilidad de los Pronósticos de Series Temporales</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="C7Trends.html"><a href="C7Trends.html#S7:RandomWalk"><i class="fa fa-check"></i><b>7.3</b> Estacionariedad y Modelos de Paseo Aleatorio</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#ruido-blanco"><i class="fa fa-check"></i>Ruido Blanco</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#paseo-aleatorio"><i class="fa fa-check"></i>Paseo Aleatorio</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="C7Trends.html"><a href="C7Trends.html#inferencia-usando-modelos-de-paseo-aleatorio"><i class="fa fa-check"></i><b>7.4</b> Inferencia usando Modelos de Paseo Aleatorio</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#propiedades-del-modelo"><i class="fa fa-check"></i>Propiedades del Modelo</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#pronósticos"><i class="fa fa-check"></i>Pronósticos</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#identificación-de-estacionariedad"><i class="fa fa-check"></i>Identificación de Estacionariedad</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#identificación-de-paseos-aleatorios"><i class="fa fa-check"></i>Identificación de Paseos Aleatorios</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#paseo-aleatorio-versus-modelo-de-tendencia-lineal-en-el-tiempo"><i class="fa fa-check"></i>Paseo Aleatorio versus Modelo de Tendencia Lineal en el Tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="C7Trends.html"><a href="C7Trends.html#filtrado-para-lograr-estacionariedad"><i class="fa fa-check"></i><b>7.5</b> Filtrado para Lograr Estacionariedad</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#transformaciones"><i class="fa fa-check"></i>Transformaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="C7Trends.html"><a href="C7Trends.html#evaluación-de-pronósticos"><i class="fa fa-check"></i><b>7.6</b> Evaluación de Pronósticos</a></li>
+<li class="chapter" data-level="7.7" data-path="C7Trends.html"><a href="C7Trends.html#lecturas-adicionales-y-referencias"><i class="fa fa-check"></i><b>7.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="7.8" data-path="C7Trends.html"><a href="C7Trends.html#ejercicios"><i class="fa fa-check"></i><b>7.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="C8AR.html"><a href="C8AR.html"><i class="fa fa-check"></i><b>8</b> Autocorrelaciones y Modelos Autorregresivos</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="C8AR.html"><a href="C8AR.html#S8:Autocorrs"><i class="fa fa-check"></i><b>8.1</b> Autocorrelaciones</a>
+<ul>
+<li class="chapter" data-level="" data-path="C8AR.html"><a href="C8AR.html#aplicación-retornos-de-bonos-con-inflación"><i class="fa fa-check"></i>Aplicación: Retornos de Bonos con Inflación</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="C8AR.html"><a href="C8AR.html#modelos-autorregresivos-de-orden-uno"><i class="fa fa-check"></i><b>8.2</b> Modelos Autorregresivos de Orden Uno</a></li>
+<li class="chapter" data-level="8.3" data-path="C8AR.html"><a href="C8AR.html#S8:Estimation"><i class="fa fa-check"></i><b>8.3</b> Estimación y Verificación de Diagnóstico</a></li>
+<li class="chapter" data-level="8.4" data-path="C8AR.html"><a href="C8AR.html#S8:AR1Smooth"><i class="fa fa-check"></i><b>8.4</b> Suavización y Predicción</a></li>
+<li class="chapter" data-level="8.5" data-path="C8AR.html"><a href="C8AR.html#S8:BoxJenkins"><i class="fa fa-check"></i><b>8.5</b> Modelado y Pronóstico de Box-Jenkins</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="C8AR.html"><a href="C8AR.html#modelos"><i class="fa fa-check"></i><b>8.5.1</b> Modelos</a></li>
+<li class="chapter" data-level="8.5.2" data-path="C8AR.html"><a href="C8AR.html#pronóstico"><i class="fa fa-check"></i><b>8.5.2</b> Pronóstico</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="C8AR.html"><a href="C8AR.html#aplicación-tasas-de-cambio-de-hong-kong"><i class="fa fa-check"></i><b>8.6</b> Aplicación: Tasas de Cambio de Hong Kong</a></li>
+<li class="chapter" data-level="8.7" data-path="C8AR.html"><a href="C8AR.html#lecturas-adicionales-y-referencias-1"><i class="fa fa-check"></i><b>8.7</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="C9Forecast.html"><a href="C9Forecast.html"><i class="fa fa-check"></i><b>9</b> Pronósticos y Modelos de Series Temporales</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="C9Forecast.html"><a href="C9Forecast.html#suavización-con-promedios-móviles"><i class="fa fa-check"></i><b>9.1</b> Suavización con Promedios Móviles</a></li>
+<li class="chapter" data-level="9.2" data-path="C9Forecast.html"><a href="C9Forecast.html#S9:ExponSmooth"><i class="fa fa-check"></i><b>9.2</b> Suavización Exponencial</a></li>
+<li class="chapter" data-level="9.3" data-path="C9Forecast.html"><a href="C9Forecast.html#S9:SeasonalTSModels"><i class="fa fa-check"></i><b>9.3</b> Modelos de Series Temporales Estacionales</a></li>
+<li class="chapter" data-level="9.4" data-path="C9Forecast.html"><a href="C9Forecast.html#pruebas-de-raíces-unitarias"><i class="fa fa-check"></i><b>9.4</b> Pruebas de Raíces Unitarias</a></li>
+<li class="chapter" data-level="9.5" data-path="C9Forecast.html"><a href="C9Forecast.html#modelos-archgarch"><i class="fa fa-check"></i><b>9.5</b> Modelos ARCH/GARCH</a></li>
+<li class="chapter" data-level="9.6" data-path="C9Forecast.html"><a href="C9Forecast.html#lecturas-y-referencias-adicionales"><i class="fa fa-check"></i><b>9.6</b> Lecturas y Referencias Adicionales</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="C10Panel.html"><a href="C10Panel.html"><i class="fa fa-check"></i><b>10</b> Modelos de Datos Longitudinales y de Panel</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="C10Panel.html"><a href="C10Panel.html#S10:Intro"><i class="fa fa-check"></i><b>10.1</b> ¿Qué son los Datos Longitudinales y de Panel?</a></li>
+<li class="chapter" data-level="10.2" data-path="C10Panel.html"><a href="C10Panel.html#S10:Visual"><i class="fa fa-check"></i><b>10.2</b> Visualización de Datos Longitudinales y de Panel</a></li>
+<li class="chapter" data-level="10.3" data-path="C10Panel.html"><a href="C10Panel.html#S10:FEModels"><i class="fa fa-check"></i><b>10.3</b> Modelos Básicos de Efectos Fijos</a></li>
+<li class="chapter" data-level="10.4" data-path="C10Panel.html"><a href="C10Panel.html#S10:FEModels2"><i class="fa fa-check"></i><b>10.4</b> Modelos Extendidos de Efectos Fijos</a></li>
+<li class="chapter" data-level="10.5" data-path="C10Panel.html"><a href="C10Panel.html#S10:REModels"><i class="fa fa-check"></i><b>10.5</b> Modelos de Efectos Aleatorios</a></li>
+<li class="chapter" data-level="10.6" data-path="C10Panel.html"><a href="C10Panel.html#S10:References"><i class="fa fa-check"></i><b>10.6</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="C11Binary.html"><a href="C11Binary.html"><i class="fa fa-check"></i><b>11</b> Variables Dependientes Categóricas</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec111"><i class="fa fa-check"></i><b>11.1</b> Variables Dependientes Binarias</a></li>
+<li class="chapter" data-level="11.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec112"><i class="fa fa-check"></i><b>11.2</b> Modelos de Regresión Logística y Probit</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1121"><i class="fa fa-check"></i><b>11.2.1</b> Uso de Funciones No Lineales de Variables Explicativas</a></li>
+<li class="chapter" data-level="11.2.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1122"><i class="fa fa-check"></i><b>11.2.2</b> Interpretación del Umbral</a></li>
+<li class="chapter" data-level="11.2.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1123"><i class="fa fa-check"></i><b>11.2.3</b> Interpretación de Utilidad Aleatoria</a></li>
+<li class="chapter" data-level="11.2.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1124"><i class="fa fa-check"></i><b>11.2.4</b> Regresión Logística</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec113"><i class="fa fa-check"></i><b>11.3</b> Inferencia para Modelos de Regresión Logística y Probit</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="C11Binary.html"><a href="C11Binary.html#estimación-de-parámetros"><i class="fa fa-check"></i><b>11.3.1</b> Estimación de Parámetros</a></li>
+<li class="chapter" data-level="11.3.2" data-path="C11Binary.html"><a href="C11Binary.html#inferencia-adicional"><i class="fa fa-check"></i><b>11.3.2</b> Inferencia Adicional</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec114"><i class="fa fa-check"></i><b>11.4</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="11.5" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec115"><i class="fa fa-check"></i><b>11.5</b> Variables Dependientes Nominales</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1151"><i class="fa fa-check"></i><b>11.5.1</b> Logit Generalizado</a></li>
+<li class="chapter" data-level="11.5.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1152"><i class="fa fa-check"></i><b>11.5.2</b> Logit Multinomial</a></li>
+<li class="chapter" data-level="11.5.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1153"><i class="fa fa-check"></i><b>11.5.3</b> Logit Anidado</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec116"><i class="fa fa-check"></i><b>11.6</b> Variables Dependientes Ordinales</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="C11Binary.html"><a href="C11Binary.html#logit-acumulativo"><i class="fa fa-check"></i><b>11.6.1</b> Logit Acumulativo</a></li>
+<li class="chapter" data-level="11.6.2" data-path="C11Binary.html"><a href="C11Binary.html#probit-acumulativo"><i class="fa fa-check"></i><b>11.6.2</b> Probit Acumulativo</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec117"><i class="fa fa-check"></i><b>11.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="11.8" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec118"><i class="fa fa-check"></i><b>11.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="11.9" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec119"><i class="fa fa-check"></i><b>11.9</b> Suplementos Técnicos - Inferencia Basada en Verosimilitud</a>
+<ul>
+<li class="chapter" data-level="11.9.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1191"><i class="fa fa-check"></i><b>11.9.1</b> Propiedades de las Funciones de Verosimilitud</a></li>
+<li class="chapter" data-level="11.9.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1192"><i class="fa fa-check"></i><b>11.9.2</b> Estimadores de Máxima Verosimilitud</a></li>
+<li class="chapter" data-level="11.9.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1193"><i class="fa fa-check"></i><b>11.9.3</b> Pruebas de Hipótesis</a></li>
+<li class="chapter" data-level="11.9.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1194"><i class="fa fa-check"></i><b>11.9.4</b> Criterios de Información</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="C12Count.html"><a href="C12Count.html"><i class="fa fa-check"></i><b>12</b> Variables Dependientes de Conteo</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec121"><i class="fa fa-check"></i><b>12.1</b> Regresión de Poisson</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec1211"><i class="fa fa-check"></i><b>12.1.1</b> Distribución de Poisson</a></li>
+<li class="chapter" data-level="12.1.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec1212"><i class="fa fa-check"></i><b>12.1.2</b> Modelo de Regresión</a></li>
+<li class="chapter" data-level="12.1.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec1213"><i class="fa fa-check"></i><b>12.1.3</b> Estimación</a></li>
+<li class="chapter" data-level="12.1.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec1214"><i class="fa fa-check"></i><b>12.1.4</b> Inferencia Adicional</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec122"><i class="fa fa-check"></i><b>12.2</b> Aplicación: Seguro de Automóviles en Singapur</a></li>
+<li class="chapter" data-level="12.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec123"><i class="fa fa-check"></i><b>12.3</b> Sobre dispersión y Modelos Binomiales Negativos</a></li>
+<li class="chapter" data-level="12.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec124"><i class="fa fa-check"></i><b>12.4</b> Otros Modelos de Conteo</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="C12Count.html"><a href="C12Count.html#modelos-inflados-en-ceros"><i class="fa fa-check"></i><b>12.4.1</b> Modelos Inflados en Ceros</a></li>
+<li class="chapter" data-level="12.4.2" data-path="C12Count.html"><a href="C12Count.html#modelos-hurdle"><i class="fa fa-check"></i><b>12.4.2</b> Modelos Hurdle</a></li>
+<li class="chapter" data-level="12.4.3" data-path="C12Count.html"><a href="C12Count.html#modelos-de-heterogeneidad"><i class="fa fa-check"></i><b>12.4.3</b> Modelos de Heterogeneidad</a></li>
+<li class="chapter" data-level="12.4.4" data-path="C12Count.html"><a href="C12Count.html#modelos-de-clases-latentes"><i class="fa fa-check"></i><b>12.4.4</b> Modelos de Clases Latentes</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="C12Count.html"><a href="C12Count.html#S:Sec125"><i class="fa fa-check"></i><b>12.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="12.6" data-path="C12Count.html"><a href="C12Count.html#S:Sec126"><i class="fa fa-check"></i><b>12.6</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="C13GLM.html"><a href="C13GLM.html"><i class="fa fa-check"></i><b>13</b> Modelos Lineales Generalizados</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec131"><i class="fa fa-check"></i><b>13.1</b> Introducción</a></li>
+<li class="chapter" data-level="13.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec132"><i class="fa fa-check"></i><b>13.2</b> Modelo GLM</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1321"><i class="fa fa-check"></i><b>13.2.1</b> Familia Exponencial Lineal de Distribuciones</a></li>
+<li class="chapter" data-level="13.2.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1322"><i class="fa fa-check"></i><b>13.2.2</b> Funciones de Enlace</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec133"><i class="fa fa-check"></i><b>13.3</b> Estimación</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1331"><i class="fa fa-check"></i><b>13.3.1</b> Estimación de Máxima Verosimilitud para Enlaces Canónicos</a></li>
+<li class="chapter" data-level="13.3.2" data-path="C13GLM.html"><a href="C13GLM.html#sobredispersión"><i class="fa fa-check"></i><b>13.3.2</b> Sobredispersión</a></li>
+<li class="chapter" data-level="13.3.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1333"><i class="fa fa-check"></i><b>13.3.3</b> Estadísticas de Bondad de Ajuste</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec134"><i class="fa fa-check"></i><b>13.4</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="13.5" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec135"><i class="fa fa-check"></i><b>13.5</b> Residuales</a></li>
+<li class="chapter" data-level="13.6" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec136"><i class="fa fa-check"></i><b>13.6</b> Distribución de Tweedie</a></li>
+<li class="chapter" data-level="13.7" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec137"><i class="fa fa-check"></i><b>13.7</b> Lecturas adicionales y referencias</a></li>
+<li class="chapter" data-level="13.8" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec138"><i class="fa fa-check"></i><b>13.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="13.9" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec139"><i class="fa fa-check"></i><b>13.9</b> Suplementos Técnicos - Familia Exponencial</a>
+<ul>
+<li class="chapter" data-level="13.9.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1391"><i class="fa fa-check"></i><b>13.9.1</b> Familia Exponencial Lineal de Distribuciones</a></li>
+<li class="chapter" data-level="13.9.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1392"><i class="fa fa-check"></i><b>13.9.2</b> Momentos</a></li>
+<li class="chapter" data-level="13.9.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1393"><i class="fa fa-check"></i><b>13.9.3</b> Estimación de Máxima Verosimilitud para Enlaces Generales</a></li>
+<li class="chapter" data-level="13.9.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1394"><i class="fa fa-check"></i><b>13.9.4</b> Mínimos Cuadrados Reponderados Iterativos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="C14Survival.html"><a href="C14Survival.html"><i class="fa fa-check"></i><b>14</b> Modelos de Supervivencia</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="C14Survival.html"><a href="C14Survival.html#introducción-2"><i class="fa fa-check"></i><b>14.1</b> Introducción</a></li>
+<li class="chapter" data-level="14.2" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec142"><i class="fa fa-check"></i><b>14.2</b> Censura y Truncamiento</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="C14Survival.html"><a href="C14Survival.html#definiciones-y-ejemplos"><i class="fa fa-check"></i><b>14.2.1</b> Definiciones y Ejemplos</a></li>
+<li class="chapter" data-level="14.2.2" data-path="C14Survival.html"><a href="C14Survival.html#inferencia-por-verosimilitud"><i class="fa fa-check"></i><b>14.2.2</b> Inferencia por Verosimilitud</a></li>
+<li class="chapter" data-level="14.2.3" data-path="C14Survival.html"><a href="C14Survival.html#estimador-producto-límite"><i class="fa fa-check"></i><b>14.2.3</b> Estimador Producto-Límite</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec143"><i class="fa fa-check"></i><b>14.3</b> Modelo de Tiempo de Fallo Acelerado</a></li>
+<li class="chapter" data-level="14.4" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec144"><i class="fa fa-check"></i><b>14.4</b> Modelo de Riesgos Proporcionales</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec1441"><i class="fa fa-check"></i><b>14.4.1</b> Riesgos Proporcionales</a></li>
+<li class="chapter" data-level="14.4.2" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec1442"><i class="fa fa-check"></i><b>14.4.2</b> Inferencia</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec145"><i class="fa fa-check"></i><b>14.5</b> Eventos Recurrentes</a></li>
+<li class="chapter" data-level="14.6" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec146"><i class="fa fa-check"></i><b>14.6</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="C15Misc.html"><a href="C15Misc.html"><i class="fa fa-check"></i><b>15</b> Temas Misceláneos de Regresión</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec151"><i class="fa fa-check"></i><b>15.1</b> Modelos Lineales Mixtos</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="C15Misc.html"><a href="C15Misc.html#mínimos-cuadrados-ponderados-2"><i class="fa fa-check"></i><b>15.1.1</b> Mínimos Cuadrados Ponderados</a></li>
+<li class="chapter" data-level="15.1.2" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec1512"><i class="fa fa-check"></i><b>15.1.2</b> Estimación de Componentes de Varianza</a></li>
+<li class="chapter" data-level="15.1.3" data-path="C15Misc.html"><a href="C15Misc.html#mejor-predicción-lineal-insesgada"><i class="fa fa-check"></i><b>15.1.3</b> Mejor Predicción Lineal Insesgada</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="C15Misc.html"><a href="C15Misc.html#regresión-bayesiana"><i class="fa fa-check"></i><b>15.2</b> Regresión Bayesiana</a></li>
+<li class="chapter" data-level="15.3" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec153"><i class="fa fa-check"></i><b>15.3</b> Estimación de Densidad y Suavizado de Diagramas de Dispersión</a></li>
+<li class="chapter" data-level="15.4" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec154"><i class="fa fa-check"></i><b>15.4</b> Modelos Aditivos Generalizados</a></li>
+<li class="chapter" data-level="15.5" data-path="C15Misc.html"><a href="C15Misc.html#bootstrapping"><i class="fa fa-check"></i><b>15.5</b> Bootstrapping</a></li>
+<li class="chapter" data-level="15.6" data-path="C15Misc.html"><a href="C15Misc.html#lecturas-adicionales-y-referencias-2"><i class="fa fa-check"></i><b>15.6</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="C16FreqSev.html"><a href="C16FreqSev.html"><i class="fa fa-check"></i><b>16</b> Modelos de Frecuencia-Severidad</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec161"><i class="fa fa-check"></i><b>16.1</b> Introducción</a></li>
+<li class="chapter" data-level="16.2" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec162"><i class="fa fa-check"></i><b>16.2</b> Modelo Tobit</a></li>
+<li class="chapter" data-level="16.3" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec163"><i class="fa fa-check"></i><b>16.3</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="16.4" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec164"><i class="fa fa-check"></i><b>16.4</b> Modelo de Dos Partes</a></li>
+<li class="chapter" data-level="16.5" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec165"><i class="fa fa-check"></i><b>16.5</b> Modelo de Pérdidas Agregadas</a></li>
+<li class="chapter" data-level="16.6" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec166"><i class="fa fa-check"></i><b>16.6</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="16.7" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec167"><i class="fa fa-check"></i><b>16.7</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="C17Fat.html"><a href="C17Fat.html"><i class="fa fa-check"></i><b>17</b> Modelos de Regresión con Colas Gruesas</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="C17Fat.html"><a href="C17Fat.html#introducción-3"><i class="fa fa-check"></i><b>17.1</b> Introducción</a></li>
+<li class="chapter" data-level="17.2" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec172"><i class="fa fa-check"></i><b>17.2</b> Transformaciones</a></li>
+<li class="chapter" data-level="17.3" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec173"><i class="fa fa-check"></i><b>17.3</b> Modelos Lineales Generalizados</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec1731"><i class="fa fa-check"></i><b>17.3.1</b> ¿Qué significa “Cola Gruesa”?</a></li>
+<li class="chapter" data-level="17.3.2" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec1732"><i class="fa fa-check"></i><b>17.3.2</b> Aplicación: Asilos de Ancianos en Wisconsin</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec174"><i class="fa fa-check"></i><b>17.4</b> Distribuciones Generalizadas</a>
+<ul>
+<li class="chapter" data-level="" data-path="C17Fat.html"><a href="C17Fat.html#aplicación-hogares-de-ancianos-en-wisconsin"><i class="fa fa-check"></i>Aplicación: Hogares de Ancianos en Wisconsin</a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec175"><i class="fa fa-check"></i><b>17.5</b> Regresión por Cuantiles</a></li>
+<li class="chapter" data-level="17.6" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec176"><i class="fa fa-check"></i><b>17.6</b> Modelos de Valores Extremos</a></li>
+<li class="chapter" data-level="17.7" data-path="C17Fat.html"><a href="C17Fat.html#lecturas-adicionales-y-referencias-3"><i class="fa fa-check"></i><b>17.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="17.8" data-path="C17Fat.html"><a href="C17Fat.html#ejercicios-1"><i class="fa fa-check"></i><b>17.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="C18Cred.html"><a href="C18Cred.html"><i class="fa fa-check"></i><b>18</b> Credibilidad y Bonus-Malus</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="C18Cred.html"><a href="C18Cred.html#clasificación-de-riesgos-y-experiencia"><i class="fa fa-check"></i><b>18.1</b> Clasificación de Riesgos y Experiencia</a></li>
+<li class="chapter" data-level="18.2" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec182"><i class="fa fa-check"></i><b>18.2</b> Credibilidad</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec1821"><i class="fa fa-check"></i><b>18.2.1</b> Credibilidad de Fluctuación Limitada</a></li>
+<li class="chapter" data-level="18.2.2" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec1822"><i class="fa fa-check"></i><b>18.2.2</b> Credibilidad de Máxima Precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec183"><i class="fa fa-check"></i><b>18.3</b> Credibilidad y Regresión</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="C18Cred.html"><a href="C18Cred.html#modelo-de-efectos-aleatorios-unidireccional"><i class="fa fa-check"></i><b>18.3.1</b> Modelo de Efectos Aleatorios Unidireccional</a></li>
+<li class="chapter" data-level="18.3.2" data-path="C18Cred.html"><a href="C18Cred.html#modelos-longitudinales"><i class="fa fa-check"></i><b>18.3.2</b> Modelos Longitudinales</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec184"><i class="fa fa-check"></i><b>18.4</b> Bonus-Malus</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="C19Triangles.html"><a href="C19Triangles.html"><i class="fa fa-check"></i><b>19</b> Triángulos de Reclamos</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="C19Triangles.html"><a href="C19Triangles.html#introducción-4"><i class="fa fa-check"></i><b>19.1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1911"><i class="fa fa-check"></i><b>19.1.1</b> Evolución de los Reclamos</a></li>
+<li class="chapter" data-level="19.1.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1912"><i class="fa fa-check"></i><b>19.1.2</b> Triángulos de Reclamos</a></li>
+<li class="chapter" data-level="19.1.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1913"><i class="fa fa-check"></i><b>19.1.3</b> Método de Escalera de Cadenas</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec192"><i class="fa fa-check"></i><b>19.2</b> Regresión Usando Funciones del Tiempo como Variables Explicativas</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1921"><i class="fa fa-check"></i><b>19.2.1</b> Modelo Lognormal</a></li>
+<li class="chapter" data-level="19.2.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1922"><i class="fa fa-check"></i><b>19.2.2</b> Curva de Hoerl</a></li>
+<li class="chapter" data-level="19.2.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1923"><i class="fa fa-check"></i><b>19.2.3</b> Modelos de Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec193"><i class="fa fa-check"></i><b>19.3</b> Usando Desarrollos Pasados</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1931"><i class="fa fa-check"></i><b>19.3.1</b> Modelo de Mack</a></li>
+<li class="chapter" data-level="19.3.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1932"><i class="fa fa-check"></i><b>19.3.2</b> Modelos Distribucionales</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="C19Triangles.html"><a href="C19Triangles.html#lecturas-adicionales-y-referencias-4"><i class="fa fa-check"></i><b>19.4</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="19.5" data-path="C19Triangles.html"><a href="C19Triangles.html#ejercicios-2"><i class="fa fa-check"></i><b>19.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="C20Report.html"><a href="C20Report.html"><i class="fa fa-check"></i><b>20</b> Redacción de Informes: Comunicando Resultados del Análisis de Datos</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="C20Report.html"><a href="C20Report.html#S20:Overview"><i class="fa fa-check"></i><b>20.1</b> Visión General</a></li>
+<li class="chapter" data-level="20.2" data-path="C20Report.html"><a href="C20Report.html#S20:Methods"><i class="fa fa-check"></i><b>20.2</b> Métodos para Comunicar Datos</a>
+<ul>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#datos-dentro-del-texto"><i class="fa fa-check"></i>Datos Dentro del Texto</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#gráficos"><i class="fa fa-check"></i>Gráficos</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="C20Report.html"><a href="C20Report.html#S20:Organize"><i class="fa fa-check"></i><b>20.3</b> Cómo Organizar</a>
+<ul>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#título-y-resumen"><i class="fa fa-check"></i>Título y Resumen</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#introducción-5"><i class="fa fa-check"></i>Introducción</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#selección-e-interpretación-del-modelo"><i class="fa fa-check"></i>Selección e Interpretación del Modelo</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#referencias-y-apéndice"><i class="fa fa-check"></i>Referencias y Apéndice</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="C20Report.html"><a href="C20Report.html#sugerencias-adicionales-para-la-redacción-de-informes"><i class="fa fa-check"></i><b>20.4</b> Sugerencias Adicionales para la Redacción de Informes</a></li>
+<li class="chapter" data-level="20.5" data-path="C20Report.html"><a href="C20Report.html#estudio-de-caso-reclamos-de-automóviles-en-suecia"><i class="fa fa-check"></i><b>20.5</b> Estudio de Caso: Reclamos de Automóviles en Suecia</a></li>
+<li class="chapter" data-level="20.6" data-path="C20Report.html"><a href="C20Report.html#further-reading-and-references"><i class="fa fa-check"></i><b>20.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="20.7" data-path="C20Report.html"><a href="C20Report.html#exercises"><i class="fa fa-check"></i><b>20.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="apéndices.html"><a href="apéndices.html"><i class="fa fa-check"></i><b>21</b> Apéndices</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a1.-inferencia-estadística-básica"><i class="fa fa-check"></i>Apéndice A1. Inferencia Estadística Básica</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribuciones-de-funciones-de-variables-aleatorias"><i class="fa fa-check"></i>Distribuciones de Funciones de Variables Aleatorias</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#estimación-y-predicción"><i class="fa fa-check"></i>Estimación y Predicción</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#pruebas-de-hipótesis"><i class="fa fa-check"></i>Pruebas de Hipótesis</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a2.-álgebra-de-matrices"><i class="fa fa-check"></i>Apéndice A2. Álgebra de Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#definiciones-básicas"><i class="fa fa-check"></i>Definiciones Básicas</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#revisión-de-operaciones-básicas"><i class="fa fa-check"></i>Revisión de Operaciones Básicas</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#definiciones-adicionales"><i class="fa fa-check"></i>Definiciones Adicionales</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a3.-tablas-de-probabilidad"><i class="fa fa-check"></i>Apéndice A3. Tablas de Probabilidad</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-normal"><i class="fa fa-check"></i>Distribución Normal</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-chi-cuadrado"><i class="fa fa-check"></i>Distribución Chi-Cuadrado</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-t"><i class="fa fa-check"></i>Distribución <em>t</em></a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-f"><i class="fa fa-check"></i>Distribución <em>F</em></a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Modelado de Regresión con Aplicaciones Actuariales y Financieras</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="C14Survival" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">Capítulo 14</span> Modelos de Supervivencia<a href="C14Survival.html#C14Survival" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Vista Previa del Capítulo</em>. Este capítulo introduce la regresión donde la variable dependiente es el tiempo hasta un evento, como el tiempo hasta la muerte, el inicio de una enfermedad o el incumplimiento de un préstamo. Los tiempos de eventos a menudo están limitados por procedimientos de muestreo, por lo que en este capítulo se resumen ideas de censura y truncamiento de datos. Los tiempos de eventos son no negativos y sus distribuciones se describen en términos de funciones de supervivencia y de riesgo. Se consideran dos tipos de regresión basada en el riesgo: un modelo completamente paramétrico de tiempo de falla acelerado y un modelo semiparamétrico de riesgos proporcionales.</p>
+<div id="introducción-2" class="section level2 hasAnchor" number="14.1">
+<h2><span class="header-section-number">14.1</span> Introducción<a href="C14Survival.html#introducción-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En los modelos de supervivencia, la variable dependiente es el tiempo hasta un evento de interés. El ejemplo clásico de un evento es el tiempo hasta la muerte (el complemento de la muerte es la supervivencia). Los modelos de supervivencia ahora se aplican ampliamente en muchas disciplinas científicas; otros ejemplos de eventos de interés incluyen el inicio de la enfermedad de Alzheimer (biomedicina), el tiempo hasta la bancarrota (economía) y el tiempo hasta el divorcio (sociología).</p>
+<p><strong>Ejemplo: Tiempo hasta la Bancarrota.</strong> Shumway (2001) examinó el tiempo hasta la bancarrota para 3,182 empresas listadas en el archivo industrial de Compustat y el archivo de rendimientos diarios de acciones de CRSP para la Bolsa de Nueva York durante el período 1962-1992. Se examinaron varias variables financieras explicativas, incluyendo capital de trabajo sobre activos totales, ganancias retenidas sobre activos totales, ganancias antes de intereses e impuestos sobre activos totales, capital de mercado sobre pasivos totales, ventas sobre activos totales, ingresos netos sobre activos totales, pasivos totales sobre activos totales y activos corrientes sobre pasivos corrientes. El conjunto de datos incluyó 300 bancarrotas de 39,745 años-firma.</p>
+<p>Véase también Kim et al. (1995) para un estudio similar sobre insolvencias en seguros.</p>
+<hr />
+<p>Una característica distintiva del modelado de supervivencia es que es común que la variable dependiente solo se observe de manera limitada. Algunos eventos de interés, como la bancarrota o el divorcio, nunca ocurren para sujetos específicos (y por lo tanto pueden pensarse como que toman un tiempo infinito). Para otros sujetos, incluso cuando el tiempo del evento es finito, puede ocurrir después del período de estudio, de modo que los datos están <em>censurados</em> (por la derecha). Es decir, la información completa sobre los tiempos de eventos puede no estar disponible debido al diseño del estudio. Además, las empresas pueden fusionarse o ser adquiridas por otras empresas, y las personas pueden mudarse de un área geográfica, dejando el estudio. Por lo tanto, los datos pueden estar limitados por eventos que son ajenos a la pregunta de investigación en consideración, representados como censura <em>aleatoria</em>. La censura es una característica regular de los datos de supervivencia; los valores grandes de una variable dependiente requieren más tiempo para desarrollarse, por lo que pueden ser más difíciles de observar que los valores pequeños, considerando otras condiciones iguales. También pueden ocurrir otros tipos de limitaciones; los sujetos cuya observación depende de la experiencia del evento de interés se denominan <em>truncados</em>. Para ilustrar, en una investigación de mortalidad en la vejez, solo aquellos que sobreviven hasta los 85 años son reclutados para ser parte del estudio. La Sección <a href="C14Survival.html#S:Sec142">14.2</a> describe la censura y el truncamiento con más detalle.</p>
+<p>Otra característica distintiva del modelado de supervivencia es que la variable dependiente tiene valores positivos. Por lo tanto, las aproximaciones de curva normal utilizadas en la regresión lineal son menos útiles en el análisis de supervivencia; este capítulo introduce modelos de regresión alternativos. Además, es habitual interpretar los modelos de supervivencia utilizando la <em>función de riesgo</em>, definida como
+<span class="math display">\[
+\mathrm{h}(t)= \frac{\textit{función de densidad de probabilidad}}
+{\textit{función de supervivencia}} =\frac{\mathrm{f}(t)}{\mathrm{S}(t)},
+\]</span>
+la probabilidad “instantánea” de un evento, condicionada a la supervivencia hasta el tiempo <span class="math inline">\(t\)</span>. La función de riesgo recibe muchos otros nombres: se conoce como la <em>fuerza de mortalidad</em> en la ciencia actuarial, la <em>tasa de falla</em> en ingeniería y la <em>función de intensidad</em> en procesos estocásticos.</p>
+<p>En economía, las funciones de riesgo se utilizan para describir la <em>dependencia de duración</em>, la relación entre la probabilidad instantánea de un evento (la densidad) y el tiempo transcurrido en un estado dado. La <em>dependencia de duración negativa</em> está asociada con tasas de riesgo decrecientes. Por ejemplo, cuanto mayor sea el tiempo hasta que un reclamante solicite un pago por una lesión asegurada, menor será la probabilidad de hacer una solicitud. La <em>dependencia de duración positiva</em> está asociada con tasas de riesgo crecientes. Por ejemplo, la mortalidad humana en la vejez generalmente muestra una tasa de riesgo creciente. Cuanto mayor sea la edad de una persona, mayor será la probabilidad de muerte en el corto plazo.</p>
+<p>Una cantidad relacionada de interés es la <em>función acumulada de riesgo</em>, <span class="math inline">\(H(t)= \int_0^t h(s)ds\)</span>. Esta cantidad también puede expresarse como el logaritmo negativo de la función de supervivencia, y de manera inversa, <span class="math inline">\(\Pr(y&gt;t)=\mathrm{S}(t) = \exp (-H(t))\)</span>.</p>
+<p>Los dos modelos de regresión más utilizados en el análisis de supervivencia están basados en funciones de riesgo. La Sección <a href="C14Survival.html#S:Sec143">14.3</a> introduce el <em>modelo de tiempo de falla acelerado</em>, donde se asume un modelo lineal para el logaritmo del tiempo hasta la falla, pero con una distribución de error que no necesita ser aproximadamente normal. La Sección <a href="C14Survival.html#S:Sec144">14.4</a> introduce el <em>modelo de riesgos proporcionales</em> debido a Cox (1972), donde se asume que la función de riesgo puede escribirse como el producto de un riesgo “base” y una función de una combinación lineal de variables explicativas.</p>
+<p>Con los datos de supervivencia, observamos una muestra transversal de sujetos donde el tiempo es la variable dependiente de interés. Al igual que en el Capítulo 10 sobre datos longitudinales y de panel, también existen aplicaciones en las que estamos interesados en observaciones repetidas para cada sujeto. Por ejemplo, si sufres una lesión cubierta por un seguro, los pagos que surgen de esta reclamación pueden ocurrir repetidamente a lo largo del tiempo, dependiendo del tiempo de recuperación. La Sección <a href="C14Survival.html#S:Sec145">14.5</a> introduce la noción de tiempos de eventos repetidos, llamados <em>eventos recurrentes</em>.</p>
+</div>
+<div id="S:Sec142" class="section level2 hasAnchor" number="14.2">
+<h2><span class="header-section-number">14.2</span> Censura y Truncamiento<a href="C14Survival.html#S:Sec142" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="definiciones-y-ejemplos" class="section level3 hasAnchor" number="14.2.1">
+<h3><span class="header-section-number">14.2.1</span> Definiciones y Ejemplos<a href="C14Survival.html#definiciones-y-ejemplos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Dos tipos de limitaciones que se encuentran en los datos de supervivencia son la <em>censura</em> y el <em>truncamiento</em>. La censura y el truncamiento también son características comunes en otras aplicaciones actuariales, incluidas las del Capítulo 16 sobre modelos de dos partes y el Capítulo 17 sobre modelos de colas largas. Por lo tanto, esta sección describe estos conceptos en detalle.</p>
+<p>Para la censura, la forma más común es la <em>censura por la derecha</em>, en la cual observamos el menor valor entre la “verdadera” variable dependiente y una variable de tiempo de censura. Por ejemplo, supongamos que deseamos estudiar el tiempo hasta que un nuevo empleado deje la empresa y que tenemos cinco años de datos para realizar nuestro análisis. Entonces, observamos el menor valor entre cinco años y el tiempo que el empleado estuvo con la empresa. También observamos si el empleado dejó la empresa dentro de esos cinco años.</p>
+<p>Usando notación, sea <span class="math inline">\(y\)</span> el tiempo hasta el evento, como la cantidad de tiempo que el empleado trabajó en la empresa. Sea <span class="math inline">\(C_U\)</span> el tiempo de censura, como <span class="math inline">\(C_U=5\)</span>. Entonces, observamos la variable <span class="math inline">\(y_U^{\ast}= \min(y, C_U)\)</span>. También observamos si ocurrió o no la censura. Sea <span class="math inline">\(\delta_U= \mathrm{I}(y \geq C_U)\)</span> una variable binaria que es 1 si ocurre censura, <span class="math inline">\(y \geq C_U\)</span>, y 0 en caso contrario. Por ejemplo, en la Figura <a href="C14Survival.html#fig:Fig141">14.1</a>, los valores de <span class="math inline">\(y\)</span> que son mayores que el límite superior de censura <span class="math inline">\(C_U\)</span> no se observan; por lo tanto, esto se llama comúnmente <em>censura por la derecha</em>.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig141"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig141-1.png" alt="Figura que Ilustra Censura por la Izquierda y por la Derecha" width="60%" />
+<p class="caption">
+Figura 14.1: <strong>Figura que Ilustra Censura por la Izquierda y por la Derecha</strong>
+</p>
+</div>
+<p>Otras formas comunes de censura son la <em>censura por la izquierda</em> y la <em>censura por intervalo</em>. Con la censura por la izquierda, observamos <span class="math inline">\(y_L^{\ast}= \max(y, C_L)\)</span> y <span class="math inline">\(\delta_L= \mathrm{I}(y \leq C_L)\)</span> donde <span class="math inline">\(C_L\)</span> es el tiempo de censura. Por ejemplo, si estás realizando un estudio y entrevistas a una persona sobre un evento pasado, el sujeto puede recordar que el evento ocurrió antes de <span class="math inline">\(C_L\)</span> pero no la fecha exacta.</p>
+<p>Con la censura por intervalo, hay un intervalo de tiempo, como <span class="math inline">\((C_L, C_U)\)</span>, en el que se sabe que <span class="math inline">\(y\)</span> ocurre pero no se observa el valor exacto. Por ejemplo, podrías estar mirando dos años sucesivos de registros anuales de empleados. Las personas empleadas en el primer año pero no en el segundo dejaron el trabajo en algún momento durante el año. Con una fecha exacta de salida, podrías calcular el tiempo que estuvieron en la empresa. Sin la fecha de salida, solo sabes que salieron en algún momento durante un intervalo de un año.</p>
+<p>Los tiempos de censura como <span class="math inline">\(C_L\)</span> y <span class="math inline">\(C_U\)</span> pueden o no ser estocásticos. Si los tiempos de censura representan variables conocidas por el analista, como el período de observación, se dice que son <em>tiempos de censura fija</em>. Aquí, el adjetivo “fijo” significa que los tiempos son conocidos de antemano. Los tiempos de censura pueden variar según el individuo pero seguir siendo fijos. Sin embargo, la censura también puede ser el resultado de fenómenos imprevistos, como la fusión de una empresa o el cambio de domicilio de un sujeto fuera de un área geográfica. En este caso, la censura <span class="math inline">\(C\)</span> se representa mediante una variable aleatoria y se dice que es <em>censura aleatoria</em>. Si la censura es fija o si el tiempo de censura aleatorio es independiente del evento de interés, entonces se dice que la censura es <em>no informativa</em>. Si los tiempos de censura son independientes del evento de interés, entonces esencialmente podemos tratar la censura como fija. Cuando la censura y el tiempo hasta el evento son dependientes (conocido como <em>censura informativa</em>), entonces se requieren modelos especiales. Por ejemplo, si el evento de interés es el tiempo hasta la quiebra de una empresa y el mecanismo de censura implica la presentación de estados financieros adecuados, entonces existe una relación potencial. Las empresas financieramente débiles tienen más probabilidades de quebrar y menos probabilidades de realizar el esfuerzo contable para presentar estados financieros adecuados.</p>
+<p>Las observaciones censuradas están disponibles para estudio, aunque de forma limitada. En contraste, las respuestas <em>truncadas</em> son un tipo de datos faltantes. Para ilustrarlo, con datos <em>truncados por la izquierda</em>, si <span class="math inline">\(y\)</span> es menor que un umbral (digamos, <span class="math inline">\(C_L\)</span>), entonces no se observa. Para datos <em>truncados por la derecha</em>, si <span class="math inline">\(y\)</span> excede un umbral (digamos, <span class="math inline">\(C_U\)</span>), entonces no se observa. Para comparar observaciones truncadas y censuradas, considera el siguiente ejemplo.</p>
+<hr />
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig142"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig142-1.png" alt="Línea de tiempo para varios sujetos en un estudio de mortalidad." width="60%" />
+<p class="caption">
+Figura 14.2: <strong>Línea de tiempo para varios sujetos en un estudio de mortalidad.</strong>
+</p>
+</div>
+<p><strong>Ejemplo: Estudio de Mortalidad.</strong> Supongamos que estás realizando un estudio de dos años sobre la mortalidad de sujetos de alto riesgo, comenzando el 1 de enero de 2010 y finalizando el 1 de enero de 2012. La Figura <a href="C14Survival.html#fig:Fig142">14.2</a> representa gráficamente los seis tipos de sujetos reclutados. Para cada sujeto, el inicio de la flecha representa el momento en que el sujeto fue reclutado y el final de la flecha representa el tiempo del evento. Por lo tanto, la flecha representa el tiempo de exposición.</p>
+<ul>
+<li>Tipo A - censura por la derecha. Este sujeto está vivo al inicio y al final del estudio. Como no se conoce el tiempo de muerte al final del estudio, está censurado por la derecha. La mayoría de los sujetos son de tipo A.</li>
+<li>Tipo B. Se dispone de información completa para un sujeto de tipo B. El sujeto está vivo al inicio del estudio y la muerte ocurre dentro del período de observación.</li>
+<li>Tipo C - censura por la derecha y truncamiento por la izquierda. Un sujeto de tipo C está censurado por la derecha, ya que la muerte ocurre después del período de observación. Sin embargo, el sujeto ingresó después del inicio del estudio y se dice que tiene un <em>tiempo de entrada retrasado</em>. Como el sujeto no habría sido observado si la muerte hubiera ocurrido antes de la entrada, está truncado por la izquierda.</li>
+<li>Tipo D - truncamiento por la izquierda. Un sujeto de tipo D también tiene una entrada retrasada. Como la muerte ocurre dentro del período de observación, este sujeto no está censurado por la derecha.</li>
+<li>Tipo E - truncamiento por la izquierda. Un sujeto de tipo E no está incluido en el estudio porque la muerte ocurre antes del período de observación.</li>
+<li>Tipo F - truncamiento por la derecha. De manera similar, un sujeto de tipo F no está incluido porque el tiempo de entrada ocurre después del período de observación.</li>
+</ul>
+<hr />
+</div>
+<div id="inferencia-por-verosimilitud" class="section level3 hasAnchor" number="14.2.2">
+<h3><span class="header-section-number">14.2.2</span> Inferencia por Verosimilitud<a href="C14Survival.html#inferencia-por-verosimilitud" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Muchas técnicas de inferencia para el modelado de supervivencia implican la estimación por verosimilitud, por lo que es útil entender las implicaciones de la censura y el truncamiento al especificar funciones de verosimilitud. Para simplificar, asumimos tiempos de censura fijos y un tiempo hasta el evento continuo <span class="math inline">\(y\)</span>.</p>
+<p>Para comenzar, considere el caso de datos censurados por la derecha, donde observamos <span class="math inline">\(y_U^{\ast}= \min(y, C_U)\)</span> y <span class="math inline">\(\delta_U= \mathrm{I}(y \geq C_U)\)</span>. Si ocurre censura de modo que <span class="math inline">\(\delta_U=1\)</span>, entonces <span class="math inline">\(y \geq C_U\)</span> y la verosimilitud es <span class="math inline">\(\Pr(y \geq C_U) = \mathrm{S}(C_U)\)</span>. Si no ocurre censura de modo que <span class="math inline">\(\delta_U=0\)</span>, entonces <span class="math inline">\(y &lt; C_U\)</span> y la verosimilitud es <span class="math inline">\(\mathrm{f}(y)\)</span>. Resumiendo, tenemos:
+<span class="math display">\[\begin{eqnarray*}
+\text{Verosimilitud} &amp;=&amp; \left\{
+\begin{array}{cl}
+\mathrm{f}(y) &amp; \textrm{si}~\delta=0 \\
+\mathrm{S}(C_U) &amp; \textrm{si}~\delta=1
+\end{array}
+\right. \\
+&amp;=&amp; \left( \mathrm{f}(y)\right)^{1-\delta} \left(
+\mathrm{S}(C_U)\right)^{\delta} .
+\end{eqnarray*}\]</span></p>
+<p>La expresión de la derecha nos permite presentar la verosimilitud de manera más compacta. Ahora, para una muestra independiente de tamaño <span class="math inline">\(n\)</span>, <span class="math inline">\(\{ (y_{U1}, \delta_1), \ldots,(y_{Un}, \delta_n) \}\)</span>, la verosimilitud es:
+<span class="math display">\[
+\prod_{i=1}^n \left( \mathrm{f}(y_i)\right)^{1-\delta_i} \left(
+\mathrm{S}(C_{Ui})\right)^{\delta_i} = \prod_{\delta_i=0}
+\mathrm{f}(y_i) \prod_{\delta_i=1} \mathrm{S}(C_{Ui}),
+\]</span>
+con posibles tiempos de censura <span class="math inline">\(\{ C_{U1}, \ldots,C_{Un} \}\)</span>. Aquí, la notación “<span class="math inline">\(\prod_{\delta_i=0}\)</span>” significa tomar el producto sobre observaciones no censuradas, y de manera similar para “<span class="math inline">\(\prod_{\delta_i=1}\)</span>”.</p>
+<p>Los datos truncados se manejan en la inferencia por verosimilitud mediante probabilidades condicionales. Específicamente, ajustamos la contribución a la verosimilitud dividiendo por la probabilidad de que la variable haya sido observada. Resumiendo, tenemos las siguientes contribuciones a la verosimilitud para seis tipos de resultados:</p>
+<p><span class="math display">\[
+\small{
+\begin{array}{lc} \hline
+\text{Resultado }           &amp; \text{Contribución a la Verosimilitud} \\\hline
+\text{Valor exacto}        &amp; f(y) \\
+\text{Censura por la derecha}    &amp; S(C_U) \\
+\text{Censura por la izquierda}     &amp; 1-S(C_L) \\
+\text{Truncamiento por la derecha}   &amp; f(y)/(1-S(C_U)) \\
+\text{Truncamiento por la izquierda}    &amp; f(y)/S(C_L) \\
+\text{Censura por intervalo} &amp; S(C_L)-S(C_U) \\
+\hline
+\end{array}
+}
+\]</span></p>
+<p>Para tiempos de evento conocidos y datos censurados, la verosimilitud es:
+<span class="math display">\[
+\prod_{E} \mathrm{f}(y_i) \prod_{R} \mathrm{S}(C_{Ui}) \prod_{L}
+(1-\mathrm{S}(C_{Li})) \prod_{I}
+(\mathrm{S}(C_{Li})-\mathrm{S}(C_{Ui})),
+\]</span>
+donde “<span class="math inline">\(\prod_{E}\)</span>” es el producto sobre observaciones con valores exactos (<em>E</em>xact), y de manera similar para <em>R</em>ight (derecha), <em>L</em>eft (izquierda) y <em>I</em>nterval (intervalo).</p>
+<p>Para datos censurados por la derecha y truncados por la izquierda, la verosimilitud es:
+<span class="math display">\[
+\prod_{E} \frac{\mathrm{f}(y_i)}{\mathrm{S}(C_{Li})} \prod_{R}
+\frac{\mathrm{S}(C_{Ui})}{\mathrm{S}(C_{Li})} ,
+\]</span>
+y de manera similar para otras combinaciones. Para obtener más información, considere lo siguiente.</p>
+<hr />
+<p><strong>Caso Especial: Distribución Exponencial.</strong> Considere datos censurados por la derecha y truncados por la izquierda, con variables dependientes <span class="math inline">\(y_i\)</span> distribuidas exponencialmente con media <span class="math inline">\(\mu\)</span>. Con estas especificaciones, recuerde que <span class="math inline">\(\mathrm{f}(y) = \mu^{-1} \exp(-y/\mu)\)</span> y <span class="math inline">\(\mathrm{S}(y) = \exp(-y/\mu)\)</span>.</p>
+<p>Para este caso especial, la verosimilitud logarítmica es:
+<span class="math display">\[
+\begin{array}{ll}
+\ln \text{Verosimilitud}  &amp;= \sum_{E} \left( \ln \mathrm{f}(y_i) - \ln
+\mathrm{S}(C_{Li}) \right)
++\sum_{R}\left( \ln \mathrm{S}(C_{Ui})- \ln \mathrm{S}(C_{Li})
+\right) \\
+&amp;=  \sum_{E} (-\ln \mu -(y_i-C_{Li})/\mu )
+-\sum_{R} (C_{Ui}-C_{Li})/\mu .
+\end{array}
+\]</span>
+Para simplificar la notación, definimos <span class="math inline">\(\delta_i = \mathrm{I}(y_i \geq C_{Ui})\)</span> como una variable binaria que indica censura por la derecha. Sea <span class="math inline">\(y_i^{\ast \ast} = \min(y_i, C_{Ui}) - C_{Li}\)</span> la cantidad en que la variable observada excede el límite inferior de truncamiento. Con esto, la verosimilitud logarítmica es:
+<span class="math display" id="eq:eq141">\[\begin{equation}
+\ln \text{Verosimilitud} =  - \sum_{i=1}^n ((1-\delta_i) \ln \mu + \frac{y_i^{\ast
+\ast}}{\mu} ).
+\tag{14.1}
+\end{equation}\]</span>
+Derivando con respecto al parámetro <span class="math inline">\(\mu\)</span> e igualando a cero se obtiene el estimador de máxima verosimilitud:
+<span class="math display">\[\begin{eqnarray*}
+\widehat{\mu}
+&amp;=&amp; \frac{1}{n_u} \sum_{i=1}^n  y_i^{\ast
+\ast},
+\end{eqnarray*}\]</span>
+donde <span class="math inline">\(n_u = \sum_i (1-\delta_i)\)</span> es el número de observaciones no censuradas.</p>
+<hr />
+</div>
+<div id="estimador-producto-límite" class="section level3 hasAnchor" number="14.2.3">
+<h3><span class="header-section-number">14.2.3</span> Estimador Producto-Límite<a href="C14Survival.html#estimador-producto-límite" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Puede ser útil calibrar los métodos de verosimilitud con métodos no paramétricos que no dependen de una forma paramétrica de la distribución. El <em>estimador producto-límite</em> debido a Kaplan y Meier (1958) es un estimador bien conocido de la distribución en presencia de censura.</p>
+<p>Para introducir este estimador, consideremos el caso de datos censurados por la derecha. Sean <span class="math inline">\(t_1 &lt; \cdots &lt; t_c\)</span> los puntos de tiempo distintos en los que ocurre un evento de interés y sea <span class="math inline">\(d_j\)</span> el número de eventos en el punto de tiempo <span class="math inline">\(t_j\)</span>. Además, definimos <span class="math inline">\(R_j\)</span> como el “conjunto de riesgo” correspondiente, es decir, el número de observaciones que están activas en un instante justo antes de <span class="math inline">\(t_j\)</span>. Usando notación, el conjunto de riesgo es <span class="math inline">\(R_j = \sum_{i=1}^n I\left( y_i \geq t_j \right)\)</span>. Con esta notación, el estimador producto-límite de la función de supervivencia es:
+<span class="math display" id="eq:eq142">\[\begin{equation}
+\widehat{S}(t) = \left\{
+\begin{array}{ll}
+1 &amp; t&lt;t_1 \\
+  \prod_{t_j \leq t} \left(1 - \frac{d_j}{R_j} \right)
+   &amp; t \geq t_1
+\end{array}
+\right. .
+\tag{14.2}
+\end{equation}\]</span></p>
+<p>Para interpretar el estimador producto-límite, evaluémoslo en los tiempos de eventos. En el primer tiempo de evento <span class="math inline">\(t_1\)</span>, el estimador es <span class="math inline">\(\widehat{S}(t_1)= 1- d_1/R_1=(R_1 - d_1)/R_1\)</span>, la proporción de no eventos en el conjunto de riesgo <span class="math inline">\(R_1\)</span>. En el segundo tiempo de evento <span class="math inline">\(t_2\)</span>, la probabilidad de supervivencia condicional a la supervivencia hasta el tiempo <span class="math inline">\(t_1\)</span> es <span class="math inline">\(\widehat{S}(t_2)/ \widehat{S}(t_1)\)</span> <span class="math inline">\(= 1 - d_2/R_2\)</span> <span class="math inline">\(=(R_2 - d_2)/R_2\)</span>, la proporción de no eventos en el conjunto de riesgo <span class="math inline">\(R_2\)</span>. De manera similar, en el <span class="math inline">\(j\)</span>-ésimo tiempo de evento:</p>
+<p><span class="math display">\[
+\frac{\widehat{S}(t_j)}{\widehat{S}(t_{j-1})}= 1 - \frac{d_j}{R_j}=\frac{R_j - d_j}{R_j} .
+\]</span>
+A partir de estas probabilidades condicionales, se puede construir el estimador de supervivencia como:</p>
+<p><span class="math display">\[
+\widehat{S}(t_j) = \frac{\widehat{S}(t_j)}{\widehat{S}(t_{j-1})}
+\times \cdots \times \frac{\widehat{S}(t_2)}{\widehat{S}(t_{1})}
+\times \widehat{S}(t_{1}),
+\]</span>
+lo que resulta en la ecuación <a href="C14Survival.html#eq:eq142">(14.2)</a>. En este sentido, el estimador es un “producto,” hasta el “límite” del tiempo. Para tiempos entre los tiempos de evento, la estimación de supervivencia se considera constante.</p>
+<p>Para ver cómo usar el estimador producto-límite, consideremos un pequeño conjunto de datos de <span class="math inline">\(n=23\)</span> observaciones, donde 18 son tiempos de evento y 5 han sido censurados por la derecha. Este ejemplo es de Miller (1997), donde los eventos corresponden a la supervivencia de pacientes con leucemia mieloide aguda. Después de recibir quimioterapia para lograr la remisión completa, se asignaron aleatoriamente a uno de dos grupos, aquellos que recibieron quimioterapia de mantenimiento y aquellos que no (el grupo control). El evento fue el tiempo en semanas hasta la recaída desde el estado de remisión completa. Para el grupo de mantenimiento, los tiempos son: 9, 13, 13+, 18, 23, 28+, 31, 34, 45+, 48, 161+. Para el grupo de control, los tiempos son: 5, 5, 8, 8, 12, 16+, 23, 27, 30, 33, 43, 45. Aquí, el signo más (+) indica censura por la derecha de una observación.</p>
+<p>Las Figuras <a href="C14Survival.html#fig:Fig143">14.3</a> y <a href="C14Survival.html#fig:Fig144">14.4</a> muestran las estimaciones de la función de supervivencia producto-límite para estos datos. Note la naturaleza escalonada de la función, donde las caídas (desde la izquierda, o saltos desde la derecha) corresponden a tiempos de eventos. Cuando no hay censura, el estimador producto-límite se reduce al estimador empírico usual de la función de supervivencia.</p>
+<p>En las figuras, las observaciones censuradas se representan con un símbolo de trazado de más (+). Cuando la última observación ha sido censurada, como en la Figura <a href="C14Survival.html#fig:Fig143">14.3</a>, existen diferentes métodos para definir la curva de supervivencia para tiempos que exceden esta observación. Los analistas que realizan estimaciones en estos tiempos deben ser conscientes de la opción que utiliza su paquete estadístico. Estas opciones se describen en libros estándar de análisis de supervivencia, como Klein y Moschberger (1997).</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig143"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig143-1.png" alt="Estimación Producto-Límite de las Funciones de Supervivencia para Dos Grupos. Este gráfico muestra que aquellos con tratamiento de quimioterapia de mantenimiento tienen mayores probabilidades de supervivencia estimadas que aquellos en el grupo control." width="60%" />
+<p class="caption">
+Figura 14.3: <strong>Estimación Producto-Límite de las Funciones de Supervivencia para Dos Grupos.</strong> Este gráfico muestra que aquellos con tratamiento de quimioterapia de mantenimiento tienen mayores probabilidades de supervivencia estimadas que aquellos en el grupo control.
+</p>
+</div>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig144"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig144-1.png" alt="Estimación Producto-Límite de la Función de Supervivencia para el Grupo Control. Los límites superior e inferior provienen de la fórmula de Greenwood para la estimación de la varianza." width="60%" />
+<p class="caption">
+Figura 14.4: <strong>Estimación Producto-Límite de la Función de Supervivencia para el Grupo Control.</strong> Los límites superior e inferior provienen de la fórmula de Greenwood para la estimación de la varianza.
+</p>
+</div>
+<p>Figure <a href="C14Survival.html#fig:Fig144">14.4</a> también muestra una estimación del error estándar. Estos se calculan utilizando la fórmula de Greenwood (1926) para una estimación de la varianza, dada por:
+<span class="math display">\[
+\widehat{\mathrm{Var}(\widehat{S}(t))} = (\widehat{S}(t))^2
+  \sum_{t_j \leq t}  \frac{d_j}{R_j(R_j-d_j)} .
+\]</span></p>
+<h5 style="text-align: center;">
+<a id="displayCode.Fig1434.Hide" href="javascript:togglecode('toggleCode.Fig1434.Hide','displayCode.Fig1434.Hide');"><i><strong>Código R para generar las Figuras 14.3 y 14.4</strong></i></a>
+</h5>
+<div id="toggleCode.Fig1434.Hide" style="display: none">
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="C14Survival.html#cb123-1" tabindex="-1"></a><span class="co"># Figura 14.3</span></span>
+<span id="cb123-2"><a href="C14Survival.html#cb123-2" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb123-3"><a href="C14Survival.html#cb123-3" tabindex="-1"></a><span class="co">#fix(aml)</span></span>
+<span id="cb123-4"><a href="C14Survival.html#cb123-4" tabindex="-1"></a>aml <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Chapters/Chapter14Survival/aml.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb123-5"><a href="C14Survival.html#cb123-5" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> x, <span class="at">data =</span> aml)</span>
+<span id="cb123-6"><a href="C14Survival.html#cb123-6" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">mark.time =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb123-7"><a href="C14Survival.html#cb123-7" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">50</span>,<span class="fl">0.7</span>,<span class="st">&quot;Mantenimiento&quot;</span>,<span class="at">adj=</span><span class="dv">0</span>, <span class="at">cex=</span><span class="fl">1.2</span>)</span>
+<span id="cb123-8"><a href="C14Survival.html#cb123-8" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span>,<span class="fl">0.05</span>,<span class="st">&quot;Control&quot;</span>,<span class="at">adj=</span><span class="dv">0</span>, <span class="at">cex=</span><span class="fl">1.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="C14Survival.html#cb124-1" tabindex="-1"></a><span class="co"># Figura 14.4</span></span>
+<span id="cb124-2"><a href="C14Survival.html#cb124-2" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb124-3"><a href="C14Survival.html#cb124-3" tabindex="-1"></a>aml2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(aml, x<span class="sc">==</span><span class="st">&quot;Nonmaintained&quot;</span> )</span>
+<span id="cb124-4"><a href="C14Survival.html#cb124-4" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>aml2)</span>
+<span id="cb124-5"><a href="C14Survival.html#cb124-5" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">mark.time =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="S:Sec143" class="section level2 hasAnchor" number="14.3">
+<h2><span class="header-section-number">14.3</span> Modelo de Tiempo de Fallo Acelerado<a href="C14Survival.html#S:Sec143" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Un modelo de tiempo de fallo acelerado (<span class="math inline">\(AFT\)</span>) puede expresarse usando una ecuación de regresión lineal <span class="math inline">\(\ln y_i = \mathbf{x}_i^{\prime} \boldsymbol \beta + \varepsilon_i\)</span>, donde <span class="math inline">\(y_i\)</span> es el tiempo de evento. A diferencia del modelo de regresión lineal usual, el modelo AFT hace una suposición paramétrica sobre el término de perturbación, como una distribución normal, de valor extremo o logística. Como hemos visto, la distribución normal es la base para el modelo de regresión lineal usual. Así, muchos analistas comienzan tomando logaritmos de los datos de eventos y utilizando rutinas de regresión lineal habituales para explorar sus datos.</p>
+<div id="distribuciones-de-localización-y-escala" class="section level4 unnumbered hasAnchor">
+<h4>Distribuciones de Localización y Escala<a href="C14Survival.html#distribuciones-de-localización-y-escala" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Para entender el nombre “tiempo de fallo acelerado,” también conocido como riesgos acelerados, es útil repasar la idea estadística de familias de localización y escala. Una <em>distribución de localización y escala paramétrica</em> es aquella donde la función de densidad tiene la forma:
+<span class="math display">\[
+\mathrm{f}(t) =\frac{1}{\sigma }\mathrm{f}_0 \left( \frac{t-\mu
+}{\sigma }\right) ,
+\]</span>
+donde <span class="math inline">\(\mu\)</span> es el parámetro de localización y <span class="math inline">\(\sigma &gt;0\)</span> es el parámetro de escala. El caso <span class="math inline">\(\mu =0\)</span> y <span class="math inline">\(\sigma =1\)</span> corresponde a la <em>forma estándar</em> de la distribución. Dentro de una distribución de localización y escala, los cambios aditivos, como pasar de grados Kelvin a grados Centígrados, <span class="math inline">\(^{\circ }K=\)</span> <span class="math inline">\(^{\circ }C+273.15\)</span>, y los múltiplos escalares, como pasar de dólares a miles de dólares, permanecen en la misma familia de distribución. Como veremos en el Capítulo 17, un parámetro de localización es un lugar natural para introducir covariables de regresión.</p>
+<p>Una variable aleatoria <span class="math inline">\(y\)</span> se dice que tiene una <em>distribución logarítmica de localización y escala</em> si <span class="math inline">\(\ln y\)</span> tiene una distribución de localización y escala. Supongamos que una variable aleatoria <span class="math inline">\(y_0\)</span> tiene una distribución de localización y escala estándar con función de supervivencia <span class="math inline">\(\mathrm{S}_0\left( z\right)\)</span>. Entonces, la función de supervivencia de <span class="math inline">\(y\)</span> definida por <span class="math inline">\(\ln y = \mu + \sigma y_0\)</span> puede expresarse como:
+<span class="math display">\[
+\mathrm{S}\left( t\right) =\Pr \left( y&gt;t\right) =\Pr \left(
+y_0&gt;\frac{\ln t-\mu }{\sigma }\right) =\mathrm{S}_0\left( \frac{\ln
+t-\mu }{\sigma } \right) =\mathrm{S}_0^{\ast }\left( \left(
+\frac{t}{e^{\mu }}\right) ^{1/\sigma }\right) ,
+\]</span>
+donde <span class="math inline">\(\mathrm{S}_0^{\ast }(t) =\mathrm{S}_0( \ln t)\)</span> es la función de supervivencia de la forma estándar de <span class="math inline">\(\ln y\)</span>. En el contexto del modelado de supervivencia donde <span class="math inline">\(t\)</span> representa tiempo, el efecto de reescalar dividiendo por <span class="math inline">\(e^{\mu }\)</span> puede interpretarse como “acelerar el tiempo” (cuando <span class="math inline">\(e^{\mu }&lt;1\)</span>). Esta es la motivación para el nombre “modelos de tiempo de fallo acelerado.” La Tabla <a href="C14Survival.html#tab:Tab141">14.1</a> proporciona algunos casos especiales de distribuciones de localización y escala ampliamente utilizadas y sus contrapartes logarítmicas.</p>
+<table class=" lightable-classic table table-striped table-condensed" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:Tab141">Tabla 14.1: </span><strong>Distribuciones de Localización y Escala</strong>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Distribución de Supervivencia Estándar
+</th>
+<th style="text-align:center;">
+Distribución de Localización y Escala
+</th>
+<th style="text-align:center;">
+Distribución Logarítmica de Localización y Escala
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<span class="math inline">\(\mathrm{S}_0(t) = \exp(- e^t)\)</span>
+</td>
+<td style="text-align:center;width: 5cm; ">
+Distribución de valor extremo
+</td>
+<td style="text-align:center;width: 5cm; ">
+Weibull
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<span class="math inline">\(\mathrm{S}_0(t) =1 - \Phi(t)\)</span>
+</td>
+<td style="text-align:center;width: 5cm; ">
+Normal
+</td>
+<td style="text-align:center;width: 5cm; ">
+Lognormal
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
+<span class="math inline">\(\mathrm{S}_0(t) = (1 + e^t)^{-1}\)</span>
+</td>
+<td style="text-align:center;width: 5cm; ">
+Logística
+</td>
+<td style="text-align:center;width: 5cm; ">
+Log-logística
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="inferencia-para-modelos-aft" class="section level4 unnumbered hasAnchor">
+<h4>Inferencia para Modelos AFT<a href="C14Survival.html#inferencia-para-modelos-aft" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Para tener una idea de las complejidades en la estimación de un modelo <span class="math inline">\(AFT\)</span>, volvemos a la distribución exponencial. Este es un caso especial de regresión Weibull con el parámetro de escala <span class="math inline">\(\sigma =1\)</span>.</p>
+<hr />
+<p><strong>Caso Especial: Distribución Exponencial - Continuación.</strong> Para introducir covariables de regresión, dejamos que <span class="math inline">\(\mu_i = \exp (\mathbf{x}_i^{\prime} \boldsymbol \beta)\)</span>. Usando el mismo razonamiento que con la ecuación <a href="C14Survival.html#eq:eq141">(14.1)</a>, la verosimilitud logarítmica es:
+<span class="math display">\[
+\begin{array}{ll}
+\ln \text{Verosimilitud}
+&amp;= - \sum_{i=1}^n ((1-\delta_i) \ln \mu_i +\frac{y_i^{\ast
+\ast}}{\mu_i} )\\
+&amp;=  - \sum_{i=1}^n ((1-\delta_i) \mathbf{x}_i^{\prime} \boldsymbol \beta+ y_i^{\ast
+\ast}\exp
+(-\mathbf{x}_i^{\prime} \boldsymbol \beta)) ,
+\end{array}
+\]</span>
+donde <span class="math inline">\(\delta_i = I(y_i \geq C_{Ui})\)</span> y <span class="math inline">\(y_i^{\ast \ast} =\min(y_i, C_{Ui}) - C_{Li}\)</span>. Al derivar con respecto a <span class="math inline">\(\boldsymbol \beta\)</span>, obtenemos la función de puntuación:
+<span class="math display">\[
+\begin{array}{ll}
+\frac{\partial \ln \text{Verosimilitud}}{\partial \boldsymbol \beta}
+&amp;=  - \sum_{i=1}^n ((1-\delta_i) \mathbf{x}_i - \mathbf{x}_i y_i^{\ast
+\ast}\exp
+(-\mathbf{x}_i^{\prime} \boldsymbol \beta)) \\
+&amp;=    \sum_{i=1}^n  \mathbf{x}_i
+\frac{y_i^{\ast
+\ast}-\mu_i (1-\delta_i)}
+{\mu_i } .
+\end{array}
+\]</span>
+Esto tiene la forma de una ecuación de estimación generalizada, introducida en el Capítulo 13. Aunque las soluciones en forma cerrada rara vez existen, puede resolverse fácilmente con paquetes estadísticos modernos.</p>
+<hr />
+<p>Como ilustra este caso especial, la estimación de modelos de regresión <span class="math inline">\(AFT\)</span> puede abordarse fácilmente a través de máxima verosimilitud. Además, las propiedades de las estimaciones de máxima verosimilitud son bien entendidas, por lo que contamos con herramientas generales de inferencia, como estimación y prueba de hipótesis. Los paquetes estadísticos estándar proporcionan resultados que apoyan esta inferencia.</p>
+</div>
+</div>
+<div id="S:Sec144" class="section level2 hasAnchor" number="14.4">
+<h2><span class="header-section-number">14.4</span> Modelo de Riesgos Proporcionales<a href="C14Survival.html#S:Sec144" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La suposición de riesgos proporcionales se define en la Sección <a href="C14Survival.html#S:Sec1441">14.4.1</a> y las técnicas de inferencia se discuten en la Sección <a href="C14Survival.html#S:Sec1442">14.4.2</a>.</p>
+<div id="S:Sec1441" class="section level3 hasAnchor" number="14.4.1">
+<h3><span class="header-section-number">14.4.1</span> Riesgos Proporcionales<a href="C14Survival.html#S:Sec1441" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En el modelo de <em>riesgos proporcionales</em> (<span class="math inline">\(PH\)</span>) debido a Cox (1972), se asume que la función de riesgo puede escribirse como el producto de un riesgo “base” y una función de una combinación lineal de variables explicativas. Para ilustrar, usamos:
+<span class="math display" id="eq:eq143">\[\begin{equation}
+h_i(t) = h_0(t) \exp( \mathbf{x}_i^{\prime} \boldsymbol \beta ).
+\tag{14.3}
+\end{equation}\]</span>
+donde <span class="math inline">\(h_0(t)\)</span> es el riesgo base. Este se conoce como un modelo de “riesgos proporcionales” porque, si se toma la razón de funciones de riesgo para dos conjuntos de covariables, digamos <span class="math inline">\(\mathbf{x}_1\)</span> y <span class="math inline">\(\mathbf{x}_2\)</span>, se obtiene:
+<span class="math display">\[
+\frac{h_1(t|\mathbf{x}_1)}{h_2(t|\mathbf{x}_2)} = \frac {h_0(t)
+\exp( \mathbf{x}_1^{\prime} \boldsymbol \beta )} {h_0(t) \exp(
+\mathbf{x}_2^{\prime} \boldsymbol \beta )} = \exp(
+(\mathbf{x}_1-\mathbf{x}_2)^{\prime}\boldsymbol \beta ) .
+\]</span>
+Nótese que la razón no depende del tiempo <span class="math inline">\(t\)</span>.</p>
+<p>Como hemos visto en muchas aplicaciones de regresión, los usuarios están interesados en los efectos de las variables y no siempre en otros aspectos del modelo. La razón por la que el modelo <span class="math inline">\(PH\)</span> en la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a> ha resultado tan popular es que especifica los efectos de las variables explicativas como una función simple de la combinación lineal mientras permite un componente base flexible, <span class="math inline">\(h_0\)</span>. Aunque este componente base es común a todos los sujetos, no necesita especificarse paramétricamente como en los modelos <span class="math inline">\(AFT\)</span>. Además, no es necesario usar la función “exp” para las variables explicativas; sin embargo, esta es la especificación común ya que asegura que la función de riesgo seguirá siendo no negativa.</p>
+<p>Los riesgos proporcionales pueden motivarse como una extensión de la regresión exponencial. Considere una variable aleatoria <span class="math inline">\(y^{\ast}\)</span> que tiene una distribución exponencial con media <span class="math inline">\(\mu = \exp (\mathbf{x}^{\prime} \boldsymbol \beta)\)</span>. Supongamos que observamos <span class="math inline">\(y = \mathrm{g}(y^{\ast})\)</span>, donde <span class="math inline">\(\mathrm{g}(\cdot)\)</span> es desconocida excepto que es monótonamente creciente. Muchas distribuciones de supervivencia son transformaciones de la distribución exponencial. Por ejemplo, si <span class="math inline">\(y = \mathrm{g}(y^{\ast})=(y^{\ast})^{\sigma}\)</span>, entonces es fácil verificar que <span class="math inline">\(y\)</span> tiene una distribución Weibull como se da en la Tabla <a href="C14Survival.html#tab:Tab141">14.1</a>. La distribución Weibull es el único modelo <span class="math inline">\(AFT\)</span> que tiene riesgos proporcionales (ver Lawless, 2003, ejercicio 6.1).</p>
+<p>Cálculos simples muestran que la función de riesgo de <span class="math inline">\(y\)</span> puede expresarse como:
+<span class="math display">\[
+\mathrm{h}_y(t) = \mathrm{g}^{\prime}(t) / \mu  =
+\mathrm{g}^{\prime}(t) \exp (- \mathbf{x}^{\prime} \boldsymbol \beta
+),
+\]</span>
+ver, por ejemplo, Zhou (2001). Esto tiene una estructura de riesgos proporcionales, como en la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a>, donde <span class="math inline">\(\mathrm{g}^{\prime}(t)\)</span> sirve como el riesgo base. En el modelo <span class="math inline">\(PH\)</span>, se asume que el riesgo base es desconocido. En contraste, para la Weibull y otros modelos de regresión <span class="math inline">\(AFT\)</span>, se asume que la función de riesgo base es conocida hasta uno o dos parámetros que pueden estimarse a partir de los datos.</p>
+</div>
+<div id="S:Sec1442" class="section level3 hasAnchor" number="14.4.2">
+<h3><span class="header-section-number">14.4.2</span> Inferencia<a href="C14Survival.html#S:Sec1442" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Debido a la especificación flexible del componente base, las técnicas usuales de estimación de máxima verosimilitud no están disponibles para estimar el modelo <span class="math inline">\(PH\)</span>. Para esbozar el procedimiento de estimación, dejamos que <span class="math inline">\((y_1, \delta_1), \ldots, (y_n, \delta_n)\)</span> sean independientes y asumimos que <span class="math inline">\(y_i\)</span> sigue la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a> con regresores <span class="math inline">\(\mathbf{x}_i\)</span>. Es decir, ahora dejamos de usar la notación con asterisco (<span class="math inline">\(\ast\)</span>) y dejamos que <span class="math inline">\(y_i\)</span> denote valores observados (exactos o censurados) y usamos <span class="math inline">\(\delta_i\)</span> como la variable binaria que indica censura (derecha). Además, dejamos que <span class="math inline">\(H_0\)</span> sea la función de riesgo acumulada asociada con la función base <span class="math inline">\(h_0\)</span>. Recordando la relación general <span class="math inline">\(\mathrm{S}(t) = \exp (-H(t))\)</span>, con la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a> tenemos <span class="math inline">\(\mathrm{S}(t) = \exp \left(-H_0(t)\exp( \mathbf{x}_i^{\prime} \boldsymbol \beta )\right).\)</span></p>
+<p>Desde la perspectiva usual de verosimilitud, de la Sección 14.2.2 la verosimilitud es:
+<span class="math display">\[\begin{eqnarray*}
+L(\boldsymbol \beta , h_0)&amp;= &amp; \prod_{i=1}^n
+\mathrm{f}(y_i)^{1-\delta_i} \mathrm{S}(y_i)^{\delta_i} =
+\prod_{i=1}^n h(y_i)^{1-\delta_i} \exp(-H(y_i))
+\\&amp;= &amp; \prod_{i=1}^n \left( h_0(t) \exp( \mathbf{x}_i^{\prime}
+\boldsymbol \beta ) \right)^{1-\delta_i} \exp\left(-H_0(y_i)\exp(
+\mathbf{x}_i^{\prime} \boldsymbol \beta ) \right) .
+\end{eqnarray*}\]</span></p>
+<p>Ahora, las estimaciones de parámetros que maximizan <span class="math inline">\(L(\boldsymbol \beta , h_0)\)</span> no siguen las propiedades usuales de la estimación de máxima verosimilitud porque el riesgo base <span class="math inline">\(h_0\)</span> no se especifica paramétricamente. Una forma de abordar este problema es mediante Breslow (1974), quien mostró que un estimador de máxima verosimilitud <em>no paramétrico</em> de <span class="math inline">\(h_0\)</span> podría usarse en <span class="math inline">\(L(\boldsymbol \beta , h_0)\)</span>. Esto resulta en lo que Cox llamó una <em>verosimilitud parcial</em>:
+<span class="math display" id="eq:eq144">\[\begin{equation}
+L_P(\boldsymbol \beta)
+= \prod_{i=1}^n
+\left( \frac{\exp( \mathbf{x}_i^{\prime} \boldsymbol \beta )}
+{\sum_{j \in R(y_i)} \exp( \mathbf{x}_j^{\prime} \boldsymbol \beta )}
+\right)^{1-\delta_i},
+\tag{14.4}
+\end{equation}\]</span>
+donde <span class="math inline">\(R(t)\)</span> es el conjunto de riesgo en el tiempo <span class="math inline">\(t\)</span>. Específicamente, este es el conjunto de todos <span class="math inline">\(\{y_1, \ldots, y_n \}\)</span> tales que $y_i t $, es decir, el conjunto de todos los sujetos que aún están bajo estudio en el tiempo <span class="math inline">\(t\)</span>.</p>
+<p>La ecuación <a href="C14Survival.html#eq:eq144">(14.4)</a> es solo una verosimilitud “parcial” en el sentido de que no utiliza toda la información en <span class="math inline">\((y_1, \delta_1), \ldots, (y_n, \delta_n)\)</span>. Por ejemplo, de la ecuación <a href="C14Survival.html#eq:eq144">(14.4)</a>, vemos que la inferencia para los coeficientes de regresión depende únicamente de los rangos de las variables dependientes <span class="math inline">\(\{y_1, \ldots, y_n \}\)</span>, no de sus valores reales.</p>
+<p>No obstante, la ecuación <a href="C14Survival.html#eq:eq144">(14.4)</a> sugiere (y es cierto) que la teoría de distribución muestral en grandes muestras tiene propiedades similares a la teoría paramétrica (totalmente) deseable. Desde la perspectiva del usuario, esta verosimilitud parcial puede tratarse como una verosimilitud usual. Es decir, los parámetros de regresión que maximizan la ecuación <a href="C14Survival.html#eq:eq144">(14.4)</a> son consistentes y tienen una distribución normal en grandes muestras con las estimaciones de varianza habituales (ver Sección 11.9 para una revisión). Esto es ligeramente sorprendente porque el modelo de riesgos proporcionales es semi-paramétrico; en la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a>, la función de riesgo tiene un componente completamente paramétrico, <span class="math inline">\(\exp( \mathbf{x}_i^{\prime} \boldsymbol \beta )\)</span>, pero también contiene un riesgo base no paramétrico, <span class="math inline">\(h_0(t)\)</span>. En general, los modelos no paramétricos son más flexibles que sus contrapartes paramétricas para el ajuste de modelos, pero resultan en propiedades muestrales menos deseables (específicamente, tasas de convergencia más lentas a una distribución asintótica).</p>
+<hr />
+<p><strong>Ejemplo: Puntajes de Crédito.</strong> Stepanova y Thomas (2002) usaron modelos de riesgos proporcionales para crear puntajes de crédito que los bancos podrían usar para evaluar la calidad de préstamos personales. Sus puntajes dependían de los propósitos del préstamo y las características de los solicitantes. Los clientes potenciales solicitan préstamos a los bancos por muchos propósitos, incluidos la financiación de la compra de una casa, automóvil, barco o instrumento musical, para mejoras en el hogar y reparaciones de automóviles, o para financiar una boda y lunas de miel; Stepanova y Thomas enumeraron 22 propósitos de préstamo. En la solicitud de préstamo, las personas proporcionaron su edad, monto solicitado, años con el empleador actual y otras características personales; Stepanova y Thomas enumeraron 22 características de la solicitud utilizadas en su análisis.</p>
+<p>Sus datos provienen de una importante institución financiera del Reino Unido. Consistieron en información de solicitud de 50,000 préstamos personales, con el estado de reembolso para cada uno de los primeros 36 meses del préstamo. Así, cada préstamo estaba (fijamente) censurado a la derecha por el menor entre la duración del período de estudio, 36 meses, y el plazo de reembolso del préstamo, que variaba entre 6 y 60 meses.</p>
+<p>Para crear los puntajes, los autores examinaron dos variables dependientes que tienen consecuencias financieras negativas para el prestamista, el tiempo hasta el incumplimiento del préstamo y el tiempo hasta el reembolso anticipado. Para este estudio, la definición de incumplimiento es 3 o más meses de morosidad. (En principio, se podrían analizar ambos tiempos simultáneamente en un marco de “riesgos competitivos”). Cuando Stepanova y Thomas usaron un modelo de riesgos proporcionales con el tiempo hasta el incumplimiento como variable dependiente, el tiempo hasta el reembolso anticipado era una variable de censura aleatoria a la derecha. A la inversa, cuando el tiempo hasta el reembolso anticipado era la variable dependiente, el tiempo hasta el incumplimiento era una variable de censura aleatoria a la derecha.</p>
+<p>Stepanova y Thomas utilizaron estimaciones del modelo de las funciones de supervivencia a los 12 meses y a los 24 meses como sus puntajes de crédito para ambas variables dependientes. Compararon estos puntajes con los de un modelo de regresión logística donde, por ejemplo, la variable dependiente era el incumplimiento del préstamo dentro de los 12 meses. Ningún enfoque dominó al otro; encontraron situaciones en las que cada enfoque de modelado proporcionaba mejores predictores del riesgo crediticio de un individuo.</p>
+<hr />
+<p>Una característica importante del modelo de riesgos proporcionales es que puede extenderse fácilmente para manejar covariables que varían en el tiempo de la forma <span class="math inline">\(\mathbf{x}_i(t)\)</span>. En este caso, se puede escribir la verosimilitud parcial como
+<span class="math display">\[
+L_P(\boldsymbol \beta)
+= \prod_{i=1}^n
+\left( \frac{\exp( \mathbf{x}_i^{\prime}(y_i) \boldsymbol \beta )}
+{\sum_{j \in R(y_i)} \exp( \mathbf{x}_j^{\prime}(y_j) \boldsymbol
+\beta ) }\right)^{1-\delta_i} .
+\]</span>
+Usar esta verosimilitud es complejo, aunque la maximización puede realizarse fácilmente con software estadístico moderno. La inferencia es compleja porque puede ser difícil separar las covariables observadas que varían en el tiempo <span class="math inline">\(\mathbf{x}_i(t)\)</span> del riesgo base no observado que varía en el tiempo <span class="math inline">\(\mathrm{h}_0(t)\)</span>. Consulte las referencias en la Sección <a href="C14Survival.html#S:Sec146">14.6</a> para más detalles.</p>
+</div>
+</div>
+<div id="S:Sec145" class="section level2 hasAnchor" number="14.5">
+<h2><span class="header-section-number">14.5</span> Eventos Recurrentes<a href="C14Survival.html#S:Sec145" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Los eventos recurrentes son tiempos de eventos que pueden ocurrir repetidamente a lo largo del tiempo para cada sujeto. Para el <span class="math inline">\(i\)</span>-ésimo sujeto, usamos la notación <span class="math inline">\(y_{i1} &lt; y_{i2} &lt; \cdots &lt; y_{im_i}\)</span> para denotar los <span class="math inline">\(m_i\)</span> tiempos de eventos. Entre otras aplicaciones, los eventos recurrentes pueden usarse para modelar:</p>
+<ul>
+<li>Reclamos de garantía,</li>
+<li>Pagos de reclamos que han sido reportados a una compañía de seguros y</li>
+<li>Reclamos de eventos que han ocurrido pero aún no han sido reportados a una compañía de seguros.</li>
+</ul>
+<hr />
+<p><strong>Ejemplo: Reclamos de Garantía de Automóviles.</strong> Cook y Lawless (2007) consideran una muestra de 15,775 automóviles que fueron vendidos y bajo garantía durante 365 días. Las garantías son garantías de confiabilidad del producto emitidas por el fabricante. Los datos de garantía corresponden a un sistema del vehículo (como frenos o tren motriz) y cubren un año con un límite de 12,000 millas. La Tabla <a href="C14Survival.html#tab:Tab142">14.2</a> resume la distribución de los 2,620 reclamos de esta muestra.</p>
+<table class=" lightable-classic table table-striped table-condensed" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption style="font-size: initial !important;">
+<span id="tab:Tab142">Tabla 14.2: </span><strong>Distribución de Frecuencia de Reclamos de Garantía</strong>
+</caption>
+<tbody>
+<tr>
+<td style="text-align:left;width: 4cm; border-right:1px solid;">
+Número de Reclamos
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+0
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+1
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+2
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+3
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+4
+</td>
+<td style="text-align:center;width: 1.3cm; border-right:1px solid;">
+5+
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+Total
+</td>
+</tr>
+<tr>
+<td style="text-align:left;width: 4cm; border-right:1px solid;">
+Número de Autos
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+13,987
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+1,243
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+379
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+103
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+34
+</td>
+<td style="text-align:center;width: 1.3cm; border-right:1px solid;">
+29
+</td>
+<td style="text-align:center;width: 1.3cm; ">
+15,775
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<span style="font-style: italic;">Fuente:</span> <sup></sup> Cook y Lawless (2007, Tabla 1.3).
+</td>
+</tr>
+</tfoot>
+</table>
+<p>La Tabla <a href="C14Survival.html#tab:Tab142">14.2</a> muestra que hay 1,788 (=15,775-13,987) automóviles con al menos un (<span class="math inline">\(m_i &gt; 0\)</span>) reclamo. La Figura <a href="C14Survival.html#fig:Fig145">14.5</a> representa la estructura de los tiempos de eventos.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig145"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig145-1.png" alt="Figura que Ilustra Reclamos de Garantía (Potencialmente) Repetidos." width="60%" />
+<p class="caption">
+Figura 14.5: <strong>Figura que Ilustra Reclamos de Garantía (Potencialmente) Repetidos.</strong>
+</p>
+</div>
+<hr />
+<p>Presentamos modelos de eventos recurrentes usando <em>procesos de conteo</em>, específicamente empleando <em>procesos de Poisson</em>. Aunque existen enfoques alternativos, para los análisis estadísticos el concepto de procesos de conteo parece el más fructífero (Cook y Lawless, 2007). Además, existe una fuerte conexión histórica de los procesos de Poisson con la teoría actuarial de ruina (Klugman, Panjer y Willmot, 2008, Capítulo 11), por lo que muchos actuarios están familiarizados con los procesos de Poisson.</p>
+<p>Sea <span class="math inline">\(N_i(t)\)</span> el número de eventos que han ocurrido hasta el tiempo <span class="math inline">\(t\)</span>. Usando álgebra, podemos escribir esto como <span class="math inline">\(N_i(t) = \sum_{j \geq 1} \mathrm{I}(y_{ij} \leq t).\)</span> Debido a que <span class="math inline">\(N_i(t)\)</span> varía con la experiencia de un sujeto, es una variable aleatoria para cada <span class="math inline">\(t\)</span> fijo. Además, al observar toda la evolución de los reclamos, <span class="math inline">\(\{N_i(t), t \geq 0 \}\)</span>, se conoce como un <em>proceso estocástico</em>. Un proceso de conteo es un tipo especial de proceso estocástico que describe conteos que aumentan de manera monótona con el tiempo. Un proceso de Poisson es un tipo especial de proceso de conteo. Si <span class="math inline">\(\{N_i(t), t \geq 0 \}\)</span> es un proceso de Poisson, entonces <span class="math inline">\(N_i(t)\)</span> tiene una distribución de Poisson con media, digamos, <span class="math inline">\(\mathrm{h}_i(t)\)</span> para cada <span class="math inline">\(t\)</span> fijo. En la literatura de procesos de conteo, es común referirse a <span class="math inline">\(\mathrm{h}_i(t)\)</span> como la <em>función de intensidad</em>.</p>
+<p>La inferencia estadística para eventos recurrentes puede llevarse a cabo utilizando procesos de Poisson y técnicas paramétricas de máxima verosimilitud. Como se discute en Cook y Lawless (2007), la verosimilitud para el <span class="math inline">\(i\)</span>-ésimo sujeto se basa en la densidad de probabilidad condicional de los resultados observados “<span class="math inline">\(m_i\)</span> eventos, en los tiempos <span class="math inline">\(y_{i1} &lt; \cdots &lt; y_{im_i}\)</span>”. Esto produce la verosimilitud
+<span class="math display" id="eq:eq145">\[\begin{equation}
+\text{Verosimilitud}_i = \prod_{j=1}^{m_i} \{\mathrm{h}_i(y_{ij}) \} \exp
+\left(- \int_0^{\infty} y_i(s) \mathrm{h}_i(s) ds \right)
+\tag{14.5}
+\end{equation}\]</span>
+donde <span class="math inline">\(y_i(s)\)</span> es una variable binaria que indica si el <span class="math inline">\(i\)</span>-ésimo sujeto es observado hasta el tiempo <span class="math inline">\(s\)</span>.</p>
+<p>Para parametrizar la función de intensidad <span class="math inline">\(\mathrm{h}_i(t)\)</span>, asumimos que tenemos disponibles variables explicativas. Por ejemplo, al examinar reclamos de garantía de automóviles, podríamos disponer de información como la marca y el modelo del vehículo, o características del conductor como género y edad al momento de la compra. También podríamos tener características que sean funciones del tiempo del reclamo, como el número de millas recorridas. Por lo tanto, usamos la notación <span class="math inline">\(\mathbf{x}_i(t)\)</span> para denotar la posible dependencia de las variables explicativas en el tiempo del evento.</p>
+<p>Similar a la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a>, es habitual escribir la función de intensidad como
+<span class="math display">\[
+h_i(t) = h_0(t) \exp( \mathbf{x}_i^{\prime}(t) \boldsymbol \beta ).
+\]</span>
+donde <span class="math inline">\(h_0(t)\)</span> es la intensidad base. Para una especificación totalmente paramétrica, se especificaría la intensidad base en términos de varios parámetros. Luego, se usaría la función de intensidad <span class="math inline">\(h_i(t)\)</span> en la ecuación de verosimilitud <a href="C14Survival.html#eq:eq145">(14.5)</a>, que serviría como base para la inferencia por verosimilitud. Como se discute en Cook y Lawless (2007), también son posibles enfoques semiparamétricos donde la base no está completamente parametrizada (como en el modelo <span class="math inline">\(PH\)</span>).</p>
+</div>
+<div id="S:Sec146" class="section level2 hasAnchor" number="14.6">
+<h2><span class="header-section-number">14.6</span> Lecturas Adicionales y Referencias<a href="C14Survival.html#S:Sec146" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Como se describe en Collett (1994), el estimador de límite de producto ha sido utilizado desde principios del siglo XX. Greenwood (1926) estableció la fórmula para una varianza aproximada. El trabajo de Kaplan y Meier (1958) suele asociarse con el estimador de límite de producto; demostraron que es un estimador de máxima verosimilitud no paramétrico de la función de supervivencia.</p>
+<p>Existen varias fuentes excelentes para el estudio adicional del análisis de supervivencia, particularmente en las ciencias biomédicas; Collett (1994) es una de estas fuentes. El texto de Klein y Moeschberger (1997) fue utilizado durante varios años como lectura obligatoria para el temario de la Sociedad de Actuarios de Norteamérica. Lawless (2003) proporciona una introducción desde una perspectiva de ingeniería. Lancaster (1990) discute temas econométricos. Hougaard (2000) ofrece un tratamiento avanzado.</p>
+<p>Recomendamos Cook y Lawless (2007) para un tratamiento extenso de eventos recurrentes.</p>
+<p><strong>Referencias del Capítulo</strong></p>
+<ul>
+<li>Breslow, Norman (1974). Covariance analysis of censored survival data. <em>Biometrics</em> 30, 89-99.</li>
+<li>Collett, D. (1994). <em>Modelling Survival Data in Medical Research.</em> Chapman &amp; Hall, London.</li>
+<li>Cook, Richard J. and Jerald F. Lawless (2007). <em>The Statistical Analysis of Recurrent Events.</em> Springer-Verlag, New York.</li>
+<li>Cox, David R. (1972). Regression models and life-tables. <em>Journal of the Royal Statistical Society, Series B</em> 34, 187-202.</li>
+<li>Gourieroux, Christian and Joann Jasiak (2007). <em>The Econometrics of Individual Risk</em>. Princeton University Press, Princeton, New Jersey.</li>
+<li>Greenwood, M. (1926). The errors of sampling of the survivorship tables. <em>Reports on Public Health and Statistical Subjects</em>, number 33, Appendix, HMSO, London.</li>
+<li>Kaplan, E. L. and Meier, P. (1958). Nonparametric estimation from incomplete observations. <em>Journal of the American Statistical Association</em> 53, 457-481.</li>
+<li>Kim, Yong-Duck, Dan R. Anderson, Terry L. Amburgey and James C. Hickman (1995). The use of event history analysis to examine insurance insolvencies. <em>Journal of Risk and Insurance</em> 62, 94-110.</li>
+<li>Klein, John P. and Melvin L. Moeschberger (1997). <em>Survival Analysis: Techniques for Censored and Truncated Data</em>. Springer-Verlag, New York.</li>
+<li>Klugman, Stuart A, Harry H. Panjer and Gordon E. Willmot (2008). <em>Loss Models: From Data to Decisions</em>. John Wiley &amp; Sons, Hoboken, New Jersey.</li>
+<li>Lancaster, Tony (1990). <em>The Econometric Analysis of Transition Data.</em> Cambridge University Press, New York.</li>
+<li>Lawless, Jerald F. (2003). <em>Statistical Models and Methods for Lifetime Data, Second Edition.</em> John Wiley &amp; Sons, New York.</li>
+<li>Hougaard, Philip (2000). <em>Analysis of Multivariate Survival Data</em>. Springer-Verlag, New York.</li>
+<li>Miller, Rupert G. (1997). <em>Survival Analysis</em>. John Wiley &amp; Sons, New York.</li>
+<li>Shumway, Tyler (2001). Forecasting bankruptcy more accurately: A simple hazard model. <em>Journal of Business</em> 74, 101-124.</li>
+<li>Stepanova, Maria and Lyn Thomas (2002). Survival analysis methods for personal loan data. <em>Operations Research</em> 50(2), 277-290.</li>
+<li>Zhou, Mai (2001). Understanding the Cox regression models with time-changing covariates. <em>American Statistician</em> 55(2), 153-155.</li>
+</ul>
+
+<!-- # Chap 1 -->
+<!-- # Chap 2 -->
+<!-- # Chap 3 -->
+<!-- # Chap 4 -->
+<!-- # Chap 5 -->
+<!-- # Chap 6 -->
+<!-- # Chap 7 -->
+<!-- # Chap 8 -->
+<!-- # Chap 9 -->
+<!-- # Chap 10 -->
+<!-- # Chap 11 -->
+<!-- # Chap 12 -->
+<!-- # Chap 13 -->
+<!-- # Chap 14 -->
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="C13GLM.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="C15Misc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

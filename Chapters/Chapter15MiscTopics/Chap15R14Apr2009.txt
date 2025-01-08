@@ -1,0 +1,47 @@
+#  FILENAME IS Chap15R.txt  ;
+
+setwd("c://BOOK3//CUPBook//Chapter15MiscTopics")
+#setwd("R://BOOK3//CUPBook//Chapter15MiscTopics")
+library(HH)
+
+
+#  NURSING HOME DATA
+NurseDat <- read.csv("CSVData/WiscNursingHome.csv", header=TRUE)
+str(NurseDat)
+NurseDat01=subset(NurseDat,CRYEAR==2001)
+NurseDat01=subset(NurseDat01,SQRFOOT>5) # 5 homes without square footage are removed
+NurseDat01$RATE= 100*NurseDat01$TPY/NurseDat01$NUMBED
+NurseDat01=subset(NurseDat01,RATE>50) # 1 home with RATE = 40 - wierd ...
+attach(NurseDat01)
+
+plot(density(RATE), main="", xlab="Occupancy Rate")#Gaussian kernel
+
+par(mfrow=c(1,2))
+plot(density(RATE, bw=0.1), main="", xlab="Occupancy Rate")
+plot(density(RATE), main="", xlab="Occupancy Rate")#Gaussian kernel
+export.eps("F15KernelDensity1.eps", width=6,height=4)
+dev.off()
+#  SILVERMAN'S AUTOMATIC BANDWIDTH CALCULATION
+
+temp =summary(RATE)
+IQ = temp[5]-temp[2]
+A = min(sd(RATE),IQ/1.34)
+bw = .9*A*length(RATE)^(-.2)
+bw
+
+
+dev.off()
+
+NurseDat02=subset(NurseDat01,RATE>110)
+par(mfrow=c(1,3))
+plot(density(NurseDat02$RATE,bw=.5,kernel=c("rectangular") ),
+       xlim=c(105,125) ,  ylim=c(0,0.4), main="", xlab="Occupancy Rate")
+plot(density(NurseDat02$RATE,bw=.5,kernel=c("epanechnikov") ),
+       xlim=c(105,125) , ylim=c(0,0.4), main="", xlab="Occupancy Rate")
+plot(density(NurseDat02$RATE,bw=.5,kernel=c("gaussian") ),
+       xlim=c(105,125) , ylim=c(0,0.4), main="", xlab="Occupancy Rate")
+export.eps("F15KernelDensity2.eps", width=8,height=4)
+dev.off()
+
+
+

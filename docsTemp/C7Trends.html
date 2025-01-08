@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 7 Modelado de Tendencias | Modelado de Regresión con Aplicaciones Actuariales y Financieras</title>
+  <meta name="description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 7 Modelado de Tendencias | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 7 Modelado de Tendencias | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  
+  <meta name="twitter:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="interpretación-de-resultados-de-regresión.html"/>
+<link rel="next" href="C8AR.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Regression Modeling With Actuarial and Financial Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefacio</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#prólogo"><i class="fa fa-check"></i>Prólogo</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#para-quién-es-este-libro"><i class="fa fa-check"></i>¿Para Quién Es Este Libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#de-qué-trata-este-libro"><i class="fa fa-check"></i>¿De Qué Trata Este Libro?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#cómo-transmite-este-libro-su-mensaje"><i class="fa fa-check"></i>¿Cómo Transmite Este Libro Su Mensaje?</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#agradecimientos"><i class="fa fa-check"></i>Agradecimientos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#dedicación"><i class="fa fa-check"></i>Dedicación</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html"><i class="fa fa-check"></i>Translation</a></li>
+<li class="chapter" data-level="1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html"><i class="fa fa-check"></i><b>1</b> Regresión y la Distribución Normal</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec11"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es el Análisis de Regresión?</a></li>
+<li class="chapter" data-level="1.2" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec12"><i class="fa fa-check"></i><b>1.2</b> Ajuste de Datos a una Distribución Normal</a></li>
+<li class="chapter" data-level="1.3" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec13"><i class="fa fa-check"></i><b>1.3</b> Transformaciones de Potencia</a></li>
+<li class="chapter" data-level="1.4" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec14"><i class="fa fa-check"></i><b>1.4</b> Muestreo y el Papel de la Normalidad</a></li>
+<li class="chapter" data-level="1.5" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec15"><i class="fa fa-check"></i><b>1.5</b> Regresión y Diseños de Muestreo</a></li>
+<li class="chapter" data-level="1.6" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec16"><i class="fa fa-check"></i><b>1.6</b> Aplicaciones Actuariales de la Regresión</a></li>
+<li class="chapter" data-level="1.7" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec17"><i class="fa fa-check"></i><b>1.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="1.8" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec18"><i class="fa fa-check"></i><b>1.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="1.9" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec19"><i class="fa fa-check"></i><b>1.9</b> Suplemento Técnico - Teorema del Límite Central</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="C2BasicLR.html"><a href="C2BasicLR.html"><i class="fa fa-check"></i><b>2</b> Regresión Lineal Básica</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec21"><i class="fa fa-check"></i><b>2.1</b> Correlaciones y Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="2.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec22"><i class="fa fa-check"></i><b>2.2</b> Modelo Básico de Regresión Lineal</a></li>
+<li class="chapter" data-level="2.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec23"><i class="fa fa-check"></i><b>2.3</b> ¿Es Útil el Modelo? Algunas Medidas de Resumen Básicas</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec231"><i class="fa fa-check"></i><b>2.3.1</b> Particionando la Variabilidad</a></li>
+<li class="chapter" data-level="2.3.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec232"><i class="fa fa-check"></i><b>2.3.2</b> El Tamaño de una Desviación Típica: <em>s</em></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec24"><i class="fa fa-check"></i><b>2.4</b> Propiedades de los Estimadores del Coeficiente de Regresión</a></li>
+<li class="chapter" data-level="2.5" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec25"><i class="fa fa-check"></i><b>2.5</b> Inferencia Estadística</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec251"><i class="fa fa-check"></i><b>2.5.1</b> ¿Es Importante la Variable Explicativa?: La Prueba <em>t</em></a></li>
+<li class="chapter" data-level="2.5.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec252"><i class="fa fa-check"></i><b>2.5.2</b> Intervalos de Confianza</a></li>
+<li class="chapter" data-level="2.5.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec253"><i class="fa fa-check"></i><b>2.5.3</b> Intervalos de Predicción</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec26"><i class="fa fa-check"></i><b>2.6</b> Construyendo un Mejor Modelo: Análisis de Residuos</a></li>
+<li class="chapter" data-level="2.7" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec27"><i class="fa fa-check"></i><b>2.7</b> Aplicación: Modelo de Valoración de Activos Financieros</a></li>
+<li class="chapter" data-level="2.8" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec28"><i class="fa fa-check"></i><b>2.8</b> Salida Computacional Ilustrativa de Regresión</a></li>
+<li class="chapter" data-level="2.9" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec29"><i class="fa fa-check"></i><b>2.9</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="2.10" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec210"><i class="fa fa-check"></i><b>2.10</b> Ejercicios</a></li>
+<li class="chapter" data-level="2.11" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec211"><i class="fa fa-check"></i><b>2.11</b> Suplemento Técnico - Elementos del Álgebra de Matrices</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2111"><i class="fa fa-check"></i><b>2.11.1</b> Definiciones Básicas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2112"><i class="fa fa-check"></i><b>2.11.2</b> Algunas Matrices Especiales</a></li>
+<li class="chapter" data-level="2.11.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2113"><i class="fa fa-check"></i><b>2.11.3</b> Operaciones Básicas</a></li>
+<li class="chapter" data-level="2.11.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2114"><i class="fa fa-check"></i><b>2.11.4</b> Matrices Aleatorias</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html"><i class="fa fa-check"></i><b>3</b> Regresión Lineal Múltiple - I</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec31"><i class="fa fa-check"></i><b>3.1</b> Método de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="3.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec32"><i class="fa fa-check"></i><b>3.2</b> Modelo de Regresión Lineal y Propiedades de los Estimadores</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec321"><i class="fa fa-check"></i><b>3.2.1</b> Función de Regresión</a></li>
+<li class="chapter" data-level="3.2.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec322"><i class="fa fa-check"></i><b>3.2.2</b> Interpretación del Coeficiente de Regresión</a></li>
+<li class="chapter" data-level="3.2.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec323"><i class="fa fa-check"></i><b>3.2.3</b> Suposiciones del Modelo</a></li>
+<li class="chapter" data-level="3.2.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec324"><i class="fa fa-check"></i><b>3.2.4</b> Propiedades de los Estimadores de los Coeficientes de Regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec33"><i class="fa fa-check"></i><b>3.3</b> Estimación y Bondad de Ajuste</a></li>
+<li class="chapter" data-level="3.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec34"><i class="fa fa-check"></i><b>3.4</b> Inferencia Estadística para un Coeficiente Único</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec341"><i class="fa fa-check"></i><b>3.4.1</b> La Prueba <em>t</em></a></li>
+<li class="chapter" data-level="3.4.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec342"><i class="fa fa-check"></i><b>3.4.2</b> Intervalos de Confianza</a></li>
+<li class="chapter" data-level="3.4.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec343"><i class="fa fa-check"></i><b>3.4.3</b> Gráficos de Variables Añadidas</a></li>
+<li class="chapter" data-level="3.4.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec344"><i class="fa fa-check"></i><b>3.4.4</b> Coeficientes de Correlación Parcial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec35"><i class="fa fa-check"></i><b>3.5</b> Algunas Variables Explicativas Especiales</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec351"><i class="fa fa-check"></i><b>3.5.1</b> Variables Binarias</a></li>
+<li class="chapter" data-level="3.5.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec352"><i class="fa fa-check"></i><b>3.5.2</b> Transformación de Variables Explicativas</a></li>
+<li class="chapter" data-level="3.5.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec353"><i class="fa fa-check"></i><b>3.5.3</b> Términos de Interacción</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec36"><i class="fa fa-check"></i><b>3.6</b> Lectura Adicional y Referencias</a></li>
+<li class="chapter" data-level="3.7" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec37"><i class="fa fa-check"></i><b>3.7</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html"><i class="fa fa-check"></i><b>4</b> Regresión Lineal Múltiple - II</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec41"><i class="fa fa-check"></i><b>4.1</b> El Papel de las Variables Binarias</a></li>
+<li class="chapter" data-level="4.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec42"><i class="fa fa-check"></i><b>4.2</b> Inferencia Estadística para Varios Coeficientes</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec421"><i class="fa fa-check"></i><b>4.2.1</b> Conjuntos de Coeficientes de Regresión</a></li>
+<li class="chapter" data-level="4.2.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec422"><i class="fa fa-check"></i><b>4.2.2</b> La Hipótesis Lineal General</a></li>
+<li class="chapter" data-level="4.2.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec423"><i class="fa fa-check"></i><b>4.2.3</b> Estimando y Prediciendo Varios Coeficientes</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec43"><i class="fa fa-check"></i><b>4.3</b> Modelo ANOVA de Un Factor</a></li>
+<li class="chapter" data-level="4.4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec44"><i class="fa fa-check"></i><b>4.4</b> Combinando Variables Explicativas Categóricas y Continuas</a></li>
+<li class="chapter" data-level="4.5" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec45"><i class="fa fa-check"></i><b>4.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="4.6" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec46"><i class="fa fa-check"></i><b>4.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="4.7" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec47"><i class="fa fa-check"></i><b>4.7</b> Suplemento Técnico - Expresiones Matriciales</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec471"><i class="fa fa-check"></i><b>4.7.1</b> Expresión de Modelos con Variables Categóricas en Forma Matricial</a></li>
+<li class="chapter" data-level="4.7.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec472"><i class="fa fa-check"></i><b>4.7.2</b> Cálculo Recursivo de Mínimos Cuadrados</a></li>
+<li class="chapter" data-level="4.7.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec473"><i class="fa fa-check"></i><b>4.7.3</b> Modelo Lineal General</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="C5VarSelect.html"><a href="C5VarSelect.html"><i class="fa fa-check"></i><b>5</b> Selección de Variables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec51"><i class="fa fa-check"></i><b>5.1</b> Un Enfoque Iterativo para el Análisis de Datos y Modelado</a></li>
+<li class="chapter" data-level="5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec52"><i class="fa fa-check"></i><b>5.2</b> Procedimientos Automáticos de Selección de Variables</a></li>
+<li class="chapter" data-level="5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec53"><i class="fa fa-check"></i><b>5.3</b> Análisis de Residuales</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec531"><i class="fa fa-check"></i><b>5.3.1</b> Residuales</a></li>
+<li class="chapter" data-level="5.3.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec532"><i class="fa fa-check"></i><b>5.3.2</b> Uso de los Residuales para Identificar Valores Atípicos</a></li>
+<li class="chapter" data-level="5.3.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec533"><i class="fa fa-check"></i><b>5.3.3</b> Uso de los Residuales para Seleccionar Variables Explicativas</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec54"><i class="fa fa-check"></i><b>5.4</b> Puntos Influyentes</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec541"><i class="fa fa-check"></i><b>5.4.1</b> Apalancamiento</a></li>
+<li class="chapter" data-level="5.4.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec542"><i class="fa fa-check"></i><b>5.4.2</b> Distancia de Cook</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec55"><i class="fa fa-check"></i><b>5.5</b> Colinealidad</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec551"><i class="fa fa-check"></i><b>5.5.1</b> ¿Qué es la Colinealidad?</a></li>
+<li class="chapter" data-level="5.5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec552"><i class="fa fa-check"></i><b>5.5.2</b> Factores de Inflación de Varianza</a></li>
+<li class="chapter" data-level="5.5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec553"><i class="fa fa-check"></i><b>5.5.3</b> Colinealidad e Influencia</a></li>
+<li class="chapter" data-level="5.5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec554"><i class="fa fa-check"></i><b>5.5.4</b> Variables Suprensoras</a></li>
+<li class="chapter" data-level="5.5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec555"><i class="fa fa-check"></i><b>5.5.5</b> Variables Ortogonales</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec56"><i class="fa fa-check"></i><b>5.6</b> Criterios de Selección</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec561"><i class="fa fa-check"></i><b>5.6.1</b> Bondad de Ajuste</a></li>
+<li class="chapter" data-level="5.6.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec562"><i class="fa fa-check"></i><b>5.6.2</b> Validación del Modelo</a></li>
+<li class="chapter" data-level="5.6.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec563"><i class="fa fa-check"></i><b>5.6.3</b> Validación Cruzada</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec57"><i class="fa fa-check"></i><b>5.7</b> Heterocedasticidad</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec571"><i class="fa fa-check"></i><b>5.7.1</b> Detección de Heterocedasticidad</a></li>
+<li class="chapter" data-level="5.7.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec572"><i class="fa fa-check"></i><b>5.7.2</b> Errores Estándar Consistentes con Heterocedasticidad</a></li>
+<li class="chapter" data-level="5.7.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec573"><i class="fa fa-check"></i><b>5.7.3</b> Mínimos Cuadrados Ponderados</a></li>
+<li class="chapter" data-level="5.7.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec574"><i class="fa fa-check"></i><b>5.7.4</b> Transformaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec58"><i class="fa fa-check"></i><b>5.8</b> Lectura Adicional y Referencias</a></li>
+<li class="chapter" data-level="5.9" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec59"><i class="fa fa-check"></i><b>5.9</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.10" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec510"><i class="fa fa-check"></i><b>5.10</b> Suplementos Técnicos para el Capítulo 5</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5101"><i class="fa fa-check"></i><b>5.10.1</b> Matriz de Proyección</a></li>
+<li class="chapter" data-level="5.10.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5102"><i class="fa fa-check"></i><b>5.10.2</b> Estadísticas Leave-One-Out</a></li>
+<li class="chapter" data-level="5.10.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5103"><i class="fa fa-check"></i><b>5.10.3</b> Omisión de Variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html"><i class="fa fa-check"></i><b>6</b> Interpretación de Resultados de Regresión</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec61"><i class="fa fa-check"></i><b>6.1</b> Lo que nos dice el proceso de modelado</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec611"><i class="fa fa-check"></i><b>6.1.1</b> Interpretación de efectos individuales</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec612"><i class="fa fa-check"></i><b>6.1.2</b> Otras Interpretaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec62"><i class="fa fa-check"></i><b>6.2</b> La Importancia de la Selección de Variables</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec621"><i class="fa fa-check"></i><b>6.2.1</b> Sobreajuste del Modelo</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec622"><i class="fa fa-check"></i><b>6.2.2</b> Subajuste del Modelo</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec63"><i class="fa fa-check"></i><b>6.3</b> La Importancia de la Recolección de Datos</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec631"><i class="fa fa-check"></i><b>6.3.1</b> Error en el Marco Muestral y Selección Adversa</a></li>
+<li class="chapter" data-level="6.3.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec632"><i class="fa fa-check"></i><b>6.3.2</b> Regiones de Muestreo Limitadas</a></li>
+<li class="chapter" data-level="6.3.3" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec633"><i class="fa fa-check"></i><b>6.3.3</b> Variables Dependientes Limitadas, Censura y Truncamiento</a></li>
+<li class="chapter" data-level="6.3.4" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec634"><i class="fa fa-check"></i><b>6.3.4</b> Variables Omitidas y Endógenas</a></li>
+<li class="chapter" data-level="6.3.5" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec635"><i class="fa fa-check"></i><b>6.3.5</b> Datos Faltantes</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec64"><i class="fa fa-check"></i><b>6.4</b> Modelos de Datos Faltantes</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec641"><i class="fa fa-check"></i><b>6.4.1</b> Faltante al Azar</a></li>
+<li class="chapter" data-level="6.4.2" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec642"><i class="fa fa-check"></i><b>6.4.2</b> Datos Faltantes No Ignorables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec65"><i class="fa fa-check"></i><b>6.5</b> Aplicación: Eficiencia en el Costo de los Gestores de Riesgos</a></li>
+<li class="chapter" data-level="6.6" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec66"><i class="fa fa-check"></i><b>6.6</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="6.7" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec67"><i class="fa fa-check"></i><b>6.7</b> Ejercicios</a></li>
+<li class="chapter" data-level="6.8" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec68"><i class="fa fa-check"></i><b>6.8</b> Suplementos Técnicos para el Capítulo 6</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="interpretación-de-resultados-de-regresión.html"><a href="interpretación-de-resultados-de-regresión.html#Sec681"><i class="fa fa-check"></i><b>6.8.1</b> Efectos de la Especificación Incorrecta del Modelo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="C7Trends.html"><a href="C7Trends.html"><i class="fa fa-check"></i><b>7</b> Modelado de Tendencias</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="C7Trends.html"><a href="C7Trends.html#introducción-1"><i class="fa fa-check"></i><b>7.1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#series-temporales-y-procesos-estocásticos"><i class="fa fa-check"></i>Series Temporales y Procesos Estocásticos</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#series-temporales-versus-modelos-causales"><i class="fa fa-check"></i>Series Temporales versus Modelos Causales</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="C7Trends.html"><a href="C7Trends.html#S7:Trends"><i class="fa fa-check"></i><b>7.2</b> Ajuste de Tendencias en el Tiempo</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#comprendiendo-patrones-en-el-tiempo"><i class="fa fa-check"></i>Comprendiendo Patrones en el Tiempo</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#ajuste-de-tendencias-en-el-tiempo"><i class="fa fa-check"></i>Ajuste de Tendencias en el Tiempo</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#ajuste-de-tendencias-estacionales"><i class="fa fa-check"></i>Ajuste de Tendencias Estacionales</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#confiabilidad-de-los-pronósticos-de-series-temporales"><i class="fa fa-check"></i>Confiabilidad de los Pronósticos de Series Temporales</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="C7Trends.html"><a href="C7Trends.html#S7:RandomWalk"><i class="fa fa-check"></i><b>7.3</b> Estacionariedad y Modelos de Paseo Aleatorio</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#ruido-blanco"><i class="fa fa-check"></i>Ruido Blanco</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#paseo-aleatorio"><i class="fa fa-check"></i>Paseo Aleatorio</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="C7Trends.html"><a href="C7Trends.html#inferencia-usando-modelos-de-paseo-aleatorio"><i class="fa fa-check"></i><b>7.4</b> Inferencia usando Modelos de Paseo Aleatorio</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#propiedades-del-modelo"><i class="fa fa-check"></i>Propiedades del Modelo</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#pronósticos"><i class="fa fa-check"></i>Pronósticos</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#identificación-de-estacionariedad"><i class="fa fa-check"></i>Identificación de Estacionariedad</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#identificación-de-paseos-aleatorios"><i class="fa fa-check"></i>Identificación de Paseos Aleatorios</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#paseo-aleatorio-versus-modelo-de-tendencia-lineal-en-el-tiempo"><i class="fa fa-check"></i>Paseo Aleatorio versus Modelo de Tendencia Lineal en el Tiempo</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="C7Trends.html"><a href="C7Trends.html#filtrado-para-lograr-estacionariedad"><i class="fa fa-check"></i><b>7.5</b> Filtrado para Lograr Estacionariedad</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#transformaciones"><i class="fa fa-check"></i>Transformaciones</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="C7Trends.html"><a href="C7Trends.html#evaluación-de-pronósticos"><i class="fa fa-check"></i><b>7.6</b> Evaluación de Pronósticos</a></li>
+<li class="chapter" data-level="7.7" data-path="C7Trends.html"><a href="C7Trends.html#lecturas-adicionales-y-referencias"><i class="fa fa-check"></i><b>7.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="7.8" data-path="C7Trends.html"><a href="C7Trends.html#ejercicios"><i class="fa fa-check"></i><b>7.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="C8AR.html"><a href="C8AR.html"><i class="fa fa-check"></i><b>8</b> Autocorrelaciones y Modelos Autorregresivos</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="C8AR.html"><a href="C8AR.html#S8:Autocorrs"><i class="fa fa-check"></i><b>8.1</b> Autocorrelaciones</a>
+<ul>
+<li class="chapter" data-level="" data-path="C8AR.html"><a href="C8AR.html#aplicación-retornos-de-bonos-con-inflación"><i class="fa fa-check"></i>Aplicación: Retornos de Bonos con Inflación</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="C8AR.html"><a href="C8AR.html#modelos-autorregresivos-de-orden-uno"><i class="fa fa-check"></i><b>8.2</b> Modelos Autorregresivos de Orden Uno</a></li>
+<li class="chapter" data-level="8.3" data-path="C8AR.html"><a href="C8AR.html#S8:Estimation"><i class="fa fa-check"></i><b>8.3</b> Estimación y Verificación de Diagnóstico</a></li>
+<li class="chapter" data-level="8.4" data-path="C8AR.html"><a href="C8AR.html#S8:AR1Smooth"><i class="fa fa-check"></i><b>8.4</b> Suavización y Predicción</a></li>
+<li class="chapter" data-level="8.5" data-path="C8AR.html"><a href="C8AR.html#S8:BoxJenkins"><i class="fa fa-check"></i><b>8.5</b> Modelado y Pronóstico de Box-Jenkins</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="C8AR.html"><a href="C8AR.html#modelos"><i class="fa fa-check"></i><b>8.5.1</b> Modelos</a></li>
+<li class="chapter" data-level="8.5.2" data-path="C8AR.html"><a href="C8AR.html#pronóstico"><i class="fa fa-check"></i><b>8.5.2</b> Pronóstico</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="C8AR.html"><a href="C8AR.html#aplicación-tasas-de-cambio-de-hong-kong"><i class="fa fa-check"></i><b>8.6</b> Aplicación: Tasas de Cambio de Hong Kong</a></li>
+<li class="chapter" data-level="8.7" data-path="C8AR.html"><a href="C8AR.html#lecturas-adicionales-y-referencias-1"><i class="fa fa-check"></i><b>8.7</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="C9Forecast.html"><a href="C9Forecast.html"><i class="fa fa-check"></i><b>9</b> Pronósticos y Modelos de Series Temporales</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="C9Forecast.html"><a href="C9Forecast.html#suavización-con-promedios-móviles"><i class="fa fa-check"></i><b>9.1</b> Suavización con Promedios Móviles</a></li>
+<li class="chapter" data-level="9.2" data-path="C9Forecast.html"><a href="C9Forecast.html#S9:ExponSmooth"><i class="fa fa-check"></i><b>9.2</b> Suavización Exponencial</a></li>
+<li class="chapter" data-level="9.3" data-path="C9Forecast.html"><a href="C9Forecast.html#S9:SeasonalTSModels"><i class="fa fa-check"></i><b>9.3</b> Modelos de Series Temporales Estacionales</a></li>
+<li class="chapter" data-level="9.4" data-path="C9Forecast.html"><a href="C9Forecast.html#pruebas-de-raíces-unitarias"><i class="fa fa-check"></i><b>9.4</b> Pruebas de Raíces Unitarias</a></li>
+<li class="chapter" data-level="9.5" data-path="C9Forecast.html"><a href="C9Forecast.html#modelos-archgarch"><i class="fa fa-check"></i><b>9.5</b> Modelos ARCH/GARCH</a></li>
+<li class="chapter" data-level="9.6" data-path="C9Forecast.html"><a href="C9Forecast.html#lecturas-y-referencias-adicionales"><i class="fa fa-check"></i><b>9.6</b> Lecturas y Referencias Adicionales</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="C10Panel.html"><a href="C10Panel.html"><i class="fa fa-check"></i><b>10</b> Modelos de Datos Longitudinales y de Panel</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="C10Panel.html"><a href="C10Panel.html#S10:Intro"><i class="fa fa-check"></i><b>10.1</b> ¿Qué son los Datos Longitudinales y de Panel?</a></li>
+<li class="chapter" data-level="10.2" data-path="C10Panel.html"><a href="C10Panel.html#S10:Visual"><i class="fa fa-check"></i><b>10.2</b> Visualización de Datos Longitudinales y de Panel</a></li>
+<li class="chapter" data-level="10.3" data-path="C10Panel.html"><a href="C10Panel.html#S10:FEModels"><i class="fa fa-check"></i><b>10.3</b> Modelos Básicos de Efectos Fijos</a></li>
+<li class="chapter" data-level="10.4" data-path="C10Panel.html"><a href="C10Panel.html#S10:FEModels2"><i class="fa fa-check"></i><b>10.4</b> Modelos Extendidos de Efectos Fijos</a></li>
+<li class="chapter" data-level="10.5" data-path="C10Panel.html"><a href="C10Panel.html#S10:REModels"><i class="fa fa-check"></i><b>10.5</b> Modelos de Efectos Aleatorios</a></li>
+<li class="chapter" data-level="10.6" data-path="C10Panel.html"><a href="C10Panel.html#S10:References"><i class="fa fa-check"></i><b>10.6</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="C11Binary.html"><a href="C11Binary.html"><i class="fa fa-check"></i><b>11</b> Variables Dependientes Categóricas</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec111"><i class="fa fa-check"></i><b>11.1</b> Variables Dependientes Binarias</a></li>
+<li class="chapter" data-level="11.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec112"><i class="fa fa-check"></i><b>11.2</b> Modelos de Regresión Logística y Probit</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1121"><i class="fa fa-check"></i><b>11.2.1</b> Uso de Funciones No Lineales de Variables Explicativas</a></li>
+<li class="chapter" data-level="11.2.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1122"><i class="fa fa-check"></i><b>11.2.2</b> Interpretación del Umbral</a></li>
+<li class="chapter" data-level="11.2.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1123"><i class="fa fa-check"></i><b>11.2.3</b> Interpretación de Utilidad Aleatoria</a></li>
+<li class="chapter" data-level="11.2.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1124"><i class="fa fa-check"></i><b>11.2.4</b> Regresión Logística</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec113"><i class="fa fa-check"></i><b>11.3</b> Inferencia para Modelos de Regresión Logística y Probit</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="C11Binary.html"><a href="C11Binary.html#estimación-de-parámetros"><i class="fa fa-check"></i><b>11.3.1</b> Estimación de Parámetros</a></li>
+<li class="chapter" data-level="11.3.2" data-path="C11Binary.html"><a href="C11Binary.html#inferencia-adicional"><i class="fa fa-check"></i><b>11.3.2</b> Inferencia Adicional</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec114"><i class="fa fa-check"></i><b>11.4</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="11.5" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec115"><i class="fa fa-check"></i><b>11.5</b> Variables Dependientes Nominales</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1151"><i class="fa fa-check"></i><b>11.5.1</b> Logit Generalizado</a></li>
+<li class="chapter" data-level="11.5.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1152"><i class="fa fa-check"></i><b>11.5.2</b> Logit Multinomial</a></li>
+<li class="chapter" data-level="11.5.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1153"><i class="fa fa-check"></i><b>11.5.3</b> Logit Anidado</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec116"><i class="fa fa-check"></i><b>11.6</b> Variables Dependientes Ordinales</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="C11Binary.html"><a href="C11Binary.html#logit-acumulativo"><i class="fa fa-check"></i><b>11.6.1</b> Logit Acumulativo</a></li>
+<li class="chapter" data-level="11.6.2" data-path="C11Binary.html"><a href="C11Binary.html#probit-acumulativo"><i class="fa fa-check"></i><b>11.6.2</b> Probit Acumulativo</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec117"><i class="fa fa-check"></i><b>11.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="11.8" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec118"><i class="fa fa-check"></i><b>11.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="11.9" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec119"><i class="fa fa-check"></i><b>11.9</b> Suplementos Técnicos - Inferencia Basada en Verosimilitud</a>
+<ul>
+<li class="chapter" data-level="11.9.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1191"><i class="fa fa-check"></i><b>11.9.1</b> Propiedades de las Funciones de Verosimilitud</a></li>
+<li class="chapter" data-level="11.9.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1192"><i class="fa fa-check"></i><b>11.9.2</b> Estimadores de Máxima Verosimilitud</a></li>
+<li class="chapter" data-level="11.9.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1193"><i class="fa fa-check"></i><b>11.9.3</b> Pruebas de Hipótesis</a></li>
+<li class="chapter" data-level="11.9.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1194"><i class="fa fa-check"></i><b>11.9.4</b> Criterios de Información</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="C12Count.html"><a href="C12Count.html"><i class="fa fa-check"></i><b>12</b> Variables Dependientes de Conteo</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec121"><i class="fa fa-check"></i><b>12.1</b> Regresión de Poisson</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec1211"><i class="fa fa-check"></i><b>12.1.1</b> Distribución de Poisson</a></li>
+<li class="chapter" data-level="12.1.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec1212"><i class="fa fa-check"></i><b>12.1.2</b> Modelo de Regresión</a></li>
+<li class="chapter" data-level="12.1.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec1213"><i class="fa fa-check"></i><b>12.1.3</b> Estimación</a></li>
+<li class="chapter" data-level="12.1.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec1214"><i class="fa fa-check"></i><b>12.1.4</b> Inferencia Adicional</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec122"><i class="fa fa-check"></i><b>12.2</b> Aplicación: Seguro de Automóviles en Singapur</a></li>
+<li class="chapter" data-level="12.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec123"><i class="fa fa-check"></i><b>12.3</b> Sobre dispersión y Modelos Binomiales Negativos</a></li>
+<li class="chapter" data-level="12.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec124"><i class="fa fa-check"></i><b>12.4</b> Otros Modelos de Conteo</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="C12Count.html"><a href="C12Count.html#modelos-inflados-en-ceros"><i class="fa fa-check"></i><b>12.4.1</b> Modelos Inflados en Ceros</a></li>
+<li class="chapter" data-level="12.4.2" data-path="C12Count.html"><a href="C12Count.html#modelos-hurdle"><i class="fa fa-check"></i><b>12.4.2</b> Modelos Hurdle</a></li>
+<li class="chapter" data-level="12.4.3" data-path="C12Count.html"><a href="C12Count.html#modelos-de-heterogeneidad"><i class="fa fa-check"></i><b>12.4.3</b> Modelos de Heterogeneidad</a></li>
+<li class="chapter" data-level="12.4.4" data-path="C12Count.html"><a href="C12Count.html#modelos-de-clases-latentes"><i class="fa fa-check"></i><b>12.4.4</b> Modelos de Clases Latentes</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="C12Count.html"><a href="C12Count.html#S:Sec125"><i class="fa fa-check"></i><b>12.5</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="12.6" data-path="C12Count.html"><a href="C12Count.html#S:Sec126"><i class="fa fa-check"></i><b>12.6</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="C13GLM.html"><a href="C13GLM.html"><i class="fa fa-check"></i><b>13</b> Modelos Lineales Generalizados</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec131"><i class="fa fa-check"></i><b>13.1</b> Introducción</a></li>
+<li class="chapter" data-level="13.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec132"><i class="fa fa-check"></i><b>13.2</b> Modelo GLM</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1321"><i class="fa fa-check"></i><b>13.2.1</b> Familia Exponencial Lineal de Distribuciones</a></li>
+<li class="chapter" data-level="13.2.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1322"><i class="fa fa-check"></i><b>13.2.2</b> Funciones de Enlace</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec133"><i class="fa fa-check"></i><b>13.3</b> Estimación</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1331"><i class="fa fa-check"></i><b>13.3.1</b> Estimación de Máxima Verosimilitud para Enlaces Canónicos</a></li>
+<li class="chapter" data-level="13.3.2" data-path="C13GLM.html"><a href="C13GLM.html#sobredispersión"><i class="fa fa-check"></i><b>13.3.2</b> Sobredispersión</a></li>
+<li class="chapter" data-level="13.3.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1333"><i class="fa fa-check"></i><b>13.3.3</b> Estadísticas de Bondad de Ajuste</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec134"><i class="fa fa-check"></i><b>13.4</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="13.5" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec135"><i class="fa fa-check"></i><b>13.5</b> Residuales</a></li>
+<li class="chapter" data-level="13.6" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec136"><i class="fa fa-check"></i><b>13.6</b> Distribución de Tweedie</a></li>
+<li class="chapter" data-level="13.7" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec137"><i class="fa fa-check"></i><b>13.7</b> Lecturas adicionales y referencias</a></li>
+<li class="chapter" data-level="13.8" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec138"><i class="fa fa-check"></i><b>13.8</b> Ejercicios</a></li>
+<li class="chapter" data-level="13.9" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec139"><i class="fa fa-check"></i><b>13.9</b> Suplementos Técnicos - Familia Exponencial</a>
+<ul>
+<li class="chapter" data-level="13.9.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1391"><i class="fa fa-check"></i><b>13.9.1</b> Familia Exponencial Lineal de Distribuciones</a></li>
+<li class="chapter" data-level="13.9.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1392"><i class="fa fa-check"></i><b>13.9.2</b> Momentos</a></li>
+<li class="chapter" data-level="13.9.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1393"><i class="fa fa-check"></i><b>13.9.3</b> Estimación de Máxima Verosimilitud para Enlaces Generales</a></li>
+<li class="chapter" data-level="13.9.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1394"><i class="fa fa-check"></i><b>13.9.4</b> Mínimos Cuadrados Reponderados Iterativos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="C14Survival.html"><a href="C14Survival.html"><i class="fa fa-check"></i><b>14</b> Modelos de Supervivencia</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="C14Survival.html"><a href="C14Survival.html#introducción-2"><i class="fa fa-check"></i><b>14.1</b> Introducción</a></li>
+<li class="chapter" data-level="14.2" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec142"><i class="fa fa-check"></i><b>14.2</b> Censura y Truncamiento</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="C14Survival.html"><a href="C14Survival.html#definiciones-y-ejemplos"><i class="fa fa-check"></i><b>14.2.1</b> Definiciones y Ejemplos</a></li>
+<li class="chapter" data-level="14.2.2" data-path="C14Survival.html"><a href="C14Survival.html#inferencia-por-verosimilitud"><i class="fa fa-check"></i><b>14.2.2</b> Inferencia por Verosimilitud</a></li>
+<li class="chapter" data-level="14.2.3" data-path="C14Survival.html"><a href="C14Survival.html#estimador-producto-límite"><i class="fa fa-check"></i><b>14.2.3</b> Estimador Producto-Límite</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec143"><i class="fa fa-check"></i><b>14.3</b> Modelo de Tiempo de Fallo Acelerado</a></li>
+<li class="chapter" data-level="14.4" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec144"><i class="fa fa-check"></i><b>14.4</b> Modelo de Riesgos Proporcionales</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec1441"><i class="fa fa-check"></i><b>14.4.1</b> Riesgos Proporcionales</a></li>
+<li class="chapter" data-level="14.4.2" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec1442"><i class="fa fa-check"></i><b>14.4.2</b> Inferencia</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec145"><i class="fa fa-check"></i><b>14.5</b> Eventos Recurrentes</a></li>
+<li class="chapter" data-level="14.6" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec146"><i class="fa fa-check"></i><b>14.6</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="C15Misc.html"><a href="C15Misc.html"><i class="fa fa-check"></i><b>15</b> Temas Misceláneos de Regresión</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec151"><i class="fa fa-check"></i><b>15.1</b> Modelos Lineales Mixtos</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="C15Misc.html"><a href="C15Misc.html#mínimos-cuadrados-ponderados-2"><i class="fa fa-check"></i><b>15.1.1</b> Mínimos Cuadrados Ponderados</a></li>
+<li class="chapter" data-level="15.1.2" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec1512"><i class="fa fa-check"></i><b>15.1.2</b> Estimación de Componentes de Varianza</a></li>
+<li class="chapter" data-level="15.1.3" data-path="C15Misc.html"><a href="C15Misc.html#mejor-predicción-lineal-insesgada"><i class="fa fa-check"></i><b>15.1.3</b> Mejor Predicción Lineal Insesgada</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="C15Misc.html"><a href="C15Misc.html#regresión-bayesiana"><i class="fa fa-check"></i><b>15.2</b> Regresión Bayesiana</a></li>
+<li class="chapter" data-level="15.3" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec153"><i class="fa fa-check"></i><b>15.3</b> Estimación de Densidad y Suavizado de Diagramas de Dispersión</a></li>
+<li class="chapter" data-level="15.4" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec154"><i class="fa fa-check"></i><b>15.4</b> Modelos Aditivos Generalizados</a></li>
+<li class="chapter" data-level="15.5" data-path="C15Misc.html"><a href="C15Misc.html#bootstrapping"><i class="fa fa-check"></i><b>15.5</b> Bootstrapping</a></li>
+<li class="chapter" data-level="15.6" data-path="C15Misc.html"><a href="C15Misc.html#lecturas-adicionales-y-referencias-2"><i class="fa fa-check"></i><b>15.6</b> Lecturas Adicionales y Referencias</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="C16FreqSev.html"><a href="C16FreqSev.html"><i class="fa fa-check"></i><b>16</b> Modelos de Frecuencia-Severidad</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec161"><i class="fa fa-check"></i><b>16.1</b> Introducción</a></li>
+<li class="chapter" data-level="16.2" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec162"><i class="fa fa-check"></i><b>16.2</b> Modelo Tobit</a></li>
+<li class="chapter" data-level="16.3" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec163"><i class="fa fa-check"></i><b>16.3</b> Aplicación: Gastos Médicos</a></li>
+<li class="chapter" data-level="16.4" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec164"><i class="fa fa-check"></i><b>16.4</b> Modelo de Dos Partes</a></li>
+<li class="chapter" data-level="16.5" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec165"><i class="fa fa-check"></i><b>16.5</b> Modelo de Pérdidas Agregadas</a></li>
+<li class="chapter" data-level="16.6" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec166"><i class="fa fa-check"></i><b>16.6</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="16.7" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec167"><i class="fa fa-check"></i><b>16.7</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="C17Fat.html"><a href="C17Fat.html"><i class="fa fa-check"></i><b>17</b> Modelos de Regresión con Colas Gruesas</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="C17Fat.html"><a href="C17Fat.html#introducción-3"><i class="fa fa-check"></i><b>17.1</b> Introducción</a></li>
+<li class="chapter" data-level="17.2" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec172"><i class="fa fa-check"></i><b>17.2</b> Transformaciones</a></li>
+<li class="chapter" data-level="17.3" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec173"><i class="fa fa-check"></i><b>17.3</b> Modelos Lineales Generalizados</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec1731"><i class="fa fa-check"></i><b>17.3.1</b> ¿Qué significa “Cola Gruesa”?</a></li>
+<li class="chapter" data-level="17.3.2" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec1732"><i class="fa fa-check"></i><b>17.3.2</b> Aplicación: Asilos de Ancianos en Wisconsin</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec174"><i class="fa fa-check"></i><b>17.4</b> Distribuciones Generalizadas</a>
+<ul>
+<li class="chapter" data-level="" data-path="C17Fat.html"><a href="C17Fat.html#aplicación-hogares-de-ancianos-en-wisconsin"><i class="fa fa-check"></i>Aplicación: Hogares de Ancianos en Wisconsin</a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec175"><i class="fa fa-check"></i><b>17.5</b> Regresión por Cuantiles</a></li>
+<li class="chapter" data-level="17.6" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec176"><i class="fa fa-check"></i><b>17.6</b> Modelos de Valores Extremos</a></li>
+<li class="chapter" data-level="17.7" data-path="C17Fat.html"><a href="C17Fat.html#lecturas-adicionales-y-referencias-3"><i class="fa fa-check"></i><b>17.7</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="17.8" data-path="C17Fat.html"><a href="C17Fat.html#ejercicios-1"><i class="fa fa-check"></i><b>17.8</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="C18Cred.html"><a href="C18Cred.html"><i class="fa fa-check"></i><b>18</b> Credibilidad y Bonus-Malus</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="C18Cred.html"><a href="C18Cred.html#clasificación-de-riesgos-y-experiencia"><i class="fa fa-check"></i><b>18.1</b> Clasificación de Riesgos y Experiencia</a></li>
+<li class="chapter" data-level="18.2" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec182"><i class="fa fa-check"></i><b>18.2</b> Credibilidad</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec1821"><i class="fa fa-check"></i><b>18.2.1</b> Credibilidad de Fluctuación Limitada</a></li>
+<li class="chapter" data-level="18.2.2" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec1822"><i class="fa fa-check"></i><b>18.2.2</b> Credibilidad de Máxima Precisión</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec183"><i class="fa fa-check"></i><b>18.3</b> Credibilidad y Regresión</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="C18Cred.html"><a href="C18Cred.html#modelo-de-efectos-aleatorios-unidireccional"><i class="fa fa-check"></i><b>18.3.1</b> Modelo de Efectos Aleatorios Unidireccional</a></li>
+<li class="chapter" data-level="18.3.2" data-path="C18Cred.html"><a href="C18Cred.html#modelos-longitudinales"><i class="fa fa-check"></i><b>18.3.2</b> Modelos Longitudinales</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec184"><i class="fa fa-check"></i><b>18.4</b> Bonus-Malus</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="C19Triangles.html"><a href="C19Triangles.html"><i class="fa fa-check"></i><b>19</b> Triángulos de Reclamos</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="C19Triangles.html"><a href="C19Triangles.html#introducción-4"><i class="fa fa-check"></i><b>19.1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1911"><i class="fa fa-check"></i><b>19.1.1</b> Evolución de los Reclamos</a></li>
+<li class="chapter" data-level="19.1.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1912"><i class="fa fa-check"></i><b>19.1.2</b> Triángulos de Reclamos</a></li>
+<li class="chapter" data-level="19.1.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1913"><i class="fa fa-check"></i><b>19.1.3</b> Método de Escalera de Cadenas</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec192"><i class="fa fa-check"></i><b>19.2</b> Regresión Usando Funciones del Tiempo como Variables Explicativas</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1921"><i class="fa fa-check"></i><b>19.2.1</b> Modelo Lognormal</a></li>
+<li class="chapter" data-level="19.2.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1922"><i class="fa fa-check"></i><b>19.2.2</b> Curva de Hoerl</a></li>
+<li class="chapter" data-level="19.2.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1923"><i class="fa fa-check"></i><b>19.2.3</b> Modelos de Poisson</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec193"><i class="fa fa-check"></i><b>19.3</b> Usando Desarrollos Pasados</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1931"><i class="fa fa-check"></i><b>19.3.1</b> Modelo de Mack</a></li>
+<li class="chapter" data-level="19.3.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1932"><i class="fa fa-check"></i><b>19.3.2</b> Modelos Distribucionales</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="C19Triangles.html"><a href="C19Triangles.html#lecturas-adicionales-y-referencias-4"><i class="fa fa-check"></i><b>19.4</b> Lecturas Adicionales y Referencias</a></li>
+<li class="chapter" data-level="19.5" data-path="C19Triangles.html"><a href="C19Triangles.html#ejercicios-2"><i class="fa fa-check"></i><b>19.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="C20Report.html"><a href="C20Report.html"><i class="fa fa-check"></i><b>20</b> Redacción de Informes: Comunicando Resultados del Análisis de Datos</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="C20Report.html"><a href="C20Report.html#S20:Overview"><i class="fa fa-check"></i><b>20.1</b> Visión General</a></li>
+<li class="chapter" data-level="20.2" data-path="C20Report.html"><a href="C20Report.html#S20:Methods"><i class="fa fa-check"></i><b>20.2</b> Métodos para Comunicar Datos</a>
+<ul>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#datos-dentro-del-texto"><i class="fa fa-check"></i>Datos Dentro del Texto</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#gráficos"><i class="fa fa-check"></i>Gráficos</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="C20Report.html"><a href="C20Report.html#S20:Organize"><i class="fa fa-check"></i><b>20.3</b> Cómo Organizar</a>
+<ul>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#título-y-resumen"><i class="fa fa-check"></i>Título y Resumen</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#introducción-5"><i class="fa fa-check"></i>Introducción</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#selección-e-interpretación-del-modelo"><i class="fa fa-check"></i>Selección e Interpretación del Modelo</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#referencias-y-apéndice"><i class="fa fa-check"></i>Referencias y Apéndice</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="C20Report.html"><a href="C20Report.html#sugerencias-adicionales-para-la-redacción-de-informes"><i class="fa fa-check"></i><b>20.4</b> Sugerencias Adicionales para la Redacción de Informes</a></li>
+<li class="chapter" data-level="20.5" data-path="C20Report.html"><a href="C20Report.html#estudio-de-caso-reclamos-de-automóviles-en-suecia"><i class="fa fa-check"></i><b>20.5</b> Estudio de Caso: Reclamos de Automóviles en Suecia</a></li>
+<li class="chapter" data-level="20.6" data-path="C20Report.html"><a href="C20Report.html#further-reading-and-references"><i class="fa fa-check"></i><b>20.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="20.7" data-path="C20Report.html"><a href="C20Report.html#exercises"><i class="fa fa-check"></i><b>20.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="apéndices.html"><a href="apéndices.html"><i class="fa fa-check"></i><b>21</b> Apéndices</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a1.-inferencia-estadística-básica"><i class="fa fa-check"></i>Apéndice A1. Inferencia Estadística Básica</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribuciones-de-funciones-de-variables-aleatorias"><i class="fa fa-check"></i>Distribuciones de Funciones de Variables Aleatorias</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#estimación-y-predicción"><i class="fa fa-check"></i>Estimación y Predicción</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#pruebas-de-hipótesis"><i class="fa fa-check"></i>Pruebas de Hipótesis</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a2.-álgebra-de-matrices"><i class="fa fa-check"></i>Apéndice A2. Álgebra de Matrices</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#definiciones-básicas"><i class="fa fa-check"></i>Definiciones Básicas</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#revisión-de-operaciones-básicas"><i class="fa fa-check"></i>Revisión de Operaciones Básicas</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#definiciones-adicionales"><i class="fa fa-check"></i>Definiciones Adicionales</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#apéndice-a3.-tablas-de-probabilidad"><i class="fa fa-check"></i>Apéndice A3. Tablas de Probabilidad</a>
+<ul>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-normal"><i class="fa fa-check"></i>Distribución Normal</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-chi-cuadrado"><i class="fa fa-check"></i>Distribución Chi-Cuadrado</a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-t"><i class="fa fa-check"></i>Distribución <em>t</em></a></li>
+<li class="chapter" data-level="" data-path="apéndices.html"><a href="apéndices.html#distribución-f"><i class="fa fa-check"></i>Distribución <em>F</em></a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Modelado de Regresión con Aplicaciones Actuariales y Financieras</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="C7Trends" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Capítulo 7</span> Modelado de Tendencias<a href="C7Trends.html#C7Trends" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Vista previa del capítulo</em>. Este capítulo inicia nuestro estudio de los datos de series temporales introduciendo técnicas para identificar patrones principales, o tendencias, en datos que evolucionan con el tiempo. El enfoque está en cómo las técnicas de regresión desarrolladas en capítulos anteriores pueden ser utilizadas para modelar tendencias. Además, se presentan nuevas técnicas, como la diferenciación de datos, que nos permiten introducir de forma natural un paseo aleatorio, un modelo importante de mercados financieros eficientes.</p>
+<div id="introducción-1" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Introducción<a href="C7Trends.html#introducción-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="series-temporales-y-procesos-estocásticos" class="section level3 unnumbered hasAnchor">
+<h3>Series Temporales y Procesos Estocásticos<a href="C7Trends.html#series-temporales-y-procesos-estocásticos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Las empresas no se definen por estructuras físicas como los sólidos edificios de piedra que simbolizan la seguridad financiera. Tampoco se definen por los juguetes de invasores espaciales que fabrican para niños. Las empresas están compuestas por varios procesos complejos e interrelacionados. Un <em>proceso</em> es una serie de acciones u operaciones que conducen a un resultado particular.</p>
+<p>Los procesos no solo son los elementos fundamentales de las empresas, sino que también forman la base de nuestras vidas cotidianas. Podemos ir al trabajo o a la escuela todos los días, practicar artes marciales o estudiar estadística. Estas son secuencias regulares de actividades que nos definen. En este texto, nos interesa modelar <em>procesos estocásticos</em>, definidos como colecciones ordenadas de variables aleatorias, que cuantifican un proceso de interés.</p>
+<p>Algunos procesos evolucionan con el tiempo, como los viajes diarios al trabajo o a la escuela y los ingresos trimestrales de una empresa. Usamos el término <em>datos longitudinales</em> para referirnos a las mediciones de un proceso que evoluciona en el tiempo. Una única medición de un proceso genera una variable en el tiempo, denotada como <span class="math inline">\(y_1, ..., y_T,\)</span> y conocida como una <em>serie temporal</em>.<br />
+En esta parte del texto, seguimos la práctica común y usamos <span class="math inline">\(T\)</span> para denotar el número de observaciones disponibles (en lugar de <span class="math inline">\(n\)</span>). El Capítulo 10 describirá otro tipo de datos longitudinales donde examinamos una sección transversal de entidades, como empresas, y observamos su evolución a lo largo del tiempo. Este tipo de datos también se conoce como <em>datos de panel</em>.</p>
+<p>Las colecciones de variables aleatorias pueden estar ordenadas de formas distintas al tiempo. Por ejemplo, los daños por huracanes se registran en el lugar donde ocurrieron y, por lo tanto, están ordenados espacialmente. Otro ejemplo es la evaluación de un proyecto de perforación petrolera, que requiere tomar muestras del suelo en varias longitudes, latitudes y profundidades. Esto genera observaciones ordenadas por las tres dimensiones del espacio, pero no por el tiempo. Un ejemplo adicional es el estudio de los agujeros en la capa de ozono, donde se toman mediciones atmosféricas. Como el interés radica en la tendencia del agotamiento del ozono, las mediciones se toman en varias longitudes, latitudes, alturas y momentos en el tiempo. Aunque solo consideramos procesos ordenados por tiempo, en otros estudios de datos longitudinales podrías encontrar ordenamientos alternativos. Los datos que no están ordenados se denominan <em>datos de corte transversal</em>.</p>
+</div>
+<div id="series-temporales-versus-modelos-causales" class="section level3 unnumbered hasAnchor">
+<h3>Series Temporales versus Modelos Causales<a href="C7Trends.html#series-temporales-versus-modelos-causales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Los métodos de regresión pueden ser utilizados para resumir muchos conjuntos de datos de series temporales. Sin embargo, usar técnicas de regresión sin establecer un contexto adecuado puede ser desastroso. Este concepto se refuerza con un ejemplo basado en el trabajo de Granger y Newbold (1974).</p>
+<hr />
+<p><strong>Ejemplo: Regresión Espuria.</strong> Sea <span class="math inline">\(\{\varepsilon_{x,t}\}\)</span> y <span class="math inline">\(\{\varepsilon_{y,t}\}\)</span> dos secuencias independientes, cada una de las cuales tiene una distribución normal estándar. A partir de estas, construimos recursivamente las variables <span class="math inline">\(x_t = 0.5 + x_{t-1} + \varepsilon_{x,t}\)</span> y <span class="math inline">\(y_t = 0.5 + y_{t-1} + \varepsilon_{y,t}\)</span>, utilizando las condiciones iniciales <span class="math inline">\(x_0 = y_0 = 0\)</span>. (En la Sección 7.3, identificaremos <span class="math inline">\(x_t\)</span> y <span class="math inline">\(y_t\)</span> como modelos de paseo aleatorio). La Figura <a href="C7Trends.html#fig:Fig71">7.1</a> muestra una realización de {<span class="math inline">\(x_t\)</span>} y {<span class="math inline">\(y_t\)</span>}, generada para <span class="math inline">\(T = 50\)</span> observaciones usando simulación. El panel izquierdo muestra el crecimiento de cada serie en el tiempo: el aumento se debe a la adición de 0.5 en cada punto de tiempo. El panel derecho muestra una fuerte relación entre {<span class="math inline">\(x_t\)</span>} y {<span class="math inline">\(y_t\)</span>}: la correlación entre estas dos series resulta ser 0.92, a pesar de que las dos series fueron generadas <em>independientemente</em>. Su aparente relación, llamada <em>espuria</em>, se debe a que ambas están relacionadas con el crecimiento a lo largo del tiempo.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig71"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig71-1.png" alt="Regresiones Espurias. El panel izquierdo muestra dos series temporales que aumentan con el tiempo. El panel derecho muestra un diagrama de dispersión de las dos series, sugiriendo una relación positiva entre ellas. La relación es espuria en el sentido de que ambas series están impulsadas por el crecimiento en el tiempo, no por una dependencia positiva entre ellas." width="100%" />
+<p class="caption">
+Figura 7.1: <strong>Regresiones Espurias.</strong> El panel izquierdo muestra dos series temporales que aumentan con el tiempo. El panel derecho muestra un diagrama de dispersión de las dos series, sugiriendo una relación positiva entre ellas. La relación es espuria en el sentido de que ambas series están impulsadas por el crecimiento en el tiempo, no por una dependencia positiva entre ellas.
+</p>
+</div>
+<hr />
+<p>En un contexto longitudinal, los modelos de regresión de la forma
+<span class="math display">\[
+y_t = \beta_0 + \beta_1 x_t + \varepsilon_t
+\]</span>
+se conocen como <em>modelos causales</em>. Los modelos causales se emplean regularmente en econometría, donde se supone que la teoría económica proporciona la información necesaria para especificar la relación causal (<span class="math inline">\(x\)</span> “causa” <span class="math inline">\(y\)</span>). En contraste, los modelos estadísticos solo pueden validar relaciones empíricas (“correlación, no causalidad”). En el ejemplo de regresión espuria, ambas variables evolucionan con el tiempo, por lo que un modelo que describa cómo una variable influye en otra necesita considerar los patrones temporales de las variables del lado izquierdo y derecho de la ecuación. Especificar modelos causales para aplicaciones actuariales puede ser difícil por esta razón: los patrones de series temporales en las variables explicativas pueden enmascarar o inducir una relación significativa con la variable dependiente. En contraste, el modelado de regresión puede aplicarse fácilmente cuando las variables explicativas son simplemente funciones del tiempo, el tema de la siguiente sección. Esto se debe a que las funciones del tiempo son determinísticas y, por lo tanto, no presentan patrones de series temporales.</p>
+<p>Los modelos causales también tienen la desventaja de que sus aplicaciones están limitadas para fines de pronóstico. Esto se debe a que, para realizar un pronóstico de una realización futura de la serie, por ejemplo <span class="math inline">\(y_{T+2}\)</span>, se necesita tener conocimiento (o un buen pronóstico) de <span class="math inline">\(x_{T+2}\)</span>, el valor de la variable explicativa en el tiempo <span class="math inline">\(T+2\)</span>. Si <span class="math inline">\(x\)</span> es una función conocida del tiempo (como en la siguiente sección), entonces esto no es un problema. Otra posibilidad es utilizar un valor rezagado de <span class="math inline">\(x\)</span>, como <span class="math inline">\(y_t = \beta_0 + \beta_1 x_{t-1} + \varepsilon_t\)</span>, de modo que los predictores a un paso sean posibles (podemos usar la ecuación para predecir <span class="math inline">\(y_{T+1}\)</span> porque <span class="math inline">\(x_T\)</span> es conocido en el tiempo <span class="math inline">\(T\)</span>).</p>
+</div>
+</div>
+<div id="S7:Trends" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Ajuste de Tendencias en el Tiempo<a href="C7Trends.html#S7:Trends" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="comprendiendo-patrones-en-el-tiempo" class="section level3 unnumbered hasAnchor">
+<h3>Comprendiendo Patrones en el Tiempo<a href="C7Trends.html#comprendiendo-patrones-en-el-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>Predecir</em> se trata de estimar realizaciones futuras de una serie temporal. A lo largo de los años, los analistas han encontrado útil descomponer una serie en tres tipos de patrones: tendencias en el tiempo (<span class="math inline">\(T_t\)</span>), estacionalidad (<span class="math inline">\(S_t\)</span>) y patrones aleatorios o irregulares (<span class="math inline">\(\varepsilon_t\)</span>). Una serie puede ser pronosticada extrapolando cada uno de estos tres patrones. La tendencia es la parte de una serie que corresponde a una evolución lenta y a largo plazo. Esta es la parte más importante para los pronósticos a largo plazo. La parte estacional de la serie corresponde a aspectos que se repiten periódicamente, como cada año. Los patrones irregulares de una serie son movimientos a corto plazo que típicamente son más difíciles de anticipar.</p>
+<p>Los analistas generalmente combinan estos patrones de dos maneras: de forma aditiva,<br />
+<span class="math display" id="eq:eq71">\[\begin{equation}
+y_t = T_t + S_t + \varepsilon_t,
+\tag{7.1}
+\end{equation}\]</span>
+o de forma multiplicativa,<br />
+<span class="math display" id="eq:eq72">\[\begin{equation}
+y_t = T_t \times S_t + \varepsilon_t.
+\tag{7.2}
+\end{equation}\]</span><br />
+Los modelos sin componentes estacionales pueden manejarse fácilmente usando <span class="math inline">\(S_t=0\)</span> para el modelo aditivo en la ecuación <a href="C7Trends.html#eq:eq71">(7.1)</a> y <span class="math inline">\(S_t=1\)</span> para el modelo multiplicativo en la ecuación <a href="C7Trends.html#eq:eq72">(7.2)</a>. Si el modelo es puramente multiplicativo, como en <span class="math inline">\(y_t = T_t \times S_t \times \varepsilon_t\)</span>, este puede convertirse en un modelo aditivo al tomar logaritmos de ambos lados.</p>
+<p>Es instructivo ver cómo estos tres componentes pueden combinarse para formar una serie de interés. Consideremos los tres componentes en la Figura <a href="C7Trends.html#fig:Fig72">7.2</a>. Bajo el modelo aditivo, la tendencia, la estacionalidad y la variación aleatoria se combinan para formar la serie que aparece en el panel inferior derecho. Un gráfico de <span class="math inline">\(y_t\)</span> frente a <span class="math inline">\(t\)</span> se llama un <em>gráfico de serie temporal</em>. En los gráficos de series temporales, la convención es conectar puntos adyacentes usando una línea para ayudar a detectar patrones en el tiempo.</p>
+<p>Cuando analizamos datos, el gráfico en el panel inferior derecho es el primer tipo de gráfico que examinamos. El objetivo del análisis es retroceder: queremos descomponer la serie en sus tres componentes. Cada componente puede ser pronosticado, lo que nos proporcionará pronósticos razonables y fáciles de interpretar.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig72"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig72-1.png" alt="Gráficos de Series Temporales de los Componentes de Respuesta. El componente de tendencia lineal aparece en el panel superior izquierdo, la estacionalidad en el superior derecho y la variación aleatoria en el inferior izquierdo. La suma de los tres componentes aparece en el panel inferior derecho." width="100%" />
+<p class="caption">
+Figura 7.2: <strong>Gráficos de Series Temporales de los Componentes de Respuesta</strong>. El componente de tendencia lineal aparece en el panel superior izquierdo, la estacionalidad en el superior derecho y la variación aleatoria en el inferior izquierdo. La suma de los tres componentes aparece en el panel inferior derecho.
+</p>
+</div>
+</div>
+<div id="ajuste-de-tendencias-en-el-tiempo" class="section level3 unnumbered hasAnchor">
+<h3>Ajuste de Tendencias en el Tiempo<a href="C7Trends.html#ajuste-de-tendencias-en-el-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El tipo más simple de tendencia temporal es la ausencia completa de tendencia. Suponiendo que las observaciones son idénticamente y distribuidas de manera independiente (<em>i.i.d.</em>), entonces podríamos usar el modelo:
+<span class="math display">\[
+y_t = \beta_0 + \varepsilon_t.
+\]</span>
+Por ejemplo, si estás observando un juego de azar como las apuestas realizadas en el lanzamiento de dos dados, entonces típicamente modelamos esto como una serie <em>i.i.d.</em>.</p>
+<p>Ajustar funciones polinomiales del tiempo es otro tipo de tendencia que es fácil de interpretar y ajustar a los datos. Comenzamos con una línea recta para nuestra función polinómica del tiempo, lo que da como resultado el <em>modelo de tendencia lineal en el tiempo</em>:
+<span class="math display" id="eq:eq73">\[\begin{equation}
+y_t = \beta_0 + \beta_1 t + \varepsilon_t.
+\tag{7.3}
+\end{equation}\]</span>
+De manera similar, las técnicas de regresión pueden usarse para ajustar otras funciones que representan tendencias en el tiempo. La ecuación <a href="C7Trends.html#eq:eq73">(7.3)</a> se puede extender fácilmente para manejar una <em>tendencia cuadrática en el tiempo</em>:
+<span class="math display">\[
+y_t = \beta_0 + \beta_1 t + \beta_2 t^2 + \varepsilon_t,
+\]</span>
+o un polinomio de orden superior.</p>
+<hr />
+<p><strong>Ejemplo: Tipos de Cambio en Hong Kong.</strong> Para los viajeros y empresas, los tipos de cambio son una parte importante de la economía monetaria. El tipo de cambio que consideramos es el número de dólares de Hong Kong que se pueden comprar con un dólar estadounidense. Tenemos <span class="math inline">\(T=502\)</span> observaciones diarias para el período del 1 de abril de 2005 al 31 de mayo de 2007, obtenidas del informe H10 de la Reserva Federal. La Figura <a href="C7Trends.html#fig:Fig73">7.3</a> muestra un gráfico de serie temporal del tipo de cambio en Hong Kong.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig73"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig73-1.png" alt="Gráfico de Serie Temporal de los Tipos de Cambio en Hong Kong con Valores Ajustados Superpuestos. Los valores ajustados provienen de una regresión utilizando una tendencia cuadrática en el tiempo. Fuente: Tipos de Cambio Extranjeros (Reserva Federal, informe H10)." width="60%" />
+<p class="caption">
+Figura 7.3: <strong>Gráfico de Serie Temporal de los Tipos de Cambio en Hong Kong con Valores Ajustados Superpuestos.</strong> Los valores ajustados provienen de una regresión utilizando una tendencia cuadrática en el tiempo. <em>Fuente</em>: Tipos de Cambio Extranjeros (Reserva Federal, informe H10).
+</p>
+</div>
+<h5 style="text-align: center;">
+<a id="displayCode.Fig73.Hide" href="javascript:togglecode('toggleCode.Fig73.Hide','displayCode.Fig73.Hide');"><i><strong>R Code to Produce Figure 7.3</strong></i></a>
+</h5>
+<div id="toggleCode.Fig73.Hide" style="display: none">
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="C7Trends.html#cb67-1" tabindex="-1"></a><span class="co"># Figura 73</span></span>
+<span id="cb67-2"><a href="C7Trends.html#cb67-2" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="C7Trends.html#cb67-3" tabindex="-1"></a>exchange <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/HKExchange.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb67-4"><a href="C7Trends.html#cb67-4" tabindex="-1"></a><span class="co">#exchange &lt;- read.csv(&quot;../../CSVData/HKExchange.csv&quot;, header=TRUE)</span></span>
+<span id="cb67-5"><a href="C7Trends.html#cb67-5" tabindex="-1"></a>t        <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(exchange)[<span class="dv">1</span>]</span>
+<span id="cb67-6"><a href="C7Trends.html#cb67-6" tabindex="-1"></a>trend    <span class="ot">&lt;-</span> <span class="fu">lm</span>(EXHKUS <span class="sc">~</span> t<span class="sc">+</span><span class="fu">I</span>(t<span class="sc">^</span><span class="dv">2</span>), <span class="at">data=</span>exchange) </span>
+<span id="cb67-7"><a href="C7Trends.html#cb67-7" tabindex="-1"></a></span>
+<span id="cb67-8"><a href="C7Trends.html#cb67-8" tabindex="-1"></a><span class="fu">plot</span>(t,exchange<span class="sc">$</span>EXHKUS,<span class="at">type=</span><span class="st">&quot;n&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">505</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="fl">7.74</span>,<span class="fl">7.84</span>),</span>
+<span id="cb67-9"><a href="C7Trends.html#cb67-9" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;&quot;</span>, <span class="at">axes=</span>F)</span>
+<span id="cb67-10"><a href="C7Trends.html#cb67-10" tabindex="-1"></a><span class="fu">lines</span>(t,exchange<span class="sc">$</span>EXHKUS)</span>
+<span id="cb67-11"><a href="C7Trends.html#cb67-11" tabindex="-1"></a><span class="fu">lines</span>(t,trend<span class="sc">$</span>fitted)</span>
+<span id="cb67-12"><a href="C7Trends.html#cb67-12" tabindex="-1"></a>xat <span class="ot">&lt;-</span> t[<span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">502</span>, <span class="at">by=</span><span class="dv">60</span>)]</span>
+<span id="cb67-13"><a href="C7Trends.html#cb67-13" tabindex="-1"></a>yat <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">7.74</span>,<span class="fl">7.84</span>, <span class="at">by=</span><span class="fl">0.02</span>)</span>
+<span id="cb67-14"><a href="C7Trends.html#cb67-14" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>,<span class="at">at=</span>xat,<span class="at">labels=</span><span class="fu">as.character</span>(exchange<span class="sc">$</span>DATE[xat]),<span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb67-15"><a href="C7Trends.html#cb67-15" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>,<span class="at">at=</span>yat,<span class="at">labels=</span><span class="fu">as.character</span>(yat),<span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb67-16"><a href="C7Trends.html#cb67-16" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+</div>
+<p>La Figura <a href="C7Trends.html#fig:Fig73">7.3</a> muestra una clara tendencia cuadrática en los datos. Para manejar esta tendencia, usamos <span class="math inline">\(t=1,...,502\)</span> como una variable explicativa para indicar el período de tiempo. La ecuación de regresión ajustada resulta ser:
+<span class="math display">\[
+\begin{array}{cccc}
+\widehat{INDEX}_t =  &amp; 7.797 &amp; -3.68\times 10^{-4}t &amp;
++8.269\times
+10^{-7}t^2 \\
+{\small t\text{-estadísticas}} &amp; {\small (8,531.9)} &amp; {\small (-44.0)} &amp;
+{\small (51.2)}
+\end{array}
+.
+\]</span><br />
+El coeficiente de determinación es un saludable <span class="math inline">\(R^2=86.2\%\)</span> y la estimación de la desviación estándar ha disminuido de <span class="math inline">\(s_{y}=0.0183\)</span> a <span class="math inline">\(s=0.0068\)</span> (nuestra desviación estándar residual). La Figura <a href="C7Trends.html#fig:Fig73">7.3</a> muestra la relación entre los datos y los valores ajustados mediante el gráfico de serie temporal del tipo de cambio con los valores ajustados superpuestos. Para aplicar estos resultados de regresión al problema de pronóstico, supongamos que queremos predecir el tipo de cambio para el 1 de abril de 2007, o <span class="math inline">\(t=503\)</span>. Nuestra predicción es
+<span class="math display">\[
+\widehat{INDEX}_{503} = 7.797 - 3.68 \times 10^{-4}(503) + 8.269
+\times 10^{-7}(503)^2 = 7.8208.
+\]</span></p>
+<p>La conclusión general es que el modelo de regresión que utiliza un término cuadrático en el tiempo <span class="math inline">\(t\)</span> como variable explicativa ajusta bien los datos. Sin embargo, una inspección más detallada de la Figura <a href="C7Trends.html#fig:Fig73">7.3</a> revela patrones en los residuos, donde las respuestas en algunos lugares son consistentemente más altas y en otros consistentemente más bajas que los valores ajustados. Estos patrones sugieren que podemos mejorar la especificación del modelo. Una forma sería introducir un modelo polinómico de mayor orden en el tiempo. En la Sección 7.3, argumentaremos que el paseo aleatorio es un modelo aún mejor para estos datos.</p>
+<hr />
+<p>Otras funciones no lineales del tiempo también pueden ser útiles. Para ilustrar, podríamos estudiar alguna medida de las tasas de interés a lo largo del tiempo (<span class="math inline">\(y_t\)</span>) y estar interesados en el efecto de un cambio en la economía (como el inicio de una guerra). Definimos <span class="math inline">\(z_t\)</span> como una variable binaria que es cero antes de que ocurra el cambio y uno durante y después del cambio. Consideremos el modelo,
+<span class="math display" id="eq:eq74">\[\begin{equation}
+y_t = \beta_0 + \beta_1 z_t + \varepsilon_t.
+\tag{7.4}
+\end{equation}\]</span>
+Así, usando
+<span class="math display">\[
+\mathrm{E~}y_t = \left\{
+\begin{array}{ll}
+\beta_0 + \beta_1 &amp; \text{si }z_t=1 \\
+\beta_0 &amp; \text{si }z_t = 0
+\end{array}
+\right. ,
+\]</span>
+el parámetro <span class="math inline">\(\beta_1\)</span> captura el cambio esperado en las tasas de interés debido al cambio en la economía. Ver Figura <a href="C7Trends.html#fig:Fig74">7.4</a>.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig74"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig74-1.png" alt="Gráfico de Serie Temporal de Tasas de Interés. Hay un cambio claro en las tasas debido a un cambio en la economía. Este cambio puede medirse usando un modelo de regresión con una variable explicativa que indique el cambio." width="60%" />
+<p class="caption">
+Figura 7.4: <strong>Gráfico de Serie Temporal de Tasas de Interés.</strong> Hay un cambio claro en las tasas debido a un cambio en la economía. Este cambio puede medirse usando un modelo de regresión con una variable explicativa que indique el cambio.
+</p>
+</div>
+<hr />
+<p><strong>Ejemplo: Modelos de Cambio de Régimen para Retornos de Acciones a Largo Plazo.</strong> Con la suposición de normalidad, podemos escribir el modelo en la ecuación <a href="C7Trends.html#eq:eq74">(7.4)</a> como
+<span class="math display">\[
+y_t \sim \left\{
+\begin{array}{ll}
+N(\mu_1, \sigma^2) &amp; t &lt; t_0 \\
+N(\mu_2, \sigma^2)&amp; t \geq t_0
+\end{array}
+\right. ,
+\]</span>
+donde <span class="math inline">\(\mu_1 = \beta_0\)</span>, <span class="math inline">\(\mu_2 = \beta_0 + \beta_1\)</span> y <span class="math inline">\(t_0\)</span> es el punto de cambio. Un modelo de <em>cambio de régimen</em> generaliza este concepto, principalmente al asumir que el punto de cambio no es conocido. En su lugar, se supone que existe un mecanismo de transición que nos permite pasar de un “régimen” a otro con una probabilidad que típicamente se estima a partir de los datos. En este modelo, hay un número finito de estados, o “regímenes.” Dentro de cada régimen, se especifica un modelo probabilístico, como la distribución normal (condicionalmente) independiente (<span class="math inline">\(N(\mu_2, \sigma^2)\)</span>). También se podría especificar un modelo autorregresivo o autorregresivo condicional que definiremos en el Capítulo 8. Además, existe una probabilidad condicional de transición de un estado a otro (las llamadas probabilidades de transición “Markov”).</p>
+<p>Hardy (2001) introdujo los modelos de cambio de régimen en la literatura actuarial, donde la variable dependiente de interés era el retorno del mercado de valores a largo plazo medido por los retornos mensuales en (1) el Standard and Poor’s 500 y (2) el Toronto Stock Exchange 300. Hardy consideró modelos de dos y tres regímenes para datos del período de 1956 a 1999, inclusive. Hardy mostró cómo usar las estimaciones de los parámetros del modelo de cambio de régimen para calcular precios de opciones y medidas de riesgo para contratos de seguros vinculados a acciones.</p>
+<hr />
+</div>
+<div id="ajuste-de-tendencias-estacionales" class="section level3 unnumbered hasAnchor">
+<h3>Ajuste de Tendencias Estacionales<a href="C7Trends.html#ajuste-de-tendencias-estacionales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El comportamiento periódico regular a menudo se encuentra en datos económicos y empresariales. Debido a que esta periodicidad a menudo está ligada al clima, estas tendencias se llaman <em>componentes estacionales</em>. Las tendencias estacionales pueden modelarse usando las mismas técnicas que las tendencias regulares o aperiódicas. El siguiente ejemplo muestra cómo capturar el comportamiento periódico utilizando variables binarias estacionales.</p>
+<hr />
+<p><strong>Ejemplo: Tendencias en el Voto.</strong> En cualquier día de elecciones, el número de votantes que realmente acuden a las urnas depende de varios factores: la publicidad que haya recibido la elección, los temas debatidos como parte de la contienda, otros problemas que enfrenten los votantes el día de las elecciones y factores no políticos, como el clima. Ahora, los posibles candidatos políticos basan sus proyecciones de financiación de campañas y probabilidades de ganar una elección en pronósticos del número de votantes que participarán en una elección. Las decisiones sobre si participar o no como candidato deben tomarse con mucha anticipación; en general, tanto tiempo antes que factores conocidos como el clima en el día de la elección no puedan usarse para generar pronósticos.</p>
+<p>Consideramos aquí el número de votantes de Wisconsin que participaron en elecciones estatales durante el período de 1920 a 1990. Aunque el interés radica en pronosticar el número real de votantes, consideramos a los votantes como un porcentaje del público votante calificado. Dividir por el público votante calificado controla el tamaño de la población de votantes; esto mejora la comparabilidad entre las partes iniciales y finales de la serie. Dado que las tendencias de mortalidad son relativamente estables, se pueden obtener fácilmente proyecciones confiables del público votante calificado. Los pronósticos del porcentaje pueden multiplicarse por las proyecciones del público votante para obtener pronósticos de la participación real de votantes.</p>
+<p>Para especificar un modelo, examinamos la Figura <a href="C7Trends.html#fig:Fig75">7.5</a>, un gráfico de serie temporal de la participación de votantes como porcentaje del público votante calificado. Esta figura muestra la baja participación de votantes en la parte inicial de la serie, seguida de una mayor participación en las décadas de 1950 y 1960, y una menor participación en la década de 1980. Este patrón puede modelarse usando, por ejemplo, una tendencia cuadrática en el tiempo. La figura también muestra una participación mucho mayor en años de elecciones presidenciales. Este componente periódico, o estacional, puede modelarse utilizando una variable binaria. Un modelo candidato es
+<span class="math display">\[
+y_t=\beta_0+\beta_1t+\beta_2t^2+\beta_{3}z_t+\varepsilon _t,
+\]</span>
+donde</p>
+<p><span class="math display">\[
+z_t=\left\{
+\begin{array}{ll}
+1 &amp; \text{si año de elección presidencial} \\
+0 &amp; \text{en caso contrario}
+\end{array}
+\right. .
+\]</span>
+Aquí, <span class="math inline">\(\beta_{3}z_t\)</span> captura el componente estacional en este modelo.</p>
+<p>Se utilizó regresión para ajustar el modelo. El modelo ajustado proporcionó un buen ajuste a los datos: el coeficiente de determinación fue <span class="math inline">\(R^2=89.6\%.\)</span> La Figura <a href="C7Trends.html#fig:Fig75">7.5</a> muestra una fuerte relación entre los valores ajustados y los reales.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig75"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig75-1.png" alt="Votantes de Wisconsin como Porcentaje del Público Votante Calificado, por Año. Los círculos opacos representan los porcentajes reales de votación. Las líneas discontinuas representan la tendencia ajustada, utilizando una tendencia cuadrática en el tiempo más una variable binaria para indicar un año de elección presidencial." width="60%" />
+<p class="caption">
+Figura 7.5: <strong>Votantes de Wisconsin como Porcentaje del Público Votante Calificado, por Año.</strong> Los círculos opacos representan los porcentajes reales de votación. Las líneas discontinuas representan la tendencia ajustada, utilizando una tendencia cuadrática en el tiempo más una variable binaria para indicar un año de elección presidencial.
+</p>
+</div>
+<hr />
+<p>El ejemplo de la tendencia en el voto demuestra el uso de variables binarias para capturar componentes estacionales. De manera similar, los efectos estacionales también pueden representarse utilizando variables categóricas, como
+<span class="math display">\[
+z_t=\left\{
+\begin{array}{ll}
+1 &amp; \text{si primavera} \\
+2 &amp; \text{si verano} \\
+3 &amp; \text{si otoño} \\
+4 &amp; \text{si invierno}.
+\end{array}
+\right.
+\]</span></p>
+<p>Otra forma de capturar efectos estacionales es mediante el uso de funciones trigonométricas. Se discute más sobre el uso de funciones trigonométricas para manejar componentes estacionales en la Sección 9.3.</p>
+<p>La eliminación de patrones estacionales se conoce como <em>ajuste estacional</em>. Esta estrategia es apropiada en situaciones de políticas públicas donde el interés radica en interpretar la “serie ajustada estacionalmente” resultante. Por ejemplo, las agencias gubernamentales generalmente informan los ingresos de manufactura industrial en términos de números ajustados estacionalmente, bajo el entendimiento de que los patrones relacionados con feriados y clima se consideran al informar el crecimiento. Sin embargo, para la mayoría de las aplicaciones actuariales y de gestión de riesgos, el interés suele estar en pronosticar la variación de toda la serie, no solo la parte ajustada estacionalmente.</p>
+</div>
+<div id="confiabilidad-de-los-pronósticos-de-series-temporales" class="section level3 unnumbered hasAnchor">
+<h3>Confiabilidad de los Pronósticos de Series Temporales<a href="C7Trends.html#confiabilidad-de-los-pronósticos-de-series-temporales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Los pronósticos de series temporales a veces se denominan pronósticos “ingenuos”. El adjetivo “ingenuo” es algo irónico porque muchas técnicas de pronóstico de series temporales son técnicas por naturaleza y complejas de calcular. Sin embargo, estos pronósticos se basan en la extrapolación de una única serie de observaciones. Por lo tanto, son ingenuos en el sentido de que los pronósticos ignoran otras fuentes de información que pueden estar disponibles para el pronosticador y los usuarios de los pronósticos. A pesar de ignorar esta información posiblemente importante, los pronósticos de series temporales son útiles porque proporcionan un punto de referencia objetivo con el cual comparar otros pronósticos y opiniones de expertos.</p>
+<p>Los pronósticos deben proporcionar al usuario una idea de la confiabilidad del pronóstico. Una forma de cuantificar esto es proporcionar pronósticos bajo conjuntos de supuestos “bajo-intermedio-alto”. Por ejemplo, si estamos pronosticando la deuda nacional, podríamos hacerlo bajo tres escenarios del desempeño futuro de la economía. Alternativamente, podemos calcular intervalos de predicción utilizando muchos de los modelos de pronóstico que se discuten en este texto. Los intervalos de predicción proporcionan una medida de confiabilidad que puede interpretarse en un sentido probabilístico familiar. Además, al variar el nivel de confianza deseado, los intervalos de predicción varían, permitiéndonos responder a preguntas del tipo “¿qué pasaría si…?”.</p>
+<p>Por ejemplo, en la Figura 21.10 encontrará una comparación de proyecciones “bajo-intermedio-alto” con intervalos de predicción para pronósticos de la tasa de inflación (IPC) utilizados en la proyección de fondos de la Seguridad Social. Las proyecciones “bajo-intermedio-alto” se basan en un rango de opiniones de expertos y, por lo tanto, reflejan la variabilidad de los pronosticadores. Los intervalos de predicción reflejan la incertidumbre de innovación en el modelo (asumiendo que el modelo es correcto). Ambos rangos dan al usuario una idea de la confiabilidad de los pronósticos, aunque de maneras diferentes.</p>
+<p>Los intervalos de predicción tienen la ventaja adicional de cuantificar el hecho de que los pronósticos se vuelven menos confiables cuanto más lejos proyectamos en el futuro. Incluso con datos de corte transversal, vimos que cuanto más lejos estábamos de la parte principal de los datos, menos confiados nos sentíamos en nuestras predicciones. Esto también es cierto al pronosticar datos longitudinales. Es importante comunicar esto a los consumidores de pronósticos, y los intervalos de predicción son una forma conveniente de hacerlo.</p>
+<p>En resumen, el análisis de regresión utilizando varias funciones del tiempo como variables explicativas es una herramienta simple pero poderosa para pronosticar datos longitudinales. Sin embargo, tiene desventajas. Debido a que ajustamos una curva a todo el conjunto de datos, no hay garantía de que el ajuste para la parte más reciente de los datos sea adecuado. Es decir, para el pronóstico, la principal preocupación es la parte más reciente de la serie. Sabemos que las estimaciones de análisis de regresión dan más peso a las observaciones con valores inusualmente grandes de variables explicativas. Para ilustrar, usando un modelo de tendencia lineal en el tiempo, esto significa dar más peso a las observaciones al final <em>y al principio</em> de la serie. Usar un modelo que dé mucho peso a las observaciones al principio de la serie se ve con sospecha por los pronosticadores. Esta desventaja del análisis de regresión nos motiva a introducir herramientas adicionales para el pronóstico. (La Sección 9.1 desarrolla este punto con mayor detalle.)</p>
+</div>
+</div>
+<div id="S7:RandomWalk" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Estacionariedad y Modelos de Paseo Aleatorio<a href="C7Trends.html#S7:RandomWalk" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una preocupación básica con los procesos que evolucionan a lo largo del tiempo es la <em>estabilidad</em> del proceso. Por ejemplo: “¿Me toma más tiempo llegar al trabajo desde que instalaron el nuevo semáforo?” “¿Han mejorado las ganancias trimestrales desde que el nuevo CEO asumió el cargo?” Medimos procesos para mejorar o gestionar su desempeño y para pronosticar el futuro del proceso. Dado que la estabilidad es una preocupación fundamental, trabajaremos con un tipo especial de estabilidad llamado <em>estacionariedad</em>.</p>
+<div class="blackbox">
+<p><strong>Definición.</strong> La estacionariedad es el concepto matemático formal que corresponde a la “estabilidad” de una serie temporal de datos. Se dice que una serie es (débilmente) estacionaria si:</p>
+<ul>
+<li>la media <span class="math inline">\(\mathrm{E~}y_t\)</span> no depende de <span class="math inline">\(t\)</span>, y</li>
+<li>la covarianza entre <span class="math inline">\(y_{s}\)</span> y <span class="math inline">\(y_t\)</span> depende solo de la diferencia entre las unidades de tiempo, <span class="math inline">\(|t-s|.\)</span></li>
+</ul>
+</div>
+<p>Por lo tanto, por ejemplo, bajo estacionariedad débil <span class="math inline">\(\mathrm{E~}y_{4}=\mathrm{E~}y_{8}\)</span> porque las medias no dependen del tiempo y, por lo tanto, son iguales. Además, <span class="math inline">\(\mathrm{Cov}(y_{4},y_{6})=\mathrm{Cov}(y_{6},y_{8})\)</span>, porque <span class="math inline">\(y_{4}\)</span> y <span class="math inline">\(y_{6}\)</span> están separados por dos unidades de tiempo, al igual que <span class="math inline">\(y_{6}\)</span> y <span class="math inline">\(y_{8}\)</span>. Como otra implicación de la segunda condición, note que <span class="math inline">\(\sigma^2 = \mathrm{Cov}(y_t, y_t)\)</span> <span class="math inline">\(= \mathrm{Cov}(y_s, y_s) = \sigma^2\)</span>. Por lo tanto, una serie débilmente estacionaria tiene una media constante y una varianza constante (homocedástica). Otro tipo de estacionariedad conocido como <em>estricta o fuerte</em> requiere que toda la distribución de <span class="math inline">\(y_t\)</span> sea constante en el tiempo, no solo la media y la varianza.</p>
+<div id="ruido-blanco" class="section level3 unnumbered hasAnchor">
+<h3>Ruido Blanco<a href="C7Trends.html#ruido-blanco" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El vínculo entre los modelos longitudinales y transversales puede establecerse mediante la noción de un proceso de <em>ruido blanco</em>. Un proceso de ruido blanco es un proceso estacionario que no muestra patrones evidentes a lo largo del tiempo. Más formalmente, un proceso de ruido blanco es simplemente una serie que es <em>i.i.d.</em>, idéntica e independientemente distribuida. Un proceso de ruido blanco es solo un tipo de proceso estacionario: el Capítulo 8 introducirá otro tipo, un modelo autorregresivo.</p>
+<p>Una característica especial del proceso de ruido blanco es que los pronósticos no dependen de cuán lejos en el futuro deseemos pronosticar. Supongamos que una serie de observaciones, <span class="math inline">\(y_1,...,y_T\)</span>, ha sido identificada como un proceso de ruido blanco. Sean <span class="math inline">\(\overline{y}\)</span> y <span class="math inline">\(s_y\)</span> la media muestral y la desviación estándar muestral, respectivamente. Un pronóstico de una observación en el futuro, digamos <span class="math inline">\(y_{T+l}\)</span>, para <span class="math inline">\(l\)</span> unidades de tiempo hacia adelante, es <span class="math inline">\(\overline{y}\)</span>. Además, un intervalo de pronóstico es
+<span class="math display" id="eq:eq75">\[\begin{equation}
+\overline{y}\pm \ t_{T-1,1-\alpha/2} ~ s_y \sqrt{1+\frac{1}{T}}.
+\tag{7.5}
+\end{equation}\]</span>
+En aplicaciones de series temporales, dado que el tamaño de la muestra <span class="math inline">\(T\)</span> suele ser relativamente grande, utilizamos el intervalo de predicción aproximado del 95% <span class="math inline">\(\overline{y} \pm 2 s_y\)</span>. Este intervalo de pronóstico aproximado ignora la incertidumbre del parámetro al usar <span class="math inline">\(\overline{y}\)</span> y <span class="math inline">\(s_y\)</span> para estimar la media <span class="math inline">\(\mathrm{E}~y\)</span> y la desviación estándar <span class="math inline">\(\sigma\)</span> de la serie. En cambio, enfatiza la incertidumbre en las realizaciones futuras de la serie (conocida como <em>incertidumbre de innovación</em>). Tenga en cuenta que este intervalo <em>no</em> depende de la elección de <span class="math inline">\(l\)</span>, el número de unidades de tiempo hacia adelante que pronosticamos.</p>
+<p>El modelo de ruido blanco es el menos y el más importante de los modelos de series temporales. Es el menos importante en el sentido de que el modelo asume que las observaciones no están relacionadas entre sí, un evento poco probable para la mayoría de las series de interés. Es el más importante porque nuestros esfuerzos de modelado están dirigidos a reducir una serie a un proceso de ruido blanco. En el análisis de series temporales, el procedimiento para reducir una serie a un proceso de ruido blanco se llama <em>filtro</em>. Una vez que se han filtrado todos los patrones de los datos, se dice que la incertidumbre es <em>irreductible</em>.</p>
+</div>
+<div id="paseo-aleatorio" class="section level3 unnumbered hasAnchor">
+<h3>Paseo Aleatorio<a href="C7Trends.html#paseo-aleatorio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Ahora introducimos el <em>modelo de paseo aleatorio</em>. Para este modelo de series temporales, mostraremos cómo filtrar los datos simplemente tomando diferencias.</p>
+<p>Para ilustrar, supongamos que juegas un juego simple basado en el lanzamiento de dos dados. Para jugar, debes pagar $7 cada vez que lanzas los dados. Recibes el número de dólares correspondiente a la suma de los dos dados, <span class="math inline">\(c_t^{\ast}\)</span>. Sea <span class="math inline">\(c_t\)</span> tus ganancias en cada lanzamiento, de modo que <span class="math inline">\(c_t = c_t^{\ast} - 7\)</span>. Suponiendo que los lanzamientos son independientes y provienen de la misma distribución, la serie <span class="math inline">\(\{c_t\}\)</span> es un proceso de ruido blanco.</p>
+<p>Supongamos que comienzas con un capital inicial de <span class="math inline">\(y_0 = \$100\)</span>. Sea <span class="math inline">\(y_t\)</span> la suma del capital después del lanzamiento <span class="math inline">\(t\)</span>. Note que <span class="math inline">\(y_t\)</span> se determina recursivamente como <span class="math inline">\(y_t = y_{t-1} + c_t\)</span>. Por ejemplo, porque ganaste $3 en el primer lanzamiento, <span class="math inline">\(t=1\)</span>, ahora tienes un capital de <span class="math inline">\(y_1 = y_0 + c_1\)</span>, o 103 = 100 + 3. <a href="C7Trends.html#Tab71">Tabla 7.1</a> muestra los resultados de los primeros cinco lanzamientos. La Figura <a href="C7Trends.html#fig:Fig76">7.6</a> es un gráfico de series temporales de las sumas, <span class="math inline">\(y_t\)</span>, para los cincuenta lanzamientos.</p>
+<p><a id=Tab71></a></p>
+<p><span id="Tab71">Tabla 7.1</span>. <strong>Ganancias para Cinco de los 50 Lanzamientos</strong></p>
+<p><span class="math display">\[
+\begin{array}{c|ccccc}
+\hline
+t &amp; 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 \\
+c_t^{\ast } &amp; 10 &amp; 9 &amp; 7 &amp; 5 &amp; 7 \\
+c_t &amp; 3 &amp; 2 &amp; 0 &amp; -2 &amp; 0 \\
+~~y_t~~ &amp; ~103~ &amp; ~105~ &amp; ~105~ &amp; ~103~ &amp; 103 \\ \hline
+\end{array}
+\]</span></p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig76"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig76-1.png" alt="Gráfico de Series Temporales de la Suma del Capital" width="60%" />
+<p class="caption">
+Figura 7.6: <strong>Gráfico de Series Temporales de la Suma del Capital</strong>
+</p>
+</div>
+<p>Las sumas parciales de un proceso de ruido blanco definen un modelo de paseo aleatorio. Por ejemplo, la serie <span class="math inline">\(\{y_1, \ldots ,y_{50}\}\)</span> en la Figura <a href="C7Trends.html#fig:Fig76">7.6</a> es una realización del modelo de paseo aleatorio. La frase <em>suma parcial</em> se utiliza porque cada observación, <span class="math inline">\(y_t\)</span>, se creó sumando las ganancias hasta el tiempo <span class="math inline">\(t\)</span>. En este ejemplo, las ganancias, <span class="math inline">\(c_t\)</span>, son un proceso de ruido blanco porque el monto retornado, <span class="math inline">\(c_t^{\ast}\)</span>, es i.i.d. En nuestro ejemplo, tus ganancias de cada lanzamiento de los dados se representan mediante un proceso de ruido blanco. Si ganas en un lanzamiento de los dados no influye en el resultado del siguiente o del anterior lanzamiento. En contraste, tu cantidad de capital en cualquier lanzamiento de los dados está altamente relacionada con la cantidad de capital después del siguiente o anterior lanzamiento. Tu cantidad de capital después de cada lanzamiento de los dados se representa mediante un modelo de paseo aleatorio.</p>
+</div>
+</div>
+<div id="inferencia-usando-modelos-de-paseo-aleatorio" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Inferencia usando Modelos de Paseo Aleatorio<a href="C7Trends.html#inferencia-usando-modelos-de-paseo-aleatorio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El paseo aleatorio es un modelo de series temporales de uso común. Para ver cómo se puede aplicar, primero discutimos algunas propiedades del modelo. Luego, utilizamos estas propiedades para pronosticar e identificar una serie como un paseo aleatorio. Finalmente, esta sección compara el paseo aleatorio con un competidor, el modelo de tendencia lineal en el tiempo.</p>
+<div id="propiedades-del-modelo" class="section level3 unnumbered hasAnchor">
+<h3>Propiedades del Modelo<a href="C7Trends.html#propiedades-del-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para establecer las propiedades del paseo aleatorio, primero recapitulamos algunas definiciones. Sean <span class="math inline">\(c_1,\ldots ,c_T\)</span> <span class="math inline">\(T\)</span> observaciones de un proceso de ruido blanco. Un paseo aleatorio puede expresarse recursivamente como
+<span class="math display" id="eq:eq76">\[\begin{equation}
+y_t = y_{t-1} + c_t.
+\tag{7.6}
+\end{equation}\]</span>
+Por sustitución repetida, tenemos
+<span class="math display">\[
+y_t = c_t + y_{t-1} = c_t + \left( c_{t-1} + y_{t-2}\right) = \ldots
+\]</span>
+Si usamos <span class="math inline">\(y_0\)</span> como el nivel inicial, entonces podemos expresar el paseo aleatorio como
+<span class="math display" id="eq:eq77">\[\begin{equation}
+y_t = y_0 + c_1 + \ldots + c_t.
+\tag{7.7}
+\end{equation}\]</span>
+La ecuación <a href="C7Trends.html#eq:eq77">(7.7)</a> muestra que un paseo aleatorio es la suma parcial de un proceso de ruido blanco.</p>
+<p>El paseo aleatorio <em>no</em> es un proceso estacionario porque la variabilidad, y posiblemente la media, depende del punto de tiempo en el que se observa la serie. Tomando la esperanza y la varianza de la ecuación <a href="C7Trends.html#eq:eq77">(7.7)</a>, obtenemos el nivel medio y la variabilidad del proceso de paseo aleatorio:
+<span class="math display">\[
+\mathrm{E~}y_t = y_0 + t\mu_c\ \ \text{ y} \ \ \mathrm{Var~} y_t =
+t \sigma_c^2,
+\]</span>
+donde <span class="math inline">\(\mathrm{E~}c_t = \mu_c\)</span> y <span class="math inline">\(\mathrm{Var~}c_t = \sigma _c^2\)</span>. Por lo tanto, mientras haya alguna variabilidad en el proceso de ruido blanco (<span class="math inline">\(\sigma_c^2 &gt; 0\)</span>), el paseo aleatorio no es estacionario en la varianza. Además, si <span class="math inline">\(\mu_c\neq 0\)</span>, entonces el paseo aleatorio no es estacionario en la media.</p>
+</div>
+<div id="pronósticos" class="section level3 unnumbered hasAnchor">
+<h3>Pronósticos<a href="C7Trends.html#pronósticos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>¿Cómo podemos pronosticar una serie de observaciones, <span class="math inline">\(y_1,...,y_T\)</span>, que ha sido identificada como una realización de un modelo de paseo aleatorio? La técnica que usamos es pronosticar las <em>diferencias</em>, o <em>cambios</em>, en la serie y luego sumar las diferencias pronosticadas para obtener la serie pronosticada. Esta técnica es manejable porque, por definición del modelo de paseo aleatorio, las diferencias pueden representarse utilizando un proceso de ruido blanco, un proceso que sabemos cómo pronosticar.</p>
+<p>Consideremos <span class="math inline">\(y_{T+l}\)</span>, el valor de la serie <span class="math inline">\(l\)</span> unidades de tiempo en el futuro. Sea <span class="math inline">\(c_t=y_t-y_{t-1}\)</span> que representa las diferencias en la serie, de modo que
+<span class="math display">\[\begin{eqnarray*}
+y_{T+l} &amp;=&amp;y_{T+l-1}+c_{T+l} = \left( y_{T+l-2} + c_{T+l-1}\right)
++c_{T+l} = \ldots
+\\
+&amp;=&amp;y_T+c_{T+1}+ \ldots +c_{T+l}.
+\end{eqnarray*}\]</span>%
+Interpretamos <span class="math inline">\(y_{T+l}\)</span> como el valor actual de la serie, <span class="math inline">\(y_T\)</span>, más la suma parcial de diferencias futuras.</p>
+<p>Para pronosticar <span class="math inline">\(y_{T+l}\)</span>, dado que en el tiempo <span class="math inline">\(T\)</span> conocemos <span class="math inline">\(y_T\)</span>, solo necesitamos pronosticar los cambios <span class="math inline">\(\{c_{T+1}, \ldots, c_{T+l}\}\)</span>. Debido a que un pronóstico de un valor futuro de un proceso de ruido blanco es simplemente el promedio del proceso, el pronóstico de <span class="math inline">\(c_{T+k}\)</span> es <span class="math inline">\(\overline{c}\)</span> para <span class="math inline">\(k=1,2,\ldots,l\)</span>. Combinando estos resultados, el pronóstico de <span class="math inline">\(y_{T+l}\)</span> es <span class="math inline">\(y_T+l\overline{c}\)</span>. Por ejemplo, para <span class="math inline">\(l=1\)</span>, interpretamos que el pronóstico del siguiente valor de la serie es el valor actual de la serie más el cambio promedio de la serie.</p>
+<p>Usando ideas similares, tenemos que un intervalo de predicción aproximado al 95% para <span class="math inline">\(y_{T+l}\)</span> es%
+<span class="math display">\[
+y_T+l\overline{c}\pm 2s_c\sqrt{l}
+\]</span>
+donde <span class="math inline">\(s_c\)</span> es la desviación estándar calculada utilizando los cambios <span class="math inline">\(c_2,c_{3},\ldots,c_T\)</span>. Note que el ancho del intervalo de predicción, <span class="math inline">\(4 s_c \sqrt{l}\)</span>, crece a medida que crece el horizonte de pronóstico <span class="math inline">\(l\)</span>. Este aumento en el ancho simplemente refleja nuestra capacidad decreciente para predecir hacia el futuro.</p>
+<p>Como ejemplo, lanzamos los dados <span class="math inline">\(T=50\)</span> veces y queremos pronosticar <span class="math inline">\(y_{60}\)</span>, nuestra suma de capital después de 60 lanzamientos. En el tiempo 50, resultó que nuestra suma de dinero disponible era <span class="math inline">\(y_{50}=\$93\)</span>. Comenzando con <span class="math inline">\(y_0 = \$100\)</span>, el cambio promedio fue <span class="math inline">\(\overline{c} = -7/50 = -0.14\)</span>, con una desviación estándar <span class="math inline">\(s_c=\$2.703\)</span>. Por lo tanto, el pronóstico en el tiempo 60 es <span class="math inline">\(93+10(-.14) =91.6\)</span>. El correspondiente intervalo de predicción al 95% es%
+<span class="math display">\[
+91.6\pm 2\left( 2.703\right) \sqrt{10}=91.6\pm 17.1=\left( 74.5,108.7\right).
+\]</span></p>
+<hr />
+<p><strong>Ejemplo: Tasas de Participación en la Fuerza Laboral.</strong> Los pronósticos de la tasa de participación en la fuerza laboral (<span class="math inline">\(LFPR\)</span>), junto con pronósticos de la población, nos brindan una visión de la futura fuerza laboral de una nación. Esta visión proporciona información sobre el funcionamiento futuro de la economía en general, y por lo tanto, las proyecciones de <span class="math inline">\(LFPR\)</span> son de interés para varias agencias gubernamentales. En los Estados Unidos, las tasas de participación en la fuerza laboral son proyectadas por la Administración del Seguro Social, la Oficina de Estadísticas Laborales, la Oficina de Presupuesto del Congreso y la Oficina de Gestión y Presupuesto. En el contexto del Seguro Social, los formuladores de políticas utilizan proyecciones de la fuerza laboral para evaluar propuestas de reforma del sistema de Seguro Social y para evaluar su futura solvencia financiera.</p>
+<p>La tasa de participación en la fuerza laboral es la fuerza laboral civil dividida por la población civil no institucionalizada. Estos datos son recopilados por la Oficina de Estadísticas Laborales. Para fines de ilustración, examinemos un grupo demográfico específico y mostremos cómo pronosticarlo; los pronósticos de otros grupos pueden encontrarse en Fullerton (1999) y Frees (2006). Específicamente, examinamos el período 1968-1998 para mujeres de 20 a 44 años, que viven en un hogar con un cónyuge presente y al menos un hijo menor de seis años. La Figura <a href="C7Trends.html#fig:Fig77">7.7</a> muestra el rápido aumento en <span class="math inline">\(LFPR\)</span> para este grupo a lo largo de <span class="math inline">\(T=31\)</span> años.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig77"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig77-1.png" alt="Tasas de Participación en la Fuerza Laboral para Mujeres de 20-44 años, Viviendo en un Hogar con un Cónyuge Presente y al Menos un Hijo Menor de Seis Años. El gráfico de la serie muestra un rápido aumento con el tiempo. También se muestran las diferencias, que son constantes." width="80%" />
+<p class="caption">
+Figura 7.7: <strong>Tasas de Participación en la Fuerza Laboral para Mujeres de 20-44 años, Viviendo en un Hogar con un Cónyuge Presente y al Menos un Hijo Menor de Seis Años.</strong> El gráfico de la serie muestra un rápido aumento con el tiempo. También se muestran las diferencias, que son constantes.
+</p>
+</div>
+<h5 style="text-align: center;">
+<a id="displayCode.Fig77.Hide" href="javascript:togglecode('toggleCode.Fig77.Hide','displayCode.Fig77.Hide');"><i><strong>Código R para producir la Figura 7.7</strong></i></a>
+</h5>
+<div id="toggleCode.Fig77.Hide" style="display: none">
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="C7Trends.html#cb68-1" tabindex="-1"></a><span class="co"># Figura 77</span></span>
+<span id="cb68-2"><a href="C7Trends.html#cb68-2" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="C7Trends.html#cb68-3" tabindex="-1"></a>labor <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/LaborForcePR.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb68-4"><a href="C7Trends.html#cb68-4" tabindex="-1"></a><span class="co">#labor &lt;- read.csv(&quot;../../CSVData/LaborForcePR.csv&quot;, header=TRUE)</span></span>
+<span id="cb68-5"><a href="C7Trends.html#cb68-5" tabindex="-1"></a></span>
+<span id="cb68-6"><a href="C7Trends.html#cb68-6" tabindex="-1"></a>msc  <span class="ot">&lt;-</span> labor<span class="sc">$</span>MSC6U</span>
+<span id="cb68-7"><a href="C7Trends.html#cb68-7" tabindex="-1"></a>time <span class="ot">&lt;-</span> labor<span class="sc">$</span>TIME</span>
+<span id="cb68-8"><a href="C7Trends.html#cb68-8" tabindex="-1"></a>year <span class="ot">&lt;-</span> labor<span class="sc">$</span>YEAR</span>
+<span id="cb68-9"><a href="C7Trends.html#cb68-9" tabindex="-1"></a>msc1 <span class="ot">&lt;-</span> msc[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb68-10"><a href="C7Trends.html#cb68-10" tabindex="-1"></a>diff <span class="ot">&lt;-</span> msc1<span class="sc">-</span>msc[<span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(msc)<span class="sc">-</span><span class="dv">1</span>)] </span>
+<span id="cb68-11"><a href="C7Trends.html#cb68-11" tabindex="-1"></a></span>
+<span id="cb68-12"><a href="C7Trends.html#cb68-12" tabindex="-1"></a><span class="fu">plot</span>(year,msc,<span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">2</span>,<span class="fl">0.8</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">1965</span>,<span class="dv">2000</span>),</span>
+<span id="cb68-13"><a href="C7Trends.html#cb68-13" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Año&quot;</span>,<span class="at">type=</span><span class="st">&quot;l&quot;</span>)  </span>
+<span id="cb68-14"><a href="C7Trends.html#cb68-14" tabindex="-1"></a><span class="fu">points</span>(year,msc,<span class="at">pch=</span><span class="dv">16</span>) </span>
+<span id="cb68-15"><a href="C7Trends.html#cb68-15" tabindex="-1"></a><span class="fu">lines</span>(year[<span class="sc">-</span><span class="fu">length</span>(year)],diff)</span>
+<span id="cb68-16"><a href="C7Trends.html#cb68-16" tabindex="-1"></a><span class="fu">points</span>(year[<span class="sc">-</span><span class="fu">length</span>(year)],diff)</span>
+<span id="cb68-17"><a href="C7Trends.html#cb68-17" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">1967</span>,<span class="fl">0.72</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;LFPR&quot;</span>,<span class="st">&quot;Diferencias&quot;</span>),<span class="at">pch=</span><span class="fu">c</span>(<span class="dv">16</span>,<span class="dv">1</span>),<span class="at">bty=</span><span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+</div>
+<p>Para pronosticar el <span class="math inline">\(LFPR\)</span> con un paseo aleatorio, comenzamos con nuestra observación más reciente, <span class="math inline">\(LFPR_{31}=0.6407\)</span>. Denotamos el cambio en el <span class="math inline">\(LFPR\)</span> como <span class="math inline">\(c_t\)</span>, de modo que <span class="math inline">\(c_t=LFPR_t-LFPR_{t-1}\)</span>. Resulta que el cambio promedio es <span class="math inline">\(\overline{c}=0.0121\)</span> con una desviación estándar <span class="math inline">\(s_c=0.0101\)</span>. Así, usando un modelo de paseo aleatorio, un intervalo de predicción aproximado al 95% para el pronóstico de <span class="math inline">\(l\)</span> pasos es%
+<span class="math display">\[
+0.6407+0.0121l\pm \ 0.0202\sqrt{l}.
+\]</span>
+La Figura <a href="C7Trends.html#fig:Fig78">7.8</a> ilustra los intervalos de predicción para los años 1999 a 2002, inclusive.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig78"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig78-1.png" alt="Gráfico de Series Temporales de las Tasas de Participación en la Fuerza Laboral con Valores Pronosticados para 1999-2002. La serie del medio representa los pronósticos puntuales. Las series superior e inferior representan los límites superior e inferior de los intervalos de predicción al 95%. Los datos de 1968-1998 representan valores reales." width="80%" />
+<p class="caption">
+Figura 7.8: <strong>Gráfico de Series Temporales de las Tasas de Participación en la Fuerza Laboral con Valores Pronosticados para 1999-2002.</strong> La serie del medio representa los pronósticos puntuales. Las series superior e inferior representan los límites superior e inferior de los intervalos de predicción al 95%. Los datos de 1968-1998 representan valores reales.
+</p>
+</div>
+<hr />
+<h5 style="text-align: center;">
+<a id="displayCode.Fig78.Hide" href="javascript:togglecode('toggleCode.Fig78.Hide','displayCode.Fig78.Hide');"><i><strong>Código R para producir la Figura 7.8</strong></i></a>
+</h5>
+<div id="toggleCode.Fig78.Hide" style="display: none">
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="C7Trends.html#cb69-1" tabindex="-1"></a><span class="co"># Figura 78</span></span>
+<span id="cb69-2"><a href="C7Trends.html#cb69-2" tabindex="-1"></a><span class="co">#labor &lt;- read.csv(&quot;CSVData/LaborForcePR.csv&quot;, header=TRUE)</span></span>
+<span id="cb69-3"><a href="C7Trends.html#cb69-3" tabindex="-1"></a><span class="co">#labor &lt;- read.csv(&quot;../../CSVData/LaborForcePR.csv&quot;, header=TRUE)</span></span>
+<span id="cb69-4"><a href="C7Trends.html#cb69-4" tabindex="-1"></a></span>
+<span id="cb69-5"><a href="C7Trends.html#cb69-5" tabindex="-1"></a><span class="co"># length(msc) = 31</span></span>
+<span id="cb69-6"><a href="C7Trends.html#cb69-6" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb69-7"><a href="C7Trends.html#cb69-7" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">c</span>(msc,msc[<span class="dv">31</span>]<span class="sc">+</span><span class="fu">mean</span>(diff)<span class="sc">*</span>l)</span>
+<span id="cb69-8"><a href="C7Trends.html#cb69-8" tabindex="-1"></a>predl <span class="ot">&lt;-</span> <span class="fu">c</span>(msc,msc[<span class="dv">31</span>]<span class="sc">+</span><span class="fu">mean</span>(diff)<span class="sc">*</span>l<span class="sc">-</span><span class="fu">sd</span>(diff)<span class="sc">*</span><span class="dv">2</span><span class="sc">*</span><span class="fu">sqrt</span>(l))</span>
+<span id="cb69-9"><a href="C7Trends.html#cb69-9" tabindex="-1"></a>predu <span class="ot">&lt;-</span> <span class="fu">c</span>(msc,msc[<span class="dv">31</span>]<span class="sc">+</span><span class="fu">mean</span>(diff)<span class="sc">*</span>l<span class="sc">+</span><span class="fu">sd</span>(diff)<span class="sc">*</span><span class="dv">2</span><span class="sc">*</span><span class="fu">sqrt</span>(l))</span>
+<span id="cb69-10"><a href="C7Trends.html#cb69-10" tabindex="-1"></a>year1 <span class="ot">&lt;-</span> <span class="fu">c</span>(year,<span class="dv">1999</span>,<span class="dv">2000</span>,<span class="dv">2001</span>,<span class="dv">2002</span>)</span>
+<span id="cb69-11"><a href="C7Trends.html#cb69-11" tabindex="-1"></a></span>
+<span id="cb69-12"><a href="C7Trends.html#cb69-12" tabindex="-1"></a><span class="fu">plot</span>(year1,pred,<span class="at">ylim=</span><span class="fu">c</span>(.<span class="dv">2</span>,<span class="fl">0.8</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">1965</span>,<span class="dv">2005</span>),</span>
+<span id="cb69-13"><a href="C7Trends.html#cb69-13" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;Año&quot;</span>,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">pch=</span><span class="dv">16</span>) </span>
+<span id="cb69-14"><a href="C7Trends.html#cb69-14" tabindex="-1"></a><span class="fu">lines</span>(year1,predl,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">pch=</span><span class="dv">16</span>)</span>
+<span id="cb69-15"><a href="C7Trends.html#cb69-15" tabindex="-1"></a><span class="fu">lines</span>(year1,predu,<span class="at">type=</span><span class="st">&quot;o&quot;</span>,<span class="at">pch=</span><span class="dv">16</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="identificación-de-estacionariedad" class="section level3 unnumbered hasAnchor">
+<h3>Identificación de Estacionariedad<a href="C7Trends.html#identificación-de-estacionariedad" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Hemos visto cómo hacer cosas útiles, como pronósticos, con modelos de paseo aleatorio. Pero, ¿cómo identificamos que una serie es una realización de un paseo aleatorio? Sabemos que el paseo aleatorio es un tipo especial de modelo no estacionario, por lo que el primer paso es examinar una serie y decidir si es estacionaria o no.</p>
+<p>La estacionariedad cuantifica la estabilidad de un proceso. Un proceso que es estrictamente estacionario tiene la misma distribución a lo largo del tiempo, por lo que deberíamos poder tomar muestras sucesivas de tamaño modesto y mostrar que tienen aproximadamente la misma distribución. Para la estacionariedad débil, la media y la varianza son estables a lo largo del tiempo, por lo que si tomamos muestras sucesivas de tamaño modesto, esperamos que el nivel promedio y la varianza sean aproximadamente similares. Para ilustrar, al examinar gráficos de series temporales, si miras las primeras cinco observaciones, las siguientes cinco, las siguientes cinco, y así sucesivamente, deberías observar niveles aproximadamente similares de promedios y desviaciones estándar.</p>
+<p>En aplicaciones de gestión de calidad, este enfoque se cuantifica mediante el uso de <em>gráficos de control</em>. Un gráfico de control es una herramienta gráfica útil para detectar la falta de estacionariedad en una serie temporal. La idea básica es superponer líneas de referencia llamadas <em>límites de control</em> en un gráfico de series temporales de los datos. Estas líneas de referencia nos ayudan a detectar visualmente tendencias en los datos e identificar puntos inusuales. La mecánica detrás de los límites de control es sencilla. Para una serie de observaciones, calculamos la media y la desviación estándar de la serie, <span class="math inline">\(\overline{y}\)</span> y <span class="math inline">\(s_y\)</span>. Definimos el “límite superior de control” como <span class="math inline">\(UCL=\overline{y}+3s_y\)</span> y el “límite inferior de control” como <span class="math inline">\(LCL=\overline{y}-3s_y\)</span>. Los gráficos de series temporales con estos límites de control superpuestos se conocen como gráficos de control.</p>
+<p>A veces se asocia el adjetivo <em>retrospectivo</em> con este tipo de gráfico de control. Este adjetivo recuerda al usuario que los promedios y las desviaciones estándar se basan en todos los datos disponibles. En contraste, cuando el gráfico de control se utiliza como una herramienta de gestión continua para detectar si un proceso industrial está “fuera de control”, un <em>gráfico de control prospectivo</em> puede ser más adecuado. Aquí, prospectivo simplemente significa usar solo una porción temprana del proceso, que está “bajo control”, para calcular los límites de control.</p>
+<p>Un gráfico de control que nos ayuda a examinar la estabilidad de la media es el gráfico <span class="math inline">\(Xbar\)</span>. Un gráfico <span class="math inline">\(Xbar\)</span> se crea combinando observaciones sucesivas de tamaño modesto, calculando un promedio sobre este grupo y luego creando un gráfico de control para los promedios de los grupos. Al tomar promedios sobre grupos, la variabilidad asociada con cada punto en el gráfico es menor que la de un gráfico de control para observaciones individuales. Esto permite al analista de datos obtener una imagen más clara de cualquier patrón que pueda ser evidente en la media de la serie.</p>
+<p>Un gráfico de control que nos ayuda a examinar la estabilidad de la variabilidad es el gráfico <span class="math inline">\(R\)</span>. Al igual que con el gráfico <span class="math inline">\(Xbar\)</span>, comenzamos formando grupos sucesivos de tamaño modesto. Con el gráfico <span class="math inline">\(R\)</span>, para cada grupo calculamos el rango, que es la observación más grande menos la más pequeña, y luego creamos un gráfico de control para los rangos de los grupos. El rango es una medida de variabilidad simple de calcular, una ventaja importante en aplicaciones de manufactura.</p>
+</div>
+<div id="identificación-de-paseos-aleatorios" class="section level3 unnumbered hasAnchor">
+<h3>Identificación de Paseos Aleatorios<a href="C7Trends.html#identificación-de-paseos-aleatorios" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Supongamos que sospechas que una serie no es estacionaria, ¿cómo identificas que estas son realizaciones de un modelo de paseo aleatorio? Recordemos que el valor esperado de un paseo aleatorio, <span class="math inline">\(\mathrm{E~}y_t=y_0+t\mu_c\)</span>, sugiere que dicha serie sigue una tendencia lineal en el tiempo. La varianza de un paseo aleatorio, <span class="math inline">\(\mathrm{Var~}y_t=t\sigma_c^2\)</span>, sugiere que la variabilidad de una serie aumenta a medida que el tiempo <span class="math inline">\(t\)</span> crece. Primero, un gráfico de control puede ayudarnos a detectar estos patrones, ya sea una tendencia lineal en el tiempo, una variabilidad creciente, o ambos.</p>
+<p>Segundo, si los datos originales siguen un modelo de paseo aleatorio, entonces la serie diferenciada sigue un modelo de proceso de ruido blanco. Si un modelo de paseo aleatorio es un modelo candidato, deberías examinar las diferencias de la serie. En este caso, el gráfico de series temporales de las diferencias debería ser un proceso estacionario, de ruido blanco, que no muestra patrones evidentes. Los gráficos de control pueden ayudarnos a detectar esta ausencia de patrones.</p>
+<p>Tercero, compara las desviaciones estándar de la serie original y la serie diferenciada. Esperamos que la desviación estándar de la serie original sea mayor que la desviación estándar de la serie diferenciada. Por lo tanto, si la serie puede representarse mediante un paseo aleatorio, esperamos una reducción sustancial en la desviación estándar al tomar diferencias.</p>
+<hr />
+<p><strong>Ejemplo: Tasas de Participación en la Fuerza Laboral - Continuación.</strong> En la Figura <a href="C7Trends.html#fig:Fig77">7.7</a>, la serie muestra una clara tendencia ascendente mientras que las diferencias no muestran tendencias aparentes en el tiempo. Además, al calcular las diferencias de la serie, resulta que%
+<span class="math display">\[
+0.1237=SD(series)&gt;SD(differences)=0.0101.
+\]</span>
+Por lo tanto, parece razonable utilizar tentativamente un modelo de paseo aleatorio para la serie de tasas de participación en la fuerza laboral.</p>
+<p>En el Capítulo 8, discutiremos dos dispositivos adicionales de identificación. Estos son gráficos de dispersión de la serie frente a una versión rezagada de la serie y las estadísticas resumen correspondientes llamadas <em>autocorrelaciones</em>.</p>
+<hr />
+</div>
+<div id="paseo-aleatorio-versus-modelo-de-tendencia-lineal-en-el-tiempo" class="section level3 unnumbered hasAnchor">
+<h3>Paseo Aleatorio versus Modelo de Tendencia Lineal en el Tiempo<a href="C7Trends.html#paseo-aleatorio-versus-modelo-de-tendencia-lineal-en-el-tiempo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El ejemplo de la tasa de participación en la fuerza laboral podría representarse usando un paseo aleatorio o un modelo de tendencia lineal en el tiempo. Estos dos modelos están más relacionados entre sí de lo que parece a primera vista. Para ver esta relación, recordemos que el modelo de tendencia lineal en el tiempo puede escribirse como
+<span class="math display" id="eq:eq78">\[\begin{equation}
+y_t = \beta_0 + \beta_1 t + \varepsilon_t,
+\tag{7.8}
+\end{equation}\]</span>
+donde <span class="math inline">\(\{\varepsilon_t\}\)</span> es un proceso de ruido blanco. Si <span class="math inline">\(\{y_t\}\)</span> es un paseo aleatorio, entonces puede modelarse como una suma parcial como en la ecuación <a href="C7Trends.html#eq:eq77">(7.7)</a>. También podemos descomponer el proceso de ruido blanco en una media <span class="math inline">\(\mu_c\)</span> más otro proceso de ruido blanco, es decir, <span class="math inline">\(c_t = \mu_c + \varepsilon_t\)</span>. Combinando estas dos ideas, un modelo de paseo aleatorio puede escribirse como
+<span class="math display" id="eq:eq79">\[\begin{equation}
+y_t = y_0 + \mu_c t + u_t
+\tag{7.9}
+\end{equation}\]</span>
+donde <span class="math inline">\(u_t = \sum_{j=1}^{t} \varepsilon_j\)</span>. Comparando las ecuaciones <a href="C7Trends.html#eq:eq78">(7.8)</a> y <a href="C7Trends.html#eq:eq79">(7.9)</a>, vemos que los dos modelos son similares en que la porción determinística es una función lineal del tiempo. La diferencia está en el componente de error. El componente de error para el modelo de tendencia lineal en el tiempo es un proceso estacionario de ruido blanco. El componente de error para el modelo de paseo aleatorio no es estacionario porque es la suma parcial de procesos de ruido blanco. Es decir, el componente de error también es un paseo aleatorio. Muchos tratamientos introductorios del modelo de paseo aleatorio se centran en el ejemplo del “juego justo” e ignoran el término de deriva <span class="math inline">\(\mu_c\)</span>. Esto es desafortunado porque la comparación entre el modelo de paseo aleatorio y el modelo de tendencia lineal en el tiempo no es tan clara cuando el parámetro <span class="math inline">\(\mu_c\)</span> es igual a cero.</p>
+</div>
+</div>
+<div id="filtrado-para-lograr-estacionariedad" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Filtrado para Lograr Estacionariedad<a href="C7Trends.html#filtrado-para-lograr-estacionariedad" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Un <em>filtro</em> es un procedimiento para reducir las observaciones a ruido blanco. En regresión, logramos esto simplemente restando la función de regresión de las observaciones, es decir, <span class="math inline">\(y_i - (\beta_0 + \beta_1 x_{1i} + \ldots + \beta_k x_{ki})=\varepsilon_i\)</span>. La transformación de los datos es otro dispositivo para filtrar que introdujimos en el Capítulo 1 al analizar datos de corte transversal. Encontramos otro ejemplo de un filtro en la Sección <a href="C7Trends.html#S7:RandomWalk">7.3</a>. Allí, al tomar diferencias de las observaciones, reducimos una serie de paseo aleatorio a un proceso de ruido blanco.</p>
+<p>Un tema importante de este texto es usar un enfoque iterativo para ajustar modelos a datos. En particular, en este capítulo discutimos técnicas para reducir una secuencia de observaciones a una serie estacionaria. Por definición, una serie estacionaria es estable y, por lo tanto, es mucho más fácil de pronosticar que una serie inestable. Esta etapa, a veces conocida como <em>pre-procesamiento</em> de los datos, generalmente da cuenta de las fuentes más importantes de tendencias en los datos. El próximo capítulo presentará modelos que explican tendencias más sutiles en los datos.</p>
+<div id="transformaciones" class="section level3 unnumbered hasAnchor">
+<h3>Transformaciones<a href="C7Trends.html#transformaciones" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Al analizar datos longitudinales, la transformación es una herramienta importante para filtrar un conjunto de datos. Específicamente, usar una transformación logarítmica tiende a reducir los datos “dispersos”. Esta característica nos da un método alternativo para tratar un proceso donde la variabilidad parece crecer con el tiempo. Recordemos que la primera opción discutida es proponer un modelo de paseo aleatorio y examinar las diferencias de los datos. Alternativamente, se puede tomar una transformación logarítmica que ayuda a reducir la varianza creciente en el tiempo.</p>
+<p>Además, por la discusión sobre paseos aleatorios, sabemos que si tanto la varianza de la serie como la varianza de la serie logarítmica aumentan con el tiempo, las diferencias de la transformación logarítmica pueden manejar esta variabilidad creciente. Las diferencias de logaritmos naturales son particularmente útiles porque pueden interpretarse como <em>cambios proporcionales</em>. Para ver esto, definimos <span class="math inline">\(pchange_t=(y_t/y_{t-1})-1\)</span>. Entonces,
+<span class="math display">\[
+\ln y_t-\ln y_{t-1} = \ln \left( \frac{y_t}{y_{t-1}}\right) = \ln
+\left( 1+pchange_t\right) \approx pchange_t.
+\]</span>
+Aquí usamos la aproximación de series de Taylor <span class="math inline">\(\ln (1+x) \approx x\)</span> que es apropiada para valores pequeños de <span class="math inline">\(|x|\)</span>.</p>
+<hr />
+<p><strong>Ejemplo: Índice Compuesto Trimestral de Standard and Poor’s.</strong> Una tarea importante de un analista financiero es cuantificar costos asociados con flujos de efectivo futuros. Consideramos aquí fondos invertidos en una medida estándar del desempeño general del mercado, el Índice Compuesto S&amp;P 500. El objetivo es pronosticar el desempeño de la cartera para descontar flujos de efectivo.</p>
+<p>En particular, examinamos el Índice Compuesto Trimestral de S&amp;P para los años 1936 a 2007, inclusive. Según los estándares actuales, este período puede no ser el más representativo porque incluye la Gran Depresión de la década de 1930. La motivación para analizar estos datos proviene del informe del “Grupo de Trabajo sobre Garantías de Madurez” del Instituto de Actuarios (1980), que analizó la serie de 1936 a 1977, inclusive. Este informe estudió el comportamiento a largo plazo de los rendimientos de inversión desde un punto de vista actuarial. Complementamos ese trabajo mostrando cómo las técnicas gráficas pueden sugerir una transformación útil para reducir los datos a un proceso estacionario.</p>
+<p>Los datos se muestran en la Figura <a href="C7Trends.html#fig:Fig79">7.9</a>. A partir de los valores originales del índice en el panel superior izquierdo, vemos que el nivel promedio y la variabilidad aumentan con el tiempo. Este patrón indica claramente que la serie no es estacionaria.</p>
+<p>Por nuestras discusiones en las Secciones <a href="C7Trends.html#S7:Trends">7.2</a> y <a href="C7Trends.html#S7:RandomWalk">7.3</a>, un modelo candidato con estas propiedades es el paseo aleatorio. Sin embargo, el gráfico de series temporales de las diferencias, en el panel superior derecho de la Figura <a href="C7Trends.html#fig:Fig79">7.9</a>, todavía indica un patrón de variabilidad creciente en el tiempo. Las diferencias no son un proceso de ruido blanco, por lo que el paseo aleatorio no es un modelo adecuado para el Índice S&amp;P 500.</p>
+<p>Una transformación alternativa es considerar los valores logarítmicos de la serie. El gráfico de series temporales de los valores logarítmicos, presentado en el panel inferior izquierdo de la Figura <a href="C7Trends.html#fig:Fig79">7.9</a>, indica que el nivel promedio de la serie aumenta con el tiempo y no es constante. Por lo tanto, el índice logarítmico no es estacionario.</p>
+<p>Otra estrategia es examinar las diferencias de la serie logarítmica. Esto es especialmente deseable al analizar índices o “cestas básicas”, porque la diferencia de logaritmos puede interpretarse como cambios proporcionales. En el gráfico final de series temporales, en el panel inferior derecho de la Figura <a href="C7Trends.html#fig:Fig79">7.9</a>, vemos que hay menos patrones discernibles en la serie transformada, la diferencia de logaritmos. Esta serie transformada parece ser estacionaria. Es interesante notar que parece haber un mayor nivel de volatilidad al comienzo de la serie. Este tipo de volatilidad cambiante es más difícil de modelar y ha sido objeto de considerable atención en la literatura de economía financiera en años recientes (ver, por ejemplo, Hardy, 2003).</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig79"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig79-1.png" alt="Gráficos de Series Temporales del Índice S &amp; P 500. El panel superior izquierdo muestra la serie original que no es estacionaria en la media ni en la variabilidad. El panel superior derecho muestra las diferencias de la serie, que no son estacionarias en la variabilidad. El panel inferior izquierdo muestra el índice logarítmico, que no es estacionario en la media. El panel inferior derecho muestra las diferencias del índice logarítmico, que parecen ser estacionarias en la media y en la variabilidad." width="100%" />
+<p class="caption">
+Figura 7.9: <strong>Gráficos de Series Temporales del Índice S &amp; P 500.</strong> El panel superior izquierdo muestra la serie original que no es estacionaria en la media ni en la variabilidad. El panel superior derecho muestra las diferencias de la serie, que no son estacionarias en la variabilidad. El panel inferior izquierdo muestra el índice logarítmico, que no es estacionario en la media. El panel inferior derecho muestra las diferencias del índice logarítmico, que parecen ser estacionarias en la media y en la variabilidad.
+</p>
+</div>
+<h5 style="text-align: center;">
+<a id="displayCode.Fig79.Hide" href="javascript:togglecode('toggleCode.Fig79.Hide','displayCode.Fig79.Hide');"><i><strong>Código R para producir la Figura 7.9</strong></i></a>
+</h5>
+<div id="toggleCode.Fig79.Hide" style="display: none">
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="C7Trends.html#cb70-1" tabindex="-1"></a><span class="co"># Figura 79</span></span>
+<span id="cb70-2"><a href="C7Trends.html#cb70-2" tabindex="-1"></a></span>
+<span id="cb70-3"><a href="C7Trends.html#cb70-3" tabindex="-1"></a>SandPQ1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/SP500Quarterly.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb70-4"><a href="C7Trends.html#cb70-4" tabindex="-1"></a><span class="co">#SandPQ1 &lt;- read.csv(&quot;../../CSVData/SP500Quarterly.csv&quot;, header=TRUE)</span></span>
+<span id="cb70-5"><a href="C7Trends.html#cb70-5" tabindex="-1"></a></span>
+<span id="cb70-6"><a href="C7Trends.html#cb70-6" tabindex="-1"></a>YEAR <span class="ot">&lt;-</span> SandPQ1<span class="sc">$</span>YEAR</span>
+<span id="cb70-7"><a href="C7Trends.html#cb70-7" tabindex="-1"></a></span>
+<span id="cb70-8"><a href="C7Trends.html#cb70-8" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>),<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb70-9"><a href="C7Trends.html#cb70-9" tabindex="-1"></a><span class="fu">plot</span>(YEAR,SandPQ1<span class="sc">$</span>SPINDEX, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Índice S&amp;P 500&quot;</span>,<span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb70-10"><a href="C7Trends.html#cb70-10" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">1</span>,.<span class="dv">1</span>))</span>
+<span id="cb70-11"><a href="C7Trends.html#cb70-11" tabindex="-1"></a><span class="fu">plot</span>(YEAR,SandPQ1<span class="sc">$</span>DIFFINDEX, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Diferencias S&amp;P 500&quot;</span>,<span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb70-12"><a href="C7Trends.html#cb70-12" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.2</span>,<span class="dv">4</span>,<span class="fl">1.8</span>,<span class="dv">1</span>))</span>
+<span id="cb70-13"><a href="C7Trends.html#cb70-13" tabindex="-1"></a><span class="fu">plot</span>(YEAR,SandPQ1<span class="sc">$</span>LNSPINDEX, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Índice Logarítmico S&amp;P 500&quot;</span>,<span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb70-14"><a href="C7Trends.html#cb70-14" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="fl">4.2</span>,<span class="dv">5</span>,<span class="fl">1.8</span>,.<span class="dv">1</span>))</span>
+<span id="cb70-15"><a href="C7Trends.html#cb70-15" tabindex="-1"></a><span class="fu">plot</span>(YEAR,SandPQ1<span class="sc">$</span>DIFFLNSP, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, </span>
+<span id="cb70-16"><a href="C7Trends.html#cb70-16" tabindex="-1"></a>  <span class="at">ylab=</span><span class="st">&quot;Diferencias de Logaritmos S&amp;P 500&quot;</span>,<span class="at">las=</span><span class="dv">1</span>)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="evaluación-de-pronósticos" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Evaluación de Pronósticos<a href="C7Trends.html#evaluación-de-pronósticos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Evaluar la precisión de los pronósticos es importante al modelar datos de series temporales. En esta sección, presentamos técnicas de evaluación de pronósticos que:</p>
+<ul>
+<li>Ayudan a detectar tendencias o patrones recientes no anticipados en los datos.</li>
+<li>Son útiles para comparar diferentes métodos de pronóstico.</li>
+<li>Proporcionan un método intuitivo y fácil de explicar para evaluar la precisión de los pronósticos.</li>
+</ul>
+<p>En las primeras cinco secciones del Capítulo 7, presentamos varias técnicas para detectar patrones en los residuales de un modelo ajustado. Las medidas que resumen la distribución de los residuales se denominan <em>estadísticas de bondad de ajuste</em>. Como vimos en nuestro estudio de modelos transversales, al ajustar varios modelos diferentes a un conjunto de datos, introducimos la posibilidad de sobreajustar los datos. Para abordar esta preocupación, utilizaremos técnicas de <em>validación fuera de muestra</em>, similares a las introducidas en la Sección 6.5.</p>
+<p>Para realizar una validación fuera de muestra de un modelo propuesto, idealmente se desarrollaría el modelo en un conjunto de datos y luego se corroboraría la utilidad del modelo en un segundo conjunto de datos independiente. Debido a que rara vez están disponibles dos conjuntos de datos ideales, en la práctica podemos dividir un conjunto de datos en dos submuestras: una <em>submuestra de desarrollo del modelo</em> y una <em>submuestra de validación</em>. Para datos longitudinales, la práctica consiste en utilizar la primera parte de la serie, las primeras <span class="math inline">\(T_1\)</span> observaciones, para desarrollar uno o más modelos candidatos. La parte posterior de la serie, las últimas <span class="math inline">\(T_2=T-T_1\)</span> observaciones, se utiliza para evaluar los pronósticos. Por ejemplo, podríamos tener diez años de datos mensuales, de modo que <span class="math inline">\(T=120\)</span>. Sería razonable utilizar los primeros ocho años de datos para desarrollar un modelo y los últimos dos años de datos para validación, obteniendo <span class="math inline">\(T_1=96\)</span> y <span class="math inline">\(T_2=24\)</span>.</p>
+<p>Por lo tanto, las observaciones <span class="math inline">\(y_1,\ldots , y_{T_1}\)</span> se utilizan para desarrollar un modelo. A partir de estas <span class="math inline">\(T_1\)</span> observaciones, podemos determinar los parámetros del modelo candidato. Usando el modelo ajustado, podemos determinar los valores ajustados para la submuestra de validación del modelo para <span class="math inline">\(t = T_1 + 1,T_1+2, \ldots, T_1+T_2\)</span>. Al tomar la diferencia entre los valores reales y los ajustados, obtenemos los residuales de pronósticos a un paso, denotados por <span class="math inline">\(e_t=y_t-\widehat{y}_t\)</span>. Estos residuales de pronóstico son las cantidades básicas que utilizaremos para evaluar y comparar técnicas de pronóstico.</p>
+<p>Para comparar modelos, utilizamos un proceso de cuatro pasos similar al descrito en la Sección 6.5, descrito a continuación.</p>
+<div class="blackbox">
+<p><em>Proceso de Validación Fuera de Muestra</em></p>
+<ol style="list-style-type: decimal">
+<li>Divide la muestra de tamaño <span class="math inline">\(T\)</span> en dos submuestras: una submuestra de desarrollo del modelo (<span class="math inline">\(t=1,\ldots,T_1\)</span>) y una submuestra de validación del modelo (<span class="math inline">\(t=T_1+1, \ldots, T_1 + T_2\)</span>).</li>
+<li>Utilizando la submuestra de desarrollo del modelo, ajusta un modelo candidato al conjunto de datos <span class="math inline">\(t=1,\ldots,T_1\)</span>.</li>
+<li>Usando el modelo creado en el Paso 2 y las variables dependientes hasta e incluyendo <span class="math inline">\(t-1\)</span>, pronostica la variable dependiente <span class="math inline">\(\widehat{y}_t\)</span>, donde <span class="math inline">\(t=T_1+1, \ldots, T_1+T_2\)</span>.</li>
+<li>Utiliza las observaciones reales y los valores ajustados calculados en el Paso 3 para calcular los residuales de pronóstico a un paso, <span class="math inline">\(e_t = y_t- \widehat{y}_t\)</span>, para la submuestra de validación del modelo. Resume estos residuales con una o más estadísticas de comparación, descritas a continuación.</li>
+</ol>
+<p>Repite los Pasos 2 al 4 para cada uno de los modelos candidatos. Elige el modelo con el menor conjunto de estadísticas de comparación.</p>
+</div>
+<p>La validación fuera de muestra se puede utilizar para comparar la precisión de los pronósticos de prácticamente cualquier modelo de pronóstico. Como vimos en la Sección 6.5, no estamos limitados a comparaciones donde un modelo es un subconjunto de otro, donde los modelos competidores usan las mismas unidades para la respuesta, y así sucesivamente.</p>
+<p>Hay varias estadísticas que se utilizan comúnmente para comparar pronósticos.</p>
+<div class="blackbox">
+<p><em>Estadísticas Comúnmente Usadas para Comparar Pronósticos</em></p>
+<ol style="list-style-type: decimal">
+<li><p>La <em>estadística de error medio</em>, definida por
+<span class="math display">\[
+ME=\frac{1}{T_2}\sum_{t=T_1+1}^{T_1+T_2}e_t.
+\]</span>
+Esta estadística mide tendencias recientes no anticipadas por el modelo.</p></li>
+<li><p>El <em>error porcentual medio</em>, definido por
+<span class="math display">\[
+MPE=\frac{100}{T_2}\sum_{t=T_1+1}^{T_1+T_2}\frac{e_t}{y_t}.
+\]</span>
+Esta estadística también mide tendencias, pero examina el error relativo al valor real.</p></li>
+<li><p>El <em>error cuadrático medio</em>, definido por
+<span class="math display">\[
+MSE=\frac{1}{T_2}\sum_{t=T_1+1}^{T_1+T_2}e_t^2.
+\]</span>
+Esta estadística puede detectar más patrones que <span class="math inline">\(ME\)</span>. Es la misma que la estadística transversal <span class="math inline">\(SSPE\)</span>, excepto por la división por <span class="math inline">\(T_2\)</span>.</p></li>
+<li><p>El <em>error absoluto medio</em>, definido por
+<span class="math display">\[
+MAE=\frac{1}{T_2}\sum_{t=T_1+1}^{T_1+T_2}|e_t|.
+\]</span>
+Al igual que <span class="math inline">\(MSE\)</span>, esta estadística puede detectar más patrones de tendencia que <span class="math inline">\(ME\)</span>. Las unidades de <span class="math inline">\(MAE\)</span> son las mismas que la variable dependiente.</p></li>
+<li><p>El <em>error absoluto porcentual medio</em>, definido por
+<span class="math display">\[
+MAPE=\frac{100}{T_2}\sum_{t=T_1+1}^{T_1+T_2}|\frac{e_t}{y_t}|.
+\]</span>
+Al igual que <span class="math inline">\(MAE\)</span>, esta estadística puede detectar más que patrones de tendencia. Al igual que <span class="math inline">\(MPE\)</span>, examina el error relativo al valor real.</p></li>
+</ol>
+</div>
+<hr />
+<p><strong>Ejemplo: Tasas de Participación en la Fuerza Laboral - Continuación.</strong> Podemos utilizar medidas de validación fuera de muestra para comparar dos modelos para las <span class="math inline">\(LFPR\)</span>s; el modelo de tendencia lineal en el tiempo y el modelo de paseo aleatorio. Para esta ilustración, examinamos las tasas de participación laboral para los años 1968 a 1994, inclusive. Esto corresponde a <span class="math inline">\(T_1 = 27\)</span> observaciones definidas en el Paso 1. Posteriormente, se recopilaron datos de tasas para los años 1995 a 1998, inclusive, correspondientes a <span class="math inline">\(T_2 = 4\)</span> para la validación fuera de muestra. Para el Paso 2, ajustamos cada modelo usando <span class="math inline">\(t=1,\ldots,27\)</span>, como se mostró anteriormente en este capítulo. Para el Paso 3, los pronósticos a un paso son:</p>
+<p><span class="math display">\[
+\widehat{y}_t = 0.2574 + 0.0145t
+\]</span>
+y%
+<span class="math display">\[
+\widehat{y}_t = y_{t-1} + 0.0132
+\]</span>
+para los modelos de tendencia lineal en el tiempo y de paseo aleatorio, respectivamente. Para el Paso 4, <a href="C7Trends.html#Tab72">Tabla 7.2</a> resume las estadísticas de comparación de pronósticos. Basándonos en estas estadísticas, la elección del modelo es claramente el paseo aleatorio.</p>
+<p><a id=Tab72></a></p>
+<p><span id="Tab72">Tabla 7.2</span>. <strong>Comparación de Pronósticos Fuera de Muestra</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{l|ccccc}
+\hline &amp; ME &amp; MPE &amp; MSE &amp; MAE &amp; MAPE \\ \hline
+\text{Modelo de tendencia lineal en el tiempo}
+&amp; -0.049 &amp; -7.657 &amp; 0.003 &amp; 0.049 &amp; 7.657 \\
+\text{Modelo de paseo aleatorio} &amp;
+-0.019 &amp; -2.946 &amp; 0.001 &amp; 0.019 &amp; 3.049 \\ \hline
+\end{array}
+}
+\]</span></p>
+<h5 style="text-align: center;">
+<a id="displayCode.Table7.2.Hide" href="javascript:togglecode('toggleCode.Table7.2.Hide','displayCode.Table7.2.Hide');"><i><strong>Código R para producir la Tabla 7.2</strong></i></a>
+</h5>
+<div id="toggleCode.Table7.2.Hide" style="display: none">
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="C7Trends.html#cb71-1" tabindex="-1"></a><span class="co"># Tabla 7.2</span></span>
+<span id="cb71-2"><a href="C7Trends.html#cb71-2" tabindex="-1"></a><span class="co">#labor &lt;- read.csv(&quot;CSVData/LaborForcePR.csv&quot;, header=TRUE)</span></span>
+<span id="cb71-3"><a href="C7Trends.html#cb71-3" tabindex="-1"></a><span class="co">#labor &lt;- read.csv(&quot;../../CSVData/LaborForcePR.csv&quot;, header=TRUE)</span></span>
+<span id="cb71-4"><a href="C7Trends.html#cb71-4" tabindex="-1"></a></span>
+<span id="cb71-5"><a href="C7Trends.html#cb71-5" tabindex="-1"></a><span class="co"># msc  &lt;- labor$MSC6U</span></span>
+<span id="cb71-6"><a href="C7Trends.html#cb71-6" tabindex="-1"></a><span class="co"># time &lt;- labor$TIME</span></span>
+<span id="cb71-7"><a href="C7Trends.html#cb71-7" tabindex="-1"></a><span class="co"># year &lt;- labor$YEAR</span></span>
+<span id="cb71-8"><a href="C7Trends.html#cb71-8" tabindex="-1"></a><span class="co"># msc1 &lt;- msc[-1]</span></span>
+<span id="cb71-9"><a href="C7Trends.html#cb71-9" tabindex="-1"></a><span class="co"># diff &lt;- msc1-msc[1:(length(msc)-1)]</span></span>
+<span id="cb71-10"><a href="C7Trends.html#cb71-10" tabindex="-1"></a></span>
+<span id="cb71-11"><a href="C7Trends.html#cb71-11" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">31</span></span>
+<span id="cb71-12"><a href="C7Trends.html#cb71-12" tabindex="-1"></a><span class="co"># Ajustar modelo de tendencia lineal</span></span>
+<span id="cb71-13"><a href="C7Trends.html#cb71-13" tabindex="-1"></a>linear <span class="ot">&lt;-</span> <span class="fu">lm</span>(msc<span class="sc">~</span>t, <span class="at">subset=</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1968</span><span class="sc">:</span><span class="dv">1994</span>)))</span>
+<span id="cb71-14"><a href="C7Trends.html#cb71-14" tabindex="-1"></a>pred1 <span class="ot">&lt;-</span> linear<span class="sc">$</span>coef[<span class="dv">1</span>]<span class="sc">+</span>linear<span class="sc">$</span>coef[<span class="dv">2</span>]<span class="sc">*</span>t[year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1995</span><span class="sc">:</span><span class="dv">1998</span>)]</span>
+<span id="cb71-15"><a href="C7Trends.html#cb71-15" tabindex="-1"></a><span class="co">#linear$coef[1];linear$coef[2]  # Verificar coeficientes de regresión</span></span>
+<span id="cb71-16"><a href="C7Trends.html#cb71-16" tabindex="-1"></a></span>
+<span id="cb71-17"><a href="C7Trends.html#cb71-17" tabindex="-1"></a><span class="co"># Ajustar modelo de paseo aleatorio</span></span>
+<span id="cb71-18"><a href="C7Trends.html#cb71-18" tabindex="-1"></a>diff <span class="ot">&lt;-</span> msc1<span class="sc">-</span>msc[<span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(msc)<span class="sc">-</span><span class="dv">1</span>)]</span>
+<span id="cb71-19"><a href="C7Trends.html#cb71-19" tabindex="-1"></a>diff1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>,diff)</span>
+<span id="cb71-20"><a href="C7Trends.html#cb71-20" tabindex="-1"></a>rw <span class="ot">&lt;-</span> <span class="fu">mean</span>(diff1[year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1969</span><span class="sc">:</span><span class="dv">1994</span>)])</span>
+<span id="cb71-21"><a href="C7Trends.html#cb71-21" tabindex="-1"></a>pred2 <span class="ot">&lt;-</span> msc[year<span class="sc">==</span><span class="dv">1994</span>]<span class="sc">+</span>rw <span class="sc">*</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb71-22"><a href="C7Trends.html#cb71-22" tabindex="-1"></a></span>
+<span id="cb71-23"><a href="C7Trends.html#cb71-23" tabindex="-1"></a>y58 <span class="ot">&lt;-</span> msc[year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1995</span><span class="sc">:</span><span class="dv">1998</span>)]</span>
+<span id="cb71-24"><a href="C7Trends.html#cb71-24" tabindex="-1"></a>e1 <span class="ot">&lt;-</span> y58<span class="sc">-</span>pred1</span>
+<span id="cb71-25"><a href="C7Trends.html#cb71-25" tabindex="-1"></a>e2 <span class="ot">&lt;-</span> y58<span class="sc">-</span>pred2</span>
+<span id="cb71-26"><a href="C7Trends.html#cb71-26" tabindex="-1"></a></span>
+<span id="cb71-27"><a href="C7Trends.html#cb71-27" tabindex="-1"></a>me1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(e1)</span>
+<span id="cb71-28"><a href="C7Trends.html#cb71-28" tabindex="-1"></a>me2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(e2)</span>
+<span id="cb71-29"><a href="C7Trends.html#cb71-29" tabindex="-1"></a></span>
+<span id="cb71-30"><a href="C7Trends.html#cb71-30" tabindex="-1"></a>mpe1 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">mean</span>(e1<span class="sc">/</span>y58)</span>
+<span id="cb71-31"><a href="C7Trends.html#cb71-31" tabindex="-1"></a>mpe2 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">mean</span>(e2<span class="sc">/</span>y58)</span>
+<span id="cb71-32"><a href="C7Trends.html#cb71-32" tabindex="-1"></a></span>
+<span id="cb71-33"><a href="C7Trends.html#cb71-33" tabindex="-1"></a>mse1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(e1<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb71-34"><a href="C7Trends.html#cb71-34" tabindex="-1"></a>mse2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(e2<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb71-35"><a href="C7Trends.html#cb71-35" tabindex="-1"></a></span>
+<span id="cb71-36"><a href="C7Trends.html#cb71-36" tabindex="-1"></a>mae1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(e1))  </span>
+<span id="cb71-37"><a href="C7Trends.html#cb71-37" tabindex="-1"></a>mae2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(e2))  </span>
+<span id="cb71-38"><a href="C7Trends.html#cb71-38" tabindex="-1"></a></span>
+<span id="cb71-39"><a href="C7Trends.html#cb71-39" tabindex="-1"></a>mape1 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">mean</span>(<span class="fu">abs</span>(e1<span class="sc">/</span>y58))  </span>
+<span id="cb71-40"><a href="C7Trends.html#cb71-40" tabindex="-1"></a>mape2 <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">mean</span>(<span class="fu">abs</span>(e2<span class="sc">/</span>y58))  </span>
+<span id="cb71-41"><a href="C7Trends.html#cb71-41" tabindex="-1"></a></span>
+<span id="cb71-42"><a href="C7Trends.html#cb71-42" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(me1,me2,mpe1,mpe2,mse1,mse2,mae1,mae2,mape1,mape2),</span>
+<span id="cb71-43"><a href="C7Trends.html#cb71-43" tabindex="-1"></a>           <span class="at">nrow=</span><span class="dv">2</span>,<span class="at">ncol=</span><span class="dv">5</span>)</span>
+<span id="cb71-44"><a href="C7Trends.html#cb71-44" tabindex="-1"></a><span class="fu">rownames</span>(mat)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Modelo de tendencia lineal en el tiempo&quot;</span>,<span class="st">&quot;Modelo de paseo aleatorio&quot;</span>)</span>
+<span id="cb71-45"><a href="C7Trends.html#cb71-45" tabindex="-1"></a><span class="fu">colnames</span>(mat)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;ME&quot;</span>,<span class="st">&quot;MPE&quot;</span>,<span class="st">&quot;MSE&quot;</span>,<span class="st">&quot;MAE&quot;</span>,<span class="st">&quot;MAPE&quot;</span>)</span>
+<span id="cb71-46"><a href="C7Trends.html#cb71-46" tabindex="-1"></a></span>
+<span id="cb71-47"><a href="C7Trends.html#cb71-47" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(mat, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
+<table>
+<colgroup>
+<col width="55%" />
+<col width="9%" />
+<col width="9%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">ME</th>
+<th align="right">MPE</th>
+<th align="right">MSE</th>
+<th align="right">MAE</th>
+<th align="right">MAPE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Modelo de tendencia lineal en el tiempo</td>
+<td align="right">-0.049</td>
+<td align="right">-7.657</td>
+<td align="right">0.003</td>
+<td align="right">0.049</td>
+<td align="right">7.657</td>
+</tr>
+<tr class="even">
+<td align="left">Modelo de paseo aleatorio</td>
+<td align="right">-0.019</td>
+<td align="right">-2.946</td>
+<td align="right">0.001</td>
+<td align="right">0.019</td>
+<td align="right">3.049</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="lecturas-adicionales-y-referencias" class="section level2 hasAnchor" number="7.7">
+<h2><span class="header-section-number">7.7</span> Lecturas Adicionales y Referencias<a href="C7Trends.html#lecturas-adicionales-y-referencias" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Durante muchos años, los actuarios en América del Norte fueron introducidos al análisis de series temporales a través de Miller y Wichern (1977), Abraham y Ledolter (1983) y Pindyck y Rubinfeld (1991). Una introducción más reciente es Diebold (2004), que contiene una breve introducción a los modelos de cambio de régimen.</p>
+<p>Debido a las dificultades relacionadas con su especificación y su uso limitado en pronósticos, no exploramos más los modelos causales en este texto. Para más detalles sobre los modelos causales, el lector interesado puede consultar Pindyck y Rubinfeld (1991).</p>
+<p><strong>Referencias del Capítulo</strong></p>
+<ul>
+<li>“Report of the Maturity Guarantees Working Party” (1980).
+<em>Journal of the Institute of Actuaries</em> 107, pp. 103-213.</li>
+<li>Abraham, Bovas and Johannes Ledolter (1983). <em>Statistical Methods for Forecasting</em>. John Wiley &amp; Sons, New York.</li>
+<li>Diebold, Francis X. (2004). <em>Elements of Forecasting</em>, Third
+Edition. Thompson South-Western, Mason, OH.</li>
+<li>Frees, Edward W. (2006). Forecasting of labor force participation
+rates. <em>The Journal of Official Statistics</em> 22(3), 453-485.</li>
+<li>Fullerton, Howard N., Jr. (1999). Labor force projections to 2008:
+steady growth and changing composition. <em>Monthly Labor Review</em>, November, pp. 19-32.</li>
+<li>Granger, Clive W. J and P. Newbold (1974). Spurious regressions in
+econometrics. <em>Journal of Econometrics</em> 2, 111-120.</li>
+<li>Hardy, Mary (2001). A regime-switching model of long-term stock
+returns. <em>North American Actuarial Journal</em> 5(2), 41-53.</li>
+<li>Hardy, Mary (2003). <em>Investment Guarantees: Modeling and Risk Management for Equity-Linked Life Insurance</em>. John Wiley &amp; Sons,
+New York.</li>
+<li>Miller, Robert B. and Dean W. Wichern (1977). <em>Intermediate Business Statistics: Analysis of Variance, Regression and Time Series</em>. Holt, Rinehart and Winston, New York.</li>
+<li>Pindyck, R.S. and D.L. Rubinfeld (1991). <em>Econometric Models and Economic Forecasts,</em> Third Edition, McGraw-Hill, New York.</li>
+</ul>
+</div>
+<div id="ejercicios" class="section level2 hasAnchor" number="7.8">
+<h2><span class="header-section-number">7.8</span> Ejercicios<a href="C7Trends.html#ejercicios" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>7.1.</strong> Considera un paseo aleatorio <span class="math inline">\(\{y_t \}\)</span> como la suma parcial de un proceso de ruido blanco <span class="math inline">\(\{ c_t \}\)</span> con
+media <span class="math inline">\(\mathrm{E}~c_t= \mu_c\)</span> y varianza <span class="math inline">\(\mathrm{Var}~c_t = \sigma_c^2\)</span>. Usa la ecuación <a href="C7Trends.html#eq:eq77">(7.7)</a> para demostrar:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\mathrm{E}~y_t= y_0 + t \mu_c\)</span>, donde <span class="math inline">\(y_0\)</span> es el valor inicial y</p></li>
+<li><p><span class="math inline">\(\mathrm{Var}~y_t= t \sigma_c^2\)</span>.</p></li>
+</ol>
+<p><strong>7.2.</strong> Considera un paseo aleatorio <span class="math inline">\(\{y_t \}\)</span> como la suma parcial de un proceso de ruido blanco <span class="math inline">\(\{ c_t \}\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Demuestra que el error de pronóstico a <span class="math inline">\(l\)</span> pasos es
+<span class="math inline">\(y_{T+l}-\widehat{y_{T+l}} = \sum_{j=1}^l (c_{T+j} - \bar{c} ).\)</span></p></li>
+<li><p>Demuestra que la varianza aproximada del error de pronóstico a <span class="math inline">\(l\)</span> pasos
+es <span class="math inline">\(l \sigma_c^2.\)</span></p></li>
+</ol>
+<p><strong>7.3.</strong> <strong>Tasas de Cambio del Euro</strong>. La tasa de cambio que consideramos es la cantidad de euros que se puede adquirir con un dólar estadounidense. Tenemos <span class="math inline">\(T=699\)</span> observaciones diarias del periodo del 1 de abril de 2005 al 8 de enero de 2008. Estos datos fueron obtenidos de la Reserva Federal (informe H10). <em>Fuente</em>: Banco de la Reserva Federal de Nueva York. Nota: Los datos se basan en tasas de compra al mediodía en Nueva York de una muestra de participantes del mercado y representan tasas establecidas para transferencias cablegráficas pagaderas en las monedas indicadas. Estas son también las tasas de cambio requeridas por la Comisión de Valores de Estados Unidos para el sistema de divulgación integrado para emisores privados extranjeros.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig710"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig710-1.png" alt="Gráfico de series temporales de la tasa de cambio del euro." width="60%" />
+<p class="caption">
+Figura 7.10: <strong>Gráfico de series temporales de la tasa de cambio del euro.</strong>
+</p>
+</div>
+<ol style="list-style-type: lower-alpha">
+<li>La Figura <a href="C7Trends.html#fig:Fig710">7.10</a> es un gráfico de series temporales de la tasa de cambio del euro.</li>
+</ol>
+<p>a(i). Define el concepto de una serie temporal estacionaria.</p>
+<p>a(ii). ¿Es la serie EURO estacionaria? Usa tu definición en la parte a(i) para justificar tu respuesta.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Basándote en la inspección de la Figura <a href="C7Trends.html#fig:Fig710">7.10</a> en la parte (a), decides ajustar un modelo de tendencia cuadrática a los datos. La Figura <a href="C7Trends.html#fig:Fig711">7.11</a> superpone los valores ajustados en un gráfico de la serie.</li>
+</ol>
+<p>b(i). Menciona varias estadísticas básicas de regresión que resumen la calidad del ajuste.</p>
+<p>b(ii). Describe brevemente cualquier patrón de residuales que observes en la Figura <a href="C7Trends.html#fig:Fig711">7.11</a>.</p>
+<p>b(iii). Aquí, el TIEMPO varía de <span class="math inline">\(1, 2, \ldots, 699\)</span>. Usando este modelo, calcula el pronóstico a tres pasos correspondiente a TIEMPO = 702.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig711"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig711-1.png" alt="Curva ajustada cuadrática superpuesta en la tasa de cambio del euro." width="60%" />
+<p class="caption">
+Figura 7.11: <strong>Curva ajustada cuadrática superpuesta en la tasa de cambio del euro.</strong>
+</p>
+</div>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Para investigar un enfoque diferente, DIFFEURO, calcula la diferencia de EURO. Decides modelar DIFFEURO como un proceso de ruido blanco.</li>
+</ol>
+<p>c(i). ¿Cuál es el nombre del modelo correspondiente para EURO?</p>
+<p>c(ii). El valor más reciente de EURO es <span class="math inline">\(EURO_{699} = 0.6795\)</span>. Usando el modelo identificado en la parte c(i), proporciona un pronóstico a tres pasos correspondiente a TIEMPO = 702.</p>
+<p>c(iii). Usando el modelo identificado en la parte c(i) y el pronóstico puntual en la parte c(ii), proporciona el intervalo de predicción al 95% correspondiente para <span class="math inline">\(EURO_{702}\)</span>.</p>
+
+<!-- # Chap 1 -->
+<!-- # Chap 2 -->
+<!-- # Chap 3 -->
+<!-- # Chap 4 -->
+<!-- # Chap 5 -->
+<!-- # Chap 6 -->
+<!-- # Chap 7 -->
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="interpretación-de-resultados-de-regresión.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="C8AR.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
