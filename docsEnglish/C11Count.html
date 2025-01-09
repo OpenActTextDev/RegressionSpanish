@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 12 Count Dependent Variables | Regression Modeling with Actuarial and Financial Applications</title>
+  <meta name="description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 12 Count Dependent Variables | Regression Modeling with Actuarial and Financial Applications" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 Count Dependent Variables | Regression Modeling with Actuarial and Financial Applications" />
+  
+  <meta name="twitter:description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="chap-11.html"/>
+<link rel="next" href="bibliography.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Regression Modeling With Actuarial and Financial Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#dedication"><i class="fa fa-check"></i>Dedication</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#forward"><i class="fa fa-check"></i>Forward</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#who-is-this-book-for"><i class="fa fa-check"></i>Who Is This Book For?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#what-is-this-book-about"><i class="fa fa-check"></i>What Is This Book About?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-does-this-book-deliver-its-message"><i class="fa fa-check"></i>How Does This Book Deliver Its Message?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="chap-1.html"><a href="chap-1.html"><i class="fa fa-check"></i><b>1</b> Chap 1</a></li>
+<li class="chapter" data-level="2" data-path="chap-2.html"><a href="chap-2.html"><i class="fa fa-check"></i><b>2</b> Chap 2</a></li>
+<li class="chapter" data-level="3" data-path="chap-3.html"><a href="chap-3.html"><i class="fa fa-check"></i><b>3</b> Chap 3</a></li>
+<li class="chapter" data-level="4" data-path="chap-4.html"><a href="chap-4.html"><i class="fa fa-check"></i><b>4</b> Chap 4</a></li>
+<li class="chapter" data-level="5" data-path="chap-5.html"><a href="chap-5.html"><i class="fa fa-check"></i><b>5</b> Chap 5</a></li>
+<li class="chapter" data-level="6" data-path="chap-6.html"><a href="chap-6.html"><i class="fa fa-check"></i><b>6</b> Chap 6</a></li>
+<li class="chapter" data-level="7" data-path="chap-7.html"><a href="chap-7.html"><i class="fa fa-check"></i><b>7</b> Chap 7</a></li>
+<li class="chapter" data-level="8" data-path="chap-8.html"><a href="chap-8.html"><i class="fa fa-check"></i><b>8</b> Chap 8</a></li>
+<li class="chapter" data-level="9" data-path="chap-9.html"><a href="chap-9.html"><i class="fa fa-check"></i><b>9</b> Chap 9</a></li>
+<li class="chapter" data-level="10" data-path="chap-10.html"><a href="chap-10.html"><i class="fa fa-check"></i><b>10</b> Chap 10</a></li>
+<li class="chapter" data-level="11" data-path="chap-11.html"><a href="chap-11.html"><i class="fa fa-check"></i><b>11</b> Chap 11</a></li>
+<li class="chapter" data-level="12" data-path="C11Count.html"><a href="C11Count.html"><i class="fa fa-check"></i><b>12</b> Count Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="C11Count.html"><a href="C11Count.html#S:Sec121"><i class="fa fa-check"></i><b>12.1</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="C11Count.html"><a href="C11Count.html#S:Sec1211"><i class="fa fa-check"></i><b>12.1.1</b> Poisson Distribution</a></li>
+<li class="chapter" data-level="12.1.2" data-path="C11Count.html"><a href="C11Count.html#regression-model"><i class="fa fa-check"></i><b>12.1.2</b> Regression Model</a></li>
+<li class="chapter" data-level="12.1.3" data-path="C11Count.html"><a href="C11Count.html#S:Sec1213"><i class="fa fa-check"></i><b>12.1.3</b> Estimation</a></li>
+<li class="chapter" data-level="12.1.4" data-path="C11Count.html"><a href="C11Count.html#additional-inference"><i class="fa fa-check"></i><b>12.1.4</b> Additional Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="C11Count.html"><a href="C11Count.html#S:Sec122"><i class="fa fa-check"></i><b>12.2</b> Application: Singapore Automobile Insurance</a></li>
+<li class="chapter" data-level="12.3" data-path="C11Count.html"><a href="C11Count.html#S:Sec123"><i class="fa fa-check"></i><b>12.3</b> Overdispersion and Negative Binomial Models</a></li>
+<li class="chapter" data-level="12.4" data-path="C11Count.html"><a href="C11Count.html#S:Sec124"><i class="fa fa-check"></i><b>12.4</b> Other Count Models</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="C11Count.html"><a href="C11Count.html#zero-inflated-models"><i class="fa fa-check"></i><b>12.4.1</b> Zero-Inflated Models</a></li>
+<li class="chapter" data-level="12.4.2" data-path="C11Count.html"><a href="C11Count.html#hurdle-models"><i class="fa fa-check"></i><b>12.4.2</b> Hurdle Models</a></li>
+<li class="chapter" data-level="12.4.3" data-path="C11Count.html"><a href="C11Count.html#heterogeneity-models"><i class="fa fa-check"></i><b>12.4.3</b> Heterogeneity Models</a></li>
+<li class="chapter" data-level="12.4.4" data-path="C11Count.html"><a href="C11Count.html#latent-class-models"><i class="fa fa-check"></i><b>12.4.4</b> Latent Class Models</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="C11Count.html"><a href="C11Count.html#S:Sec125"><i class="fa fa-check"></i><b>12.5</b> Further Reading and References</a></li>
+<li class="chapter" data-level="12.6" data-path="C11Count.html"><a href="C11Count.html#S:Sec126"><i class="fa fa-check"></i><b>12.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Regression Modeling with Actuarial and Financial Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="C11Count" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Count Dependent Variables<a href="C11Count.html#C11Count" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Chapter Preview</em>. In this chapter, the dependent
+variable <span class="math inline">\(y\)</span> is a count, taking on values 0, 1, 2 and so on, that
+describes a number of events. Count dependent variables form the
+basis of actuarial models of claims <em>frequency</em>. In other
+applications, a count dependent variable may be the number of
+accidents, the number of people retiring or the number of firms
+becoming insolvent.</p>
+<p>The chapter introduces Poisson regression, a model that
+includes explanatory variables with a Poisson distribution for
+counts. This fundamental model handles many datasets of interest to
+actuaries. However, with the Poisson distribution, the mean equals
+the variance, a limitation suggesting the need for more general
+distributions such as the negative binomial. Even the two parameter
+negative binomial can fail to capture some important features,
+motivating the need for even more complex models such as the
+“zero-inflated” and latent variable models introduced in this
+chapter.</p>
+<div id="S:Sec121" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Poisson Regression<a href="C11Count.html#S:Sec121" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="S:Sec1211" class="section level3 hasAnchor" number="12.1.1">
+<h3><span class="header-section-number">12.1.1</span> Poisson Distribution<a href="C11Count.html#S:Sec1211" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A count random variable <span class="math inline">\(y\)</span> is one that has outcomes on the
+non-negative integers, <span class="math inline">\(j=0,1,2,...\)</span> The Poisson is a fundamental
+distribution used for counts that has probability mass function</p>
+<p><span class="math display">\[\begin{equation}\label{E12:PoissonDist}
+\Pr \left( y=j\right) =\frac{\mu^j}{j!}e^{-\mu },~~~j=0,1,2,...
+\end{equation}\]</span>
+It can be shown that $ y =_{j=0}^{
+}j( y=j) =$, so we may interpret the parameter
+$$ to be the mean of the distribution. Similarly, one can show
+that $y =$, so that the mean equals the variance
+for this distribution.</p>
+<p>An early application (Bortkiewicz, 1898) was based on using the
+Poisson distribution to represent the annual number of deaths in the
+Prussian army due to “mule kicks.” The distribution is still
+widely used as a model of the number of accidents, such as injuries
+in an industrial environment (for workers’ compensation coverage)
+and property damages in automobile insurance.</p>
+<p> These data are from a
+1993 portfolio of <span class="math inline">\(n=7,483\)</span> automobile insurance policies from a
+major insurance company in Singapore. The data will be described
+further in Section <span class="math inline">\(\ref{S12:SingaporeData}\)</span>. Table <span class="math inline">\(\ref{T12:Table121}\)</span>
+provides the distribution of the number of accidents. The dependent
+variable is the number of automobile accidents per policyholder. For
+this dataset, it turns out that the maximum number of accidents in a
+year was three. There were on average <span class="math inline">\(\overline{y}=0.06989\)</span>
+accidents per person.</p>
+<p>Table <span class="math inline">\(\ref{T12:Table121}\)</span> also provides fitted counts that were
+computed using the maximum likelihood estimator of <span class="math inline">\(\mu\)</span>.
+Specifically, from equation (<span class="math inline">\(\ref{E12:PoissonDist}\)</span>) we can write the
+mass function as <span class="math inline">\(\mathrm{f}(y,\mu) = \mu^y e^{-\mu} /y!,\)</span> and so
+the log-likelihood is
+<span class="math display">\[\begin{equation}\label{E12:BasicLogLike}
+L(\mu) = \sum_{i=1}^{n} \ln \mathrm{f}(y_i,\mu) =
+\sum_{i=1}^{n}\left( -\mu +y_i\ln \mu -\ln y_i!\right) .
+\end{equation}\]</span>
+It is straight-forward to show that the log-likelihood has a maximum
+at <span class="math inline">\(\widehat{\mu }=\overline{y}\)</span>, the average claims count.
+Estimated probabilities, using equation (<span class="math inline">\(\ref{E12:PoissonDist}\)</span>) and
+<span class="math inline">\(\widehat{\mu }= \overline{y}\)</span>, are denoted as <span class="math inline">\(\widehat{p}_j\)</span>. We
+used these estimated probabilities in Table <span class="math inline">\(\ref{T12:Table121}\)</span> when
+computing the fitted counts with <span class="math inline">\(n=7,483\)</span>.</p>
+<p></p>
+<p>To compare observed and fitted counts, a widely used goodness of fit
+statistic is , given by
+<span class="math display">\[\begin{equation}\label{E12:Pearson}
+\sum_j\frac{\left( n_j-n\widehat{p}_j\right)^2}{n\widehat{p}_j}.
+\end{equation}\]</span>
+Under the null hypothesis that the Poisson distribution is a correct
+model, this statistic has a large sample chi-square distribution
+where the degrees of freedom is the number of cells minus one minus
+the number of estimated parameters. For the Singapore data in Table
+<span class="math inline">\(\ref{T12:Table121}\)</span> , this is <span class="math inline">\(df=5-1-1=3\)</span>. It turns out the
+statistic is 41.98, indicating that this basic Poisson model is
+inadequate.</p>
+</div>
+<div id="regression-model" class="section level3 hasAnchor" number="12.1.2">
+<h3><span class="header-section-number">12.1.2</span> Regression Model<a href="C11Count.html#regression-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To extend the basic Poisson model, we first allow the mean to vary
+by a known amount called an <span class="math inline">\(E_i\)</span> , so that
+<span class="math display">\[\begin{equation*}
+\mathrm{E~}y_i=E_i\times \mu .
+\end{equation*}\]</span>
+To motivate this specification, recall that sums of independent
+Poisson random variables also have a Poisson distribution so that it
+is sensible to think of exposures as large positive numbers. Thus,
+it is common to model the number of accidents per thousand vehicles
+or the number of homicides per million population. Further, we also
+consider instances where the units of exposure may be fractions. To
+illustrate, for our Singapore data, <span class="math inline">\(E_i\)</span> will represent the
+fraction of the year that a policyholder had insurance coverage. The
+logic behind this is that the expected number of accidents is
+directly proportional to the length of coverage. (This can also be
+motivated by a probabilistic framework based on collections of
+Poisson distributed random variables known as see, for example, Klugman et al., 2008).</p>
+<p>More generally, we wish to allow the mean to vary according to
+information contained in other explanatory variables. For the
+Poisson, it is customary to specify
+<span class="math display">\[\begin{equation*}
+\mathrm{E~}y_i = \mu_i = \exp \left(
+\mathbf{x}_i^{\prime}\boldsymbol \beta \right) .
+\end{equation*}\]</span>
+Using the exponential function to map the systematic component
+<span class="math inline">\(\mathbf{x}_i^{\prime }\boldsymbol \beta\)</span> into the mean ensures that
+<span class="math inline">\(\mathrm{E~}y_i\)</span> will remain positive. Assuming the linearity of the
+regression coefficients allows for easy interpretation.
+Specifically, because
+<span class="math display">\[\begin{equation*}
+\frac{\partial \mathrm{E~}y_i}{\partial x_{ij}} \times
+\frac{1}{\mathrm{E~}y_i} =\beta_j,
+\end{equation*}\]</span></p>
+<p>we may interpret <span class="math inline">\(\beta_j\)</span> to be the proportional change
+in the mean per unit change in <span class="math inline">\(x_{ij}\)</span>. The function that connects
+the mean to the systematic component is known as the
+, that is, <span class="math inline">\(\ln \mu_i=\mathbf{x}_i^{\prime }\boldsymbol \beta\)</span>.</p>
+<p>To incorporate exposures, one can always specify one of the
+explanatory variables to be <span class="math inline">\(\ln E_i\)</span> and restrict the corresponding
+regression coefficient to be 1. This term is known as an
+. With this convention, the link function is
+<span class="math display">\[\begin{equation}\label{E12:logLink}
+\ln \mu_i=\ln E_i+\mathbf{x}_i^{\prime }\boldsymbol \beta.
+\end{equation}\]</span></p>
+<strong>Example: California Automobile Accidents</strong>. Weber
+(1971) provided the first application of Poisson regression to
+automobile accident frequencies in his study of California driving
+records. In one model, Weber examined the number of automobile
+accidents during 1963 of nearly 87,000 male drivers. His explanatory
+variables consisted of:
+<p>Interestingly, in this early application, Weber achieved a
+satisfactory fit representing the mean as a linear combination of
+explanatory variables (E <span class="math inline">\(y_i=\mathbf{x}_i^{\prime }\boldsymbol \beta\)</span>), not the exponentiated version as in equation
+(<span class="math inline">\(\ref{E12:logLink}\)</span>) that is now commonly fit.</p>
+</div>
+<div id="S:Sec1213" class="section level3 hasAnchor" number="12.1.3">
+<h3><span class="header-section-number">12.1.3</span> Estimation<a href="C11Count.html#S:Sec1213" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Maximum likelihood is the usual estimation technique for Poisson
+regression models. Using the logarithmic link function in equation
+(<span class="math inline">\(\ref{E12:logLink}\)</span>), the log-likelihood is given by
+<span class="math display">\[\begin{eqnarray*}
+L(\boldsymbol \beta) &amp;=&amp;\sum_{i=1}^{n}\left( -\mu_i+y_i\ln \mu
+_i-\ln y_i!\right) \\
+&amp;=&amp;\sum_{i=1}^{n}\left( -E_i\exp \left( \mathbf{x}_i^{\prime
+}\boldsymbol \beta \right) +y_i\left( \ln E_i+\mathbf{x}_i^{\prime
+}\boldsymbol \beta \right) -\ln y_i!\right) .
+\end{eqnarray*}\]</span>
+Setting the equal to zero yields
+<span class="math display">\[\begin{equation}\label{E12:Score}
+\left. \frac{\partial }{\partial \boldsymbol
+\beta}\mathrm{L}(\boldsymbol \beta )\right\vert_{\mathbf{\beta
+=b}}=\sum_{i=1}^{n}\left( y_i-E_i\exp \left( \mathbf{x}_i^{\prime
+}\mathbf{b}\right) \right) \mathbf{x} _i=\sum_{i=1}^{n}\left(
+y_i-\widehat{\mu }_i\right) \mathbf{x}_i= \mathbf{0},
+\end{equation}\]</span>
+where <span class="math inline">\(\widehat{\mu }_i = E_i\exp \left( \mathbf{x}_i^{\prime }\mathbf{b} \right)\)</span>. Solving this equation (numerically) yields
+<span class="math inline">\(\mathbf{b}\)</span>, the maximum likelihood estimator of <span class="math inline">\(\boldsymbol \beta\)</span>. From equation (<span class="math inline">\(\ref{E12:Score}\)</span>), we see that if a row of
+<span class="math inline">\(\mathbf{x}_i\)</span> is constant (corresponding to a constant intercept
+regression term), then the sum of residuals <span class="math inline">\(y_i - \widehat{\mu}_i\)</span><br />
+is zero.</p>
+<p>Taking second derivatives yields the ,
+<span class="math display">\[\begin{equation*}
+\mathbf{I}(\boldsymbol \beta) = - \mathrm{E} \frac{\partial
+^2}{\partial \boldsymbol \beta\partial \boldsymbol \beta^{\prime
+}}\mathrm{L}(\boldsymbol \beta)=\sum_{i=1}^{n}E_i\exp \left(
+\mathbf{x}_i^{\prime }\boldsymbol \beta\right)
+\mathbf{x}_i\mathbf{x}_i^{\prime
+}=\sum_{i=1}^{n}\mu_i\mathbf{x}_i\mathbf{x}_i^{\prime }.
+\end{equation*}\]</span>
+Standard maximum likelihood estimation theory (Section 11.9.2) shows
+that the asymptotic variance-covariance matrix of <span class="math inline">\(\mathbf{b}\)</span>
+is
+<span class="math display">\[\begin{equation*}
+\widehat{\mathrm{Var~}\mathbf{b}}=\left(
+\sum\limits_{i=1}^{n}\widehat{\mu }
+_i\mathbf{x}_i\mathbf{x}_i^{\prime }\right)^{-1}.
+\end{equation*}\]</span>
+The square root of the <span class="math inline">\(j\)</span>th diagonal element of
+<span class="math inline">\(\widehat{\mathrm{Var~} \mathbf{b}}\)</span> yields the standard error for
+<span class="math inline">\(b_j\)</span>, which we denote as <span class="math inline">\(se(b_j)\)</span>.</p>
+<p><strong>Example: Medical Malpractice Insurance.</strong> Physicians make errors and may be sued by
+parties harmed by these errors. Like many professionals, it is
+common for physicians to carry insurance coverage that mitigates the
+financial consequences of “malpractice” lawsuits.</p>
+<p>Because insurers wish to accurately price this type of coverage, it
+seems natural to ask what type of physicians are likely to submit
+medical malpractice claims. Fournier and McInnes (2001) examined a
+sample of <span class="math inline">\(n=9,059\)</span> Florida physicians using data from the Florida
+Medical Professional Liability Insurance Claims File. The authors
+examined closed claims in years 1985-1989 for physicians who were
+licensed before 1981, thus omitting claims for newly licensed
+physicians. Medical malpractice claims can take a long time to be
+resolved (“settled”); in their study, Fournier and McInnes found
+that 2 percent of claims were still not settled after 5 years of the
+malpractice event. Thus, they chose an early period (1985-1989) to
+allow the experience to mature. The authors also ignored minor
+claims by only considering claims that exceeded $100.</p>
+<p>Table <span class="math inline">\(\ref{T12:MedMalPoisson}\)</span> provides fitted Poisson regression
+coefficients along with standard errors that appear in Fournier and
+McInnes (2001). The table shows that physicians’ practice area,
+region, practice size and physician personal characteristics
+(experience and gender) to be important determinants of the number
+of medical malpractice suits. For example, we may interpret the
+coefficient associated with gender to say that males are expected to
+have <span class="math inline">\(\exp (0.432)= 1.540\)</span> times as many claims as females.</p>
+</div>
+<div id="additional-inference" class="section level3 hasAnchor" number="12.1.4">
+<h3><span class="header-section-number">12.1.4</span> Additional Inference<a href="C11Count.html#additional-inference" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In Poisson regression models, we anticipate
+dependent variables because of the relation <span class="math inline">\(\mathrm{Var~}y_i=\mu _i\)</span>. This characteristic means that ordinary residuals
+<span class="math inline">\(y_i-\widehat{\mu }_i\)</span> are of less use, so that it is more common
+to examine , defined as
+<span class="math display">\[\begin{equation*}
+r_i=\frac{y_i-\widehat{\mu }_i}{\sqrt{\widehat{\mu }_i}}.
+\end{equation*}\]</span>
+By construction, Pearson residuals are approximately homoscedastic.
+Plots of Pearson residuals can be used to identify unusual
+observations or to detect whether additional variables of interest
+can be used to improve the model specification.</p>
+<p></p>
+<p>Pearson residuals can also be used to calculate a Pearson goodness of fit
+statistic,
+<span class="math display">\[\begin{equation}\label{E12:Pearson2}
+\sum\limits_{i=1}^{n}r_i^2=\sum\limits_{i=1}^{n}\frac{\left( y_i-%
+\widehat{\mu }_i\right)^2}{\widehat{\mu }_i}.
+\end{equation}\]</span>
+This statistic is an overall measure of how well the model fits the
+data. If the model is specified correctly, then this statistic
+should be approximately <span class="math inline">\(n-(k+1)\)</span>. In general, Pearson goodness of
+fit statistics take the form <span class="math inline">\(\sum \left( O-E\right)^2/E\)</span>, where <span class="math inline">\(O\)</span>
+is some observed quantity and <span class="math inline">\(E\)</span> is the corresponding estimated
+(expected) value based on a model. The statistic in equation
+(<span class="math inline">\(\ref{E12:Pearson2}\)</span>) is computed at the observation level whereas
+the statistic in equation (<span class="math inline">\(\ref{E12:Pearson}\)</span>) was computed
+summarizing information over cells.</p>
+<p>In linear regression, the coefficient of determination <span class="math inline">\(R^2\)</span> is a
+widely accepted goodness of fit measure. In nonlinear regression
+such as for binary and count dependent variables, this is not true.
+Information statistics, such as
+<span class="math display">\[\begin{equation*}
+AIC=-2 L(\mathbf{b}) +2(k+1),
+\end{equation*}\]</span>
+represents a type of statistic useful for goodness of fit that is
+broadly defined over a large range of models. Models with smaller
+values of fit better, and are preferred.</p>
+<p></p>
+<p>As noted in Section <a href="C11Count.html#S:Sec1213">12.1.3</a>, -statistics are
+regularly used for testing the significance of individual regression
+coefficients. For testing collections of regression coefficients, it
+is customary to use the . The likelihood
+ratio test is a well-known procedure for testing the null hypothesis
+<span class="math inline">\(H_0:\mathrm{h}(\boldsymbol \beta) = \mathbf{d}\)</span>, where <span class="math inline">\(\mathbf{d}\)</span>
+is a known vector of dimension <span class="math inline">\(r\times 1\)</span> and
+<span class="math inline">\(\mathrm{h}(\mathbf{.})\)</span> is known and differentiable function. This
+approach uses <span class="math inline">\(\mathbf{b}\)</span> and <span class="math inline">\(\mathbf{b}_{\mathrm{Reduced}}\)</span>,
+where <span class="math inline">\(\mathbf{b}_{\mathrm{Reduced}}\)</span> is the value of <span class="math inline">\(\boldsymbol \beta\)</span> that maximizes <span class="math inline">\(L(\boldsymbol \beta)\)</span> under the restriction
+that <span class="math inline">\(\mathrm{h}(\boldsymbol \beta)=\mathbf{d}\)</span>. One computes the
+test statistic
+<span class="math display">\[\begin{equation}\label{E12:LRT}
+LRT = 2 \left( L(\mathbf{b}) - L(\mathbf{b}_{\mathrm{Reduced}})
+\right) .
+\end{equation}\]</span>
+Under the null hypothesis <span class="math inline">\(H_0\)</span>, the test statistic <span class="math inline">\(LRT\)</span> has an
+asymptotic chi-square distribution with <span class="math inline">\(r\)</span> degrees of freedom.
+Thus, large values of <span class="math inline">\(LRT\)</span> suggest that the null hypothesis is not
+valid.</p>
+</div>
+</div>
+<div id="S:Sec122" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Application: Singapore Automobile Insurance<a href="C11Count.html#S:Sec122" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Frees and Valdez (2008) investigate hierarchical models of Singapore
+driving experience. Here we examine in detail a subset of their
+data, focussing on 1993 counts of automobile accidents. The purpose
+of the analysis is to understand the impact of vehicle and driver
+characteristics on accident experience. These relationships provide
+a foundation for an actuary working in , that is,
+setting the price of insurance coverages.</p>
+<p></p>
+<p>The data are from the General Insurance Association of Singapore, an
+organization consisting of general (property and casualty) insurers
+in Singapore (see the organization’s website: www.gia.org.sg). From
+this database, several characteristics were available to explain
+automobile accident frequency. These characteristics include vehicle
+variables, such as type and age, as well as person level variables,
+such as age, gender and prior driving experience. Table
+<span class="math inline">\(\ref{T12:Table122}\)</span> summarizes these characteristics.</p>
+
+<p>Table <span class="math inline">\(\ref{T12:SingIntroStats}\)</span> shows the effects of vehicle
+characteristics on claim count. The “Automobile” category has
+lower overall claims experience. The
+Other category consists primarily of (commercial)
+goods vehicles, as well as weekend and hire cars. The vehicle age
+shows nonlinear effects of the age of the vehicle. Here, we see low
+claims for new cars with initially increasing accident frequency
+over time. However, for vehicles in operation for long periods of
+time, the accident frequencies are relatively low. There are also
+some important interaction effects between vehicle type and age not
+shown here. Nonetheless, Table <span class="math inline">\(\ref{T12:SingIntroStats}\)</span> clearly
+suggests the importance of these two variables on claim frequencies.</p>
+<p>Table <span class="math inline">\(\ref{T12:SingClaimsStats}\)</span> shows the effects of person level
+characteristics, gender, age and no claims discount, on the
+frequency distribution. Person level characteristics were largely
+unavailable for commercial use vehicles and so Table
+<span class="math inline">\(\ref{T12:SingClaimsStats}\)</span> present summary statistics for only those
+observations having automobile coverage with the requisite gender
+and age information. When we restricted consideration to (private
+use) automobiles, relatively few policies did not contain gender and
+age information.</p>
+<p>Table <span class="math inline">\(\ref{T12:SingClaimsStats}\)</span> suggests that driving experience was
+roughly similar between males and females. This company insured very
+few young drivers, so the young male driver category that typically
+has extremely high accident rates in most automobiles studies is
+less important for these data. Nonetheless, Table
+<span class="math inline">\(\ref{T12:SingClaimsStats}\)</span> suggests strong age effects, with older
+drivers having better driver experience. Table
+<span class="math inline">\(\ref{T12:SingClaimsStats}\)</span> also demonstrates the importance of the no
+claims discounts (NCD). As anticipated, drivers with better previous
+driving records who enjoy a higher NCD have fewer accidents.</p>
+<p>As part of the examination process, we investigated interaction
+terms among the covariates and nonlinear specifications. However,
+Table <span class="math inline">\(\ref{T12:SingPoissonEst}\)</span> summarizes a simpler fitted Poisson
+model with only additive effects. Table <span class="math inline">\(\ref{T12:SingPoissonEst}\)</span>
+shows that both vehicle age and no claims discount are important
+categories in that the -ratios for many of the
+coefficients are statistically significant. The overall
+log-likelihood for this model is <span class="math inline">\(L( \mathbf{b}) =-1,776.730\)</span>.</p>
+<p>Omitted reference levels are given in the footnote of Table
+<span class="math inline">\(\ref{T12:SingPoissonEst}\)</span> to help interpret the parameters. For
+example, for <span class="math inline">\(NCD=0\)</span>, we expect that a poor driver with <span class="math inline">\(NCD=0\)</span> will
+have <span class="math inline">\(\exp (0.729)=2.07\)</span> times as many accidents as a comparable
+excellent driver with <span class="math inline">\(NCD=50\)</span>. In the same vein, we expect that a
+poor driver with <span class="math inline">\(NCD=0\)</span> will have <span class="math inline">\(\exp (0.729-0.293)=1.55\)</span> times
+as many accidents as a comparable average driver with <span class="math inline">\(NCD=30\)</span>.</p>
+<p>For a more parsimonious model, one might consider removing the
+automobile, gender and age variables. Removing these seven variables
+results in a model with a log-likelihood of <span class="math inline">\(L \left( \mathbf{b}_{\mathrm{Reduced}}\right) =-1,779.420\)</span>. To understand
+whether this is a significant reduction, we can compute a likelihood
+ratio statistic (equation <span class="math inline">\(\ref{E12:LRT}\)</span>),
+<span class="math display">\[\begin{equation*}
+LRT=2\times \left( -1,776.730 - (-1,779.420) \right) =5.379.
+\end{equation*}\]</span>
+Comparing this to a chi-square distribution with <span class="math inline">\(df=7\)</span> degrees of
+freedom, the statistic <span class="math inline">\(p\)</span>-value <span class="math inline">\(=\Pr \left( \chi _{7}^2&gt;5.379\right) =0.618\)</span> indicates that these variables are not
+statistically significant. Nonetheless, for purposes of further
+model development, we retained automobile, gender and age as it is
+customary to include these variables in ratemaking models.
+</p>
+<p>As described in Section <span class="math inline">\(\ref{S12:PoissonInference}\)</span>, there are
+several ways of assessing a model’s overall goodness of fit. Table
+<span class="math inline">\(\ref{T12:SingGoodFit}\)</span> compares several fitted models, providing
+fitted values for each response level and summarizing the overall
+fit with Pearson chi-square goodness of fit statistics. The left
+portion of the table repeats the baseline information that appeared
+in Table <span class="math inline">\(\ref{T12:Table121}\)</span>, for convenience.  To begin, first note
+that even without covariates, the inclusion of the offset,
+exposures, dramatically improves the fit of the model. This is
+intuitively appealing; as a driver has more insurance coverage
+during a year, he or she is more likely to be in an accident covered
+under the insurance contract. Table <span class="math inline">\(\ref{T12:SingGoodFit}\)</span> also shows
+the improvement in the overall fit when including the fitted model
+summarized in Table <span class="math inline">\(\ref{T12:SingPoissonEst}\)</span>. When compared to a
+chi-square distribution, the statistic <span class="math inline">\(p\)</span>-value <span class="math inline">\(=\Pr \left( \chi _{4}^2&gt;8.77\right) =0.067\)</span> suggests agreement between the data and
+the fitted value. However, this model specification can be improved
+- the following section introduces a negative binomial model that
+proves to be a yet better fit for this data set.</p>
+</div>
+<div id="S:Sec123" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> Overdispersion and Negative Binomial Models<a href="C11Count.html#S:Sec123" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Although simplicity is a virtue of the Poisson regression model, its form
+can also be too restrictive. In particular, the requirement that the mean
+equal the variance, known as , is not satisfied for
+many datasets of interest. If the variance exceeds the mean, then the data
+are said to be . A less common case occurs when the
+variance is less than the mean, known as .</p>
+<p>To mitigate this concern, a common specification is to assume that
+<span class="math display">\[\begin{equation}\label{E12:Pscale}
+\mathrm{Var~}y_i=\phi \mu_i,
+\end{equation}\]</span>
+where <span class="math inline">\(\phi &gt;0\)</span> is a parameter to accommodate the potential over-
+or under-dispersion. As suggested by equation (<span class="math inline">\(\ref{E12:Score}\)</span>),
+consistent estimation of <span class="math inline">\(\boldsymbol \beta\)</span> requires only that the
+mean function be specified correctly, not that the equidispersion or
+Poisson distribution assumptions hold. This feature also holds for
+linear regression. Because of this, the estimator <span class="math inline">\(\mathbf{b}\)</span> is
+sometimes referred to as a . With
+this estimator, we may compute estimated means <span class="math inline">\(\widehat{\mu}_i\)</span><br />
+and then estimate $$ as<br />
+<span class="math display">\[\begin{equation}\label{E12:QuasiEstimator}
+\widehat{\phi }=\frac{1}{n-(k+1)}\sum\limits_{i=1}^{n}\frac{\left( y_i-%
+\widehat{\mu }_i\right)^2}{\widehat{\mu }_i}.
+\end{equation}\]</span>
+Standard errors are then based on
+<span class="math display">\[\begin{equation*}
+\widehat{\mathrm{Var~}\mathbf{b}}=\left( \widehat{\phi }\sum%
+\limits_{i=1}^{n}\widehat{\mu }_i\mathbf{x}_i\mathbf{x}_i^{\prime
+}\right)^{-1}.
+\end{equation*}\]</span>
+</p>
+<p>A drawback of equation (<span class="math inline">\(\ref{E12:Pscale}\)</span>) is that one assumes the
+variance of each observation is a constant multiple of its mean. For
+datasets where this assumption is in doubt, it is common to use a
+, computed as the square root of the
+diagonal element of
+<span class="math display">\[\begin{equation*}
+\mathrm{Var~}\mathbf{b}=\left( \sum\limits_{i=1}^{n}\mu_i\mathbf{x}_i%
+\mathbf{x}_i^{\prime }\right)^{-1}\left( \sum\limits_{i=1}^{n}\left(
+y_i-\mu_i\right)^2\mathbf{x}_i\mathbf{x}_i^{\prime }\right) \left(
+\sum\limits_{i=1}^{n}\mu_i\mathbf{x}_i\mathbf{x}_i^{\prime
+}\right)^{-1},
+\end{equation*}\]</span>
+evaluated at <span class="math inline">\(\widehat{\mu }_i.\)</span> Here, the idea is that <span class="math inline">\(\left( y_i-\mu_i\right)^2\)</span> is an unbiased estimator of Var <span class="math inline">\(y_i\)</span>,
+regardless of the form. Although <span class="math inline">\(\left( y_i-\mu_i\right)^2\)</span> is a
+poor estimator of Var <span class="math inline">\(y_i\)</span> for each observation <span class="math inline">\(i\)</span>, the weighted
+sum $ _i( y_i-_i)^2_i
+_i^{}$ is a reliable estimator of <span class="math inline">\(\sum\nolimits_i\left( \mathrm{Var~}y_i\right) \mathbf{x}_i\mathbf{x}_i^{\prime }\)</span>.</p>
+<p>For the quasi-likelihood estimator, the estimation strategy assumes only a
+correct specification of the mean and uses a more robust specification of
+the variance than implied by the Poisson distribution. The advantage and
+disadvantage of this estimator is that it is not linked to a full
+distribution. This assumption makes it difficult, for example, if the
+interest is in estimating the probability of zero counts. An alternative
+approach is to assume a more flexible parametric model that permits a wider
+range of dispersion.</p>
+<p></p>
+<p>A widely used model for counts is the , with
+probability mass function
+<span class="math display">\[\begin{equation}
+\mathrm{Pr}(y=j)=\left(
+\begin{array}{c}
+j+r-1 \\
+r-1
+\end{array}
+\right) p^{r}\left( 1-p\right)^j,
+\end{equation}\]</span>
+where <span class="math inline">\(r\)</span> and <span class="math inline">\(p\)</span> are parameters of the model. To help interpret the
+parameters of the model, straightforward calculations show that
+<span class="math inline">\(\mathrm{E~}y=r(1-p)/p\)</span> and <span class="math inline">\(\mathrm{Var~}y = r(1-p)/p^2.\)</span></p>
+<p>The negative binomial has several important advantages when compared
+to the Poisson distribution. First, because there are two parameters
+describing the negative binomial distribution, it has greater
+flexibility for fitting data. Second, it can be shown that the
+Poisson is a limiting case of the negative binomial (by allowing
+<span class="math inline">\(p\rightarrow 1\)</span> and <span class="math inline">\(r \rightarrow 0\)</span> such that $rp
+$). In this sense, the Poisson is nested within the negative
+binomial distribution. Third, one can show that negative binomial
+distribution arises from a mixture of the Poisson variables. For
+example, think about the Singapore data set with each driver having
+their own value of $$. Conditional on $$, assume
+that the driver’s accident distribution has a Poisson distribution
+with parameter $$. Further assume that the distribution of
+$$’s can be described as a gamma distribution. Then, it can
+be shown that the overall accident counts have a negative binomial
+distribution. See, for example, Klugman et al. (2008). Such
+“mixture” interpretations are helpful in explaining results to
+consumers of actuarial analyses.</p>
+<p>For regression modeling, the “<span class="math inline">\(p\)</span>” parameter varies by subject
+<span class="math inline">\(i\)</span>. It is customary to reparameterize the model and use a log-link
+function such that <span class="math inline">\(\sigma =1/r\)</span> and that <span class="math inline">\(p_i\)</span> related to the mean
+through <span class="math inline">\(\mu_i =r(1-p_i)/p_i = \exp (\mathbf{x}_i^{\prime} \boldsymbol \beta)\)</span>. Because the negative binomial is a probability
+frequency distribution, there is no difficulty in estimating
+features of this distribution, such as the probability of zero
+counts, after a regression fit. This is in contrast to the
+quasi-likelihood estimation of a Poisson model with an ad hoc
+specification of the variance summarized in equation
+(<span class="math inline">\(\ref{E12:QuasiEstimator}\)</span>).</p>
+<hr />
+<p><strong>Example: Singapore Automobile Data - Continued.</strong> The
+negative binomial distribution was fit to the Section
+<span class="math inline">\(\ref{S12:SingaporeData}\)</span> Singapore data using the set of covariates
+summarized in Table <span class="math inline">\(\ref{T12:SingPoissonEst}\)</span>. The resulting
+log-likelihood was <span class="math inline">\(\mathrm{L}_{NegBin}(\mathbf{b})=-1,774.494;\)</span>
+this is
+larger than the Poisson likelihood fit <span class="math inline">\(\mathrm{L}_{Poisson}\left( \mathbf{b} \right) =-1,776.730\)</span> because of an additional parameter. The usual
+likelihood ratio test is not formally appropriate because the models
+are only nested in a limiting sense. It is more useful to compare
+the goodness of fit statistics given in Table <span class="math inline">\(\ref{T12:SingGoodFit}\)</span>.
+Here, we see that the negative binomial is a better fit than the
+Poisson (with the same systematic components). A chi-square test of
+whether the negative binomial with covariates is suitable yields
+<span class="math inline">\(p\)</span>-value<span class="math inline">\(=\Pr \left( \chi_{4}^2&gt;1.79\right) =0.774\)</span>,
+suggesting strong agreement between the observed data and fitted
+values. We interpret the findings of Table <span class="math inline">\(\ref{T12:SingGoodFit}\)</span> to
+mean that the negative binomial distribution well captures the
+heterogeneity in the accident frequency distribution.</p>
+</div>
+<div id="S:Sec124" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Other Count Models<a href="C11Count.html#S:Sec124" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Actuaries are familiar with a host of frequency models; see, for
+example, Klugman et al. (2008). In principle, each frequency model
+could be used in a regression context by simply incorporating a
+systematic component, <span class="math inline">\(\mathbf{x}^{\prime}\boldsymbol \beta\)</span>, into
+one or more model parameters. However, analysts have found that four
+variations of the basic models perform well in fitting models to
+data and provide an intuitive platform for interpreting model
+results.</p>
+<div id="zero-inflated-models" class="section level3 hasAnchor" number="12.4.1">
+<h3><span class="header-section-number">12.4.1</span> Zero-Inflated Models<a href="C11Count.html#zero-inflated-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For many datasets, a troublesome aspect is the “excess” number of
+zeros, relative to a specified model. For example, this could occur
+in automobile claims data because insureds are reluctant to report
+claims, fearing that a reported claim will result in higher future
+insurance premiums. Thus, we have a higher than anticipated number
+of zeros due to the non-reporting of claims.</p>
+<p>A zero-inflated model represents the claims number <span class="math inline">\(y_i\)</span> as a
+mixture of a point mass at zero and another claims frequency
+distribution, say <span class="math inline">\(g_i(j)\)</span> (which is typically Poisson or negative
+binomial). (We might interpret the point mass as the tendency of
+non-reporting.) The probability of getting the point mass would be
+modeled by a binary count model such as, for example, the logit
+model
+<span class="math display">\[\begin{equation*}
+\pi_i=\frac{\exp \left( \mathbf{x}_i^{\prime}\boldsymbol \beta%
+_{1}\right) }{1+\exp \left( \mathbf{x}_i^{\prime}\boldsymbol \beta%
+_{1}\right) }.
+\end{equation*}\]</span>
+As a consequence of the mixture assumption, the zero-inflated count
+distribution can be written as
+<span class="math display">\[\begin{equation}\label{E12:ZICount}
+\Pr \left( y_i=j\right) =\left\{
+\begin{array}{ll}
+\pi_i+(1-\pi_i)g_i(0) &amp; j=0 \\
+(1-\pi_i)g_i(j) &amp; j=1,2,...
+\end{array}
+\right. .
+\end{equation}\]</span>
+From equation (<span class="math inline">\(\ref{E12:ZICount}\)</span>), we see that zeros could arise
+from either the point mass or the other claims frequency
+distribution.</p>
+<p>To see the effects of a zero-inflated model, suppose that <span class="math inline">\(g_i\)</span>
+follows a Poisson distribution with mean <span class="math inline">\(\mu_i\)</span>. Then, easy
+calculations show that
+<span class="math display">\[\begin{equation*}
+\mathrm{E~} y_i = (1 - \pi_i) \mu_i
+\end{equation*}\]</span>
+and%
+<span class="math display">\[\begin{equation*}
+\mathrm{Var~} y_i = \pi_i \mu_i+\pi_i\mu_i^2(1-\pi_i).
+\end{equation*}\]</span>%
+Thus, for the zero-inflated Poisson, the variance always exceeds the
+mean, thus accommodating overdispersion relative to the Poisson
+model.</p>
+<hr />
+<p><strong>Example: Automobile Insurance</strong>. Yip and Yau (2005) examine a portfolio of <span class="math inline">\(n=2,812\)</span>
+automobile policies available from SAS Institute, Inc.  Explanatory
+variables include age, gender, marital status, annual income, job
+category and education level of the policyholder. For this dataset,
+they found that several zero-inflated count models accommodated well
+the presence of extra zeros.</p>
+</div>
+<div id="hurdle-models" class="section level3 hasAnchor" number="12.4.2">
+<h3><span class="header-section-number">12.4.2</span> Hurdle Models<a href="C11Count.html#hurdle-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A “hurdle model” provides another mechanism to modify basic count
+distributions in order to represent situations with an excess number
+of zeros. Hurdle models can be motivated by sequential decision
+making processes confronted by individuals. For example, in
+healthcare choice, we can think about an individual’s decision to
+seek healthcare care as an initial process. Conditional on having
+sought healthcare <span class="math inline">\(\{y\geq 1\}\)</span>, the amount of healthcare is a
+decision made by a healthcare provider (such as a physician or
+hospital), thus representing a different process. One needs to pass
+the first “hurdle” (the decision to seek healthcare) in order to
+address the second (the amount of healthcare). An appeal of the
+hurdle model is its connection to the “principal-agent” model
+where the provider (agent) decides on the amount after initial
+contact by the insured (principal) is made. As another example, in
+property and casualty insurance, the decision process an insured
+uses for reporting the initial claim may differ from that used for
+reporting subsequent claims.</p>
+<p>To represent hurdle models, let <span class="math inline">\(\pi_i\)</span> represent the probability that <span class="math inline">\(% \{y_i=0\}\)</span> used for the first decision and suppose that <span class="math inline">\(g_i\)</span>
+represents the count distribution that will be used for the second
+decision. We define the probability mass function as
+<span class="math display">\[\begin{equation} \label{E12:Hurdle}
+\Pr \left( y_i=j\right) =\left\{
+\begin{array}{ll}
+\pi_i &amp; j=0 \\
+k_ig_i(j) &amp; j=1,2,...%
+\end{array}%
+\right. .
+\end{equation}\]</span>%
+where <span class="math inline">\(k_i=(1-\pi_i)/(1-g_i(0))\)</span>. As with zero-inflated models, a
+logit model might be suitable for representing <span class="math inline">\(\pi_i\)</span>.</p>
+<p>To see the effects of a hurdle model, suppose that <span class="math inline">\(g_i\)</span> follows a
+Poisson distribution with mean <span class="math inline">\(\mu_i\)</span>. Then, easy calculations show
+that
+<span class="math display">\[\begin{equation*}
+\mathrm{E~} y_i =k_i \mu_i
+\end{equation*}\]</span>
+and%
+<span class="math display">\[\begin{equation*}
+\mathrm{Var~} y_i = k_i \mu_i + k_i \mu_i^2(1-k_i).
+\end{equation*}\]</span>
+Because <span class="math inline">\(k_i\)</span> may be larger or smaller than 1, this model allows
+for both under- and overdispersion relative to the Poisson model.</p>
+<p>The hurdle model is a special case of the “two-part” model
+described in Chapter 16. There, we will see that for two-part
+models, the amount of healthcare utilized may be a continuous as
+well as a count variable. An appeal of two-part models is that
+parameters for each hurdle/part can be analyzed separately.
+Specifically, the log-likelihood for the i<span class="math inline">\(th\)</span> subject can be
+written as
+<span class="math display">\[\begin{equation*}
+\ln \left[ \Pr \left( y_i=j\right) \right] =\left[
+\mathrm{I}(j=0)\ln \pi_i+\mathrm{I}(j\geq 1)\ln (1-\pi_i)\right]
++\mathrm{I}(j\geq 1)\ln \frac{g_i(j)}{(1-g_i(0))}.
+\end{equation*}\]</span>%
+The terms in the square brackets on the right-hand side correspond
+to the likelihood for a binary count model. The latter terms
+correspond to a count model with zeros removed (known as a truncated
+model). If the parameters for the two pieces are different
+(“separable”), then the maximization may be done separately for
+each part.</p>
+</div>
+<div id="heterogeneity-models" class="section level3 hasAnchor" number="12.4.3">
+<h3><span class="header-section-number">12.4.3</span> Heterogeneity Models<a href="C11Count.html#heterogeneity-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In a heterogeneity model, one allows one or more model parameters to
+vary randomly. The motivation is that these random parameters
+capture unobserved features of a subject. For example, suppose that
+<span class="math inline">\(\alpha_i\)</span> represents a random parameter and that <span class="math inline">\(y_i\)</span> given
+<span class="math inline">\(\alpha_i\)</span> has conditional mean $ (
+_i+_i^{}) .$ We
+interpret <span class="math inline">\(\alpha_i,\)</span> called a to
+represent unobserved subject characteristics that contribute
+linearly to the systematic component
+<span class="math inline">\(\mathbf{x}_i^{\prime}\boldsymbol \beta\)</span>.</p>
+<p>To see the effects of the heterogeneity component on the count distribution,
+basic calculations show that
+<span class="math display">\[\begin{equation*}
+\mathrm{E~} y_i = \exp \left( \mathbf{x}_i^{\prime} \boldsymbol
+\beta \right) =\mu_i
+\end{equation*}\]</span>
+and%
+<span class="math display">\[\begin{equation*}
+\mathrm{Var~} y_i = \mu_i + \mu_i^2 \mathrm{Var}\left(
+e^{\alpha_i}\right) .
+\end{equation*}\]</span>
+where we typically assume that <span class="math inline">\(\mathrm{E}\left( e^{\alpha _i}\right) =1\)</span> for parameter identification. Thus, heterogeneity
+models readily accommodate overdispersion in datasets.</p>
+<p>It is common to assume that the count distribution is Poisson
+conditional on <span class="math inline">\(\alpha_i\)</span>. There are several choices for the
+distribution of <span class="math inline">\(\alpha_i\)</span>, the two most common being the log-gamma
+and the log-normal. For the former, one first assumes that $
+( _i) $ has a gamma distribution, implying that
+$( _i + _i^{}
+) $ also has a gamma distribution. Recall that we have
+already noted in Section <span class="math inline">\(\ref{S12:NBSection}\)</span> that using a gamma
+mixing distribution for Poisson counts results in a negative
+binomial distribution. Thus, this choice provides another motivation
+for the popularity of the negative binomial as the choice of the
+count distribution. For the latter, assuming that an observed
+quantity such as $( _i) $ has a normal
+distribution is quite common in applied data analysis. Although
+there are no closed-form analytic expressions for the resulting
+marginal count distribution, there are several software packages
+that readily lend itself to ease computational difficulties.</p>
+<p>The heterogeneity component is particularly useful in repeated
+samples where it can be used to model clustering of observations.
+Observations from different clusters tend to be dissimilar compared
+to observations within a cluster, a feature known as
+heterogeneity.  The similarity
+of observations within a cluster can be captured by a common term
+<span class="math inline">\(\alpha_i\)</span>. Different heterogeneity terms from observations from
+different clusters can capture the heterogeneity. For an
+introduction to modeling from repeated sampling, see Chapter 10.</p>
+<hr />
+<p><strong>Example: Spanish Third Party Automobile Liability Insurance.</strong> Boucher et al. (2006) analyzed a portfolio of <span class="math inline">\(n=548,830\)</span>
+automobile contracts from a major insurance company operating in
+Spain. Claims were for third party automobile liability, so that in
+the event of an automobile accident, the amount that the insured is
+liable for non-property damages to other parties is covered under
+the insurance contract. For these data, the average claims frequency
+was approximately 6.9%. Explanatory variables include age, gender,
+driving location, driving experience, engine size and policy type.
+The paper considers a wide variety of zero-inflated, hurdle and
+heterogeneity models, showing that each was a substantial
+improvement over the basic Poisson model.</p>
+</div>
+<div id="latent-class-models" class="section level3 hasAnchor" number="12.4.4">
+<h3><span class="header-section-number">12.4.4</span> Latent Class Models<a href="C11Count.html#latent-class-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In most data sets, it is easy to think about classifications of subjects
+that the analyst would like to make in order to promote homogeneity among
+observations. Some examples include:</p>
+<p>For many datasets of interests, such obvious classification
+information is not available and are said to be unobserved, or
+. A “latent class” model still employs this
+classification idea but treats it as an unknown discrete random
+variable. Thus, like Sections 12.4.1-12.4.3, we use mixture models
+to modify basic count distributions but now assume that the mixture
+is a discrete random variable that we interpret to be the latent
+class.</p>
+<p>To be specific, assume that we have two classes, “low-risk” and
+“high-risks,” with probability <span class="math inline">\(\pi_{L}\)</span> that a subject belongs to
+the low-risk class. Then, we can write the probability mass
+function as%
+<span class="math display">\[\begin{equation}\label{E12:Latent}
+\Pr \left( y_i=j\right) =\pi_{L}\Pr \left( y_i=j;L\right) +\left(
+1-\pi_{L}\right) \Pr \left( y_i=j;H\right) ,
+\end{equation}\]</span>%
+where $( y_i=j;L) $ and $( y_i=j;H)
+$ are the probability mass functions for the low and high risks,
+respectively.</p>
+<p>This model is intuitively pleasing in that corresponds to an
+analyst’s perception of the behavior of the world. It is flexible in
+the sense that the model readily accommodates under- and
+over-dispersion, long-tails and bi-modal distributions. However,
+this flexibility also leads to difficulty regarding computational
+issues. There is a possibility of multiple local maxima when
+estimating via maximum likelihood. Convergence can be slow compared
+to other methods described in 12.4.1-12.4.3.</p>
+<p>Nonetheless, latent class models have proven fruitful in
+applications of interest to actuaries.</p>
+<hr />
+<p><strong>Example: Rand Health Insurance Experiment.</strong> Deb and Trivedi (2002) find strong
+evidence that a latent class model performs well when compared to
+the hurdle model. They examined counts of utilization of healthcare
+expenditures for the Rand Health Insurance Experiment, a dataset
+that has extensively analyzed in the health economics literature.
+They interpreted $( y_i=j;L) $ to be a distribution
+of infrequent healthcare users and $( y_i=j;H) $ to
+be a distribution of  frequent healthcare users. Each distribution
+was based on a negative binomial distribution, with different
+parameters for each class. They found statistically significant
+differences for their four insurance variables, two coinsurance
+variables, a variable indicating whether there was an individual
+deductible and a variable describing the maximum limit reimbursed.
+Because subjects were randomly assigned to insurance plans (very
+unusual), the effects of insurance variables on healthcare
+utilization are particularly interesting from a policy standpoint,
+as are differences among low and high use subjects. For their data,
+they estimated that approximately 20% were in the high use class.</p>
+</div>
+</div>
+<div id="S:Sec125" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> Further Reading and References<a href="C11Count.html#S:Sec125" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The Poisson distribution was derived by Poisson (1837) as a limiting
+case of the binomial distribution. Greenwood and Yule (1920) derived
+the negative binomial distribution as a mixture of a Poisson with a
+gamma distribution. Interestingly, one example of the 1920 paper was
+to use the Poisson distribution as a model of accidents, with the
+mean as a gamma random variable, reflecting the variation of workers
+in a population. Greenwood and Yule referred to this as individuals
+subject to “repeated accidents” that other authors have dubbed as
+“accident-proneness.”</p>
+<p>The first application of Poisson regression is due to Cochran (1940)
+in the context of ANOVA modeling and to Jorgensen (1961) in the
+context of multiple linear regression. As described in Section 12.2,
+Weber (1971) gives the first application to automobile accidents.</p>
+<p>This chapter focuses on insurance and risk management applications
+of count models. For those interested in automobiles, there is a
+related literature on studies of motor vehicle crash process, see
+for example, Lord et al. (2005). For applications in other areas of
+social science and additional model development, we refer to Cameron
+and Trivedi (1998).</p>
+<p></p>
+<p>\begin{multicols}{2}</p>
+<p>Bortkiewicz, L. von (1898). .
+Leipzig, Teubner.</p>
+<p>Boucher, Jean-Philippe, Michel Denuit and Montserratt Guill'{e}n
+(2006). Risk classification for claim counts: A comparative analysis
+of various zero-inflated mixed Poisson and hurdle models. Working
+paper.</p>
+<p>Cameron, A. Colin and Pravin K. Trivedi. (1998) . Cambridge University Press, Cambridge.</p>
+<p>Cochran, W. G. (1940). The analysis of variance when experimental
+errors follow the Poisson or binomial law. 11, 335-347.</p>
+<p>Deb, Partha and Pravin K. Trivedi (2002). The structure of demand for health
+care: latent class versus two-part models. 21, 601-625.</p>
+<p>Fournier, Gary M. and Melayne Morgan McInnes (2001). The case of
+experience rating in medical malpractice insurance: An empirical
+evaluation. 68, 255-276.</p>
+<p>Frees, Edward W. and Emiliano Valdez (2008). Hierarchical insurance
+claims modeling. 103, 1457-1469.</p>
+<p>Greenwood, M. and G. U. Yule (1920). An inquiry into the nature of
+frequency distributions representative of multiple happenings with
+particular reference to the occurrence of multiple attacks of
+disease or of repeated accidents. 83, 255-279.</p>
+<p>Jones, Andrew M. (2000). Health econometrics. Chapter 6 of the . Edited by Antonio.J. Culyer, and
+Joseph.P. Newhouse, Elsevier, Amersterdam. 265-344.</p>
+<p>Jorgensen, Dale W. (1961). Multiple regression analysis of a Poisson
+process.
+56, 235-245.</p>
+<p>Lord, Dominique, Simon P. Washington and John N. Ivan (2005).
+Poisson, Poisson-gamma and zero-inflated regression models of motor
+vehicle crashes: Balancing statistical theory and fit.
+37, 35-46.</p>
+<p>Klugman, Stuart A, Harry H. Panjer and Gordon E. Willmot (2008).
+. John Wiley &amp; Sons,
+Hoboken, New Jersey.</p>
+<p>Purcaru, Oana and Michel Denuit (2003). Dependence in dynamic claim
+frequency credibility models. 33(1), 23-40.</p>
+<p>Weber, Donald C. (1971). Accident rate potential: An application of
+multiple regression analysis of a Poisson process. 66, 285-288.</p>
+<p>Yip, Karen C. H. and Kelvin K.W. Yau (2005). On modeling claim frequency
+data in general insurance with extra zeros. 36(2) 153-163.</p>
+</div>
+<div id="S:Sec126" class="section level2 hasAnchor" number="12.6">
+<h2><span class="header-section-number">12.6</span> Exercises<a href="C11Count.html#S:Sec126" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>12.1 Show that the log-likelihood in equation (<span class="math inline">\(\ref{E12:BasicLogLike}\)</span>)
+has a maximum at $ =$.</p>
+<p>For the data in Table <span class="math inline">\(\ref{T12:Table121}\)</span>, confirm that the
+Pearson statistic in equation (<span class="math inline">\(\ref{E12:Pearson}\)</span>) is 41.98.</p>
+<p>. Consider a Poisson regression. Let <span class="math inline">\(e_i = y_i - \widehat{\mu}_i\)</span> denote the <span class="math inline">\(i\)</span>th ordinary residual. Assume
+that an intercept is used in the model so that one of the
+explanatory variables <span class="math inline">\(x\)</span> is a constant equal to one.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Show that the average ordinary residual is 0.</p></li>
+<li><p>Show that the correlation between the ordinary residuals and each
+explanatory variable is zero.</p></li>
+</ol>
+<p>.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Assume that <span class="math inline">\(y_1, \ldots, y_n\)</span> are i.i.d. with a negative
+binomial distribution with parameters <span class="math inline">\(r\)</span> and <span class="math inline">\(p\)</span>. Determine the
+maximum likelihood estimators.</p></li>
+<li><p>Use the sampling mechanism in part (a) but with parameters
+<span class="math inline">\(\sigma =1/r\)</span> and <span class="math inline">\(\mu\)</span> where <span class="math inline">\(\mu =r(1-p)/p.\)</span> Determine the maximum
+likelihood estimators of <span class="math inline">\(\sigma\)</span> and <span class="math inline">\(\mu.\)</span></p></li>
+<li><p>Assume that <span class="math inline">\(y_1, \ldots, y_n\)</span> are independent with <span class="math inline">\(y_i\)</span> having
+a negative binomial distribution with parameters <span class="math inline">\(r\)</span> and <span class="math inline">\(p_i\)</span>,
+where <span class="math inline">\(\sigma =1/r\)</span> and <span class="math inline">\(p_i\)</span> satisfies <span class="math inline">\(r(1-p_i)/p_i=\exp (\mathbf{x}_i^{\prime }\boldsymbol \beta) (= \mu_i).\)</span> Determine the
+score function in terms of <span class="math inline">\(\sigma\)</span> and <span class="math inline">\(\boldsymbol \beta\)</span>.</p></li>
+</ol>
+<p> This exercise considers data
+from the Medical Expenditure Panel Survey (MEPS) described in
+Exercise 1.<span class="math inline">\(\ref{Ex:MedExpend}\)</span> and Section 11.4. Our dependent
+variable consists of the number of outpatient (COUNTOP) visits. For
+MEPS, outpatient events include hospital outpatient department
+visits, office-based provider visits and emergency room visits
+excluding dental services. (Dental services, compared to other types
+of health care services, are more predictable and occur in a more
+regular basis.) Hospital stays with the same date of admission and
+discharge, known as “zero-night stays,” were also included in
+outpatient counts and expenditures. (Payments associated with
+emergency room visits that immediately preceded an inpatient stay
+were included in the inpatient expenditures. Prescribed medicines
+that can be linked to hospital admissions were included in inpatient
+expenditures, not in outpatient utilization.)</p>
+<p>Consider the explanatory variables described in Section 11.4.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Provide a table of counts, a histogram and summary statistics of
+COUNTOP. Note the shape of the distribution and the relationship
+between the sample mean and sample variance.</p></li>
+<li><p>Create tables of means of COUNTOP by level of GENDER, ethnicity,
+region, education, self-rated physical health, self-rated mental
+health, activity limitation, income and insurance. Do these tables
+suggest that these explanatory variables have an impact on COUNTOP?</p></li>
+<li><p>As a baseline, estimate a Poisson model without any explanatory
+variables and calculate a Pearson’s chi-square statistic for
+goodness of fit (at the individual level).</p></li>
+<li><p>Estimate a Poisson model using the explanatory variables in part
+(b).</p></li>
+</ol>
+<p>d(i). Comment briefly on the statistical significance of each
+variable.</p>
+<p>d(ii). Provide an interpretation for the GENDER coefficient.</p>
+<p>d(iii). Calculate a (individual-level) Pearson’s chi-square
+statistic for goodness of fit. Compare this to the one in part (b).
+Based on this statistic and the statistical significance of
+coefficients discussed in part d(i), which model do you prefer?</p>
+<p>d(iv). Re-estimate the model using the quasi-likelihood estimator of
+the dispersion parameter. How have your comments in part d(i)
+changed?</p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Estimate a negative binomial model using the explanatory
+variables in part (d).</li>
+</ol>
+<p>e(i). Comment briefly on the statistical significance of each
+variable.</p>
+<p>e(ii). Calculate a (individual-level) Pearson’s chi-square statistic
+for goodness of fit. Compare this to the ones in parts (b) and (d).
+Which model do you prefer? Also cite the <span class="math inline">\(AIC\)</span> statistic in your
+comparison.</p>
+<p>e(iii). Re-estimate the model, dropping the factor income. Use the
+likelihood ratio test to say whether income is a statistically
+significant factor.</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>As a robustness check, estimate a logistic regression model using
+the explanatory variables in part (d). Do the signs and significance
+of the coefficients of this model fit give the same interpretation
+as with the negative binomial model in part (e)?</li>
+</ol>
+<p> We can express the two
+population problem in a regression context using one explanatory
+variable. Specifically, suppose that <span class="math inline">\(x_i\)</span> only takes on the values
+0 and 1. Out of the <span class="math inline">\(n\)</span> observations, <span class="math inline">\(n_0\)</span> take on the value <span class="math inline">\(x=0\)</span>.
+These $n_0 $ observations have an average <span class="math inline">\(y\)</span> value of
+<span class="math inline">\(\overline{y}_0\)</span>. The remaining <span class="math inline">\(n_1 =n-n_0\)</span> observations have value
+<span class="math inline">\(x=1\)</span> and an average <span class="math inline">\(y\)</span> value of <span class="math inline">\(\overline{y}_1\)</span>.</p>
+<p>Use the Poisson model with the logarithmic link function and
+systematic component <span class="math inline">\(\mathbf{x}_i^{\prime} \boldsymbol \beta = \beta_0 +\beta_1 x_i\)</span>.</p>
+<ol style="list-style-type: lower-roman">
+<li><p>Determine the maximum likelihood estimators of <span class="math inline">\(\beta_0\)</span> and
+<span class="math inline">\(\beta_1\)</span>, respectively.</p></li>
+<li><p>Suppose that <span class="math inline">\(n_0 = 10\)</span>, <span class="math inline">\(n_1= 90\)</span>, <span class="math inline">\(\overline{y}_0 = 0.20\)</span> and
+<span class="math inline">\(\overline{y}_1= 0.05\)</span>. Using your results in part a(i), compute the
+maximum likelihood estimators of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>,
+respectively.</p></li>
+<li><p>Determine the information matrix.</p></li>
+</ol>
+<p>\end{exercises}</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chap-11.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bibliography.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 18 Credibility and Bonus-Malus | Regression Modeling with Actuarial and Financial Applications</title>
+  <meta name="description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 18 Credibility and Bonus-Malus | Regression Modeling with Actuarial and Financial Applications" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 18 Credibility and Bonus-Malus | Regression Modeling with Actuarial and Financial Applications" />
+  
+  <meta name="twitter:description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="C17Fat.html"/>
+<link rel="next" href="C19Triangles.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Regression Modeling With Actuarial and Financial Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#dedication"><i class="fa fa-check"></i>Dedication</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#forward"><i class="fa fa-check"></i>Forward</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#who-is-this-book-for"><i class="fa fa-check"></i>Who Is This Book For?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#what-is-this-book-about"><i class="fa fa-check"></i>What Is This Book About?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-does-this-book-deliver-its-message"><i class="fa fa-check"></i>How Does This Book Deliver Its Message?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html"><i class="fa fa-check"></i><b>1</b> Regression and the Normal Distribution</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec11"><i class="fa fa-check"></i><b>1.1</b> What is Regression Analysis?</a></li>
+<li class="chapter" data-level="1.2" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec12"><i class="fa fa-check"></i><b>1.2</b> Fitting Data to a Normal Distribution</a></li>
+<li class="chapter" data-level="1.3" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec13"><i class="fa fa-check"></i><b>1.3</b> Power Transforms</a></li>
+<li class="chapter" data-level="1.4" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec14"><i class="fa fa-check"></i><b>1.4</b> Sampling and the Role of Normality</a></li>
+<li class="chapter" data-level="1.5" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec15"><i class="fa fa-check"></i><b>1.5</b> Regression and Sampling Designs</a></li>
+<li class="chapter" data-level="1.6" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec16"><i class="fa fa-check"></i><b>1.6</b> Actuarial Applications of Regression</a></li>
+<li class="chapter" data-level="1.7" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec17"><i class="fa fa-check"></i><b>1.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="1.8" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec18"><i class="fa fa-check"></i><b>1.8</b> Exercises</a></li>
+<li class="chapter" data-level="1.9" data-path="regression-and-the-normal-distribution.html"><a href="regression-and-the-normal-distribution.html#Sec19"><i class="fa fa-check"></i><b>1.9</b> Technical Supplement - Central Limit Theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="C2BasicLR.html"><a href="C2BasicLR.html"><i class="fa fa-check"></i><b>2</b> Basic Linear Regression</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec21"><i class="fa fa-check"></i><b>2.1</b> Correlations and Least Squares</a></li>
+<li class="chapter" data-level="2.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec22"><i class="fa fa-check"></i><b>2.2</b> Basic Linear Regression Model</a></li>
+<li class="chapter" data-level="2.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec23"><i class="fa fa-check"></i><b>2.3</b> Is the Model Useful? Some Basic Summary Measures</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec231"><i class="fa fa-check"></i><b>2.3.1</b> Partitioning the Variability</a></li>
+<li class="chapter" data-level="2.3.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec232"><i class="fa fa-check"></i><b>2.3.2</b> The Size of a Typical Deviation: <em>s</em></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec24"><i class="fa fa-check"></i><b>2.4</b> Properties of Regression Coefficient Estimators</a></li>
+<li class="chapter" data-level="2.5" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec25"><i class="fa fa-check"></i><b>2.5</b> Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec251"><i class="fa fa-check"></i><b>2.5.1</b> Is the Explanatory Variable Important?: The <em>t</em>-Test</a></li>
+<li class="chapter" data-level="2.5.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec252"><i class="fa fa-check"></i><b>2.5.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="2.5.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec253"><i class="fa fa-check"></i><b>2.5.3</b> Prediction Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec26"><i class="fa fa-check"></i><b>2.6</b> Building a Better Model: Residual Analysis</a></li>
+<li class="chapter" data-level="2.7" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec27"><i class="fa fa-check"></i><b>2.7</b> Application: Capital Asset Pricing Model</a></li>
+<li class="chapter" data-level="2.8" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec28"><i class="fa fa-check"></i><b>2.8</b> Illustrative Regression Computer Output</a></li>
+<li class="chapter" data-level="2.9" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec29"><i class="fa fa-check"></i><b>2.9</b> Further Reading and References</a></li>
+<li class="chapter" data-level="2.10" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec210"><i class="fa fa-check"></i><b>2.10</b> Exercises</a></li>
+<li class="chapter" data-level="2.11" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec211"><i class="fa fa-check"></i><b>2.11</b> Technical Supplement - Elements of Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="2.11.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2111"><i class="fa fa-check"></i><b>2.11.1</b> Basic Definitions</a></li>
+<li class="chapter" data-level="2.11.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2112"><i class="fa fa-check"></i><b>2.11.2</b> Some Special Matrices</a></li>
+<li class="chapter" data-level="2.11.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2113"><i class="fa fa-check"></i><b>2.11.3</b> Basic Operations</a></li>
+<li class="chapter" data-level="2.11.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2114"><i class="fa fa-check"></i><b>2.11.4</b> Random Matrices</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html"><i class="fa fa-check"></i><b>3</b> Multiple Linear Regression - I</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec31"><i class="fa fa-check"></i><b>3.1</b> Method of Least Squares</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec311"><i class="fa fa-check"></i><b>3.1.1</b> Least Squares Method</a></li>
+<li class="chapter" data-level="3.1.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec312"><i class="fa fa-check"></i><b>3.1.2</b> General Case with <em>k</em> Explanatory Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec32"><i class="fa fa-check"></i><b>3.2</b> Linear Regression Model and Properties of Estimators</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec321"><i class="fa fa-check"></i><b>3.2.1</b> Regression Function</a></li>
+<li class="chapter" data-level="3.2.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec322"><i class="fa fa-check"></i><b>3.2.2</b> Regression Coefficient Interpretation</a></li>
+<li class="chapter" data-level="3.2.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec323"><i class="fa fa-check"></i><b>3.2.3</b> Model Assumptions</a></li>
+<li class="chapter" data-level="3.2.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec324"><i class="fa fa-check"></i><b>3.2.4</b> Properties of Regression Coefficient Estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec33"><i class="fa fa-check"></i><b>3.3</b> Estimation and Goodness of Fit</a></li>
+<li class="chapter" data-level="3.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec34"><i class="fa fa-check"></i><b>3.4</b> Statistical Inference for a Single Coefficient</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec341"><i class="fa fa-check"></i><b>3.4.1</b> The <em>t</em>-Test</a></li>
+<li class="chapter" data-level="3.4.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec342"><i class="fa fa-check"></i><b>3.4.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="3.4.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec343"><i class="fa fa-check"></i><b>3.4.3</b> Added Variable Plots</a></li>
+<li class="chapter" data-level="3.4.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec344"><i class="fa fa-check"></i><b>3.4.4</b> Partial Correlation Coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec35"><i class="fa fa-check"></i><b>3.5</b> Some Special Explanatory Variables</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec351"><i class="fa fa-check"></i><b>3.5.1</b> Binary Variables</a></li>
+<li class="chapter" data-level="3.5.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec352"><i class="fa fa-check"></i><b>3.5.2</b> Transforming Explanatory Variables</a></li>
+<li class="chapter" data-level="3.5.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec353"><i class="fa fa-check"></i><b>3.5.3</b> Interaction Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec36"><i class="fa fa-check"></i><b>3.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="3.7" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec37"><i class="fa fa-check"></i><b>3.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html"><i class="fa fa-check"></i><b>4</b> Multiple Linear Regression - II</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec41"><i class="fa fa-check"></i><b>4.1</b> The Role of Binary Variables</a></li>
+<li class="chapter" data-level="4.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec42"><i class="fa fa-check"></i><b>4.2</b> Statistical Inference for Several Coefficients</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec421"><i class="fa fa-check"></i><b>4.2.1</b> Sets of Regression Coefficients</a></li>
+<li class="chapter" data-level="4.2.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec422"><i class="fa fa-check"></i><b>4.2.2</b> The General Linear Hypothesis</a></li>
+<li class="chapter" data-level="4.2.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec423"><i class="fa fa-check"></i><b>4.2.3</b> Estimating and Predicting Several Coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec43"><i class="fa fa-check"></i><b>4.3</b> One Factor ANOVA Model</a></li>
+<li class="chapter" data-level="4.4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec44"><i class="fa fa-check"></i><b>4.4</b> Combining Categorical and Continuous Explanatory Variables</a></li>
+<li class="chapter" data-level="4.5" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec45"><i class="fa fa-check"></i><b>4.5</b> Further Reading and References</a></li>
+<li class="chapter" data-level="4.6" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec46"><i class="fa fa-check"></i><b>4.6</b> Exercises</a></li>
+<li class="chapter" data-level="4.7" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec47"><i class="fa fa-check"></i><b>4.7</b> Technical Supplement - Matrix Expressions</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec471"><i class="fa fa-check"></i><b>4.7.1</b> Expressing Models with Categorical Variables in Matrix Form</a></li>
+<li class="chapter" data-level="4.7.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec472"><i class="fa fa-check"></i><b>4.7.2</b> Calculating Least Squares Recursively</a></li>
+<li class="chapter" data-level="4.7.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec473"><i class="fa fa-check"></i><b>4.7.3</b> General Linear Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="C5VarSelect.html"><a href="C5VarSelect.html"><i class="fa fa-check"></i><b>5</b> Variable Selection</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec51"><i class="fa fa-check"></i><b>5.1</b> An Iterative Approach to Data Analysis and Modeling</a></li>
+<li class="chapter" data-level="5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec52"><i class="fa fa-check"></i><b>5.2</b> Automatic Variable Selection Procedures</a></li>
+<li class="chapter" data-level="5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec53"><i class="fa fa-check"></i><b>5.3</b> Residual Analysis</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec531"><i class="fa fa-check"></i><b>5.3.1</b> Residuals</a></li>
+<li class="chapter" data-level="5.3.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec532"><i class="fa fa-check"></i><b>5.3.2</b> Using Residuals to Identify Outliers</a></li>
+<li class="chapter" data-level="5.3.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec533"><i class="fa fa-check"></i><b>5.3.3</b> Using Residuals to Select Explanatory Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec54"><i class="fa fa-check"></i><b>5.4</b> Influential Points</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec541"><i class="fa fa-check"></i><b>5.4.1</b> Leverage</a></li>
+<li class="chapter" data-level="5.4.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec542"><i class="fa fa-check"></i><b>5.4.2</b> Cook’s Distance</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec55"><i class="fa fa-check"></i><b>5.5</b> Collinearity</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec551"><i class="fa fa-check"></i><b>5.5.1</b> What is Collinearity?</a></li>
+<li class="chapter" data-level="5.5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec552"><i class="fa fa-check"></i><b>5.5.2</b> Variance Inflation Factors</a></li>
+<li class="chapter" data-level="5.5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec553"><i class="fa fa-check"></i><b>5.5.3</b> Collinearity and Leverage</a></li>
+<li class="chapter" data-level="5.5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec554"><i class="fa fa-check"></i><b>5.5.4</b> Suppressor Variables</a></li>
+<li class="chapter" data-level="5.5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec555"><i class="fa fa-check"></i><b>5.5.5</b> Orthogonal Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec56"><i class="fa fa-check"></i><b>5.6</b> Selection Criteria</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec561"><i class="fa fa-check"></i><b>5.6.1</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="5.6.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec562"><i class="fa fa-check"></i><b>5.6.2</b> Model Validation</a></li>
+<li class="chapter" data-level="5.6.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec563"><i class="fa fa-check"></i><b>5.6.3</b> Cross-Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec57"><i class="fa fa-check"></i><b>5.7</b> Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec571"><i class="fa fa-check"></i><b>5.7.1</b> Detecting Heteroscedasticity</a></li>
+<li class="chapter" data-level="5.7.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec572"><i class="fa fa-check"></i><b>5.7.2</b> Heteroscedasticity-Consistent Standard Errors</a></li>
+<li class="chapter" data-level="5.7.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec573"><i class="fa fa-check"></i><b>5.7.3</b> Weighted Least Squares</a></li>
+<li class="chapter" data-level="5.7.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec574"><i class="fa fa-check"></i><b>5.7.4</b> Transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec58"><i class="fa fa-check"></i><b>5.8</b> Further Reading and References</a></li>
+<li class="chapter" data-level="5.9" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec59"><i class="fa fa-check"></i><b>5.9</b> Exercises</a></li>
+<li class="chapter" data-level="5.10" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec510"><i class="fa fa-check"></i><b>5.10</b> Technical Supplements for Chapter 5</a>
+<ul>
+<li class="chapter" data-level="5.10.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5101"><i class="fa fa-check"></i><b>5.10.1</b> Projection Matrix</a></li>
+<li class="chapter" data-level="5.10.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5102"><i class="fa fa-check"></i><b>5.10.2</b> Leave One Out Statistics</a></li>
+<li class="chapter" data-level="5.10.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5103"><i class="fa fa-check"></i><b>5.10.3</b> Omitting Variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html"><i class="fa fa-check"></i><b>6</b> Interpreting Regression Results</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec61"><i class="fa fa-check"></i><b>6.1</b> What the Modeling Process Tells Us</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec611"><i class="fa fa-check"></i><b>6.1.1</b> Interpreting Individual Effects</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec612"><i class="fa fa-check"></i><b>6.1.2</b> Other Interpretations</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec62"><i class="fa fa-check"></i><b>6.2</b> The Importance of Variable Selection</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec621"><i class="fa fa-check"></i><b>6.2.1</b> Overfitting the Model</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec622"><i class="fa fa-check"></i><b>6.2.2</b> Underfitting the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec63"><i class="fa fa-check"></i><b>6.3</b> The Importance of Data Collection</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec631"><i class="fa fa-check"></i><b>6.3.1</b> Sampling Frame Error and Adverse Selection</a></li>
+<li class="chapter" data-level="6.3.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec632"><i class="fa fa-check"></i><b>6.3.2</b> Limited Sampling Regions</a></li>
+<li class="chapter" data-level="6.3.3" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec633"><i class="fa fa-check"></i><b>6.3.3</b> Limited Dependent Variables, Censoring and Truncation</a></li>
+<li class="chapter" data-level="6.3.4" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec634"><i class="fa fa-check"></i><b>6.3.4</b> Omitted and Endogenous Variables</a></li>
+<li class="chapter" data-level="6.3.5" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec635"><i class="fa fa-check"></i><b>6.3.5</b> Missing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec64"><i class="fa fa-check"></i><b>6.4</b> Missing Data Models</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec641"><i class="fa fa-check"></i><b>6.4.1</b> Missing at Random</a></li>
+<li class="chapter" data-level="6.4.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec642"><i class="fa fa-check"></i><b>6.4.2</b> Non-Ignorable Missing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec65"><i class="fa fa-check"></i><b>6.5</b> Application: Risk Managers’ Cost Effectiveness</a></li>
+<li class="chapter" data-level="6.6" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec66"><i class="fa fa-check"></i><b>6.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="6.7" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec67"><i class="fa fa-check"></i><b>6.7</b> Exercises</a></li>
+<li class="chapter" data-level="6.8" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec68"><i class="fa fa-check"></i><b>6.8</b> Technical Supplements for Chapter 6</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec681"><i class="fa fa-check"></i><b>6.8.1</b> Effects of Model Misspecification</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="C7Trends.html"><a href="C7Trends.html"><i class="fa fa-check"></i><b>7</b> Modeling Trends</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="C7Trends.html"><a href="C7Trends.html#introduction-1"><i class="fa fa-check"></i><b>7.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#time-series-and-stochastic-processes"><i class="fa fa-check"></i>Time Series and Stochastic Processes</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#time-series-versus-causal-models"><i class="fa fa-check"></i>Time Series versus Causal Models</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="C7Trends.html"><a href="C7Trends.html#S7:Trends"><i class="fa fa-check"></i><b>7.2</b> Fitting Trends in Time</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#understanding-patterns-over-time"><i class="fa fa-check"></i>Understanding Patterns over Time</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#fitting-trends-in-time"><i class="fa fa-check"></i>Fitting Trends in Time</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#fitting-seasonal-trends"><i class="fa fa-check"></i>Fitting Seasonal Trends</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#reliability-of-time-series-forecasts"><i class="fa fa-check"></i>Reliability of Time Series Forecasts</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="C7Trends.html"><a href="C7Trends.html#S7:RandomWalk"><i class="fa fa-check"></i><b>7.3</b> Stationarity and Random Walk Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#white-noise"><i class="fa fa-check"></i>White Noise</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#random-walk"><i class="fa fa-check"></i>Random Walk</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="C7Trends.html"><a href="C7Trends.html#inference-using-random-walk-models"><i class="fa fa-check"></i><b>7.4</b> Inference using Random Walk Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#model-properties"><i class="fa fa-check"></i>Model Properties</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#forecasting"><i class="fa fa-check"></i>Forecasting</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#identifying-stationarity"><i class="fa fa-check"></i>Identifying Stationarity</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#identifying-random-walks"><i class="fa fa-check"></i>Identifying Random Walks</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#random-walk-versus-linear-trend-in-time-models"><i class="fa fa-check"></i>Random Walk versus Linear Trend in Time Models</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="C7Trends.html"><a href="C7Trends.html#filtering-to-achieve-stationarity"><i class="fa fa-check"></i><b>7.5</b> Filtering to Achieve Stationarity</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#transformations"><i class="fa fa-check"></i>Transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="C7Trends.html"><a href="C7Trends.html#forecast-evaluation"><i class="fa fa-check"></i><b>7.6</b> Forecast Evaluation</a></li>
+<li class="chapter" data-level="7.7" data-path="C7Trends.html"><a href="C7Trends.html#further-reading-and-references"><i class="fa fa-check"></i><b>7.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="7.8" data-path="C7Trends.html"><a href="C7Trends.html#exercises"><i class="fa fa-check"></i><b>7.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="C8AR.html"><a href="C8AR.html"><i class="fa fa-check"></i><b>8</b> Autocorrelations and Autoregressive Models</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="C8AR.html"><a href="C8AR.html#S8:Autocorrs"><i class="fa fa-check"></i><b>8.1</b> Autocorrelations</a>
+<ul>
+<li class="chapter" data-level="" data-path="C8AR.html"><a href="C8AR.html#application-inflation-bond-returns"><i class="fa fa-check"></i>Application: Inflation Bond Returns</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="C8AR.html"><a href="C8AR.html#autoregressive-models-of-order-one"><i class="fa fa-check"></i><b>8.2</b> Autoregressive Models of Order One</a></li>
+<li class="chapter" data-level="8.3" data-path="C8AR.html"><a href="C8AR.html#S8:Estimation"><i class="fa fa-check"></i><b>8.3</b> Estimation and Diagnostic Checking</a></li>
+<li class="chapter" data-level="8.4" data-path="C8AR.html"><a href="C8AR.html#S8:AR1Smooth"><i class="fa fa-check"></i><b>8.4</b> Smoothing and Prediction</a></li>
+<li class="chapter" data-level="8.5" data-path="C8AR.html"><a href="C8AR.html#S8:BoxJenkins"><i class="fa fa-check"></i><b>8.5</b> Box-Jenkins Modeling and Forecasting</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="C8AR.html"><a href="C8AR.html#models"><i class="fa fa-check"></i><b>8.5.1</b> Models</a></li>
+<li class="chapter" data-level="8.5.2" data-path="C8AR.html"><a href="C8AR.html#forecasting-1"><i class="fa fa-check"></i><b>8.5.2</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="C8AR.html"><a href="C8AR.html#application-hong-kong-exchange-rates"><i class="fa fa-check"></i><b>8.6</b> Application: Hong Kong Exchange Rates</a></li>
+<li class="chapter" data-level="8.7" data-path="C8AR.html"><a href="C8AR.html#further-reading-and-references-1"><i class="fa fa-check"></i><b>8.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="8.8" data-path="C8AR.html"><a href="C8AR.html#exercises-1"><i class="fa fa-check"></i><b>8.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="C9Forecast.html"><a href="C9Forecast.html"><i class="fa fa-check"></i><b>9</b> Forecasting and Time Series Models</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="C9Forecast.html"><a href="C9Forecast.html#smoothing-with-moving-averages"><i class="fa fa-check"></i><b>9.1</b> Smoothing with Moving Averages</a></li>
+<li class="chapter" data-level="9.2" data-path="C9Forecast.html"><a href="C9Forecast.html#S9:ExponSmooth"><i class="fa fa-check"></i><b>9.2</b> Exponential Smoothing</a></li>
+<li class="chapter" data-level="9.3" data-path="C9Forecast.html"><a href="C9Forecast.html#S9:SeasonalTSModels"><i class="fa fa-check"></i><b>9.3</b> Seasonal Time Series Models</a></li>
+<li class="chapter" data-level="9.4" data-path="C9Forecast.html"><a href="C9Forecast.html#unit-root-tests"><i class="fa fa-check"></i><b>9.4</b> Unit Root Tests</a></li>
+<li class="chapter" data-level="9.5" data-path="C9Forecast.html"><a href="C9Forecast.html#archgarch-models"><i class="fa fa-check"></i><b>9.5</b> ARCH/GARCH Models</a></li>
+<li class="chapter" data-level="9.6" data-path="C9Forecast.html"><a href="C9Forecast.html#further-reading-and-references-2"><i class="fa fa-check"></i><b>9.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="C10Panel.html"><a href="C10Panel.html"><i class="fa fa-check"></i><b>10</b> Longitudinal and Panel Data Models</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="C10Panel.html"><a href="C10Panel.html#S10:Intro"><i class="fa fa-check"></i><b>10.1</b> What are Longitudinal and Panel Data?</a></li>
+<li class="chapter" data-level="10.2" data-path="C10Panel.html"><a href="C10Panel.html#S10:Visual"><i class="fa fa-check"></i><b>10.2</b> Visualizing Longitudinal and Panel Data</a></li>
+<li class="chapter" data-level="10.3" data-path="C10Panel.html"><a href="C10Panel.html#S10:FEModels"><i class="fa fa-check"></i><b>10.3</b> Basic Fixed Effects Models</a></li>
+<li class="chapter" data-level="10.4" data-path="C10Panel.html"><a href="C10Panel.html#S10:FEModels2"><i class="fa fa-check"></i><b>10.4</b> Extended Fixed Effects Models</a></li>
+<li class="chapter" data-level="10.5" data-path="C10Panel.html"><a href="C10Panel.html#S10:REModels"><i class="fa fa-check"></i><b>10.5</b> Random Effects Models</a></li>
+<li class="chapter" data-level="10.6" data-path="C10Panel.html"><a href="C10Panel.html#S10:References"><i class="fa fa-check"></i><b>10.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="C11Binary.html"><a href="C11Binary.html"><i class="fa fa-check"></i><b>11</b> Categorical Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec111"><i class="fa fa-check"></i><b>11.1</b> Binary Dependent Variables</a></li>
+<li class="chapter" data-level="11.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec112"><i class="fa fa-check"></i><b>11.2</b> Logistic and Probit Regression Models</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1121"><i class="fa fa-check"></i><b>11.2.1</b> Using Nonlinear Functions of Explanatory Variables</a></li>
+<li class="chapter" data-level="11.2.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1122"><i class="fa fa-check"></i><b>11.2.2</b> Threshold Interpretation</a></li>
+<li class="chapter" data-level="11.2.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1123"><i class="fa fa-check"></i><b>11.2.3</b> Random Utility Interpretation</a></li>
+<li class="chapter" data-level="11.2.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1124"><i class="fa fa-check"></i><b>11.2.4</b> Logistic Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec113"><i class="fa fa-check"></i><b>11.3</b> Inference for Logistic and Probit Regression Models</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="C11Binary.html"><a href="C11Binary.html#parameter-estimation"><i class="fa fa-check"></i><b>11.3.1</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="11.3.2" data-path="C11Binary.html"><a href="C11Binary.html#additional-inference"><i class="fa fa-check"></i><b>11.3.2</b> Additional Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec114"><i class="fa fa-check"></i><b>11.4</b> Application: Medical Expenditures</a></li>
+<li class="chapter" data-level="11.5" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec115"><i class="fa fa-check"></i><b>11.5</b> Nominal Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1151"><i class="fa fa-check"></i><b>11.5.1</b> Generalized Logit</a></li>
+<li class="chapter" data-level="11.5.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1152"><i class="fa fa-check"></i><b>11.5.2</b> Multinomial Logit</a></li>
+<li class="chapter" data-level="11.5.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1153"><i class="fa fa-check"></i><b>11.5.3</b> Nested Logit</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec116"><i class="fa fa-check"></i><b>11.6</b> Ordinal Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="C11Binary.html"><a href="C11Binary.html#cumulative-logit"><i class="fa fa-check"></i><b>11.6.1</b> Cumulative Logit</a></li>
+<li class="chapter" data-level="11.6.2" data-path="C11Binary.html"><a href="C11Binary.html#cumulative-probit"><i class="fa fa-check"></i><b>11.6.2</b> Cumulative Probit</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec117"><i class="fa fa-check"></i><b>11.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="11.8" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec118"><i class="fa fa-check"></i><b>11.8</b> Exercises</a></li>
+<li class="chapter" data-level="11.9" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec119"><i class="fa fa-check"></i><b>11.9</b> Technical Supplements - Likelihood-Based Inference</a>
+<ul>
+<li class="chapter" data-level="11.9.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1191"><i class="fa fa-check"></i><b>11.9.1</b> Properties of Likelihood Functions</a></li>
+<li class="chapter" data-level="11.9.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1192"><i class="fa fa-check"></i><b>11.9.2</b> Maximum Likelihood Estimators</a></li>
+<li class="chapter" data-level="11.9.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1193"><i class="fa fa-check"></i><b>11.9.3</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="11.9.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1194"><i class="fa fa-check"></i><b>11.9.4</b> Information Criteria</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="C12Count.html"><a href="C12Count.html"><i class="fa fa-check"></i><b>12</b> Count Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec121"><i class="fa fa-check"></i><b>12.1</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec1211"><i class="fa fa-check"></i><b>12.1.1</b> Poisson Distribution</a></li>
+<li class="chapter" data-level="12.1.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec1212"><i class="fa fa-check"></i><b>12.1.2</b> Regression Model</a></li>
+<li class="chapter" data-level="12.1.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec1213"><i class="fa fa-check"></i><b>12.1.3</b> Estimation</a></li>
+<li class="chapter" data-level="12.1.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec1214"><i class="fa fa-check"></i><b>12.1.4</b> Additional Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec122"><i class="fa fa-check"></i><b>12.2</b> Application: Singapore Automobile Insurance</a></li>
+<li class="chapter" data-level="12.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec123"><i class="fa fa-check"></i><b>12.3</b> Overdispersion and Negative Binomial Models</a></li>
+<li class="chapter" data-level="12.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec124"><i class="fa fa-check"></i><b>12.4</b> Other Count Models</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="C12Count.html"><a href="C12Count.html#zero-inflated-models"><i class="fa fa-check"></i><b>12.4.1</b> Zero-Inflated Models</a></li>
+<li class="chapter" data-level="12.4.2" data-path="C12Count.html"><a href="C12Count.html#hurdle-models"><i class="fa fa-check"></i><b>12.4.2</b> Hurdle Models</a></li>
+<li class="chapter" data-level="12.4.3" data-path="C12Count.html"><a href="C12Count.html#heterogeneity-models"><i class="fa fa-check"></i><b>12.4.3</b> Heterogeneity Models</a></li>
+<li class="chapter" data-level="12.4.4" data-path="C12Count.html"><a href="C12Count.html#latent-class-models"><i class="fa fa-check"></i><b>12.4.4</b> Latent Class Models</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="C12Count.html"><a href="C12Count.html#S:Sec125"><i class="fa fa-check"></i><b>12.5</b> Further Reading and References</a></li>
+<li class="chapter" data-level="12.6" data-path="C12Count.html"><a href="C12Count.html#S:Sec126"><i class="fa fa-check"></i><b>12.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="C13GLM.html"><a href="C13GLM.html"><i class="fa fa-check"></i><b>13</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec131"><i class="fa fa-check"></i><b>13.1</b> Introduction</a></li>
+<li class="chapter" data-level="13.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec132"><i class="fa fa-check"></i><b>13.2</b> GLM Model</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1321"><i class="fa fa-check"></i><b>13.2.1</b> Linear Exponential Family of Distributions</a></li>
+<li class="chapter" data-level="13.2.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1322"><i class="fa fa-check"></i><b>13.2.2</b> Link Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec133"><i class="fa fa-check"></i><b>13.3</b> Estimation</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1331"><i class="fa fa-check"></i><b>13.3.1</b> Maximum Likelihood Estimation for Canonical Links</a></li>
+<li class="chapter" data-level="13.3.2" data-path="C13GLM.html"><a href="C13GLM.html#overdispersion"><i class="fa fa-check"></i><b>13.3.2</b> Overdispersion</a></li>
+<li class="chapter" data-level="13.3.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1333"><i class="fa fa-check"></i><b>13.3.3</b> Goodness of Fit Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec134"><i class="fa fa-check"></i><b>13.4</b> Application: Medical Expenditures</a></li>
+<li class="chapter" data-level="13.5" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec135"><i class="fa fa-check"></i><b>13.5</b> Residuals</a></li>
+<li class="chapter" data-level="13.6" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec136"><i class="fa fa-check"></i><b>13.6</b> Tweedie Distribution</a></li>
+<li class="chapter" data-level="13.7" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec137"><i class="fa fa-check"></i><b>13.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="13.8" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec138"><i class="fa fa-check"></i><b>13.8</b> Exercises</a></li>
+<li class="chapter" data-level="13.9" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec139"><i class="fa fa-check"></i><b>13.9</b> Technical Supplements - Exponential Family</a>
+<ul>
+<li class="chapter" data-level="13.9.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1391"><i class="fa fa-check"></i><b>13.9.1</b> Linear Exponential Family of Distributions</a></li>
+<li class="chapter" data-level="13.9.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1392"><i class="fa fa-check"></i><b>13.9.2</b> Moments</a></li>
+<li class="chapter" data-level="13.9.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1393"><i class="fa fa-check"></i><b>13.9.3</b> Maximum Likelihood Estimation for General Links</a></li>
+<li class="chapter" data-level="13.9.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1394"><i class="fa fa-check"></i><b>13.9.4</b> Iterated Reweighted Least Squares</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="C14Survival.html"><a href="C14Survival.html"><i class="fa fa-check"></i><b>14</b> Survival Models</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="C14Survival.html"><a href="C14Survival.html#introduction-2"><i class="fa fa-check"></i><b>14.1</b> Introduction</a></li>
+<li class="chapter" data-level="14.2" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec142"><i class="fa fa-check"></i><b>14.2</b> Censoring and Truncation</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="C14Survival.html"><a href="C14Survival.html#definitions-and-examples"><i class="fa fa-check"></i><b>14.2.1</b> Definitions and Examples</a></li>
+<li class="chapter" data-level="14.2.2" data-path="C14Survival.html"><a href="C14Survival.html#likelihood-inference"><i class="fa fa-check"></i><b>14.2.2</b> Likelihood Inference</a></li>
+<li class="chapter" data-level="14.2.3" data-path="C14Survival.html"><a href="C14Survival.html#product-limit-estimator"><i class="fa fa-check"></i><b>14.2.3</b> Product-Limit Estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec143"><i class="fa fa-check"></i><b>14.3</b> Accelerated Failure Time Model</a></li>
+<li class="chapter" data-level="14.4" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec144"><i class="fa fa-check"></i><b>14.4</b> Proportional Hazards Model</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec1441"><i class="fa fa-check"></i><b>14.4.1</b> Proportional Hazards</a></li>
+<li class="chapter" data-level="14.4.2" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec1442"><i class="fa fa-check"></i><b>14.4.2</b> Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec145"><i class="fa fa-check"></i><b>14.5</b> Recurrent Events</a></li>
+<li class="chapter" data-level="14.6" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec146"><i class="fa fa-check"></i><b>14.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="C15Misc.html"><a href="C15Misc.html"><i class="fa fa-check"></i><b>15</b> Miscellaneous Regression Topics</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec151"><i class="fa fa-check"></i><b>15.1</b> Mixed Linear Models</a>
+<ul>
+<li class="chapter" data-level="15.1.1" data-path="C15Misc.html"><a href="C15Misc.html#weighted-least-squares-2"><i class="fa fa-check"></i><b>15.1.1</b> Weighted Least Squares</a></li>
+<li class="chapter" data-level="15.1.2" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec1512"><i class="fa fa-check"></i><b>15.1.2</b> Variance Components Estimation</a></li>
+<li class="chapter" data-level="15.1.3" data-path="C15Misc.html"><a href="C15Misc.html#best-linear-unbiased-prediction"><i class="fa fa-check"></i><b>15.1.3</b> Best Linear Unbiased Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="C15Misc.html"><a href="C15Misc.html#bayesian-regression"><i class="fa fa-check"></i><b>15.2</b> Bayesian Regression</a></li>
+<li class="chapter" data-level="15.3" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec153"><i class="fa fa-check"></i><b>15.3</b> Density Estimation and Scatterplot Smoothing}</a></li>
+<li class="chapter" data-level="15.4" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec154"><i class="fa fa-check"></i><b>15.4</b> Generalized Additive Models</a></li>
+<li class="chapter" data-level="15.5" data-path="C15Misc.html"><a href="C15Misc.html#bootstrapping"><i class="fa fa-check"></i><b>15.5</b> Bootstrapping</a></li>
+<li class="chapter" data-level="15.6" data-path="C15Misc.html"><a href="C15Misc.html#further-reading-and-references-3"><i class="fa fa-check"></i><b>15.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="C16FreqSev.html"><a href="C16FreqSev.html"><i class="fa fa-check"></i><b>16</b> Frequency-Severity Models</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec161"><i class="fa fa-check"></i><b>16.1</b> Introduction</a></li>
+<li class="chapter" data-level="16.2" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec162"><i class="fa fa-check"></i><b>16.2</b> Tobit Model</a></li>
+<li class="chapter" data-level="16.3" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec163"><i class="fa fa-check"></i><b>16.3</b> Application: Medical Expenditures</a></li>
+<li class="chapter" data-level="16.4" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec164"><i class="fa fa-check"></i><b>16.4</b> Two-Part Model</a></li>
+<li class="chapter" data-level="16.5" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec165"><i class="fa fa-check"></i><b>16.5</b> Aggregate Loss Model</a></li>
+<li class="chapter" data-level="16.6" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec166"><i class="fa fa-check"></i><b>16.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="16.7" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec167"><i class="fa fa-check"></i><b>16.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="C17Fat.html"><a href="C17Fat.html"><i class="fa fa-check"></i><b>17</b> Fat-Tailed Regression Models</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="C17Fat.html"><a href="C17Fat.html#introduction-3"><i class="fa fa-check"></i><b>17.1</b> Introduction</a></li>
+<li class="chapter" data-level="17.2" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec172"><i class="fa fa-check"></i><b>17.2</b> Transformations</a></li>
+<li class="chapter" data-level="17.3" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec173"><i class="fa fa-check"></i><b>17.3</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec1731"><i class="fa fa-check"></i><b>17.3.1</b> What is “Fat-Tailed?”</a></li>
+<li class="chapter" data-level="17.3.2" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec1732"><i class="fa fa-check"></i><b>17.3.2</b> Application: Wisconsin Nursing Homes</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec174"><i class="fa fa-check"></i><b>17.4</b> Generalized Distributions</a>
+<ul>
+<li class="chapter" data-level="" data-path="C17Fat.html"><a href="C17Fat.html#applicationwisconsin-nursing-homes"><i class="fa fa-check"></i>Application:Wisconsin Nursing Homes</a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec175"><i class="fa fa-check"></i><b>17.5</b> Quantile Regression</a></li>
+<li class="chapter" data-level="17.6" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec176"><i class="fa fa-check"></i><b>17.6</b> Extreme Value Models</a></li>
+<li class="chapter" data-level="17.7" data-path="C17Fat.html"><a href="C17Fat.html#further-reading-and-references-4"><i class="fa fa-check"></i><b>17.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="17.8" data-path="C17Fat.html"><a href="C17Fat.html#exercises-2"><i class="fa fa-check"></i><b>17.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="C18Cred.html"><a href="C18Cred.html"><i class="fa fa-check"></i><b>18</b> Credibility and Bonus-Malus</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="C18Cred.html"><a href="C18Cred.html#risk-classification-and-experience-rating"><i class="fa fa-check"></i><b>18.1</b> Risk Classification and Experience Rating</a></li>
+<li class="chapter" data-level="18.2" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec182"><i class="fa fa-check"></i><b>18.2</b> Credibility</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec1821"><i class="fa fa-check"></i><b>18.2.1</b> Limited Fluctuation Credibility</a></li>
+<li class="chapter" data-level="18.2.2" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec1822"><i class="fa fa-check"></i><b>18.2.2</b> Greatest Accuracy Credibility</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec183"><i class="fa fa-check"></i><b>18.3</b> Credibility and Regression</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="C18Cred.html"><a href="C18Cred.html#one-way-random-effects-model"><i class="fa fa-check"></i><b>18.3.1</b> One-Way Random Effects Model</a></li>
+<li class="chapter" data-level="18.3.2" data-path="C18Cred.html"><a href="C18Cred.html#longitudinal-models"><i class="fa fa-check"></i><b>18.3.2</b> Longitudinal Models</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec184"><i class="fa fa-check"></i><b>18.4</b> Bonus-Malus</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="C19Triangles.html"><a href="C19Triangles.html"><i class="fa fa-check"></i><b>19</b> Claims Triangles</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="C19Triangles.html"><a href="C19Triangles.html#introduction-4"><i class="fa fa-check"></i><b>19.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="19.1.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1911"><i class="fa fa-check"></i><b>19.1.1</b> Claims Evolution</a></li>
+<li class="chapter" data-level="19.1.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1912"><i class="fa fa-check"></i><b>19.1.2</b> Claims Triangles</a></li>
+<li class="chapter" data-level="19.1.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1913"><i class="fa fa-check"></i><b>19.1.3</b> Chain Ladder Method</a></li>
+</ul></li>
+<li class="chapter" data-level="19.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec192"><i class="fa fa-check"></i><b>19.2</b> Regression Using Functions of Time as Explanatory Variables</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1921"><i class="fa fa-check"></i><b>19.2.1</b> Lognormal Model</a></li>
+<li class="chapter" data-level="19.2.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1922"><i class="fa fa-check"></i><b>19.2.2</b> Hoerl Curve</a></li>
+<li class="chapter" data-level="19.2.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1923"><i class="fa fa-check"></i><b>19.2.3</b> Poisson Models</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec193"><i class="fa fa-check"></i><b>19.3</b> Using Past Developments</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1931"><i class="fa fa-check"></i><b>19.3.1</b> Mack Model</a></li>
+<li class="chapter" data-level="19.3.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1932"><i class="fa fa-check"></i><b>19.3.2</b> Distributional Models</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="C19Triangles.html"><a href="C19Triangles.html#further-reading-and-references-5"><i class="fa fa-check"></i><b>19.4</b> Further Reading and References</a></li>
+<li class="chapter" data-level="19.5" data-path="C19Triangles.html"><a href="C19Triangles.html#exercises-3"><i class="fa fa-check"></i><b>19.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="C20Report.html"><a href="C20Report.html"><i class="fa fa-check"></i><b>20</b> Report Writing: Communicating Data Analysis Results</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="C20Report.html"><a href="C20Report.html#S20:Overview"><i class="fa fa-check"></i><b>20.1</b> Overview</a></li>
+<li class="chapter" data-level="20.2" data-path="C20Report.html"><a href="C20Report.html#S20:Methods"><i class="fa fa-check"></i><b>20.2</b> Methods for Communicating Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#within-text-data"><i class="fa fa-check"></i>Within Text Data</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#graphs"><i class="fa fa-check"></i>Graphs</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="C20Report.html"><a href="C20Report.html#S20:Organize"><i class="fa fa-check"></i><b>20.3</b> How to Organize</a>
+<ul>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#title-and-abstract"><i class="fa fa-check"></i>Title and Abstract</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#introduction-5"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#model-selection-and-interpretation"><i class="fa fa-check"></i>Model Selection and Interpretation</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#references-and-appendix"><i class="fa fa-check"></i>References and Appendix</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="C20Report.html"><a href="C20Report.html#further-suggestions-for-report-writing"><i class="fa fa-check"></i><b>20.4</b> Further Suggestions for Report Writing</a></li>
+<li class="chapter" data-level="20.5" data-path="C20Report.html"><a href="C20Report.html#case-study-swedish-automobile-claims"><i class="fa fa-check"></i><b>20.5</b> Case Study: Swedish Automobile Claims</a></li>
+<li class="chapter" data-level="20.6" data-path="C20Report.html"><a href="C20Report.html#further-reading-and-references-6"><i class="fa fa-check"></i><b>20.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="20.7" data-path="C20Report.html"><a href="C20Report.html#exercises-4"><i class="fa fa-check"></i><b>20.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="C21Design.html"><a href="C21Design.html"><i class="fa fa-check"></i><b>21</b> Designing Effective Graphs</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="C21Design.html"><a href="C21Design.html#S21:Intro"><i class="fa fa-check"></i><b>21.1</b> Introduction</a></li>
+<li class="chapter" data-level="21.2" data-path="C21Design.html"><a href="C21Design.html#S21:GDesign"><i class="fa fa-check"></i><b>21.2</b> Graphic Design Choices Make a Difference</a></li>
+<li class="chapter" data-level="21.3" data-path="C21Design.html"><a href="C21Design.html#S21:DesignGuide"><i class="fa fa-check"></i><b>21.3</b> Design Guidelines</a>
+<ul>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-one-avoid-chartjunk"><i class="fa fa-check"></i>Guideline One: Avoid Chartjunk</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-two-use-small-multiples-to-promote-comparisons-and-assess-change"><i class="fa fa-check"></i>Guideline Two: Use Small Multiples to Promote Comparisons and Assess Change</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-three-use-complex-graphs-to-portray-complex-patterns"><i class="fa fa-check"></i>Guideline Three: Use Complex Graphs to Portray Complex Patterns</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-four-relate-graph-size-to-information-content"><i class="fa fa-check"></i>Guideline Four: Relate Graph Size to Information Content</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-five-use-graphical-forms-that-promote-comparisons"><i class="fa fa-check"></i>Guideline Five: Use Graphical Forms That Promote Comparisons</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-six-integrate-graphs-and-text"><i class="fa fa-check"></i>Guideline Six: Integrate Graphs and Text</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-seven-demonstrate-an-important-message"><i class="fa fa-check"></i>Guideline Seven: Demonstrate an Important Message</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-eight-know-your-audience"><i class="fa fa-check"></i>Guideline Eight: Know Your Audience</a></li>
+</ul></li>
+<li class="chapter" data-level="21.4" data-path="C21Design.html"><a href="C21Design.html#S21:EmpiricalFoundations"><i class="fa fa-check"></i><b>21.4</b> Empirical Foundations For Guidelines</a>
+<ul>
+<li class="chapter" data-level="21.4.1" data-path="C21Design.html"><a href="C21Design.html#graphs-as-units-of-study"><i class="fa fa-check"></i><b>21.4.1</b> Graphs as Units of Study</a></li>
+</ul></li>
+<li class="chapter" data-level="21.5" data-path="C21Design.html"><a href="C21Design.html#S21:Conclude"><i class="fa fa-check"></i><b>21.5</b> Concluding Remarks</a></li>
+<li class="chapter" data-level="21.6" data-path="C21Design.html"><a href="C21Design.html#S21:References"><i class="fa fa-check"></i><b>21.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="appendices.html"><a href="appendices.html"><i class="fa fa-check"></i><b>22</b> Appendices</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#appendix-a1.-basic-statistical-inference"><i class="fa fa-check"></i>Appendix A1. Basic Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#distributions-of-functions-of-random-variables"><i class="fa fa-check"></i>Distributions of Functions of Random Variables</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#estimation-and-prediction"><i class="fa fa-check"></i>Estimation and Prediction</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#testing-hypotheses"><i class="fa fa-check"></i>Testing Hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#appendix-a2.-matrix-algebra"><i class="fa fa-check"></i>Appendix A2. Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#basic-definitions"><i class="fa fa-check"></i>Basic Definitions</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#review-of-basic-operations"><i class="fa fa-check"></i>Review of Basic Operations</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#further-definitions"><i class="fa fa-check"></i>Further Definitions</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#appendix-a3.-probability-tables"><i class="fa fa-check"></i>Appendix A3. Probability Tables</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#normal-distribution"><i class="fa fa-check"></i>Normal Distribution</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#chi-square-distribution"><i class="fa fa-check"></i>Chi-Square Distribution</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#t-distribution"><i class="fa fa-check"></i><em>t</em>-Distribution</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#f-distribution"><i class="fa fa-check"></i><em>F</em>-Distribution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="brief-answers-to-selected-exercises.html"><a href="brief-answers-to-selected-exercises.html"><i class="fa fa-check"></i>Brief Answers to Selected Exercises</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Regression Modeling with Actuarial and Financial Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="C18Cred" class="section level1 hasAnchor" number="18">
+<h1><span class="header-section-number">Chapter 18</span> Credibility and Bonus-Malus<a href="C18Cred.html#C18Cred" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><em>Chapter Preview</em>. This chapter introduces regression
+applications of pricing in credibility and bonus-malus experience
+rating systems. Experience rating systems are formal methods for
+including claims experience into renewal premiums of short-term
+contracts, such automobile, health and workers compensation. This
+chapter provides brief introductions to credibility and bonus-malus,
+emphasizing their relationship with regression methods.</p>
+<div id="risk-classification-and-experience-rating" class="section level2 hasAnchor" number="18.1">
+<h2><span class="header-section-number">18.1</span> Risk Classification and Experience Rating<a href="C18Cred.html#risk-classification-and-experience-rating" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Risk classification is a key ingredient of insurance pricing.
+Insurers sell coverage at prices that are sufficient to cover
+anticipated claims, administrative expenses and an expected profit
+to compensate for the cost of capital necessary to support the sale
+of the coverage. In many countries and lines of business, the
+insurance market is mature and highly competitive. This strong
+competition induces insurers to classify risks they underwrite in
+order to receive fair premiums for the risk undertaken. This
+classification is based on <em>known</em> characteristics of the
+insured, the person or firm seeking the insurance coverage.</p>
+<p>For example, suppose that you are working for a company that insures
+small businesses for time lost due to employees injured on the job.
+Consider pricing this insurance product for two businesses that are
+identical with respect to number of employees, location, age and
+gender distribution and so forth, except that one company is a
+management consulting firm and the other is a construction firm.
+Based on experience, you expect the management consulting firm to
+have a lower claims level than the construction firm and you need to
+price accordingly. If you do not, another insurance company will
+offer a lower insurance price to the consulting firm and take this
+potential customer away, leaving your company with only the more
+costly construction firm business.</p>
+<p>Competition among insurers leads to charging premiums according to
+observable characteristics, known as <em>risk classification</em>.
+In the context of regression modeling, we can think of this as
+modeling the claims distributions in terms of explanatory variables.</p>
+<p>Many pricing situations are based on a relationship between the
+insurer and the insured that develops over time. These relationships
+allow insurers to base prices on <em>unobservable</em> characteristics
+of the insured by taking into account the prior claims experience of
+the insured. Modifying premiums with claims history is known as
+<em>experience rating</em>, also sometimes referred to as
+<em>merit rating</em>.</p>
+<p>Experience rating methods are either applied retrospectively or
+prospectively. With retrospective methods, a “refund” of a portion
+of the premium is provided to the insured in the event of favorable
+(to the insurer) experience. Retrospective premiums are common in
+life insurance arrangements (where insureds earned “dividends” in
+the U.S. and “bonuses” in the U.K.). In property and casualty
+insurance prospective methods are more common, where favorable
+insured experience is “rewarded” through a lower renewal premium.</p>
+<p>In this chapter, we discuss two prospective methods that are
+well-suited for regression modeling, credibility and bonus-malus.
+Bonus-malus methods are used extensively in Asia and Europe,
+although almost exclusively with automobile insurance. As we will
+see in Section <a href="C18Cred.html#S:Sec184">18.4</a>, the idea is to use claims
+experience to modify the classification of an insured. Credibility
+methods, introduced in Section <a href="C18Cred.html#S:Sec182">18.2</a>, are more broadly
+applied in terms of lines of business and geography.</p>
+</div>
+<div id="S:Sec182" class="section level2 hasAnchor" number="18.2">
+<h2><span class="header-section-number">18.2</span> Credibility<a href="C18Cred.html#S:Sec182" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Credibility is a technique for pricing insurance coverages that is
+widely used by health, group term life and property and casualty
+actuaries. In the United States, the standards are described under
+the Actuarial Standard of Practice Number 25 published by the
+Actuarial Standards Board of the American Academy of Actuaries (web
+site: <a href="http://www.actuary.org/" class="uri">http://www.actuary.org/</a>). Further, several insurance laws and
+regulation require the use of credibility.</p>
+<p>The theory of credibility has been called a “cornerstone” of the
+field of actuarial science (Hickman and Heacox, 1999). The basic
+idea is to use claims experience and additional information to
+develop a pricing formula, such as through the relation
+<span class="math display" id="eq:eq181">\[\begin{equation}
+New~Premium =  \zeta \times Claims~Experience + (1 - \zeta)  \times
+Old~Premium.
+\tag{18.1}
+\end{equation}\]</span>
+Here, <span class="math inline">\(\zeta\)</span> (the Greek letter “zeta”) is known as the
+“credibility factor;” values generally lie between zero and one.
+The case <span class="math inline">\(\zeta=1\)</span> is known as “full credibility,” where claims
+experience is used solely to determine the premium. The case
+<span class="math inline">\(\zeta=0\)</span> can be thought of as “no credibility,” where claims
+experience is ignored and external information is used as the sole
+basis for pricing.</p>
+<p>To keep this chapter self-contained, we begin by introducing some
+basic credibility concepts. Section <a href="C18Cred.html#S:Sec1821">18.2.1</a> reviews
+classic concepts of credibility, including when to use it and linear
+pricing formulas. Section <a href="C18Cred.html#S:Sec1822">18.2.2</a> describes the
+modern version of credibility by introducing a formal probabilistic
+model that can be used for updating insurance prices. Section
+<a href="C18Cred.html#S:Sec183">18.3</a> discusses the link with regression
+modeling.</p>
+<div id="S:Sec1821" class="section level3 hasAnchor" number="18.2.1">
+<h3><span class="header-section-number">18.2.1</span> Limited Fluctuation Credibility<a href="C18Cred.html#S:Sec1821" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Credibility has a long history in actuarial science, with
+fundamental contributions dating back to Mowbray (1914).
+Subsequently, Whitney (1918) introduced the intuitively appealing
+concept of using a weighted average of (1) claims from the risk
+class and (2) claims over all risk classes to predict future
+expected claims.</p>
+<div id="standards-for-full-credibility" class="section level4 unnumbered hasAnchor">
+<h4>Standards for Full Credibility<a href="C18Cred.html#standards-for-full-credibility" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The title of Mowbray’s paper was “How extensive a payroll exposure
+is necessary to give a dependable pure premium?” It is still the
+first question that an analyst needs to confront: when do I need to
+use credibility estimators? To get a better handle on this question,
+consider the following situation.</p>
+<hr />
+<p><strong>Example: Dental Costs.</strong> Suppose that you are pricing dental
+insurance coverage for a small employer. For males aged 18-25, the
+employer provides the following experience:</p>
+<p><span class="math display">\[
+\small{
+\begin{array}{l|rrr}
+  \hline
+  \text{Year} &amp; 2007 &amp; 2008 &amp; 2009 \\ \hline
+  \text{Number} &amp; 8 &amp; 12 &amp; 10 \\
+  \text{Average Dental Cost}  &amp; 500 &amp; 400 &amp; 900 \\
+  \hline
+\end{array}
+}
+\]</span></p>
+<p>The “manual rate,” available from a tabulation of a much
+larger set of data, is $700 per employee. Ignoring inflation and
+expenses, what would you use to anticipate dental costs in 2010? The
+manual rate? The average of the available data? Or some combination?</p>
+<hr />
+<p>Mowbray wanted to distinguish between situations when (1) large
+employers with substantial information could use their own
+experience and (2) small employers with limited experience would use
+external sources, so-called “manual rates.” In statistical
+terminology, we can think about forming an estimator from an
+employer’s experience of the true mean costs. We are asking whether
+the distribution of the estimator is sufficiently close to the mean
+to be reliable. Of course, “sufficiently close” is the tricky
+part, so let us look at a more concrete situation.</p>
+<p>The simplest set-up is to assume that you have claims <span class="math inline">\(y_1, \ldots, y_n\)</span> that are identically and independently distributed (i.i.d.)
+with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. As a standard for full
+credibility, we could require that <span class="math inline">\(n\)</span> be large enough so that</p>
+<p><span class="math display" id="eq:eq182">\[\begin{equation}
+\Pr ( (1-r) \mu \leq \bar{y} \leq (1+r) \mu) \geq p,
+\tag{18.2}
+\end{equation}\]</span>
+where <span class="math inline">\(r\)</span> and <span class="math inline">\(p\)</span> are given constants. For example, if <span class="math inline">\(r=0.05\)</span> and
+<span class="math inline">\(p=0.9\)</span>, then we wish to have at least 90% chance of being within
+5% of the mean.</p>
+<p>Using normal approximations, it is straight-forward to show that
+sufficient for equation <a href="C18Cred.html#eq:eq182">(18.2)</a> is</p>
+<p><span class="math display" id="eq:eq183">\[\begin{equation}
+n \geq \left(\frac{\Phi^{-1}(\frac{p+1}{2}) \sigma}{r \mu} \right)^2
+.
+\tag{18.3}
+\end{equation}\]</span>
+We define <span class="math inline">\(n_F\)</span>, the number of observations required for full
+credibility, to be the smallest value of <span class="math inline">\(n\)</span> that satisfies equation
+<a href="C18Cred.html#eq:eq183">(18.3)</a>.</p>
+<hr />
+<p><strong>Example: Dental Costs - Continued.</strong> From the table, average
+costs are <span class="math inline">\(\bar{y} = \left( 500 \times 8 + 400 \times 12 + 900 \times 10 \right)/30 = 593.33.\)</span> Suppose that we have available an
+estimate of the standard deviation <span class="math inline">\(\sigma \approx \widehat{\sigma}= 200.\)</span> Using <span class="math inline">\(p=0.90\)</span>, the 90th percentile of the normal distribution
+is <span class="math inline">\(\Phi^{-1}(.95) = 1.645\)</span>. With <span class="math inline">\(r=0.05\)</span>, the approximate sample
+size required is
+<span class="math display">\[
+\left(\frac{\Phi^{-1}(.95) \widehat{\sigma}}{r \bar{y}} \right)^2 =
+  \left(\frac{1.645 \times 200}{0.05 \times 593.33} \right)^2=
+  122.99,
+\]</span>
+or <span class="math inline">\(n_F=123\)</span>. Based on a sample of size 30, we do not have enough
+observations for full credibility.</p>
+<hr />
+<p>The standards for full credibility given in equations <a href="C18Cred.html#eq:eq182">(18.2)</a> and <a href="C18Cred.html#eq:eq183">(18.3)</a> are based on
+approximate normality. It is easy to construct similar rules for
+other distributions such as binomial and Poisson count data or
+mixtures of distributions for aggregate losses. See Klugman, Panjer
+and Willmot (2008) for more details.</p>
+</div>
+<div id="partial-credibility" class="section level4 unnumbered hasAnchor">
+<h4>Partial Credibility<a href="C18Cred.html#partial-credibility" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Actuaries do not always work with massive data sets. You may be
+working with the experience from a small employer or association and
+not have sufficient experience to meet the full credibility
+standard. Or, you may be working with a large employer but have
+decided to decompose your data into small, homogeneous subsets. For
+example, if you are working with dental claims, you may wish to
+create several small groups based on age and gender.</p>
+<p>For smaller groups that do not meet the full credibility threshold,
+Witney (1918) proposed using a weighted average of the group’s
+claims experience and a manual rate. Assuming approximate normality,
+the expression for partial credibility is
+<span class="math display" id="eq:eq184">\[\begin{equation}
+New~Premium =  Z \times \bar{y} + (1 - Z)  \times Manual~Premium,
+\tag{18.4}
+\end{equation}\]</span>
+where <span class="math inline">\(Z\)</span> is the “credibility factor,” defined as
+<span class="math display" id="eq:eq185">\[\begin{equation}
+Z = \min\{1,\sqrt{\frac{n}{n_F}} \}.
+\tag{18.5}
+\end{equation}\]</span>
+Here, <span class="math inline">\(n\)</span> is the sample size and <span class="math inline">\(n_F\)</span> is the number of observations
+required for full credibility.</p>
+<hr />
+<p><strong>Example: Dental Costs - Continued.</strong> From prior work, the
+standard for full credibility is <span class="math inline">\(n_F = 123\)</span>. Thus, the credibility
+factor is <span class="math inline">\(\min\{1,\sqrt{\frac{30}{123}} \} = 0.494.\)</span> With this, the
+partial credibility premium is
+<span class="math display">\[
+New~Premium =  0.494 \times 593.33 + (1 - 0.494)  \times 700 =
+647.31.
+\]</span></p>
+<hr />
+<p>One line of justification for the partial credibility formulas in
+equations <a href="C18Cred.html#eq:eq184">(18.4)</a> and <a href="C18Cred.html#eq:eq185">(18.5)</a> is given
+in the exercises. From equation <a href="C18Cred.html#eq:eq185">(18.5)</a>, we see
+that the credibility factor <span class="math inline">\(Z\)</span> is bounded by 0 and 1; as the sample
+size <span class="math inline">\(n\)</span> and hence the experience becomes larger, <span class="math inline">\(Z\)</span> tends to 1.
+This means that larger groups are more “credible.” As the
+credibility factor <span class="math inline">\(Z\)</span> increases, a greater weight is placed upon
+the group’s experience (<span class="math inline">\(\bar{y}\)</span>). As <span class="math inline">\(Z\)</span> decreases, more weight is
+placed upon the manual premium, the rate that is developed
+externally based on the group’s characteristics.</p>
+</div>
+</div>
+<div id="S:Sec1822" class="section level3 hasAnchor" number="18.2.2">
+<h3><span class="header-section-number">18.2.2</span> Greatest Accuracy Credibility<a href="C18Cred.html#S:Sec1822" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Credibility theory was used for over fifty years in insurance
+pricing before it was placed on a firm mathematical foundation by
+Bühlmann (1967). To introduce this framework, sometimes known as
+“greatest accuracy credibility,” let us begin with the assumption
+that we have a sample of claims <span class="math inline">\(y_1, \ldots, y_n\)</span> from a small
+group and that we wish to estimate the mean for this group. Although
+the sample average <span class="math inline">\(\bar{y}\)</span> is certainly a sensible estimator, the
+sample size may be too small to rely exclusively on <span class="math inline">\(\bar{y}\)</span>. We
+also suppose that have an external estimate of overall mean claims,
+<span class="math inline">\(M\)</span>, that we think of as a “manual premium.” The question is
+whether we can combine the two estimates, <span class="math inline">\(\bar{y}\)</span> and <span class="math inline">\(M\)</span>, to
+provide an estimator that is superior to either alternative.</p>
+<p>Bühlmann hypothesized the existence of unobserved
+characteristics of the group that we denote as <span class="math inline">\(\alpha\)</span>; he referred
+to these as “structure variables.” Although unobserved, these
+characteristics are common to all observations from the group. For
+dental claims, the structure variables may include the water quality
+where the group is located, the number of dentists to provide
+preventative care in the area, the educational level of the group,
+and so forth. Thus, we assume, conditional on <span class="math inline">\(\alpha\)</span>, that <span class="math inline">\(\{y_1, \ldots, y_n\}\)</span> are a random sample from an unknown population and
+hence are i.i.d. For notation, we will let <span class="math inline">\(\mathrm{E}(y | \alpha)\)</span>
+denote the conditional expected claims and <span class="math inline">\(\mathrm{Var}(y | \alpha)\)</span> to be the corresponding conditional variance. Our goal is
+to determine a sensible “estimator” of <span class="math inline">\(\mathrm{E}(y | \alpha)\)</span>.</p>
+<p>Although unobserved, we can learn something about the
+characteristics <span class="math inline">\(\alpha\)</span> from repeated observations of claims. For
+each group, the (conditional) mean and variance functions are
+<span class="math inline">\(\mathrm{E}(y | \alpha)\)</span> and <span class="math inline">\(\mathrm{Var}(y | \alpha)\)</span>,
+respectively. The expectation over all groups of the variance
+functions is E <span class="math inline">\(\mathrm{Var}(y | \alpha)\)</span>. Similarly, the variance
+of conditional expectations is Var <span class="math inline">\(\mathrm{E}(y | \alpha)\)</span>.</p>
+<p>With these quantities in hand, we are able to give Bühlmann’s
+credibility premium.
+<span class="math display" id="eq:eq186">\[\begin{equation}
+New~Premium =  \zeta \times \bar{y} + (1 - \zeta)  \times M,
+\tag{18.6}
+\end{equation}\]</span>
+where <span class="math inline">\(\zeta\)</span> is the “credibility factor,” defined as
+<span class="math display" id="eq:eq187">\[\begin{equation}
+\zeta = \frac{n}{n+Ratio}, ~\mathrm{with}~~~~~~~~Ratio =
+\frac{\mathrm{E~}\mathrm{Var}(y | \alpha)}{\mathrm{Var}~\mathrm{E}(y
+| \alpha)}.
+\tag{18.7}
+\end{equation}\]</span>
+The credibility formula in equation <a href="C18Cred.html#eq:eq186">(18.6)</a> is the
+same as the classic partial credibility formula in equation
+<a href="C18Cred.html#eq:eq184">(18.4)</a>, with the credibility factor <span class="math inline">\(\zeta\)</span> in place of
+<span class="math inline">\(Z\)</span>. Thus, it shares the same intuitively pleasing expression as a
+weighted average. Further, both credibility factors lie in the
+interval <span class="math inline">\((0,1)\)</span> and both increase to one as the sample size <span class="math inline">\(n\)</span>
+increases.</p>
+<hr />
+<p><strong>Example: Dental Costs - Continued.</strong> From prior work, we have
+that an estimate of the conditional mean is 593.33. Use similar
+calculations to show that the estimated conditional variance is
+48,622.22.</p>
+<p>Now assume that there are three additional groups with conditional
+means and variances given as follows:</p>
+<p><span class="math display">\[
+\small{
+\begin{array}{c|cccc}
+  \hline
+        &amp;            &amp; \text{Conditional}   &amp; \text{Conditional }      \\
+        &amp; \text{Unobserved} &amp;         \text{Mean } &amp;  \text{Variance}         &amp;  \text{Probability} \\
+  \text{Group}&amp; \text{Variable}   &amp; \text{E} (y|\alpha)&amp;  \text{Var} (y|\alpha) &amp;  \Pr(\alpha) \\
+    \hline
+1 &amp; \alpha_1 &amp; 593.33 &amp; 48,622.22 &amp; 0.20 \\
+2  &amp; \alpha_2&amp; 625.00 &amp; 50,000.00 &amp; 0.30 \\
+3  &amp; \alpha_3&amp; 800.00 &amp; 70,000.00 &amp; 0.25 \\
+4  &amp; \alpha_4&amp; 400.00 &amp; 40,000.00 &amp; 0.25 \\
+  \hline
+\end{array}
+}
+\]</span>
+We assume that probability of being a member of a group is given as
+<span class="math inline">\(\Pr(\alpha)\)</span>. For example, this may be determined by taking
+proportions of the number of members in each group.</p>
+<p>With this information, it is straight-forward to calculate the
+expected conditional variance,
+<span class="math display">\[
+\mathrm{E~}\mathrm{Var}(y | \alpha) = 0.2(48622.22) + 0.3(50000) +
+.25(70000) + .25(40000) = 52,224.44 .
+\]</span></p>
+<p>To calculate the variance of conditional expectations, one can begin
+with the overall expectation
+<span class="math display">\[
+\mathrm{E~}\mathrm{E}(y | \alpha) = 0.2(593.33) + 0.3(625) +
+.25(800) + .25(400) = 606.166,
+\]</span>
+and then use a similar procedure to calculate the expected value of
+the conditional second moment, <span class="math inline">\(\mathrm{E~}(\mathrm{E}(y | \alpha))^2 = 387,595.6\)</span>. With these two pieces, the variance of
+conditional expectations is <span class="math inline">\(\mathrm{E~}\mathrm{Var}(y | \alpha)\)</span> <span class="math inline">\(= 387,595.6- 606.166^2 = 20,158.\)</span></p>
+<p>This yields the <span class="math inline">\(Ratio=52224.44/20158 = 2.591\)</span> and thus the
+credibility factor <span class="math inline">\(\zeta = \frac{30}{30+2.591} = 0.9205\)</span>. With
+this, the credibility premium is
+<span class="math display">\[
+New~Premium =  0.9205 \times 593.33 + (1 - 0.9205)  \times 700 =
+601.81.
+\]</span></p>
+<hr />
+<p>To see how to use the credibility formula using alternative
+distributions, consider the following.</p>
+<hr />
+<p><strong>Example: Credibility with Count Data.</strong> Suppose that the
+number of claims each year for an individual insured has a Poisson
+distribution. The expected annual claim frequency of the entire
+population of insureds is uniformly distributed over the interval
+(0,1). An individual’s expected claims frequency is constant through
+time.</p>
+<p>Consider a particular insured that had 3 claims during the prior
+three years.</p>
+<p>Under these assumptions, we have the claims for an individual <span class="math inline">\(y\)</span>
+with latent characteristics <span class="math inline">\(\alpha\)</span> are Poisson distributed with
+conditional mean <span class="math inline">\(\alpha\)</span> and conditional variance <span class="math inline">\(\alpha\)</span>. The
+distribution of <span class="math inline">\(\alpha\)</span> is uniform on the interval (0,1), so easy
+calculations show that
+<span class="math display">\[
+\mathrm{E}~\mathrm{Var}(y|\alpha) = \mathrm{E}~\alpha =
+0.5~~~\mathrm{and}~~~ \mathrm{Var}~\mathrm{E}(y|\alpha) =
+\mathrm{Var}~\alpha = 1/12 = 0.08333.
+\]</span>
+Thus, with <span class="math inline">\(n=3\)</span>, the credibility factor is
+<span class="math display">\[
+\zeta = \frac{3}{3+ 0.5/0.08333} = 0.3333.
+\]</span>
+With <span class="math inline">\(\bar{y}=3/3 =1\)</span> and the overall mean
+<span class="math inline">\(\mathrm{E}~\mathrm{E}(y|\alpha)=0.5\)</span> as the manual premium, the
+credibility premium is
+<span class="math display">\[
+New~Premium =  0.3333 \times 1 + (1 - 0.3333)  \times 0.5 = 0.6667.
+\]</span></p>
+<hr />
+<p>More formally, the optimality of the credibility estimator is based
+on the following.</p>
+<p><strong>Property.</strong> Assume, conditional on <span class="math inline">\(\alpha\)</span>, that <span class="math inline">\(\{y_1, \ldots, y_n \}\)</span> are identically and independently distributed with
+conditional mean and variance <span class="math inline">\(\mathrm{E}(y | \alpha)\)</span> and and
+<span class="math inline">\(\mathrm{Var}(y | \alpha)\)</span>, respectively. Suppose that we wish to
+estimate <span class="math inline">\(\mathrm{E}~(y_{n+1}|\alpha)\)</span>. Then, the credibility
+premium given in equations <a href="C18Cred.html#eq:eq186">(18.6)</a> and
+<a href="C18Cred.html#eq:eq187">(18.7)</a> has the smallest variance within the
+class of all linear unbiased predictors.</p>
+<p>This property indicates that the credibility premium has “greatest
+accuracy” in the sense that it has minimum variance among linear
+unbiased predictors. As we have seen, it is couched in terms of
+means and variances that can be applied to many distributions;
+unlike the partial credibility premium, there is no assumption of
+normality. It is a fundamental result in that it is based on
+(conditionally) i.i.d. observations. Not surprisingly, it is easy to
+modify this basic result to allow for different exposures for
+observations, trends in times and so forth.</p>
+<p>The property is silent on how one would estimate quantities
+associated with the distribution of <span class="math inline">\(\alpha\)</span>. To do this, we will
+introduce a more detailed sampling scheme that will allow us to
+incorporate regression methods. Although not the only way of
+sampling, this framework will allow us to introduce many variations
+of interest and will help to interpret credibility in a natural way.</p>
+</div>
+</div>
+<div id="S:Sec183" class="section level2 hasAnchor" number="18.3">
+<h2><span class="header-section-number">18.3</span> Credibility and Regression<a href="C18Cred.html#S:Sec183" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>By expressing credibility in the framework of regression models,
+actuaries can realize several benefits:</p>
+<ul>
+<li>Regression models provide a wide variety of models from
+which to choose.</li>
+<li>Standard statistical software makes analyzing data
+relatively easy.</li>
+<li>Actuaries have another method for explaining the
+ratemaking process.</li>
+<li>Actuaries can use graphical and diagnostic tools
+to select a model and assess its usefulness.</li>
+</ul>
+<div id="one-way-random-effects-model" class="section level3 hasAnchor" number="18.3.1">
+<h3><span class="header-section-number">18.3.1</span> One-Way Random Effects Model<a href="C18Cred.html#one-way-random-effects-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Assume that we are interested in pricing for <span class="math inline">\(n\)</span> groups and that for
+each of the <span class="math inline">\(i=1,\ldots,n\)</span> groups, we have claims experience
+<span class="math inline">\(y_{it}, t=1, \ldots, T\)</span>. Although this is the longitudinal data
+set-up introduced in Chapter 10, we need not assume that claims
+evolve over time; the <span class="math inline">\(t\)</span> subscripts may represent different members
+of a group. To begin, we assume that we do not have an explanatory
+variables. Claims experience follows
+<span class="math display" id="eq:eq188">\[\begin{equation}
+y_{it} = \mu + \alpha_i + \varepsilon_{it}, ~~~~~ t=1, \ldots, T,
+i=1,\ldots, n,
+\tag{18.8}
+\end{equation}\]</span>
+where <span class="math inline">\(\mu\)</span> represents an overall claim average, <span class="math inline">\(\alpha_i\)</span> the
+unobserved group characteristics and <span class="math inline">\(\varepsilon_{it}\)</span> the
+individual claim variation. We assume that <span class="math inline">\(\{\alpha_i\}\)</span> are i.i.d.
+with mean zero and variance <span class="math inline">\(\sigma^2_{\alpha}\)</span>. Further assume that
+<span class="math inline">\(\{\varepsilon_{it}\}\)</span> are i.i.d. with mean zero and variance
+<span class="math inline">\(\sigma^2\)</span> and are independent of <span class="math inline">\(\alpha_i\)</span>. These are the
+assumptions of a basic “one-way random effects” model described in
+Section 10.5.</p>
+<p>It seems reasonable to use the quantity <span class="math inline">\(\mu + \alpha_i\)</span> to predict
+a new claim from the <span class="math inline">\(i\)</span>th group. For the model in equation
+<a href="C18Cred.html#eq:eq188">(18.8)</a>, it seems intuitively plausible that <span class="math inline">\(\bar{y}\)</span>
+is a desirable estimator of <span class="math inline">\(\mu\)</span> and that <span class="math inline">\(\bar{y}_i-\bar{y}\)</span>, is a
+desirable “estimator” of <span class="math inline">\(\alpha_i\)</span>. Thus, <span class="math inline">\(\bar{y}_i\)</span> is a
+desirable predictor of <span class="math inline">\(\mu+\alpha_i\)</span>. More generally, consider
+predictors of <span class="math inline">\(\mu+\alpha_i\)</span> that are linear combinations of
+<span class="math inline">\(\bar{y}_i\)</span> and <span class="math inline">\(\bar{y}\)</span>, that is, <span class="math inline">\(c_1 \bar{y}_i+c_2\bar{y}\)</span>, for
+constants <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span>. To retain the unbiasedness, we use <span class="math inline">\(c_2 = 1 - c_1\)</span>. Some basic calculations show that the best value of <span class="math inline">\(c_1\)</span>
+that minimizes <span class="math inline">\(\mathrm{E} \left( c_1 \bar{y}_i+(1-c_1)\bar{y} - (\mu+\alpha_i) \right)^2\)</span> is
+<span class="math display">\[
+c_1 = \frac{T}{T+\sigma^2/\sigma^2_{\alpha}} = \zeta,
+\]</span>
+the credibility factor. This yields the <em>shrinkage estimator</em>,
+or predictor, of <span class="math inline">\(\mu+\alpha_i\)</span>, defined as
+<span class="math display" id="eq:eq189">\[\begin{equation}
+\bar{y}_{i,s} = \zeta \bar{y}_i+(1-\zeta)\bar{y}.
+\tag{18.9}
+\end{equation}\]</span></p>
+<p>The shrinkage estimator is equivalent to credibility premium when we
+see that
+<span class="math display">\[
+\mathrm{Var}
+\left(\mathrm{E}(y_{it}|\alpha_i) \right) = \mathrm{Var}
+\left(\mathrm{E}(\mu+\alpha_i) \right) =
+\sigma^2_{\alpha}
+\]</span>
+and
+<span class="math display">\[
+\mathrm{E}
+\left(\mathrm{Var}(y_{it}|\alpha_i) \right) = \mathrm{E}
+\left(\mathrm{E}(\sigma^2) \right) = \sigma^2 ,
+\]</span>
+so that <span class="math inline">\(Ratio = \sigma^2/\sigma^2_{\alpha}\)</span>. Thus, the one-way
+random effects model is sometimes referred to as the “balanced
+Bühlmann” model. This shrinkage estimator is also a best linear
+unbiased predictor (<span class="math inline">\(BLUP\)</span>), introduced in Section 15.1.3.</p>
+<hr />
+<p><strong>Example: Visualizing Shrinkage</strong>. Consider the following illustrative data:</p>
+<p><span class="math display">\[
+\small{
+\begin{array}{c|cccc|c}  \hline
+\text{Group}&amp;&amp;&amp;&amp;&amp;\text{Group}\\
+i&amp; 1  &amp; 2  &amp; 3  &amp; 4  &amp; \text{Average } (\bar{y}_i)\\ \hline
+1  &amp; 14 &amp; 12 &amp; 10 &amp; 12 &amp; 12 \\
+2  &amp; 9  &amp; 16 &amp; 15 &amp; 12 &amp; 13 \\
+3  &amp; 8  &amp; 10 &amp; 7  &amp; 7  &amp; 8 \\  \hline
+\end{array}
+}
+\]</span></p>
+<p>That is, we have <span class="math inline">\(n=3\)</span> groups, each of which has <span class="math inline">\(T=4\)</span> observations.
+The sample mean is <span class="math inline">\(\bar{y} = 11\)</span> and group-specific sample means are
+<span class="math inline">\(\bar{y}_1=12\)</span>, <span class="math inline">\(\bar{y}_2=13\)</span> and <span class="math inline">\(\bar{y}_3=8\)</span>. We now fit the
+one-way random effects ANOVA model in equation <a href="C18Cred.html#eq:eq188">(18.8)</a>
+using maximum likelihood estimation assuming normality. Standard
+statistical software shows that the estimates of <span class="math inline">\(\sigma^2\)</span> and
+<span class="math inline">\(\sigma^2_{\alpha}\)</span> are 4.889 and 5.778, respectively. It follows
+that the estimated <span class="math inline">\(\zeta\)</span> factor is 0.738. Using equation
+<a href="C18Cred.html#eq:eq189">(18.9)</a>, the corresponding predictions for the
+subjects are 11.738, 12.476, and 8.786, respectively.</p>
+<p>Figure <a href="C18Cred.html#fig:Fig181">18.1</a> compares group-specific means to the
+corresponding predictions. Here, we see less spread in the
+predictions compared to the group-specific means; each group’s
+estimate is “shrunk” to the overall mean, <span class="math inline">\(\bar{y}\)</span> . These are
+the best predictors assuming <span class="math inline">\(\alpha_i\)</span> are random. In contrast, the
+subject-specific means are the best predictors assuming <span class="math inline">\(\alpha_i\)</span>
+are deterministic. Thus, this “shrinkage effect” is a consequence
+of the random effects specification.</p>
+
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig181"></span>
+<img src="RegressionMarkdown_files/figure-html/Fig181-1.png" alt="Comparison of Group-Specific Means to Shrinkage Estimates. For an illustrative data set, group-specific and overall means are graphed on the upper scale. The corresponding shrinkage estimates are graphed on the lower scale. This figure shows the shrinkage aspect of models with random effects." width="80%" />
+<p class="caption">
+Figure 18.1: <strong>Comparison of Group-Specific Means to Shrinkage Estimates.</strong> For an illustrative data set, group-specific and overall means are graphed on the upper scale. The corresponding shrinkage estimates are graphed on the lower scale. This figure shows the shrinkage aspect of models with random effects.
+</p>
+</div>
+<hr />
+<p>Under the one-way random effects model, we have that <span class="math inline">\(\bar{y}_i\)</span> is
+an unbiased predictor of <span class="math inline">\(\mu+\alpha_i\)</span> in the sense that E
+(<span class="math inline">\(\bar{y}_i - (\mu+\alpha_i)\)</span>)=0. However, <span class="math inline">\(\bar{y}_i\)</span> is
+inefficient in the sense that the shrinkage estimator,
+<span class="math inline">\(\bar{y}_{i,s}\)</span>, has a smaller mean square error than <span class="math inline">\(\bar{y}_i\)</span>.
+Intuitively, because <span class="math inline">\(\bar{y}_{i,s}\)</span> is a linear combination of
+<span class="math inline">\(\bar{y}_i\)</span> and <span class="math inline">\(\bar{y}\)</span>, we say that has been “shrunk” towards
+the estimator <span class="math inline">\(\bar{y}\)</span>. Further, because of the additional
+information in <span class="math inline">\(\bar{y}_{i,s}\)</span>, it is customary to interpret a
+shrinkage estimator as “borrowing strength” from the estimator of
+the overall mean.</p>
+<p>Note that the shrinkage estimator reduces to the fixed effects
+estimator <span class="math inline">\(\bar{y}_i\)</span> when the credibility factor, <span class="math inline">\(\zeta\)</span>, becomes
+1. It is easy to see that <span class="math inline">\(\zeta \rightarrow 1\)</span> as either (i)
+<span class="math inline">\(T\rightarrow\infty\)</span> or (ii) <span class="math inline">\(\sigma^2/\sigma^2_{\alpha}\rightarrow 0\)</span>. That is, the best predictor approaches the group mean as either
+(i) the number of observations per group becomes large or (ii) the
+variability among groups becomes large relative to the response
+variability. In actuarial language, either case supports the idea
+that the information from the <span class="math inline">\(i\)</span>th group is becoming more
+“credible.”</p>
+</div>
+<div id="longitudinal-models" class="section level3 hasAnchor" number="18.3.2">
+<h3><span class="header-section-number">18.3.2</span> Longitudinal Models<a href="C18Cred.html#longitudinal-models" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As we have seen the context of the one-way random effects model with
+balanced replications, Bühlmann’s greatest accuracy credibility
+estimator is equivalent to the best linear unbiased predictor
+introduced in Section 15.1.3. This is also true when considering a
+more general longitudinal sampling set-up introduced in Chapter 10
+(see, for example, Frees, Young and Luo, 1999). By expressing the
+credibility problem in terms of a regression-based sampling scheme,
+we can use well-known regression techniques to estimate parameters
+and predict unknown quantities. We now consider a longitudinal model
+that handles many special cases of interest in actuarial practice.</p>
+<p>Assume that claims experience follows
+<span class="math display" id="eq:eq1810">\[\begin{equation}
+y_{it} = M_i + \mathbf{x}_{it}^{\prime} \boldsymbol \beta+
+\mathbf{z}_{it}^{\prime} {\boldsymbol \alpha}_i +
+\varepsilon_{it},~~~~~ t=1, \ldots, T_i, i=1,\ldots, n.
+\tag{18.10}
+\end{equation}\]</span>
+Let us consider each model component in turn.</p>
+<ul>
+<li><p><span class="math inline">\(M_i\)</span> represents the manual premium that is assumed known.
+In the language of generalized linear models, <span class="math inline">\(M_i\)</span> is an “offset
+variable.” In estimating the regression model, one simply uses
+<span class="math inline">\(y_{it}^{\ast} = y_{it} - M_i\)</span> as the dependent variable. If the
+manual premium is not available, then take <span class="math inline">\(M_i = 0\)</span>.</p></li>
+<li><p><span class="math inline">\(\mathbf{x}_{it}^{\prime} \boldsymbol \beta\)</span> is the usual
+linear combination of explanatory variables. These can be used to
+adjust the manual premium. For example, you may have a larger than
+typical proportions of males (or females) in your group and wish to
+allow for the gender of group members. This can be done by using a
+binary gender variable as a predictor and thinking of the regression
+coefficient as the amount to adjust the manual premium. In a similar
+fashion, you could use age, experience or other characteristics of
+group members to adjust manual premiums. Explanatory variables may
+also be used to describe the group, not just the members. For
+example, you may wish to include explanatory variables that give
+information about location of place of employment (such as urban
+versus rural) to adjust manual premiums.</p></li>
+<li><p><span class="math inline">\(\mathbf{z}_{it}^{\prime} {\boldsymbol \alpha}_i\)</span> represents a
+linear combination of random effects that can be written as
+<span class="math inline">\(\mathbf{z}_{it}^{\prime} {\boldsymbol \alpha}_i = z_{it,1} \alpha_{i,1} + \cdots +z_{it,q} \alpha_{i,q}\)</span>. Often, there is only
+a single random intercept so that <span class="math inline">\(q=1\)</span>, <span class="math inline">\(z_{it}=1\)</span> and
+<span class="math inline">\(\mathbf{z}_{it}^{\prime} {\boldsymbol \alpha}_i = \alpha_{i1} = \alpha_i\)</span>. The random effects have mean zero but a non-zero mean can
+be incorporated using <span class="math inline">\(\mathbf{x}_{it}^{\prime} \boldsymbol \beta\)</span>.
+For example, we might use time <span class="math inline">\(t\)</span> as an explanatory variable and
+define <span class="math inline">\(\mathbf{x}_{it}=\mathbf{z}_{it}=(1 ~t)^{\prime}\)</span>. Then,
+equation <a href="C18Cred.html#eq:eq1810">(18.10)</a> reduces to <span class="math inline">\(y_{it} = \beta_0 + \alpha_{i1} + ( \beta_1 + \alpha_{i2}) \times t+ \varepsilon_{it}\)</span>,
+a model due to Hachemeister in 1975.</p></li>
+<li><p><span class="math inline">\(\varepsilon_{it}\)</span> is the mean zero disturbance term. In many
+applications, a weight is attached to it in the sense that
+<span class="math inline">\(\mathrm{Var}~\varepsilon_{it} = \sigma^2 /w_{it}.\)</span> Here, the weight
+<span class="math inline">\(w_{it}\)</span> is known and accounts for an exposure such as the amount of
+insurance premium, number of employees, size of the payroll, number
+of insured vehicles and so forth. Introducing weights was proposed
+by Bühlmann and Straub in 1970. The disturbances terms are
+typically assumed independent among groups (over <span class="math inline">\(i\)</span>) but, in some
+applications, may incorporate time patterns, such as <span class="math inline">\(AR\)</span>(1)
+(autoregressive of order 1).</p></li>
+</ul>
+<hr />
+<p><strong>Example: Workers Compensation.</strong> We consider workers compensation insurance, examining
+losses due to permanent, partial disability claims. The data are
+from Klugman (1992), who explored Bayesian model representations,
+and are originally from the National Council on Compensation
+Insurance. We consider <span class="math inline">\(n=121\)</span> occupation classes over <span class="math inline">\(T=7\)</span> years.
+To protect the data sources, further information on the occupation
+classes and years are not available. We summarize the analysis in
+Frees, Young and Luo (2001).</p>
+<p>The response variable of interest is the pure premium (PP), defined
+to be losses due to permanent, partial disability per dollar of
+PAYROLL. The variable PP is of interest to actuaries because worker
+compensation rates are determined and quoted per unit of payroll.
+The exposure measure, PAYROLL, is one of the potential explanatory
+variables. Other explanatory variables are YEAR (= 1, , 7) and
+occupation class.</p>
+<p>Among other representations, Frees et al. (2001) considered the
+model Bühlmann-Straub model,
+<span class="math display" id="eq:eq1811">\[\begin{equation}
+\ln (PP)_{it} = \beta_0 + \alpha_{i1}+  \varepsilon_{it},
+\tag{18.11}
+\end{equation}\]</span>
+the Hachemeister model
+<span class="math display" id="eq:eq1812">\[\begin{equation}
+\ln (PP)_{it} = \beta_0 + \alpha_{i1} + (\beta_1+\alpha_{i2})YEAR_t
++ \varepsilon_{it},
+\tag{18.12}
+\end{equation}\]</span>
+and an intermediate version
+<span class="math display" id="eq:eq1813">\[\begin{equation}
+\ln (PP)_{it} = \beta_0 + \alpha_{i1}+  \alpha_{i2}YEAR_t +
+\varepsilon_{it}.
+\tag{18.13}
+\end{equation}\]</span>
+In all three cases, the weights given by <span class="math inline">\(w_{it}= PAYROLL_{it}\)</span>.
+These models are all special cases of the general model in equation
+<a href="C18Cred.html#eq:eq1810">(18.10)</a> with <span class="math inline">\(y_{it} = \ln (PP)_{it}\)</span> and
+<span class="math inline">\(M_i=0\)</span>.</p>
+<hr />
+<p>Parameter estimation and related statistical inference, including
+prediction, for the mixed linear regression model in equation
+<a href="C18Cred.html#eq:eq1810">(18.10)</a> has been well investigated. The
+literature is summarized briefly in Section 15.1. From Section
+15.1.3, the best linear unbiased predictor of <span class="math inline">\(\mathrm{E}(y_{it} | \boldsymbol \alpha)\)</span> is of the form
+<span class="math display" id="eq:eq1814">\[\begin{equation}
+M_i + \mathbf{x}_{it}^{\prime} \mathbf{b}_{GLS}+
+\mathbf{z}_{it}^{\prime} \mathbf{a}_{BLUP,i},
+\tag{18.14}
+\end{equation}\]</span>
+where <span class="math inline">\(\mathbf{b}_{GLS}\)</span> is the generalized least squares estimator
+of <span class="math inline">\(\boldsymbol \beta\)</span> and the general expression for
+<span class="math inline">\(\mathbf{a}_{BLUP,i}\)</span> is given in equation (15.11). This is a
+general credibility estimator that can be readily calculated using
+statistical packages.</p>
+<hr />
+<p><strong>Special Case: Bühlmann-Straub Model.</strong> For the
+Bühlmann-Straub model, the credibility factor is
+<span class="math display">\[
+\zeta_{i,w} = \frac{WT_i}{WT_i + \sigma^2/\sigma^2_{\alpha}},
+\]</span>
+where <span class="math inline">\(WT_i\)</span> is the sum of weights for the <span class="math inline">\(i\)</span>th group, <span class="math inline">\(WT_i = \sum_{t=1}^{T_i} w_{it}\)</span>.</p>
+<p>Using equation <a href="C18Cred.html#eq:eq1814">(18.14)</a> in the
+Bühlmann-Straub model, it is easy to check that the prediction
+for the <span class="math inline">\(i\)</span>th group is
+<span class="math display">\[
+\zeta_{i,w}  \bar{y}_{i,w} + (1-\zeta_{i,w} ) \bar{y}_w ,
+\]</span>
+where
+<span class="math display">\[
+\bar{y}_{i,w} =\frac{\sum_{t=1}^{T_i} w_{it}y_{it}}{WT_i}
+~~~~\mathrm{and}~~~~~~\bar{y}_w =\frac{\sum_{t=1}^{T_i} \zeta_{i,w}
+\bar{y}_{i,w}}{\sum_{t=1}^{T_i} \zeta_{i,w} }
+\]</span>
+are the <span class="math inline">\(i\)</span>th weighted group mean and the overall weighted mean,
+respectively. This reduces to the balanced Bühlmann predictor by
+taking weights identically equal to 1. See, for example, Frees
+(2004, Section 4.7) for further details.</p>
+<hr />
+<p><strong>Example: Workers Compensation - Continued.</strong> We estimated
+the models in equations <a href="C18Cred.html#eq:eq1811">(18.11)</a>-<a href="C18Cred.html#eq:eq1813">(18.13)</a> as well
+as the unweighted Buhlmann model using maximum likelihood. <a href="C18Cred.html#Tab181">Table 18.1</a> summarizes the results. This table
+suggest that the annual trend factor is not statistically
+significant, at least for conditional means. The annual trend that
+varies by occupational class does seem to be helpful. The
+information criterion <span class="math inline">\(AIC\)</span> suggestions that the intermediate model
+given in equation <a href="C18Cred.html#eq:eq1813">(18.13)</a> provides the best fit to the
+data.</p>
+<p><a id=Tab181></a></p>
+<p><span id="Tab181">Table 18.1</span>. <strong>Workers Compensation Model Fits</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{l|rrrr}\hline
+    &amp;  &amp; \text{Bühlmann-Straub} &amp; \text{Hachemeister} \\
+\text{Parameter} &amp; \text{Bühlmann} &amp; Eq (18.11) &amp;Eq (18.12) &amp; Eq (18.13) \\
+\hline
+\beta_0  &amp; -4.3665 &amp;  -4.4003&amp;  -4.3805&amp; -4.4036 \\
+(t-\text{statistic}) &amp; (-50.38)&amp; (-51.47) &amp; (-44.38)&amp; (-51.90) \\
+\beta_1     &amp; &amp; &amp; -0.00446&amp; \\
+(t-\text{statistic}) &amp; &amp; &amp; (-0.47)  \\ \hline
+\sigma_{\alpha,1}  &amp;0.9106 &amp;  0.8865 &amp; 0.9634 &amp; 0.9594\\
+\sigma_{\alpha,2}  &amp; &amp;   &amp; 0.0452 &amp; 0.0446\\
+\sigma  &amp; 0.5871&amp; 42.4379&amp; 41.3386 &amp; 41.3582\\\hline
+AIC  &amp; 1,715.924 &amp; 1,571.391&amp; 1,567.769&amp;1,565.977 \\
+\hline
+\end{array}
+}
+\]</span></p>
+<h5 style="text-align: center;">
+<a id="displayCode.Tab181.Hide" href="javascript:togglecode('toggleCode.Tab181.Hide','displayCode.Tab181.Hide');"><i><strong>R Code to Produce Table 18.1</strong></i></a>
+</h5>
+<div id="toggleCode.Tab181.Hide" style="display: none">
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="C18Cred.html#cb134-1" tabindex="-1"></a><span class="co"># Table 18.1</span></span>
+<span id="cb134-2"><a href="C18Cred.html#cb134-2" tabindex="-1"></a>WorkersC <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;CSVData/WorkersComp.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb134-3"><a href="C18Cred.html#cb134-3" tabindex="-1"></a><span class="co">#WorkersC  &lt;- read.csv(&quot;../../CSVData/WorkersComp.csv&quot;, header=TRUE)</span></span>
+<span id="cb134-4"><a href="C18Cred.html#cb134-4" tabindex="-1"></a></span>
+<span id="cb134-5"><a href="C18Cred.html#cb134-5" tabindex="-1"></a>WorkersC<span class="sc">$</span>PP <span class="ot">&lt;-</span> WorkersC<span class="sc">$</span>LOSS<span class="sc">/</span>WorkersC<span class="sc">$</span>PR</span>
+<span id="cb134-6"><a href="C18Cred.html#cb134-6" tabindex="-1"></a><span class="co">#  ONLY MODEL SEVERITY PORTION</span></span>
+<span id="cb134-7"><a href="C18Cred.html#cb134-7" tabindex="-1"></a>WorkersC3 <span class="ot">&lt;-</span> <span class="fu">subset</span>(WorkersC, PP<span class="sc">&gt;</span> <span class="dv">0</span> )</span>
+<span id="cb134-8"><a href="C18Cred.html#cb134-8" tabindex="-1"></a></span>
+<span id="cb134-9"><a href="C18Cred.html#cb134-9" tabindex="-1"></a><span class="co">#  FIXED EFFECTS MODEL - NOT NEEDED FOR THIS TABLE</span></span>
+<span id="cb134-10"><a href="C18Cred.html#cb134-10" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(PP)<span class="sc">~</span><span class="fu">factor</span>(CL), <span class="at">data =</span> WorkersC3)</span>
+<span id="cb134-11"><a href="C18Cred.html#cb134-11" tabindex="-1"></a>lme1.sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(lm1)</span>
+<span id="cb134-12"><a href="C18Cred.html#cb134-12" tabindex="-1"></a></span>
+<span id="cb134-13"><a href="C18Cred.html#cb134-13" tabindex="-1"></a>Tab181 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="dv">8</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span>
+<span id="cb134-14"><a href="C18Cred.html#cb134-14" tabindex="-1"></a><span class="co">#  RANDOM EFFECTS MODEL</span></span>
+<span id="cb134-15"><a href="C18Cred.html#cb134-15" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<span id="cb134-16"><a href="C18Cred.html#cb134-16" tabindex="-1"></a><span class="co">#  BUHLMANN</span></span>
+<span id="cb134-17"><a href="C18Cred.html#cb134-17" tabindex="-1"></a>lme2 <span class="ot">&lt;-</span> <span class="fu">lme</span>(<span class="fu">log</span>(PP)<span class="sc">~</span><span class="dv">1</span>, <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>CL, <span class="at">method=</span><span class="st">&quot;ML&quot;</span>, <span class="at">data =</span> WorkersC3) </span>
+<span id="cb134-18"><a href="C18Cred.html#cb134-18" tabindex="-1"></a>lme2.sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(lme2)</span>
+<span id="cb134-19"><a href="C18Cred.html#cb134-19" tabindex="-1"></a>Tab181[<span class="dv">1</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme2.sum<span class="sc">$</span>tTable[<span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb134-20"><a href="C18Cred.html#cb134-20" tabindex="-1"></a>Tab181[<span class="dv">2</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme2.sum<span class="sc">$</span>tTable[<span class="dv">1</span>,<span class="dv">4</span>])</span>
+<span id="cb134-21"><a href="C18Cred.html#cb134-21" tabindex="-1"></a>Tab181[<span class="dv">5</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(lme2)[<span class="dv">1</span>,<span class="dv">2</span>] )</span>
+<span id="cb134-22"><a href="C18Cred.html#cb134-22" tabindex="-1"></a>Tab181[<span class="dv">7</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(lme2)[<span class="dv">2</span>,<span class="dv">2</span>])</span>
+<span id="cb134-23"><a href="C18Cred.html#cb134-23" tabindex="-1"></a>Tab181[<span class="dv">8</span>,<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme2.sum<span class="sc">$</span>AIC )</span>
+<span id="cb134-24"><a href="C18Cred.html#cb134-24" tabindex="-1"></a></span>
+<span id="cb134-25"><a href="C18Cred.html#cb134-25" tabindex="-1"></a><span class="co">#  BUHLMANN - STRAUB</span></span>
+<span id="cb134-26"><a href="C18Cred.html#cb134-26" tabindex="-1"></a>lme3 <span class="ot">&lt;-</span> <span class="fu">lme</span>(<span class="fu">log</span>(PP)<span class="sc">~</span><span class="dv">1</span>, <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>CL, <span class="at">weights=</span><span class="fu">varFixed</span>(<span class="sc">~</span><span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(PR)), </span>
+<span id="cb134-27"><a href="C18Cred.html#cb134-27" tabindex="-1"></a>            <span class="at">method=</span><span class="st">&quot;ML&quot;</span>, <span class="at">data =</span> WorkersC3) </span>
+<span id="cb134-28"><a href="C18Cred.html#cb134-28" tabindex="-1"></a>lme3.sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(lme3)</span>
+<span id="cb134-29"><a href="C18Cred.html#cb134-29" tabindex="-1"></a>Tab181[<span class="dv">1</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme3.sum<span class="sc">$</span>tTable[<span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb134-30"><a href="C18Cred.html#cb134-30" tabindex="-1"></a>Tab181[<span class="dv">2</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme3.sum<span class="sc">$</span>tTable[<span class="dv">1</span>,<span class="dv">4</span>])</span>
+<span id="cb134-31"><a href="C18Cred.html#cb134-31" tabindex="-1"></a>Tab181[<span class="dv">5</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(lme3)[<span class="dv">1</span>,<span class="dv">2</span>] )</span>
+<span id="cb134-32"><a href="C18Cred.html#cb134-32" tabindex="-1"></a>Tab181[<span class="dv">7</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(lme3)[<span class="dv">2</span>,<span class="dv">2</span>])</span>
+<span id="cb134-33"><a href="C18Cred.html#cb134-33" tabindex="-1"></a>Tab181[<span class="dv">8</span>,<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme3.sum<span class="sc">$</span>AIC)</span>
+<span id="cb134-34"><a href="C18Cred.html#cb134-34" tabindex="-1"></a></span>
+<span id="cb134-35"><a href="C18Cred.html#cb134-35" tabindex="-1"></a><span class="co">#  HACHEMEISTER</span></span>
+<span id="cb134-36"><a href="C18Cred.html#cb134-36" tabindex="-1"></a>lme4 <span class="ot">&lt;-</span> <span class="fu">lme</span>(<span class="fu">log</span>(PP)<span class="sc">~</span><span class="dv">1</span><span class="sc">+</span>YR, <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">+</span>YR<span class="sc">|</span>CL, <span class="at">weights=</span><span class="fu">varFixed</span>(<span class="sc">~</span><span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(PR)),</span>
+<span id="cb134-37"><a href="C18Cred.html#cb134-37" tabindex="-1"></a>            <span class="at">method=</span><span class="st">&quot;ML&quot;</span>, <span class="at">data =</span> WorkersC3) </span>
+<span id="cb134-38"><a href="C18Cred.html#cb134-38" tabindex="-1"></a>lme4.sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(lme4)</span>
+<span id="cb134-39"><a href="C18Cred.html#cb134-39" tabindex="-1"></a>Tab181[<span class="dv">1</span>,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme4.sum<span class="sc">$</span>tTable[<span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb134-40"><a href="C18Cred.html#cb134-40" tabindex="-1"></a>Tab181[<span class="dv">2</span>,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme4.sum<span class="sc">$</span>tTable[<span class="dv">1</span>,<span class="dv">4</span>])</span>
+<span id="cb134-41"><a href="C18Cred.html#cb134-41" tabindex="-1"></a>Tab181[<span class="dv">3</span>,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme4.sum<span class="sc">$</span>tTable[<span class="dv">2</span>,<span class="dv">1</span>])</span>
+<span id="cb134-42"><a href="C18Cred.html#cb134-42" tabindex="-1"></a>Tab181[<span class="dv">4</span>,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme4.sum<span class="sc">$</span>tTable[<span class="dv">2</span>,<span class="dv">4</span>])</span>
+<span id="cb134-43"><a href="C18Cred.html#cb134-43" tabindex="-1"></a>Tab181[<span class="dv">5</span>,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(lme4)[<span class="dv">1</span>,<span class="dv">2</span>])</span>
+<span id="cb134-44"><a href="C18Cred.html#cb134-44" tabindex="-1"></a>Tab181[<span class="dv">6</span>,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(lme4)[<span class="dv">2</span>,<span class="dv">2</span>])</span>
+<span id="cb134-45"><a href="C18Cred.html#cb134-45" tabindex="-1"></a>Tab181[<span class="dv">7</span>,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(lme4)[<span class="dv">3</span>,<span class="dv">2</span>])</span>
+<span id="cb134-46"><a href="C18Cred.html#cb134-46" tabindex="-1"></a>Tab181[<span class="dv">8</span>,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme4.sum<span class="sc">$</span>AIC)</span>
+<span id="cb134-47"><a href="C18Cred.html#cb134-47" tabindex="-1"></a></span>
+<span id="cb134-48"><a href="C18Cred.html#cb134-48" tabindex="-1"></a><span class="co">#  IN BETWEEN</span></span>
+<span id="cb134-49"><a href="C18Cred.html#cb134-49" tabindex="-1"></a>lme5 <span class="ot">&lt;-</span> <span class="fu">lme</span>(<span class="fu">log</span>(PP) <span class="sc">~</span><span class="dv">1</span>, <span class="at">random=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">+</span>YR<span class="sc">|</span>CL, <span class="at">weights=</span><span class="fu">varFixed</span>(<span class="sc">~</span><span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(PR)),</span>
+<span id="cb134-50"><a href="C18Cred.html#cb134-50" tabindex="-1"></a>            <span class="at">method=</span><span class="st">&quot;ML&quot;</span>, <span class="at">data =</span> WorkersC3) </span>
+<span id="cb134-51"><a href="C18Cred.html#cb134-51" tabindex="-1"></a>lme5.sum <span class="ot">&lt;-</span> <span class="fu">summary</span>(lme5)</span>
+<span id="cb134-52"><a href="C18Cred.html#cb134-52" tabindex="-1"></a>Tab181[<span class="dv">1</span>,<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme5.sum<span class="sc">$</span>tTable[<span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb134-53"><a href="C18Cred.html#cb134-53" tabindex="-1"></a>Tab181[<span class="dv">2</span>,<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme5.sum<span class="sc">$</span>tTable[<span class="dv">1</span>,<span class="dv">4</span>])</span>
+<span id="cb134-54"><a href="C18Cred.html#cb134-54" tabindex="-1"></a>Tab181[<span class="dv">5</span>,<span class="dv">4</span>] <span class="ot">&lt;-</span>  <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(lme5)[<span class="dv">1</span>,<span class="dv">2</span>] )</span>
+<span id="cb134-55"><a href="C18Cred.html#cb134-55" tabindex="-1"></a>Tab181[<span class="dv">7</span>,<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(lme5)[<span class="dv">2</span>,<span class="dv">2</span>])</span>
+<span id="cb134-56"><a href="C18Cred.html#cb134-56" tabindex="-1"></a>Tab181[<span class="dv">8</span>,<span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(lme5.sum<span class="sc">$</span>AIC)</span>
+<span id="cb134-57"><a href="C18Cred.html#cb134-57" tabindex="-1"></a></span>
+<span id="cb134-58"><a href="C18Cred.html#cb134-58" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(Tab181, <span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div>
+<table>
+<tbody>
+<tr class="odd">
+<td align="right">-4.3665</td>
+<td align="right">-4.4003</td>
+<td align="right">-4.3805</td>
+<td align="right">-4.4036</td>
+</tr>
+<tr class="even">
+<td align="right">-50.3827</td>
+<td align="right">-51.4689</td>
+<td align="right">-44.3825</td>
+<td align="right">-51.9044</td>
+</tr>
+<tr class="odd">
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">-0.0045</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">-0.4688</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">0.9106</td>
+<td align="right">0.8865</td>
+<td align="right">0.9634</td>
+<td align="right">0.9594</td>
+</tr>
+<tr class="even">
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">0.0452</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">0.5871</td>
+<td align="right">42.4379</td>
+<td align="right">41.3387</td>
+<td align="right">0.0446</td>
+</tr>
+<tr class="even">
+<td align="right">1715.9244</td>
+<td align="right">1571.3906</td>
+<td align="right">1567.7690</td>
+<td align="right">1565.9766</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><a href="C18Cred.html#Tab182">Table 18.2</a> illustrates the resulting
+credibility predictions for the first five occupational classes.
+Here, for each method, after making the prediction we exponentiated
+the result and multiplied by 100, so that these are the number of
+cents of predicted losses per dollar of payroll. Also included are
+predictions for the “fixed effects” model that amount to taking
+the average over occupational class for the seven year time span.
+Predictions for the Hachemeister and equation <a href="C18Cred.html#eq:eq1813">(18.13)</a>
+models were made for Year 8.</p>
+<p><a href="C18Cred.html#Tab182">Table 18.2</a> shows substantial agreement
+between the Bühlmann and Bühlmann-Straub predictions,
+indicating that payroll weighting is less important for this data
+set. There is also substantial agreement between the Hachemeister
+and equation <a href="C18Cred.html#eq:eq1813">(18.13)</a> model predictions, indicating that
+the overall time trend is less important. Comparing the two sets of
+predictions indicates that a time trend that varies by occupational
+class does make a difference.</p>
+<p><a id=Tab182></a></p>
+<p><span id="Tab182">Table 18.2</span>. <strong>Workers Compensation Predictions</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{c|rrrr}\hline
+\text{Occupational} &amp; \text{Fixed} &amp;             &amp;&amp; &amp;    \\
+\text{Class }  &amp; \text{Effects} &amp; \text{Bühlmann}   &amp; \text{Bühlmann-Straub} &amp; \text{Hachemeister}  &amp; Eq (18.13) \\
+\hline \hline
+         1 &amp;      2.981 &amp;      2.842 &amp;      2.834 &amp;      2.736 &amp;      2.785 \\
+         2 &amp;      1.941 &amp;      1.895 &amp;      1.875 &amp;      1.773 &amp;      1.803 \\
+         3 &amp;      1.129 &amp;      1.137 &amp;      1.135 &amp;      1.124 &amp;      1.139 \\
+         4 &amp;      0.795 &amp;      0.816 &amp;      0.765 &amp;      0.682 &amp;      0.692 \\
+         5 &amp;      1.129 &amp;      1.137 &amp;      1.129 &amp;      1.062 &amp;      1.079 \\
+\hline
+\end{array}
+}
+\]</span></p>
+<hr />
+</div>
+</div>
+<div id="S:Sec184" class="section level2 hasAnchor" number="18.4">
+<h2><span class="header-section-number">18.4</span> Bonus-Malus<a href="C18Cred.html#S:Sec184" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Bonus-malus methods of experience rating are used extensively in
+automobile insurance pricing in Europe and Asia. To understand this
+type of experience rating, let us first consider pricing based on
+observable characteristics. In automobile insurance, these include
+driver characteristics (such as age and sex), vehicle
+characteristics (such as car type and whether or not used for work)
+and territory characteristics (such as county of residence). Use of
+only these characteristics for pricing results in an <em>a priori premium</em>. In the US and Canada, this is the primary basis of the
+premium; experience rating enters in a limited fashion in the form
+of premium surcharges for at-fault accidents and moving traffic
+violations.</p>
+<p>Bonus-malus systems (BMS) provide a more detailed integration of
+claims experience into the pricing. Typically, a BMS classifies
+policyholders into one of several ordered categories. A policyholder
+enters the system into a specific category. In the following year,
+policyholders with an accident-free year are awarded a “bonus” and
+moved up a category. Policyholders that experience at-fault
+accidents during the year receive a “malus” and moved down a
+specified number of categories. The category that one resides in
+dictates the <em>bonus-malus factor</em>, or <em>BMF</em>. The
+<em>BMF</em> times the a priori premium is known as the <em>a posteriori premium.</em></p>
+<p>To illustrate, Lemaire (1998) gives an example of a Brazilian system
+that is summarized in <a href="C18Cred.html#Tab183">Table 18.3</a>. In this system, one
+begins in Class 7, paying 100% of premiums dictated by the
+insurer’s a priori premium. In the following year, if the
+policyholder experiences an accident-free year, he or she pays only
+90% of the a priori premium. Otherwise, the premium is 100% of the
+a priori premium.</p>
+<p><a id=Tab183></a></p>
+<p><span id="Tab183">Table 18.3</span>. <strong>Brazilian Bonus-Malus System</strong></p>
+<p><span class="math display">\[
+\small{
+\begin{array}{c|rrrr}\hline
+  \hline
+   &amp;  &amp; &amp;&amp;\text{Class}&amp; \text{After}\\
+  \text{Class } &amp;      &amp;  0 &amp; 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; \geq 6 \\
+  \text{Before} &amp; BMF &amp; Claims &amp; Claims &amp; Claims &amp; Claims &amp; Claims &amp; Claims &amp; Claims \\  \hline
+  7 &amp; 100       &amp; 6 &amp; 7 &amp; 7 &amp; 7 &amp; 7 &amp; 7 &amp; 7 \\
+  6 &amp; 90        &amp; 5 &amp; 7 &amp; 7 &amp; 7 &amp; 7 &amp; 7 &amp; 7 \\
+  5 &amp; 85        &amp; 4 &amp; 6 &amp; 7 &amp; 7 &amp; 7 &amp; 7 &amp; 7 \\
+  4 &amp; 80        &amp; 3 &amp; 5 &amp; 6 &amp; 7 &amp; 7 &amp; 7 &amp; 7 \\
+  3 &amp; 75        &amp; 2 &amp; 4 &amp; 5 &amp; 6 &amp; 7 &amp; 7 &amp; 7 \\
+  2 &amp; 70        &amp; 1 &amp; 3 &amp; 4 &amp; 5 &amp; 6 &amp; 7 &amp; 7 \\
+  1 &amp; 65        &amp; 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 &amp; 7 \\
+  \hline
+\end{array}
+}
+\]</span>
+<em>Source</em> Lemaire (1998)</p>
+<p>As described in Lemaire (1998), the Brazilian system is simple
+compared to others (the Belgian system has 23 classes). Insurers
+operating in countries with detailed bonus-malus systems do not
+require the extensive a priori rating variable compared to the US
+and Canada. This typically means fewer underwriting expenses and
+thus a less costly insurance system. Moreover, many argue that it is
+fairer to policyholders in the sense that those with poor claims
+experience bear the burden of higher premiums and one is not
+penalized simply because of gender or other rating variables that
+are outside of the policyholder’s control. See Lemaire (1995) for a
+broad discussion of institutional, regulatory and ethical issues
+involving bonus-malus systems.</p>
+<p>Throughout this book, we have seen how to use regression techniques
+to compute a priori premiums. Dionne and C. Vanasse (1992) pointed
+out the advantages of using a regression framework to calculate
+bonus-malus factors. Essentially, they used latent variable to
+represent a policyholder’s unobserved tendencies to become involved
+in an accident (aggressiveness, swiftness of reflexes) with
+regression count models to compute a posterior premiums. See Denuit
+et al. (2007) for a recent overview of this developing area.</p>
+<p>See Norberg (1986) for an early account relating credibility theory
+to the framework of mixed linear models. The treatment here follows
+Frees, Young and Luo (1999).</p>
+<p>By demonstrating that many important credibility models can be
+viewed in a (linear) longitudinal data framework, we restrict our
+consideration to certain types of credibility models. Specifically,
+the longitudinal data models accommodate only unobserved risks that
+are additive. This chapter does not address models of nonlinear
+random effects that have been investigated in the actuarial
+literature; see, for example, Taylor (1977) and Norberg (1980).
+Taylor (1977) allowed insurance claims to be possibly infinite
+dimensional using Hilbert space theory and established credibility
+formulas in this general context. Norberg (1980) considered the more
+concrete context, yet still general, of multivariate claims and
+established the relationship between credibility and statistical
+empirical Bayes estimation. As described in Section
+<a href="C18Cred.html#S:Sec184">18.4</a>, Denuit et al. (2007) provides a recent
+overview of nonlinear longitudinal claim count models.</p>
+<p>To account for the entire distribution of claims, a common approach
+used in credibility is to adopt a Bayesian perspective. Keffer
+(1929) initially suggested using a Bayesian perspective for
+experience rating in the context of group life insurance.
+Subsequently, Bailey (1945, 1950) showed how to derive the linear
+credibility form from a Bayesian perspective as the mean of a
+predictive distribution. Several authors have provided useful
+extensions of this paradigm. Jewell (1980) extended Bailey’s results
+to a broader class of distributions, the exponential family, with
+conjugate prior distributions for the structure variables.</p>
+<p><strong>References</strong></p>
+<ul>
+<li>Bailey, Arthur (1945). A generalized theory of credibility.
+<em>Proceedings of the Casualty Actuarial Society</em> 32.</li>
+<li>Bailey, Arthur (1950). Credibility procedures: LaPlace’s
+generalization of Bayes’ rule and the combination of collateral
+knowledge with observed data. <em>Proceedings of the Casualty Actuarial Society Society</em> 37, 7-23.</li>
+<li>Bühlmann, Hans (1967). Experience rating and credibility.
+<em>ASTIN Bulletin</em> 4, 199-207.</li>
+<li>Bühlmann, Hans and E. Straub (1970). Glaubwürdigkeit für
+schadensätze. <em>Mitteilungen der Vereinigung Schweizerischer Versicherungs-Mathematiker</em> 70, 111-133.</li>
+<li>Dionne, George and C. Vanasse (1992). Automobile insurance
+ratemaking in the presence of asymmetrical information.
+<em>Journal of Applied Econometrics</em> 7, 149-165.</li>
+<li>Denuit, Michel, Xavier Marechal, Sandra Pitrebois and Jean-Francois
+Walhin (2007). <em>Actuarial Modelling of Claim Counts: Risk Classification, Credibility and Bonus-Malus Systems</em>. Wiley, New York.</li>
+<li>Frees, Edward W., Virginia R. Young, and Yu Luo (1999). A
+longitudinal data analysis interpretation of credibility models.
+<em>Insurance: Mathematics and Economics</em> 24, 229-247.</li>
+<li>Frees, Edward W., Virginia R. Young, and Yu Luo (2001). Case studies
+using panel data models. <em>North American Actuarial Journal</em>
+5(4), 24-42.</li>
+<li>Frees, Edward W. (2004). <em>Longitudinal and Panel Data: Analysis and Applications in the Social Sciences.</em> Cambridge
+University Press, New York.</li>
+<li>Hachemeister, Charles A. (1975). Credibility for regression models
+with applications to trend. In <em>Credibility: Theory and Applications</em>, editor Paul M. Kahn. Academic Press, New York, 129-163.</li>
+<li>Keffer, R (1929). An experience rating formula. <em>Transactions of the Actuarial Society of America</em> 30, 130-139.</li>
+<li>Klugman, Stuart A. (1992). <em>Bayesian Statistics in Actuarial Science</em>. Kluwer, Boston.</li>
+<li>Klugman, Stuart A, Harry H. Panjer and Gordon E. Willmot (2008).
+<em>Loss Models: From Data to Decisions</em>. John Wiley &amp; Sons,
+Hoboken, New Jersey.</li>
+<li>Lemaire, Jean (1995). <em>Bonus-Malus Systems in Automobile Insurance</em>. Kluwer, Boston.</li>
+<li>Lemaire, Jean (1998). Bonus-malus systems: The European and Asian
+approach to merit-rating. <em>North American Actuarial Journal</em>
+2(1), 26-47.</li>
+<li>Mowbray, Albert H. (1914). How extensive a payroll exposure is
+necessary to give a dependable pure premium. <em>Proceedings of the Casualty Actuarial Society</em> 1, 24-30.</li>
+<li>Norberg, Ragnar (1980). Empirical Bayes credibility.
+<em>Scandinavian Actuarial Journal</em> 177-194.</li>
+<li>Norberg, Ragnar (1986). Hierarchical credibility: Analysis of a
+random effect linear model with nested classification.
+<em>Scandinavian Actuarial Journal</em> 204-22.</li>
+<li>Taylor, Greg C. (1977). Abstract credibility. <em>Scandinavian Actuarial Journal</em> 149-68.</li>
+<li>Whitney, Albert W. (1918). The theory of experience rating.
+<em>Proceedings of the Casualty Actuarial Society</em> 4.</li>
+</ul>
+
+<!-- # Chap 1 -->
+<!-- # Chap 2 -->
+<!-- # Chap 3 -->
+<!-- # Chap 4 -->
+<!-- # Chap 5 -->
+<!-- # Chap 6 -->
+<!-- # Chap 7 -->
+<!-- # Chap 8 -->
+<!-- # Chap 9 -->
+<!-- # Chap 10 -->
+<!-- # Chap 11 -->
+<!-- # Chap 12 -->
+<!-- # Chap 13 -->
+<!-- # Chap 14 -->
+<!-- # Chap 15 -->
+<!-- # Chap 16 -->
+<!-- # Chap 17 -->
+<!-- # Chap 18 -->
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="C17Fat.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="C19Triangles.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

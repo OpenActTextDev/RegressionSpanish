@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 15 Chap 7 | Regression Modeling with Actuarial and Financial Applications</title>
+  <meta name="description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 15 Chap 7 | Regression Modeling with Actuarial and Financial Applications" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 15 Chap 7 | Regression Modeling with Actuarial and Financial Applications" />
+  
+  <meta name="twitter:description" content="HTML version of ‘Regression Modeling with Actuarial and Financial Applications’" />
+  
+
+<meta name="author" content="Edward (Jed) Frees, University of Wisconsin - Madison, Australian National University" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="chap-6.html"/>
+<link rel="next" href="chap-8.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+<!-- Mathjax Version 2-->
+<script type='text/x-mathjax-config'>
+		MathJax.Hub.Config({
+			extensions: ['tex2jax.js'],
+			jax: ['input/TeX', 'output/HTML-CSS'],
+			tex2jax: {
+				inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+				displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+				processEscapes: true
+			},
+			'HTML-CSS': { availableFonts: ['TeX'] }
+		});
+</script>
+
+<script type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML"> </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<link href="https://unpkg.com/survey-jquery/modern.min.css" type="text/css" rel="stylesheet">
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+
+<!-- Various toggle functions used throughout --> 
+<script language="javascript">
+function toggle(id1,id2) {
+	var ele = document.getElementById(id1); var text = document.getElementById(id2);
+	if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+		else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}
+function togglecode(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show R Code";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide R Code";}}
+function toggleEX(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Example";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Example";}}
+function toggleTheory(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Theory";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Theory";}}
+function toggleSolution(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Solution";}}      
+function toggleQuiz(id1,id2) {
+   var ele = document.getElementById(id1); var text = document.getElementById(id2);
+   if (ele.style.display == "block") {ele.style.display = "none"; text.innerHTML = "Show Quiz Solution";}
+      else {ele.style.display = "block"; text.innerHTML = "Hide Quiz Solution";}}      
+</script>
+
+<!-- A few functions for revealing definitions -->
+<script language="javascript">
+<!--   $( function() {
+    $("#tabs").tabs();
+  } ); -->
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover(); 
+});
+</script>
+
+<script language="javascript">
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Regression Modeling With Actuarial and Financial Applications</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#dedication"><i class="fa fa-check"></i>Dedication</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#forward"><i class="fa fa-check"></i>Forward</a>
+<ul>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#who-is-this-book-for"><i class="fa fa-check"></i>Who Is This Book For?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#what-is-this-book-about"><i class="fa fa-check"></i>What Is This Book About?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#how-does-this-book-deliver-its-message"><i class="fa fa-check"></i>How Does This Book Deliver Its Message?</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="C2BasicLR.html"><a href="C2BasicLR.html"><i class="fa fa-check"></i><b>1</b> Basic Linear Regression</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec21"><i class="fa fa-check"></i><b>1.1</b> Correlations and Least Squares</a></li>
+<li class="chapter" data-level="1.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec22"><i class="fa fa-check"></i><b>1.2</b> Basic Linear Regression Model</a></li>
+<li class="chapter" data-level="1.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec23"><i class="fa fa-check"></i><b>1.3</b> Is the Model Useful? Some Basic Summary Measures</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec231"><i class="fa fa-check"></i><b>1.3.1</b> Partitioning the Variability</a></li>
+<li class="chapter" data-level="1.3.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec232"><i class="fa fa-check"></i><b>1.3.2</b> The Size of a Typical Deviation: <em>s</em></a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec24"><i class="fa fa-check"></i><b>1.4</b> Properties of Regression Coefficient Estimators</a></li>
+<li class="chapter" data-level="1.5" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec25"><i class="fa fa-check"></i><b>1.5</b> Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec251"><i class="fa fa-check"></i><b>1.5.1</b> Is the Explanatory Variable Important?: The <em>t</em>-Test</a></li>
+<li class="chapter" data-level="1.5.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec252"><i class="fa fa-check"></i><b>1.5.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="1.5.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec253"><i class="fa fa-check"></i><b>1.5.3</b> Prediction Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec26"><i class="fa fa-check"></i><b>1.6</b> Building a Better Model: Residual Analysis</a></li>
+<li class="chapter" data-level="1.7" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec27"><i class="fa fa-check"></i><b>1.7</b> Application: Capital Asset Pricing Model</a></li>
+<li class="chapter" data-level="1.8" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec28"><i class="fa fa-check"></i><b>1.8</b> Illustrative Regression Computer Output</a></li>
+<li class="chapter" data-level="1.9" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec29"><i class="fa fa-check"></i><b>1.9</b> Further Reading and References</a></li>
+<li class="chapter" data-level="1.10" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec210"><i class="fa fa-check"></i><b>1.10</b> Exercises</a></li>
+<li class="chapter" data-level="1.11" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec211"><i class="fa fa-check"></i><b>1.11</b> Technical Supplement - Elements of Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="1.11.1" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2111"><i class="fa fa-check"></i><b>1.11.1</b> Basic Definitions</a></li>
+<li class="chapter" data-level="1.11.2" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2112"><i class="fa fa-check"></i><b>1.11.2</b> Some Special Matrices</a></li>
+<li class="chapter" data-level="1.11.3" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2113"><i class="fa fa-check"></i><b>1.11.3</b> Basic Operations</a></li>
+<li class="chapter" data-level="1.11.4" data-path="C2BasicLR.html"><a href="C2BasicLR.html#Sec2114"><i class="fa fa-check"></i><b>1.11.4</b> Random Matrices</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html"><i class="fa fa-check"></i><b>2</b> Multiple Linear Regression - I</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec31"><i class="fa fa-check"></i><b>2.1</b> Method of Least Squares</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec311"><i class="fa fa-check"></i><b>2.1.1</b> Least Squares Method</a></li>
+<li class="chapter" data-level="2.1.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec312"><i class="fa fa-check"></i><b>2.1.2</b> General Case with <em>k</em> Explanatory Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec32"><i class="fa fa-check"></i><b>2.2</b> Linear Regression Model and Properties of Estimators</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec321"><i class="fa fa-check"></i><b>2.2.1</b> Regression Function</a></li>
+<li class="chapter" data-level="2.2.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec322"><i class="fa fa-check"></i><b>2.2.2</b> Regression Coefficient Interpretation</a></li>
+<li class="chapter" data-level="2.2.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec323"><i class="fa fa-check"></i><b>2.2.3</b> Model Assumptions</a></li>
+<li class="chapter" data-level="2.2.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec324"><i class="fa fa-check"></i><b>2.2.4</b> Properties of Regression Coefficient Estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec33"><i class="fa fa-check"></i><b>2.3</b> Estimation and Goodness of Fit</a></li>
+<li class="chapter" data-level="2.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec34"><i class="fa fa-check"></i><b>2.4</b> Statistical Inference for a Single Coefficient</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec341"><i class="fa fa-check"></i><b>2.4.1</b> The <em>t</em>-Test</a></li>
+<li class="chapter" data-level="2.4.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec342"><i class="fa fa-check"></i><b>2.4.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="2.4.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec343"><i class="fa fa-check"></i><b>2.4.3</b> Added Variable Plots</a></li>
+<li class="chapter" data-level="2.4.4" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec344"><i class="fa fa-check"></i><b>2.4.4</b> Partial Correlation Coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec35"><i class="fa fa-check"></i><b>2.5</b> Some Special Explanatory Variables</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec351"><i class="fa fa-check"></i><b>2.5.1</b> Binary Variables</a></li>
+<li class="chapter" data-level="2.5.2" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec352"><i class="fa fa-check"></i><b>2.5.2</b> Transforming Explanatory Variables</a></li>
+<li class="chapter" data-level="2.5.3" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec353"><i class="fa fa-check"></i><b>2.5.3</b> Interaction Terms</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec36"><i class="fa fa-check"></i><b>2.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="2.7" data-path="C3BasicMLR.html"><a href="C3BasicMLR.html#Sec37"><i class="fa fa-check"></i><b>2.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html"><i class="fa fa-check"></i><b>3</b> Multiple Linear Regression - II</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec41"><i class="fa fa-check"></i><b>3.1</b> The Role of Binary Variables</a></li>
+<li class="chapter" data-level="3.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec42"><i class="fa fa-check"></i><b>3.2</b> Statistical Inference for Several Coefficients</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec421"><i class="fa fa-check"></i><b>3.2.1</b> Sets of Regression Coefficients</a></li>
+<li class="chapter" data-level="3.2.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec422"><i class="fa fa-check"></i><b>3.2.2</b> The General Linear Hypothesis</a></li>
+<li class="chapter" data-level="3.2.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec423"><i class="fa fa-check"></i><b>3.2.3</b> Estimating and Predicting Several Coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec43"><i class="fa fa-check"></i><b>3.3</b> One Factor ANOVA Model</a></li>
+<li class="chapter" data-level="3.4" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec44"><i class="fa fa-check"></i><b>3.4</b> Combining Categorical and Continuous Explanatory Variables</a></li>
+<li class="chapter" data-level="3.5" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec45"><i class="fa fa-check"></i><b>3.5</b> Further Reading and References</a></li>
+<li class="chapter" data-level="3.6" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec46"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+<li class="chapter" data-level="3.7" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec47"><i class="fa fa-check"></i><b>3.7</b> Technical Supplement - Matrix Expressions</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec471"><i class="fa fa-check"></i><b>3.7.1</b> Expressing Models with Categorical Variables in Matrix Form</a></li>
+<li class="chapter" data-level="3.7.2" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec472"><i class="fa fa-check"></i><b>3.7.2</b> Calculating Least Squares Recursively</a></li>
+<li class="chapter" data-level="3.7.3" data-path="C4MLRANOVA.html"><a href="C4MLRANOVA.html#Sec473"><i class="fa fa-check"></i><b>3.7.3</b> General Linear Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="C5VarSelect.html"><a href="C5VarSelect.html"><i class="fa fa-check"></i><b>4</b> Variable Selection</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec51"><i class="fa fa-check"></i><b>4.1</b> An Iterative Approach to Data Analysis and Modeling</a></li>
+<li class="chapter" data-level="4.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec52"><i class="fa fa-check"></i><b>4.2</b> Automatic Variable Selection Procedures</a></li>
+<li class="chapter" data-level="4.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec53"><i class="fa fa-check"></i><b>4.3</b> Residual Analysis</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec531"><i class="fa fa-check"></i><b>4.3.1</b> Residuals</a></li>
+<li class="chapter" data-level="4.3.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec532"><i class="fa fa-check"></i><b>4.3.2</b> Using Residuals to Identify Outliers</a></li>
+<li class="chapter" data-level="4.3.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec533"><i class="fa fa-check"></i><b>4.3.3</b> Using Residuals to Select Explanatory Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec54"><i class="fa fa-check"></i><b>4.4</b> Influential Points</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec541"><i class="fa fa-check"></i><b>4.4.1</b> Leverage</a></li>
+<li class="chapter" data-level="4.4.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec542"><i class="fa fa-check"></i><b>4.4.2</b> Cook’s Distance</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec55"><i class="fa fa-check"></i><b>4.5</b> Collinearity</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec551"><i class="fa fa-check"></i><b>4.5.1</b> What is Collinearity?</a></li>
+<li class="chapter" data-level="4.5.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec552"><i class="fa fa-check"></i><b>4.5.2</b> Variance Inflation Factors</a></li>
+<li class="chapter" data-level="4.5.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec553"><i class="fa fa-check"></i><b>4.5.3</b> Collinearity and Leverage</a></li>
+<li class="chapter" data-level="4.5.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec554"><i class="fa fa-check"></i><b>4.5.4</b> Suppressor Variables</a></li>
+<li class="chapter" data-level="4.5.5" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec555"><i class="fa fa-check"></i><b>4.5.5</b> Orthogonal Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec56"><i class="fa fa-check"></i><b>4.6</b> Selection Criteria</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec561"><i class="fa fa-check"></i><b>4.6.1</b> Goodness of Fit</a></li>
+<li class="chapter" data-level="4.6.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec562"><i class="fa fa-check"></i><b>4.6.2</b> Model Validation</a></li>
+<li class="chapter" data-level="4.6.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec563"><i class="fa fa-check"></i><b>4.6.3</b> Cross-Validation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec57"><i class="fa fa-check"></i><b>4.7</b> Heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec571"><i class="fa fa-check"></i><b>4.7.1</b> Detecting Heteroscedasticity</a></li>
+<li class="chapter" data-level="4.7.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec572"><i class="fa fa-check"></i><b>4.7.2</b> Heteroscedasticity-Consistent Standard Errors</a></li>
+<li class="chapter" data-level="4.7.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec573"><i class="fa fa-check"></i><b>4.7.3</b> Weighted Least Squares</a></li>
+<li class="chapter" data-level="4.7.4" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec574"><i class="fa fa-check"></i><b>4.7.4</b> Transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec58"><i class="fa fa-check"></i><b>4.8</b> Further Reading and References</a></li>
+<li class="chapter" data-level="4.9" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec59"><i class="fa fa-check"></i><b>4.9</b> Exercises</a></li>
+<li class="chapter" data-level="4.10" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec510"><i class="fa fa-check"></i><b>4.10</b> Technical Supplements for Chapter 5</a>
+<ul>
+<li class="chapter" data-level="4.10.1" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5101"><i class="fa fa-check"></i><b>4.10.1</b> Projection Matrix</a></li>
+<li class="chapter" data-level="4.10.2" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5102"><i class="fa fa-check"></i><b>4.10.2</b> Leave One Out Statistics</a></li>
+<li class="chapter" data-level="4.10.3" data-path="C5VarSelect.html"><a href="C5VarSelect.html#Sec5103"><i class="fa fa-check"></i><b>4.10.3</b> Omitting Variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html"><i class="fa fa-check"></i><b>5</b> Interpreting Regression Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec61"><i class="fa fa-check"></i><b>5.1</b> What the Modeling Process Tells Us</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec611"><i class="fa fa-check"></i><b>5.1.1</b> Interpreting Individual Effects</a></li>
+<li class="chapter" data-level="5.1.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec612"><i class="fa fa-check"></i><b>5.1.2</b> Other Interpretations</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec62"><i class="fa fa-check"></i><b>5.2</b> The Importance of Variable Selection</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec621"><i class="fa fa-check"></i><b>5.2.1</b> Overfitting the Model</a></li>
+<li class="chapter" data-level="5.2.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec622"><i class="fa fa-check"></i><b>5.2.2</b> Underfitting the Model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec63"><i class="fa fa-check"></i><b>5.3</b> The Importance of Data Collection</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec631"><i class="fa fa-check"></i><b>5.3.1</b> Sampling Frame Error and Adverse Selection</a></li>
+<li class="chapter" data-level="5.3.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec632"><i class="fa fa-check"></i><b>5.3.2</b> Limited Sampling Regions</a></li>
+<li class="chapter" data-level="5.3.3" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec633"><i class="fa fa-check"></i><b>5.3.3</b> Limited Dependent Variables, Censoring and Truncation</a></li>
+<li class="chapter" data-level="5.3.4" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec634"><i class="fa fa-check"></i><b>5.3.4</b> Omitted and Endogenous Variables</a></li>
+<li class="chapter" data-level="5.3.5" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec635"><i class="fa fa-check"></i><b>5.3.5</b> Missing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec64"><i class="fa fa-check"></i><b>5.4</b> Missing Data Models</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec641"><i class="fa fa-check"></i><b>5.4.1</b> Missing at Random</a></li>
+<li class="chapter" data-level="5.4.2" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec642"><i class="fa fa-check"></i><b>5.4.2</b> Non-Ignorable Missing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec65"><i class="fa fa-check"></i><b>5.5</b> Application: Risk Managers’ Cost Effectiveness</a></li>
+<li class="chapter" data-level="5.6" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec66"><i class="fa fa-check"></i><b>5.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="5.7" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec67"><i class="fa fa-check"></i><b>5.7</b> Exercises</a></li>
+<li class="chapter" data-level="5.8" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec68"><i class="fa fa-check"></i><b>5.8</b> Technical Supplements for Chapter 6</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="interpreting-regression-results.html"><a href="interpreting-regression-results.html#Sec681"><i class="fa fa-check"></i><b>5.8.1</b> Effects of Model Misspecification</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="C7Trends.html"><a href="C7Trends.html"><i class="fa fa-check"></i><b>6</b> Modeling Trends</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="C7Trends.html"><a href="C7Trends.html#introduction-1"><i class="fa fa-check"></i><b>6.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#time-series-and-stochastic-processes"><i class="fa fa-check"></i>Time Series and Stochastic Processes</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#time-series-versus-causal-models"><i class="fa fa-check"></i>Time Series versus Causal Models</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="C7Trends.html"><a href="C7Trends.html#S7:Trends"><i class="fa fa-check"></i><b>6.2</b> Fitting Trends in Time</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#understanding-patterns-over-time"><i class="fa fa-check"></i>Understanding Patterns over Time</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#fitting-trends-in-time"><i class="fa fa-check"></i>Fitting Trends in Time</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#fitting-seasonal-trends"><i class="fa fa-check"></i>Fitting Seasonal Trends</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#reliability-of-time-series-forecasts"><i class="fa fa-check"></i>Reliability of Time Series Forecasts</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="C7Trends.html"><a href="C7Trends.html#S7:RandomWalk"><i class="fa fa-check"></i><b>6.3</b> Stationarity and Random Walk Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#white-noise"><i class="fa fa-check"></i>White Noise</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#random-walk"><i class="fa fa-check"></i>Random Walk</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="C7Trends.html"><a href="C7Trends.html#inference-using-random-walk-models"><i class="fa fa-check"></i><b>6.4</b> Inference using Random Walk Models</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#model-properties"><i class="fa fa-check"></i>Model Properties</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#forecasting"><i class="fa fa-check"></i>Forecasting</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#identifying-stationarity"><i class="fa fa-check"></i>Identifying Stationarity</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#identifying-random-walks"><i class="fa fa-check"></i>Identifying Random Walks</a></li>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#random-walk-versus-linear-trend-in-time-models"><i class="fa fa-check"></i>Random Walk versus Linear Trend in Time Models</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="C7Trends.html"><a href="C7Trends.html#filtering-to-achieve-stationarity"><i class="fa fa-check"></i><b>6.5</b> Filtering to Achieve Stationarity</a>
+<ul>
+<li class="chapter" data-level="" data-path="C7Trends.html"><a href="C7Trends.html#transformations"><i class="fa fa-check"></i>Transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="C7Trends.html"><a href="C7Trends.html#forecast-evaluation"><i class="fa fa-check"></i><b>6.6</b> Forecast Evaluation</a></li>
+<li class="chapter" data-level="6.7" data-path="C7Trends.html"><a href="C7Trends.html#further-reading-and-references"><i class="fa fa-check"></i><b>6.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="6.8" data-path="C7Trends.html"><a href="C7Trends.html#exercises"><i class="fa fa-check"></i><b>6.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="C8AR.html"><a href="C8AR.html"><i class="fa fa-check"></i><b>7</b> Autocorrelations and Autoregressive Models</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="C8AR.html"><a href="C8AR.html#S8:Autocorrs"><i class="fa fa-check"></i><b>7.1</b> Autocorrelations</a>
+<ul>
+<li class="chapter" data-level="" data-path="C8AR.html"><a href="C8AR.html#application-inflation-bond-returns"><i class="fa fa-check"></i>Application: Inflation Bond Returns</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="C8AR.html"><a href="C8AR.html#autoregressive-models-of-order-one"><i class="fa fa-check"></i><b>7.2</b> Autoregressive Models of Order One</a></li>
+<li class="chapter" data-level="7.3" data-path="C8AR.html"><a href="C8AR.html#S8:Estimation"><i class="fa fa-check"></i><b>7.3</b> Estimation and Diagnostic Checking</a></li>
+<li class="chapter" data-level="7.4" data-path="C8AR.html"><a href="C8AR.html#S8:AR1Smooth"><i class="fa fa-check"></i><b>7.4</b> Smoothing and Prediction</a></li>
+<li class="chapter" data-level="7.5" data-path="C8AR.html"><a href="C8AR.html#S8:BoxJenkins"><i class="fa fa-check"></i><b>7.5</b> Box-Jenkins Modeling and Forecasting</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="C8AR.html"><a href="C8AR.html#models"><i class="fa fa-check"></i><b>7.5.1</b> Models</a></li>
+<li class="chapter" data-level="7.5.2" data-path="C8AR.html"><a href="C8AR.html#forecasting-1"><i class="fa fa-check"></i><b>7.5.2</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="C8AR.html"><a href="C8AR.html#application-hong-kong-exchange-rates"><i class="fa fa-check"></i><b>7.6</b> Application: Hong Kong Exchange Rates</a></li>
+<li class="chapter" data-level="7.7" data-path="C8AR.html"><a href="C8AR.html#further-reading-and-references-1"><i class="fa fa-check"></i><b>7.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="7.8" data-path="C8AR.html"><a href="C8AR.html#exercises-1"><i class="fa fa-check"></i><b>7.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="C9Forecast.html"><a href="C9Forecast.html"><i class="fa fa-check"></i><b>8</b> Forecasting and Time Series Models</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="C9Forecast.html"><a href="C9Forecast.html#smoothing-with-moving-averages"><i class="fa fa-check"></i><b>8.1</b> Smoothing with Moving Averages</a></li>
+<li class="chapter" data-level="8.2" data-path="C9Forecast.html"><a href="C9Forecast.html#S9:ExponSmooth"><i class="fa fa-check"></i><b>8.2</b> Exponential Smoothing</a></li>
+<li class="chapter" data-level="8.3" data-path="C9Forecast.html"><a href="C9Forecast.html#S9:SeasonalTSModels"><i class="fa fa-check"></i><b>8.3</b> Seasonal Time Series Models</a></li>
+<li class="chapter" data-level="8.4" data-path="C9Forecast.html"><a href="C9Forecast.html#unit-root-tests"><i class="fa fa-check"></i><b>8.4</b> Unit Root Tests</a></li>
+<li class="chapter" data-level="8.5" data-path="C9Forecast.html"><a href="C9Forecast.html#archgarch-models"><i class="fa fa-check"></i><b>8.5</b> ARCH/GARCH Models</a></li>
+<li class="chapter" data-level="8.6" data-path="C9Forecast.html"><a href="C9Forecast.html#further-reading-and-references-2"><i class="fa fa-check"></i><b>8.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="chap-1.html"><a href="chap-1.html"><i class="fa fa-check"></i><b>9</b> Chap 1</a></li>
+<li class="chapter" data-level="10" data-path="chap-2.html"><a href="chap-2.html"><i class="fa fa-check"></i><b>10</b> Chap 2</a></li>
+<li class="chapter" data-level="11" data-path="chap-3.html"><a href="chap-3.html"><i class="fa fa-check"></i><b>11</b> Chap 3</a></li>
+<li class="chapter" data-level="12" data-path="chap-4.html"><a href="chap-4.html"><i class="fa fa-check"></i><b>12</b> Chap 4</a></li>
+<li class="chapter" data-level="13" data-path="chap-5.html"><a href="chap-5.html"><i class="fa fa-check"></i><b>13</b> Chap 5</a></li>
+<li class="chapter" data-level="14" data-path="chap-6.html"><a href="chap-6.html"><i class="fa fa-check"></i><b>14</b> Chap 6</a></li>
+<li class="chapter" data-level="15" data-path="chap-7.html"><a href="chap-7.html"><i class="fa fa-check"></i><b>15</b> Chap 7</a></li>
+<li class="chapter" data-level="16" data-path="chap-8.html"><a href="chap-8.html"><i class="fa fa-check"></i><b>16</b> Chap 8</a></li>
+<li class="chapter" data-level="17" data-path="chap-9.html"><a href="chap-9.html"><i class="fa fa-check"></i><b>17</b> Chap 9</a></li>
+<li class="chapter" data-level="18" data-path="C10Panel.html"><a href="C10Panel.html"><i class="fa fa-check"></i><b>18</b> Longitudinal and Panel Data Models</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="C10Panel.html"><a href="C10Panel.html#S10:Intro"><i class="fa fa-check"></i><b>18.1</b> What are Longitudinal and Panel Data?</a></li>
+<li class="chapter" data-level="18.2" data-path="C10Panel.html"><a href="C10Panel.html#S10:Visual"><i class="fa fa-check"></i><b>18.2</b> Visualizing Longitudinal and Panel Data</a></li>
+<li class="chapter" data-level="18.3" data-path="C10Panel.html"><a href="C10Panel.html#S10:FEModels"><i class="fa fa-check"></i><b>18.3</b> Basic Fixed Effects Models</a></li>
+<li class="chapter" data-level="18.4" data-path="C10Panel.html"><a href="C10Panel.html#S10:FEModels2"><i class="fa fa-check"></i><b>18.4</b> Extended Fixed Effects Models</a></li>
+<li class="chapter" data-level="18.5" data-path="C10Panel.html"><a href="C10Panel.html#S10:REModels"><i class="fa fa-check"></i><b>18.5</b> Random Effects Models</a></li>
+<li class="chapter" data-level="18.6" data-path="C10Panel.html"><a href="C10Panel.html#S10:References"><i class="fa fa-check"></i><b>18.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="chap-7-1.html"><a href="chap-7-1.html"><i class="fa fa-check"></i><b>19</b> Chap 7</a></li>
+<li class="chapter" data-level="20" data-path="chap-8-1.html"><a href="chap-8-1.html"><i class="fa fa-check"></i><b>20</b> Chap 8</a></li>
+<li class="chapter" data-level="21" data-path="chap-9-1.html"><a href="chap-9-1.html"><i class="fa fa-check"></i><b>21</b> Chap 9</a></li>
+<li class="chapter" data-level="22" data-path="chap-10.html"><a href="chap-10.html"><i class="fa fa-check"></i><b>22</b> Chap 10</a></li>
+<li class="chapter" data-level="23" data-path="C11Binary.html"><a href="C11Binary.html"><i class="fa fa-check"></i><b>23</b> Categorical Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec111"><i class="fa fa-check"></i><b>23.1</b> Binary Dependent Variables</a></li>
+<li class="chapter" data-level="23.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec112"><i class="fa fa-check"></i><b>23.2</b> Logistic and Probit Regression Models</a>
+<ul>
+<li class="chapter" data-level="23.2.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1121"><i class="fa fa-check"></i><b>23.2.1</b> Using Nonlinear Functions of Explanatory Variables</a></li>
+<li class="chapter" data-level="23.2.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1122"><i class="fa fa-check"></i><b>23.2.2</b> Threshold Interpretation</a></li>
+<li class="chapter" data-level="23.2.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1123"><i class="fa fa-check"></i><b>23.2.3</b> Random Utility Interpretation</a></li>
+<li class="chapter" data-level="23.2.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1124"><i class="fa fa-check"></i><b>23.2.4</b> Logistic Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="23.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec113"><i class="fa fa-check"></i><b>23.3</b> Inference for Logistic and Probit Regression Models</a>
+<ul>
+<li class="chapter" data-level="23.3.1" data-path="C11Binary.html"><a href="C11Binary.html#parameter-estimation"><i class="fa fa-check"></i><b>23.3.1</b> Parameter Estimation</a></li>
+<li class="chapter" data-level="23.3.2" data-path="C11Binary.html"><a href="C11Binary.html#additional-inference"><i class="fa fa-check"></i><b>23.3.2</b> Additional Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec114"><i class="fa fa-check"></i><b>23.4</b> Application: Medical Expenditures</a></li>
+<li class="chapter" data-level="23.5" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec115"><i class="fa fa-check"></i><b>23.5</b> Nominal Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="23.5.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1151"><i class="fa fa-check"></i><b>23.5.1</b> Generalized Logit</a></li>
+<li class="chapter" data-level="23.5.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1152"><i class="fa fa-check"></i><b>23.5.2</b> Multinomial Logit</a></li>
+<li class="chapter" data-level="23.5.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1153"><i class="fa fa-check"></i><b>23.5.3</b> Nested Logit</a></li>
+</ul></li>
+<li class="chapter" data-level="23.6" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec116"><i class="fa fa-check"></i><b>23.6</b> Ordinal Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="23.6.1" data-path="C11Binary.html"><a href="C11Binary.html#cumulative-logit"><i class="fa fa-check"></i><b>23.6.1</b> Cumulative Logit</a></li>
+<li class="chapter" data-level="23.6.2" data-path="C11Binary.html"><a href="C11Binary.html#cumulative-probit"><i class="fa fa-check"></i><b>23.6.2</b> Cumulative Probit</a></li>
+</ul></li>
+<li class="chapter" data-level="23.7" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec117"><i class="fa fa-check"></i><b>23.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="23.8" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec118"><i class="fa fa-check"></i><b>23.8</b> Exercises</a></li>
+<li class="chapter" data-level="23.9" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec119"><i class="fa fa-check"></i><b>23.9</b> Technical Supplements - Likelihood-Based Inference</a>
+<ul>
+<li class="chapter" data-level="23.9.1" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1191"><i class="fa fa-check"></i><b>23.9.1</b> Properties of Likelihood Functions</a></li>
+<li class="chapter" data-level="23.9.2" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1192"><i class="fa fa-check"></i><b>23.9.2</b> Maximum Likelihood Estimators</a></li>
+<li class="chapter" data-level="23.9.3" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1193"><i class="fa fa-check"></i><b>23.9.3</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="23.9.4" data-path="C11Binary.html"><a href="C11Binary.html#S:Sec1194"><i class="fa fa-check"></i><b>23.9.4</b> Information Criteria</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="C12Count.html"><a href="C12Count.html"><i class="fa fa-check"></i><b>24</b> Count Dependent Variables</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec121"><i class="fa fa-check"></i><b>24.1</b> Poisson Regression</a>
+<ul>
+<li class="chapter" data-level="24.1.1" data-path="C12Count.html"><a href="C12Count.html#S:Sec1211"><i class="fa fa-check"></i><b>24.1.1</b> Poisson Distribution</a></li>
+<li class="chapter" data-level="24.1.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec1212"><i class="fa fa-check"></i><b>24.1.2</b> Regression Model</a></li>
+<li class="chapter" data-level="24.1.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec1213"><i class="fa fa-check"></i><b>24.1.3</b> Estimation</a></li>
+<li class="chapter" data-level="24.1.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec1214"><i class="fa fa-check"></i><b>24.1.4</b> Additional Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="24.2" data-path="C12Count.html"><a href="C12Count.html#S:Sec122"><i class="fa fa-check"></i><b>24.2</b> Application: Singapore Automobile Insurance</a></li>
+<li class="chapter" data-level="24.3" data-path="C12Count.html"><a href="C12Count.html#S:Sec123"><i class="fa fa-check"></i><b>24.3</b> Overdispersion and Negative Binomial Models</a></li>
+<li class="chapter" data-level="24.4" data-path="C12Count.html"><a href="C12Count.html#S:Sec124"><i class="fa fa-check"></i><b>24.4</b> Other Count Models</a>
+<ul>
+<li class="chapter" data-level="24.4.1" data-path="C12Count.html"><a href="C12Count.html#zero-inflated-models"><i class="fa fa-check"></i><b>24.4.1</b> Zero-Inflated Models</a></li>
+<li class="chapter" data-level="24.4.2" data-path="C12Count.html"><a href="C12Count.html#hurdle-models"><i class="fa fa-check"></i><b>24.4.2</b> Hurdle Models</a></li>
+<li class="chapter" data-level="24.4.3" data-path="C12Count.html"><a href="C12Count.html#heterogeneity-models"><i class="fa fa-check"></i><b>24.4.3</b> Heterogeneity Models</a></li>
+<li class="chapter" data-level="24.4.4" data-path="C12Count.html"><a href="C12Count.html#latent-class-models"><i class="fa fa-check"></i><b>24.4.4</b> Latent Class Models</a></li>
+</ul></li>
+<li class="chapter" data-level="24.5" data-path="C12Count.html"><a href="C12Count.html#S:Sec125"><i class="fa fa-check"></i><b>24.5</b> Further Reading and References</a></li>
+<li class="chapter" data-level="24.6" data-path="C12Count.html"><a href="C12Count.html#S:Sec126"><i class="fa fa-check"></i><b>24.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="C13GLM.html"><a href="C13GLM.html"><i class="fa fa-check"></i><b>25</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec131"><i class="fa fa-check"></i><b>25.1</b> Introduction</a></li>
+<li class="chapter" data-level="25.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec132"><i class="fa fa-check"></i><b>25.2</b> GLM Model</a>
+<ul>
+<li class="chapter" data-level="25.2.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1321"><i class="fa fa-check"></i><b>25.2.1</b> Linear Exponential Family of Distributions</a></li>
+<li class="chapter" data-level="25.2.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1322"><i class="fa fa-check"></i><b>25.2.2</b> Link Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="25.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec133"><i class="fa fa-check"></i><b>25.3</b> Estimation</a>
+<ul>
+<li class="chapter" data-level="25.3.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1331"><i class="fa fa-check"></i><b>25.3.1</b> Maximum Likelihood Estimation for Canonical Links</a></li>
+<li class="chapter" data-level="25.3.2" data-path="C13GLM.html"><a href="C13GLM.html#overdispersion"><i class="fa fa-check"></i><b>25.3.2</b> Overdispersion</a></li>
+<li class="chapter" data-level="25.3.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1333"><i class="fa fa-check"></i><b>25.3.3</b> Goodness of Fit Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="25.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec134"><i class="fa fa-check"></i><b>25.4</b> Application: Medical Expenditures</a></li>
+<li class="chapter" data-level="25.5" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec135"><i class="fa fa-check"></i><b>25.5</b> Residuals</a></li>
+<li class="chapter" data-level="25.6" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec136"><i class="fa fa-check"></i><b>25.6</b> Tweedie Distribution</a></li>
+<li class="chapter" data-level="25.7" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec137"><i class="fa fa-check"></i><b>25.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="25.8" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec138"><i class="fa fa-check"></i><b>25.8</b> Exercises</a></li>
+<li class="chapter" data-level="25.9" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec139"><i class="fa fa-check"></i><b>25.9</b> Technical Supplements - Exponential Family</a>
+<ul>
+<li class="chapter" data-level="25.9.1" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1391"><i class="fa fa-check"></i><b>25.9.1</b> Linear Exponential Family of Distributions</a></li>
+<li class="chapter" data-level="25.9.2" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1392"><i class="fa fa-check"></i><b>25.9.2</b> Moments</a></li>
+<li class="chapter" data-level="25.9.3" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1393"><i class="fa fa-check"></i><b>25.9.3</b> Maximum Likelihood Estimation for General Links</a></li>
+<li class="chapter" data-level="25.9.4" data-path="C13GLM.html"><a href="C13GLM.html#S:Sec1394"><i class="fa fa-check"></i><b>25.9.4</b> Iterated Reweighted Least Squares</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="C14Survival.html"><a href="C14Survival.html"><i class="fa fa-check"></i><b>26</b> Survival Models</a>
+<ul>
+<li class="chapter" data-level="26.1" data-path="C14Survival.html"><a href="C14Survival.html#introduction-2"><i class="fa fa-check"></i><b>26.1</b> Introduction</a></li>
+<li class="chapter" data-level="26.2" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec142"><i class="fa fa-check"></i><b>26.2</b> Censoring and Truncation</a>
+<ul>
+<li class="chapter" data-level="26.2.1" data-path="C14Survival.html"><a href="C14Survival.html#definitions-and-examples"><i class="fa fa-check"></i><b>26.2.1</b> Definitions and Examples</a></li>
+<li class="chapter" data-level="26.2.2" data-path="C14Survival.html"><a href="C14Survival.html#likelihood-inference"><i class="fa fa-check"></i><b>26.2.2</b> Likelihood Inference</a></li>
+<li class="chapter" data-level="26.2.3" data-path="C14Survival.html"><a href="C14Survival.html#product-limit-estimator"><i class="fa fa-check"></i><b>26.2.3</b> Product-Limit Estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="26.3" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec143"><i class="fa fa-check"></i><b>26.3</b> Accelerated Failure Time Model</a></li>
+<li class="chapter" data-level="26.4" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec144"><i class="fa fa-check"></i><b>26.4</b> Proportional Hazards Model</a>
+<ul>
+<li class="chapter" data-level="26.4.1" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec1441"><i class="fa fa-check"></i><b>26.4.1</b> Proportional Hazards</a></li>
+<li class="chapter" data-level="26.4.2" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec1442"><i class="fa fa-check"></i><b>26.4.2</b> Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="26.5" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec145"><i class="fa fa-check"></i><b>26.5</b> Recurrent Events</a></li>
+<li class="chapter" data-level="26.6" data-path="C14Survival.html"><a href="C14Survival.html#S:Sec146"><i class="fa fa-check"></i><b>26.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="C15Misc.html"><a href="C15Misc.html"><i class="fa fa-check"></i><b>27</b> Miscellaneous Regression Topics</a>
+<ul>
+<li class="chapter" data-level="27.1" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec151"><i class="fa fa-check"></i><b>27.1</b> Mixed Linear Models</a>
+<ul>
+<li class="chapter" data-level="27.1.1" data-path="C15Misc.html"><a href="C15Misc.html#weighted-least-squares-2"><i class="fa fa-check"></i><b>27.1.1</b> Weighted Least Squares</a></li>
+<li class="chapter" data-level="27.1.2" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec1512"><i class="fa fa-check"></i><b>27.1.2</b> Variance Components Estimation</a></li>
+<li class="chapter" data-level="27.1.3" data-path="C15Misc.html"><a href="C15Misc.html#best-linear-unbiased-prediction"><i class="fa fa-check"></i><b>27.1.3</b> Best Linear Unbiased Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="27.2" data-path="C15Misc.html"><a href="C15Misc.html#bayesian-regression"><i class="fa fa-check"></i><b>27.2</b> Bayesian Regression</a></li>
+<li class="chapter" data-level="27.3" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec153"><i class="fa fa-check"></i><b>27.3</b> Density Estimation and Scatterplot Smoothing}</a></li>
+<li class="chapter" data-level="27.4" data-path="C15Misc.html"><a href="C15Misc.html#S:Sec154"><i class="fa fa-check"></i><b>27.4</b> Generalized Additive Models</a></li>
+<li class="chapter" data-level="27.5" data-path="C15Misc.html"><a href="C15Misc.html#bootstrapping"><i class="fa fa-check"></i><b>27.5</b> Bootstrapping</a></li>
+<li class="chapter" data-level="27.6" data-path="C15Misc.html"><a href="C15Misc.html#further-reading-and-references-3"><i class="fa fa-check"></i><b>27.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="C16FreqSev.html"><a href="C16FreqSev.html"><i class="fa fa-check"></i><b>28</b> Frequency-Severity Models</a>
+<ul>
+<li class="chapter" data-level="28.1" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec161"><i class="fa fa-check"></i><b>28.1</b> Introduction</a></li>
+<li class="chapter" data-level="28.2" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec162"><i class="fa fa-check"></i><b>28.2</b> Tobit Model</a></li>
+<li class="chapter" data-level="28.3" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec163"><i class="fa fa-check"></i><b>28.3</b> Application: Medical Expenditures</a></li>
+<li class="chapter" data-level="28.4" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec164"><i class="fa fa-check"></i><b>28.4</b> Two-Part Model</a></li>
+<li class="chapter" data-level="28.5" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec165"><i class="fa fa-check"></i><b>28.5</b> Aggregate Loss Model</a></li>
+<li class="chapter" data-level="28.6" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec166"><i class="fa fa-check"></i><b>28.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="28.7" data-path="C16FreqSev.html"><a href="C16FreqSev.html#S:Sec167"><i class="fa fa-check"></i><b>28.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="C17Fat.html"><a href="C17Fat.html"><i class="fa fa-check"></i><b>29</b> Fat-Tailed Regression Models</a>
+<ul>
+<li class="chapter" data-level="29.1" data-path="C17Fat.html"><a href="C17Fat.html#introduction-3"><i class="fa fa-check"></i><b>29.1</b> Introduction</a></li>
+<li class="chapter" data-level="29.2" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec172"><i class="fa fa-check"></i><b>29.2</b> Transformations</a></li>
+<li class="chapter" data-level="29.3" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec173"><i class="fa fa-check"></i><b>29.3</b> Generalized Linear Models</a>
+<ul>
+<li class="chapter" data-level="29.3.1" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec1731"><i class="fa fa-check"></i><b>29.3.1</b> What is “Fat-Tailed?”</a></li>
+<li class="chapter" data-level="29.3.2" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec1732"><i class="fa fa-check"></i><b>29.3.2</b> Application: Wisconsin Nursing Homes</a></li>
+</ul></li>
+<li class="chapter" data-level="29.4" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec174"><i class="fa fa-check"></i><b>29.4</b> Generalized Distributions</a>
+<ul>
+<li class="chapter" data-level="" data-path="C17Fat.html"><a href="C17Fat.html#applicationwisconsin-nursing-homes"><i class="fa fa-check"></i>Application:Wisconsin Nursing Homes</a></li>
+</ul></li>
+<li class="chapter" data-level="29.5" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec175"><i class="fa fa-check"></i><b>29.5</b> Quantile Regression</a></li>
+<li class="chapter" data-level="29.6" data-path="C17Fat.html"><a href="C17Fat.html#S:Sec176"><i class="fa fa-check"></i><b>29.6</b> Extreme Value Models</a></li>
+<li class="chapter" data-level="29.7" data-path="C17Fat.html"><a href="C17Fat.html#further-reading-and-references-4"><i class="fa fa-check"></i><b>29.7</b> Further Reading and References</a></li>
+<li class="chapter" data-level="29.8" data-path="C17Fat.html"><a href="C17Fat.html#exercises-2"><i class="fa fa-check"></i><b>29.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="C18Cred.html"><a href="C18Cred.html"><i class="fa fa-check"></i><b>30</b> Credibility and Bonus-Malus</a>
+<ul>
+<li class="chapter" data-level="30.1" data-path="C18Cred.html"><a href="C18Cred.html#risk-classification-and-experience-rating"><i class="fa fa-check"></i><b>30.1</b> Risk Classification and Experience Rating</a></li>
+<li class="chapter" data-level="30.2" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec182"><i class="fa fa-check"></i><b>30.2</b> Credibility</a>
+<ul>
+<li class="chapter" data-level="30.2.1" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec1821"><i class="fa fa-check"></i><b>30.2.1</b> Limited Fluctuation Credibility</a></li>
+<li class="chapter" data-level="30.2.2" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec1822"><i class="fa fa-check"></i><b>30.2.2</b> Greatest Accuracy Credibility</a></li>
+</ul></li>
+<li class="chapter" data-level="30.3" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec183"><i class="fa fa-check"></i><b>30.3</b> Credibility and Regression</a>
+<ul>
+<li class="chapter" data-level="30.3.1" data-path="C18Cred.html"><a href="C18Cred.html#one-way-random-effects-model"><i class="fa fa-check"></i><b>30.3.1</b> One-Way Random Effects Model</a></li>
+<li class="chapter" data-level="30.3.2" data-path="C18Cred.html"><a href="C18Cred.html#longitudinal-models"><i class="fa fa-check"></i><b>30.3.2</b> Longitudinal Models</a></li>
+</ul></li>
+<li class="chapter" data-level="30.4" data-path="C18Cred.html"><a href="C18Cred.html#S:Sec184"><i class="fa fa-check"></i><b>30.4</b> Bonus-Malus</a></li>
+</ul></li>
+<li class="chapter" data-level="31" data-path="C19Triangles.html"><a href="C19Triangles.html"><i class="fa fa-check"></i><b>31</b> Claims Triangles</a>
+<ul>
+<li class="chapter" data-level="31.1" data-path="C19Triangles.html"><a href="C19Triangles.html#introduction-4"><i class="fa fa-check"></i><b>31.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="31.1.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1911"><i class="fa fa-check"></i><b>31.1.1</b> Claims Evolution</a></li>
+<li class="chapter" data-level="31.1.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1912"><i class="fa fa-check"></i><b>31.1.2</b> Claims Triangles</a></li>
+<li class="chapter" data-level="31.1.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1913"><i class="fa fa-check"></i><b>31.1.3</b> Chain Ladder Method</a></li>
+</ul></li>
+<li class="chapter" data-level="31.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec192"><i class="fa fa-check"></i><b>31.2</b> Regression Using Functions of Time as Explanatory Variables</a>
+<ul>
+<li class="chapter" data-level="31.2.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1921"><i class="fa fa-check"></i><b>31.2.1</b> Lognormal Model</a></li>
+<li class="chapter" data-level="31.2.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1922"><i class="fa fa-check"></i><b>31.2.2</b> Hoerl Curve</a></li>
+<li class="chapter" data-level="31.2.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1923"><i class="fa fa-check"></i><b>31.2.3</b> Poisson Models</a></li>
+</ul></li>
+<li class="chapter" data-level="31.3" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec193"><i class="fa fa-check"></i><b>31.3</b> Using Past Developments</a>
+<ul>
+<li class="chapter" data-level="31.3.1" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1931"><i class="fa fa-check"></i><b>31.3.1</b> Mack Model</a></li>
+<li class="chapter" data-level="31.3.2" data-path="C19Triangles.html"><a href="C19Triangles.html#S:Sec1932"><i class="fa fa-check"></i><b>31.3.2</b> Distributional Models</a></li>
+</ul></li>
+<li class="chapter" data-level="31.4" data-path="C19Triangles.html"><a href="C19Triangles.html#further-reading-and-references-5"><i class="fa fa-check"></i><b>31.4</b> Further Reading and References</a></li>
+<li class="chapter" data-level="31.5" data-path="C19Triangles.html"><a href="C19Triangles.html#exercises-3"><i class="fa fa-check"></i><b>31.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="32" data-path="C20Report.html"><a href="C20Report.html"><i class="fa fa-check"></i><b>32</b> Report Writing: Communicating Data Analysis Results</a>
+<ul>
+<li class="chapter" data-level="32.1" data-path="C20Report.html"><a href="C20Report.html#S20:Overview"><i class="fa fa-check"></i><b>32.1</b> Overview</a></li>
+<li class="chapter" data-level="32.2" data-path="C20Report.html"><a href="C20Report.html#S20:Methods"><i class="fa fa-check"></i><b>32.2</b> Methods for Communicating Data</a>
+<ul>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#within-text-data"><i class="fa fa-check"></i>Within Text Data</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#graphs"><i class="fa fa-check"></i>Graphs</a></li>
+</ul></li>
+<li class="chapter" data-level="32.3" data-path="C20Report.html"><a href="C20Report.html#S20:Organize"><i class="fa fa-check"></i><b>32.3</b> How to Organize</a>
+<ul>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#title-and-abstract"><i class="fa fa-check"></i>Title and Abstract</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#introduction-5"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#model-selection-and-interpretation"><i class="fa fa-check"></i>Model Selection and Interpretation</a></li>
+<li class="chapter" data-level="" data-path="C20Report.html"><a href="C20Report.html#references-and-appendix"><i class="fa fa-check"></i>References and Appendix</a></li>
+</ul></li>
+<li class="chapter" data-level="32.4" data-path="C20Report.html"><a href="C20Report.html#further-suggestions-for-report-writing"><i class="fa fa-check"></i><b>32.4</b> Further Suggestions for Report Writing</a></li>
+<li class="chapter" data-level="32.5" data-path="C20Report.html"><a href="C20Report.html#case-study-swedish-automobile-claims"><i class="fa fa-check"></i><b>32.5</b> Case Study: Swedish Automobile Claims</a></li>
+<li class="chapter" data-level="32.6" data-path="C20Report.html"><a href="C20Report.html#further-reading-and-references-6"><i class="fa fa-check"></i><b>32.6</b> Further Reading and References</a></li>
+<li class="chapter" data-level="32.7" data-path="C20Report.html"><a href="C20Report.html#exercises-4"><i class="fa fa-check"></i><b>32.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="33" data-path="C21Design.html"><a href="C21Design.html"><i class="fa fa-check"></i><b>33</b> Designing Effective Graphs</a>
+<ul>
+<li class="chapter" data-level="33.1" data-path="C21Design.html"><a href="C21Design.html#S21:Intro"><i class="fa fa-check"></i><b>33.1</b> Introduction</a></li>
+<li class="chapter" data-level="33.2" data-path="C21Design.html"><a href="C21Design.html#S21:GDesign"><i class="fa fa-check"></i><b>33.2</b> Graphic Design Choices Make a Difference</a></li>
+<li class="chapter" data-level="33.3" data-path="C21Design.html"><a href="C21Design.html#S21:DesignGuide"><i class="fa fa-check"></i><b>33.3</b> Design Guidelines</a>
+<ul>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-one-avoid-chartjunk"><i class="fa fa-check"></i>Guideline One: Avoid Chartjunk</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-two-use-small-multiples-to-promote-comparisons-and-assess-change"><i class="fa fa-check"></i>Guideline Two: Use Small Multiples to Promote Comparisons and Assess Change</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-three-use-complex-graphs-to-portray-complex-patterns"><i class="fa fa-check"></i>Guideline Three: Use Complex Graphs to Portray Complex Patterns</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-four-relate-graph-size-to-information-content"><i class="fa fa-check"></i>Guideline Four: Relate Graph Size to Information Content</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-five-use-graphical-forms-that-promote-comparisons"><i class="fa fa-check"></i>Guideline Five: Use Graphical Forms That Promote Comparisons</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-six-integrate-graphs-and-text"><i class="fa fa-check"></i>Guideline Six: Integrate Graphs and Text</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-seven-demonstrate-an-important-message"><i class="fa fa-check"></i>Guideline Seven: Demonstrate an Important Message</a></li>
+<li class="chapter" data-level="" data-path="C21Design.html"><a href="C21Design.html#guideline-eight-know-your-audience"><i class="fa fa-check"></i>Guideline Eight: Know Your Audience</a></li>
+</ul></li>
+<li class="chapter" data-level="33.4" data-path="C21Design.html"><a href="C21Design.html#S21:EmpiricalFoundations"><i class="fa fa-check"></i><b>33.4</b> Empirical Foundations For Guidelines</a>
+<ul>
+<li class="chapter" data-level="33.4.1" data-path="C21Design.html"><a href="C21Design.html#graphs-as-units-of-study"><i class="fa fa-check"></i><b>33.4.1</b> Graphs as Units of Study</a></li>
+</ul></li>
+<li class="chapter" data-level="33.5" data-path="C21Design.html"><a href="C21Design.html#S21:Conclude"><i class="fa fa-check"></i><b>33.5</b> Concluding Remarks</a></li>
+<li class="chapter" data-level="33.6" data-path="C21Design.html"><a href="C21Design.html#S21:References"><i class="fa fa-check"></i><b>33.6</b> Further Reading and References</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="appendices.html"><a href="appendices.html"><i class="fa fa-check"></i><b>34</b> Appendices</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#appendix-a1.-basic-statistical-inference"><i class="fa fa-check"></i>Appendix A1. Basic Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#distributions-of-functions-of-random-variables"><i class="fa fa-check"></i>Distributions of Functions of Random Variables</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#estimation-and-prediction"><i class="fa fa-check"></i>Estimation and Prediction</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#testing-hypotheses"><i class="fa fa-check"></i>Testing Hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#appendix-a2.-matrix-algebra"><i class="fa fa-check"></i>Appendix A2. Matrix Algebra</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#basic-definitions"><i class="fa fa-check"></i>Basic Definitions</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#review-of-basic-operations"><i class="fa fa-check"></i>Review of Basic Operations</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#further-definitions"><i class="fa fa-check"></i>Further Definitions</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#appendix-a3.-probability-tables"><i class="fa fa-check"></i>Appendix A3. Probability Tables</a>
+<ul>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#normal-distribution"><i class="fa fa-check"></i>Normal Distribution</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#chi-square-distribution"><i class="fa fa-check"></i>Chi-Square Distribution</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#t-distribution"><i class="fa fa-check"></i><em>t</em>-Distribution</a></li>
+<li class="chapter" data-level="" data-path="appendices.html"><a href="appendices.html#f-distribution"><i class="fa fa-check"></i><em>F</em>-Distribution</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="brief-answers-to-selected-exercises.html"><a href="brief-answers-to-selected-exercises.html"><i class="fa fa-check"></i>Brief Answers to Selected Exercises</a></li>
+<li class="chapter" data-level="" data-path="bibliography.html"><a href="bibliography.html"><i class="fa fa-check"></i>Bibliography</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/OpenActTextDev/RegressionSpanish/" target="blank">Spanish Regression on GitHub</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Regression Modeling with Actuarial and Financial Applications</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chap-7" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Chap 7<a href="chap-7.html#chap-7" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chap-6.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chap-8.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
