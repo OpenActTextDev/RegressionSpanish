@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 14 Modelos de Supervivencia | Modelado de Regresión con Aplicaciones Actuariales y Financieras</title>
+  <title>Respuestas Breves a Ejercicios Seleccionados | Modelado de Regresión con Aplicaciones Actuariales y Financieras</title>
   <meta name="description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 14 Modelos de Supervivencia | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  <meta property="og:title" content="Respuestas Breves a Ejercicios Seleccionados | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 14 Modelos de Supervivencia | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
+  <meta name="twitter:title" content="Respuestas Breves a Ejercicios Seleccionados | Modelado de Regresión con Aplicaciones Actuariales y Financieras" />
   
   <meta name="twitter:description" content="Spanish Translation of ‘Regression Modeling with Actuarial and Financial Applications’" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="C13GLM.html"/>
-<link rel="next" href="C15Misc.html"/>
+<link rel="prev" href="apéndices.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -741,533 +741,701 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="C14Survival" class="section level1 hasAnchor" number="14">
-<h1><span class="header-section-number">Capítulo 14</span> Modelos de Supervivencia<a href="C14Survival.html#C14Survival" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><em>Vista Previa del Capítulo</em>. Este capítulo introduce la regresión donde la variable dependiente es el tiempo hasta un evento, como el tiempo hasta la muerte, el inicio de una enfermedad o el incumplimiento de un préstamo. Los tiempos de eventos a menudo están limitados por procedimientos de muestreo, por lo que en este capítulo se resumen ideas de censura y truncamiento de datos. Los tiempos de eventos son no negativos y sus distribuciones se describen en términos de funciones de supervivencia y de riesgo. Se consideran dos tipos de regresión basada en el riesgo: un modelo completamente paramétrico de tiempo de falla acelerado y un modelo semiparamétrico de riesgos proporcionales.</p>
-<div id="introducción-2" class="section level2 hasAnchor" number="14.1">
-<h2><span class="header-section-number">14.1</span> Introducción<a href="C14Survival.html#introducción-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>En los modelos de supervivencia, la variable dependiente es el tiempo hasta un evento de interés. El ejemplo clásico de un evento es el tiempo hasta la muerte (el complemento de la muerte es la supervivencia). Los modelos de supervivencia ahora se aplican ampliamente en muchas disciplinas científicas; otros ejemplos de eventos de interés incluyen el inicio de la enfermedad de Alzheimer (biomedicina), el tiempo hasta la bancarrota (economía) y el tiempo hasta el divorcio (sociología).</p>
-<p><strong>Ejemplo: Tiempo hasta la Bancarrota.</strong> Shumway (2001) examinó el tiempo hasta la bancarrota para 3,182 empresas listadas en el archivo industrial de Compustat y el archivo de rendimientos diarios de acciones de CRSP para la Bolsa de Nueva York durante el período 1962-1992. Se examinaron varias variables financieras explicativas, incluyendo capital de trabajo sobre activos totales, ganancias retenidas sobre activos totales, ganancias antes de intereses e impuestos sobre activos totales, capital de mercado sobre pasivos totales, ventas sobre activos totales, ingresos netos sobre activos totales, pasivos totales sobre activos totales y activos corrientes sobre pasivos corrientes. El conjunto de datos incluyó 300 bancarrotas de 39,745 años-firma.</p>
-<p>Véase también Kim et al. (1995) para un estudio similar sobre insolvencias en seguros.</p>
-<hr />
-<p>Una característica distintiva del modelado de supervivencia es que es común que la variable dependiente solo se observe de manera limitada. Algunos eventos de interés, como la bancarrota o el divorcio, nunca ocurren para sujetos específicos (y por lo tanto pueden pensarse como que toman un tiempo infinito). Para otros sujetos, incluso cuando el tiempo del evento es finito, puede ocurrir después del período de estudio, de modo que los datos están <em>censurados</em> (por la derecha). Es decir, la información completa sobre los tiempos de eventos puede no estar disponible debido al diseño del estudio. Además, las empresas pueden fusionarse o ser adquiridas por otras empresas, y las personas pueden mudarse de un área geográfica, dejando el estudio. Por lo tanto, los datos pueden estar limitados por eventos que son ajenos a la pregunta de investigación en consideración, representados como censura <em>aleatoria</em>. La censura es una característica regular de los datos de supervivencia; los valores grandes de una variable dependiente requieren más tiempo para desarrollarse, por lo que pueden ser más difíciles de observar que los valores pequeños, considerando otras condiciones iguales. También pueden ocurrir otros tipos de limitaciones; los sujetos cuya observación depende de la experiencia del evento de interés se denominan <em>truncados</em>. Para ilustrar, en una investigación de mortalidad en la vejez, solo aquellos que sobreviven hasta los 85 años son reclutados para ser parte del estudio. La Sección <a href="C14Survival.html#S:Sec142">14.2</a> describe la censura y el truncamiento con más detalle.</p>
-<p>Otra característica distintiva del modelado de supervivencia es que la variable dependiente tiene valores positivos. Por lo tanto, las aproximaciones de curva normal utilizadas en la regresión lineal son menos útiles en el análisis de supervivencia; este capítulo introduce modelos de regresión alternativos. Además, es habitual interpretar los modelos de supervivencia utilizando la <em>función de riesgo</em>, definida como
+<div id="respuestas-breves-a-ejercicios-seleccionados" class="section level1 unnumbered hasAnchor">
+<h1>Respuestas Breves a Ejercicios Seleccionados<a href="respuestas-breves-a-ejercicios-seleccionados.html#respuestas-breves-a-ejercicios-seleccionados" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="capítulo-1" class="section level4 unnumbered hasAnchor">
+<h4>Capítulo 1<a href="respuestas-breves-a-ejercicios-seleccionados.html#capítulo-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>1.1</strong><br />
+a(i). Media = 12,840, Mediana = 5,695 <br><br />
+a(ii). Desviación estándar = 48,836.7 = 3.8 veces la media. Los datos parecen estar sesgados.<br><br />
+b. Los gráficos no se presentan aquí. Al verlos, la distribución parece estar sesgada hacia la derecha.<br><br />
+c(i). Los gráficos no se presentan aquí. Al verlos, aunque la distribución se ha acercado a la simetría, todavía es bastante asimétrica.<br><br />
+c(ii). Los gráficos no se presentan aquí. Al verlos, sí, la distribución parece ser mucho más simétrica.<br><br />
+d. Media = 1,854.0, Mediana = 625.7, Desviación estándar = 3,864.3. Un patrón similar se mantiene para pacientes ambulatorios como para pacientes hospitalizados.<br></p>
+<p><strong>1.2</strong>. Parte 1. a. Estadísticas descriptivas para los datos de 2000<br />
 <span class="math display">\[
-\mathrm{h}(t)= \frac{\textit{función de densidad de probabilidad}}
-{\textit{función de supervivencia}} =\frac{\mathrm{f}(t)}{\mathrm{S}(t)},
-\]</span>
-la probabilidad “instantánea” de un evento, condicionada a la supervivencia hasta el tiempo <span class="math inline">\(t\)</span>. La función de riesgo recibe muchos otros nombres: se conoce como la <em>fuerza de mortalidad</em> en la ciencia actuarial, la <em>tasa de falla</em> en ingeniería y la <em>función de intensidad</em> en procesos estocásticos.</p>
-<p>En economía, las funciones de riesgo se utilizan para describir la <em>dependencia de duración</em>, la relación entre la probabilidad instantánea de un evento (la densidad) y el tiempo transcurrido en un estado dado. La <em>dependencia de duración negativa</em> está asociada con tasas de riesgo decrecientes. Por ejemplo, cuanto mayor sea el tiempo hasta que un reclamante solicite un pago por una lesión asegurada, menor será la probabilidad de hacer una solicitud. La <em>dependencia de duración positiva</em> está asociada con tasas de riesgo crecientes. Por ejemplo, la mortalidad humana en la vejez generalmente muestra una tasa de riesgo creciente. Cuanto mayor sea la edad de una persona, mayor será la probabilidad de muerte en el corto plazo.</p>
-<p>Una cantidad relacionada de interés es la <em>función acumulada de riesgo</em>, <span class="math inline">\(H(t)= \int_0^t h(s)ds\)</span>. Esta cantidad también puede expresarse como el logaritmo negativo de la función de supervivencia, y de manera inversa, <span class="math inline">\(\Pr(y&gt;t)=\mathrm{S}(t) = \exp (-H(t))\)</span>.</p>
-<p>Los dos modelos de regresión más utilizados en el análisis de supervivencia están basados en funciones de riesgo. La Sección <a href="C14Survival.html#S:Sec143">14.3</a> introduce el <em>modelo de tiempo de falla acelerado</em>, donde se asume un modelo lineal para el logaritmo del tiempo hasta la falla, pero con una distribución de error que no necesita ser aproximadamente normal. La Sección <a href="C14Survival.html#S:Sec144">14.4</a> introduce el <em>modelo de riesgos proporcionales</em> debido a Cox (1972), donde se asume que la función de riesgo puede escribirse como el producto de un riesgo “base” y una función de una combinación lineal de variables explicativas.</p>
-<p>Con los datos de supervivencia, observamos una muestra transversal de sujetos donde el tiempo es la variable dependiente de interés. Al igual que en el Capítulo 10 sobre datos longitudinales y de panel, también existen aplicaciones en las que estamos interesados en observaciones repetidas para cada sujeto. Por ejemplo, si sufres una lesión cubierta por un seguro, los pagos que surgen de esta reclamación pueden ocurrir repetidamente a lo largo del tiempo, dependiendo del tiempo de recuperación. La Sección <a href="C14Survival.html#S:Sec145">14.5</a> introduce la noción de tiempos de eventos repetidos, llamados <em>eventos recurrentes</em>.</p>
-</div>
-<div id="S:Sec142" class="section level2 hasAnchor" number="14.2">
-<h2><span class="header-section-number">14.2</span> Censura y Truncamiento<a href="C14Survival.html#S:Sec142" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="definiciones-y-ejemplos" class="section level3 hasAnchor" number="14.2.1">
-<h3><span class="header-section-number">14.2.1</span> Definiciones y Ejemplos<a href="C14Survival.html#definiciones-y-ejemplos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Dos tipos de limitaciones que se encuentran en los datos de supervivencia son la <em>censura</em> y el <em>truncamiento</em>. La censura y el truncamiento también son características comunes en otras aplicaciones actuariales, incluidas las del Capítulo 16 sobre modelos de dos partes y el Capítulo 17 sobre modelos de colas largas. Por lo tanto, esta sección describe estos conceptos en detalle.</p>
-<p>Para la censura, la forma más común es la <em>censura por la derecha</em>, en la cual observamos el menor valor entre la “verdadera” variable dependiente y una variable de tiempo de censura. Por ejemplo, supongamos que deseamos estudiar el tiempo hasta que un nuevo empleado deje la empresa y que tenemos cinco años de datos para realizar nuestro análisis. Entonces, observamos el menor valor entre cinco años y el tiempo que el empleado estuvo con la empresa. También observamos si el empleado dejó la empresa dentro de esos cinco años.</p>
-<p>Usando notación, sea <span class="math inline">\(y\)</span> el tiempo hasta el evento, como la cantidad de tiempo que el empleado trabajó en la empresa. Sea <span class="math inline">\(C_U\)</span> el tiempo de censura, como <span class="math inline">\(C_U=5\)</span>. Entonces, observamos la variable <span class="math inline">\(y_U^{\ast}= \min(y, C_U)\)</span>. También observamos si ocurrió o no la censura. Sea <span class="math inline">\(\delta_U= \mathrm{I}(y \geq C_U)\)</span> una variable binaria que es 1 si ocurre censura, <span class="math inline">\(y \geq C_U\)</span>, y 0 en caso contrario. Por ejemplo, en la Figura <a href="C14Survival.html#fig:Fig141">14.1</a>, los valores de <span class="math inline">\(y\)</span> que son mayores que el límite superior de censura <span class="math inline">\(C_U\)</span> no se observan; por lo tanto, esto se llama comúnmente <em>censura por la derecha</em>.</p>
-
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig141"></span>
-<img src="RegressionMarkdown_files/figure-html/Fig141-1.png" alt="Figura que Ilustra Censura por la Izquierda y por la Derecha" width="60%" />
-<p class="caption">
-Figura 14.1: <strong>Figura que Ilustra Censura por la Izquierda y por la Derecha</strong>
-</p>
-</div>
-<p>Otras formas comunes de censura son la <em>censura por la izquierda</em> y la <em>censura por intervalo</em>. Con la censura por la izquierda, observamos <span class="math inline">\(y_L^{\ast}= \max(y, C_L)\)</span> y <span class="math inline">\(\delta_L= \mathrm{I}(y \leq C_L)\)</span> donde <span class="math inline">\(C_L\)</span> es el tiempo de censura. Por ejemplo, si estás realizando un estudio y entrevistas a una persona sobre un evento pasado, el sujeto puede recordar que el evento ocurrió antes de <span class="math inline">\(C_L\)</span> pero no la fecha exacta.</p>
-<p>Con la censura por intervalo, hay un intervalo de tiempo, como <span class="math inline">\((C_L, C_U)\)</span>, en el que se sabe que <span class="math inline">\(y\)</span> ocurre pero no se observa el valor exacto. Por ejemplo, podrías estar mirando dos años sucesivos de registros anuales de empleados. Las personas empleadas en el primer año pero no en el segundo dejaron el trabajo en algún momento durante el año. Con una fecha exacta de salida, podrías calcular el tiempo que estuvieron en la empresa. Sin la fecha de salida, solo sabes que salieron en algún momento durante un intervalo de un año.</p>
-<p>Los tiempos de censura como <span class="math inline">\(C_L\)</span> y <span class="math inline">\(C_U\)</span> pueden o no ser estocásticos. Si los tiempos de censura representan variables conocidas por el analista, como el período de observación, se dice que son <em>tiempos de censura fija</em>. Aquí, el adjetivo “fijo” significa que los tiempos son conocidos de antemano. Los tiempos de censura pueden variar según el individuo pero seguir siendo fijos. Sin embargo, la censura también puede ser el resultado de fenómenos imprevistos, como la fusión de una empresa o el cambio de domicilio de un sujeto fuera de un área geográfica. En este caso, la censura <span class="math inline">\(C\)</span> se representa mediante una variable aleatoria y se dice que es <em>censura aleatoria</em>. Si la censura es fija o si el tiempo de censura aleatorio es independiente del evento de interés, entonces se dice que la censura es <em>no informativa</em>. Si los tiempos de censura son independientes del evento de interés, entonces esencialmente podemos tratar la censura como fija. Cuando la censura y el tiempo hasta el evento son dependientes (conocido como <em>censura informativa</em>), entonces se requieren modelos especiales. Por ejemplo, si el evento de interés es el tiempo hasta la quiebra de una empresa y el mecanismo de censura implica la presentación de estados financieros adecuados, entonces existe una relación potencial. Las empresas financieramente débiles tienen más probabilidades de quebrar y menos probabilidades de realizar el esfuerzo contable para presentar estados financieros adecuados.</p>
-<p>Las observaciones censuradas están disponibles para estudio, aunque de forma limitada. En contraste, las respuestas <em>truncadas</em> son un tipo de datos faltantes. Para ilustrarlo, con datos <em>truncados por la izquierda</em>, si <span class="math inline">\(y\)</span> es menor que un umbral (digamos, <span class="math inline">\(C_L\)</span>), entonces no se observa. Para datos <em>truncados por la derecha</em>, si <span class="math inline">\(y\)</span> excede un umbral (digamos, <span class="math inline">\(C_U\)</span>), entonces no se observa. Para comparar observaciones truncadas y censuradas, considera el siguiente ejemplo.</p>
-<hr />
-
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig142"></span>
-<img src="RegressionMarkdown_files/figure-html/Fig142-1.png" alt="Línea de tiempo para varios sujetos en un estudio de mortalidad." width="60%" />
-<p class="caption">
-Figura 14.2: <strong>Línea de tiempo para varios sujetos en un estudio de mortalidad.</strong>
-</p>
-</div>
-<p><strong>Ejemplo: Estudio de Mortalidad.</strong> Supongamos que estás realizando un estudio de dos años sobre la mortalidad de sujetos de alto riesgo, comenzando el 1 de enero de 2010 y finalizando el 1 de enero de 2012. La Figura <a href="C14Survival.html#fig:Fig142">14.2</a> representa gráficamente los seis tipos de sujetos reclutados. Para cada sujeto, el inicio de la flecha representa el momento en que el sujeto fue reclutado y el final de la flecha representa el tiempo del evento. Por lo tanto, la flecha representa el tiempo de exposición.</p>
-<ul>
-<li>Tipo A - censura por la derecha. Este sujeto está vivo al inicio y al final del estudio. Como no se conoce el tiempo de muerte al final del estudio, está censurado por la derecha. La mayoría de los sujetos son de tipo A.</li>
-<li>Tipo B. Se dispone de información completa para un sujeto de tipo B. El sujeto está vivo al inicio del estudio y la muerte ocurre dentro del período de observación.</li>
-<li>Tipo C - censura por la derecha y truncamiento por la izquierda. Un sujeto de tipo C está censurado por la derecha, ya que la muerte ocurre después del período de observación. Sin embargo, el sujeto ingresó después del inicio del estudio y se dice que tiene un <em>tiempo de entrada retrasado</em>. Como el sujeto no habría sido observado si la muerte hubiera ocurrido antes de la entrada, está truncado por la izquierda.</li>
-<li>Tipo D - truncamiento por la izquierda. Un sujeto de tipo D también tiene una entrada retrasada. Como la muerte ocurre dentro del período de observación, este sujeto no está censurado por la derecha.</li>
-<li>Tipo E - truncamiento por la izquierda. Un sujeto de tipo E no está incluido en el estudio porque la muerte ocurre antes del período de observación.</li>
-<li>Tipo F - truncamiento por la derecha. De manera similar, un sujeto de tipo F no está incluido porque el tiempo de entrada ocurre después del período de observación.</li>
-</ul>
-<hr />
-</div>
-<div id="inferencia-por-verosimilitud" class="section level3 hasAnchor" number="14.2.2">
-<h3><span class="header-section-number">14.2.2</span> Inferencia por Verosimilitud<a href="C14Survival.html#inferencia-por-verosimilitud" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Muchas técnicas de inferencia para el modelado de supervivencia implican la estimación por verosimilitud, por lo que es útil entender las implicaciones de la censura y el truncamiento al especificar funciones de verosimilitud. Para simplificar, asumimos tiempos de censura fijos y un tiempo hasta el evento continuo <span class="math inline">\(y\)</span>.</p>
-<p>Para comenzar, considere el caso de datos censurados por la derecha, donde observamos <span class="math inline">\(y_U^{\ast}= \min(y, C_U)\)</span> y <span class="math inline">\(\delta_U= \mathrm{I}(y \geq C_U)\)</span>. Si ocurre censura de modo que <span class="math inline">\(\delta_U=1\)</span>, entonces <span class="math inline">\(y \geq C_U\)</span> y la verosimilitud es <span class="math inline">\(\Pr(y \geq C_U) = \mathrm{S}(C_U)\)</span>. Si no ocurre censura de modo que <span class="math inline">\(\delta_U=0\)</span>, entonces <span class="math inline">\(y &lt; C_U\)</span> y la verosimilitud es <span class="math inline">\(\mathrm{f}(y)\)</span>. Resumiendo, tenemos:
-<span class="math display">\[\begin{eqnarray*}
-\text{Verosimilitud} &amp;=&amp; \left\{
-\begin{array}{cl}
-\mathrm{f}(y) &amp; \textrm{si}~\delta=0 \\
-\mathrm{S}(C_U) &amp; \textrm{si}~\delta=1
+\small{
+\begin{array}{lrrrrrrr}
+   \hline
+         &amp;   &amp; 1er  &amp;   &amp;    &amp; 3er  &amp;   &amp; \text{Desviación} \\
+         &amp; \text{Mínimo}  &amp; \text{Cuartil}  &amp; \text{Mediana} &amp; \text{Media}  &amp; \text{Cuartil} &amp; \text{Máximo}   &amp; \text{Estándar}
+         \\\hline
+   \text{TPY}   &amp; 11.57 &amp; 56.72 &amp; 80.54 &amp; 88.79 &amp; 108.60 &amp; 314.70 &amp; 46.10 \\
+   \text{NUMBED} &amp; 18.00    &amp; 60.25 &amp; 90.00    &amp; 97.08 &amp; 118.8 &amp; 320.00   &amp; 48.99 \\
+   \text{SQRFOOT} &amp; 5.64  &amp; 28.64 &amp; 39.22 &amp; 50.14 &amp; 65.49 &amp; 262.00   &amp; 34.50 \\
+    \hline
 \end{array}
-\right. \\
-&amp;=&amp; \left( \mathrm{f}(y)\right)^{1-\delta} \left(
-\mathrm{S}(C_U)\right)^{\delta} .
-\end{eqnarray*}\]</span></p>
-<p>La expresión de la derecha nos permite presentar la verosimilitud de manera más compacta. Ahora, para una muestra independiente de tamaño <span class="math inline">\(n\)</span>, <span class="math inline">\(\{ (y_{U1}, \delta_1), \ldots,(y_{Un}, \delta_n) \}\)</span>, la verosimilitud es:
-<span class="math display">\[
-\prod_{i=1}^n \left( \mathrm{f}(y_i)\right)^{1-\delta_i} \left(
-\mathrm{S}(C_{Ui})\right)^{\delta_i} = \prod_{\delta_i=0}
-\mathrm{f}(y_i) \prod_{\delta_i=1} \mathrm{S}(C_{Ui}),
+}
 \]</span>
-con posibles tiempos de censura <span class="math inline">\(\{ C_{U1}, \ldots,C_{Un} \}\)</span>. Aquí, la notación “<span class="math inline">\(\prod_{\delta_i=0}\)</span>” significa tomar el producto sobre observaciones no censuradas, y de manera similar para “<span class="math inline">\(\prod_{\delta_i=1}\)</span>”.</p>
-<p>Los datos truncados se manejan en la inferencia por verosimilitud mediante probabilidades condicionales. Específicamente, ajustamos la contribución a la verosimilitud dividiendo por la probabilidad de que la variable haya sido observada. Resumiendo, tenemos las siguientes contribuciones a la verosimilitud para seis tipos de resultados:</p>
+b. Los gráficos no se presentan aquí. Al verlos, el histograma parece estar sesgado hacia la derecha, pero solo levemente.<br><br />
+c. Los gráficos no se presentan aquí. Al verlos, tanto el histograma como el gráfico <span class="math inline">\(qq\)</span> sugieren que la distribución transformada es cercana a una distribución normal.<br><br />
+Parte 2. a. Estadísticas descriptivas para los datos de 2001<br />
+<span class="math display">\[
+\small{
+\begin{array}{lrrrrrrr}
+   \hline
+         &amp;   &amp; 1er  &amp;   &amp;    &amp; 3er  &amp;   &amp; \text{Desviación} \\
+         &amp; \text{Mínimo}  &amp; \text{Cuartil}  &amp; \text{Mediana} &amp; \text{Media}  &amp; \text{Cuartil} &amp; \text{Máximo}   &amp; \text{Estándar}
+         \\\hline
+   \text{TPY}   &amp; 12.31 &amp; 56.89 &amp; 81.13 &amp; 89.71 &amp; 109.90 &amp; 440.70 &amp; 49.05 \\
+   \text{NUMBED} &amp; 18.00    &amp; 60.00    &amp; 90.00    &amp; 97.33 &amp; 119.00   &amp; 457.00   &amp; 51.97 \\
+   \text{SQRFOOT} &amp; 5.64  &amp; 28.68 &amp; 40.26 &amp; 50.37 &amp; 63.49 &amp; 262.00   &amp; 35.56 \\
+   \hline
+\end{array}
+}
+\]</span>
+c. Tanto el histograma como el gráfico <span class="math inline">\(qq\)</span> (no presentados aquí) sugieren que la distribución transformada es cercana a una distribución normal.<br></p>
+<p><strong>1.5</strong><br />
+a. Media = 5.953, Mediana = 2.331<br><br />
+b. Los gráficos no se presentan aquí. Al verlos, el histograma parece estar sesgado hacia la derecha. El gráfico <span class="math inline">\(qq\)</span> indica una desviación seria de la normalidad.<br><br />
+c(i). Para ATTORNEY=1, tenemos Media = 9.863 y Mediana = 3.417. Para ATTORNEY=2, tenemos Media = 1.865 y Mediana = 0.986. Esto sugiere que las pérdidas asociadas con la intervención de un abogado (ATTORNEY=1) son mayores que cuando no hay un abogado involucrado (ATTORNEY=2).<br></p>
+<p><strong>1.7</strong><br />
+a. Los gráficos no se presentan aquí. Al verlos, el histograma parece estar sesgado hacia la izquierda. El gráfico <span class="math inline">\(qq\)</span> indica una desviación seria de la normalidad.<br><br />
+b. Los gráficos no se presentan aquí. Al verlos, la transformación hace poco para simetrizar la distribución.</p>
+</div>
+<div id="capítulo-2" class="section level4 unnumbered hasAnchor">
+<h4>Capítulo 2<a href="respuestas-breves-a-ejercicios-seleccionados.html#capítulo-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>2.1</strong><br />
+<span class="math inline">\(r=0.5491, b_0=4.2054, b_1=0.1279\)</span> <br></p>
+<p><strong>2.3</strong> a.<br />
+<span class="math display">\[\begin{eqnarray*} 0 &amp; \leq &amp;  
+\frac{1}{n-1}\sum_{i=1}^n\left( a\frac{x_i-\overline{x}}{s_{x}}-c  
+\frac{y_i-\overline{y}}{s_{y}}\right) ^{2} \\  
+&amp;=&amp;{\frac{1}{n-1}}\sum_{i=1}^n\left[a^2\frac{(x_i-\overline{x})^2}{s_{x}^2}  
+-2ac\frac{(x_i-\overline{x})(y_i-\overline{y})}{s_x s_{y}}+c^2\frac{(y_i-\overline{y})^2}{s_{y}^2} \right]\\  
+&amp;=&amp; a^2\frac{1}{s_x^2}\frac{1}{n-1}\sum_{i=1}^n\left(x_i-\overline{x}\right)^2-2ac\frac{1}{s_x s_y}\frac{1}{n-1}\sum_{i=1}^n\left(x_i-\overline{x}\right)\left(y_i-\overline{y}\right)\\  
+&amp;&amp;+~c^2\frac{1}{s_y^2}\frac{1}{n-1}\sum_{i=1}^n\left(y_i-\overline{y}\right)^2\\  
+&amp;=&amp;a^2\frac{1}{s_x^2}s_x^2-2acr+c^2\frac{1}{s_y^2}s_y^2\\  
+&amp;=&amp; a^{2}+c^{2}-2acr.  
+\end{eqnarray*}\]</span><br />
+b. Según la parte (a), tenemos <span class="math inline">\(a^{2}+c^{2}-2acr \geq 0\)</span>.<br />
+Así que,<span class="math display">\[\begin{eqnarray*}  
+a^{2}+c^{2}-2ac+2ac &amp;\geq&amp; 2acr\\  
+(a-c)^2&amp;\geq&amp; 2acr-2ac\\  
+(a-c)^2&amp;\geq&amp; 2ac(r-1)  
+\end{eqnarray*}\]</span><br />
+c. Usando el resultado en la parte b) y tomando <span class="math inline">\(a = c\)</span>, podemos obtener <span class="math inline">\(2a^{2}(r-1)\leq0\)</span>.<br />
+Además, <span class="math inline">\(a^2\geq 0\)</span>, por lo que <span class="math inline">\(r-1\leq 0\)</span>. Así, <span class="math inline">\(r \leq 1\)</span>.<br><br />
+d. Usando el resultado en la parte (b) y tomando <span class="math inline">\(a = -c\)</span>, podemos obtener <span class="math inline">\(-2a^{2}(r-1)\leq4a^2\)</span>.<br />
+Además, <span class="math inline">\(-2a^2\leq 0\)</span>, por lo que <span class="math inline">\(r-1\geq -2\)</span>. Así, <span class="math inline">\(r \geq -1\)</span>.<br><br />
+e. Si todos los datos se encuentran en una línea recta que pasa por los cuadrantes superior izquierdo e inferior derecho, entonces <span class="math inline">\(r=-1\)</span>.<br />
+Si todos los datos se encuentran en una línea recta que pasa por los cuadrantes inferior izquierdo y superior derecho, entonces <span class="math inline">\(r=1\)</span>.<br></p>
+<p><strong>2.5</strong> a.<br />
+<span class="math display">\[\begin{eqnarray*}
+b_1 = r\frac{s_{y}}{s_{x}} &amp;=&amp; \frac{1}{(n-1)s_{x}^{2}}\sum_{i=1}^n\left( x_{i}-\overline{x}\right) \left( y_{i}-\overline{y}\right)  \\
+&amp;=&amp; \frac{1}{\sum_{i=1}^n\left( x_{i}-\overline{x}\right)^{2}}\sum_{i=1}^n\left[\frac{y_{i}-\overline{y}}{x_{i}-\overline{x}}\left( x_{i}-\overline{x}\right)^2\right]\\
+&amp;&amp; \\
+&amp;&amp;\\
+&amp;=&amp; \frac{\sum_{i=1}^nweight_i~slope_i}{\sum_{i=1}^nweight_{i}}.
+\end{eqnarray*}\]</span><br />
+donde,<br />
+<span class="math display">\[
+slope_i=\frac{y_{i}-\overline{y}}{x_{i}-\overline{x}}~~~~~\mathrm{y}~~~~~weight_i=\left( x_{i}-\overline{x}\right)^2
+\]</span><br />
+b. <span class="math inline">\(slope_1=-1.5, weight_1=4\)</span><br></p>
+<p><strong>2.7</strong> a.<br />
+Para el modelo en este ejercicio, la estimación de mínimos cuadrados de <span class="math inline">\(\beta_1\)</span> es el <span class="math inline">\(b_1\)</span> que minimiza la suma de cuadrados <span class="math inline">\(\mathrm{SS}(b_1^{\ast} )=\sum_{i=1}^n\left( y_i - b_1^{\ast }x_i\right) ^{2}.\)</span><br />
+Entonces, tomando la derivada con respecto a <span class="math inline">\(b_1^{\ast}\)</span>, tenemos<br />
+<span class="math display">\[
+\frac{\partial }{\partial b_1^{\ast }}SS(b_1^{\ast })=\sum_{i=1}^n(-2x_{i})\left( y_{i}-b_1^{\ast }x_{i}\right)
+\]</span><br />
+Al igualar esta cantidad a cero y cancelar términos constantes, se obtiene<br />
+<span class="math display">\[
+\sum_{i=1}^n\left(x_{i}y_{i}-b_1^{\ast }x_{i}^2\right) =0
+\]</span><br />
+Por lo tanto, concluimos que<br />
+<span class="math display">\[
+b_1 = \frac{\sum_{i=1}^n x_i y_i}{\sum_{i=1}^nx_i^{2}}.
+\]</span><br />
+b. Del problema, tenemos <span class="math inline">\(x_i = z_i^2\)</span>. Usando el resultado de la parte (a), podemos concluir que<br />
+<span class="math display">\[
+b_1 = \frac{\sum_{i=1}^n z_i^2 y_i}{\sum_{i=1}^nz_i^{4}}.
+\]</span></p>
+<p><strong>2.10</strong><br />
+a(i). Correlación<span class="math inline">\(= 0.9372\)</span><br><br />
+a(ii). Tabla de correlaciones<br />
+<span class="math display">\[
+\small{
+\begin{array}{llll}
+   \hline
+   &amp;\text{TPY} &amp;   \text{NUMBED} &amp;  \text{SQRFOOT}  \\\hline
+\text{TPY}  &amp;   1.0000 &amp; 0.9791 &amp; 0.8244\\
+\text{NUMBED} &amp;  0.9791 &amp; 1.0000 &amp; 0.8192\\
+\text{SQRFOOT} &amp; 0.8244 &amp; 0.8192 &amp; 1.0000\\
+  \hline
+\end{array}
+}
+\]</span><br />
+a(iii). Correlación<span class="math inline">\(= 0.9791.\)</span> Las correlaciones no se ven afectadas por los cambios de escala.<br><br />
+b. Los gráficos no se presentan aquí. Al verlos, existe una fuerte relación lineal entre NUMBED y TPY. La relación lineal entre SQRFOOT y TPY no es tan fuerte como la de NUMBED y TPY.<br><br />
+c(i). <span class="math inline">\(b_1=0.92142, t-\mathrm{ratio}=91.346, R^2=0.9586\)</span><br><br />
+c(ii). <span class="math inline">\(R^2 =0.6797.\)</span> El modelo que utiliza NUMBED es preferido.<br><br />
+c(iii). <span class="math inline">\(b_1 =1.01231, t-\mathrm{ratio}=81.235, R^2=0.9483\)</span><br><br />
+c(iv). <span class="math inline">\(b_1 =0.68737, t-\mathrm{ratio}=27.25, R^2=0.6765\)</span><br><br />
+Parte 2: <span class="math inline">\(b_1=0.932384, t-\mathrm{ratio}=120.393, R^2=0.9762.\)</span> El patrón es similar al informe de costos para el año 2000.<br></p>
+<p><strong>2.11</strong> <span class="math inline">\(\hat{e}_1 = -23.\)</span><br></p>
+<p><strong>2.13</strong><br />
+a.<br />
+<span class="math display">\[
+\hat{y}_i - \overline{y} = (b_0 + b_1 x_i) - \overline{y} = (\overline{y}-b_1 \overline{x} + b_1 x_i) - \overline{y} = b_1(x_i - \overline{x}).
+\]</span><br />
+b.<br />
+<span class="math display">\[
+\sum^n_{i=1}(y_i - \overline{y})^2 =
+\sum^n_{i=1}(b_1(x_i - \overline{x}))^2 = b_1^2 \sum_{i=1}^n(x_i - \overline{x})^2 = b_1^2 s_x^2(n-1).
+\]</span><br />
+c.<br />
+<span class="math display">\[
+R^2 = \frac{Regression ~SS}{Total ~SS} =
+\frac{b_1^2 s_x^2(n-1)}{\sum_{i=1}^n(y_i - \overline{y})^2} =
+\frac{b_1^2 s_x^2(n-1)}{s_y^2(n-1)} = \frac{b_1^2 s_x^2}{s_y^2}.
+\]</span></p>
+<p><strong>2.15</strong> a. A partir de la definición del coeficiente de correlación y del Ejercicio 2.8(b), tenemos<br />
+<span class="math display">\[
+r(y,x)(n-1)s_y s_x = \sum_{i=1}^n \left( y_i-\overline{y}\right)
+\left( x_i-\overline{x}\right) = \sum_{i=1}^n y_i x_i - n
+\overline{x} \overline{y}.
+\]</span>
+Si <span class="math inline">\(\overline{y}=0,\overline{x}=0\)</span> o ambos <span class="math inline">\(\overline{x}\)</span> y <span class="math inline">\(\overline{y}=0\)</span>, entonces <span class="math inline">\(r(y,x)(n-1)s_y s_x = \sum_{i=1}^n y_i x_i\)</span>. Por lo tanto, <span class="math inline">\(r(y,x)=0\)</span> implica
+<span class="math inline">\(\sum_{i=1}^ny_i x_i=0\)</span> y viceversa.<br><br />
+b.<br />
+<span class="math display">\[\begin{eqnarray*}
+\sum_{i=1}^n x_i e_i &amp;=&amp; \sum_{i=1}^n x_i (y_i - (\overline{y} + b_1(x_i-\overline{x}) )) \\
+&amp;=&amp; \sum_{i=1}^n x_i (y_i - \overline{y}) - b_1 \sum_{i=1}^n x_i (x_i-\overline{x}) \\
+&amp;=&amp; \sum_{i=1}^n x_i b_1(x_i - \overline{x}) - b_1 \sum_{i=1}^n x_i (x_i-\overline{x}) = 0,
+\end{eqnarray*}\]</span><br />
+c.<br />
+<span class="math display">\[\begin{eqnarray*}
+\sum_{i=1}^n \widehat{y}_i e_i &amp;=&amp; \sum_{i=1}^n
+( \overline{y}+b_1(x_i-\overline{x}) ) e_i \\
+&amp;=&amp;  \overline{y} \sum_{i=1}^n e_i + b_1\sum_{i=1}^n ( (x_i-\overline{x})) e_i = 0,
+\end{eqnarray*}\]</span></p>
+<p><strong>2.17</strong><br />
+Cuando <span class="math inline">\(n = 100\)</span>, <span class="math inline">\(k = 1\)</span>, <span class="math inline">\(Error~SS = [n-(k+1)]s^2 = 98s^2\)</span><br><br />
+a. <span class="math inline">\(e_{10}^2/(Error~SS) = (8s)^2/(98s^2) = 65.31\%\)</span><br><br />
+b. <span class="math inline">\(e_{10}^2/(Error~SS) = (4s)^2/(98s^2) = 16.33\%\)</span><br><br />
+Cuando <span class="math inline">\(n = 20\)</span>, <span class="math inline">\(k = 1\)</span>, <span class="math inline">\(Error~SS = [n-(k+1)]s^2 = 18s^2\)</span><br><br />
+c. <span class="math inline">\(e_{10}^2/(Error~SS) = (4s)^2/(18s^2) = 88.89\%\)</span><br></p>
+<p><strong>2.20</strong><br />
+a. Correlación=0.9830<br><br />
+Estadísticas descriptivas<br />
+<span class="math display">\[
+\small{
+\begin{array}
+{lrrrrrrr}
+   \hline
+         &amp;   &amp; 1st  &amp;   &amp;    &amp; 3rd  &amp;   &amp; \text{Desviación} \\
+         &amp; \text{Mínimo}  &amp; \text{Cuartil}  &amp; \text{Mediana} &amp; \text{Media}  &amp; \text{Cuartil} &amp; \text{Máximo}   &amp; \text{Estándar}
+         \\\hline
+   \text{LOGTPY}   &amp; 2.51 &amp;  4.04 &amp; 4.40 &amp; 4.37 &amp; 4.70 &amp; 6.09 &amp; 0.51 \\
+   \text{LOGNUMBED} &amp; 2.89    &amp; 4.09 &amp; 4.50    &amp; 4.46 &amp; 4.78 &amp; 6.13   &amp; 0.49 \\
+   \hline
+\end{array}
+}
+\]</span><br />
+b. <span class="math inline">\(R^2 = 0.9664\)</span>, <span class="math inline">\(b_1 = 1.01923\)</span>, <span class="math inline">\(t(b_1) = 100.73\)</span>.<br><br />
+c(i). Los grados de libertad son <span class="math inline">\(df = 355 - (1+1) = 353\)</span>. El valor <span class="math inline">\(t\)</span> correspondiente es 1.96. Como el estadístico <span class="math inline">\(t\)</span> <span class="math inline">\(t(b_1) = 100.73 &gt; 1.9667\)</span>, rechazamos <span class="math inline">\(H_0\)</span> a favor de la alternativa.<br><br />
+c(ii). El estadístico <span class="math inline">\(t\)</span> es <span class="math inline">\(t - \mathrm{ratio} = (b_1 - 1)/se(b_1) = (1.01923 - 1)/0.01012 = 1.9002.\)</span> Como <span class="math inline">\(t-\mathrm{ratio} &lt; 1.9667\)</span>, no rechazamos <span class="math inline">\(H_0\)</span> a favor de la alternativa.<br><br />
+c(iii). El valor <span class="math inline">\(t\)</span> correspondiente es 1.645. El estadístico <span class="math inline">\(t\)</span> es <span class="math inline">\(t - \mathrm{ratio} = 1.9002.\)</span> Rechazamos <span class="math inline">\(H_0\)</span> a favor de la alternativa.<br><br />
+c(iv). El valor <span class="math inline">\(t\)</span> correspondiente es -1.645. El estadístico <span class="math inline">\(t\)</span> es <span class="math inline">\(t - \mathrm{ratio} = 1.9002.\)</span> No rechazamos <span class="math inline">\(H_0\)</span> a favor de la alternativa.<br><br />
+d(i). Una estimación puntual es 2.0384<br><br />
+d(ii). El intervalo de confianza al 95% para la pendiente <span class="math inline">\(b_1\)</span> es <span class="math inline">\(1.0192 \pm 1.9667 \times 0.0101 = (0.9993, 1.0391)\)</span>. Un intervalo de confianza al 95% para el cambio esperado de LOGTPY es <span class="math inline">\((0.9993 \times 2, 1.0391 \times 2) = (1.9987, 2.0781)\)</span><br><br />
+d(iii). El intervalo de confianza al 99% es $(2(1.0192 - 2.5898), 2(1.0192 + 2.5898) =(1.9861, 2.0907) $<br><br />
+e(i). <span class="math inline">\(\widehat{y} = -0.1747 + 1.0192 \times \ln 100 = 4.519037.\)</span> <br><br />
+e(ii). El error estándar de la predicción<br />
+<span class="math display">\[
+se(pred) = s \sqrt{1+\frac{1}{n}+\frac{\left( x^{\ast }-\overline{x}\right) ^{2} }{(n-1)s_{x}^{2}}} =
+0.09373 \sqrt{1+\frac{1}{355}+\frac{\left( \ln(100)-4.4573\right) ^{2} }{(355-1)0.4924^{2}}}=0.0938.
+\]</span><br />
+e(iii). El intervalo de predicción al 95% en <span class="math inline">\(x^*\)</span> es<br />
+<span class="math display">\[
+\widehat{y}^{\ast } \pm t_{n-2,1-\alpha /2} ~se(pred) = 4.519037 \pm
+1.9667(0.0938) = (4.3344, 4.7034).
+\]</span><br />
+e(iv). La predicción puntual es <span class="math inline">\(e^{4.519037}= 91.747\)</span>. <br><br />
+El intervalo de predicción es <span class="math inline">\((e^{4.334405}=76.280, e^{4.703668}=110.351 ).\)</span><br><br />
+e(v). El intervalo de predicción es <span class="math inline">\((e^{4.364214}=78.588, e^{4.673859}=107.110 ).\)</span><br></p>
+<p><strong>2.22</strong><br />
+a. Ajustado US <span class="math inline">\(LIFEEXP = 83.7381 - 5.2735 \times 2.0 = 73.1911\)</span><br><br />
+b. Un intervalo de predicción al 95% para la esperanza de vida en Dominica es<br />
+<span class="math display">\[
+\widehat{y}_{\ast} \pm t_{n-2,1-\alpha /2} ~se(pred)=73.1911\pm(1.973)(6.642)=(60.086, 86.296)
+\]</span><br />
+c.<br />
+<span class="math display">\[
+e_{i}=y_{i}-\widehat{y}_{i}=y_{i}-\left(
+b_0+b_1x_{i}\right)= 72.5-(83.7381 - 5.2735 \times 1.7)=-2.273
+\]</span><br />
+Este residual es 2.273/6.615 = 0.3436 múltiplos de <span class="math inline">\(s\)</span> por debajo de cero.<br><br />
+d. Probar <span class="math inline">\(H_0: \beta_1 = -6.0\)</span> frente a <span class="math inline">\(H_a: \beta_1 &gt; -6.0\)</span> al nivel de significancia del 5% usando un valor <span class="math inline">\(t\)</span> = 1.645. El estadístico <span class="math inline">\(t\)</span> calculado <span class="math inline">\(= \frac{-5.2735-(-6)}{0.2887}=2.5165\)</span>, que es <span class="math inline">\(\geq1.645\)</span>. Por lo tanto, rechazamos <span class="math inline">\(H_0\)</span> a favor de la alternativa. El valor <span class="math inline">\(p\)</span> correspondiente <span class="math inline">\(= 0.00637\)</span>.</p>
+</div>
+<div id="capítulo-3" class="section level4 unnumbered hasAnchor">
+<h4>Capítulo 3<a href="respuestas-breves-a-ejercicios-seleccionados.html#capítulo-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>3.1</strong>. a. <span class="math inline">\(R^2_a = 1 - s/{s^2_y} = 1 - {(50)^2}/{(100)^2} = 1 - 1/4 = 0.75.\)</span><br><br />
+b. <span class="math inline">\(Total ~SS =(n - 1)s^2_y = 99(100)^2 = 990000\)</span> y <br><br />
+<span class="math inline">\(Error ~SS = (n - (k + 1))s^2 = (100 - (3 + 1))(50)^2 = 240000.\)</span><br><br />
+<span class="math display">\[
+\small{
+\begin{array}{lcrcc}
+\hline
+Fuente &amp; SS &amp; df &amp; MS &amp; F \\ \hline
+\text{Regresión} &amp; 750000 &amp; 3 &amp; 250000 &amp; 100 \\  
+\text{Error} &amp; 240000 &amp; 96 &amp; 2500 &amp; \\  
+\text{Total} &amp; 990000 &amp;99 &amp;&amp; \\  
+\hline
+\end{array}
+}
+\]</span><br />
+c. <span class="math inline">\(R^2 = (Regression~SS)/(Total~SS) =750000/990000 = 75.76\%\)</span>.<br></p>
+<p><strong>3.3</strong> a. <span class="math inline">\({\bf y}=(0~1~5~8)^{\prime}\)</span>, <span class="math inline">\(\mathbf{X}=\left(  \begin{array}{ccc}  1 &amp; -1 &amp; 0 \\  1 &amp; 2 &amp; 0 \\  1 &amp; 4 &amp; 1 \\  1 &amp; 6 &amp; 1 \\  \end{array}  \right)\)</span>.<br><br />
+b. <span class="math inline">\(\hat{y}_{3}=x^{\prime}_{3}\mathbf{b}=(1~4~1)\left(  \begin{array}{c}  0.15 \\  0.692 \\  2.88 \\  \end{array}  \right)=5.798\)</span>
+<br><br />
+c. <span class="math inline">\(se(b_{2})=s\sqrt{3rd~diagonal~element~of~(\mathbf{X^{\prime }X)}^{-1}} = 1.373\sqrt{4.11538}=2.785\)</span><br><br />
+d. <span class="math inline">\(t(b_1)=b_1/se(b_1)=0.692/(1.373\times\sqrt{0.15385})=1.286\)</span><br></p>
+<p><strong>3.6</strong><br />
+a. El coeficiente de regresión es -0.1846, lo que significa que cuando los gastos en educación pública aumentan en un 1% del PIB, se espera que la esperanza de vida disminuya en 0.1846 años, manteniendo constantes las demás variables.<br><br />
+b. El coeficiente de regresión es -0.2358, lo que significa que cuando los gastos en salud aumentan en un 1% del PIB, se espera que la esperanza de vida disminuya en 0.2358 años, manteniendo constantes las demás variables.<br><br />
+c. <span class="math inline">\(H_{0}:\beta_2=0, H_{1}:\beta_2\neq0\)</span>. No podemos rechazar la hipótesis nula porque el valor <span class="math inline">\(p\)</span> es mayor que el nivel de significancia, digamos 0.05. Por lo tanto, PUBLICEDUCATION no es una variable estadísticamente significativa.<br><br />
+d(i). El propósito del gráfico de variables añadidas es explorar la correlación entre PUBLICEDUCATION y LIFEEXP después de eliminar los efectos de otras variables.<br><br />
+d(ii). La correlación parcial es<br />
+<span class="math display">\[
+r=\frac{t(b_2)}{\sqrt{t(b_2)^2+n-(k+1)}}=\frac{-0.6888}{\sqrt{-0.6888^2+152-(3+1)}}=-0.0565 .
+\]</span></p>
+</div>
+<div id="capítulo-4" class="section level4 unnumbered hasAnchor">
+<h4>Capítulo 4<a href="respuestas-breves-a-ejercicios-seleccionados.html#capítulo-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>4.1</strong><br />
+a. <span class="math inline">\(R^2 = (Regression~SS)/(Total~SS)\)</span>.<br><br />
+b. <span class="math inline">\(F\)</span>-ratio=<span class="math inline">\((Regression~MS)/(Error~MS)\)</span>.<br><br />
+c.<br />
+<span class="math display">\[
+1-R^2 =
+\frac{Total~SS}{Total~SS}-\frac{Regression~SS}{Total~SS}=
+\frac{Error~SS}{Total~SS}.
+\]</span><br />
+Ahora, desde el lado derecho, tenemos<br />
+<span class="math display">\[\begin{align*}
+\frac{R^2}{1-R^2} \frac{(n-(k+1))}{k}
+&amp;=\frac{(Regression~SS)/(Total~SS)}{(Error~SS)/(Total~SS)}\frac{(n-(k+1))}{k}\\
+&amp;= \frac{Regression~SS}{Error~SS}\frac{(n-(k+1))}{k}\\
+&amp;=\frac{(Regression~SS)/k}{(Error~SS)/(n-(k+1))}\\
+&amp;=\frac{Regression~MS}{Error~MS} = F-\mathrm{ratio}.
+\end{align*}\]</span><br><br />
+d. <span class="math inline">\(F-\mathrm{ratio}=1.7.\)</span><br><br />
+e. <span class="math inline">\(F-\mathrm{ratio}=19.7.\)</span><br></p>
+<p><strong>4.3</strong><br />
+a. El tercer nivel de la estructura organizacional será capturado por el término de intercepción de la regresión.<br><br />
+b. <span class="math inline">\(H_0\)</span>:TAXEXEMPT no es importante, <span class="math inline">\(H_1\)</span>: TAXEXEMPT es importante. <span class="math inline">\(p= 0.7694&gt;0.05\)</span>, no rechazamos la hipótesis nula.<br><br />
+c. Dado que el valor <span class="math inline">\(p = 1.74e^{-6}\)</span> es menor que el nivel de significancia <span class="math inline">\(\alpha=0.05\)</span>, MCERT es un factor importante para determinar LOGTPY.<br><br />
+c(i). La estimación puntual de LOGTPY es 3.988.<br><br />
+c(ii). El intervalo de confianza al 95% es<br />
+$ 3.988  /() = (3.826, 4.150)$.<br><br />
+d. <span class="math inline">\(R^2=0.1448\)</span>. Todas las variables son estadísticamente significativas.<br><br />
+e. <span class="math inline">\(R^2= 0.9673\)</span>. Solo LOGNUMBED es estadísticamente significativo a <span class="math inline">\(\alpha=0.05\)</span>.<br><br />
+e(i). La correlación parcial es 0.0744. La correlación entre LOGTPY y LOGSQRFOOT es 0.8151. La correlación parcial elimina el efecto de otras variables en LOGTPY.<br><br />
+e(ii). El <span class="math inline">\(t\)</span>-ratio prueba si la variable explicativa individual es estadísticamente significativa. El <span class="math inline">\(F\)</span>-ratio prueba si las variables explicativas tomadas en conjunto tienen un impacto significativo en la variable de respuesta. En este caso, solo LOGNUMBED es significativa y el <span class="math inline">\(R^2\)</span> es alto, esto explica por qué el <span class="math inline">\(F\)</span>-ratio es grande mientras que la mayoría de los <span class="math inline">\(t\)</span>-ratios son pequeños.<br></p>
+<p><strong>4.7</strong><br />
+a. <span class="math inline">\(H_0\)</span>: PUBLICEDUCATION y lnHEALTH no son conjuntamente estadísticamente significativos. Es decir, los coeficientes de las dos variables son iguales a cero. <span class="math inline">\(H_1\)</span>: PUBLICEDUCATION y lnHEALTH son conjuntamente estadísticamente significativos. Al menos uno de los coeficientes de las dos variables no es igual a cero. Para tomar la decisión, comparamos las estadísticas <span class="math inline">\(F\)</span> con el valor crítico. Si las estadísticas <span class="math inline">\(F\)</span> son mayores que el valor crítico, rechazamos la hipótesis nula. De lo contrario, no lo hacemos.<br><br />
+<span class="math inline">\(F-ratio = (6602.7 - 6535.7)/(2 \times 44.2) = 0.76\)</span>.<br />
+El 95% de la distribución <span class="math inline">\(F\)</span> con <span class="math inline">\(df_1=2\)</span> y <span class="math inline">\(df_2=148\)</span> es aproximadamente 3.00. Dado que el <span class="math inline">\(F-ratio\)</span> es menor que el valor crítico, no podemos rechazar la hipótesis nula. Es decir, PUBLICEDUCATION y lnHEALTH no son conjuntamente significativos.<br><br />
+b. Podemos ver que la esperanza de vida varía entre diferentes regiones.<br><br />
+c. <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\beta_{REGION}=0\)</span>, <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\beta_{REGION}\neq0\)</span>. Para tomar la decisión, comparamos el valor <span class="math inline">\(p\)</span> con el nivel de significancia <span class="math inline">\(\alpha=0.05\)</span>. Si <span class="math inline">\(p&lt;\alpha\)</span>, rechazamos la hipótesis nula. De lo contrario, no lo hacemos. En este caso, <span class="math inline">\(p=0.000 &lt; 0.05\)</span>, por lo que rechazamos la hipótesis nula. REGION es un determinante estadísticamente significativo de LIFEEXP.<br><br />
+d(i). Si REGION=Abrab state, <span class="math inline">\(\widehat{LIFEEXP} = 83.3971-2.7559 \times 2-0.4333\times 5-0.7939\times 1=74.9249\)</span>.<br />
+Si REGION=Sub-Sahara Africa, <span class="math inline">\(\widehat{LIFEEXP} = 83.3971-2.7559\times 2-0.4333 \times 5-0.7939 \times 1 -14.3567 = 60.5682\)</span>.<br><br />
+d(ii). El intervalo de confianza al 95% es <span class="math inline">\(-14.3567\pm 1.976\times 1.8663=(-18.044,-10.669).\)</span><br><br />
+d(iii). La estimación puntual para la diferencia es 18.1886.</p>
+</div>
+<div id="capítulo-5" class="section level4 unnumbered hasAnchor">
+<h4>Capítulo 5<a href="respuestas-breves-a-ejercicios-seleccionados.html#capítulo-5" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>5.1</strong><br />
+a. De la ecuación (2.9), tenemos<br />
+<span class="math display">\[\begin{eqnarray*}
+h_{ii} &amp; = &amp; \mathbf{x_i}^{\prime}\left(\mathbf{X}^{\prime }\mathbf{X}\right)^{-1}\mathbf{x_i}\\
+&amp;=&amp;\left(\begin{array}{cc}1 &amp; x_i\end{array}\right)
+\frac{1}{ \sum_{i=1}^{n}x_i^2-n\overline{x}^2}
+\left(\begin{array}{cc}n^{-1}\sum_{i=1}^{n}x_i^2 &amp; -\overline{x} \\-\overline{x} &amp; 1\end{array}\right)
+\left(\begin{array}{c}1 \\x_i\end{array}\right)\\
+&amp;=&amp; \frac{1}{\sum_{i=1}^{n}x_i^2-n\overline{x}^2} \left(
+n^{-1}(\sum_{i=1}^{n}x_i^2-n\overline{x}^2)+\overline{x}^2-2\overline{x}x_i+x_i^2
+\right)\\
+&amp;=&amp;\frac{1}{n}+\frac{(x_i-\overline{x})^2}{(n-1)s_x^2} .
+\end{eqnarray*}\]</span></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><p>El promedio del leverage es<br />
+<span class="math display">\[
+\bar{h}=\frac{1}{n} \sum_{i=1}^n h_{ii} =
+\frac{1}{n}+\frac{1}{n}\sum_{i=1}^n\frac{(x_i-\bar{x})^2}{(n-1)s_{x}^2}=\frac{1}{n}+\frac{1}{n}=\frac{2}{n}
+\]</span></p></li>
+<li><p>Sea <span class="math inline">\(c = (x_i-\bar{x})/s_x\)</span>. Entonces,<br />
+<span class="math display">\[
+\frac{6}{n}=h_{ii}=\frac{1}{n}+\frac{(x_i-\bar{x})^2}{(n-1)s_{x}^2} =
+\frac{1}{n}+\frac{(cs_x)^2}{(n-1)s_{x}^2}=\frac{1}{n}+\frac{c^2}{n-1} .
+\]</span><br />
+Para <span class="math inline">\(n\)</span> grande, <span class="math inline">\(x_i\)</span> está aproximadamente a <span class="math inline">\(c=\sqrt{5}=2.236\)</span> desviaciones estándar del promedio.</p></li>
+</ol>
+<p><strong>5.3</strong><br />
+a. Los gráficos no se presentan aquí. Al observarlos, es difícil detectar patrones lineales en el gráfico de GDP versus LIFEEXP. La transformación logarítmica de GDP distribuye los valores de GDP, permitiéndonos ver patrones lineales. Argumentos similares se aplican a HEALTH, donde el patrón en lnHEALTH es más lineal.<br><br />
+c(ii). Es ambos. El residual estandarizado es -2.66, que excede el umbral de 2, en valor absoluto. El leverage es 0.1529, que es mayor que el umbral <span class="math inline">\(3 \times\overline{h} =3\times (k+1)/n = 0.08\)</span>.<br><br />
+c(iii). La variable PUBLICEDUCATION ya no es estadísticamente significativa.</p>
+</div>
+<div id="capítulo-6" class="section level4 unnumbered hasAnchor">
+<h4>Capítulo 6<a href="respuestas-breves-a-ejercicios-seleccionados.html#capítulo-6" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>6.1</strong><br />
+a. La variable involact está algo sesgada hacia la derecha, pero no de manera drástica. La variable involact tiene varios ceros que pueden ser un problema con variables dependientes limitadas. La variable age parece ser bimodal, con seis observaciones de 28 años o menos y las demás mayores o iguales a 40 años.<br />
+<span class="math display">\[
+\small{
+\begin{array}{lrrrrrrr}
+   \hline
+       &amp;   &amp;  &amp; \text{Desviación} \\
+       &amp;  \text{Media}  &amp;  \text{Mediana} &amp; \text{Estándar} &amp; \text{Mínimo} &amp; \text{Máximo}\\
+   \hline
+\text{race}  &amp;   34.9    &amp;   24.5 &amp;  32.6  &amp;      1.0  &amp;     99.7\\
+\text{fire}   &amp;   12.3    &amp;   10.4 &amp;   9.3  &amp;      2.0  &amp;     39.7\\
+\text{theft}  &amp;   32.4    &amp;   29.0 &amp;  22.3  &amp;      3.0  &amp;    147.0\\
+\text{age}    &amp;   60.3    &amp;   65.0 &amp;  22.6  &amp;      2.0  &amp;     90.1\\
+\text{income} &amp;   10,696  &amp;  10,694.0 &amp; 2,754  &amp;    5,583 &amp;   21,480\\
+\text{volact}  &amp;  6.5    &amp;    5.9  &amp;  3.9     &amp;   0.5    &amp;   14.3\\
+\text{involact} &amp; 0.6   &amp;     0.4  &amp;  0.6     &amp;   0.0    &amp;    2.2\\
+   \hline
+\end{array}
+}
+\]</span><br />
+b. La matriz de dispersión (no presentada aquí) muestra una relación negativa entre volact e involact, una relación negativa entre race y volact, y una relación positiva entre race e involact. Si existiera discriminación racial, esperaríamos que los códigos postales con más minorías tuvieran menos acceso al mercado voluntario (menos costoso), lo que significa que tendrían que recurrir al mercado involuntario para obtener seguro.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Tabla de correlaciones<br />
+<span class="math display">\[
+\small{
+\begin{array}{lrrrrrrr}
+\hline
+    &amp;    \text{race}&amp;  \text{fire}  &amp;\text{theft} &amp;   \text{age} &amp; \text{income} &amp;\text{volact} &amp;\text{involact}\\
+\hline
+\text{race}  &amp;   1.000 &amp;   &amp; &amp;  &amp;  &amp;  &amp;\\
+\text{fire}   &amp;   0.593 &amp; 1.000  &amp; &amp; &amp;  &amp;  &amp;\\
+\text{theft}  &amp;   0.255 &amp; 0.556  &amp;1.000 &amp;  &amp;  &amp;  &amp;\\
+\text{age}    &amp;   0.251 &amp; 0.412  &amp;0.318 &amp; 1.000 &amp;  &amp;  &amp;\\
+\text{income} &amp;  -0.704 &amp;-0.610 &amp;-0.173 &amp;-0.529 &amp; 1.000  &amp;  &amp;\\
+\text{volact} &amp;  -0.759 &amp;-0.686 &amp;-0.312 &amp;-0.606 &amp; 0.751  &amp;1.000   &amp;\\
+\text{involact} &amp; 0.714 &amp; 0.703 &amp; 0.150 &amp; 0.476 &amp; -0.665 &amp;-0.746  &amp;  1.000\\
+\hline
+\end{array}
+}
+\]</span>
+d(i). El coeficiente asociado con race es negativo y estadísticamente significativo.<br>
+d(ii). Los códigos postales con alta influencia son el número 7 y 24. La variable race sigue siendo estadísticamente significativa y negativa. La variable fire ya no es significativa, aunque income se vuelve significativa.<br></li>
+<li>La variable race sigue siendo positiva y estadísticamente significativa. De manera similar, el papel de las otras variables no cambia dependiendo de la presencia de los dos puntos de alta influencia.<br></li>
+<li>La variable race sigue siendo positiva y estadísticamente significativa. De manera similar, el papel de las otras variables no cambia dependiendo de la presencia de los dos puntos de alta influencia.<br></li>
+<li>La influencia depende de las variables explicativas, no de las variables dependientes. Como las variables explicativas permanecieron sin cambios en los tres análisis, las influencias permanecieron sin cambios.<br></li>
+<li>La demanda de seguros depende del tamaño de la pérdida a asegurar, la capacidad del solicitante de pagarla y el conocimiento de los contratos de seguros. Para los seguros de vivienda, el tamaño de la pérdida se relaciona con el precio de la vivienda, el tipo de estructura, las precauciones de seguridad disponibles y la susceptibilidad a catástrofes como tornados, inundaciones, etc. La capacidad de pago se basa en ingresos, patrimonio, número de dependientes y otros factores. El conocimiento de los contratos de seguros depende, por ejemplo, de la educación. Todos estos factores omitidos pueden estar relacionados con race.<br></li>
+<li>Se esperaría que los códigos postales contiguos compartieran experiencias económicas similares. Podríamos subdividir la ciudad en grupos homogéneos, como el centro de la ciudad y los suburbios. También podríamos realizar mínimos cuadrados ponderados donde los pesos estén dados por la distancia al centro de la ciudad.</li>
+</ol>
+</div>
+<div id="capítulo-7" class="section level4 unnumbered hasAnchor">
+<h4>Capítulo 7<a href="respuestas-breves-a-ejercicios-seleccionados.html#capítulo-7" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>7.1</strong><br />
+a. <span class="math display">\[\begin{align*}
+\textrm{E}~y_t &amp;= \textrm{E}~(y_0+c_1+\cdots+c_t)=\textrm{E}~y_0+\textrm{E}~c_1+\cdots+\textrm{E}~c_t\\
+&amp;= y_0+\mu_c+\cdots+\mu_c = y_0 + t \mu_c.
+\end{align*}\]</span></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li><span class="math display">\[\begin{align*}
+\textrm{Var}~y_t &amp;= \textrm{Var}~(y_0+c_1+\cdots+c_t)=\textrm{Var}~c_1+\cdots+\textrm{Var}~c_t\\
+&amp;=\sigma_c^2+\cdots+\sigma_c^2 = t\sigma_t^2.
+\end{align*}\]</span></li>
+</ol>
+<p><strong>7.3</strong><br />
+a(ii). No. Hay una tendencia clara hacia la baja en la serie, lo que indica que la media cambia con el tiempo.<br>
+b(i). Los <span class="math inline">\(t-\)</span>ratios asociados con las porciones de tendencia lineal y cuadrática son altamente significativos desde el punto de vista estadístico. El <span class="math inline">\(R^2 = 0.8733\)</span> indica que el modelo se ajusta bien.<br>
+b(ii). El signo de un residuo es muy probable que sea el mismo que el de los residuos precedentes y posteriores. Esto sugiere un alto grado de autocorrelación en los residuos.<br>
+b(iii). <span class="math inline">\(\widehat{EURO_{702}} = 0.808 + 0.0001295(702) - 4.639 \times 10^{-7}(702)^2 = 0.6703.\)</span><br>
+c(i). Este es un modelo de caminata aleatoria.<br>
+c(ii). <span class="math inline">\(\widehat{EURO_{702}} = 0.6795 + 3(-0.0001374) = 0.679088.\)</span><br>
+c(iii). Un intervalo de predicción aproximado al 95% para <span class="math inline">\(EURO_{702}\)</span> es
+<span class="math display">\[
+0.679088\pm2(0.003621979)\sqrt{3} \approx (0.66654, 0.691635).
+\]</span></p>
+</div>
+<div id="capítulo-8" class="section level4 unnumbered hasAnchor">
+<h4>Capítulo 8<a href="respuestas-breves-a-ejercicios-seleccionados.html#capítulo-8" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>8.1</strong><br />
+<span class="math display">\[
+\begin{array}{ll}
+r_1 &amp;=\left(\sum_{t=2}^{5}(y_{t-1}-\bar y)(y_{t}-\bar
+y)\right) /\left(\sum_{t=1}^{5}(y_{t}-\bar y)^{2}\right) = -0.0036/0.0134 = -0.2687 \\
+r_2 &amp;= \left(\sum_{t=3}^{5}(y_{t-2}-\bar y)(y_{t}-\bar
+y)\right) /\left(\sum_{t=1}^{5}(y_{t}-\bar y)^{2}\right) = 0.0821
+\end{array}
+\]</span></p>
+<p><strong>8.3</strong><br />
+a. <span class="math inline">\(b_1= \left(\sum_{t=2}^{T}(y_{t-1}-\bar y_{-})(y_t-\bar y_{+})\right) /\left(\sum_{t=2}^{T}(y_{t-1}-\bar y_{-})^2\right)\)</span>,
+donde <span class="math inline">\(\bar y_{+}=\left(\sum_{t=2}^{T}y_{t}\right)/(T-1)\)</span> y <span class="math inline">\(\bar y_{-}=\left(\sum_{t=1}^{T-1}y_{t} \right)/(T-1)\)</span>.<br>
+b. <span class="math inline">\(b_0=\bar y_{+}-b_1 \bar y_{-}\)</span>.<br>
+c. <span class="math inline">\(b_0\approx \bar y \left[ 1- \left(\sum_{t=2}^{T}(y_{t-1}-\bar y_{-})(y_t-\bar y_{+})\right) /\left(\sum_{t=2}^{T}(y_{t-1}-\bar y_{-})^2\right) \right] \approx \bar y \left[1-r_1\right]\)</span>.</p>
+<p><strong>8.6</strong><br />
+a. Dado que la media y la varianza de la secuencia no varían con el tiempo, se puede considerar que la secuencia es débilmente estacionaria.<br>
+b. Las estadísticas resumen de la secuencia son las siguientes:
+<span class="math display">\[
+\small{
+\begin{array}{rrrrr} \hline
+\text{Media}&amp; \text{Mediana}&amp; \text{Desv. Estándar}&amp; \text{Mínimo}&amp; \text{Máximo}\\
+0.0004&amp; 0.0008&amp; 0.0064&amp; -0.0182 &amp; 0.0213\\
+\hline
+\end{array}
+}
+\]</span>
+Bajo la suposición de ruido blanco, el pronóstico de una observación en el futuro es su media muestral, es decir, 0.0004. Este pronóstico no depende del número de pasos hacia adelante.<br>
+c. Las autocorrelaciones para los rezagos 1 a 10 se muestran a continuación:
+<span class="math display">\[
+\small{
+\begin{array}{ccccccccccc}
+\hline
+         0   &amp;   1  &amp;    2  &amp;    3   &amp;   4   &amp;   5   &amp;   6   &amp;   7   &amp;   8   &amp;   9   &amp;  10\\
+     1.000 &amp; -0.046 &amp; -0.096 &amp; 0.019 &amp; -0.002 &amp;  -0.004 &amp; -0.054 &amp; -0.035 &amp; -0.034 &amp; -0.051 &amp; 0.026\\
+\hline
+\end{array}
+}
+\]</span>
+Dado que <span class="math inline">\(|r_k/se(r_k)|&lt;2\)</span> (<span class="math inline">\(se(r_k)=1/\sqrt{503} = 0.0446\)</span>) para <span class="math inline">\(i=1,\ldots,10\)</span>, ninguna de las autocorrelaciones es fuertemente estadísticamente significativa diferente de cero, excepto para el rezago 2. Para el rezago 2, la autocorrelación es <span class="math inline">\(0.096/0.0446 = 2.15\)</span> errores estándar por debajo de cero.</p>
+</div>
+<div id="capítulo-11" class="section level4 unnumbered hasAnchor">
+<h4>Capítulo 11<a href="respuestas-breves-a-ejercicios-seleccionados.html#capítulo-11" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>11.1</strong><br />
+a. La función de densidad de probabilidad es
+<span class="math display">\[
+\mathrm{f}(y)=\frac{\partial}{\partial y}\mathrm{F}(y)
+=(-1)(1+e^{-y})^{-2}e^{-y}(-1)= \frac{e^y}{(1+e^y)^2}.
+\]</span>
+b.
+<span class="math display">\[
+\mu_y = \int_{-\infty}^{\infty}\ y \mathrm{f}(y)dy =
+\int_{-\infty}^{\infty}\ y \frac{e^{y}}{(1+e^{y})^{2}}dy= 0.
+\]</span>
+c.
+<span class="math display">\[
+\mathrm{E~}y^2 = \int_{-\infty}^{\infty}\ y^2 \mathrm{f}(y)dy =
+\pi^2 /3 .
+\]</span>
+Dado que <span class="math inline">\(\mu_y = 0\)</span>, la desviación estándar es <span class="math inline">\(\sigma_y = \pi / \sqrt{3}=1.813798.\)</span> <br>
+d. La función de densidad de probabilidad para <span class="math inline">\(y^{\ast \ast}\)</span> es<br>
+<span class="math display">\[\begin{eqnarray*}
+\mathrm{f}^{\ast}(y)&amp;=&amp; \frac{\partial}{\partial y}\Pr(y^{\ast \ast}
+\leq y) = \frac{\partial}{\partial y}\Pr(y^{\ast } \leq y \sigma_y +
+\mu_y) =\sigma_y \mathrm{f}(y \sigma_y) = \sigma_y
+\frac{e^{y\sigma_y}}{(1+e^{y\sigma_y})^2}.
+\end{eqnarray*}\]</span></p>
+<p><strong>11.3</strong><br />
+Sea <span class="math inline">\(\Pr(\varepsilon_{i1} \leq a) = F(a)=\exp(-e^{-a})\)</span> y <span class="math inline">\(f(a)=\frac{dF(a)}{da}=\exp(-e^{-a})e^{-a}.\)</span> Entonces</p>
+<p><span class="math display">\[\begin{align*}
+\Pr(\varepsilon_{i2}-\varepsilon_{i1} \leq a)
+&amp;=\int_{-\infty}^{\infty}F(a+y)f(y)\,dy=\int_{-\infty}^{\infty}\exp\left[-e^{-y}(e^{-a}+1)\right]e^{-y}\,dy\\
+&amp;=\int_{\infty}^0\exp(-zA)z \,d(-\ln z)=-\int_{\infty}^0\exp(-zA)\,dz\\
+&amp;= \frac{\exp(-zA)}{A}|_\infty^0=\frac{1}{A}=\frac{1}{1+e^{-a}},
+\end{align*}\]</span>
+con <span class="math inline">\(A=e^{-a}+1\)</span> y <span class="math inline">\(z=e^{-y}\)</span>. Así,</p>
+<p><span class="math display">\[
+\pi_i=\Pr (\epsilon _{i2}-\epsilon _{i1}&lt;V_{i1}-V_{i2})=\Pr
+(\epsilon _{i2}-\epsilon _{i1}&lt;\mathbf{x}_i^{\mathbf{\prime
+}}\boldsymbol \beta) =\frac{1}{1+\exp (-\mathbf{x}_i^{\mathbf{\prime
+}}\boldsymbol \beta)}.
+\]</span></p>
+<p><strong>11.5</strong><br />
+De la ecuación (11.5) sabemos que</p>
+<p><span class="math display">\[
+\sum\limits_{i=1}^{n}\mathbf{x}_i\left( y_i-\mathrm{\pi }(\mathbf{x}
+_i^{\mathbf{\prime}}\mathbf{b}_{MLE})\right) =
+\sum\limits_{i=1}^{n}(1~~x_{i1}~~\cdots~~x_{ik})^\prime \left(
+y_i-\mathrm{\pi }(\mathbf{x}
+_i^{\mathbf{\prime}}\mathbf{b}_{MLE})\right)
+=(0~~0~~\cdots~~0)^{\prime}.
+\]</span></p>
+<p>De la primera fila, obtenemos <span class="math inline">\(\sum\limits_{i=1}^{n} \left( y_i-\mathrm{\pi }(\mathbf{x} _i^{\mathbf{\prime}}\mathbf{b}_{MLE})\right) =0\)</span>. Dividiendo por <span class="math inline">\(n\)</span>
+se obtiene <span class="math inline">\(\overline{y} = n^{-1} \sum_{i=1}^n \widehat{y}_i .\)</span></p>
+<p><strong>11.7</strong><br />
+a. La derivada de la función logit es
+<span class="math display">\[
+\frac{\partial}{\partial y}\mathrm{\pi}(y) =
+\mathrm{\pi}(y)\frac{1}{(1+e^y)}=\mathrm{\pi}(y)(1-\mathrm{\pi}(y)).
+\]</span>
+Por lo tanto, usando la regla de la cadena y la ecuación (11.5), tenemos
+<span class="math display">\[
+\begin{array}{ll}
+\mathbf{I}(\boldsymbol \beta) &amp;=&amp;  - \mathrm{E~}\frac{\partial
+^{2}}{\partial \boldsymbol \beta\partial \boldsymbol \beta ^{\prime
+}}L(\boldsymbol \beta) = -\mathrm{E~} \frac{\partial }{\partial
+\boldsymbol \beta^{\prime}} \left(
+\sum\limits_{i=1}^{n}\mathbf{x}_i\left( y_i-\mathrm{\pi }(\mathbf{x}
+_i^{\mathbf{\prime }}\boldsymbol \beta)\right) \right) \\
+&amp;=&amp; \sum\limits_{i=1}^{n}\mathbf{x}_i \frac{\partial }{\partial
+\boldsymbol \beta^{\prime}} \mathrm{\pi }(\mathbf{x}
+_i^{\mathbf{\prime }}\boldsymbol \beta)
+=\sum\limits_{i=1}^{n}\mathbf{x}_i \mathbf{x}_i^{\prime}
+\mathrm{\pi}(\mathbf{x} _i^{\mathbf{\prime}}\boldsymbol
+\beta)(1-\mathrm{\pi}(\mathbf{x} _i^{\mathbf{\prime}}\boldsymbol
+\beta)).
+\end{array}
+\]</span>
+Esto proporciona el resultado con <span class="math inline">\(\sigma_i^2 = \mathrm{\pi}(\mathbf{x}_i^{\prime} \boldsymbol \beta)(1-\mathrm{\pi}(\mathbf{x}_i^{\prime}\boldsymbol \beta))\)</span>.<br></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Definir <span class="math inline">\(\mathbf{a}_i=\mathbf{x}_i\left( y_i-\mathrm{\pi }(\mathbf{x} _i^{\mathbf{\prime}}\boldsymbol \beta)\right)\)</span> y
+<span class="math inline">\(\mathbf{H}_i = \frac{\partial }{\partial \boldsymbol \beta^{\prime}}\mathbf{a}_i =-\mathbf{x}_i \mathbf{x}_i^{\mathbf{\prime}} \mathrm{\pi }^{\prime}( \mathbf{x}_i^{\mathbf{\prime}}\boldsymbol \beta).\)</span> <br>
+Nótese que
+<span class="math inline">\(\mathrm{E}(\mathbf{a}_i)=\mathbf{x}_i \mathrm{E}\left( y_i-\mathrm{\pi }(\mathbf{x} _i^{\mathbf{\prime}}\boldsymbol \beta)\right)= \mathbf{0}\)</span>. Además, definimos <span class="math inline">\(b_i=\frac{\mathrm{\pi }^{\prime}( \mathbf{x}_i^{\mathbf{\prime}}\boldsymbol \beta)}{\mathrm{\pi }(\mathbf{x} _i^{\mathbf{\prime}}\boldsymbol \beta)(1-\mathrm{\pi }(\mathbf{x}_i^{ \mathbf{\prime}}\boldsymbol \beta))}\)</span>. Con esta notación, la función de score es <span class="math inline">\(\frac{\partial }{\partial \boldsymbol \beta}L(\boldsymbol \beta) = \sum\limits_{i=1}^{n} \mathbf{a}_i b_i\)</span>. Así,
+<span class="math display">\[
+\begin{array}{ll}
+\mathbf{I}(\boldsymbol \beta) &amp; =  - \mathrm{E} \left(
+\frac{\partial^2}{\partial \boldsymbol \beta ~ \partial \boldsymbol \beta ^{\prime}}L(\boldsymbol \beta) \right) = - \mathrm{E} \left( \frac{\partial}{\partial \boldsymbol \beta^{\prime}}\sum\limits_{i=1}^{n} \mathbf{a}_i b_i\right) \\
+&amp;= - \mathrm{E} \left( \sum\limits_{i=1}^{n} \left( \left(\frac{\partial}{\partial \boldsymbol
+\beta^{\prime}}\mathbf{a}_i \right) b_i + \mathbf{a}_i \frac{\partial}{\partial \boldsymbol \beta^{\prime}}b_i \right) \right)
+= - \sum\limits_{i=1}^{n} \left[\mathrm{E}(\mathbf{H}_i)b_i + \mathrm{E}(\mathbf{a}_i)
+\frac{\partial}{\partial \boldsymbol \beta^{\prime}}b_i \right] \\
+&amp;=  - \sum\limits_{i=1}^{n} \mathbf{H}_i b_i  =  \sum\limits_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^{\mathbf{\prime}} \frac {\left( \mathrm{\pi }^{\prime}( \mathbf{x}_i^{\mathbf{\prime}}\boldsymbol \beta)\right)^2} {\mathrm{\pi }(\mathbf{x} _i^{\mathbf{\prime}}\boldsymbol \beta)(1-\mathrm{\pi }(\mathbf{x}_i^{ \mathbf{\prime}}\boldsymbol \beta))} .
+\end{array}
+\]</span></li>
+</ol>
+<p><strong>11.8</strong><br />
+a(i). Los gráficos no se presentan aquí.
+<span class="math display">\[
+\small{
+\begin{array}{lrrrrrrr}
+   \hline
+       &amp;  mean  &amp;  median &amp; std &amp; minimum &amp; maximum\\
+   \hline
+\text{CLMAGE}    &amp; 32.531  &amp;   31.000  &amp;  17.089  &amp;    0.000  &amp;     95.000\\
+\text{LOSS}      &amp;  5.954  &amp;    2.331  &amp;  33.136  &amp;    0.005  &amp;   1067.700\\
+   \hline
+\end{array}
+}
+\]</span>
+a(ii). No para CLMAGE, pero ambas versiones de LOSS parecen diferir por ATTORNEY.
+<span class="math display">\[
+\small{
+\begin{array}{crrr}
+   \hline
+   \text{ ATTORNEY}   &amp; \text{CLMAGE} &amp;  \text{LOSS} &amp; \text{lnLOSS} \\
+   \hline
+      1 &amp; 32.270  &amp; 9.863   &amp; 1.251\\
+      2 &amp; 32.822  &amp; 1.865   &amp; -0.169\\
+   \hline
+\end{array}
+}
+\]</span>
+a(iii). SEATBELT y CLMINSUR parecen ser diferentes, CLMSEX y MARITAL menos.</p>
 <p><span class="math display">\[
 \small{
-\begin{array}{lc} \hline
-\text{Resultado }           &amp; \text{Contribución a la Verosimilitud} \\\hline
-\text{Valor exacto}        &amp; f(y) \\
-\text{Censura por la derecha}    &amp; S(C_U) \\
-\text{Censura por la izquierda}     &amp; 1-S(C_L) \\
-\text{Truncamiento por la derecha}   &amp; f(y)/(1-S(C_U)) \\
-\text{Truncamiento por la izquierda}    &amp; f(y)/S(C_L) \\
-\text{Censura por intervalo} &amp; S(C_L)-S(C_U) \\
+\begin{array}{cccccccc}
+\hline
+  \text{ATTORNEY} &amp;  \text{CLMSEX} &amp; &amp; \text{MARITAL} &amp;&amp;&amp;  &amp; \text{CLMINSUR} &amp;  &amp;  \text{SEATBELT} \\
+           &amp;          1 &amp;          2 &amp;          1 &amp;          2 &amp;          3 &amp;          4 &amp;          1 &amp;          2 &amp;          1 &amp;          2 \\
+\hline
+         1 &amp;        325 &amp;        352 &amp;        320 &amp;        329 &amp;          6 &amp;         20 &amp;         76 &amp;        585 &amp;        643 &amp;         16 \\
+         2 &amp;        261 &amp;        390 &amp;        304 &amp;        321 &amp;          9 &amp;         15 &amp;         44 &amp;        594 &amp;        627 &amp;          6 \\
+\hline
+\end{array}
+}
+\]</span>
+a(iv). El número de valores faltantes se muestra como:</p>
+<p><span class="math display">\[
+\small{
+\begin{array}{cccccc}
+\hline
+\text{CLMAGE}  &amp;  \text{LOSS} &amp; \text{CLMSEX} &amp; \text{MARITAL}&amp; \text{CLMINSUR} &amp; \text{SEATBELT}\\
+                   189         &amp;     12         &amp;   16          &amp;         41        &amp;        48       &amp;      NA\\
+\hline
+\end{array}
+}
+\]</span>
+b(i). La variable CLMSEX es estadísticamente significativa. La razón de probabilidades es <span class="math inline">\(\exp(-0.3218) = 0.7248\)</span>, lo que indica que las mujeres tienen un 72% de probabilidad de usar un abogado en comparación con los hombres (o los hombres tienen 1/0.72 = 1.379 veces más probabilidades de usar un abogado que las mujeres).<br>
+b(ii). CLMSEX y CLMINSUR son estadísticamente significativas, y SEATBELT es algo significativo, según los valores <span class="math inline">\(p\)</span>. CLMAGE no es significativo. MARITAL no parece ser estadísticamente significativo.<br>
+b(iii). Los hombres usan abogados con más frecuencia: la razón de probabilidades es <span class="math inline">\(\exp(-0.37691) = 0.686\)</span>, lo que indica que las mujeres tienen un 68.6% de probabilidad de usar un abogado en comparación con los hombres.<br>
+b(iv). La versión logarítmica, lnLOSS, es más importante. En el modelo final sin LOSS, el valor <span class="math inline">\(p\)</span> asociado con lnLOSS fue muy pequeño (<span class="math inline">\(&lt; 2e-16\)</span>), lo que indica una fuerte significación estadística.<br>
+b(v). Todas las variables permanecen iguales excepto una de las variables binarias de MARITAL, que se vuelve marginalmente estadísticamente significativa. La principal diferencia es que estamos utilizando 168 observaciones adicionales al no requerir que CLMAGE esté en el modelo.<br>
+b(vi). Para el componente sistemático, tenemos:
+<span class="math display">\[
+\begin{array}{llll}
+\mathbf{x}^{\prime}\mathbf{b}_{MLE}
+&amp;= 0.75424 \\
+&amp;~~~ -0.51210* (\text{CLMSEX}=2)&amp; +  0.04613*(\text{MARITAL}=2) \\
+&amp;~~~+ 0.37762*(\text{MARITAL}=3) &amp;+ 0.12099*(\text{MARITAL}=4) \\
+&amp;~~~+ 0.13692*(\text{SEATBELT}=2) &amp;-0.52960*(\text{CLMINSUR}=2)  \\
+&amp;~~~-0.01628* \text{CLMAGE} &amp;+ 0.98260*\text{lnLOSS} \\
+&amp;= 1.3312.
+\end{array}
+\]</span>
+La probabilidad estimada de usar un abogado es
+<span class="math display">\[
+\widehat{\pi} = \frac {\exp (1.3312)}{1+\exp (1.3312)} = 0.791.
+\]</span>
+c. Las mujeres tienen menos probabilidades de usar abogados. Aquellos que no usan cinturón de seguridad (SEATBELT=2) tienen más probabilidades de usar un abogado (aunque no es significativo). Los solteros (MARITAL=2) tienen más probabilidades de usar un abogado. Los reclamantes asegurados (CLMINSUR=2) tienen menos probabilidades de usar un abogado. A mayor pérdida, mayor es la probabilidad de que un abogado esté involucrado.</p>
+<p><strong>11.11</strong> a. El intercepto y las variables PLACE%, MSAT, RANK son significativas al nivel del 5%.<br>
+b(i). La probabilidad de éxito para este caso es 0.482. <br>
+b(ii). La probabilidad de éxito para este caso es 0.281. <br>
+b(iii). La probabilidad de éxito para este caso es 0.366. <br>
+b(iv). La probabilidad de éxito para este caso es 0.497. <br>
+b(v). La probabilidad de éxito para este caso es 0.277. <br></p>
+</div>
+<div id="chapter-12" class="section level4 unnumbered hasAnchor">
+<h4>Chapter 12<a href="respuestas-breves-a-ejercicios-seleccionados.html#chapter-12" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>12.1</strong> Tomamos la derivada de la ecuación (12.2) con respecto a <span class="math inline">\(\mu\)</span> y establecemos la condición de primer orden igual a cero. Con esto, tenemos <span class="math inline">\(\partial L(\mu)/\partial \mu=\sum_{i=1}^{n}(-1+y_i/\mu)=0\)</span>,
+es decir, <span class="math inline">\(\hat\mu=\bar y\)</span>.</p>
+<p><strong>12.3</strong> a. De la expresión de la ecuación del score (12.5),
+<span class="math display">\[
+\left. \frac{\partial }{\partial \boldsymbol \beta} L(\boldsymbol
+\beta )\right\vert _{\mathbf{\beta =b}}= \sum_{i=1}^{n}\left(
+y_i-\widehat{\mu }_i\right) \left(
+                                                   \begin{array}{c}
+                                                     1 \\
+                                                     x_{i,1} \\
+                                                     \vdots \\
+                                                      x_{i,k} \\
+                                                   \end{array}
+                                                 \right) =
+                                                 \mathbf{0}.
+\]</span>
+De la primera fila, tenemos que el promedio de los residuales <span class="math inline">\(e_i = y_i - \widehat{\mu}_i\)</span> es igual a cero.<br>
+b. De la fila <span class="math inline">\((j+1)^{st}\)</span> de la ecuación del score (12.5), tenemos
+<span class="math display">\[
+\sum_{i=1}^{n} e_i x_{i,j}= 0.
+\]</span>
+Debido a que los residuales tienen un promedio igual a cero, la covarianza muestral entre los residuales y <span class="math inline">\(x_j\)</span> es cero, y por lo tanto, la correlación muestral es cero.</p>
+<p><strong>12.5</strong> a. La distribución de COUNTOP tiene una cola larga y está sesgada hacia la derecha. La varianza (<span class="math inline">\(12.5^2 = 156.25\)</span>) es mucho mayor que la media, 5.67.<br>
+<span class="math display">\[
+\small{
+\begin{array}{cccccc} \hline
+   &amp;1st &amp;  &amp;  &amp;3rd  &amp;  \\
+  \text{Minimum} &amp; \text{Quartile} &amp; \text{Median} &amp;   \text{Mean} &amp;\text{Quartile} &amp;  \text{Maximum}\\\hline
+   0.00   &amp; 0.00 &amp;   2.00 &amp;   5.67 &amp;   6.00 &amp; 167.00\\
 \hline
 \end{array}
 }
 \]</span></p>
-<p>Para tiempos de evento conocidos y datos censurados, la verosimilitud es:
-<span class="math display">\[
-\prod_{E} \mathrm{f}(y_i) \prod_{R} \mathrm{S}(C_{Ui}) \prod_{L}
-(1-\mathrm{S}(C_{Li})) \prod_{I}
-(\mathrm{S}(C_{Li})-\mathrm{S}(C_{Ui})),
-\]</span>
-donde “<span class="math inline">\(\prod_{E}\)</span>” es el producto sobre observaciones con valores exactos (<em>E</em>xact), y de manera similar para <em>R</em>ight (derecha), <em>L</em>eft (izquierda) y <em>I</em>nterval (intervalo).</p>
-<p>Para datos censurados por la derecha y truncados por la izquierda, la verosimilitud es:
-<span class="math display">\[
-\prod_{E} \frac{\mathrm{f}(y_i)}{\mathrm{S}(C_{Li})} \prod_{R}
-\frac{\mathrm{S}(C_{Ui})}{\mathrm{S}(C_{Li})} ,
-\]</span>
-y de manera similar para otras combinaciones. Para obtener más información, considere lo siguiente.</p>
-<hr />
-<p><strong>Caso Especial: Distribución Exponencial.</strong> Considere datos censurados por la derecha y truncados por la izquierda, con variables dependientes <span class="math inline">\(y_i\)</span> distribuidas exponencialmente con media <span class="math inline">\(\mu\)</span>. Con estas especificaciones, recuerde que <span class="math inline">\(\mathrm{f}(y) = \mu^{-1} \exp(-y/\mu)\)</span> y <span class="math inline">\(\mathrm{S}(y) = \exp(-y/\mu)\)</span>.</p>
-<p>Para este caso especial, la verosimilitud logarítmica es:
-<span class="math display">\[
-\begin{array}{ll}
-\ln \text{Verosimilitud}  &amp;= \sum_{E} \left( \ln \mathrm{f}(y_i) - \ln
-\mathrm{S}(C_{Li}) \right)
-+\sum_{R}\left( \ln \mathrm{S}(C_{Ui})- \ln \mathrm{S}(C_{Li})
-\right) \\
-&amp;=  \sum_{E} (-\ln \mu -(y_i-C_{Li})/\mu )
--\sum_{R} (C_{Ui}-C_{Li})/\mu .
-\end{array}
-\]</span>
-Para simplificar la notación, definimos <span class="math inline">\(\delta_i = \mathrm{I}(y_i \geq C_{Ui})\)</span> como una variable binaria que indica censura por la derecha. Sea <span class="math inline">\(y_i^{\ast \ast} = \min(y_i, C_{Ui}) - C_{Li}\)</span> la cantidad en que la variable observada excede el límite inferior de truncamiento. Con esto, la verosimilitud logarítmica es:
-<span class="math display" id="eq:eq141">\[\begin{equation}
-\ln \text{Verosimilitud} =  - \sum_{i=1}^n ((1-\delta_i) \ln \mu + \frac{y_i^{\ast
-\ast}}{\mu} ).
-\tag{14.1}
-\end{equation}\]</span>
-Derivando con respecto al parámetro <span class="math inline">\(\mu\)</span> e igualando a cero se obtiene el estimador de máxima verosimilitud:
-<span class="math display">\[\begin{eqnarray*}
-\widehat{\mu}
-&amp;=&amp; \frac{1}{n_u} \sum_{i=1}^n  y_i^{\ast
-\ast},
-\end{eqnarray*}\]</span>
-donde <span class="math inline">\(n_u = \sum_i (1-\delta_i)\)</span> es el número de observaciones no censuradas.</p>
-<hr />
-</div>
-<div id="estimador-producto-límite" class="section level3 hasAnchor" number="14.2.3">
-<h3><span class="header-section-number">14.2.3</span> Estimador Producto-Límite<a href="C14Survival.html#estimador-producto-límite" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Puede ser útil calibrar los métodos de verosimilitud con métodos no paramétricos que no dependen de una forma paramétrica de la distribución. El <em>estimador producto-límite</em> debido a Kaplan y Meier (1958) es un estimador bien conocido de la distribución en presencia de censura.</p>
-<p>Para introducir este estimador, consideremos el caso de datos censurados por la derecha. Sean <span class="math inline">\(t_1 &lt; \cdots &lt; t_c\)</span> los puntos de tiempo distintos en los que ocurre un evento de interés y sea <span class="math inline">\(d_j\)</span> el número de eventos en el punto de tiempo <span class="math inline">\(t_j\)</span>. Además, definimos <span class="math inline">\(R_j\)</span> como el “conjunto de riesgo” correspondiente, es decir, el número de observaciones que están activas en un instante justo antes de <span class="math inline">\(t_j\)</span>. Usando notación, el conjunto de riesgo es <span class="math inline">\(R_j = \sum_{i=1}^n I\left( y_i \geq t_j \right)\)</span>. Con esta notación, el estimador producto-límite de la función de supervivencia es:
-<span class="math display" id="eq:eq142">\[\begin{equation}
-\widehat{S}(t) = \left\{
-\begin{array}{ll}
-1 &amp; t&lt;t_1 \\
-  \prod_{t_j \leq t} \left(1 - \frac{d_j}{R_j} \right)
-   &amp; t \geq t_1
-\end{array}
-\right. .
-\tag{14.2}
-\end{equation}\]</span></p>
-<p>Para interpretar el estimador producto-límite, evaluémoslo en los tiempos de eventos. En el primer tiempo de evento <span class="math inline">\(t_1\)</span>, el estimador es <span class="math inline">\(\widehat{S}(t_1)= 1- d_1/R_1=(R_1 - d_1)/R_1\)</span>, la proporción de no eventos en el conjunto de riesgo <span class="math inline">\(R_1\)</span>. En el segundo tiempo de evento <span class="math inline">\(t_2\)</span>, la probabilidad de supervivencia condicional a la supervivencia hasta el tiempo <span class="math inline">\(t_1\)</span> es <span class="math inline">\(\widehat{S}(t_2)/ \widehat{S}(t_1)\)</span> <span class="math inline">\(= 1 - d_2/R_2\)</span> <span class="math inline">\(=(R_2 - d_2)/R_2\)</span>, la proporción de no eventos en el conjunto de riesgo <span class="math inline">\(R_2\)</span>. De manera similar, en el <span class="math inline">\(j\)</span>-ésimo tiempo de evento:</p>
-<p><span class="math display">\[
-\frac{\widehat{S}(t_j)}{\widehat{S}(t_{j-1})}= 1 - \frac{d_j}{R_j}=\frac{R_j - d_j}{R_j} .
-\]</span>
-A partir de estas probabilidades condicionales, se puede construir el estimador de supervivencia como:</p>
-<p><span class="math display">\[
-\widehat{S}(t_j) = \frac{\widehat{S}(t_j)}{\widehat{S}(t_{j-1})}
-\times \cdots \times \frac{\widehat{S}(t_2)}{\widehat{S}(t_{1})}
-\times \widehat{S}(t_{1}),
-\]</span>
-lo que resulta en la ecuación <a href="C14Survival.html#eq:eq142">(14.2)</a>. En este sentido, el estimador es un “producto,” hasta el “límite” del tiempo. Para tiempos entre los tiempos de evento, la estimación de supervivencia se considera constante.</p>
-<p>Para ver cómo usar el estimador producto-límite, consideremos un pequeño conjunto de datos de <span class="math inline">\(n=23\)</span> observaciones, donde 18 son tiempos de evento y 5 han sido censurados por la derecha. Este ejemplo es de Miller (1997), donde los eventos corresponden a la supervivencia de pacientes con leucemia mieloide aguda. Después de recibir quimioterapia para lograr la remisión completa, se asignaron aleatoriamente a uno de dos grupos, aquellos que recibieron quimioterapia de mantenimiento y aquellos que no (el grupo control). El evento fue el tiempo en semanas hasta la recaída desde el estado de remisión completa. Para el grupo de mantenimiento, los tiempos son: 9, 13, 13+, 18, 23, 28+, 31, 34, 45+, 48, 161+. Para el grupo de control, los tiempos son: 5, 5, 8, 8, 12, 16+, 23, 27, 30, 33, 43, 45. Aquí, el signo más (+) indica censura por la derecha de una observación.</p>
-<p>Las Figuras <a href="C14Survival.html#fig:Fig143">14.3</a> y <a href="C14Survival.html#fig:Fig144">14.4</a> muestran las estimaciones de la función de supervivencia producto-límite para estos datos. Note la naturaleza escalonada de la función, donde las caídas (desde la izquierda, o saltos desde la derecha) corresponden a tiempos de eventos. Cuando no hay censura, el estimador producto-límite se reduce al estimador empírico usual de la función de supervivencia.</p>
-<p>En las figuras, las observaciones censuradas se representan con un símbolo de trazado de más (+). Cuando la última observación ha sido censurada, como en la Figura <a href="C14Survival.html#fig:Fig143">14.3</a>, existen diferentes métodos para definir la curva de supervivencia para tiempos que exceden esta observación. Los analistas que realizan estimaciones en estos tiempos deben ser conscientes de la opción que utiliza su paquete estadístico. Estas opciones se describen en libros estándar de análisis de supervivencia, como Klein y Moschberger (1997).</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Sí, las tablas sugieren que la mayoría de las variables tienen un impacto significativo en COUNTOP. <br></li>
+<li>La estadística chi-cuadrado de Pearson es 55044. <br>
+d(i). Todas las variables parecen ser muy significativas estadísticamente. <br>
+d(ii). El coeficiente de GENDER es 0.4197. Aproximadamente, esperaríamos que las mujeres tengan un 42% más de gastos ambulatorios que los hombres. <br>
+d(iii). La estadística chi-cuadrado es 33,214 - más baja que la parte (b) (55,044). Esto indica que las covariables ayudan en el proceso de ajuste. La significancia estadística también indica que las covariables son estadísticamente significativas, pero la sobredispersión es sospechosa - ver d(iv). <br>
+d(iv). Ahora, la mayoría de las variables siguen siendo estadísticamente significativas, pero la fuerza de la significancia estadística ha disminuido dramáticamente. No está claro si la variable income es estadísticamente significativa. <br>
+e(i). Todas las variables parecen ser estadísticamente significativas. La variable income es quizás la menos importante. <br>
+e(ii). La estadística chi-cuadrado es 33,660 - más alta que el modelo Poisson (33,214) pero más baja que la parte (b) (55,044). Esto sugiere que los dos modelos se ajustan de manera similar, con el modelo Poisson teniendo una ligera ventaja. El AIC para el Poisson básico es 22,725 - lo cual es mucho más alto que el AIC para el binomial negativo (10,002). Por lo tanto, el binomial negativo es preferido al Poisson básico. Sin embargo, el quasi-Poisson probablemente sea tan bueno como el binomial negativo. <br>
+e(iii). Según el output, la estadística de la prueba de razón de verosimilitud es 18.7 - basada en 4 grados de libertad, el <span class="math inline">\(p\)</span>-valor es 0.000915. Esto indica que income es un factor estadísticamente significativo en el modelo. <br></li>
+<li>Para GENDER, educación, estado de salud personal, anylimit, income e insurance, los modelos reportan el mismo signo y efectos estadísticamente significativos. RACE no parece ser estadísticamente significativo en el modelo de regresión logística. Para REGION, los signos parecen ser los mismos aunque la significancia estadística ha cambiado.</li>
+</ol>
 
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig143"></span>
-<img src="RegressionMarkdown_files/figure-html/Fig143-1.png" alt="Estimación Producto-Límite de las Funciones de Supervivencia para Dos Grupos. Este gráfico muestra que aquellos con tratamiento de quimioterapia de mantenimiento tienen mayores probabilidades de supervivencia estimadas que aquellos en el grupo control." width="60%" />
-<p class="caption">
-Figura 14.3: <strong>Estimación Producto-Límite de las Funciones de Supervivencia para Dos Grupos.</strong> Este gráfico muestra que aquellos con tratamiento de quimioterapia de mantenimiento tienen mayores probabilidades de supervivencia estimadas que aquellos en el grupo control.
-</p>
+</div>
 </div>
 
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig144"></span>
-<img src="RegressionMarkdown_files/figure-html/Fig144-1.png" alt="Estimación Producto-Límite de la Función de Supervivencia para el Grupo Control. Los límites superior e inferior provienen de la fórmula de Greenwood para la estimación de la varianza." width="60%" />
-<p class="caption">
-Figura 14.4: <strong>Estimación Producto-Límite de la Función de Supervivencia para el Grupo Control.</strong> Los límites superior e inferior provienen de la fórmula de Greenwood para la estimación de la varianza.
-</p>
-</div>
-<p>Figure <a href="C14Survival.html#fig:Fig144">14.4</a> también muestra una estimación del error estándar. Estos se calculan utilizando la fórmula de Greenwood (1926) para una estimación de la varianza, dada por:
-<span class="math display">\[
-\widehat{\mathrm{Var}(\widehat{S}(t))} = (\widehat{S}(t))^2
-  \sum_{t_j \leq t}  \frac{d_j}{R_j(R_j-d_j)} .
-\]</span></p>
-<h5 style="text-align: center;">
-<a id="displayCode.Fig1434.Hide" href="javascript:togglecode('toggleCode.Fig1434.Hide','displayCode.Fig1434.Hide');"><i><strong>Código R para generar las Figuras 14.3 y 14.4</strong></i></a>
-</h5>
-<div id="toggleCode.Fig1434.Hide" style="display: none">
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="C14Survival.html#cb123-1" tabindex="-1"></a><span class="co"># Figura 14.3</span></span>
-<span id="cb123-2"><a href="C14Survival.html#cb123-2" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb123-3"><a href="C14Survival.html#cb123-3" tabindex="-1"></a><span class="co">#fix(aml)</span></span>
-<span id="cb123-4"><a href="C14Survival.html#cb123-4" tabindex="-1"></a>aml <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Chapters/Chapter14Survival/aml.csv&quot;</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
-<span id="cb123-5"><a href="C14Survival.html#cb123-5" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> x, <span class="at">data =</span> aml)</span>
-<span id="cb123-6"><a href="C14Survival.html#cb123-6" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">mark.time =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb123-7"><a href="C14Survival.html#cb123-7" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">50</span>,<span class="fl">0.7</span>,<span class="st">&quot;Mantenimiento&quot;</span>,<span class="at">adj=</span><span class="dv">0</span>, <span class="at">cex=</span><span class="fl">1.2</span>)</span>
-<span id="cb123-8"><a href="C14Survival.html#cb123-8" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">1</span>,<span class="fl">0.05</span>,<span class="st">&quot;Control&quot;</span>,<span class="at">adj=</span><span class="dv">0</span>, <span class="at">cex=</span><span class="fl">1.2</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="C14Survival.html#cb124-1" tabindex="-1"></a><span class="co"># Figura 14.4</span></span>
-<span id="cb124-2"><a href="C14Survival.html#cb124-2" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb124-3"><a href="C14Survival.html#cb124-3" tabindex="-1"></a>aml2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(aml, x<span class="sc">==</span><span class="st">&quot;Nonmaintained&quot;</span> )</span>
-<span id="cb124-4"><a href="C14Survival.html#cb124-4" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>aml2)</span>
-<span id="cb124-5"><a href="C14Survival.html#cb124-5" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">mark.time =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-</div>
-</div>
-</div>
-<div id="S:Sec143" class="section level2 hasAnchor" number="14.3">
-<h2><span class="header-section-number">14.3</span> Modelo de Tiempo de Fallo Acelerado<a href="C14Survival.html#S:Sec143" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Un modelo de tiempo de fallo acelerado (<span class="math inline">\(AFT\)</span>) puede expresarse usando una ecuación de regresión lineal <span class="math inline">\(\ln y_i = \mathbf{x}_i^{\prime} \boldsymbol \beta + \varepsilon_i\)</span>, donde <span class="math inline">\(y_i\)</span> es el tiempo de evento. A diferencia del modelo de regresión lineal usual, el modelo AFT hace una suposición paramétrica sobre el término de perturbación, como una distribución normal, de valor extremo o logística. Como hemos visto, la distribución normal es la base para el modelo de regresión lineal usual. Así, muchos analistas comienzan tomando logaritmos de los datos de eventos y utilizando rutinas de regresión lineal habituales para explorar sus datos.</p>
-<div id="distribuciones-de-localización-y-escala" class="section level4 unnumbered hasAnchor">
-<h4>Distribuciones de Localización y Escala<a href="C14Survival.html#distribuciones-de-localización-y-escala" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Para entender el nombre “tiempo de fallo acelerado,” también conocido como riesgos acelerados, es útil repasar la idea estadística de familias de localización y escala. Una <em>distribución de localización y escala paramétrica</em> es aquella donde la función de densidad tiene la forma:
-<span class="math display">\[
-\mathrm{f}(t) =\frac{1}{\sigma }\mathrm{f}_0 \left( \frac{t-\mu
-}{\sigma }\right) ,
-\]</span>
-donde <span class="math inline">\(\mu\)</span> es el parámetro de localización y <span class="math inline">\(\sigma &gt;0\)</span> es el parámetro de escala. El caso <span class="math inline">\(\mu =0\)</span> y <span class="math inline">\(\sigma =1\)</span> corresponde a la <em>forma estándar</em> de la distribución. Dentro de una distribución de localización y escala, los cambios aditivos, como pasar de grados Kelvin a grados Centígrados, <span class="math inline">\(^{\circ }K=\)</span> <span class="math inline">\(^{\circ }C+273.15\)</span>, y los múltiplos escalares, como pasar de dólares a miles de dólares, permanecen en la misma familia de distribución. Como veremos en el Capítulo 17, un parámetro de localización es un lugar natural para introducir covariables de regresión.</p>
-<p>Una variable aleatoria <span class="math inline">\(y\)</span> se dice que tiene una <em>distribución logarítmica de localización y escala</em> si <span class="math inline">\(\ln y\)</span> tiene una distribución de localización y escala. Supongamos que una variable aleatoria <span class="math inline">\(y_0\)</span> tiene una distribución de localización y escala estándar con función de supervivencia <span class="math inline">\(\mathrm{S}_0\left( z\right)\)</span>. Entonces, la función de supervivencia de <span class="math inline">\(y\)</span> definida por <span class="math inline">\(\ln y = \mu + \sigma y_0\)</span> puede expresarse como:
-<span class="math display">\[
-\mathrm{S}\left( t\right) =\Pr \left( y&gt;t\right) =\Pr \left(
-y_0&gt;\frac{\ln t-\mu }{\sigma }\right) =\mathrm{S}_0\left( \frac{\ln
-t-\mu }{\sigma } \right) =\mathrm{S}_0^{\ast }\left( \left(
-\frac{t}{e^{\mu }}\right) ^{1/\sigma }\right) ,
-\]</span>
-donde <span class="math inline">\(\mathrm{S}_0^{\ast }(t) =\mathrm{S}_0( \ln t)\)</span> es la función de supervivencia de la forma estándar de <span class="math inline">\(\ln y\)</span>. En el contexto del modelado de supervivencia donde <span class="math inline">\(t\)</span> representa tiempo, el efecto de reescalar dividiendo por <span class="math inline">\(e^{\mu }\)</span> puede interpretarse como “acelerar el tiempo” (cuando <span class="math inline">\(e^{\mu }&lt;1\)</span>). Esta es la motivación para el nombre “modelos de tiempo de fallo acelerado.” La Tabla <a href="C14Survival.html#tab:Tab141">14.1</a> proporciona algunos casos especiales de distribuciones de localización y escala ampliamente utilizadas y sus contrapartes logarítmicas.</p>
-<table class=" lightable-classic table table-striped table-condensed" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
-<caption style="font-size: initial !important;">
-<span id="tab:Tab141">Tabla 14.1: </span><strong>Distribuciones de Localización y Escala</strong>
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-Distribución de Supervivencia Estándar
-</th>
-<th style="text-align:center;">
-Distribución de Localización y Escala
-</th>
-<th style="text-align:center;">
-Distribución Logarítmica de Localización y Escala
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
-<span class="math inline">\(\mathrm{S}_0(t) = \exp(- e^t)\)</span>
-</td>
-<td style="text-align:center;width: 5cm; ">
-Distribución de valor extremo
-</td>
-<td style="text-align:center;width: 5cm; ">
-Weibull
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
-<span class="math inline">\(\mathrm{S}_0(t) =1 - \Phi(t)\)</span>
-</td>
-<td style="text-align:center;width: 5cm; ">
-Normal
-</td>
-<td style="text-align:center;width: 5cm; ">
-Lognormal
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 2.5cm; border-right:1px solid;">
-<span class="math inline">\(\mathrm{S}_0(t) = (1 + e^t)^{-1}\)</span>
-</td>
-<td style="text-align:center;width: 5cm; ">
-Logística
-</td>
-<td style="text-align:center;width: 5cm; ">
-Log-logística
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="inferencia-para-modelos-aft" class="section level4 unnumbered hasAnchor">
-<h4>Inferencia para Modelos AFT<a href="C14Survival.html#inferencia-para-modelos-aft" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Para tener una idea de las complejidades en la estimación de un modelo <span class="math inline">\(AFT\)</span>, volvemos a la distribución exponencial. Este es un caso especial de regresión Weibull con el parámetro de escala <span class="math inline">\(\sigma =1\)</span>.</p>
-<hr />
-<p><strong>Caso Especial: Distribución Exponencial - Continuación.</strong> Para introducir covariables de regresión, dejamos que <span class="math inline">\(\mu_i = \exp (\mathbf{x}_i^{\prime} \boldsymbol \beta)\)</span>. Usando el mismo razonamiento que con la ecuación <a href="C14Survival.html#eq:eq141">(14.1)</a>, la verosimilitud logarítmica es:
-<span class="math display">\[
-\begin{array}{ll}
-\ln \text{Verosimilitud}
-&amp;= - \sum_{i=1}^n ((1-\delta_i) \ln \mu_i +\frac{y_i^{\ast
-\ast}}{\mu_i} )\\
-&amp;=  - \sum_{i=1}^n ((1-\delta_i) \mathbf{x}_i^{\prime} \boldsymbol \beta+ y_i^{\ast
-\ast}\exp
-(-\mathbf{x}_i^{\prime} \boldsymbol \beta)) ,
-\end{array}
-\]</span>
-donde <span class="math inline">\(\delta_i = I(y_i \geq C_{Ui})\)</span> y <span class="math inline">\(y_i^{\ast \ast} =\min(y_i, C_{Ui}) - C_{Li}\)</span>. Al derivar con respecto a <span class="math inline">\(\boldsymbol \beta\)</span>, obtenemos la función de puntuación:
-<span class="math display">\[
-\begin{array}{ll}
-\frac{\partial \ln \text{Verosimilitud}}{\partial \boldsymbol \beta}
-&amp;=  - \sum_{i=1}^n ((1-\delta_i) \mathbf{x}_i - \mathbf{x}_i y_i^{\ast
-\ast}\exp
-(-\mathbf{x}_i^{\prime} \boldsymbol \beta)) \\
-&amp;=    \sum_{i=1}^n  \mathbf{x}_i
-\frac{y_i^{\ast
-\ast}-\mu_i (1-\delta_i)}
-{\mu_i } .
-\end{array}
-\]</span>
-Esto tiene la forma de una ecuación de estimación generalizada, introducida en el Capítulo 13. Aunque las soluciones en forma cerrada rara vez existen, puede resolverse fácilmente con paquetes estadísticos modernos.</p>
-<hr />
-<p>Como ilustra este caso especial, la estimación de modelos de regresión <span class="math inline">\(AFT\)</span> puede abordarse fácilmente a través de máxima verosimilitud. Además, las propiedades de las estimaciones de máxima verosimilitud son bien entendidas, por lo que contamos con herramientas generales de inferencia, como estimación y prueba de hipótesis. Los paquetes estadísticos estándar proporcionan resultados que apoyan esta inferencia.</p>
-</div>
-</div>
-<div id="S:Sec144" class="section level2 hasAnchor" number="14.4">
-<h2><span class="header-section-number">14.4</span> Modelo de Riesgos Proporcionales<a href="C14Survival.html#S:Sec144" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>La suposición de riesgos proporcionales se define en la Sección <a href="C14Survival.html#S:Sec1441">14.4.1</a> y las técnicas de inferencia se discuten en la Sección <a href="C14Survival.html#S:Sec1442">14.4.2</a>.</p>
-<div id="S:Sec1441" class="section level3 hasAnchor" number="14.4.1">
-<h3><span class="header-section-number">14.4.1</span> Riesgos Proporcionales<a href="C14Survival.html#S:Sec1441" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>En el modelo de <em>riesgos proporcionales</em> (<span class="math inline">\(PH\)</span>) debido a Cox (1972), se asume que la función de riesgo puede escribirse como el producto de un riesgo “base” y una función de una combinación lineal de variables explicativas. Para ilustrar, usamos:
-<span class="math display" id="eq:eq143">\[\begin{equation}
-h_i(t) = h_0(t) \exp( \mathbf{x}_i^{\prime} \boldsymbol \beta ).
-\tag{14.3}
-\end{equation}\]</span>
-donde <span class="math inline">\(h_0(t)\)</span> es el riesgo base. Este se conoce como un modelo de “riesgos proporcionales” porque, si se toma la razón de funciones de riesgo para dos conjuntos de covariables, digamos <span class="math inline">\(\mathbf{x}_1\)</span> y <span class="math inline">\(\mathbf{x}_2\)</span>, se obtiene:
-<span class="math display">\[
-\frac{h_1(t|\mathbf{x}_1)}{h_2(t|\mathbf{x}_2)} = \frac {h_0(t)
-\exp( \mathbf{x}_1^{\prime} \boldsymbol \beta )} {h_0(t) \exp(
-\mathbf{x}_2^{\prime} \boldsymbol \beta )} = \exp(
-(\mathbf{x}_1-\mathbf{x}_2)^{\prime}\boldsymbol \beta ) .
-\]</span>
-Nótese que la razón no depende del tiempo <span class="math inline">\(t\)</span>.</p>
-<p>Como hemos visto en muchas aplicaciones de regresión, los usuarios están interesados en los efectos de las variables y no siempre en otros aspectos del modelo. La razón por la que el modelo <span class="math inline">\(PH\)</span> en la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a> ha resultado tan popular es que especifica los efectos de las variables explicativas como una función simple de la combinación lineal mientras permite un componente base flexible, <span class="math inline">\(h_0\)</span>. Aunque este componente base es común a todos los sujetos, no necesita especificarse paramétricamente como en los modelos <span class="math inline">\(AFT\)</span>. Además, no es necesario usar la función “exp” para las variables explicativas; sin embargo, esta es la especificación común ya que asegura que la función de riesgo seguirá siendo no negativa.</p>
-<p>Los riesgos proporcionales pueden motivarse como una extensión de la regresión exponencial. Considere una variable aleatoria <span class="math inline">\(y^{\ast}\)</span> que tiene una distribución exponencial con media <span class="math inline">\(\mu = \exp (\mathbf{x}^{\prime} \boldsymbol \beta)\)</span>. Supongamos que observamos <span class="math inline">\(y = \mathrm{g}(y^{\ast})\)</span>, donde <span class="math inline">\(\mathrm{g}(\cdot)\)</span> es desconocida excepto que es monótonamente creciente. Muchas distribuciones de supervivencia son transformaciones de la distribución exponencial. Por ejemplo, si <span class="math inline">\(y = \mathrm{g}(y^{\ast})=(y^{\ast})^{\sigma}\)</span>, entonces es fácil verificar que <span class="math inline">\(y\)</span> tiene una distribución Weibull como se da en la Tabla <a href="C14Survival.html#tab:Tab141">14.1</a>. La distribución Weibull es el único modelo <span class="math inline">\(AFT\)</span> que tiene riesgos proporcionales (ver Lawless, 2003, ejercicio 6.1).</p>
-<p>Cálculos simples muestran que la función de riesgo de <span class="math inline">\(y\)</span> puede expresarse como:
-<span class="math display">\[
-\mathrm{h}_y(t) = \mathrm{g}^{\prime}(t) / \mu  =
-\mathrm{g}^{\prime}(t) \exp (- \mathbf{x}^{\prime} \boldsymbol \beta
-),
-\]</span>
-ver, por ejemplo, Zhou (2001). Esto tiene una estructura de riesgos proporcionales, como en la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a>, donde <span class="math inline">\(\mathrm{g}^{\prime}(t)\)</span> sirve como el riesgo base. En el modelo <span class="math inline">\(PH\)</span>, se asume que el riesgo base es desconocido. En contraste, para la Weibull y otros modelos de regresión <span class="math inline">\(AFT\)</span>, se asume que la función de riesgo base es conocida hasta uno o dos parámetros que pueden estimarse a partir de los datos.</p>
-</div>
-<div id="S:Sec1442" class="section level3 hasAnchor" number="14.4.2">
-<h3><span class="header-section-number">14.4.2</span> Inferencia<a href="C14Survival.html#S:Sec1442" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Debido a la especificación flexible del componente base, las técnicas usuales de estimación de máxima verosimilitud no están disponibles para estimar el modelo <span class="math inline">\(PH\)</span>. Para esbozar el procedimiento de estimación, dejamos que <span class="math inline">\((y_1, \delta_1), \ldots, (y_n, \delta_n)\)</span> sean independientes y asumimos que <span class="math inline">\(y_i\)</span> sigue la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a> con regresores <span class="math inline">\(\mathbf{x}_i\)</span>. Es decir, ahora dejamos de usar la notación con asterisco (<span class="math inline">\(\ast\)</span>) y dejamos que <span class="math inline">\(y_i\)</span> denote valores observados (exactos o censurados) y usamos <span class="math inline">\(\delta_i\)</span> como la variable binaria que indica censura (derecha). Además, dejamos que <span class="math inline">\(H_0\)</span> sea la función de riesgo acumulada asociada con la función base <span class="math inline">\(h_0\)</span>. Recordando la relación general <span class="math inline">\(\mathrm{S}(t) = \exp (-H(t))\)</span>, con la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a> tenemos <span class="math inline">\(\mathrm{S}(t) = \exp \left(-H_0(t)\exp( \mathbf{x}_i^{\prime} \boldsymbol \beta )\right).\)</span></p>
-<p>Desde la perspectiva usual de verosimilitud, de la Sección 14.2.2 la verosimilitud es:
-<span class="math display">\[\begin{eqnarray*}
-L(\boldsymbol \beta , h_0)&amp;= &amp; \prod_{i=1}^n
-\mathrm{f}(y_i)^{1-\delta_i} \mathrm{S}(y_i)^{\delta_i} =
-\prod_{i=1}^n h(y_i)^{1-\delta_i} \exp(-H(y_i))
-\\&amp;= &amp; \prod_{i=1}^n \left( h_0(t) \exp( \mathbf{x}_i^{\prime}
-\boldsymbol \beta ) \right)^{1-\delta_i} \exp\left(-H_0(y_i)\exp(
-\mathbf{x}_i^{\prime} \boldsymbol \beta ) \right) .
-\end{eqnarray*}\]</span></p>
-<p>Ahora, las estimaciones de parámetros que maximizan <span class="math inline">\(L(\boldsymbol \beta , h_0)\)</span> no siguen las propiedades usuales de la estimación de máxima verosimilitud porque el riesgo base <span class="math inline">\(h_0\)</span> no se especifica paramétricamente. Una forma de abordar este problema es mediante Breslow (1974), quien mostró que un estimador de máxima verosimilitud <em>no paramétrico</em> de <span class="math inline">\(h_0\)</span> podría usarse en <span class="math inline">\(L(\boldsymbol \beta , h_0)\)</span>. Esto resulta en lo que Cox llamó una <em>verosimilitud parcial</em>:
-<span class="math display" id="eq:eq144">\[\begin{equation}
-L_P(\boldsymbol \beta)
-= \prod_{i=1}^n
-\left( \frac{\exp( \mathbf{x}_i^{\prime} \boldsymbol \beta )}
-{\sum_{j \in R(y_i)} \exp( \mathbf{x}_j^{\prime} \boldsymbol \beta )}
-\right)^{1-\delta_i},
-\tag{14.4}
-\end{equation}\]</span>
-donde <span class="math inline">\(R(t)\)</span> es el conjunto de riesgo en el tiempo <span class="math inline">\(t\)</span>. Específicamente, este es el conjunto de todos <span class="math inline">\(\{y_1, \ldots, y_n \}\)</span> tales que $y_i t $, es decir, el conjunto de todos los sujetos que aún están bajo estudio en el tiempo <span class="math inline">\(t\)</span>.</p>
-<p>La ecuación <a href="C14Survival.html#eq:eq144">(14.4)</a> es solo una verosimilitud “parcial” en el sentido de que no utiliza toda la información en <span class="math inline">\((y_1, \delta_1), \ldots, (y_n, \delta_n)\)</span>. Por ejemplo, de la ecuación <a href="C14Survival.html#eq:eq144">(14.4)</a>, vemos que la inferencia para los coeficientes de regresión depende únicamente de los rangos de las variables dependientes <span class="math inline">\(\{y_1, \ldots, y_n \}\)</span>, no de sus valores reales.</p>
-<p>No obstante, la ecuación <a href="C14Survival.html#eq:eq144">(14.4)</a> sugiere (y es cierto) que la teoría de distribución muestral en grandes muestras tiene propiedades similares a la teoría paramétrica (totalmente) deseable. Desde la perspectiva del usuario, esta verosimilitud parcial puede tratarse como una verosimilitud usual. Es decir, los parámetros de regresión que maximizan la ecuación <a href="C14Survival.html#eq:eq144">(14.4)</a> son consistentes y tienen una distribución normal en grandes muestras con las estimaciones de varianza habituales (ver Sección 11.9 para una revisión). Esto es ligeramente sorprendente porque el modelo de riesgos proporcionales es semi-paramétrico; en la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a>, la función de riesgo tiene un componente completamente paramétrico, <span class="math inline">\(\exp( \mathbf{x}_i^{\prime} \boldsymbol \beta )\)</span>, pero también contiene un riesgo base no paramétrico, <span class="math inline">\(h_0(t)\)</span>. En general, los modelos no paramétricos son más flexibles que sus contrapartes paramétricas para el ajuste de modelos, pero resultan en propiedades muestrales menos deseables (específicamente, tasas de convergencia más lentas a una distribución asintótica).</p>
-<hr />
-<p><strong>Ejemplo: Puntajes de Crédito.</strong> Stepanova y Thomas (2002) usaron modelos de riesgos proporcionales para crear puntajes de crédito que los bancos podrían usar para evaluar la calidad de préstamos personales. Sus puntajes dependían de los propósitos del préstamo y las características de los solicitantes. Los clientes potenciales solicitan préstamos a los bancos por muchos propósitos, incluidos la financiación de la compra de una casa, automóvil, barco o instrumento musical, para mejoras en el hogar y reparaciones de automóviles, o para financiar una boda y lunas de miel; Stepanova y Thomas enumeraron 22 propósitos de préstamo. En la solicitud de préstamo, las personas proporcionaron su edad, monto solicitado, años con el empleador actual y otras características personales; Stepanova y Thomas enumeraron 22 características de la solicitud utilizadas en su análisis.</p>
-<p>Sus datos provienen de una importante institución financiera del Reino Unido. Consistieron en información de solicitud de 50,000 préstamos personales, con el estado de reembolso para cada uno de los primeros 36 meses del préstamo. Así, cada préstamo estaba (fijamente) censurado a la derecha por el menor entre la duración del período de estudio, 36 meses, y el plazo de reembolso del préstamo, que variaba entre 6 y 60 meses.</p>
-<p>Para crear los puntajes, los autores examinaron dos variables dependientes que tienen consecuencias financieras negativas para el prestamista, el tiempo hasta el incumplimiento del préstamo y el tiempo hasta el reembolso anticipado. Para este estudio, la definición de incumplimiento es 3 o más meses de morosidad. (En principio, se podrían analizar ambos tiempos simultáneamente en un marco de “riesgos competitivos”). Cuando Stepanova y Thomas usaron un modelo de riesgos proporcionales con el tiempo hasta el incumplimiento como variable dependiente, el tiempo hasta el reembolso anticipado era una variable de censura aleatoria a la derecha. A la inversa, cuando el tiempo hasta el reembolso anticipado era la variable dependiente, el tiempo hasta el incumplimiento era una variable de censura aleatoria a la derecha.</p>
-<p>Stepanova y Thomas utilizaron estimaciones del modelo de las funciones de supervivencia a los 12 meses y a los 24 meses como sus puntajes de crédito para ambas variables dependientes. Compararon estos puntajes con los de un modelo de regresión logística donde, por ejemplo, la variable dependiente era el incumplimiento del préstamo dentro de los 12 meses. Ningún enfoque dominó al otro; encontraron situaciones en las que cada enfoque de modelado proporcionaba mejores predictores del riesgo crediticio de un individuo.</p>
-<hr />
-<p>Una característica importante del modelo de riesgos proporcionales es que puede extenderse fácilmente para manejar covariables que varían en el tiempo de la forma <span class="math inline">\(\mathbf{x}_i(t)\)</span>. En este caso, se puede escribir la verosimilitud parcial como
-<span class="math display">\[
-L_P(\boldsymbol \beta)
-= \prod_{i=1}^n
-\left( \frac{\exp( \mathbf{x}_i^{\prime}(y_i) \boldsymbol \beta )}
-{\sum_{j \in R(y_i)} \exp( \mathbf{x}_j^{\prime}(y_j) \boldsymbol
-\beta ) }\right)^{1-\delta_i} .
-\]</span>
-Usar esta verosimilitud es complejo, aunque la maximización puede realizarse fácilmente con software estadístico moderno. La inferencia es compleja porque puede ser difícil separar las covariables observadas que varían en el tiempo <span class="math inline">\(\mathbf{x}_i(t)\)</span> del riesgo base no observado que varía en el tiempo <span class="math inline">\(\mathrm{h}_0(t)\)</span>. Consulte las referencias en la Sección <a href="C14Survival.html#S:Sec146">14.6</a> para más detalles.</p>
-</div>
-</div>
-<div id="S:Sec145" class="section level2 hasAnchor" number="14.5">
-<h2><span class="header-section-number">14.5</span> Eventos Recurrentes<a href="C14Survival.html#S:Sec145" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Los eventos recurrentes son tiempos de eventos que pueden ocurrir repetidamente a lo largo del tiempo para cada sujeto. Para el <span class="math inline">\(i\)</span>-ésimo sujeto, usamos la notación <span class="math inline">\(y_{i1} &lt; y_{i2} &lt; \cdots &lt; y_{im_i}\)</span> para denotar los <span class="math inline">\(m_i\)</span> tiempos de eventos. Entre otras aplicaciones, los eventos recurrentes pueden usarse para modelar:</p>
-<ul>
-<li>Reclamos de garantía,</li>
-<li>Pagos de reclamos que han sido reportados a una compañía de seguros y</li>
-<li>Reclamos de eventos que han ocurrido pero aún no han sido reportados a una compañía de seguros.</li>
-</ul>
-<hr />
-<p><strong>Ejemplo: Reclamos de Garantía de Automóviles.</strong> Cook y Lawless (2007) consideran una muestra de 15,775 automóviles que fueron vendidos y bajo garantía durante 365 días. Las garantías son garantías de confiabilidad del producto emitidas por el fabricante. Los datos de garantía corresponden a un sistema del vehículo (como frenos o tren motriz) y cubren un año con un límite de 12,000 millas. La Tabla <a href="C14Survival.html#tab:Tab142">14.2</a> resume la distribución de los 2,620 reclamos de esta muestra.</p>
-<table class=" lightable-classic table table-striped table-condensed" style="font-size: 12px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;border-bottom: 0;">
-<caption style="font-size: initial !important;">
-<span id="tab:Tab142">Tabla 14.2: </span><strong>Distribución de Frecuencia de Reclamos de Garantía</strong>
-</caption>
-<tbody>
-<tr>
-<td style="text-align:left;width: 4cm; border-right:1px solid;">
-Número de Reclamos
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-0
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-1
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-2
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-3
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-4
-</td>
-<td style="text-align:center;width: 1.3cm; border-right:1px solid;">
-5+
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-Total
-</td>
-</tr>
-<tr>
-<td style="text-align:left;width: 4cm; border-right:1px solid;">
-Número de Autos
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-13,987
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-1,243
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-379
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-103
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-34
-</td>
-<td style="text-align:center;width: 1.3cm; border-right:1px solid;">
-29
-</td>
-<td style="text-align:center;width: 1.3cm; ">
-15,775
-</td>
-</tr>
-</tbody>
-<tfoot>
-<tr>
-<td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Fuente:</span> <sup></sup> Cook y Lawless (2007, Tabla 1.3).
-</td>
-</tr>
-</tfoot>
-</table>
-<p>La Tabla <a href="C14Survival.html#tab:Tab142">14.2</a> muestra que hay 1,788 (=15,775-13,987) automóviles con al menos un (<span class="math inline">\(m_i &gt; 0\)</span>) reclamo. La Figura <a href="C14Survival.html#fig:Fig145">14.5</a> representa la estructura de los tiempos de eventos.</p>
 
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig145"></span>
-<img src="RegressionMarkdown_files/figure-html/Fig145-1.png" alt="Figura que Ilustra Reclamos de Garantía (Potencialmente) Repetidos." width="60%" />
-<p class="caption">
-Figura 14.5: <strong>Figura que Ilustra Reclamos de Garantía (Potencialmente) Repetidos.</strong>
-</p>
-</div>
-<hr />
-<p>Presentamos modelos de eventos recurrentes usando <em>procesos de conteo</em>, específicamente empleando <em>procesos de Poisson</em>. Aunque existen enfoques alternativos, para los análisis estadísticos el concepto de procesos de conteo parece el más fructífero (Cook y Lawless, 2007). Además, existe una fuerte conexión histórica de los procesos de Poisson con la teoría actuarial de ruina (Klugman, Panjer y Willmot, 2008, Capítulo 11), por lo que muchos actuarios están familiarizados con los procesos de Poisson.</p>
-<p>Sea <span class="math inline">\(N_i(t)\)</span> el número de eventos que han ocurrido hasta el tiempo <span class="math inline">\(t\)</span>. Usando álgebra, podemos escribir esto como <span class="math inline">\(N_i(t) = \sum_{j \geq 1} \mathrm{I}(y_{ij} \leq t).\)</span> Debido a que <span class="math inline">\(N_i(t)\)</span> varía con la experiencia de un sujeto, es una variable aleatoria para cada <span class="math inline">\(t\)</span> fijo. Además, al observar toda la evolución de los reclamos, <span class="math inline">\(\{N_i(t), t \geq 0 \}\)</span>, se conoce como un <em>proceso estocástico</em>. Un proceso de conteo es un tipo especial de proceso estocástico que describe conteos que aumentan de manera monótona con el tiempo. Un proceso de Poisson es un tipo especial de proceso de conteo. Si <span class="math inline">\(\{N_i(t), t \geq 0 \}\)</span> es un proceso de Poisson, entonces <span class="math inline">\(N_i(t)\)</span> tiene una distribución de Poisson con media, digamos, <span class="math inline">\(\mathrm{h}_i(t)\)</span> para cada <span class="math inline">\(t\)</span> fijo. En la literatura de procesos de conteo, es común referirse a <span class="math inline">\(\mathrm{h}_i(t)\)</span> como la <em>función de intensidad</em>.</p>
-<p>La inferencia estadística para eventos recurrentes puede llevarse a cabo utilizando procesos de Poisson y técnicas paramétricas de máxima verosimilitud. Como se discute en Cook y Lawless (2007), la verosimilitud para el <span class="math inline">\(i\)</span>-ésimo sujeto se basa en la densidad de probabilidad condicional de los resultados observados “<span class="math inline">\(m_i\)</span> eventos, en los tiempos <span class="math inline">\(y_{i1} &lt; \cdots &lt; y_{im_i}\)</span>”. Esto produce la verosimilitud
-<span class="math display" id="eq:eq145">\[\begin{equation}
-\text{Verosimilitud}_i = \prod_{j=1}^{m_i} \{\mathrm{h}_i(y_{ij}) \} \exp
-\left(- \int_0^{\infty} y_i(s) \mathrm{h}_i(s) ds \right)
-\tag{14.5}
-\end{equation}\]</span>
-donde <span class="math inline">\(y_i(s)\)</span> es una variable binaria que indica si el <span class="math inline">\(i\)</span>-ésimo sujeto es observado hasta el tiempo <span class="math inline">\(s\)</span>.</p>
-<p>Para parametrizar la función de intensidad <span class="math inline">\(\mathrm{h}_i(t)\)</span>, asumimos que tenemos disponibles variables explicativas. Por ejemplo, al examinar reclamos de garantía de automóviles, podríamos disponer de información como la marca y el modelo del vehículo, o características del conductor como género y edad al momento de la compra. También podríamos tener características que sean funciones del tiempo del reclamo, como el número de millas recorridas. Por lo tanto, usamos la notación <span class="math inline">\(\mathbf{x}_i(t)\)</span> para denotar la posible dependencia de las variables explicativas en el tiempo del evento.</p>
-<p>Similar a la ecuación <a href="C14Survival.html#eq:eq143">(14.3)</a>, es habitual escribir la función de intensidad como
-<span class="math display">\[
-h_i(t) = h_0(t) \exp( \mathbf{x}_i^{\prime}(t) \boldsymbol \beta ).
-\]</span>
-donde <span class="math inline">\(h_0(t)\)</span> es la intensidad base. Para una especificación totalmente paramétrica, se especificaría la intensidad base en términos de varios parámetros. Luego, se usaría la función de intensidad <span class="math inline">\(h_i(t)\)</span> en la ecuación de verosimilitud <a href="C14Survival.html#eq:eq145">(14.5)</a>, que serviría como base para la inferencia por verosimilitud. Como se discute en Cook y Lawless (2007), también son posibles enfoques semiparamétricos donde la base no está completamente parametrizada (como en el modelo <span class="math inline">\(PH\)</span>).</p>
-</div>
-<div id="S:Sec146" class="section level2 hasAnchor" number="14.6">
-<h2><span class="header-section-number">14.6</span> Lecturas Adicionales y Referencias<a href="C14Survival.html#S:Sec146" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Como se describe en Collett (1994), el estimador de límite de producto ha sido utilizado desde principios del siglo XX. Greenwood (1926) estableció la fórmula para una varianza aproximada. El trabajo de Kaplan y Meier (1958) suele asociarse con el estimador de límite de producto; demostraron que es un estimador de máxima verosimilitud no paramétrico de la función de supervivencia.</p>
-<p>Existen varias fuentes excelentes para el estudio adicional del análisis de supervivencia, particularmente en las ciencias biomédicas; Collett (1994) es una de estas fuentes. El texto de Klein y Moeschberger (1997) fue utilizado durante varios años como lectura obligatoria para el temario de la Sociedad de Actuarios de Norteamérica. Lawless (2003) proporciona una introducción desde una perspectiva de ingeniería. Lancaster (1990) discute temas econométricos. Hougaard (2000) ofrece un tratamiento avanzado.</p>
-<p>Recomendamos Cook y Lawless (2007) para un tratamiento extenso de eventos recurrentes.</p>
-<p><strong>Referencias del Capítulo</strong></p>
-<ul>
-<li>Breslow, Norman (1974). Covariance analysis of censored survival data. <em>Biometrics</em> 30, 89-99.</li>
-<li>Collett, D. (1994). <em>Modelling Survival Data in Medical Research.</em> Chapman &amp; Hall, London.</li>
-<li>Cook, Richard J. and Jerald F. Lawless (2007). <em>The Statistical Analysis of Recurrent Events.</em> Springer-Verlag, New York.</li>
-<li>Cox, David R. (1972). Regression models and life-tables. <em>Journal of the Royal Statistical Society, Series B</em> 34, 187-202.</li>
-<li>Gourieroux, Christian and Joann Jasiak (2007). <em>The Econometrics of Individual Risk</em>. Princeton University Press, Princeton, New Jersey.</li>
-<li>Greenwood, M. (1926). The errors of sampling of the survivorship tables. <em>Reports on Public Health and Statistical Subjects</em>, number 33, Appendix, HMSO, London.</li>
-<li>Kaplan, E. L. and Meier, P. (1958). Nonparametric estimation from incomplete observations. <em>Journal of the American Statistical Association</em> 53, 457-481.</li>
-<li>Kim, Yong-Duck, Dan R. Anderson, Terry L. Amburgey and James C. Hickman (1995). The use of event history analysis to examine insurance insolvencies. <em>Journal of Risk and Insurance</em> 62, 94-110.</li>
-<li>Klein, John P. and Melvin L. Moeschberger (1997). <em>Survival Analysis: Techniques for Censored and Truncated Data</em>. Springer-Verlag, New York.</li>
-<li>Klugman, Stuart A, Harry H. Panjer and Gordon E. Willmot (2008). <em>Loss Models: From Data to Decisions</em>. John Wiley &amp; Sons, Hoboken, New Jersey.</li>
-<li>Lancaster, Tony (1990). <em>The Econometric Analysis of Transition Data.</em> Cambridge University Press, New York.</li>
-<li>Lawless, Jerald F. (2003). <em>Statistical Models and Methods for Lifetime Data, Second Edition.</em> John Wiley &amp; Sons, New York.</li>
-<li>Hougaard, Philip (2000). <em>Analysis of Multivariate Survival Data</em>. Springer-Verlag, New York.</li>
-<li>Miller, Rupert G. (1997). <em>Survival Analysis</em>. John Wiley &amp; Sons, New York.</li>
-<li>Shumway, Tyler (2001). Forecasting bankruptcy more accurately: A simple hazard model. <em>Journal of Business</em> 74, 101-124.</li>
-<li>Stepanova, Maria and Lyn Thomas (2002). Survival analysis methods for personal loan data. <em>Operations Research</em> 50(2), 277-290.</li>
-<li>Zhou, Mai (2001). Understanding the Cox regression models with time-changing covariates. <em>American Statistician</em> 55(2), 153-155.</li>
-</ul>
 
-<!-- # Chap 1 -->
-<!-- # Chap 2 -->
-<!-- # Chap 3 -->
-<!-- # Chap 4 -->
-<!-- # Chap 5 -->
-<!-- # Chap 6 -->
-<!-- # Chap 7 -->
-<!-- # Chap 8 -->
-<!-- # Chap 9 -->
-<!-- # Chap 10 -->
-<!-- # Chap 11 -->
-<!-- # Chap 12 -->
-<!-- # Chap 13 -->
-<!-- # Chap 14 -->
-</div>
-</div>
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="C13GLM.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="C15Misc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="apéndices.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
