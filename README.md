@@ -13,9 +13,5 @@ Here are the instructions given to ChapGPT for the conversion from latex to R ma
 >Please convert the following into R markdown. Use MathJax for rendering the mathematical expressions - use $ for inline equations and $$ for other equations, consistent with MathJax format. Do not use \[ formats....  This is conversion only - no additional interpretations and retained the English. Some words are in all upper case, please leave them as is - DO NOT enclose using '$' for inline equations. Please use markdown symbols for italics and bold, not \textit and \textbf.
 
 
-(ref:Extrapolation) **Extrapolation outside of the sampling region may be biased** 
-
-```{r Extrapolation, fig.cap='(ref:Extrapolation)', echo=FALSE, fig.align='center', out.width = "80%"}
-#Term <- read.csv("CSVData/TermLife.csv", header=TRUE)
 
 ```
