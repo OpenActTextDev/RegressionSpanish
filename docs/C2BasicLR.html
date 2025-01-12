@@ -1019,7 +1019,7 @@ La línea que determinan, <span class="math inline">\(\widehat{y}=b_0+b_1x\)</sp
 <span class="math display">\[
 \widehat{y} = 469.7 + (0.647)x.
 \]</span>
-El sombrero, o “gorro”, encima de la <span class="math inline">\(y\)</span> nos recuerda que esta <span class="math inline">\(\widehat{y}\)</span>, o <span class="math inline">\(\widehat{SALES}\)</span>, es un valor ajustado. Una aplicación de la línea de regresión es estimar ventas para una población específica, digamos, <span class="math inline">\(x=10,000\)</span>. La estimación es la altura de la línea de regresión, que es <span class="math inline">\(469.7 + (0.647)(10,000) = 6,939.7\)</span>.</p>
+El sombrero, o “gorro”, encima de la <span class="math inline">\(y\)</span> nos recuerda que esta <span class="math inline">\(\widehat{y}\)</span>, o <span class="math inline">\(\widehat{SALES}\)</span>, es un valor ajustado. Una aplicación de la línea de regresión es estimar ventas para una población específica, digamos, <span class="math inline">\(x=10,000\)</span>. La estimación es la altura de la línea de regresión, que es <span class="math inline">\(469.7 + (0.647)(10,000)\)</span> <span class="math inline">\(= 6,939.7\)</span>.</p>
 <hr />
 <p><strong>Ejemplo: Resumiendo Simulaciones.</strong> El análisis de regresión es una herramienta para resumir datos complejos. En el trabajo práctico, los actuarios a menudo simulan escenarios financieros complicados; a menudo se pasa por alto que la regresión puede usarse para resumir relaciones de interés.</p>
 <p>Para ilustrar, Manistre y Hancock (2005) simularon muchas realizaciones de una opción put europea a 10 años y demostraron la relación entre dos medidas de riesgo actuarial, el valor en riesgo (VaR) y la expectativa de cola condicional (CTE). Para un ejemplo, estos autores examinaron rendimientos de acciones distribuidos logarítmicamente con un precio inicial de $100, de modo que en 10 años el precio de la acción estaría distribuido como
@@ -1084,9 +1084,9 @@ Figura 2.3: <strong>Gráfico de la Expectativa de Cola Condicional (CTE) frente 
 &amp;\textbf{Modelo Básico de Regresión Lineal} \\
 &amp;\textbf{Supuestos de Muestreo de la Representación Observable} \\ \hline
 \text{F1}. &amp; \mathrm{E}~y_i=\beta_0 + \beta_1 x_i . \\
-\text{F2}.  &amp; \{x_1,\ldots ,x_n\}  \text{son variables no estocásticas}. \\
+\text{F2}.  &amp; \{x_1,\ldots ,x_n\}  \text{ son variables no estocásticas}. \\
 \text{F3}. &amp; \mathrm{Var}~y_i=\sigma ^{2}. \\
-\text{F4}. &amp; \{ y_i\} \text{son variables aleatorias independientes}. \\ \hline\
+\text{F4}. &amp; \{ y_i\} \text{ son variables aleatorias independientes}. \\ \hline\
 \end{array}
 }
 \]</span></p>
@@ -1222,6 +1222,7 @@ s^2=\frac{1}{n-2}\sum_{i=1}^{n}\left( y_i-\widehat{y}_i\right) ^2=
 \frac{Error~SS}{n-2}=MSE.
 \]</span></p>
 <p>Esto nos lleva a la <em>tabla de análisis de varianza</em> o <em>ANOVA</em>:</p>
+<div class="blackbox">
 <p><span class="math display">\[
 {\small
 \begin{array}{llcl}
@@ -1234,6 +1235,7 @@ s^2=\frac{1}{n-2}\sum_{i=1}^{n}\left( y_i-\widehat{y}_i\right) ^2=
 \end{array}
 }
 \]</span></p>
+</div>
 <p>La tabla ANOVA es simplemente un dispositivo de contabilidad utilizado para
 hacer un seguimiento de las fuentes de variabilidad; aparece rutinariamente en
 paquetes de software estadístico como parte de los resultados de la regresión. Las
@@ -1514,8 +1516,7 @@ o (0.549, 0.745). De manera similar, si la población difiere en 1,000, un inter
 se(pred) = s \sqrt{1+\frac{1}{n}+\frac{\left(
 x_{\ast}-\overline{x}\right) ^2}{(n-1)s_x^2}}.
 \]</span>
-Al igual que con <span class="math inline">\(se(b_1)\)</span>, los términos <span class="math inline">\(n^{-1}\)</span> y $(
-x_{}- ) ^2/$ se acercan
+Al igual que con <span class="math inline">\(se(b_1)\)</span>, los términos <span class="math inline">\(n^{-1}\)</span> y <span class="math inline">\(\left(x_{\ast}-\overline{x} \right) ^2/\left[ (n-1)s_x^2\right]\)</span> se acercan
 a cero a medida que el tamaño de la muestra <span class="math inline">\(n\)</span> se vuelve grande. Por lo tanto, para grandes <span class="math inline">\(n\)</span>, tenemos que <span class="math inline">\(se(pred)\approx s\)</span>, lo que refleja que el error en
 la estimación de la línea de regresión en un punto se vuelve insignificante y la
 desviación de la respuesta adicional de su media se convierte en la
@@ -1665,6 +1666,7 @@ de aproximadamente 0.29, pequeño en comparación con la dispersión en los valo
 <hr />
 <p>¡Simplemente porque puedes mejorar dramáticamente un ajuste de regresión omitiendo una observación no significa que siempre debas hacerlo! El objetivo del análisis de datos es comprender la información en los datos. A lo largo del texto, encontraremos muchos conjuntos de datos donde los puntos inusuales proporcionan alguna de la información más interesante sobre los datos. El objetivo de esta subsección es reconocer los efectos de los puntos inusuales; el Capítulo 5 proporcionará opciones para manejar puntos inusuales en tu análisis.</p>
 <p>Todas las disciplinas cuantitativas, como contabilidad, economía, programación lineal, etc., practican el arte del <em>análisis de sensibilidad</em>. El análisis de sensibilidad es una descripción de los cambios globales en un sistema debido a un pequeño cambio local en un elemento del sistema. Examinar los efectos de observaciones individuales en el ajuste de regresión es un tipo de análisis de sensibilidad.</p>
+<hr />
 <p><strong>Ejemplo: Ventas de Lotería – Continuación.</strong> La Figura <a href="C2BasicLR.html#fig:Fig28">2.8</a> muestra un valor atípico; el punto en la parte superior izquierda del gráfico representa un código postal que incluye a Kenosha, Wisconsin. Las ventas para este código postal son inusualmente altas dada su población. Kenosha está cerca de la frontera con Illinois; los residentes de Illinois probablemente participen en la lotería de Wisconsin, lo que aumenta efectivamente el potencial de ventas en Kenosha. <a href="C2BasicLR.html#Table27">Tabla 2.7</a> resume el ajuste de la regresión tanto con como sin este código postal.</p>
 <p><a id=Table27></a></p>
 <p><span id="Table27">Tabla 2.7</span>. <strong>Resultados de la Regresión con y sin Kenosha</strong></p>
