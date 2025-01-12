@@ -589,7 +589,9 @@ TableGen1(TableData=bigblock1 ,
          TextTitle='Estadísticas Resumidas de Reclamaciones de Automóviles por Clase de Riesgo', 
          Align='lrrrrrr', Digits=3, ColumnSpec=1:6,
          ColWidth = ColWidth4) %>%
-       kableExtra::column_spec(1, width =  "6cm") 
+       kableExtra::column_spec(1, width =  "6cm") %>%
+     kableExtra::row_spec(6, extra_css = "border-bottom: 2px solid black;") %>%
+     kableExtra::row_spec(12, extra_css = "border-bottom: 2px solid black;")
 
 ```
 
@@ -1269,19 +1271,35 @@ boxplot(LifeExp4.good$LIFEEXP ~ LifeExp4.good$REGION, ylab="Expectativa de Vida"
 ```
 
 
-   La Tabla 4.11 resume la esperanza de vida promedio por región.
+```{r Tab411, echo = FALSE}
+LifeExp <- read.csv("CSVData/UNLifeExpectancy.csv", header=TRUE)
+# ELIMINAR VIDAESPERANZA FALTANTE
+LifeExp3 <- subset(LifeExp, !is.na(LIFEEXP))   
+varLife <- c("FERTILITY","PUBLICEDUCATION", "REGION","COUNTRY","LIFEEXP", "HEALTHEXPEND")
+LifeExp4 <- LifeExp3[varLife]
+LifeExp4$lnHEALTH <- log(LifeExp4$HEALTHEXPEND)
+LifeExp4.good <- na.omit(LifeExp4) 
+RegionLab <- c("Estados Árabes","Asia Oriental y el Pacífico",
+               "América Latina y el Caribe","Asia del Sur",                                
+               "Europa Meridional","África Subsahariana",
+               "Europa Central y del Este","Altos Ingresos OCDE")   
+t1 <- Hmisc::summarize(LifeExp4.good$LIFEEXP, LifeExp4.good$REGION, length) 
+t3 <- Hmisc::summarize(LifeExp4.good$LIFEEXP, LifeExp4.good$REGION, mean) 
+Tab411A <- cbind(t1[,1], RegionLab, t1[,2], round(t3[,2], digits = 1))
+#Totales <- c("", "Todos", sum(t1[,2]), round(mean(LifeExp$LIFEEXP), digits = 1))
+Totales <- c("", "Todos", sum(t1[,2]), 67.4)
 
-   | REGIÓN | Descripción de la Región                | Número | Media |
-   |--------|-----------------------------------------|--------|-------|
-   | 1      | Estados Árabes                          | 13     | 71.9  |
-   | 2      | Asia Oriental y Pacífico                | 17     | 69.1  |
-   | 3      | América Latina y el Caribe              | 25     | 72.8  |
-   | 4      | Asia Meridional                         | 7      | 65.1  |
-   | 5      | Europa Meridional                       | 3      | 67.4  |
-   | 6      | África Subsahariana                      | 38     | 52.2  |
-   | 7      | Europa Central y Oriental               | 24     | 71.6  |
-   | 8      | OECD de Altos Ingresos                  | 23     | 79.6  |
-   |        | Todos                                   | 150    | 67.4  |
+Tab411 <- rbind(Tab411A, Totales)
+colnames(Tab411) <- c("Región", "Descripción de la Región", "Número", "Media")
+rownames(Tab411) <- NULL
+
+TableGen1(TableData=Tab411 , 
+         TextTitle='Esperanza de Vida Promedio por Región',
+         Align='ccccc', 
+         ColWidth = ColWidth4) %>%
+         kableExtra::column_spec(2, width =  "5cm") 
+```
+
 
 c. Ajusta un modelo de regresión utilizando solo el factor REGION. ¿Es REGION un determinante estadísticamente significativo de LIFEEXP? Establece tus hipótesis nula y alternativa, el criterio de toma de decisiones y tus reglas de toma de decisiones.
 
@@ -1573,7 +1591,7 @@ $$
 \cdots & \cdots & \cdots & \cdots \\
 \mathbf{0}_c & \mathbf{0}_c & \cdots & \mathbf{1}_c
 \end{bmatrix}
-\text{   y   }
+~~~~~\text{   y   }~~~~
 \mathbf{X}_2 =
 \begin{bmatrix}
 \mathbf{x}_1 \\

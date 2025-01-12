@@ -75,7 +75,7 @@ TableGen1(TableData=tableMat1,
 
 </div>
 
-\bigskip
+
 
 Como muestra la Tabla \@ref(tab:Tab21), las estadísticas resumen básicas
 dan ideas útiles de la estructura de las características clave de los datos.
@@ -120,12 +120,12 @@ Una forma de resumir la fuerza de la relación entre dos variables es a través 
 
 :::: {.blackbox }
 *Definición*. El coeficiente de *correlación ordinario, o de Pearson* se define como
-\begin{equation*}
-r=\frac{1}{(n-1)s_xs_y}\sum_{i=1}^{n}\left(
+$$
+r = \frac{1}{(n-1)s_xs_y}\sum_{i=1}^{n}\left(
 x_{i}-\overline{x}\right) \left( y_{i}-\overline{y}\right) .
-\end{equation*}
+$$
 
-\bigskip
+
 
 Aquí, usamos la desviación estándar de la muestra $s_y = \sqrt{(n-1)^{-1} \sum_{i=1}^{n}\left( y_i - \overline{y}\right)^{2}}$ definida en la Sección 1.2, con una notación similar para $s_x$.
 
@@ -210,42 +210,42 @@ Para responder a estas preguntas, el primer paso asume una relación lineal apro
 
 El método comienza con la línea $y=b_0^{\ast}+b_1^{\ast}x$, donde la intersección y la pendiente, $b_0^{\ast}$ y $b_1^{\ast}$, son meramente valores genéricos. Para la $i$-ésima observación, $y_i-\left(
 b_0^{\ast}+b_1^{\ast}x_i\right)$ representa la desviación del valor observado $y_i$ de la línea en $x_i$. La cantidad
-\begin{equation*}
+$$
 SS(b_0^{\ast},b_1^{\ast})=\sum_{i=1}^{n}\left( y_i-\left(
 b_0^{\ast}+b_1^{\ast}x_i\right) \right) ^{2}
-\end{equation*}
+$$
 representa la suma de desviaciones cuadradas para esta línea candidata. El método de mínimos cuadrados consiste en determinar los valores de $b_0^{\ast}$ y $b_1^{\ast}$ que minimizan $SS(b_0^{\ast},b_1^{\ast})$. Este es un problema fácil que puede resolverse mediante cálculo, de la siguiente manera. Tomando derivadas parciales con respecto a cada argumento obtenemos
-\begin{equation*}
+$$
 \frac{\partial }{\partial
 b_0^{\ast}}SS(b_0^{\ast},b_1^{\ast})=\sum_{i=1}^{n}(-2)\left(
 y_i-\left( b_0^{\ast}+b_1^{\ast}x_i\right) \right)
-\end{equation*}
+$$
 y
-\begin{equation*}
+$$
 \frac{\partial }{\partial
 b_1^{\ast}}SS(b_0^{\ast},b_1^{\ast})=\sum_{i=1}^{n}(-2x_i)\left(
 y_i-\left( b_0^{\ast}+b_1^{\ast}x_i\right) \right) .
-\end{equation*}
+$$
 Se invita al lector a tomar las segundas derivadas parciales para asegurarse de que estamos minimizando, no maximizando, esta función. Igualando estas cantidades a cero y cancelando términos constantes obtenemos
-\begin{equation*}
+$$
 \sum_{i=1}^{n}\left( y_i-\left( b_0^{\ast}+b_1^{\ast}x_i\right)
 \right) =0
-\end{equation*}
+$$
 y
-\begin{equation*}
+$$
 \sum_{i=1}^{n}x_i\left( y_i-\left( b_0^{\ast}+b_1^{\ast}x_i\right)
 \right) =0,
-\end{equation*}
+$$
 que son conocidas como las *ecuaciones normales*. Resolver estas ecuaciones proporciona los valores de $b_0^{\ast}$ y $b_1^{\ast}$ que minimizan la suma de cuadrados.
 
 
 :::: {.blackbox }
 *Definición.* Las *estimaciones de intersección y pendiente de mínimos cuadrados* son
 
-\begin{equation*}
+$$
 b_1=r\frac{s_y}{s_x}~~~~~\mathrm{y}~~~~~b_0=\overline{y}-b_1
 \overline{x}.
-\end{equation*}
+$$
 La línea que determinan, $\widehat{y}=b_0+b_1x$, se llama la *línea de regresión ajustada*.
 
 ::::
@@ -253,9 +253,9 @@ La línea que determinan, $\widehat{y}=b_0+b_1x$, se llama la *línea de regresi
 Hemos eliminado la notación de asterisco, o estrella, porque $b_0$ y $b_1$ ya no son valores "candidatos".
 
 ¿Proporciona este procedimiento una línea sensata para nuestras ventas de lotería de Wisconsin? Anteriormente, calculamos $r=0.886$. A partir de esto y de las estadísticas básicas resumidas en la Tabla \@ref(tab:Tab21), tenemos $b_1 = 0.886 \left( 8,103\right) /11,098=0.647$ y $b_0 = 6,495-(0.647)9,311 = 469.7$. Esto produce la línea de regresión ajustada 
-\begin{equation*}
+$$
 \widehat{y} = 469.7 + (0.647)x.
-\end{equation*}
+$$
 El sombrero, o "gorro", encima de la $y$ nos recuerda que esta $\widehat{y}$, o $\widehat{SALES}$, es un valor ajustado. Una aplicación de la línea de regresión es estimar ventas para una población específica, digamos, $x=10,000$. La estimación es la altura de la línea de regresión, que es $469.7 + (0.647)(10,000) = 6,939.7$.
 
 ***
@@ -264,13 +264,13 @@ El sombrero, o "gorro", encima de la $y$ nos recuerda que esta $\widehat{y}$, o 
 **Ejemplo: Resumiendo Simulaciones.** El análisis de regresión es una herramienta para resumir datos complejos. En el trabajo práctico, los actuarios a menudo simulan escenarios financieros complicados; a menudo se pasa por alto que la regresión puede usarse para resumir relaciones de interés.
 
 Para ilustrar, Manistre y Hancock (2005) simularon muchas realizaciones de una opción put europea a 10 años y demostraron la relación entre dos medidas de riesgo actuarial, el valor en riesgo (VaR) y la expectativa de cola condicional (CTE). Para un ejemplo, estos autores examinaron rendimientos de acciones distribuidos logarítmicamente con un precio inicial de \$100, de modo que en 10 años el precio de la acción estaría distribuido como
-\begin{equation*}
+$$
 S(Z)=100 \exp \left( (.08) 10 + .15 \sqrt{10} Z \right),
-\end{equation*}
+$$
 basado en un retorno medio anual del 8\%, desviación estándar del 15\% y el resultado de una variable aleatoria normal estándar $Z$. La opción put paga la diferencia entre el precio de ejercicio, que se tomará como 110 para este ejemplo, y $S(Z)$. El valor presente de esta opción es
-\begin{equation*}
+$$
 C(Z)= \mathrm{e}^{-0.06(10)} \mathrm{max} \left(0, 110-S(Z) \right),
-\end{equation*}
+$$
 basado en una tasa de descuento del 6%.
 
 
@@ -398,7 +398,7 @@ points(1, 0.5, pch=19)
 points(2, 1.8, pch=19)
 
 arrows(0.5, 3, 0.6, 0.6, code=2, angle=10, length=0.2)
-text(0.6, 3.5, "Línea de Regresión \n Verdadera Desconocida", cex=.9)
+text(0.5, 3.5, "Línea de Regresión \n Verdadera Desconocida", cex=.9)
 arrows(1.5, -1.6, 1.2, -0.1, code=2, angle=10, length=0.2)
 text(1.5, -2.3, "Cada Respuesta Tiende \n A Caer Cerca De La Altura De \n La Línea de Regresión", cex=.9)
 text(2.6, -.2, "El Centro De Cada Curva \n Normal Está En La Altura De \n La Línea de Regresión", cex=.9)
@@ -500,9 +500,9 @@ En muchos casos, la descomposición de la variabilidad se reporta a través de u
 
 :::: {.blackbox }
 *Definición*. El *coeficiente de determinación* se denota por el símbolo $R^2$, llamado "$R$-cuadrado", y se define como
-\begin{equation*}
+$$
 R^2=\frac{Regression~SS}{Total~SS}.
-\end{equation*}
+$$
 ::::
 
 Interpretamos $R^2$ como la proporción de variabilidad explicada por la línea de regresión. En un caso extremo donde la línea de regresión se ajusta perfectamente a los datos, tenemos $Error~SS=0$ y $R^2=1$. En el otro caso extremo donde la línea de regresión no proporciona ninguna información sobre la respuesta, tenemos $Regression~SS=0$ y $R^2=0$. El coeficiente de determinación está limitado por las desigualdades $0 \leq R^2 \leq 1$ con valores mayores que implican un mejor ajuste.
@@ -511,13 +511,13 @@ Interpretamos $R^2$ como la proporción de variabilidad explicada por la línea 
 ### El Tamaño de una Desviación Típica: *s*  {#Sec232}
 
 En el modelo de regresión lineal básica, la desviación de la respuesta
-de la línea de regresión, $y_i-\left( \beta_0+\beta_1x_i\right) $,
+de la línea de regresión, $y_i-\left( \beta_0+\beta_1x_i\right)$,
 no es una cantidad observable porque los parámetros $\beta_0$ y
 $\beta_1$ no son observados. Sin embargo, usando los estimadores $b_0$ y
 $b_1$, podemos aproximar esta desviación usando
-\begin{equation*}
+$$
 e_i=y_i-\widehat{y}_i=y_i-\left( b_0+b_1x_i\right) ,
-\end{equation*}
+$$
 conocido como el *residuo*.
 
 Los residuos serán cruciales para desarrollar estrategias para mejorar
@@ -549,10 +549,10 @@ dividir por $n-2$, se puede mostrar que $s^2$ es un estimador insesgado de $\sig
 
 También podemos expresar $s^2$ en términos de las sumas de cuadrados. Es decir,
 
-\begin{equation*}
+$$
 s^2=\frac{1}{n-2}\sum_{i=1}^{n}\left( y_i-\widehat{y}_i\right) ^2=
 \frac{Error~SS}{n-2}=MSE.
-\end{equation*}
+$$
 
 Esto nos lleva a la *tabla de análisis de varianza* o *ANOVA*:
 
@@ -621,9 +621,9 @@ De esta tabla, puede verificar que $R^2=78.5\%$ y $s=3,792.$
 ## Propiedades de los Estimadores del Coeficiente de Regresión  {#Sec24}
 
 Las estimaciones de mínimos cuadrados se pueden expresar como una suma ponderada de las respuestas. Para ver esto, define los pesos
-\begin{equation*}
+$$
 w_i=\frac{x_i-\overline{x}}{s_x^2(n-1)}.
-\end{equation*}
+$$
 Como la suma de las desviaciones de $x$ ($x_i-\overline{x}$) es cero, vemos que $\sum_{i=1}^{n}w_i=0$. Así, podemos expresar la estimación de la pendiente
 \begin{equation}
 b_1=r\frac{s_y}{s_x}=\frac{1}{(n-1)s_x^2}\sum_{i=1}^{n}\left(
@@ -636,14 +636,14 @@ x_i-\overline{x}\right) \left( y_i-\overline{y}\right)
 Los ejercicios piden al lector verificar que $b_0$ también puede expresarse como una suma ponderada de las respuestas, por lo que nuestra discusión se refiere a ambos coeficientes de regresión. Dado que los coeficientes de regresión son sumas ponderadas de respuestas, pueden verse afectados drásticamente por observaciones inusuales (ver Sección \@ref(Sec26)).
 
 Como $b_1$ es una suma ponderada, es sencillo derivar la esperanza y la varianza de esta estadística. Por la linealidad de las esperanzas y la Suposición F1, tenemos
-\begin{equation*}
+$$
 \mathrm{E}~b_1=\sum_{i=1}^{n}w_i~\mathrm{E}~y_i=\beta_0\sum_{i=1}^{n}w_i+\beta_1\sum_{i=1}^{n}w_ix_i=\beta_1.
-\end{equation*}
+$$
 Es decir, $b_1$ es un estimador imparcial de $\beta_1$. Aquí, la suma $\sum_{i=1}^{n}w_ix_i$ $=$  $\left[ s_x^2(n-1)\right] ^{-1}\sum_{i=1}^{n}\left( x_i-\overline{x}\right) x_i$ $=\left[s_x^2(n-1)\right] ^{-1}\sum_{i=1}^{n}\left( x_i-\overline{x}\right) ^2=1.$ A partir de la definición de los pesos, una sencilla algebra también muestra que $\sum_{i=1}^{n}w_i^2=1/\left( s_x^2(n-1)\right)$. Además, la independencia de las respuestas implica que la varianza de la suma es la suma de las varianzas, y así tenemos
-\begin{equation*}
+$$
 \mathrm{Var}~b_1
 =\sum_{i=1}^{n}w_i^2\mathrm{Var}~y_i=\frac{\sigma^2}{s_x^2(n-1)}.
-\end{equation*}
+$$
 Sustituyendo $\sigma ^2$ por su estimador $s^2$ y tomando raíces cuadradas se obtiene lo siguiente.
 
 :::: {.blackbox }
@@ -743,7 +743,7 @@ Tomar decisiones comparando una razón *t* con un valor *t* se llama una *prueba
 $$
 {\small
 \begin{array}{c|c}
-\hline \text{Hipótesis Alternativa} (H_{a}) & \text{Procedimiento: Rechazar } H_0 \text{ a favor de }  H_{a} \text{ si} \\ \hline
+\hline \text{Hipótesis Alternativa } (H_{a}) & \text{Procedimiento: Rechazar } H_0 \text{ a favor de }  H_{a} \text{ si} \\ \hline
 \beta_1>d & t-\mathrm{ratio}>t_{n-2,1-\alpha }. \\
 \beta_1<d & t-\mathrm{ratio}<-t_{n-2,1-\alpha }. \\
 \beta_1\neq d & |t-\mathrm{ratio}\mathit{|}>t_{n-2,1-\alpha /2}. \\
@@ -751,7 +751,7 @@ $$
 {\small
 \begin{array}{l}
 \hline \text{Notas: El nivel de significancia es } \alpha . \text{Aquí, }t_{n-2,1-\alpha} \text{ es el percentil } (1-\alpha )\\
-~~\text{de la distribución *t* con } df=n-2 \text{ grados de libertad.}\\
+~~\text{de la distribución }t \text{ con } df=n-2 \text{ grados de libertad.}\\
 ~~\text{La estadística de prueba es }t-\mathrm{ratio} = (b_1 -d)/se(b_1) . \\  \hline
 \end{array}
 }
@@ -770,7 +770,7 @@ $$
 \begin{array}{c|ccc}
 \hline
 \text{Hipótesis} &  &  &  \\
-\text{Alternativa} (H_a) & \beta_1>d & \beta_1<d & \beta_1\neq d
+\text{Alternativa } (H_a) & \beta_1>d & \beta_1<d & \beta_1\neq d
 \\ \hline
 p-value & \Pr(t_{n-2}>t-\mathrm{ratio}) &
 \Pr(t_{n-2}<t-\mathrm{ratio}) & \Pr
@@ -778,7 +778,7 @@ p-value & \Pr(t_{n-2}>t-\mathrm{ratio}) &
 \end{array} }\\
 {\small
 \begin{array}{l}
-\hline \text{Notas: Aquí, }t_{n-2} \text{ es una variable aleatoria distribuida como *t* con } df=n-2 \text{ grados de libertad.}\\
+\hline \text{Notas: Aquí, }t_{n-2} \text{ es una variable aleatoria distribuida como }t \text{ con } df=n-2 \text{ grados de libertad.}\\
 ~~\text{La estadística de prueba es }t-\mathrm{ratio} = (b_1 -d)/se(b_1) . \\  \hline
 \end{array}
 }
@@ -806,9 +806,9 @@ b_1\pm t_{n-2,1-\alpha /2} ~se(b_1).
 Al igual que con las pruebas de hipótesis, $t_{n-2,1-\alpha /2}$ es el percentil (1-$\alpha$ /2) de la distribución $t$ con $df=n-2$ grados de libertad. Debido a la naturaleza bilateral de los intervalos de confianza, el percentil es 1 - (1 - nivel de confianza) / 2. En este texto, por simplicidad, generalmente usamos un intervalo de confianza del 95\%, por lo que el percentil es 1-(1-0.95)/2 = 0.975. El intervalo de confianza proporciona un rango de confiabilidad que mide la utilidad de la estimación.
 
 En la Sección 2.1, establecimos que la estimación de la pendiente por mínimos cuadrados para el ejemplo de ventas de lotería es $b_1=0.647$. La interpretación es que si la población de un código postal difiere en 1,000, entonces esperamos que las ventas promedio de lotería difieran en \$647. ¿Qué tan confiable es esta estimación? Resulta que $se(b_1)=0.0488$ y, por lo tanto, un intervalo de confianza aproximado del 95\% para la pendiente es
-\begin{equation*}
+$$
 0.647\pm (2.011)(.0488),
-\end{equation*}
+$$
 o (0.549, 0.745). De manera similar, si la población difiere en 1,000, un intervalo de confianza del 95\% para el cambio esperado en las ventas es (549, 745). Aquí, usamos el valor $t$ $t_{48,0.975}=2.011$ porque hay 48 (= $n$-2) grados de libertad y, para un intervalo de confianza del 95\%, necesitamos el percentil 97.5.
 
 ### Intervalos de Predicción  {#Sec253}
@@ -833,10 +833,10 @@ $$
 $$
 
 Se puede demostrar que el error estándar de la predicción es
-\begin{equation*}
+$$
 se(pred) = s \sqrt{1+\frac{1}{n}+\frac{\left(
 x_{\ast}-\overline{x}\right) ^2}{(n-1)s_x^2}}.
-\end{equation*}
+$$
 Al igual que con $se(b_1)$, los términos $n^{-1}$ y $\left(
 x_{\ast}-\overline{x} \right) ^2/\left[ (n-1)s_x^2\right] $\ se acercan
 a cero a medida que el tamaño de la muestra $n$ se vuelve grande. Por lo tanto, para grandes $n$, tenemos que $se(pred)\approx s$, lo que refleja que el error en
@@ -855,15 +855,15 @@ donde el valor $t$ $t_{n-2,1-\alpha /2}$ es el mismo que se usa para la prueba d
 :::: 
 
 Por ejemplo, la predicción puntual en $x_{\ast} = 10,000$ es $\widehat{y}_{\ast}$= 469.7 + 0.647 (10000) = 6,939.7. El error estándar de esta predicción es
-\begin{equation*}
+$$
 se(pred) = 3,792 \sqrt{1+\frac{1}{50} + \frac{\left(
 10,000-9,311\right)^2}{(50-1)(11,098)^2}} = 3,829.6.
-\end{equation*}
+$$
 Con un valor $t$ igual a 2.011, esto da lugar a un intervalo de predicción aproximado del 95\%
-\begin{equation*}
+$$
 6,939.7 \pm (2.011)(3,829.6) = 6,939.7 \pm 7,701.3 = (-761.6,
 ~14,641.0).
-\end{equation*}
+$$
 Interpretamos estos resultados señalando primero que nuestra mejor estimación de ventas de lotería para un código postal con una población de 10,000 es 6,939.70. Nuestro intervalo de predicción del 95\% representa un rango de confiabilidad para esta predicción. Si pudiéramos observar muchos códigos postales, cada uno con una población de 10,000, en promedio esperaríamos que aproximadamente 19 de cada 20, o el 95\%, tendrían ventas de lotería entre 0 y 14,641. Es habitual truncar el límite inferior del intervalo de predicción a cero si se considera que los valores negativos de la respuesta son inapropiados.
 
 `r HideRCode('Section25.Hide',"Código R para producir los análisis de la Sección 2.5")`
@@ -926,7 +926,9 @@ Esta lista servirá al lector durante el estudio del análisis de regresión. Po
 Gran parte del análisis de residuos se realiza examinando un *residuo estandarizado*, que es un residuo dividido por su error estándar. Un error estándar aproximado del residuo es $s$; en el Capítulo 3 daremos una definición matemática precisa. Hay dos razones por las que a menudo examinamos residuos estandarizados en lugar de residuos básicos. Primero, si las respuestas están distribuidas normalmente, entonces los residuos estandarizados son aproximadamente realizaciones de una distribución normal estándar. Esto proporciona una distribución de referencia para comparar los valores de los residuos estandarizados. Por ejemplo, si un residuo estandarizado supera dos en valor absoluto, esto se considera inusualmente grande y la
 observación se llama *outlier* (punto atípico). Segundo, dado que los residuos estandarizados son adimensionales, podemos transferir la experiencia de un conjunto de datos a otro. Esto es cierto independientemente de si la distribución de referencia normal es aplicable o no.
 
-**Puntos Atípicos y Puntos de Alta Influencia.** Otra parte importante del análisis de residuos es la identificación de observaciones inusuales en un conjunto de datos. Debido a que las estimaciones de regresión son promedios ponderados con pesos que varían según la observación, algunas observaciones son más importantes que otras. Esta ponderación es más importante de lo que muchos usuarios del análisis de regresión se dan cuenta. De hecho, el ejemplo a continuación demuestra que una sola observación puede tener un efecto dramático en un gran conjunto de datos.
+#### Puntos Atípicos y Puntos de Alta Influencia {-}
+
+Otra parte importante del análisis de residuos es la identificación de observaciones inusuales en un conjunto de datos. Debido a que las estimaciones de regresión son promedios ponderados con pesos que varían según la observación, algunas observaciones son más importantes que otras. Esta ponderación es más importante de lo que muchos usuarios del análisis de regresión se dan cuenta. De hecho, el ejemplo a continuación demuestra que una sola observación puede tener un efecto dramático en un gran conjunto de datos.
 
 Hay dos direcciones en las que un punto de datos puede ser inusual: la dirección horizontal y la dirección vertical. Por "inusual", nos referimos a que una observación bajo consideración parece estar lejos de la mayoría del conjunto de datos. Una observación que es inusual en la dirección vertical se llama *punto atípico*. Una observación que es inusual en la dirección horizontal se llama *punto de alta influencia*. Una observación puede ser tanto un punto atípico como un punto de alta influencia.
 
@@ -1092,7 +1094,7 @@ Para verificar la exactitud de nuestras suposiciones, también es común revisar
 
 ```{r Fig29, fig.cap='(ref:Fig29)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
-#Lot <- read.csv("CSVData/WiscLottery.csv", header=TRUE)
+#Lot <- read.csv("../../CSVData/WiscLottery.csv", header=TRUE)
 #  FIGURA 2.9
 
 #  TABLA 2.7
@@ -1102,10 +1104,12 @@ model.Kenosha<-lm(SALES ~ POP, Lot, subset=-c(9))
 #summary(model.Kenosha)
 
 par(mfrow=c(1, 2), mar=c(4.1,3.9,1.7,1),cex=1.1)
-qqnorm(residuals(model.basiclinearreg), main="", ylab="", las=1)
-mtext("Cuantiles Muestrales", side=2,at=20500,las=1,cex=1.1, adj=.5)
-qqnorm(residuals(model.Kenosha), main="", ylab="", las=1)
-mtext("Cuantiles Muestrales", side=2,at=9050,las=1,cex=1.1, adj=.5)
+qqnorm(residuals(model.basiclinearreg), main="", 
+       ylab="", las=1, xlab = "Cuantiles Teóricos")
+mtext("Cuantiles Muestrales", side=2,at=20500,las=1,cex=1.1, adj=.48)
+qqnorm(residuals(model.Kenosha), main="", 
+       ylab="", las=1, xlab = "Cuantiles Teóricos")
+mtext("Cuantiles Muestrales", side=2,at=9050,las=1,cex=1.1, adj=.48)
 
 ```
 
@@ -1133,9 +1137,9 @@ Si podemos estimar los rendimientos que genera una acción, entonces el conocimi
 Una idea intuitivamente atractiva, y una de las características básicas del CAPM, es que debería haber una relación entre el rendimiento de una acción y el mercado. Una justificación es simplemente que si las fuerzas económicas hacen que el mercado mejore, entonces esas mismas fuerzas deberían actuar sobre una acción individual, sugiriendo que también debería mejorar. Como se mencionó anteriormente, medimos el rendimiento de una acción a través del rendimiento. Para medir el rendimiento del mercado, existen varios índices de mercado que resumen el rendimiento de cada bolsa. Usaremos el índice "ponderado por igual" del Standard \& Poor's 500. El Standard \& Poor's 500 es la colección de las 500 empresas más grandes que se negocian en la NYSE, donde "grande" es identificado por Standard \& Poor's, una organización de calificación de servicios financieros. El índice ponderado por igual se define asumiendo que se crea una cartera invirtiendo un dólar en cada una de las 500 empresas.
 
 Otra justificación para una relación entre los rendimientos de las acciones y el mercado proviene de la teoría de la economía financiera. Esta es la teoría CAPM, atribuida a Sharpe (1964) y Lintner (1965) y basada en las ideas de diversificación de cartera de Harry Markowitz (1959). Otros factores iguales, los inversionistas desearían seleccionar un rendimiento con un alto valor esperado y una baja desviación estándar, esta última siendo una medida de riesgo. Una de las propiedades deseables de usar desviaciones estándar como medida de riesgo es que es sencillo calcular la desviación estándar de una cartera. Solo es necesario conocer la desviación estándar de cada acción y las correlaciones entre acciones. Una acción notable es una libre de riesgo, es decir, una acción que teóricamente tiene una desviación estándar cero. Los inversionistas a menudo utilizan un bono del Tesoro de EE. UU. a 30 días como una aproximación de una acción libre de riesgo, argumentando que la probabilidad de default del gobierno de EE. UU. dentro de 30 días es insignificante. Positando la existencia de un activo libre de riesgo y algunas otras condiciones suaves, bajo la teoría CAPM existe una frontera eficiente llamada la *línea de mercado de valores*. Esta frontera especifica el rendimiento mínimo esperado que los inversionistas deberían exigir para un nivel específico de riesgo. Para estimar esta línea, podemos usar la ecuación:
-\begin{equation*}
+$$
 \mathrm{E}~r = \beta_0 + \beta_1 r_m
-\end{equation*}
+$$
 donde $r$ es el rendimiento de la acción y $r_m$ es el rendimiento del mercado. Interpretamos $\beta_1 r_m$ como una medida de la cantidad de rendimiento de la acción que se atribuye al comportamiento del mercado.
 
 Probar la teoría económica, o modelos que surgen de cualquier disciplina, implica recolectar datos. La teoría CAPM trata sobre rendimientos ex-ante (antes del hecho), aunque solo podemos probar con rendimientos ex-post (después del hecho). Antes del hecho, los rendimientos son desconocidos y hay toda una distribución de rendimientos. Después del hecho, solo hay una realización única del rendimiento de la acción y del mercado. Debido a que se requieren al menos dos observaciones para determinar una línea, los modelos CAPM se estiman usando datos de acciones y del mercado recopilados a lo largo del tiempo. De esta manera, se pueden realizar varias observaciones. Para los propósitos de nuestras discusiones, seguimos la práctica estándar en la industria de valores y examinamos precios mensuales.
@@ -1195,27 +1199,25 @@ TableGen1(TableData=tableMat,
            footnote_as_chunk = TRUE)
 ```
 
-A continuación, examinamos los datos a lo largo del tiempo, como se muestra gráficamente en la Figura \@ref(fig:Fig2.10). Estos son gráficos de dispersión de los rendimientos versus el tiempo, llamados *gráficos de series temporales*. En la Figura \@ref(fig:Fig2.10), se puede ver claramente
+A continuación, examinamos los datos a lo largo del tiempo, como se muestra gráficamente en la Figura \@ref(fig:Fig210). Estos son gráficos de dispersión de los rendimientos versus el tiempo, llamados *gráficos de series temporales*. En la Figura \@ref(fig:Fig210), se puede ver claramente el rendimiento más bajo del mercado y un vistazo rápido al eje horizontal revela que este punto inusual está en octubre de 1987, el momento del conocido colapso del mercado.
 
- el rendimiento más bajo del mercado y un vistazo rápido al eje horizontal revela que este punto inusual está en octubre de 1987, el momento del conocido colapso del mercado.
+(ref:Fig210) **Gráfico de series temporales de los rendimientos de la Lincoln National Corporation y del mercado.** Hay 60 rendimientos mensuales durante el período de enero de 1986 a diciembre de 1990.
 
-(ref:Fig2.10) **Gráfico de series temporales de los rendimientos de la Lincoln National Corporation y del mercado.** Hay 60 rendimientos mensuales durante el período de enero de 1986 a diciembre de 1990.
-
-```{r Fig2.10, fig.cap='(ref:Fig2.10)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig210, fig.cap='(ref:Fig210)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 #  FIGURA 2.10
 par(mar=c(4.1,3.1,2,1),cex=1.1, las=1)
 foo <- ts(CAPM, freq = 12, start = c(1986, 1))
 ts.plot(foo[,2], foo[,3], xlab="Año", ylab="", type="o", lty=c(1, 2))
-mtext("Rendimiento Mensual", side=2, at=.38,las=1,cex=1.1, adj=.5)
+mtext("Rendimiento Mensual", side=2, at=.38,las=1,cex=1.1, adj=.25)
 legend(1986, 0.3, c("LINCOLN", "MARKET"), lty=1:2, cex=0.5)
 ```
 
-El gráfico de dispersión en la Figura \@ref(fig:Fig2.11) resume gráficamente la relación entre el rendimiento de Lincoln y el rendimiento del mercado. El colapso del mercado es claramente evidente en la Figura \@ref(fig:Fig2.11) y representa un punto de alta influencia. Con la línea de regresión (descrita a continuación) superpuesta, los dos puntos atípicos que se pueden ver en la Figura \@ref(fig:Fig2.10) también son evidentes. A pesar de estas anomalías, el gráfico en la Figura \@ref(fig:Fig2.11) sugiere que hay una relación lineal entre los rendimientos de Lincoln y del mercado.
+El gráfico de dispersión en la Figura \@ref(fig:Fig211) resume gráficamente la relación entre el rendimiento de Lincoln y el rendimiento del mercado. El colapso del mercado es claramente evidente en la Figura \@ref(fig:Fig211) y representa un punto de alta influencia. Con la línea de regresión (descrita a continuación) superpuesta, los dos puntos atípicos que se pueden ver en la Figura \@ref(fig:Fig210) también son evidentes. A pesar de estas anomalías, el gráfico en la Figura \@ref(fig:Fig211) sugiere que hay una relación lineal entre los rendimientos de Lincoln y del mercado.
 
-(ref:Fig2.11) **Gráfico de dispersión del rendimiento de Lincoln versus el rendimiento del índice S\&P 500.** La línea de regresión está superpuesta, lo que nos permite identificar el colapso del mercado y dos puntos atípicos.
+(ref:Fig211) **Gráfico de dispersión del rendimiento de Lincoln versus el rendimiento del índice S\&P 500.** La línea de regresión está superpuesta, lo que nos permite identificar el colapso del mercado y dos puntos atípicos.
 
-```{r Fig2.11, fig.cap='(ref:Fig2.11)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig211, fig.cap='(ref:Fig211)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 #  FIGURA 2.11
 
@@ -1228,7 +1230,7 @@ arrows(-0.22, -0.1, -0.22, -0.22,length=0.1, angle = 10)
 text(-0.22, -0.08, "COLAPSO DE OCTUBRE, 1987", cex=0.8)
 arrows(0.1, 0.02, 0, -0.27,length=0.1, angle = 10)
 arrows(0.1, 0.02, 0.06, 0.3,length=0.1, angle = 10)
-text(0.16, 0.02, "PUNTOS ATÍPICOS DE 1990", cex=0.8)
+text(0.16, 0.02, "PUNTOS ATÍPICOS \n DE 1990", cex=0.8)
 
 ```
 
@@ -1237,10 +1239,10 @@ text(0.16, 0.02, "PUNTOS ATÍPICOS DE 1990", cex=0.8)
 ```{r ref.label = 'Tab28', eval = FALSE}
 ```
 
-```{r ref.label = 'Fig2.10', eval = FALSE}
+```{r ref.label = 'Fig210', eval = FALSE}
 ```
 
-```{r ref.label = 'Fig2.11', eval = FALSE}
+```{r ref.label = 'Fig211', eval = FALSE}
 ```
 
 </div>
@@ -1251,9 +1253,9 @@ text(0.16, 0.02, "PUNTOS ATÍPICOS DE 1990", cex=0.8)
 
 Para resumir la relación entre el mercado y el rendimiento de Lincoln, se ajustó un modelo de regresión. La regresión ajustada es
 
-\begin{equation*}
+$$
 \widehat{LINCOLN}=-0.00214+0.973 MARKET.
-\end{equation*}
+$$
 
 El error estándar estimado resultante, $s = 0.0696$, es menor que la desviación estándar de los rendimientos de Lincoln, $s_y=0.0859$. Por lo tanto, el modelo de regresión explica parte de la variabilidad de los rendimientos de Lincoln. Además, el estadístico $t$ asociado con la pendiente $b_1$ resulta ser $t(b_1)=5.64$, lo cual es significativamente alto. Un aspecto decepcionante es que el estadístico $R^2=35.4\%$ se puede interpretar como que el mercado explica solo un poco más de un tercio de la variabilidad. Por lo tanto, aunque el mercado es claramente un determinante importante, como lo evidencian el alto estadístico $t$, solo proporciona una explicación parcial del rendimiento de los rendimientos de Lincoln.
 
@@ -1270,9 +1272,9 @@ El riesgo de un valor se debe al riesgo del mercado más el riesgo de un compone
 
 El resumen anterior plantea inmediatamente dos cuestiones adicionales. Primero, ¿cuál es el efecto del colapso de octubre de 1987 en la ecuación de regresión ajustada? Sabemos que las observaciones inusuales, como el colapso, pueden influir mucho en el ajuste. Con este fin, se volvió a ejecutar la regresión sin la observación correspondiente al colapso. La motivación para esto es que el colapso de octubre de 1987 representa una combinación de eventos altamente inusuales (la interacción de varios programas de comercio automatizado operados por grandes casas de corretaje de valores) que no deseamos representar con el mismo modelo que nuestras otras observaciones. Eliminando esta observación, la regresión ajustada es
 
-\begin{equation*}
+$$
 \widehat{LINCOLN} = -0.00181 + 0.956 MARKET,
-\end{equation*}
+$$
 
 con $R^2=26.4\%$, $t(b_1)=4.52$, $s=0.0702$ y $s_y=0.0811$. Interpretamos estas estadísticas de la misma manera que el modelo ajustado que incluye el colapso de octubre de 1987. Sin embargo, es interesante notar que la proporción de variabilidad explicada ha *disminuido* al excluir el punto influyente. Esto sirve para ilustrar un punto importante. Los puntos de alta influencia a menudo son temidos por los analistas de datos porque, por definición, son diferentes de otras observaciones en el conjunto de datos y requieren una atención especial. Sin embargo, al ajustar las relaciones entre variables, también representan una oportunidad porque permiten al analista de datos observar la relación entre variables en rangos más amplios que de otro modo serían posibles. La desventaja es que estas relaciones pueden ser no lineales o seguir un patrón completamente diferente en comparación con las relaciones observadas en la parte principal de los datos.
 
@@ -1478,9 +1480,9 @@ $b_0=\sum_{i=1}^{n}w_{i,0}y_i.$ Además, expresa los pesos en términos de los p
 2.5 **Otra expresión para la pendiente como una suma ponderada**
 
 a. Utilizando álgebra, establece una expresión alternativa
-\begin{equation*}
+$$
 b_1=\frac{\sum_{i=1}^{n}weight_i~slope_i}{ \sum_{i=1}^{n}weight_i}.
-\end{equation*}
+$$
 Aquí, $slope_i$ es la pendiente entre $(x_i,y_i)$ y $(\bar{x},\bar{y})$. Da una forma precisa para el peso $weight_i$ como una función de la variable explicativa $x$.  
 b. Supón que $\bar{x} = 4, \bar{y} = 3, x_1 = 2 \text{ y } y_1= 6$. Determina la pendiente y el peso para la primera observación, es decir, $slope_1$ y $weight_1$.
 
@@ -1490,17 +1492,17 @@ b. Supón que $\bar{x} = 4, \bar{y} = 3, x_1 = 2 \text{ y } y_1= 6$. Determina l
 b_1^{\ast}x_i\right) ^2.$
 
 a. Verifica que
-\begin{equation*}
+$$
 b_1 = \frac{\sum_{i=1}^{n} x_i y_i}{\sum_{i=1}^{n}x_i^2}.
-\end{equation*}
+$$
 
 b. Considera el modelo $y_i=\beta_1 z_i^2 + \varepsilon_i$, un modelo cuadrático que pasa por el origen. Utiliza el resultado del apartado (a) para determinar la estimación de mínimos cuadrados de $\beta_1$.
 
 2.8 a. Demuestra que
-\begin{equation*}
+$$
 s_y^2=\frac{1}{n-1}\sum_{i=1}^{n}\left( y_i-\overline{y}\right) ^2=
 \frac{1}{n-1}\left( \sum_{i=1}^{n}y_i^2-n\overline{y}^2\right) .
-\end{equation*}
+$$
 
 b. Sigue los mismos pasos para demostrar que $\sum_{i=1}^{n}\left( y_i - \overline{y} \right) \left( x_i-\overline{x}\right) =\sum_{i=1}^{n}
 x_i y_i - n \overline{x}~\overline{y}.$  
@@ -1569,19 +1571,22 @@ c. Muestra que la correlación entre los residuos y los valores ajustados es cer
 2.16 **Correlación y estadísticas $t$.** Usa los siguientes pasos para establecer una relación entre el coeficiente de correlación y el estadístico $t$ para la pendiente.
 
 a. Usa álgebra para verificar que
-\begin{equation*}
+$$
 R^2=1-\frac{n-2}{n-1}\frac{s^2}{s_y^2}.
-\end{equation*}
+$$
 
 b. Usa la parte (a) para establecer la siguiente fórmula rápida para $s$,
-\begin{equation*}s = s_y \sqrt{(1-r^2)\frac{n-1}{n-2}}.\end{equation*}
+$$s = s_y \sqrt{(1-r^2)\frac{n-1}{n-2}}.$$
 
 c. Usa la parte (b) para mostrar que
-\begin{equation*}
+$$
 t(b_1) = \sqrt{n-2}\frac{r}{\sqrt{1-r^2}}.
-\end{equation*}
+$$
 
----
+***
+
+
+#### Secciones 2.6-2.7 {-}
 
 2.17 **Efectos de un punto inusual.** Estás analizando un conjunto de datos de tamaño $n=100$. Has realizado un análisis de regresión usando una variable predictora y notas que el residuo para la décima observación es inusualmente grande.
 
@@ -1648,7 +1653,7 @@ a. Estadísticas descriptivas. Crea estadísticas descriptivas básicas para cad
 
 b. Ajusta el modelo lineal básico. Cita las estadísticas descriptivas básicas, incluye el coeficiente de determinación, el coeficiente de regresión para LOGNUMBED y el estadístico $t$ correspondiente.
 
-c. **Pruebas de hipótesis.** Prueba las siguientes hipótesis al nivel de significancia del 5% usando un estadístico $t$. También calcula el valor $p$ correspondiente.
+c. *Pruebas de hipótesis.* Prueba las siguientes hipótesis al nivel de significancia del 5% usando un estadístico $t$. También calcula el valor $p$ correspondiente.
 
    c(i). Prueba $H_0: \beta_1 = 0$ frente a $H_a: \beta_1 \neq 0$. <br>
    c(ii). Prueba $H_0: \beta_1 = 1$ frente a $H_a: \beta_1 \neq 1$. <br>
@@ -1718,7 +1723,7 @@ $$
 }
 $$
 
-b. Ingresos logarítmicos y retornos. <br>
+b. Tabla 2.11 resume una regresión utilizando ingresos y rendimientos logarítmicos.<br>
 
    b(i). Supón que usas LnREV para predecir RETURN. Calcula el RETURN ajustado bajo este modelo de regresión. ¿Es igual a tu respuesta en la parte a(ii)? <br>
    b(ii) ¿Afectan significativamente los ingresos logarítmicos a los retornos? Para ello, proporciona una prueba formal de hipótesis. Expón tus hipótesis nula y alternativa, el criterio de toma de decisiones y la regla de toma de decisiones. Usa un nivel de significancia del 10%. <br>
@@ -1741,11 +1746,11 @@ e. El $R^2$ del modelo de regresión ajustado es un decepcionante 3.5%. Parte de
 ación como una observación de alto apalancamiento? Justifica tu respuesta.
 
 
-2.22 **Esperanzas de Vida Nacionales.** Continuamos el análisis iniciado en el Ejercicio 1.7 examinando la relación entre $y= LIFEEXP$ y $x=FERTILITY$, mostrado en la Figura \@ref(fig:Fig2.12). Ajusta un modelo de regresión lineal de $LIFEEXP$ usando la variable explicativa $x=FERTILITY$.
+2.22 **Esperanzas de Vida Nacionales.** Continuamos el análisis iniciado en el Ejercicio 1.7 examinando la relación entre $y= LIFEEXP$ y $x=FERTILITY$, mostrado en la Figura \@ref(fig:Fig212). Ajusta un modelo de regresión lineal de $LIFEEXP$ usando la variable explicativa $x=FERTILITY$.
 
-(ref:Fig2.12) **Gráfico de FERTILITY versus LIFEEXP.**
+(ref:Fig212) **Gráfico de FERTILITY versus LIFEEXP.**
 
-```{r Fig2.12, fig.cap='(ref:Fig2.12)', out.width = '60%', fig.align = 'center', echo = FALSE}
+```{r Fig212, fig.cap='(ref:Fig212)', out.width = '60%', fig.align = 'center', echo = FALSE}
 
 LifeExp <- read.csv("CSVData/UNLifeExpectancy.csv", header=TRUE)
 #  FIGURA 2.12
@@ -1774,7 +1779,7 @@ Los ejemplos son una herramienta excelente para introducir temas técnicos como 
 
 Una *matriz* es una tabla rectangular de números organizados en filas y columnas (el plural de matriz es matrices). Por ejemplo, considera los ingresos y la edad de 3 personas.
 
-\begin{equation*}
+$$
 \mathbf{A}=
 \begin{array}{c}
 Fila~1 \\
@@ -1792,7 +1797,7 @@ Fila~3
 11,000 & 35
 \end{array}
 \right) }
-\end{equation*}
+$$
 
 Aquí, la columna 1 representa el ingreso y la columna 2 representa la edad. Cada fila corresponde a un individuo. Por ejemplo, el primer individuo tiene 23 años y un ingreso de \$6,000.
 
@@ -1800,7 +1805,7 @@ El número de filas y columnas se llama la *dimensión* de la matriz. Por ejempl
 
 Es conveniente representar una matriz usando la notación
 
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc}
 a_{11} & a_{12} \\
@@ -1808,11 +1813,11 @@ a_{21} & a_{22} \\
 a_{31} & a_{32}
 \end{array}
 \right) .
-\end{equation*}
+$$
 
 Aquí, $a_{ij}$ es el símbolo para el número en la $i$-ésima fila y $j$-ésima columna de $\mathbf{A}$. En general, trabajamos con matrices de la forma
 
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cccc}
 a_{11} & a_{12} & \cdots & a_{1k} \\
@@ -1820,13 +1825,13 @@ a_{11} & a_{12} & \cdots & a_{1k} \\
 a_{n1} & a_{n2} & \cdots & a_{nk}
 \end{array}
 \right) .
-\end{equation*}
+$$
 
 En este caso, la matriz $\mathbf{A}$ tiene dimensión $n\times k$.
 
 Un *vector* es una matriz especial. Un *vector fila* es una matriz que contiene solo 1 fila ($k=1$). Un *vector columna* es una matriz que contiene solo 1 columna ($n=1$). Por ejemplo,
 
-\begin{equation*}
+$$
 \text{vector columna}\rightarrow \left(
 \begin{array}{c}
 2 \\
@@ -1840,11 +1845,11 @@ Un *vector* es una matriz especial. Un *vector fila* es una matriz que contiene 
 2 & 3 & 4 & 5 & 6
 \end{array}
 \right) .
-\end{equation*}
+$$
 
 Observa que el vector fila ocupa mucho menos espacio en una página impresa que el vector columna correspondiente. Una operación básica que relaciona estas dos cantidades es la *transposición*. La transposición de una matriz $\mathbf{A}$ se define intercambiando las filas y columnas y se denota por $\mathbf{A }^{\prime }$ (o $\mathbf{A}^{T}$). Por ejemplo,
 
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc}
 6,000 & 23 \\
@@ -1857,7 +1862,7 @@ Observa que el vector fila ocupa mucho menos espacio en una página impresa que 
 23 & 47 & 35
 \end{array}
 \right) .
-\end{equation*}
+$$
 
 Así, si $\mathbf{A}$ tiene dimensión $n\times k$, entonces $\mathbf{A}^{\prime }$ tiene dimensiones $k\times n$.
 
@@ -1867,7 +1872,7 @@ Así, si $\mathbf{A}$ tiene dimensión $n\times k$, entonces $\mathbf{A}^{\prime
 *  Una *matriz cuadrada* es una matriz donde el número de filas es igual al número de columnas, es decir, $n=k$.
 
 *  Los *números diagonales* de una matriz cuadrada son los números en una matriz donde el número de fila es igual al número de columna, por ejemplo, $a_{11}$, $a_{22}$, y así sucesivamente. Una *matriz diagonal* es una matriz cuadrada en la que todos los números no diagonales son iguales a 0. Por ejemplo,
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{ccc}
 -1 & 0 & 0 \\
@@ -1875,12 +1880,12 @@ Así, si $\mathbf{A}$ tiene dimensión $n\times k$, entonces $\mathbf{A}^{\prime
 0 & 0 & 3
 \end{array}
 \right) .
-\end{equation*}
+$$
 
 *  Una *matriz identidad* es una matriz diagonal donde todos los números diagonales son iguales a 1. Esta matriz especial se denota a menudo por $\mathbf{I}$.
 
 *  Una *matriz simétrica* es una matriz cuadrada $\mathbf{A}$ tal que la matriz permanece sin cambios si intercambiamos las filas y las columnas. Más formalmente, una matriz $\mathbf{A}$ es simétrica si $\mathbf{A=A} ^{\prime }$. Por ejemplo,
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{ccc}
 1 & 2 & 3 \\
@@ -1888,7 +1893,7 @@ Así, si $\mathbf{A}$ tiene dimensión $n\times k$, entonces $\mathbf{A}^{\prime
 3 & 5 & 10
 \end{array}
 \right) \mathbf{=A}^{\prime }.
-\end{equation*}
+$$
 Observa que una matriz diagonal es una matriz simétrica.
 
 ### Operaciones Básicas {#Sec2113}
@@ -1896,7 +1901,7 @@ Observa que una matriz diagonal es una matriz simétrica.
 #### Multiplicación por un Escalar {-}
 
 Sea $\mathbf{A}$ una matriz de $n\times k$ y sea $c$ un número real. Es decir, un número real es una matriz de $1\times 1$ y también se llama *escalar*. Multiplicar un escalar $c$ por una matriz $\mathbf{A}$ se denota por $c\mathbf{A}$ y se define por
-\begin{equation*}
+$$
 c\mathbf{A}=\left(
 \begin{array}{cccc}
 ca_{11} & ca_{12} & \cdots & ca_{1k} \\
@@ -1904,9 +1909,9 @@ ca_{11} & ca_{12} & \cdots & ca_{1k} \\
 ca_{n1} & ca_{n2} & \cdots & ca_{nk}
 \end{array}
 \right) .
-\end{equation*}
+$$
 Por ejemplo, supongamos que $c=10$ y
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc}
 1 & 2 \\
@@ -1918,50 +1923,50 @@ Por ejemplo, supongamos que $c=10$ y
 60 & 80
 \end{array}
 \right) .
-\end{equation*}
+$$
 Observa que $c\mathbf{A}=\mathbf{A}c$.
 
 #### Suma y Resta de Matrices {-}
 
 Sean $\mathbf{A}$ y $\mathbf{B}$ matrices con dimensiones $n\times k$. Utiliza $a_{ij}$ y $b_{ij}$ para denotar los números en la $i$-ésima fila y $j$-ésima columna de $\mathbf{A}$ y $\mathbf{B}$, respectivamente. Entonces, la matriz $\mathbf{C}=\mathbf{A}+\mathbf{B}$ se define como la matriz con $(a_{ij}+b_{ij})$ en la $i$-ésima fila y $j$-ésima columna. De manera similar, la matriz $\mathbf{C}=\mathbf{A}-\mathbf{B}$ se define como la matriz con $(a_{ij}-b_{ij})$ en la $i$-ésima fila y $j$-ésima columna. Simbólicamente, escribimos esto como sigue.
-\begin{equation*}
+$$
 \text{Si   }\mathbf{A=}\left( a_{ij}\right) _{ij}\text{    y
    } \mathbf{B=}\left( b_{ij}\right) _{ij}\text{, entonces}
-\end{equation*}
-\begin{equation*}
+$$
+$$
 \mathbf{C}=\mathbf{A}+\mathbf{B=}\left( a_{ij}+b_{ij}\right)
 _{ij}\text{    y    }\mathbf{C}=\mathbf{A}-\mathbf{B=}\left(
 a_{ij}-b_{ij}\right) _{ij}.
-\end{equation*}
+$$
 Por ejemplo, considera
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc} 2 & 5 \\ 4 & 1 \end{array}
 \right) ~~~\mathbf{B}=\left(
 \begin{array}{cc} 4 & 6 \\ 8 & 1 \end{array}
 \right).
-\end{equation*}
+$$
 Entonces
-\begin{equation*}
+$$
 \mathbf{A}+\mathbf{B}=\left(
 \begin{array}{cc} 6 & 11 \\ 12 & 2 \end{array}
 \right) ~~~\mathbf{A}-\mathbf{B}=\left(
 \begin{array}{cc} -2 & -1 \\ -4 & 0 \end{array}
 \right) .
-\end{equation*}
+$$
 
 ***
 
 **Ejemplo Básico de Regresión Lineal de Suma y Resta**. Ahora, recuerda que el modelo básico de regresión lineal puede escribirse como $n$ ecuaciones:
-\begin{equation*}
+$$
 \begin{array}{c}
 y_1=\beta_0+\beta_1x_1+\varepsilon_1 \\
 \vdots \\
 y_n=\beta_0+\beta_1x_n+\varepsilon_n.
 \end{array}
-\end{equation*}
+$$
 Podemos definir
-\begin{equation*}
+$$
 \mathbf{y}=\left(
 \begin{array}{c} y_1 \\ \vdots \\ y_n \end{array}
 \right)
@@ -1973,18 +1978,18 @@ Podemos definir
 \mathrm{E~}\mathbf{y} =\left(
 \begin{array}{c} \beta_0+\beta_1 x_1 \\ \vdots \\ \beta_0 + \beta_1 x_n \end{array}
 \right) .
-\end{equation*}
+$$
 Con esta notación, podemos expresar las $n$ ecuaciones de manera más compacta como $\mathbf{y} = \mathrm{E~}\mathbf{y}+\boldsymbol \varepsilon$.
 
 
 #### Multiplicación de Matrices {-}
 
 En general, si $\mathbf{A}$ es una matriz de dimensión $n\times c$ y $\mathbf{B}$ es una matriz de dimensión $c\times k$, entonces $\mathbf{C}=\mathbf{AB}$ es una matriz de dimensión $n\times k$ y se define por
-\begin{equation*}
+$$
 \mathbf{C}=\mathbf{AB}=\left( \sum_{s=1}^{c}a_{is}b_{sj}\right)_{ij}.
-\end{equation*}
+$$
 Por ejemplo, considera las matrices $2\times 2$
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc}
 2 & 5 \\
@@ -1996,9 +2001,9 @@ Por ejemplo, considera las matrices $2\times 2$
 8 & 1
 \end{array}
 \right) .
-\end{equation*}
+$$
 La matriz $\mathbf{AB}$ tiene dimensión $2\times 2$. Para ilustrar el cálculo, considera el número en la primera fila y segunda columna de $\mathbf{AB}$. Según la regla presentada arriba, con $i=1$ y $j=2$, el elemento correspondiente de $\mathbf{AB}$ es $\sum_{s=1}^2a_{1s}b_{s2}=a_{11}b_{12}+a_{12}b_{22}=2(6)+5(1)=17$. Los otros cálculos se resumen como
-\begin{equation*}
+$$
 \mathbf{AB}=\left(
 \begin{array}{cc}
 2(4)+5(8) & 2(6)+5(1) \\
@@ -2010,9 +2015,9 @@ La matriz $\mathbf{AB}$ tiene dimensión $2\times 2$. Para ilustrar el cálculo,
 24 & 25
 \end{array}
 \right) .
-\end{equation*}
+$$
 Como otro ejemplo, supongamos
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{ccc}
 1 & 2 & 4 \\
@@ -2025,9 +2030,9 @@ Como otro ejemplo, supongamos
 2
 \end{array}
 \right) .
-\end{equation*}
+$$
 Como $\mathbf{A}$ tiene dimensión $2\times 3$ y $\mathbf{B}$ tiene dimensión $3\times 1$, esto significa que el producto $\mathbf{AB}$ tiene dimensión $2\times 1$. Los cálculos se resumen como
-\begin{equation*}
+$$
 \mathbf{AB}=\left(
 \begin{array}{c}
 1(3)+2(5)+4(2) \\
@@ -2039,9 +2044,9 @@ Como $\mathbf{A}$ tiene dimensión $2\times 3$ y $\mathbf{B}$ tiene dimensión $
 41
 \end{array}
 \right) .
-\end{equation*}
+$$
 Para algunos ejemplos adicionales, tenemos
-\begin{equation*}
+$$
 \left(
 \begin{array}{cc}
 4 & 2 \\
@@ -2058,8 +2063,8 @@ a_2
 5a_1+8a_2
 \end{array}
 \right) .
-\end{equation*}
-\begin{equation*}
+$$
+$$
 \left(
 \begin{array}{ccc}
 2 & 3 & 5
@@ -2087,11 +2092,11 @@ a_2
 10 & 15 & 25
 \end{array}
 \right) .
-\end{equation*}
+$$
 En general, observa que $\mathbf{AB}\neq \mathbf{BA}$ en la multiplicación de matrices, a diferencia de la multiplicación de escalares (números reales). Además, observamos que la matriz identidad cumple el papel de "uno" en la multiplicación de matrices, ya que $\mathbf{AI=A}$ y $\mathbf{IA=A}$ para cualquier matriz $\mathbf{A}$, siempre que las dimensiones sean compatibles para permitir la multiplicación de matrices.
 
 **Ejemplo Básico de Regresión Lineal de Multiplicación de Matrices**. Define
-\begin{equation*}
+$$
 \mathbf{X}=\left(
 \begin{array}{cc}
 1 & x_1 \\
@@ -2110,9 +2115,9 @@ En general, observa que $\mathbf{AB}\neq \mathbf{BA}$ en la multiplicación de m
 \beta_0+\beta_1x_n
 \end{array}
 \right) =\mathbf{\mathrm{E~}\mathbf{y}}.
-\end{equation*}
+$$
 Así, se obtiene la expresión matricial familiar del modelo de regresión, $\mathbf{y}=\mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}$. Otras cantidades útiles incluyen
-\begin{equation*}
+$$
 \mathbf{y}^{\prime }\mathbf{y}=\left(
 \begin{array}{ccc}
 y_1 & \cdots & y_n
@@ -2124,8 +2129,8 @@ y_1 \\
 y_n
 \end{array}
 \right) =y_1^2+\cdots +y_n^2=\sum_{i=1}^{n}y_i^2,
-\end{equation*}
-\begin{equation*}
+$$
+$$
 \mathbf{X}^{\prime }\mathbf{y}=\left(
 \begin{array}{ccc}
 1 & \cdots & 1 \\
@@ -2143,9 +2148,9 @@ y_n
 \sum_{i=1}^{n}x_iy_i
 \end{array}
 \right)
-\end{equation*}
+$$
 y
-\begin{equation*}
+$$
 \mathbf{X}^{\prime }\mathbf{X}=\left(
 \begin{array}{ccc}
 1 & \cdots & 1 \\
@@ -2163,18 +2168,18 @@ n & \sum_{i=1}^{n}x_i \\
 \sum_{i=1}^{n}x_i & \sum_{i=1}^{n} x_i^2
 \end{array}
 \right) .
-\end{equation*}
+$$
 Observa que $\mathbf{X}^{\prime }\mathbf{X}$ es una matriz simétrica.
 
 
 #### Inversas de Matrices {-}
 
 En álgebra de matrices, no existe el concepto de "división." En su lugar, extendemos el concepto de "recíprocos" de los números reales. Para comenzar, supongamos que $\mathbf{A}$ es una matriz cuadrada de dimensión $k \times k$ y que $\mathbf{I}$ es la matriz identidad de dimensión $k \times k$. Si existe una matriz $k \times k$ llamada $\mathbf{B}$ tal que $\mathbf{AB}=\mathbf{I}=\mathbf{BA}$, entonces $\mathbf{B}$ se llama *inversa* de $\mathbf{A}$ y se escribe como
-\begin{equation*}
+$$
 \mathbf{B}=\mathbf{A}^{-1}.
-\end{equation*}
+$$
 No todas las matrices cuadradas tienen inversas. Además, incluso cuando existe una inversa, puede no ser fácil de calcular manualmente. Una excepción a esta regla son las matrices diagonales. Supongamos que $\mathbf{A}$ es una matriz diagonal de la forma
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{ccc}
 a_{11} & \cdots & 0 \\
@@ -2188,9 +2193,9 @@ a_{11} & \cdots & 0 \\
 0 & \cdots & \frac{1}{a_{kk}}
 \end{array}
 \right).
-\end{equation*}
+$$
 Por ejemplo,
-\begin{equation*}
+$$
 \begin{array}{cccc}
 \left(
 \begin{array}{cc}
@@ -2211,9 +2216,9 @@ Por ejemplo,
 \mathbf{A} & \mathbf{A}^{-1} & = & \mathbf{I}
 \end{array}
 .
-\end{equation*}
+$$
 En el caso de una matriz de dimensión $2\times 2$, el procedimiento de inversión se puede realizar manualmente incluso cuando la matriz no es diagonal. En el caso de $2\times 2$, supongamos que si
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc}
 a & b \\
@@ -2225,9 +2230,9 @@ d & -b \\
 -c & a
 \end{array}
 \right) \text{.}
-\end{equation*}
+$$
 Así, por ejemplo, si
-\begin{equation*}
+$$
 \mathbf{A}=\left(
 \begin{array}{cc}
 2 & 2 \\
@@ -2244,9 +2249,9 @@ Así, por ejemplo, si
 -3/2 & 1
 \end{array}
 \right) \text{.}
-\end{equation*}
+$$
 Como verificación, tenemos
-\begin{equation*}
+$$
 \mathbf{A}\mathbf{A}^{-1}=\left(
 \begin{array}{cc}
 2 & 2 \\
@@ -2268,30 +2273,30 @@ Como verificación, tenemos
 0 & 1
 \end{array}
 \right) =\mathbf{I}\text{.}
-\end{equation*}
+$$
 
-\bigskip
+
 
 ***
 
 **Ejemplo Básico de Regresión Lineal de Inversas de Matrices.** Con
-\begin{equation*}
+$$
 \mathbf{X}^{\prime }\mathbf{X}=\left(
 \begin{array}{cc}
 n & \sum\limits_{i=1}^{n}x_i \\
 \sum\limits_{i=1}^{n}x_i & \sum\limits_{i=1}^{n}x_i^2
 \end{array}
 \right),
-\end{equation*}
+$$
 tenemos
-\begin{equation*}
+$$
 \left( \mathbf{X}^{\prime }\mathbf{X}\right)^{-1}=\frac{1}{n\sum_{i=1}^{n}x_i^2-\left( \sum_{i=1}^{n}x_i\right) ^2}\left(
 \begin{array}{cc}
 \sum\limits_{i=1}^{n}x_i^2 & -\sum\limits_{i=1}^{n}x_i \\
 -\sum\limits_{i=1}^{n}x_i & n
 \end{array}
 \right).
-\end{equation*}
+$$
 Para simplificar esta expresión, recuerda que $\overline{x}=n^{-1} \sum_{i=1}^{n}x_i$. Así,
 \begin{equation}
 \left( \mathbf{X}^{\prime }\mathbf{X}\right)^{-1}=\frac{1}{ \sum_{i=1}^{n}x_i^2-n\overline{x}^2}\left(
@@ -2329,16 +2334,15 @@ b_1
 \right) .
 \end{eqnarray*}
 De esta expresión, podemos ver
-\begin{equation*}
+$$
 b_1=\frac{\sum\limits_{i=1}^{n}x_iy_i-n\overline{x}\overline{y}}{\sum\limits_{i=1}^{n}x_i^2-n\overline{x}^2}
-\end{equation*}
+$$
 y
-\begin{equation*}
+$$
 b_0=\frac{\overline{y}\sum\limits_{i=1}^{n}x_i^2-\overline{x} \sum\limits_{i=1}^{n}x_iy_i}{\sum\limits_{i=1}^{n}x_i^2-n\overline{x}^2}=\frac{\overline{y}\left( \sum\limits_{i=1}^{n}x_i^2-n\overline{x} ^2\right) -\overline{x}\left( \sum\limits_{i=1}^{n}
-
 x_i y_i - n\overline{x} \overline{y}\right) }{\sum\limits_{i=1}^{n}x_i^2-n\overline{x}^2}=\overline{y}-b_1\overline{x}.
-\end{equation*}
-Estas son las expresiones usuales para la pendiente $b_1$ (Ejercicio 2A.8) y el intercepto $b_0$.
+$$
+Estas son las expresiones usuales para la pendiente $b_1$ (Ejercicio 2.8) y el intercepto $b_0$.
 
 ***
 
@@ -2346,7 +2350,7 @@ Estas son las expresiones usuales para la pendiente $b_1$ (Ejercicio 2A.8) y el 
 ### Matrices Aleatorias  {#Sec2114}
 
 **Esperanzas.** Consideremos una matriz de variables aleatorias
-\begin{equation*}
+$$
 \mathbf{U=}\left(
 \begin{array}{cccc}
 u_{11} &  u_{12}  & \cdots & u_{1c}  \\
@@ -2355,9 +2359,9 @@ u_{21} &  u_{22}  & \cdots & u_{2c}  \\
 u_{n1} &  u_{n2}  & \cdots & u_{nc}
 \end{array}
 \right).
-\end{equation*}
+$$
 Cuando escribimos la esperanza de una matriz, esto es una forma abreviada para la matriz de esperanzas. Específicamente, supongamos que la función de probabilidad conjunta de ${u_{11}, u_{12}, ..., u_{1c}, ..., u_{n1}, ..., u_{nc}}$ está disponible para definir el operador de esperanza. Entonces definimos
-\begin{equation*}
+$$
 \mathrm{E} ~ \mathbf{U} = \left(
 \begin{array}{cccc}
 \mathrm{E }u_{11} &  \mathrm{E }u_{12}  & \cdots & \mathrm{E }u_{1c}  \\
@@ -2366,9 +2370,9 @@ Cuando escribimos la esperanza de una matriz, esto es una forma abreviada para l
 \mathrm{E }u_{n1} &  \mathrm{E }u_{n2}  & \cdots & \mathrm{E }u_{nc}
 \end{array}
 \right).
-\end{equation*}
+$$
 Como un caso especial importante, consideremos la función de probabilidad conjunta para las variables aleatorias $y_1, \ldots, y_n$ y el operador de expectativas correspondiente. Entonces
-\begin{equation*}
+$$
 \mathrm{E}~ \mathbf{y=} \mathrm{E } \left(
 \begin{array}{cccc}
 y_1   \\
@@ -2382,7 +2386,7 @@ y_n
 \mathrm{E }y_n
 \end{array}
 \right).
-\end{equation*}
+$$
 Por la linealidad de las esperanzas, para una matriz no aleatoria **A** y un vector \textbf{B}, tenemos $\mathrm{E} (\textbf{A y} + \textbf{B}) = \textbf{A} \mathrm{E} \textbf{y + B}$.
 
 **Varianzas.** También podemos trabajar con los segundos momentos de vectores aleatorios. La varianza de un vector de variables aleatorias se llama *matriz de varianza-covarianza*. Se define como
@@ -2391,7 +2395,7 @@ Por la linealidad de las esperanzas, para una matriz no aleatoria **A** y un vec
 (\#eq:eq210) 
 \end{equation}
 Es decir, podemos expresar
-\begin{equation*}
+$$
 \mathrm{Var}~\mathbf{y=} \mathrm{E } \left( \left( \begin{array}{c}
 y_1 -\mathrm{E } y_1    \\
 \vdots \\
@@ -2400,26 +2404,26 @@ y_n -\mathrm{E } y_n
 \left(\begin{array}{ccc} y_1 - \mathrm{E } y_1   & \cdots & y_n -
 \mathrm{E } y_n
 \end{array}\right) \right)
-\end{equation*}
-\begin{equation*}
+$$
+$$
 = \left( \begin{array}{cccc}
 \mathrm{Var}~y_1 & \mathrm{Cov}(y_1, y_2) & \cdots &\mathrm{Cov}(y_1, y_n)   \\
 \mathrm{Cov}(y_2, y_1) & \mathrm{Var}~y_2 & \cdots & \mathrm{Cov}(y_2, y_n)   \\
 \vdots  & \vdots & \ddots & \vdots\\
 \mathrm{Cov}(y_n, y_1) & \mathrm{Cov}(y_n, y_2) & \cdots & \mathrm{Var}~y_n   \\
 \end{array}\right),
-\end{equation*}
+$$
 porque $\mathrm{E} ( (y_i - \mathrm{E} y_i)(y_j - \mathrm{E} y_j) ) = \mathrm{Cov}(y_i, y_j)$ para $i \neq j$ y $\mathrm{Cov}(y_i, y_i) = \mathrm{Var}~y_i$.
 
 En el caso de que $y_1, \ldots, y_n$ sean mutuamente no correlacionados, tenemos que $\mathrm{Cov}(y_i, y_j)=0$ para $i \neq j$ y así
-\begin{equation*}
+$$
 \mathrm{Var}~\mathbf{y=} \left( \begin{array}{cccc}
 \mathrm{Var}~y_1 & 0 & \cdots & 0   \\
 0 & \mathrm{Var}~y_2 & \cdots & 0   \\
 \vdots  & \vdots & \ddots & \vdots\\
 0 & 0 & \cdots & \mathrm{Var}~y_n   \\
 \end{array}\right).
-\end{equation*}
+$$
 Además, si las varianzas son idénticas, de modo que $\mathrm{Var}~y_i=\sigma ^2$, entonces podemos escribir $\mathrm{Var} ~\mathbf{y} = \sigma ^2 \mathbf{I}$, donde **I** es la matriz identidad $n \times n$. Por ejemplo, si $y_1, \ldots, y_n$ son i.i.d., entonces $\mathrm{Var} ~\mathbf{y} = \sigma ^2 \mathbf{I}$.
 
 A partir de la ecuación \@ref(eq:eq210), se puede demostrar que
@@ -2430,17 +2434,17 @@ A partir de la ecuación \@ref(eq:eq210), se puede demostrar que
 (\#eq:eq211) 
 \end{equation}
 Por ejemplo, si $\mathbf{A} = (a_1, a_2, \ldots,a_n)= \mathbf{a}^{\prime}$ y **B = 0**, entonces la ecuación \@ref(eq:eq211) se reduce a
-\begin{equation*}
+$$
 \mathrm{Var}\left( \sum_{i=1}^n a_i y_i \right) = \mathrm{Var}
 \left( \mathbf{a^{\prime} y}  \right) = \mathbf{a^{\prime}} \left(
 \mathrm{Var} ~\mathbf{y} \right) \mathbf{a} = (a_1, a_2, \ldots,a_n)
 \left( \mathrm{Var} ~\mathbf{y} \right) \left(\begin{array}{c} a_1 \\
 \vdots \\ a_n \end{array}\right)
-\end{equation*}
-\begin{equation*}
+$$
+$$
 = \sum_{i=1}^n a_i^2 \mathrm{Var} ~y_i ~+~2 \sum_{i=2}^n
 \sum_{j=1}^{i-1} a_i a_j \mathrm{Cov}(y_i, y_j).
-\end{equation*}
+$$
 
 **Definición - Distribución Normal Multivariante.** Un vector de variables aleatorias $\mathbf{y} = \left(y_1, \ldots, y_n \right)^{\prime}$ se dice que es *normal multivariante* si todas las combinaciones lineales de la forma $\sum_{i=1}^n a_i y_i$ están distribuidas normalmente. En este caso, escribimos $\mathbf{y} \sim N (\mathbf{\boldsymbol \mu}, \mathbf{\Sigma} )$, donde $\mathbf{\boldsymbol \mu} = \mathrm{E}~ \mathbf{y}$ es el valor esperado de **y** y $\mathbf{\Sigma}= \mathrm{Var}~\mathbf{y}$ es la matriz de varianza-covarianza de **y**. Según la definición, tenemos que $\mathbf{y}\sim N (\mathbf{\boldsymbol \mu}, \mathbf{\Sigma} )$ implica que $\mathbf{a^{\prime}y}\sim N (\mathbf{a^{\prime} \boldsymbol \mu}, \mathbf{a^{\prime}\Sigma a})$. Así, si $y_i$ son i.i.d., entonces $\sum_{i=1}^n a_i y_i$ está distribuido normalmente con media 
 $\mu \sum_{i=1}^n a_i$ y varianza $\sigma ^2 \sum_{i=1}^n a_i ^2$.

@@ -210,7 +210,8 @@ TableGen1(TableData=tableout ,
 
 
 *** 
-**Example: How does Cost-Sharing in Insurance Plans affect Expenditures in Healthcare?** In one of many studies that resulted from the Rand Health Insurance Experiment (HIE) introduced in Section 1.5, Keeler and Rolph (1988) investigated the effects of cost-sharing in insurance plans. For this study, 14 health insurance plans were grouped by the co-insurance rate (the percentage paid as out-of-pocket expenditures that varied by 0, 25, 50 and 95\%). One of the 95\% plans limited annual out-of-pocket outpatient expenditures to \$150 per person (\$450 per family), providing in effect an individual outpatient deductible. This plan was analyzed as a separate group so that there were $c=5$ categories of insurance plans. 
+
+**Example: How does Cost-Sharing in Insurance Plans affect Expenditures in Healthcare?** In one of many studies that resulted from the Rand Health Insurance Experiment (HIE) introduced in Section 1.5, Keeler and Rolph (1988) investigated the effects of cost-sharing in insurance plans. For this study, 14 health insurance plans were grouped by the co-insurance rate (the percentage paid as out-of-pocket expenditures that varied by 0, 25, 50 and 95\%). One of the 95\% plans limited annual out-of-pocket outpatient expenditures to 150 per person (450 per family), providing in effect an individual outpatient deductible. This plan was analyzed as a separate group so that there were $c=5$ categories of insurance plans. 
 
 In most insurance studies, individuals choose insurance plans making it difficult to assess cost-sharing effects because of adverse selection. Adverse selection can arise because individuals in poor chronic health are more likely to choose plans with less cost sharing, thus giving the appearance that less coverage leads to greater expenditures. In the Rand HIE, individuals were randomly assigned to plans, thus removing this potential source of bias.
 
@@ -803,7 +804,9 @@ TableGen1(TableData=bigblock1 ,
          TextTitle='Automobile Claims Summary Statistics by Risk Class', 
          Align='lrrrrrr', Digits=3, ColumnSpec=1:6,
          ColWidth = ColWidth4) %>%
-       kableExtra::column_spec(1, width =  "4cm") 
+       kableExtra::column_spec(1, width =  "4cm") %>%
+     kableExtra::row_spec(6, extra_css = "border-bottom: 2px solid black;") %>%
+     kableExtra::row_spec(12, extra_css = "border-bottom: 2px solid black;")
 
 
 ```
@@ -1595,7 +1598,7 @@ c. Test whether $POP$, $MEDSCHYR$, and $MEDHVL$ are jointly important explanator
 4.7. **National Life Expectancies**. We continue the analysis begun in Exercises 1.7, 2.22, and 3.6.
 
 a. Consider the regression using three explanatory variables, $FERTILITY$, $PUBLICEDUCATION$, and $\ln{HEALTH}$ that you did in Exercise 3.6. Test whether $PUBLICEDUCATION$ and $\ln{HEALTH}$ are jointly statistically significant, using a partial $F$-test. State your null and alternative hypotheses, decision-making criterion, and your decision-making rules. (Hint: Use the coefficient of determination form for calculating the test statistic.) Provide an approximate $p$-value for the test.
-b. We now introduce the $REGION$ variable, summarized in Table 4.11. A boxplot of life expectancies versus $REGION$ is given in Figure \@ref(fig:Fig48). Describe what we learn from the Table and boxplot about the effect of $REGION$ on $LIFEEXP$.
+b. We now introduce the $REGION$ variable, summarized in Table \@ref(tab:Tab411). A boxplot of life expectancies versus $REGION$ is given in Figure \@ref(fig:Fig48). Describe what we learn from the Table and boxplot about the effect of $REGION$ on $LIFEEXP$.
 
 (ref:Fig48) **Boxplots of LIFEEXP by REGION** 
 
@@ -1611,6 +1614,36 @@ LifeExp4$lnHEALTH <- log(LifeExp4$HEALTHEXPEND)
 LifeExp4.good <- na.omit(LifeExp4) 
 
 boxplot(LifeExp4.good$LIFEEXP ~ LifeExp4.good$REGION, ylab="Life Expectancy",xlab="Region")
+
+```
+
+
+```{r Tab411, echo = FALSE}
+LifeExp <- read.csv("CSVData/UNLifeExpectancy.csv", header=TRUE)
+#  REMOVE MISSING LIFEEXPs
+LifeExp3 <- subset(LifeExp, !is.na(LIFEEXP) )   
+varLife <- c("FERTILITY","PUBLICEDUCATION", "REGION","COUNTRY","LIFEEXP", "HEALTHEXPEND")
+LifeExp4 <- LifeExp3[varLife]
+LifeExp4$lnHEALTH <- log(LifeExp4$HEALTHEXPEND)
+LifeExp4.good <- na.omit(LifeExp4) 
+RegionLab <- c("Arab States","East Asia and the Pacific",
+               "Latin American and the Carribean","South Asia",                                "Southern Europe","Sub-Saharan Africa",
+              " Central and Eastern Europe","High Income OECD")   
+t1 <- Hmisc::summarize(LifeExp4.good$LIFEEXP, LifeExp4.good$REGION, length ) 
+t3 <- Hmisc::summarize(LifeExp4.good$LIFEEXP, LifeExp4.good$REGION, mean) 
+Tab411A <- cbind(t1[,1], RegionLab, t1[,2], round(t3[,2], digits = 1))
+#Totals <- c("", "All", sum(t1[,2]), round(mean(LifeExp$LIFEEXP), digits = 1) )
+Totals <- c("", "All", sum(t1[,2]), 67.4)
+
+Tab411 <- rbind(Tab411A, Totals)
+colnames(Tab411) <- c("Region", "Description of the Region", "Number", "Mean")
+rownames(Tab411) <- NULL
+
+TableGen1(TableData=Tab411 , 
+         TextTitle='Average Life Expectancy by Region',
+                  Align='ccccc', 
+         ColWidth = ColWidth4) %>%
+         kableExtra::column_spec(2, width =  "5cm") 
 
 ```
 

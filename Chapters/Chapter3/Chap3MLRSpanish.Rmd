@@ -665,6 +665,7 @@ Como resultado, $R$, la raíz cuadrada positiva de $R^2$, se llama el *coeficien
 
 La descomposición de la variabilidad también se resume utilizando la *tabla de análisis de varianza*, o *ANOVA*, como sigue.
 
+:::: {.blackbox }
 $$
 \small{
 \begin{array}{l|lcl}
@@ -678,6 +679,7 @@ $$
 \end{array}
 }
 $$
+::::
 
 Las cifras de la columna de cuadrados medios se definen como las cifras de suma de cuadrados divididas por sus respectivos grados de libertad. Los grados de libertad del error denotan el número de residuales no restringidos. Es este número el que utilizamos en nuestra definición del "promedio" o error cuadrático medio. Es decir, definimos
 
@@ -807,16 +809,16 @@ $$
 \begin{array}{cc}
 \hline \text{Hipótesis Alternativa }(H_{a}) & \text{Procedimiento: Rechazar } H_0 \text{ en
 favor de } H_a \text{ si }\\ \hline
-\beta_j > d & t-\mathrm{razón}>t_{n-(k+1),1-\alpha } \\
-\beta_j < d & t-\mathrm{razón}<-t_{n-(k+1),1-\alpha } \\
-\beta_j\neq d  & |t-\mathrm{razón}\mathit{|}>t_{n-(k+1),1-\alpha/2}
+\beta_j > d & t-\mathrm{ratio}>t_{n-(k+1),1-\alpha } \\
+\beta_j < d & t-\mathrm{ratio}<-t_{n-(k+1),1-\alpha } \\
+\beta_j\neq d  & |t-\mathrm{ratio}\mathit{|}>t_{n-(k+1),1-\alpha/2}
 \end{array}
 \\ 
 \begin{array}{ll}\hline
 \textit{Notas:} &\text{ El nivel de significancia es } \alpha.
 \text{ Aquí, } t_{n-(k+1),1-\alpha}\text{ es el }(1-\alpha)^{th}\text{ percentil} \\
 &~~\text{de la distribución }t-\text{utilizando } df=n-(k+1)\text{ grados de libertad.} \\
-&~~\text{La estadística de prueba es }t-\mathrm{razón} = (b_j -d)/se(b_j) . \\
+&~~\text{La estadística de prueba es }t-\mathrm{ratio} = (b_j -d)/se(b_j) . \\
 \hline
 \end{array}
 }
@@ -837,8 +839,8 @@ $$
 \hline
 \text{Hipótesis} &  &  &  \\
 \text{Alternativa} (H_a ) & \beta_j > d & \beta_j < d & \beta_j \neq d  \\
-\hline p-valor & \Pr(t_{n-(k+1)}>t-ratio) &
-\Pr(t_{n-(k+1)}<t-ratio) & \Pr(|t_{n-(k+1)}|>|t-ratio|) \\
+\hline p-valor & \Pr(t_{n-(k+1)}>t-\mathrm{ratio}) &
+\Pr(t_{n-(k+1)}<t-\mathrm{ratio}) & \Pr(|t_{n-(k+1)}|>|t-\mathrm{ratio}|) \\
 \end{array}
 \\ 
 \begin{array}{ll}\hline
@@ -890,7 +892,7 @@ b_j \pm t_{n-(k+1),1-\alpha /2}~se(b_j).
 (\#eq:eq310)
 \end{equation}
 
-Aquí, el valor $t$ $t_{n-(k+1),1-\alpha /2}$ es un percentil de la distribución $t$ con $df=n-(k+1)$ grados de libertad. Usamos el mismo valor $t$ que en la prueba de hipótesis bilateral. De hecho, hay una dualidad entre el intervalo de confianza y la prueba de hipótesis bilateral. Por ejemplo, no es difícil comprobar que si un valor hipotético cae fuera del intervalo de confianza, entonces $H_0$ será rechazado en favor de $H_{a}$. Además, el conocimiento del $p$-valor, la estimación puntual y el error estándar se puede utilizar para determinar un intervalo de confianza.
+Aquí, el valor $t$, $t_{n-(k+1),1-\alpha /2}$, es un percentil de la distribución $t$ con $df=n-(k+1)$ grados de libertad. Usamos el mismo valor $t$ que en la prueba de hipótesis bilateral. De hecho, hay una dualidad entre el intervalo de confianza y la prueba de hipótesis bilateral. Por ejemplo, no es difícil comprobar que si un valor hipotético cae fuera del intervalo de confianza, entonces $H_0$ será rechazado en favor de $H_{a}$. Además, el conocimiento del $p$-valor, la estimación puntual y el error estándar se puede utilizar para determinar un intervalo de confianza.
 
 ### Gráficos de Variables Añadidas {#Sec343}
 
@@ -1111,6 +1113,7 @@ text(11.8,9.2,expression(widehat(LNFACE)),cex=.7)
 text(12.6,8.7,expression("= 4.29 + 0.634 LNINCOME"),cex=.7)
 arrows(6.4, 14.8, 7,9.7, code=2, angle=10, length=0.2)
 arrows(13.3,9, 12.8, 12, code=2, angle=10, length=0.2)
+
 ```
 
 
@@ -1119,8 +1122,8 @@ La Figura \@ref(fig:Fig35) sugiere que LNFACE es más bajo para aquellos soltero
 $$
 \text{E } y = 
 \begin{cases} 
-    \beta_0 + \beta_1 \text{LNINCOME} & \text{para otros encuestados} \\
-    \beta_0 + \beta_2 + \beta_1 \text{LNINCOME} & \text{para encuestados solteros}
+    \beta_0 + \beta_1 \text{ LNINCOME} & \text{para otros encuestados} \\
+    \beta_0 + \beta_2 + \beta_1 \text{ LNINCOME} & \text{para encuestados solteros}
 \end{cases}
 $$
 
@@ -1130,8 +1133,8 @@ Aunque la interpretación para variables explicativas binarias difiere de la con
 
 $$
 \small{
-\begin{array}{cclll}
-  \widehat{LNFACE} & = & 5.09   &  + 0.634 \text{LNINCOME} & - 0.800 \text{SINGLE} .\\
+\begin{array}{ccccc}
+  \widehat{LNFACE} & = & 5.09   &  + 0.634 \text{ LNINCOME} & - 0.800 \text{ SINGLE} .\\
   \text{error estándar}    &   & (0.89) & ~~(0.078) & ~(0.248) \\
 \end{array}
 }
@@ -1169,7 +1172,7 @@ Hasta ahora hemos discutido cómo las variables explicativas, digamos $x_1$ y $x
 Con este modelo, el cambio en el esperado $y$ por cada unidad de cambio en $x_1$ ahora depende de $x_2$. Formalmente, podemos evaluar pequeños cambios en la función de regresión como:
 
 $$
-\frac{\partial \mathrm{E}~y}{\partial x_1} = \frac{\partial}{\partial x_1} \left(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 \right) = \beta_1 + \beta_3 x_2 .
+\frac{\partial~ \mathrm{E}~y}{\partial x_1} = \frac{\partial}{\partial x_1} \left(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 \right) = \beta_1 + \beta_3 x_2 .
 $$
 
 De esta manera, podemos permitir funciones más complicadas de $x_1$ y $x_2$. La Figura \@ref(fig:Fig36) ilustra esta estructura compleja. A partir de esta figura y los cálculos anteriores, vemos que los cambios parciales de $\mathrm{E}~y$ debido al movimiento de $x_1$ dependen del valor de $x_2$. De esta manera, decimos que los cambios parciales debidos a cada variable no son independientes, sino que "se mueven juntos."
@@ -1372,7 +1375,7 @@ text(94000,92000,expression(beta[1]),cex=1.1)
 
 </div>
 
-Una justificación para este modelo es que, en 2007, los individuos pagaban un 7.65% de sus ingresos en impuestos de Seguridad Social hasta \$97,500. No se aplican impuestos de Seguridad Social a los ingresos que superan los \$97,500. Así, una teoría es que, para los ingresos superiores a \$97,500, los individuos tienen más ingresos disponibles por dólar y, por lo tanto, deberían estar más dispuestos a hacer contribuciones benéficas.
+Una justificación para este modelo es que, en 2007, los individuos pagaban un 7.65% de sus ingresos en impuestos de Seguridad Social hasta 97,500. No se aplican impuestos de Seguridad Social a los ingresos que superan los 97,500. Así, una teoría es que, para los ingresos superiores a 97,500, los individuos tienen más ingresos disponibles por dólar y, por lo tanto, deberían estar más dispuestos a hacer contribuciones benéficas.
 
 Para modelar esta relación, definamos la variable binaria $z$ que sea cero si $x < 97,500$ y uno si $x \ge 97,500$. Definamos la función de regresión como $\mathrm{E}~y = \beta_0 + \beta_1 x + \beta_2 z (x - 97,500)$. Esto se puede escribir como:
 
@@ -1511,9 +1514,9 @@ d. Determina el valor numérico para $t(b_1)$.
 3.4. **Lotería de Wisconsin.** \label{Ex:Lottery3} La Sección 2.1 describió una muestra de $n=50$ áreas geográficas (códigos postales) que contenían datos de ventas de la lotería estatal de Wisconsin ($y = \text{SALES}$). En esa sección, las ventas se analizaron usando un modelo de regresión lineal básico con $x = \text{POP}$, la población del área, como la variable explicativa. Este ejercicio amplía ese análisis al introducir variables explicativas adicionales dadas en la Tabla 3.11.
 
 $$
-    \text{Tabla 3.11: Características de lotería, económicas y demográficas de cincuenta códigos postales de Wisconsin}
+    \text{Tabla 3.11: Características de lotería, económicas y demográficas } \\
+        \text{ de cincuenta códigos postales de Wisconsin}
 $$
-
 $$
 \small{
 \begin{array}{ll}
@@ -1524,15 +1527,18 @@ $$
      ~~~~~\textbf{demográficas} \\\hline 
     \text{PERPERHH} & \text{Personas por hogar} \\ 
     \text{MEDSCHYR} & \text{Años medianos de escolaridad} \\ 
-    \text{MEDHVL} & \text{Valor medianos de viviendas en \$1000s para viviendas ocupadas por sus propietarios} \\ 
+    \text{MEDHVL} & \text{Valor medianos de viviendas en 1000s} \\ 
+         & ~~~ \text{ para viviendas ocupadas por sus propietarios} \\ 
     \text{PRCRENT} & \text{Porcentaje de viviendas ocupadas por arrendatarios} \\ 
     \text{PRC55P} & \text{Porcentaje de la población que tiene 55 años o más} \\ 
     \text{HHMEDAGE} & \text{Edad mediana del hogar} \\ 
-    \text{MEDINC} & \text{Ingreso mediano estimado del hogar, en \$1000s} \\ 
+    \text{MEDINC} & \text{Ingreso mediano estimado del hogar, en 1000s} \\ 
     \text{POP} & \text{Población} \\ \hline 
 \end{array}
 }
 $$
+
+
 
 a. Produce una tabla de estadísticas descriptivas para todas las variables. Un código postal (observación 11, código = 53211, Shorewood Wisconsin, un suburbio de Milwaukee) parece tener valores inusualmente grandes de MEDSCHYR y MEDHVL. Para esta observación, ¿cuántas desviaciones estándar está el valor de MEDSCHYR por encima de la media? Para esta observación, ¿cuántas desviaciones estándar está el valor de MEDHVL por encima de la media?
 b. Produce una tabla de correlaciones. ¿Cuáles son las tres variables más correlacionadas con SALES?

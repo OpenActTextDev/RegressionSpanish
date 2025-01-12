@@ -237,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#dedicación"><i class="fa fa-check"></i>Dedicación</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html"><i class="fa fa-check"></i>Translation</a></li>
+<li class="chapter" data-level="" data-path="traducción.html"><a href="traducción.html"><i class="fa fa-check"></i>Traducción</a></li>
 <li class="chapter" data-level="1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html"><i class="fa fa-check"></i><b>1</b> Regresión y la Distribución Normal</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec11"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es el Análisis de Regresión?</a></li>
@@ -1621,6 +1621,7 @@ R^2 = \left[ r \left(y, \widehat{y} \right) \right]^2.
 \]</span></p>
 <p>Como resultado, <span class="math inline">\(R\)</span>, la raíz cuadrada positiva de <span class="math inline">\(R^2\)</span>, se llama el <em>coeficiente de correlación múltiple</em>. Se puede interpretar como la correlación entre la respuesta y la mejor combinación lineal de las variables explicativas, los valores ajustados. (Esta relación se desarrolla utilizando álgebra matricial en el apéndice técnico Sección 5.10.1.)</p>
 <p>La descomposición de la variabilidad también se resume utilizando la <em>tabla de análisis de varianza</em>, o <em>ANOVA</em>, como sigue.</p>
+<div class="blackbox">
 <p><span class="math display">\[
 \small{
 \begin{array}{l|lcl}
@@ -1634,6 +1635,7 @@ R^2 = \left[ r \left(y, \widehat{y} \right) \right]^2.
 \end{array}
 }
 \]</span></p>
+</div>
 <p>Las cifras de la columna de cuadrados medios se definen como las cifras de suma de cuadrados divididas por sus respectivos grados de libertad. Los grados de libertad del error denotan el número de residuales no restringidos. Es este número el que utilizamos en nuestra definición del “promedio” o error cuadrático medio. Es decir, definimos</p>
 <p><span class="math display">\[
 MSE = Error~MS = \frac{Error~SS}{n - (k + 1)} = s^2.
@@ -1770,16 +1772,16 @@ se(b_j) = s \sqrt{\text{elemento diagonal (j+1)st de } (\mathbf{X^{\prime}X})^{-
 \begin{array}{cc}
 \hline \text{Hipótesis Alternativa }(H_{a}) &amp; \text{Procedimiento: Rechazar } H_0 \text{ en
 favor de } H_a \text{ si }\\ \hline
-\beta_j &gt; d &amp; t-\mathrm{razón}&gt;t_{n-(k+1),1-\alpha } \\
-\beta_j &lt; d &amp; t-\mathrm{razón}&lt;-t_{n-(k+1),1-\alpha } \\
-\beta_j\neq d  &amp; |t-\mathrm{razón}\mathit{|}&gt;t_{n-(k+1),1-\alpha/2}
+\beta_j &gt; d &amp; t-\mathrm{ratio}&gt;t_{n-(k+1),1-\alpha } \\
+\beta_j &lt; d &amp; t-\mathrm{ratio}&lt;-t_{n-(k+1),1-\alpha } \\
+\beta_j\neq d  &amp; |t-\mathrm{ratio}\mathit{|}&gt;t_{n-(k+1),1-\alpha/2}
 \end{array}
 \\
 \begin{array}{ll}\hline
 \textit{Notas:} &amp;\text{ El nivel de significancia es } \alpha.
 \text{ Aquí, } t_{n-(k+1),1-\alpha}\text{ es el }(1-\alpha)^{th}\text{ percentil} \\
 &amp;~~\text{de la distribución }t-\text{utilizando } df=n-(k+1)\text{ grados de libertad.} \\
-&amp;~~\text{La estadística de prueba es }t-\mathrm{razón} = (b_j -d)/se(b_j) . \\
+&amp;~~\text{La estadística de prueba es }t-\mathrm{ratio} = (b_j -d)/se(b_j) . \\
 \hline
 \end{array}
 }
@@ -1793,8 +1795,8 @@ favor de } H_a \text{ si }\\ \hline
 \hline
 \text{Hipótesis} &amp;  &amp;  &amp;  \\
 \text{Alternativa} (H_a ) &amp; \beta_j &gt; d &amp; \beta_j &lt; d &amp; \beta_j \neq d  \\
-\hline p-valor &amp; \Pr(t_{n-(k+1)}&gt;t-ratio) &amp;
-\Pr(t_{n-(k+1)}&lt;t-ratio) &amp; \Pr(|t_{n-(k+1)}|&gt;|t-ratio|) \\
+\hline p-valor &amp; \Pr(t_{n-(k+1)}&gt;t-\mathrm{ratio}) &amp;
+\Pr(t_{n-(k+1)}&lt;t-\mathrm{ratio}) &amp; \Pr(|t_{n-(k+1)}|&gt;|t-\mathrm{ratio}|) \\
 \end{array}
 \\
 \begin{array}{ll}\hline
@@ -1835,7 +1837,7 @@ favor de } H_a \text{ si }\\ \hline
 b_j \pm t_{n-(k+1),1-\alpha /2}~se(b_j).
 \tag{3.10}
 \end{equation}\]</span></p>
-<p>Aquí, el valor <span class="math inline">\(t\)</span> <span class="math inline">\(t_{n-(k+1),1-\alpha /2}\)</span> es un percentil de la distribución <span class="math inline">\(t\)</span> con <span class="math inline">\(df=n-(k+1)\)</span> grados de libertad. Usamos el mismo valor <span class="math inline">\(t\)</span> que en la prueba de hipótesis bilateral. De hecho, hay una dualidad entre el intervalo de confianza y la prueba de hipótesis bilateral. Por ejemplo, no es difícil comprobar que si un valor hipotético cae fuera del intervalo de confianza, entonces <span class="math inline">\(H_0\)</span> será rechazado en favor de <span class="math inline">\(H_{a}\)</span>. Además, el conocimiento del <span class="math inline">\(p\)</span>-valor, la estimación puntual y el error estándar se puede utilizar para determinar un intervalo de confianza.</p>
+<p>Aquí, el valor <span class="math inline">\(t\)</span>, <span class="math inline">\(t_{n-(k+1),1-\alpha /2}\)</span>, es un percentil de la distribución <span class="math inline">\(t\)</span> con <span class="math inline">\(df=n-(k+1)\)</span> grados de libertad. Usamos el mismo valor <span class="math inline">\(t\)</span> que en la prueba de hipótesis bilateral. De hecho, hay una dualidad entre el intervalo de confianza y la prueba de hipótesis bilateral. Por ejemplo, no es difícil comprobar que si un valor hipotético cae fuera del intervalo de confianza, entonces <span class="math inline">\(H_0\)</span> será rechazado en favor de <span class="math inline">\(H_{a}\)</span>. Además, el conocimiento del <span class="math inline">\(p\)</span>-valor, la estimación puntual y el error estándar se puede utilizar para determinar un intervalo de confianza.</p>
 </div>
 <div id="Sec343" class="section level3 hasAnchor" number="3.4.3">
 <h3><span class="header-section-number">3.4.3</span> Gráficos de Variables Añadidas<a href="C3BasicMLR.html#Sec343" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -2370,16 +2372,16 @@ Figura 3.5: <strong>Gráfico de letras de LNFACE versus LNINCOME, con el código
 <p><span class="math display">\[
 \text{E } y =
 \begin{cases}
-    \beta_0 + \beta_1 \text{LNINCOME} &amp; \text{para otros encuestados} \\
-    \beta_0 + \beta_2 + \beta_1 \text{LNINCOME} &amp; \text{para encuestados solteros}
+    \beta_0 + \beta_1 \text{ LNINCOME} &amp; \text{para otros encuestados} \\
+    \beta_0 + \beta_2 + \beta_1 \text{ LNINCOME} &amp; \text{para encuestados solteros}
 \end{cases}
 \]</span></p>
 <p>La interpretación de los coeficientes del modelo difiere del caso de variables continuas. Para variables continuas como LNINCOME, interpretamos <span class="math inline">\(\beta_1\)</span> como el cambio esperado en <span class="math inline">\(y\)</span> por unidad de cambio en el ingreso logarítmico, manteniendo fijas otras variables. Para variables binarias como SINGLE, interpretamos <span class="math inline">\(\beta_2\)</span> como el aumento esperado en <span class="math inline">\(y\)</span> al pasar del nivel base de SINGLE (=0) al nivel alternativo. Así, aunque tenemos un modelo para ambos estados civiles, podemos interpretar el modelo usando dos ecuaciones de regresión, una para cada tipo de estado civil. Al escribir una ecuación separada para cada estado civil, hemos simplificado una complicada ecuación de regresión múltiple. A veces, es más fácil comunicar una serie de relaciones simples en comparación con una sola relación compleja.</p>
 <p>Aunque la interpretación para variables explicativas binarias difiere de la continua, el método de estimación de mínimos cuadrados ordinarios sigue siendo válido. Para ilustrar, la versión ajustada del modelo anterior es</p>
 <p><span class="math display">\[
 \small{
-\begin{array}{cclll}
-  \widehat{LNFACE} &amp; = &amp; 5.09   &amp;  + 0.634 \text{LNINCOME} &amp; - 0.800 \text{SINGLE} .\\
+\begin{array}{ccccc}
+  \widehat{LNFACE} &amp; = &amp; 5.09   &amp;  + 0.634 \text{ LNINCOME} &amp; - 0.800 \text{ SINGLE} .\\
   \text{error estándar}    &amp;   &amp; (0.89) &amp; ~~(0.078) &amp; ~(0.248) \\
 \end{array}
 }
@@ -2405,7 +2407,7 @@ Figura 3.5: <strong>Gráfico de letras de LNFACE versus LNINCOME, con el código
 <p>Hasta ahora hemos discutido cómo las variables explicativas, digamos <span class="math inline">\(x_1\)</span> y <span class="math inline">\(x_2\)</span>, afectan la respuesta media de manera aditiva, es decir, <span class="math inline">\(\mathrm{E}~y = \beta_0 + \beta_1 x_1 + \beta_2 x_2\)</span>. Aquí, esperamos que <span class="math inline">\(y\)</span> aumente en <span class="math inline">\(\beta_1\)</span> por cada unidad que aumente <span class="math inline">\(x_1\)</span>, manteniendo <span class="math inline">\(x_2\)</span> fijo. ¿Qué pasa si la tasa marginal de aumento de <span class="math inline">\(\mathrm{E}~y\)</span> difiere para valores altos de <span class="math inline">\(x_2\)</span> en comparación con valores bajos de <span class="math inline">\(x_2\)</span>? Una forma de representar esto es crear una <em>variable de interacción</em> <span class="math inline">\(x_3 = x_1 \times x_2\)</span> y considerar el modelo <span class="math inline">\(\mathrm{E}~y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3\)</span>.</p>
 <p>Con este modelo, el cambio en el esperado <span class="math inline">\(y\)</span> por cada unidad de cambio en <span class="math inline">\(x_1\)</span> ahora depende de <span class="math inline">\(x_2\)</span>. Formalmente, podemos evaluar pequeños cambios en la función de regresión como:</p>
 <p><span class="math display">\[
-\frac{\partial \mathrm{E}~y}{\partial x_1} = \frac{\partial}{\partial x_1} \left(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 \right) = \beta_1 + \beta_3 x_2 .
+\frac{\partial~ \mathrm{E}~y}{\partial x_1} = \frac{\partial}{\partial x_1} \left(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 \right) = \beta_1 + \beta_3 x_2 .
 \]</span></p>
 <p>De esta manera, podemos permitir funciones más complicadas de <span class="math inline">\(x_1\)</span> y <span class="math inline">\(x_2\)</span>. La Figura <a href="C3BasicMLR.html#fig:Fig36">3.6</a> ilustra esta estructura compleja. A partir de esta figura y los cálculos anteriores, vemos que los cambios parciales de <span class="math inline">\(\mathrm{E}~y\)</span> debido al movimiento de <span class="math inline">\(x_1\)</span> dependen del valor de <span class="math inline">\(x_2\)</span>. De esta manera, decimos que los cambios parciales debidos a cada variable no son independientes, sino que “se mueven juntos.”</p>
 
@@ -2540,7 +2542,7 @@ Figura 3.9: <strong>El cambio marginal en <span class="math inline">\(\mathrm{E}
 <span id="cb40-8"><a href="C3BasicMLR.html#cb40-8" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">102000</span>,<span class="dv">102000</span>,<span class="fu">expression</span>(beta[<span class="dv">1</span>]<span class="sc">+</span>beta[<span class="dv">2</span>]),<span class="at">cex=</span><span class="fl">1.1</span>)</span>
 <span id="cb40-9"><a href="C3BasicMLR.html#cb40-9" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">94000</span>,<span class="dv">92000</span>,<span class="fu">expression</span>(beta[<span class="dv">1</span>]),<span class="at">cex=</span><span class="fl">1.1</span>)</span></code></pre></div>
 </div>
-<p>Una justificación para este modelo es que, en 2007, los individuos pagaban un 7.65% de sus ingresos en impuestos de Seguridad Social hasta $97,500. No se aplican impuestos de Seguridad Social a los ingresos que superan los $97,500. Así, una teoría es que, para los ingresos superiores a $97,500, los individuos tienen más ingresos disponibles por dólar y, por lo tanto, deberían estar más dispuestos a hacer contribuciones benéficas.</p>
+<p>Una justificación para este modelo es que, en 2007, los individuos pagaban un 7.65% de sus ingresos en impuestos de Seguridad Social hasta 97,500. No se aplican impuestos de Seguridad Social a los ingresos que superan los 97,500. Así, una teoría es que, para los ingresos superiores a 97,500, los individuos tienen más ingresos disponibles por dólar y, por lo tanto, deberían estar más dispuestos a hacer contribuciones benéficas.</p>
 <p>Para modelar esta relación, definamos la variable binaria <span class="math inline">\(z\)</span> que sea cero si <span class="math inline">\(x &lt; 97,500\)</span> y uno si <span class="math inline">\(x \ge 97,500\)</span>. Definamos la función de regresión como <span class="math inline">\(\mathrm{E}~y = \beta_0 + \beta_1 x + \beta_2 z (x - 97,500)\)</span>. Esto se puede escribir como:</p>
 <p><span class="math display">\[
 \mathrm{E}~y = \begin{cases}
@@ -2666,9 +2668,10 @@ Figura 3.10: <strong>Gráfico de comisiones esperadas (<span class="math inline"
 </ol>
 <p>3.4. <strong>Lotería de Wisconsin.</strong> La Sección 2.1 describió una muestra de <span class="math inline">\(n=50\)</span> áreas geográficas (códigos postales) que contenían datos de ventas de la lotería estatal de Wisconsin (<span class="math inline">\(y = \text{SALES}\)</span>). En esa sección, las ventas se analizaron usando un modelo de regresión lineal básico con <span class="math inline">\(x = \text{POP}\)</span>, la población del área, como la variable explicativa. Este ejercicio amplía ese análisis al introducir variables explicativas adicionales dadas en la Tabla 3.11.</p>
 <p><span class="math display">\[
-    \text{Tabla 3.11: Características de lotería, económicas y demográficas de cincuenta códigos postales de Wisconsin}
-\]</span></p>
-<p><span class="math display">\[
+    \text{Tabla 3.11: Características de lotería, económicas y demográficas } \\
+        \text{ de cincuenta códigos postales de Wisconsin}
+\]</span>
+<span class="math display">\[
 \small{
 \begin{array}{ll}
     \hline
@@ -2678,11 +2681,12 @@ Figura 3.10: <strong>Gráfico de comisiones esperadas (<span class="math inline"
      ~~~~~\textbf{demográficas} \\\hline
     \text{PERPERHH} &amp; \text{Personas por hogar} \\
     \text{MEDSCHYR} &amp; \text{Años medianos de escolaridad} \\
-    \text{MEDHVL} &amp; \text{Valor medianos de viviendas en \$1000s para viviendas ocupadas por sus propietarios} \\
+    \text{MEDHVL} &amp; \text{Valor medianos de viviendas en 1000s} \\
+         &amp; ~~~ \text{ para viviendas ocupadas por sus propietarios} \\
     \text{PRCRENT} &amp; \text{Porcentaje de viviendas ocupadas por arrendatarios} \\
     \text{PRC55P} &amp; \text{Porcentaje de la población que tiene 55 años o más} \\
     \text{HHMEDAGE} &amp; \text{Edad mediana del hogar} \\
-    \text{MEDINC} &amp; \text{Ingreso mediano estimado del hogar, en \$1000s} \\
+    \text{MEDINC} &amp; \text{Ingreso mediano estimado del hogar, en 1000s} \\
     \text{POP} &amp; \text{Población} \\ \hline
 \end{array}
 }

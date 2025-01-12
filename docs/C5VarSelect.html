@@ -237,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#dedicación"><i class="fa fa-check"></i>Dedicación</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="translation.html"><a href="translation.html"><i class="fa fa-check"></i>Translation</a></li>
+<li class="chapter" data-level="" data-path="traducción.html"><a href="traducción.html"><i class="fa fa-check"></i>Traducción</a></li>
 <li class="chapter" data-level="1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html"><i class="fa fa-check"></i><b>1</b> Regresión y la Distribución Normal</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="regresión-y-la-distribución-normal.html"><a href="regresión-y-la-distribución-normal.html#Sec11"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es el Análisis de Regresión?</a></li>
@@ -1591,16 +1591,16 @@ D_i &amp;= \frac{\sum_{j=1}^{n} (\hat{y}_j - \hat{y}_{j(i)})^2}{(k+1) s^2} \tag{
 <thead>
 <tr>
 <th style="text-align:center;">
-Observation
+Observación
 </th>
 <th style="text-align:center;">
-Standardized Residual <span class="math inline">\(e / se(e)\)</span>
+Residuo Estandarizado <span class="math inline">\(e / se(e)\)</span>
 </th>
 <th style="text-align:center;">
 Leverage <span class="math inline">\(h\)</span>
 </th>
 <th style="text-align:center;">
-Cook’s Distance <span class="math inline">\(D\)</span>
+Distancia de Cook <span class="math inline">\(D\)</span>
 </th>
 </tr>
 </thead>
@@ -1795,6 +1795,7 @@ VALUE
 </tbody>
 </table>
 <p>Puede verificar que la relación en la ecuación <a href="C5VarSelect.html#eq:eq55">(5.5)</a> es válida para cada una de las variables explicativas en la Tabla <a href="C5VarSelect.html#tab:Tab57">5.7</a>. Dado que cada estadístico <span class="math inline">\(VIF\)</span> es menor a diez, hay poca razón para sospechar colinealidad severa. Esto es interesante porque puede recordar que existe una relación perfecta entre PRICE, SHARE y VALUE en el sentido de que definimos el valor de mercado como VALUE = PRICE <span class="math inline">\(\times\)</span> SHARE. Sin embargo, la relación es multiplicativa y, por lo tanto, es no lineal. Debido a que las variables no están relacionadas linealmente, es válido incluir las tres en el modelo de regresión. Desde una perspectiva financiera, la variable VALUE es importante porque mide el valor de una empresa. Desde una perspectiva estadística, la variable VALUE cuantifica la interacción entre PRICE y SHARE (las variables de interacción se introdujeron en la Sección 3.5.3).</p>
+<hr />
 <p>Para la colinealidad, solo nos interesa detectar tendencias lineales, por lo que las relaciones no lineales entre variables no son un problema aquí. Por ejemplo, hemos visto que a veces es útil mantener tanto una variable explicativa <span class="math inline">\(x\)</span> como su cuadrado <span class="math inline">\(x^2\)</span>, a pesar de que existe una relación perfecta (no lineal) entre las dos. Sin embargo, debemos verificar que las relaciones no lineales no sean aproximadamente lineales en la región de muestreo. Aunque la relación es teóricamente no lineal, si es cercana a lineal para nuestra muestra disponible, pueden surgir problemas de colinealidad. La Figura <a href="C5VarSelect.html#fig:Fig55">5.5</a> ilustra esta situación.</p>
 
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:Fig55"></span>
@@ -1991,7 +1992,7 @@ Figura 5.10: <strong>El área sombreada representa los datos.</strong>
 Figura 5.11: <strong>Residuos trazados frente a los valores ajustados para los datos en la Figura 5.10.</strong>
 </p>
 </div>
-<p>Más pruebas formales de heterocedasticidad también están disponibles en la literatura de regresión. Por ejemplo, consideremos una prueba de Breusch y Pagan (1980). Específicamente, esta prueba examina la hipótesis alternativa <span class="math inline">\(H_a\)</span>: $ y_i = ^2 + _i^{} $, donde <span class="math inline">\(\mathbf{z}_i\)</span> es un vector conocido de variables y <span class="math inline">\(\boldsymbol \gamma\)</span> es un vector de parámetros de dimensión <span class="math inline">\(p\)</span>. Así, la hipótesis nula es <span class="math inline">\(H_0:~ \boldsymbol \gamma = \mathbf{0}\)</span>, que es equivalente a homocedasticidad, <span class="math inline">\(\mathrm{Var~} y_i = \sigma^2.\)</span></p>
+<p>Más pruebas formales de heterocedasticidad también están disponibles en la literatura de regresión. Por ejemplo, consideremos una prueba de Breusch y Pagan (1980). Específicamente, esta prueba examina la hipótesis alternativa <span class="math inline">\(H_a\)</span>: <span class="math inline">\(\mathrm{Var~} y_i = \sigma^2 + \mathbf{z}_i^{\prime} \boldsymbol \gamma\)</span>, donde <span class="math inline">\(\mathbf{z}_i\)</span> es un vector conocido de variables y <span class="math inline">\(\boldsymbol \gamma\)</span> es un vector de parámetros de dimensión <span class="math inline">\(p\)</span>. Así, la hipótesis nula es <span class="math inline">\(H_0:~ \boldsymbol \gamma = \mathbf{0}\)</span>, que es equivalente a homocedasticidad, <span class="math inline">\(\mathrm{Var~} y_i = \sigma^2.\)</span></p>
 <p><em>Procedimiento para la Prueba de Heterocedasticidad</em></p>
 <ol style="list-style-type: decimal">
 <li>Ajuste un modelo de regresión y calcule los residuos del modelo, <span class="math inline">\(e_i\)</span>.</li>
@@ -2152,7 +2153,7 @@ Como se discutió en la Sección <a href="C5VarSelect.html#Sec541">5.4.1</a>, us
 \mathbf{e} = \mathbf{y} - \mathbf{\hat{y}} = \mathbf{y - Hy} = \mathbf{(I-H)(X \boldsymbol{\beta} + \boldsymbol{\varepsilon})} = \mathbf{(I-H) \boldsymbol{\varepsilon}}.
 \tag{5.14}
 \end{equation}\]</span>
-La última igualdad se debe al hecho de que <span class="math inline">\(\mathbf{(I-H)X} = \mathbf{X - HX} = \mathbf{X - X} = \mathbf{0}\)</span>. Usando <span class="math inline">\(\text{Var~} \boldsymbol{\varepsilon} = \sigma^2 \mathbf{I}\)</span>, tenemos
+La última igualdad se debe al hecho de que <span class="math inline">\(\mathbf{(I-H)X} = \mathbf{X - HX} = \mathbf{X - X} = \mathbf{0}\)</span>. Usando <span class="math inline">\(\text{Var }~ \boldsymbol{\varepsilon} = \sigma^2 \mathbf{I}\)</span>, tenemos
 <span class="math display">\[
 \begin{array}{ll}
 \text{Var } \mathbf{e} &amp;= \text{Var }\left[ \mathbf{(I-H)\boldsymbol{\varepsilon}} \right] = \mathbf{(I-H)} \text{Var } \boldsymbol{\varepsilon} \mathbf{(I-H)} \\

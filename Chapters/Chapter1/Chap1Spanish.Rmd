@@ -53,10 +53,9 @@ colnames(tableMat)  <- c("<64.0", "64.5", "65.5", "66.5","67.5", "68.5","69.5", 
  
  #colSums(tableMat)
 TableGen1(TableData=tableMat, 
-         TextTitle='Galtons 1885 Regression Data', 
+         TextTitle='Galtons 1885 Datos de Regresión', 
          Align='r', Digits=0, ColumnSpec=1:11,
          BorderRight=c(1,12), ColWidth = ColWidth10)
- 
  
 ```
 *Fuente*: Stigler (1986)
@@ -69,8 +68,7 @@ Históricamente, la distribución normal tuvo un papel fundamental en el desarro
 
 Formalmente, la curva normal se define por la función
 \begin{equation}
-\mathrm{f}(y)=\frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{1}{2\sigma ^{2}%
-}\left( y-\mu \right) ^{2}\right) .
+\mathrm{f}(y)=\frac{1}{\sigma \sqrt{2\pi }}\exp \left( -\frac{1}{2\sigma ^{2} }\left( y-\mu \right) ^{2}\right) .
 (\#eq:eq11)
 \end{equation}
 
@@ -92,11 +90,14 @@ La Tabla \@ref(tab:Tab12) proporciona varias estadísticas que resumen diferente
 
 
 
+
+
+
 ```{r Tab12, echo = FALSE}
 injury <- read.csv("CSVData/MassBodilyInjury.csv", header=TRUE)
 injury2<-subset(injury, providerA != 0 )
 LOGCLAIMS<-log(injury2$claims)
-# TABLE 1.2 SUMMARY STATISTICS
+# TABLA 1.2 ESTADÍSTICAS RESUMEN
 TableOut <- cbind(
 length(LOGCLAIMS),
 mean(LOGCLAIMS),
@@ -107,17 +108,17 @@ max(LOGCLAIMS),
 quantile(LOGCLAIMS,0.25),
 quantile(LOGCLAIMS,0.75)
 )
-rownames(TableOut) <- "Claims"
-colnames(TableOut) <- c("Number", "Mean", "Median", "Standard Deviation", "Minimum",
-                        "Maximum", "25th Percentile", "75th Percentile")
+rownames(TableOut) <- "Reclamaciones"
+colnames(TableOut) <- c("Número", "Media", "Mediana", "Desviación Estándar", "Mínimo",
+                        "Máximo", "Percentil 25", "Percentil 75")
 
 TableGen1(TableData=TableOut, 
-         TextTitle='Summary
-Statistics of Massachusetts Automobile Bodily Injury Claims', 
+         TextTitle='Estadísticas Resumen de Reclamaciones por Lesiones Corporales en Automóviles de Massachusetts', 
          Align='r', Digits=3, ColumnSpec=1:8,
           ColWidth = ColWidth8)
 
 ```
+
 
 ***
 
@@ -177,7 +178,7 @@ text(1, .57, "mediana", cex=1.2)
 text(1.36, -0.2, "percentil 25", cex=1.2)
 text(1.36, 1.1, "percentil 75", cex=1.2)
 arrows(1.05, -2, 1.05, -3.3, code=3, angle=20, length=0.1)
-text(1.15, -2.5, "valores atípicos", cex=1.2)
+text(1.35, -2.5, "valores atípicos", cex=1.2)
 text(1.13, 3.9, "valor atípico", cex=1.2)
 ```
 
@@ -311,7 +312,7 @@ mtext("Recíproco negativo de y", side=1, cex=.75, line=2)
 
 Una *estadística* es una medida resumen de los datos, como una media, mediana o percentil. Las colecciones de estadísticas son muy útiles para analistas, tomadores de decisiones y consumidores cotidianos para comprender grandes cantidades de datos que representan situaciones complejas. Hasta este punto, nuestro enfoque ha sido introducir técnicas sensatas para resumir variables; técnicas que se usarán repetidamente a lo largo de este texto. Sin embargo, la verdadera utilidad de la *disciplina de la estadística* es su capacidad para decir algo sobre lo desconocido, no solo para resumir la información ya disponible. Con este fin, necesitamos hacer algunas suposiciones bastante formales sobre la manera en que se observan los datos. Como ciencia, una característica destacada de la estadística (como disciplina) es la capacidad de criticar estas suposiciones y ofrecer alternativas mejoradas en situaciones específicas.
 
-Es costumbre suponer que los datos se extraen de una población más grande que estamos interesados en describir. El proceso de extracción de los datos se conoce como *muestreo*, o *proceso generador de datos*. Denotamos esta muestra como $\{y_1,\ldots,y_n\}$. Para que podamos criticar y modificar estas suposiciones de muestreo, las enumeramos a continuación en detalle:\smallskip
+Es costumbre suponer que los datos se extraen de una población más grande que estamos interesados en describir. El proceso de extracción de los datos se conoce como *muestreo*, o *proceso generador de datos*. Denotamos esta muestra como $\{y_1,\ldots,y_n\}$. Para que podamos criticar y modificar estas suposiciones de muestreo, las enumeramos a continuación en detalle:
 
 $$
 \begin{array}{l}
@@ -518,43 +519,43 @@ a. Examina la distribución de la variable dependiente, LIFEEXP. Haz esto creand
 b. Realiza una transformación logarítmica natural y examina la distribución de esta variable transformada. ¿Ha ayudado la transformación a simetrizar la distribución?
 
 
-
 $$
-\small{
+{\scriptsize
 \begin{array}{ll|crrrrr}
 \hline
-&  & Num &        &     & Std  &   Mini- &  Maxi- \\
-  Variable     & Description & Miss &    Mean    &    Median   & Dev &    mum &    mum \\\hline
-BIRTH & \text{ Births attended  by skilled} &          7 &      78.25 &      92.00 &      26.42 &       6.00 &     100.00 \\
- ~~ATTEND& ~~ \text{ health personnel} (\%)\\
-FEMALE & \text{ Legislators, senior officials} &         87 &      29.07 &      30.00 &      11.71 &       2.00 &      58.00 \\
- ~~BOSS& ~~ \text{ and managers, % female }\\
- FERTILITY & \text{ Total fertility rate,}&          4 &       3.19 &       2.70 &       1.71 &       0.90 &       7.50 \\
- & ~~ \text{ births per woman }&          \\
-       GDP & \text{ Gross domestic product,} &          7 &     247.55 &      14.20 &   1,055.69 &       0.10 &  12,416.50 \\
-       & ~~\text{ in billions of USD} \\
-HEALTH& \text{ 2004 Health expenditure} &          5 &     718.01 &     297.50 &   1,037.01 &      15.00 &   6,096.00 \\
-~~ EXPEND & ~~ \text{ per capita, PPP in USD} \\
-ILLITERATE & \text{ Adult illiteracy rate,}  &         14 &      17.69 &      10.10 &      19.86 &       0.20 &      76.40 \\
-  & ~~ \% \text{ aged 15 and older} &      \\
- PHYSICIAN & \text{ Physicians,}&          3 &     146.08 &     107.50 &     138.55 &       2.00 &     591.00 \\
- & ~~ \text{ per 100,000 people} \\
-       POP & \text{ 2005 population,} &          1 &      35.36 &       7.80 &     131.70 &       0.10 &   1,313.00 \\
-       & ~~\text{ in millions }\\
-PRIVATE & \text{ 2004 Private expenditure}  &          1 &       2.52 &       2.40 &       1.33 &       0.30 &       8.50 \\
-~~HEALTH& ~~\text{on health, % of GDP}  \\
-PUBLIC & \text{ Public expenditure}  &         28 &       4.69 &       4.60 &       2.05 &       0.60 &      13.40 \\
-~~EDUCATION& ~~ \text{ on education, % of GDP} \\
-RESEAR & \text{ Researchers in R & D,}  &         95 &   2,034.66 &     848.00 &   4,942.93 &      15.00 &  45,454.00 \\
- ~~CHERS&~~  \text{ per million people} &         \\
-   SMOKING & \text{ Prevalence of smoking,} &         88 &      35.09 &      32.00 &      14.40 &       6.00 &      68.00 \\
-    & ~~\text{ (male) % of adults } \\ \hline
-   LIFEEXP & \text{ Life expectancy at birth,}&            &      67.05 &      71.00 &      11.08 &      40.50 &      82.30 \\
-   & ~~ \text{ in years } \\
+&  & Num &        &     & Desv  &   Mín- &  Máx- \\
+  Variable     & Descripción & Faltantes &    Media    &    Mediana   & Est. &    imo &    imo \\\hline
+BIRTH & \text{ Nacimientos atendidos por personal} &          7 &      78.25 &      92.00 &      26.42 &       6.00 &     100.00 \\
+ ~~ATTEND& ~~ \text{ sanitario capacitado (%)}\\
+FEMALE & \text{ Legisladoras, altas funcionarias} &         87 &      29.07 &      30.00 &      11.71 &       2.00 &      58.00 \\
+ ~~BOSS& ~~ \text{ y gerentes, % mujeres }\\
+ FERTILITY & \text{ Tasa de fertilidad total,}&          4 &       3.19 &       2.70 &       1.71 &       0.90 &       7.50 \\
+ & ~~ \text{ nacimientos por mujer }&          \\
+       GDP & \text{ Producto interno bruto,} &          7 &     247.55 &      14.20 &   1,055.69 &       0.10 &  12,416.50 \\
+       & ~~\text{ en miles de millones de USD} \\
+HEALTH& \text{ Gasto en salud 2004} &          5 &     718.01 &     297.50 &   1,037.01 &      15.00 &   6,096.00 \\
+~~ EXPEND & ~~ \text{ per cápita, PPA en USD} \\
+ILLITERATE & \text{ Tasa de analfabetismo adulto,}  &         14 &      17.69 &      10.10 &      19.86 &       0.20 &      76.40 \\
+  & ~~ \% \text{ personas de 15 años y más} &      \\
+ PHYSICIAN & \text{ Médicos,}&          3 &     146.08 &     107.50 &     138.55 &       2.00 &     591.00 \\
+ & ~~ \text{ por cada 100,000 habitantes} \\
+       POP & \text{ Población en 2005,} &          1 &      35.36 &       7.80 &     131.70 &       0.10 &   1,313.00 \\
+       & ~~\text{ en millones }\\
+PRIVATE & \text{ Gasto privado en salud 2004}  &          1 &       2.52 &       2.40 &       1.33 &       0.30 &       8.50 \\
+~~HEALTH& ~~\text{% del PIB}  \\
+PUBLIC & \text{ Gasto público}  &         28 &       4.69 &       4.60 &       2.05 &       0.60 &      13.40 \\
+~~EDUCATION& ~~ \text{ en educación, % del PIB} \\
+RESEAR & \text{ Investigadores en I + D,}  &         95 &   2,034.66 &     848.00 &   4,942.93 &      15.00 &  45,454.00 \\
+ ~~CHERS&~~  \text{ por cada millón de habitantes} &         \\
+   SMOKING & \text{ Prevalencia de tabaquismo,} &         88 &      35.09 &      32.00 &      14.40 &       6.00 &      68.00 \\
+    & ~~\text{ (hombres) % de adultos } \\ \hline
+   LIFEEXP & \text{ Esperanza de vida al nacer,}&            &      67.05 &      71.00 &      11.08 &      40.50 &      82.30 \\
+   & ~~ \text{ en años } \\
 \hline
 \end{array}
 }
 $$
+
 
 
 ## Suplemento Técnico - Teorema del Límite Central {#Sec19}

@@ -546,20 +546,22 @@ Para tener una idea del tamaño esperado de $D_i$ para un punto que no es inusua
 
 **Ejemplo: Valores Atípicos y Puntos de Alto Apalancamiento - Continuación.** Para ilustrar, volvemos a nuestro ejemplo de la Sección 2.6. En este ejemplo, consideramos 19 puntos "buenos" o base, más cada uno de los tres tipos de puntos inusuales, etiquetados como A, B y C. La Tabla \@ref(tab:Tab56) resume los cálculos.
 
-```{r Tab56,  echo=FALSE, results='asis'}
- table.out <- data.frame(
-  Observation = c("A", "B", "C"),
-  `Standardized residual` = c("4.00", "0.77", "-4.01"),
+
+```{r Tab56, echo=FALSE, results='asis'}
+table.out <- data.frame(
+  Observación = c("A", "B", "C"),
+  `Residuo estandarizado` = c("4.00", "0.77", "-4.01"),
   Leverage = c("0.067", "0.550", "0.550"),
-  `Cook's distance` = c("0.577", "0.363", "9.832")
+  `Distancia de Cook` = c("0.577", "0.363", "9.832")
 )
-colnames(table.out) <- c("Observation", "Standardized Residual $e / se(e)$", "Leverage $h$", "Cook's Distance $D$")
+colnames(table.out) <- c("Observación", "Residuo Estandarizado $e / se(e)$", "Leverage $h$", "Distancia de Cook $D$")
 TableGen1(TableData=table.out, 
          TextTitle='Medidas de Tres Tipos de Puntos Inusuales', 
          Align='cccc', Digits=3, ColumnSpec=1:3,
          ColWidth = ColWidth4)
-
 ```
+
+
 
 Como se mencionó en la Sección 2.6, de la columna de residuos estandarizados vemos que tanto los puntos A como C son valores atípicos. Para juzgar el tamaño de los apalancamientos, dado que hay $n=20$ puntos, los apalancamientos están limitados por 0.05 y 1.00, con el apalancamiento promedio siendo $\bar{h} = \frac{2}{20} = 0.10$. Usando 0.3 ($= 3 \times \bar{h}$) como un umbral, tanto los puntos B como C son puntos de alto apalancamiento. Nótese que sus valores son los mismos. Esto se debe a que, según la Figura 2.7, los valores de las variables explicativas son los mismos y solo la variable de respuesta ha cambiado. La columna de la distancia de Cook captura ambos tipos de comportamiento inusual. Dado que el valor típico de $D_i$ es $\frac{1}{n}$ o 0.05, la distancia de Cook proporciona una estadística para alertarnos de que cada punto es inusual en un aspecto u otro. En particular, el punto C tiene un $D_i$ muy grande, lo que refleja el hecho de que es tanto un valor atípico como un punto de alto apalancamiento. El percentil 95 de una distribución $F$ con $df_1 = 2$ y $df_2 = 18$ es 3.555. El hecho de que el punto C tenga un valor de $D_i$ que supera con creces este umbral indica la influencia sustancial de este punto.
 
@@ -660,6 +662,7 @@ TableGen1(TableData=table.out,
 
 Puede verificar que la relación en la ecuación \@ref(eq:eq55) es válida para cada una de las variables explicativas en la Tabla \@ref(tab:Tab57). Dado que cada estadístico $VIF$ es menor a diez, hay poca razón para sospechar colinealidad severa. Esto es interesante porque puede recordar que existe una relación perfecta entre PRICE, SHARE y VALUE en el sentido de que definimos el valor de mercado como VALUE = PRICE $\times$ SHARE. Sin embargo, la relación es multiplicativa y, por lo tanto, es no lineal. Debido a que las variables no están relacionadas linealmente, es válido incluir las tres en el modelo de regresión. Desde una perspectiva financiera, la variable VALUE es importante porque mide el valor de una empresa. Desde una perspectiva estadística, la variable VALUE cuantifica la interacción entre PRICE y SHARE (las variables de interacción se introdujeron en la Sección 3.5.3).
 
+***
 
 Para la colinealidad, solo nos interesa detectar tendencias lineales, por lo que las relaciones no lineales entre variables no son un problema aquí. Por ejemplo, hemos visto que a veces es útil mantener tanto una variable explicativa $x$ como su cuadrado $x^2$, a pesar de que existe una relación perfecta (no lineal) entre las dos. Sin embargo, debemos verificar que las relaciones no lineales no sean aproximadamente lineales en la región de muestreo. Aunque la relación es teóricamente no lineal, si es cercana a lineal para nuestra muestra disponible, pueden surgir problemas de colinealidad. La Figura \@ref(fig:Fig55) ilustra esta situación.
 
@@ -983,7 +986,7 @@ lines(x, y)
 ```
 
 
-Más pruebas formales de heterocedasticidad también están disponibles en la literatura de regresión. Por ejemplo, consideremos una prueba de Breusch y Pagan (1980). Específicamente, esta prueba examina la hipótesis alternativa $H_a$: $\mathrm{Var~} y_i = \sigma^2 + \mathbf{z}_i^{\prime} \boldsymbol \gamma $, donde $\mathbf{z}_i$ es un vector conocido de variables y $\boldsymbol \gamma$ es un vector de parámetros de dimensión $p$. Así, la hipótesis nula es $H_0:~ \boldsymbol \gamma = \mathbf{0}$, que es equivalente a homocedasticidad, $\mathrm{Var~} y_i = \sigma^2.$
+Más pruebas formales de heterocedasticidad también están disponibles en la literatura de regresión. Por ejemplo, consideremos una prueba de Breusch y Pagan (1980). Específicamente, esta prueba examina la hipótesis alternativa $H_a$: $\mathrm{Var~} y_i = \sigma^2 + \mathbf{z}_i^{\prime} \boldsymbol \gamma$, donde $\mathbf{z}_i$ es un vector conocido de variables y $\boldsymbol \gamma$ es un vector de parámetros de dimensión $p$. Así, la hipótesis nula es $H_0:~ \boldsymbol \gamma = \mathbf{0}$, que es equivalente a homocedasticidad, $\mathrm{Var~} y_i = \sigma^2.$
 
 *Procedimiento para la Prueba de Heterocedasticidad*
 
@@ -1172,7 +1175,7 @@ Como se discutió en la Sección \@ref(Sec541), usamos nuestros límites y el ap
 \mathbf{e} = \mathbf{y} - \mathbf{\hat{y}} = \mathbf{y - Hy} = \mathbf{(I-H)(X \boldsymbol{\beta} + \boldsymbol{\varepsilon})} = \mathbf{(I-H) \boldsymbol{\varepsilon}}.
 (\#eq:eq514)
 \end{equation}
-La última igualdad se debe al hecho de que $\mathbf{(I-H)X} = \mathbf{X - HX} = \mathbf{X - X} = \mathbf{0}$. Usando $\text{Var~} \boldsymbol{\varepsilon} = \sigma^2 \mathbf{I}$, tenemos
+La última igualdad se debe al hecho de que $\mathbf{(I-H)X} = \mathbf{X - HX} = \mathbf{X - X} = \mathbf{0}$. Usando $\text{Var }~ \boldsymbol{\varepsilon} = \sigma^2 \mathbf{I}$, tenemos
 $$
 \begin{array}{ll}
 \text{Var } \mathbf{e} &= \text{Var }\left[ \mathbf{(I-H)\boldsymbol{\varepsilon}} \right] = \mathbf{(I-H)} \text{Var } \boldsymbol{\varepsilon} \mathbf{(I-H)} \\
