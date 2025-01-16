@@ -4,7 +4,8 @@ Online version is available at https://openacttextdev.github.io/RegressionSpanis
 
 Here are the instructions given to ChapGPT for the translation:
 
->Hello. We are in the process of translating an undergraduate textbook on actuarial science from english to spanish. The following text is an english version, written in R's markdown language. Can you provide similar text in markdown but in spanish? Please use simple language, when possible. Variables are words in all upper case, so please do not translate these. Expressions within mathjax are mathematical expression, so please do not translate these.
+>Hello. We are in the process of translating an undergraduate textbook on actuarial science from english to spanish. The following text is an english version, written in R's markdown language. Can you provide similar text in markdown but in spanish? Please use simple language, when possible. Variables are words in all upper case, so please do not translate these. Return R markdown code that I can copy. This is to be used in an R bookdown file, so do not indicate that is is markdown code. Translate only, do not provide new explanations.
+Expressions within mathjax are mathematical expression, so please do not translate these.
 
 Here are the instructions given to ChapGPT for the conversion from latex to R markdown.
 
